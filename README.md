@@ -1,5 +1,7 @@
 # line-bot-sdk-go
 
+[![Build Status](https://travis-ci.org/line/line-bot-sdk-go.svg?branch=master)](https://travis-ci.org/line/line-bot-sdk-go)
+
 SDK of the LINE BOT API Trial for Go
 
 ## Installation ##
