@@ -8,7 +8,6 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"strconv"
 )
 
 // errors
@@ -20,9 +19,8 @@ var (
 
 // Client type
 type Client struct {
-	channelID     int64
 	channelSecret string
-	mid           string
+	channelToken  string
 	endpointBase  string       // default APIEndpointBaseTrial
 	httpClient    *http.Client // default http.DefaultClient
 }
@@ -31,11 +29,10 @@ type Client struct {
 type ClientOption func(*Client) error
 
 // NewClient function
-func NewClient(channelID int64, channelSecret, mid string, options ...ClientOption) (*Client, error) {
+func NewClient(channelSecret, channelToken string, options ...ClientOption) (*Client, error) {
 	c := &Client{
-		channelID:     channelID,
 		channelSecret: channelSecret,
-		mid:           mid,
+		channelToken:  channelToken,
 		endpointBase:  APIEndpointBaseTrial,
 		httpClient:    http.DefaultClient,
 	}
@@ -124,26 +121,22 @@ func (client *Client) post(endpoint string, body io.Reader) (result *ResponseCon
 	defer res.Body.Close()
 	decoder := json.NewDecoder(res.Body)
 
-	if res.StatusCode != http.StatusOK {
-		var content ErrorResponseContent
-		if err = decoder.Decode(&content); err != nil {
-			return
-		}
-		return nil, fmt.Errorf("%s: %s", content.Code, content.Message)
-	}
-
 	result = &ResponseContent{}
 	err = decoder.Decode(result)
 	if err != nil {
 		return
 	}
+	if res.StatusCode != http.StatusOK {
+		// TODO: error details
+		return nil, fmt.Errorf("%d: %s", res.StatusCode, result.Message)
+	}
+
 	return
 }
 
 func (client *Client) do(req *http.Request) (res *http.Response, err error) {
-	req.Header.Set("X-Line-ChannelID", strconv.FormatInt(client.channelID, 10))
-	req.Header.Set("X-Line-ChannelSecret", client.channelSecret)
-	req.Header.Set("X-Line-Trusted-User-With-ACL", client.mid)
+	req.Header.Set("X-LINE-ChannelToken", client.channelToken)
+	req.Header.Set("Authorization", "Bearer "+client.channelToken)
 	res, err = client.httpClient.Do(req)
 	return
 }

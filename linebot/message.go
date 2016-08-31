@@ -1,19 +1,5 @@
 package linebot
 
-// ResponseContent type
-type ResponseContent struct {
-	Version   int      `json:"version"`
-	MessageID string   `json:"messageId"`
-	Failed    []string `json:"failed"`
-	Timestamp int64    `json:"timestamp"`
-}
-
-// ErrorResponseContent type
-type ErrorResponseContent struct {
-	Code    string `json:"statusCode"`
-	Message string `json:"statusMessage"`
-}
-
 // SingleMessage type
 type SingleMessage struct {
 	To        []string             `json:"to"`

@@ -35,11 +35,11 @@ func (client *Client) GetUserProfile(mids []string) (result *UserProfile, err er
 	defer res.Body.Close()
 	decoder := json.NewDecoder(res.Body)
 	if res.StatusCode != http.StatusOK {
-		var content ErrorResponseContent
+		var content ResponseContent
 		if err = decoder.Decode(&content); err != nil {
 			return
 		}
-		return nil, fmt.Errorf("%s: %s", content.Code, content.Message)
+		return nil, fmt.Errorf("%d: %s", res.StatusCode, content.Message)
 	}
 
 	result = &UserProfile{}

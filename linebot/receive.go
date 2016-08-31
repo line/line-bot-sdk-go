@@ -261,24 +261,6 @@ type ReceivedOperationContent struct {
 	Params   []string
 }
 
-// ParseRequest function
-func (client *Client) ParseRequest(r *http.Request) (results *ReceivedResults, err error) {
-	defer r.Body.Close()
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		return
-	}
-	if !client.validateSignature(r.Header.Get("X-LINE-ChannelSignature"), body) {
-		return nil, ErrInvalidSignature
-	}
-
-	results = &ReceivedResults{}
-	if err = json.Unmarshal(body, results); err != nil {
-		return nil, err
-	}
-	return
-}
-
 func (client *Client) validateSignature(signature string, body []byte) bool {
 	decoded, err := base64.StdEncoding.DecodeString(signature)
 	if err != nil {
