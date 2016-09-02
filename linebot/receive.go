@@ -4,9 +4,6 @@ import (
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/base64"
-	"encoding/json"
-	"io/ioutil"
-	"net/http"
 	"strconv"
 )
 
