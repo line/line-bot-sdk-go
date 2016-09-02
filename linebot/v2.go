@@ -12,6 +12,14 @@ const (
 	APIEndpointEventsPush  = "/v2/bot/message/push"
 	APIEndpointEventsReply = "/v2/bot/message/reply"
 
+	EventTypeMessage  = "message"
+	EventTypeFollow   = "follow"
+	EventTypeUnfollow = "unfollow"
+	EventTypeJoin     = "join"
+	EventTypeLeave    = "leave"
+	EventTypePostback = "postback"
+	EventTypeBeacon   = "beacon"
+
 	EventMessageTypeText     = "text"
 	EventMessageTypeImage    = "image"
 	EventMessageTypeVideo    = "video"
@@ -32,7 +40,7 @@ type ReplyMessage struct {
 	Messages   []Message `json:"messages"`
 }
 
-// Push function
+// Push method
 func (client *Client) Push(to string, messages []Message) (result *ResponseContent, err error) {
 	body, err := json.Marshal(PushMessage{
 		To:       to,
@@ -45,7 +53,7 @@ func (client *Client) Push(to string, messages []Message) (result *ResponseConte
 	return
 }
 
-// Reply function
+// Reply method
 func (client *Client) Reply(token string, messages []Message) (result *ResponseContent, err error) {
 	body, err := json.Marshal(ReplyMessage{
 		ReplyToken: token,
@@ -69,19 +77,26 @@ type ResponseContent struct {
 }
 
 // Message inteface
-type Message interface{}
+type Message interface {
+	Type() string
+}
 
 // TextMessage type
 type TextMessage struct {
-	Type string `json:"type"`
-	Text string `json:"text"`
+	TypeStr string `json:"type"`
+	Text    string `json:"text"`
+}
+
+// Type method
+func (m *TextMessage) Type() string {
+	return m.TypeStr
 }
 
 // NewTextMessage function
 func NewTextMessage(content string) *TextMessage {
 	return &TextMessage{
-		Type: EventMessageTypeText,
-		Text: content,
+		TypeStr: EventMessageTypeText,
+		Text:    content,
 	}
 }
 
@@ -108,12 +123,15 @@ type ReceivedEvent struct {
 	} `json:"message"`
 }
 
-// TextMessage function
-func (e *ReceivedEvent) TextMessage() (*TextMessage, error) {
-	if e.RawMessage.Type != EventMessageTypeText {
-		return nil, ErrInvalidContentType
+// Message funcation
+func (e *ReceivedEvent) Message() (Message, error) {
+	if e.Type != EventTypeMessage {
+		return nil, ErrInvalidEventType
 	}
-	return NewTextMessage(e.RawMessage.Text), nil
+	if e.RawMessage.Type == EventMessageTypeText {
+		return NewTextMessage(e.RawMessage.Text), nil
+	}
+	return nil, ErrUnknown
 }
 
 // ParseRequest function
