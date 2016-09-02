@@ -58,8 +58,10 @@ func (app *KitchenSink) Callback(w http.ResponseWriter, r *http.Request) {
 				continue
 			}
 			if message.Type() == linebot.EventMessageTypeText {
-				// TODO
-				app.handleText(message, event.ReplyToken)
+				if err := app.handleText(message, event.ReplyToken, event.Source); err != nil {
+					log.Print(err)
+					continue
+				}
 			}
 			if message.Type() == linebot.EventMessageTypeImage {
 				// TODO
@@ -69,17 +71,38 @@ func (app *KitchenSink) Callback(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (app *KitchenSink) handleText(message linebot.Message, replyToken string) {
+func (app *KitchenSink) handleText(message linebot.Message, replyToken string, source linebot.ReceivedEventSource) error {
 	if tm, ok := message.(*linebot.TextMessage); ok {
 		switch tm.Text {
+		case "profile":
+			if source.UserID != "" {
+				var profile *linebot.UserProfileResponse
+				profile, err := app.bot.GetUserProfile(source.UserID)
+				if err != nil {
+					return err
+				}
+				messages := []linebot.Message{
+					linebot.NewTextMessage("Display name: " + profile.DisplayName),
+					linebot.NewTextMessage("Status message: " + profile.StatusMessage),
+				}
+				if _, err := app.bot.Reply(replyToken, messages); err != nil {
+					return err
+				}
+			}
+			break
 		// TODO
 		case "":
-			break
 		default:
 			log.Printf("echo message to %s: %s", replyToken, tm.Text)
-			app.bot.Reply(replyToken, []linebot.Message{
+			messages := []linebot.Message{
 				linebot.NewTextMessage(tm.Text),
-			})
+			}
+			if _, err := app.bot.Reply(replyToken, messages); err != nil {
+				return err
+			}
 		}
+	} else {
+		return linebot.ErrInvalidContentType
 	}
+	return nil
 }

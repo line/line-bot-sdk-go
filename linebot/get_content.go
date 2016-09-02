@@ -24,20 +24,20 @@ func newMessageContentResponse(res *http.Response) (mc *MessageContentResponse) 
 	return
 }
 
-// GetMessageContent function
-func (client *Client) GetMessageContent(content *ReceivedContent) (mc *MessageContentResponse, err error) {
-	res, err := client.get(APIEndpointMessage+"/"+content.ID+"/content", "")
-	if err != nil {
-		return
-	}
-	return newMessageContentResponse(res), nil
-}
+// // GetMessageContent function
+// func (client *Client) GetMessageContent(content *ReceivedContent) (mc *MessageContentResponse, err error) {
+// 	res, err := client.get(APIEndpointMessage+"/"+content.ID+"/content", "")
+// 	if err != nil {
+// 		return
+// 	}
+// 	return newMessageContentResponse(res), nil
+// }
 
-// GetMessageContentPreview function
-func (client *Client) GetMessageContentPreview(content *ReceivedContent) (mc *MessageContentResponse, err error) {
-	res, err := client.get(APIEndpointMessage+"/"+content.ID+"/content/preview", "")
-	if err != nil {
-		return
-	}
-	return newMessageContentResponse(res), nil
-}
+// // GetMessageContentPreview function
+// func (client *Client) GetMessageContentPreview(content *ReceivedContent) (mc *MessageContentResponse, err error) {
+// 	res, err := client.get(APIEndpointMessage+"/"+content.ID+"/content/preview", "")
+// 	if err != nil {
+// 		return
+// 	}
+// 	return newMessageContentResponse(res), nil
+// }

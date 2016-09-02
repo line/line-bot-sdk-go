@@ -92,12 +92,11 @@ func (client *Client) sendMultipleMessage(to []string, content MultipleMessageCo
 	return
 }
 
-func (client *Client) get(endpoint, rawQuery string) (res *http.Response, err error) {
+func (client *Client) get(endpoint string) (res *http.Response, err error) {
 	url, err := client.url(endpoint)
 	if err != nil {
 		return
 	}
-	url.RawQuery = rawQuery
 	req, err := http.NewRequest("GET", url.String(), nil)
 	if err != nil {
 		return

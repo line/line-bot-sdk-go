@@ -102,14 +102,10 @@ func NewTextMessage(content string) *TextMessage {
 
 // ReceivedEvent type
 type ReceivedEvent struct {
-	ReplyToken string `json:"replyToken"`
-	Type       string `json:"type"`
-	Timestamp  int64  `json:"timestamp"`
-	RawSource  struct {
-		Type    string `json:"type"`
-		UserID  string `json:"userId"`
-		GroupID string `json:"groupId"`
-	} `json:"source"`
+	ReplyToken string              `json:"replyToken"`
+	Type       string              `json:"type"`
+	Timestamp  int64               `json:"timestamp"`
+	Source     ReceivedEventSource `json:"source"`
 	RawMessage struct {
 		ID        string  `json:"id"`
 		Type      string  `json:"type"`
@@ -123,7 +119,14 @@ type ReceivedEvent struct {
 	} `json:"message"`
 }
 
-// Message funcation
+// ReceivedEventSource type
+type ReceivedEventSource struct {
+	Type    string `json:"type"`
+	UserID  string `json:"userId"`
+	GroupID string `json:"groupId"`
+}
+
+// Message returns Message
 func (e *ReceivedEvent) Message() (Message, error) {
 	if e.Type != EventTypeMessage {
 		return nil, ErrInvalidEventType

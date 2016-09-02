@@ -4,31 +4,20 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"net/url"
-	"strings"
 )
 
-// UserProfile type
-type UserProfile struct {
-	Contacts []ContactInfo `json:"contacts"`
-	Count    int           `json:"count"`
-	Start    int           `json:"start"`
-	Display  int           `json:"display"`
-}
-
-// ContactInfo type
-type ContactInfo struct {
+// UserProfileResponse type
+type UserProfileResponse struct {
+	RequestID     string `json:"requestId"`
+	UserID        string `json:"userId"`
 	DisplayName   string `json:"displayName"`
-	MID           string `json:"mid"`
-	PictureURL    string `json:"pictureUrl"`
+	PicutureURL   string `json:"pictureUrl"`
 	StatusMessage string `json:"statusMessage"`
 }
 
 // GetUserProfile function
-func (client *Client) GetUserProfile(mids []string) (result *UserProfile, err error) {
-	query := url.Values{}
-	query.Set("mids", strings.Join(mids, ","))
-	res, err := client.get(APIEndpointProfiles, query.Encode())
+func (client *Client) GetUserProfile(uid string) (result *UserProfileResponse, err error) {
+	res, err := client.get("/v2/bot/profile/" + uid)
 	if err != nil {
 		return
 	}
@@ -42,7 +31,7 @@ func (client *Client) GetUserProfile(mids []string) (result *UserProfile, err er
 		return nil, fmt.Errorf("%d: %s", res.StatusCode, content.Message)
 	}
 
-	result = &UserProfile{}
+	result = &UserProfileResponse{}
 	err = decoder.Decode(result)
 	if err != nil {
 		return
