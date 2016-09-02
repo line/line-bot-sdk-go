@@ -30,7 +30,7 @@ type KitchenSink struct {
 
 // NewKitchenSink function
 func NewKitchenSink(channelSecret, channelToken, apiEndpointBase string) (*KitchenSink, error) {
-	bot, err := linebot.NewClient(channelSecret, channelToken, linebot.WithEndpointBase(apiEndpointBase))
+	bot, err := linebot.New(channelSecret, channelToken, linebot.WithEndpointBase(apiEndpointBase))
 	if err != nil {
 		return nil, err
 	}

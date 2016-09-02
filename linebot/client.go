@@ -29,8 +29,8 @@ type Client struct {
 // ClientOption type
 type ClientOption func(*Client) error
 
-// NewClient function
-func NewClient(channelSecret, channelToken string, options ...ClientOption) (*Client, error) {
+// New returns a new bot client instance.
+func New(channelSecret, channelToken string, options ...ClientOption) (*Client, error) {
 	c := &Client{
 		channelSecret: channelSecret,
 		channelToken:  channelToken,
