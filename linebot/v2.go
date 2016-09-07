@@ -77,26 +77,24 @@ type ResponseContent struct {
 }
 
 // Message inteface
-type Message interface {
-	Type() string
-}
+type Message interface{}
 
 // TextMessage type
 type TextMessage struct {
-	TypeStr string `json:"type"`
-	Text    string `json:"text"`
+	Type string `json:"type"`
+	Text string `json:"text"`
 }
 
-// Type method
-func (m *TextMessage) Type() string {
-	return m.TypeStr
+// ImageMessage type
+type ImageMessage struct {
+	Type string `json:"type"`
 }
 
 // NewTextMessage function
 func NewTextMessage(content string) *TextMessage {
 	return &TextMessage{
-		TypeStr: EventMessageTypeText,
-		Text:    content,
+		Type: EventMessageTypeText,
+		Text: content,
 	}
 }
 

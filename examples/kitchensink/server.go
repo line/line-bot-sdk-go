@@ -52,57 +52,54 @@ func (app *KitchenSink) Callback(w http.ResponseWriter, r *http.Request) {
 	}
 	for _, event := range events {
 		if event.Type == linebot.EventTypeMessage {
-			var message linebot.Message
-			if message, err = event.Message(); err != nil {
+			m, err := event.Message()
+			if err != nil {
 				log.Print(err)
 				continue
 			}
-			if message.Type() == linebot.EventMessageTypeText {
+			switch message := m.(type) {
+			case *linebot.TextMessage:
 				if err := app.handleText(message, event.ReplyToken, event.Source); err != nil {
 					log.Print(err)
 					continue
 				}
-			}
-			if message.Type() == linebot.EventMessageTypeImage {
+				break
+			case *linebot.ImageMessage:
 				// TODO
+				break
 			}
 		}
 	}
-
 }
 
-func (app *KitchenSink) handleText(message linebot.Message, replyToken string, source linebot.ReceivedEventSource) error {
-	if tm, ok := message.(*linebot.TextMessage); ok {
-		switch tm.Text {
-		case "profile":
-			if source.UserID != "" {
-				var profile *linebot.UserProfileResponse
-				profile, err := app.bot.GetUserProfile(source.UserID)
-				if err != nil {
-					return err
-				}
-				messages := []linebot.Message{
-					linebot.NewTextMessage("Display name: " + profile.DisplayName),
-					linebot.NewTextMessage("Status message: " + profile.StatusMessage),
-				}
-				if _, err := app.bot.Reply(replyToken, messages); err != nil {
-					return err
-				}
+func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken string, source linebot.ReceivedEventSource) error {
+	switch message.Text {
+	case "profile":
+		if source.UserID != "" {
+			var profile *linebot.UserProfileResponse
+			profile, err := app.bot.GetUserProfile(source.UserID)
+			if err != nil {
+				return err
 			}
-			break
-		// TODO
-		case "":
-		default:
-			log.Printf("echo message to %s: %s", replyToken, tm.Text)
 			messages := []linebot.Message{
-				linebot.NewTextMessage(tm.Text),
+				linebot.NewTextMessage("Display name: " + profile.DisplayName),
+				linebot.NewTextMessage("Status message: " + profile.StatusMessage),
 			}
 			if _, err := app.bot.Reply(replyToken, messages); err != nil {
 				return err
 			}
 		}
-	} else {
-		return linebot.ErrInvalidContentType
+		break
+	// TODO
+	case "":
+	default:
+		log.Printf("echo message to %s: %s", replyToken, message.Text)
+		messages := []linebot.Message{
+			linebot.NewTextMessage(message.Text),
+		}
+		if _, err := app.bot.Reply(replyToken, messages); err != nil {
+			return err
+		}
 	}
 	return nil
 }
