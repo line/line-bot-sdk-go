@@ -20,13 +20,22 @@ const (
 	EventTypePostback = "postback"
 	EventTypeBeacon   = "beacon"
 
-	EventMessageTypeText     = "text"
-	EventMessageTypeImage    = "image"
-	EventMessageTypeVideo    = "video"
-	EventMessageTypeAudio    = "audio"
-	EventMessageTypeLocation = "location"
-	EventMessageTypeSticker  = "sticker"
+	EventSourceTypeUser  = "user"
+	EventSourceTypeGroup = "group"
+
+	MessageTypeText     = "text"
+	MessageTypeImage    = "image"
+	MessageTypeVideo    = "video"
+	MessageTypeAudio    = "audio"
+	MessageTypeLocation = "location"
+	MessageTypeSticker  = "sticker"
 )
+
+// EventSourceType type
+type EventSourceType string
+
+// MessageType type
+type MessageType string
 
 // PushMessage type
 type PushMessage struct {
@@ -81,29 +90,29 @@ type Message interface{}
 
 // TextMessage type
 type TextMessage struct {
-	Type string `json:"type"`
-	Text string `json:"text"`
+	Type MessageType `json:"type"`
+	Text string      `json:"text"`
 }
 
 // ImageMessage type
 type ImageMessage struct {
-	Type string `json:"type"`
+	Type MessageType `json:"type"`
 }
 
 // NewTextMessage function
 func NewTextMessage(content string) *TextMessage {
 	return &TextMessage{
-		Type: EventMessageTypeText,
+		Type: MessageTypeText,
 		Text: content,
 	}
 }
 
-// ReceivedEvent type
-type ReceivedEvent struct {
-	ReplyToken string              `json:"replyToken"`
-	Type       string              `json:"type"`
-	Timestamp  int64               `json:"timestamp"`
-	Source     ReceivedEventSource `json:"source"`
+// Event type
+type Event struct {
+	ReplyToken string      `json:"replyToken"`
+	Type       EventType   `json:"type"`
+	Timestamp  int64       `json:"timestamp"`
+	Source     EventSource `json:"source"`
 	RawMessage struct {
 		ID        string  `json:"id"`
 		Type      string  `json:"type"`
@@ -117,26 +126,26 @@ type ReceivedEvent struct {
 	} `json:"message"`
 }
 
-// ReceivedEventSource type
-type ReceivedEventSource struct {
-	Type    string `json:"type"`
-	UserID  string `json:"userId"`
-	GroupID string `json:"groupId"`
+// EventSource type
+type EventSource struct {
+	Type    EventSourceType `json:"type"`
+	UserID  string          `json:"userId"`
+	GroupID string          `json:"groupId"`
 }
 
 // Message returns Message
-func (e *ReceivedEvent) Message() (Message, error) {
+func (e *Event) Message() (Message, error) {
 	if e.Type != EventTypeMessage {
 		return nil, ErrInvalidEventType
 	}
-	if e.RawMessage.Type == EventMessageTypeText {
+	if e.RawMessage.Type == MessageTypeText {
 		return NewTextMessage(e.RawMessage.Text), nil
 	}
 	return nil, ErrUnknown
 }
 
 // ParseRequest function
-func (client *Client) ParseRequest(r *http.Request) (events []ReceivedEvent, err error) {
+func (client *Client) ParseRequest(r *http.Request) (events []Event, err error) {
 	defer r.Body.Close()
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -147,7 +156,7 @@ func (client *Client) ParseRequest(r *http.Request) (events []ReceivedEvent, err
 	}
 
 	request := &struct {
-		Events []ReceivedEvent `json:"events"`
+		Events []Event `json:"events"`
 	}{}
 	if err = json.Unmarshal(body, request); err != nil {
 		return nil, err

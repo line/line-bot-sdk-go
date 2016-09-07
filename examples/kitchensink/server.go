@@ -72,7 +72,7 @@ func (app *KitchenSink) Callback(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken string, source linebot.ReceivedEventSource) error {
+func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken string, source linebot.EventSource) error {
 	switch message.Text {
 	case "profile":
 		if source.UserID != "" {
