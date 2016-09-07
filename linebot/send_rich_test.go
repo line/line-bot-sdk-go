@@ -67,4 +67,3 @@ func TestSendRich(t *testing.T) {
 		t.Error("response is nil")
 	}
 }
-*/
