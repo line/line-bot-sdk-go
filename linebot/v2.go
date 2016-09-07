@@ -39,7 +39,7 @@ type MessageType string
 
 // Push method
 func (client *Client) Push(to string, messages []Message) (result *ResponseContent, err error) {
-	body, err := json.Marshal(struct {
+	body, err := json.Marshal(&struct {
 		To       string    `json:"to"`
 		Messages []Message `json:"messages"`
 	}{
@@ -55,7 +55,7 @@ func (client *Client) Push(to string, messages []Message) (result *ResponseConte
 
 // Reply method
 func (client *Client) Reply(token string, messages []Message) (result *ResponseContent, err error) {
-	body, err := json.Marshal(struct {
+	body, err := json.Marshal(&struct {
 		ReplyToken string    `json:"replyToken"`
 		Messages   []Message `json:"messages"`
 	}{
@@ -91,7 +91,7 @@ type TextMessage struct {
 
 // MarshalJSON method
 func (m *TextMessage) MarshalJSON() ([]byte, error) {
-	return json.Marshal(struct {
+	return json.Marshal(&struct {
 		Type MessageType `json:"type"`
 		Text string      `json:"text"`
 	}{
