@@ -52,12 +52,7 @@ func (app *KitchenSink) Callback(w http.ResponseWriter, r *http.Request) {
 	}
 	for _, event := range events {
 		if event.Type == linebot.EventTypeMessage {
-			m, err := event.Message()
-			if err != nil {
-				log.Print(err)
-				continue
-			}
-			switch message := m.(type) {
+			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
 				if err := app.handleText(message, event.ReplyToken, event.Source); err != nil {
 					log.Print(err)
@@ -72,7 +67,7 @@ func (app *KitchenSink) Callback(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken string, source linebot.EventSource) error {
+func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken string, source *linebot.EventSource) error {
 	switch message.Text {
 	case "profile":
 		if source.UserID != "" {
