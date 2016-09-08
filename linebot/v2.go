@@ -130,6 +130,27 @@ func (call *PushCall) encodeJSON(w io.Writer) error {
 	})
 }
 
+func decodeToBasicResponse(res *http.Response) (*BasicResponse, error) {
+	decoder := json.NewDecoder(res.Body)
+	if res.StatusCode != http.StatusOK {
+		result := ErrorResponse{}
+		if err := decoder.Decode(&result); err != nil {
+			return nil, &Error{
+				Code: res.StatusCode,
+			}
+		}
+		return nil, &Error{
+			Code:     res.StatusCode,
+			Response: &result,
+		}
+	}
+	result := BasicResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
+
 // Do method
 func (call *PushCall) Do() (*BasicResponse, error) {
 	var buf bytes.Buffer
@@ -143,22 +164,7 @@ func (call *PushCall) Do() (*BasicResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	decoder := json.NewDecoder(res.Body)
-	if res.StatusCode != http.StatusOK {
-		result := ErrorResponse{}
-		if err = decoder.Decode(&result); err != nil {
-			return nil, err
-		}
-		return nil, &Error{
-			Code:     res.StatusCode,
-			Response: &result,
-		}
-	}
-	result := BasicResponse{}
-	if err = decoder.Decode(&result); err != nil {
-		return nil, err
-	}
-	return &result, nil
+	return decodeToBasicResponse(res)
 }
 
 // ReplyCall type
@@ -200,22 +206,7 @@ func (call *ReplyCall) Do() (*BasicResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	decoder := json.NewDecoder(res.Body)
-	if res.StatusCode != http.StatusOK {
-		result := ErrorResponse{}
-		if err = decoder.Decode(&result); err != nil {
-			return nil, err
-		}
-		return nil, &Error{
-			Code:     res.StatusCode,
-			Response: &result,
-		}
-	}
-	result := BasicResponse{}
-	if err = decoder.Decode(&result); err != nil {
-		return nil, err
-	}
-	return &result, nil
+	return decodeToBasicResponse(res)
 }
 
 func (client *Client) doCtx(ctx context.Context, req *http.Request) (*http.Response, error) {
