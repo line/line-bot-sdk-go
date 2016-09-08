@@ -37,21 +37,12 @@ type EventSourceType string
 // MessageType type
 type MessageType string
 
-// PushMessage type
-type PushMessage struct {
-	To       string    `json:"to"`
-	Messages []Message `json:"messages"`
-}
-
-// ReplyMessage type
-type ReplyMessage struct {
-	ReplyToken string    `json:"replyToken"`
-	Messages   []Message `json:"messages"`
-}
-
 // Push method
 func (client *Client) Push(to string, messages []Message) (result *ResponseContent, err error) {
-	body, err := json.Marshal(PushMessage{
+	body, err := json.Marshal(&struct {
+		To       string    `json:"to"`
+		Messages []Message `json:"messages"`
+	}{
 		To:       to,
 		Messages: messages,
 	})
@@ -64,7 +55,10 @@ func (client *Client) Push(to string, messages []Message) (result *ResponseConte
 
 // Reply method
 func (client *Client) Reply(token string, messages []Message) (result *ResponseContent, err error) {
-	body, err := json.Marshal(ReplyMessage{
+	body, err := json.Marshal(&struct {
+		ReplyToken string    `json:"replyToken"`
+		Messages   []Message `json:"messages"`
+	}{
 		ReplyToken: token,
 		Messages:   messages,
 	})
@@ -90,13 +84,26 @@ type Message interface{}
 
 // TextMessage type
 type TextMessage struct {
-	Type MessageType `json:"type"`
-	Text string      `json:"text"`
+	ID   string
+	Type MessageType
+	Text string
+}
+
+// MarshalJSON method
+func (m *TextMessage) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		Type MessageType `json:"type"`
+		Text string      `json:"text"`
+	}{
+		Type: MessageTypeText,
+		Text: m.Text,
+	})
 }
 
 // ImageMessage type
 type ImageMessage struct {
-	Type MessageType `json:"type"`
+	ID   string
+	Type MessageType
 }
 
 // NewTextMessage function
@@ -107,25 +114,6 @@ func NewTextMessage(content string) *TextMessage {
 	}
 }
 
-// Event type
-type Event struct {
-	ReplyToken string      `json:"replyToken"`
-	Type       EventType   `json:"type"`
-	Timestamp  int64       `json:"timestamp"`
-	Source     EventSource `json:"source"`
-	RawMessage struct {
-		ID        string  `json:"id"`
-		Type      string  `json:"type"`
-		Text      string  `json:"text"`
-		Title     string  `json:"title"`
-		Address   string  `json:"address"`
-		Latitude  float64 `json:"latitude"`
-		Longitude float64 `json:"longitude"`
-		PackageID string  `json:"packageId"`
-		StickerID string  `json:"stickerId"`
-	} `json:"message"`
-}
-
 // EventSource type
 type EventSource struct {
 	Type    EventSourceType `json:"type"`
@@ -133,15 +121,54 @@ type EventSource struct {
 	GroupID string          `json:"groupId"`
 }
 
-// Message returns Message
-func (e *Event) Message() (Message, error) {
-	if e.Type != EventTypeMessage {
-		return nil, ErrInvalidEventType
+// Event type
+type Event struct {
+	ReplyToken string
+	Type       EventType
+	Timestamp  int64
+	Source     *EventSource
+	Message    Message
+}
+
+// UnmarshalJSON returns a Event from JSON-encoded data.
+func (e *Event) UnmarshalJSON(body []byte) (err error) {
+	rawEvent := struct {
+		ReplyToken string      `json:"replyToken"`
+		Type       EventType   `json:"type"`
+		Timestamp  int64       `json:"timestamp"`
+		Source     EventSource `json:"source"`
+		Message    struct {
+			ID        string      `json:"id"`
+			Type      MessageType `json:"type"`
+			Text      string      `json:"text"`
+			Title     string      `json:"title"`
+			Address   string      `json:"address"`
+			Latitude  float64     `json:"latitude"`
+			Longitude float64     `json:"longitude"`
+			PackageID string      `json:"packageId"`
+			StickerID string      `json:"stickerId"`
+		} `json:"message"`
+	}{}
+	if err = json.Unmarshal(body, &rawEvent); err != nil {
+		return
 	}
-	if e.RawMessage.Type == MessageTypeText {
-		return NewTextMessage(e.RawMessage.Text), nil
+
+	e.ReplyToken = rawEvent.ReplyToken
+	e.Type = rawEvent.Type
+	e.Timestamp = rawEvent.Timestamp
+	e.Source = &rawEvent.Source
+
+	if rawEvent.Type == EventTypeMessage {
+		switch rawEvent.Message.Type {
+		case MessageTypeText:
+			e.Message = &TextMessage{
+				ID:   rawEvent.Message.ID,
+				Type: MessageTypeText,
+				Text: rawEvent.Message.Text,
+			}
+		}
 	}
-	return nil, ErrUnknown
+	return
 }
 
 // ParseRequest function
