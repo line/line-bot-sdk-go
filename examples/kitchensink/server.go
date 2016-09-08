@@ -85,7 +85,7 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 			var profile *linebot.UserProfileResponse
 			profile, err := app.bot.GetUserProfile(source.UserID)
 			if err != nil {
-				return err
+				return app.replyText(replyToken, err.Error())
 			}
 			messages := []linebot.Message{
 				linebot.NewTextMessage("Display name: " + profile.DisplayName),
@@ -94,10 +94,30 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 			if _, err := app.bot.Reply(replyToken, messages); err != nil {
 				return err
 			}
+		} else {
+			return app.replyText(replyToken, "Bot can't use profile API without user ID")
 		}
 		break
-	// TODO
-	case "":
+	case "bye":
+		switch source.Type {
+		case linebot.EventSourceTypeUser:
+			return app.replyText(replyToken, "Bot can't leave from 1:1 chat")
+		case linebot.EventSourceTypeGroup:
+			if err := app.replyText(replyToken, "Leaving group"); err != nil {
+				return err
+			}
+			if _, err := app.bot.LeaveGroup(source.GroupID); err != nil {
+				return app.replyText(replyToken, err.Error())
+			}
+		case linebot.EventSourceTypeRoom:
+			if err := app.replyText(replyToken, "Leaving group"); err != nil {
+				return err
+			}
+			if _, err := app.bot.LeaveRoom(source.RoomID); err != nil {
+				return app.replyText(replyToken, err.Error())
+			}
+		}
+		break
 	default:
 		log.Printf("echo message to %s: %s", replyToken, message.Text)
 		messages := []linebot.Message{
@@ -106,6 +126,7 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 		if _, err := app.bot.Reply(replyToken, messages); err != nil {
 			return err
 		}
+		break
 	}
 	return nil
 }
@@ -125,6 +146,13 @@ func (app *KitchenSink) handleSticker(message *linebot.StickerMessage, replyToke
 		linebot.NewStickerMessage(message.PackageID, message.StickerID),
 	}
 	if _, err := app.bot.Reply(replyToken, messages); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (app *KitchenSink) replyText(replyToken, text string) error {
+	if _, err := app.bot.Reply(replyToken, []linebot.Message{linebot.NewTextMessage(text)}); err != nil {
 		return err
 	}
 	return nil
