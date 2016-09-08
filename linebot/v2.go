@@ -11,6 +11,8 @@ import (
 const (
 	APIEndpointEventsPush  = "/v2/bot/message/push"
 	APIEndpointEventsReply = "/v2/bot/message/reply"
+	APIEndpointLeaveGroup  = "/v2/bot/group/%s/leave"
+	APIEndpointLeaveRoom   = "/v2/bot/room/%s/leave"
 
 	EventTypeMessage  = "message"
 	EventTypeFollow   = "follow"
@@ -22,6 +24,7 @@ const (
 
 	EventSourceTypeUser  = "user"
 	EventSourceTypeGroup = "group"
+	EventSourceTypeRoom  = "room"
 
 	MessageTypeText     = "text"
 	MessageTypeImage    = "image"
@@ -197,6 +200,7 @@ type EventSource struct {
 	Type    EventSourceType `json:"type"`
 	UserID  string          `json:"userId"`
 	GroupID string          `json:"groupId"`
+	RoomID  string          `json:"roomId"`
 }
 
 // Event type
