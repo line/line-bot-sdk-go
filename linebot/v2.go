@@ -3,6 +3,7 @@ package linebot
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -60,6 +61,7 @@ func (client *Client) Reply(replyToken string, messages []Message) *ReplyCall {
 }
 
 // ResponseContent type
+// Duplicated
 type ResponseContent struct {
 	RequestID string `json:"requestId"`
 	Message   string `json:"message"`
@@ -67,6 +69,39 @@ type ResponseContent struct {
 		Message  string `json:"message"`
 		Property string `json:"property"`
 	} `json:"details"`
+}
+
+// BasicResponse type
+type BasicResponse struct {
+	RequestID string `json:"requestId"`
+}
+
+// ErrorResponse type
+type ErrorResponse struct {
+	RequestID string `json:"requestId"`
+	Message   string `json:"message"`
+	Details   []struct {
+		Message  string `json:"message"`
+		Property string `json:"property"`
+	} `json:"details"`
+}
+
+// Error type
+type Error struct {
+	Code     int
+	Response *ErrorResponse
+}
+
+func (e *Error) Error() string {
+	var buf bytes.Buffer
+	fmt.Fprintf(&buf, "linebot: Error %d ", e.Code)
+	if e.Response != nil {
+		fmt.Fprintf(&buf, "%s", e.Response.Message)
+		for _, d := range e.Response.Details {
+			fmt.Fprintf(&buf, "\n[%s] %s", d.Property, d.Message)
+		}
+	}
+	return buf.String()
 }
 
 // PushCall type
@@ -96,12 +131,12 @@ func (call *PushCall) encodeJSON(w io.Writer) error {
 }
 
 // Do method
-func (call *PushCall) Do() (*ResponseContent, error) {
-	buf := new(bytes.Buffer)
-	if err := call.encodeJSON(buf); err != nil {
+func (call *PushCall) Do() (*BasicResponse, error) {
+	var buf bytes.Buffer
+	if err := call.encodeJSON(&buf); err != nil {
 		return nil, err
 	}
-	res, err := call.c.postCtx(call.ctx, APIEndpointEventsPush, buf)
+	res, err := call.c.postCtx(call.ctx, APIEndpointEventsPush, &buf)
 	if res != nil && res.Body != nil {
 		defer res.Body.Close()
 	}
@@ -109,7 +144,17 @@ func (call *PushCall) Do() (*ResponseContent, error) {
 		return nil, err
 	}
 	decoder := json.NewDecoder(res.Body)
-	result := ResponseContent{}
+	if res.StatusCode != http.StatusOK {
+		result := ErrorResponse{}
+		if err = decoder.Decode(&result); err != nil {
+			return nil, err
+		}
+		return nil, &Error{
+			Code:     res.StatusCode,
+			Response: &result,
+		}
+	}
+	result := BasicResponse{}
 	if err = decoder.Decode(&result); err != nil {
 		return nil, err
 	}
@@ -143,12 +188,12 @@ func (call *ReplyCall) encodeJSON(w io.Writer) error {
 }
 
 // Do method
-func (call *ReplyCall) Do() (*ResponseContent, error) {
-	buf := new(bytes.Buffer)
-	if err := call.encodeJSON(buf); err != nil {
+func (call *ReplyCall) Do() (*BasicResponse, error) {
+	var buf bytes.Buffer
+	if err := call.encodeJSON(&buf); err != nil {
 		return nil, err
 	}
-	res, err := call.c.postCtx(call.ctx, APIEndpointEventsReply, buf)
+	res, err := call.c.postCtx(call.ctx, APIEndpointEventsReply, &buf)
 	if res != nil && res.Body != nil {
 		defer res.Body.Close()
 	}
@@ -156,7 +201,17 @@ func (call *ReplyCall) Do() (*ResponseContent, error) {
 		return nil, err
 	}
 	decoder := json.NewDecoder(res.Body)
-	result := ResponseContent{}
+	if res.StatusCode != http.StatusOK {
+		result := ErrorResponse{}
+		if err = decoder.Decode(&result); err != nil {
+			return nil, err
+		}
+		return nil, &Error{
+			Code:     res.StatusCode,
+			Response: &result,
+		}
+	}
+	result := BasicResponse{}
 	if err = decoder.Decode(&result); err != nil {
 		return nil, err
 	}
