@@ -80,7 +80,7 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 				linebot.NewTextMessage("Display name: " + profile.DisplayName),
 				linebot.NewTextMessage("Status message: " + profile.StatusMessage),
 			}
-			if _, err := app.bot.Reply(replyToken, messages); err != nil {
+			if _, err := app.bot.Reply(replyToken, messages).Do(); err != nil {
 				return err
 			}
 		}
@@ -92,7 +92,7 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 		messages := []linebot.Message{
 			linebot.NewTextMessage(message.Text),
 		}
-		if _, err := app.bot.Reply(replyToken, messages); err != nil {
+		if _, err := app.bot.Reply(replyToken, messages).Do(); err != nil {
 			return err
 		}
 	}
