@@ -19,7 +19,7 @@ const (
 
 // Message inteface
 type Message interface {
-	MarshalJSON() ([]byte, error)
+	json.Marshaler
 }
 
 // TextMessage type
