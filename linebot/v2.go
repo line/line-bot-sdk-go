@@ -16,6 +16,8 @@ import (
 const (
 	APIEndpointEventsPush  = "/v2/bot/message/push"
 	APIEndpointEventsReply = "/v2/bot/message/reply"
+	APIEndpointLeaveGroup  = "/v2/bot/group/%s/leave"
+	APIEndpointLeaveRoom   = "/v2/bot/room/%s/leave"
 
 	EventTypeMessage  = "message"
 	EventTypeFollow   = "follow"
@@ -27,6 +29,7 @@ const (
 
 	EventSourceTypeUser  = "user"
 	EventSourceTypeGroup = "group"
+	EventSourceTypeRoom  = "room"
 
 	MessageTypeText     = "text"
 	MessageTypeImage    = "image"
@@ -232,16 +235,17 @@ func (client *Client) postCtx(ctx context.Context, endpoint string, body io.Read
 }
 
 // Message inteface
-type Message interface{}
+type Message interface {
+	MarshalJSON() ([]byte, error)
+}
 
 // TextMessage type
 type TextMessage struct {
 	ID   string
-	Type MessageType
 	Text string
 }
 
-// MarshalJSON method
+// MarshalJSON method of TextMessage
 func (m *TextMessage) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type MessageType `json:"type"`
@@ -254,15 +258,92 @@ func (m *TextMessage) MarshalJSON() ([]byte, error) {
 
 // ImageMessage type
 type ImageMessage struct {
-	ID   string
-	Type MessageType
+	ID                 string
+	OriginalContentURL string
+	PreviewImageURL    string
+}
+
+// MarshalJSON method of ImageMessage
+func (m *ImageMessage) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		Type               MessageType `json:"type"`
+		OriginalContentURL string      `json:"originalContentUrl"`
+		PreviewImageURL    string      `json:"previewImageUrl"`
+	}{
+		Type:               MessageTypeImage,
+		OriginalContentURL: m.OriginalContentURL,
+		PreviewImageURL:    m.PreviewImageURL,
+	})
+}
+
+// LocationMessage type
+type LocationMessage struct {
+	ID        string
+	Title     string
+	Address   string
+	Latitude  float64
+	Longitude float64
+}
+
+// MarshalJSON method of LocationMessage
+func (m *LocationMessage) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		Type      MessageType `json:"type"`
+		Title     string      `json:"title"`
+		Address   string      `json:"address"`
+		Latitude  float64     `json:"latitude"`
+		Longitude float64     `json:"longitude"`
+	}{
+		Type:      MessageTypeLocation,
+		Title:     m.Title,
+		Address:   m.Address,
+		Latitude:  m.Latitude,
+		Longitude: m.Longitude,
+	})
+}
+
+// StickerMessage type
+type StickerMessage struct {
+	ID        string
+	PackageID string
+	StickerID string
+}
+
+// MarshalJSON method of StickerMessage
+func (m *StickerMessage) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		Type      MessageType `json:"type"`
+		PackageID string      `json:"packageId"`
+		StickerID string      `json:"stickerId"`
+	}{
+		Type:      MessageTypeSticker,
+		PackageID: m.PackageID,
+		StickerID: m.StickerID,
+	})
 }
 
 // NewTextMessage function
 func NewTextMessage(content string) *TextMessage {
 	return &TextMessage{
-		Type: MessageTypeText,
 		Text: content,
+	}
+}
+
+// NewLocationMessage function
+func NewLocationMessage(title, address string, latitude, longitude float64) *LocationMessage {
+	return &LocationMessage{
+		Title:     title,
+		Address:   address,
+		Latitude:  latitude,
+		Longitude: longitude,
+	}
+}
+
+// NewStickerMessage function
+func NewStickerMessage(packageID, stickerID string) *StickerMessage {
+	return &StickerMessage{
+		PackageID: packageID,
+		StickerID: stickerID,
 	}
 }
 
@@ -271,6 +352,7 @@ type EventSource struct {
 	Type    EventSourceType `json:"type"`
 	UserID  string          `json:"userId"`
 	GroupID string          `json:"groupId"`
+	RoomID  string          `json:"roomId"`
 }
 
 // Event type
@@ -315,8 +397,25 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 		case MessageTypeText:
 			e.Message = &TextMessage{
 				ID:   rawEvent.Message.ID,
-				Type: MessageTypeText,
 				Text: rawEvent.Message.Text,
+			}
+		case MessageTypeImage:
+			e.Message = &ImageMessage{
+				ID: rawEvent.Message.ID,
+			}
+		case MessageTypeLocation:
+			e.Message = &LocationMessage{
+				ID:        rawEvent.Message.ID,
+				Title:     rawEvent.Message.Title,
+				Address:   rawEvent.Message.Address,
+				Latitude:  rawEvent.Message.Latitude,
+				Longitude: rawEvent.Message.Longitude,
+			}
+		case MessageTypeSticker:
+			e.Message = &StickerMessage{
+				ID:        rawEvent.Message.ID,
+				PackageID: rawEvent.Message.PackageID,
+				StickerID: rawEvent.Message.StickerID,
 			}
 		}
 	}
