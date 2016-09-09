@@ -89,15 +89,15 @@ type ErrorResponse struct {
 	} `json:"details"`
 }
 
-// Error type
-type Error struct {
+// APIError type
+type APIError struct {
 	Code     int
 	Response *ErrorResponse
 }
 
-func (e *Error) Error() string {
+func (e *APIError) Error() string {
 	var buf bytes.Buffer
-	fmt.Fprintf(&buf, "linebot: Error %d ", e.Code)
+	fmt.Fprintf(&buf, "linebot: APIError %d ", e.Code)
 	if e.Response != nil {
 		fmt.Fprintf(&buf, "%s", e.Response.Message)
 		for _, d := range e.Response.Details {
@@ -138,11 +138,11 @@ func decodeToBasicResponse(res *http.Response) (*BasicResponse, error) {
 	if res.StatusCode != http.StatusOK {
 		result := ErrorResponse{}
 		if err := decoder.Decode(&result); err != nil {
-			return nil, &Error{
+			return nil, &APIError{
 				Code: res.StatusCode,
 			}
 		}
-		return nil, &Error{
+		return nil, &APIError{
 			Code:     res.StatusCode,
 			Response: &result,
 		}
