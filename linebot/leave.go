@@ -31,7 +31,7 @@ func (call *LeaveGroupCall) WithContext(ctx context.Context) *LeaveGroupCall {
 // Do method
 func (call *LeaveGroupCall) Do() (*BasicResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointLeaveGroup, call.groupID)
-	res, err := call.c.postCtx(call.ctx, endpoint, nil)
+	res, err := call.c.post(call.ctx, endpoint, nil)
 	if res != nil && res.Body != nil {
 		defer res.Body.Close()
 	}
@@ -66,7 +66,7 @@ func (call *LeaveRoomCall) WithContext(ctx context.Context) *LeaveRoomCall {
 // Do method
 func (call *LeaveRoomCall) Do() (*BasicResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointLeaveRoom, call.roomID)
-	res, err := call.c.postCtx(call.ctx, endpoint, nil)
+	res, err := call.c.post(call.ctx, endpoint, nil)
 	if res != nil && res.Body != nil {
 		defer res.Body.Close()
 	}

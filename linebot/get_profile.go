@@ -31,7 +31,7 @@ func (call *GetUserProfileCall) WithContext(ctx context.Context) *GetUserProfile
 // Do method
 func (call *GetUserProfileCall) Do() (*UserProfileResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointGetUserProfile, call.userID)
-	res, err := call.c.getCtx(call.ctx, endpoint)
+	res, err := call.c.get(call.ctx, endpoint)
 	if res != nil && res.Body != nil {
 		defer res.Body.Close()
 	}

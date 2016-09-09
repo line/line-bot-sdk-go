@@ -58,7 +58,7 @@ func (call *PushCall) Do() (*BasicResponse, error) {
 	if err := call.encodeJSON(&buf); err != nil {
 		return nil, err
 	}
-	res, err := call.c.postCtx(call.ctx, APIEndpointEventsPush, &buf)
+	res, err := call.c.post(call.ctx, APIEndpointEventsPush, &buf)
 	if res != nil && res.Body != nil {
 		defer res.Body.Close()
 	}
@@ -100,7 +100,7 @@ func (call *ReplyCall) Do() (*BasicResponse, error) {
 	if err := call.encodeJSON(&buf); err != nil {
 		return nil, err
 	}
-	res, err := call.c.postCtx(call.ctx, APIEndpointEventsReply, &buf)
+	res, err := call.c.post(call.ctx, APIEndpointEventsReply, &buf)
 	if res != nil && res.Body != nil {
 		defer res.Body.Close()
 	}

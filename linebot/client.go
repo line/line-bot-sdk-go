@@ -73,7 +73,7 @@ func (client *Client) url(endpoint string) (url *url.URL, err error) {
 	return
 }
 
-func (client *Client) doCtx(ctx context.Context, req *http.Request) (*http.Response, error) {
+func (client *Client) do(ctx context.Context, req *http.Request) (*http.Response, error) {
 	req.Header.Set("X-LINE-ChannelToken", client.channelToken)
 	req.Header.Set("Authorization", "Bearer "+client.channelToken)
 	if ctx == nil {
@@ -82,7 +82,7 @@ func (client *Client) doCtx(ctx context.Context, req *http.Request) (*http.Respo
 	return ctxhttp.Do(ctx, client.httpClient, req)
 }
 
-func (client *Client) getCtx(ctx context.Context, endpoint string) (res *http.Response, err error) {
+func (client *Client) get(ctx context.Context, endpoint string) (res *http.Response, err error) {
 	url, err := client.url(endpoint)
 	if err != nil {
 		return
@@ -91,10 +91,10 @@ func (client *Client) getCtx(ctx context.Context, endpoint string) (res *http.Re
 	if err != nil {
 		return
 	}
-	return client.doCtx(ctx, req)
+	return client.do(ctx, req)
 }
 
-func (client *Client) postCtx(ctx context.Context, endpoint string, body io.Reader) (*http.Response, error) {
+func (client *Client) post(ctx context.Context, endpoint string, body io.Reader) (*http.Response, error) {
 	url, err := client.url(endpoint)
 	if err != nil {
 		return nil, err
@@ -104,5 +104,5 @@ func (client *Client) postCtx(ctx context.Context, endpoint string, body io.Read
 		return nil, err
 	}
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
-	return client.doCtx(ctx, req)
+	return client.do(ctx, req)
 }
