@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
+	"golang.org/x/net/context"
 )
 
 // UserProfileResponse type
@@ -15,26 +17,58 @@ type UserProfileResponse struct {
 	StatusMessage string `json:"statusMessage"`
 }
 
-// GetUserProfile function
-func (client *Client) GetUserProfile(uid string) (result *UserProfileResponse, err error) {
-	res, err := client.get("/v2/bot/profile/" + uid)
-	if err != nil {
-		return
-	}
-	defer res.Body.Close()
+func decodeToUserProfileResponse(res *http.Response) (*UserProfileResponse, error) {
 	decoder := json.NewDecoder(res.Body)
 	if res.StatusCode != http.StatusOK {
-		var content ResponseContent
-		if err = decoder.Decode(&content); err != nil {
-			return
+		result := ErrorResponse{}
+		if err := decoder.Decode(&result); err != nil {
+			return nil, &APIError{
+				Code: res.StatusCode,
+			}
 		}
-		return nil, fmt.Errorf("%d: %s", res.StatusCode, content.Message)
+		return nil, &APIError{
+			Code:     res.StatusCode,
+			Response: &result,
+		}
 	}
+	result := UserProfileResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
 
-	result = &UserProfileResponse{}
-	err = decoder.Decode(result)
-	if err != nil {
-		return
+// GetUserProfile function
+func (client *Client) GetUserProfile(userID string) *GetUserProfileCall {
+	return &GetUserProfileCall{
+		c:      client,
+		userID: userID,
 	}
-	return
+}
+
+// GetUserProfileCall type
+type GetUserProfileCall struct {
+	c   *Client
+	ctx context.Context
+
+	userID string
+}
+
+// WithContext method
+func (call *GetUserProfileCall) WithContext(ctx context.Context) *GetUserProfileCall {
+	call.ctx = ctx
+	return call
+}
+
+// Do method
+func (call *GetUserProfileCall) Do() (*UserProfileResponse, error) {
+	endpoint := fmt.Sprintf(APIEndpointGetUserProfile, call.userID)
+	res, err := call.c.getCtx(call.ctx, endpoint)
+	if res != nil && res.Body != nil {
+		defer res.Body.Close()
+	}
+	if err != nil {
+		return nil, err
+	}
+	return decodeToUserProfileResponse(res)
 }

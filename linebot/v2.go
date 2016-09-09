@@ -3,16 +3,22 @@ package linebot
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
+
+	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 )
 
 // constants
 const (
-	APIEndpointEventsPush  = "/v2/bot/message/push"
-	APIEndpointEventsReply = "/v2/bot/message/reply"
-	APIEndpointLeaveGroup  = "/v2/bot/group/%s/leave"
-	APIEndpointLeaveRoom   = "/v2/bot/room/%s/leave"
+	APIEndpointEventsPush     = "/v2/bot/message/push"
+	APIEndpointEventsReply    = "/v2/bot/message/reply"
+	APIEndpointLeaveGroup     = "/v2/bot/group/%s/leave"
+	APIEndpointLeaveRoom      = "/v2/bot/room/%s/leave"
+	APIEndpointGetUserProfile = "/v2/bot/profile/%s"
 
 	EventTypeMessage  = "message"
 	EventTypeFollow   = "follow"
@@ -41,38 +47,25 @@ type EventSourceType string
 type MessageType string
 
 // Push method
-func (client *Client) Push(to string, messages []Message) (result *ResponseContent, err error) {
-	body, err := json.Marshal(&struct {
-		To       string    `json:"to"`
-		Messages []Message `json:"messages"`
-	}{
-		To:       to,
-		Messages: messages,
-	})
-	if err != nil {
-		return
+func (client *Client) Push(to string, messages []Message) *PushCall {
+	return &PushCall{
+		c:        client,
+		to:       to,
+		messages: messages,
 	}
-	result, err = client.post(APIEndpointEventsPush, bytes.NewReader(body))
-	return
 }
 
 // Reply method
-func (client *Client) Reply(token string, messages []Message) (result *ResponseContent, err error) {
-	body, err := json.Marshal(&struct {
-		ReplyToken string    `json:"replyToken"`
-		Messages   []Message `json:"messages"`
-	}{
-		ReplyToken: token,
-		Messages:   messages,
-	})
-	if err != nil {
-		return
+func (client *Client) Reply(replyToken string, messages []Message) *ReplyCall {
+	return &ReplyCall{
+		c:          client,
+		replyToken: replyToken,
+		messages:   messages,
 	}
-	result, err = client.post(APIEndpointEventsReply, bytes.NewReader(body))
-	return
 }
 
 // ResponseContent type
+// Duplicated
 type ResponseContent struct {
 	RequestID string `json:"requestId"`
 	Message   string `json:"message"`
@@ -80,6 +73,177 @@ type ResponseContent struct {
 		Message  string `json:"message"`
 		Property string `json:"property"`
 	} `json:"details"`
+}
+
+// BasicResponse type
+type BasicResponse struct {
+	RequestID string `json:"requestId"`
+}
+
+// ErrorResponse type
+type ErrorResponse struct {
+	RequestID string `json:"requestId"`
+	Message   string `json:"message"`
+	Details   []struct {
+		Message  string `json:"message"`
+		Property string `json:"property"`
+	} `json:"details"`
+}
+
+// APIError type
+type APIError struct {
+	Code     int
+	Response *ErrorResponse
+}
+
+func (e *APIError) Error() string {
+	var buf bytes.Buffer
+	fmt.Fprintf(&buf, "linebot: APIError %d ", e.Code)
+	if e.Response != nil {
+		fmt.Fprintf(&buf, "%s", e.Response.Message)
+		for _, d := range e.Response.Details {
+			fmt.Fprintf(&buf, "\n[%s] %s", d.Property, d.Message)
+		}
+	}
+	return buf.String()
+}
+
+// PushCall type
+type PushCall struct {
+	c   *Client
+	ctx context.Context
+
+	to       string
+	messages []Message
+}
+
+// WithContext method
+func (call *PushCall) WithContext(ctx context.Context) *PushCall {
+	call.ctx = ctx
+	return call
+}
+
+func (call *PushCall) encodeJSON(w io.Writer) error {
+	enc := json.NewEncoder(w)
+	return enc.Encode(&struct {
+		To       string    `json:"to"`
+		Messages []Message `json:"messages"`
+	}{
+		To:       call.to,
+		Messages: call.messages,
+	})
+}
+
+func decodeToBasicResponse(res *http.Response) (*BasicResponse, error) {
+	decoder := json.NewDecoder(res.Body)
+	if res.StatusCode != http.StatusOK {
+		result := ErrorResponse{}
+		if err := decoder.Decode(&result); err != nil {
+			return nil, &APIError{
+				Code: res.StatusCode,
+			}
+		}
+		return nil, &APIError{
+			Code:     res.StatusCode,
+			Response: &result,
+		}
+	}
+	result := BasicResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
+
+// Do method
+func (call *PushCall) Do() (*BasicResponse, error) {
+	var buf bytes.Buffer
+	if err := call.encodeJSON(&buf); err != nil {
+		return nil, err
+	}
+	res, err := call.c.postCtx(call.ctx, APIEndpointEventsPush, &buf)
+	if res != nil && res.Body != nil {
+		defer res.Body.Close()
+	}
+	if err != nil {
+		return nil, err
+	}
+	return decodeToBasicResponse(res)
+}
+
+// ReplyCall type
+type ReplyCall struct {
+	c   *Client
+	ctx context.Context
+
+	replyToken string
+	messages   []Message
+}
+
+// WithContext method
+func (call *ReplyCall) WithContext(ctx context.Context) *ReplyCall {
+	call.ctx = ctx
+	return call
+}
+
+func (call *ReplyCall) encodeJSON(w io.Writer) error {
+	enc := json.NewEncoder(w)
+	return enc.Encode(&struct {
+		ReplyToken string    `json:"replyToken"`
+		Messages   []Message `json:"messages"`
+	}{
+		ReplyToken: call.replyToken,
+		Messages:   call.messages,
+	})
+}
+
+// Do method
+func (call *ReplyCall) Do() (*BasicResponse, error) {
+	var buf bytes.Buffer
+	if err := call.encodeJSON(&buf); err != nil {
+		return nil, err
+	}
+	res, err := call.c.postCtx(call.ctx, APIEndpointEventsReply, &buf)
+	if res != nil && res.Body != nil {
+		defer res.Body.Close()
+	}
+	if err != nil {
+		return nil, err
+	}
+	return decodeToBasicResponse(res)
+}
+
+func (client *Client) doCtx(ctx context.Context, req *http.Request) (*http.Response, error) {
+	req.Header.Set("X-LINE-ChannelToken", client.channelToken)
+	req.Header.Set("Authorization", "Bearer "+client.channelToken)
+	if ctx == nil {
+		return client.httpClient.Do(req)
+	}
+	return ctxhttp.Do(ctx, client.httpClient, req)
+}
+
+func (client *Client) getCtx(ctx context.Context, endpoint string) (res *http.Response, err error) {
+	url, err := client.url(endpoint)
+	if err != nil {
+		return
+	}
+	req, err := http.NewRequest("GET", url.String(), nil)
+	if err != nil {
+		return
+	}
+	return client.doCtx(ctx, req)
+}
+func (client *Client) postCtx(ctx context.Context, endpoint string, body io.Reader) (*http.Response, error) {
+	url, err := client.url(endpoint)
+	if err != nil {
+		return nil, err
+	}
+	req, err := http.NewRequest("POST", url.String(), body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
+	return client.doCtx(ctx, req)
 }
 
 // Message inteface
@@ -212,7 +376,7 @@ type Event struct {
 	Message    Message
 }
 
-// UnmarshalJSON returns a Event from JSON-encoded data.
+// UnmarshalJSON constructs a Event from JSON-encoded data.
 func (e *Event) UnmarshalJSON(body []byte) (err error) {
 	rawEvent := struct {
 		ReplyToken string      `json:"replyToken"`
