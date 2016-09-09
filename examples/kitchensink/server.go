@@ -106,14 +106,14 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 			if err := app.replyText(replyToken, "Leaving group"); err != nil {
 				return err
 			}
-			if _, err := app.bot.LeaveGroup(source.GroupID); err != nil {
+			if _, err := app.bot.LeaveGroup(source.GroupID).Do(); err != nil {
 				return app.replyText(replyToken, err.Error())
 			}
 		case linebot.EventSourceTypeRoom:
 			if err := app.replyText(replyToken, "Leaving group"); err != nil {
 				return err
 			}
-			if _, err := app.bot.LeaveRoom(source.RoomID); err != nil {
+			if _, err := app.bot.LeaveRoom(source.RoomID).Do(); err != nil {
 				return app.replyText(replyToken, err.Error())
 			}
 		}
@@ -135,7 +135,7 @@ func (app *KitchenSink) handleLocation(message *linebot.LocationMessage, replyTo
 	messages := []linebot.Message{
 		linebot.NewLocationMessage(message.Title, message.Address, message.Latitude, message.Longitude),
 	}
-	if _, err := app.bot.Reply(replyToken, messages); err != nil {
+	if _, err := app.bot.Reply(replyToken, messages).Do(); err != nil {
 		return err
 	}
 	return nil
@@ -145,14 +145,14 @@ func (app *KitchenSink) handleSticker(message *linebot.StickerMessage, replyToke
 	messages := []linebot.Message{
 		linebot.NewStickerMessage(message.PackageID, message.StickerID),
 	}
-	if _, err := app.bot.Reply(replyToken, messages); err != nil {
+	if _, err := app.bot.Reply(replyToken, messages).Do(); err != nil {
 		return err
 	}
 	return nil
 }
 
 func (app *KitchenSink) replyText(replyToken, text string) error {
-	if _, err := app.bot.Reply(replyToken, []linebot.Message{linebot.NewTextMessage(text)}); err != nil {
+	if _, err := app.bot.Reply(replyToken, []linebot.Message{linebot.NewTextMessage(text)}).Do(); err != nil {
 		return err
 	}
 	return nil
