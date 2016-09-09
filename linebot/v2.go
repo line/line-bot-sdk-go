@@ -14,10 +14,11 @@ import (
 
 // constants
 const (
-	APIEndpointEventsPush  = "/v2/bot/message/push"
-	APIEndpointEventsReply = "/v2/bot/message/reply"
-	APIEndpointLeaveGroup  = "/v2/bot/group/%s/leave"
-	APIEndpointLeaveRoom   = "/v2/bot/room/%s/leave"
+	APIEndpointEventsPush     = "/v2/bot/message/push"
+	APIEndpointEventsReply    = "/v2/bot/message/reply"
+	APIEndpointLeaveGroup     = "/v2/bot/group/%s/leave"
+	APIEndpointLeaveRoom      = "/v2/bot/room/%s/leave"
+	APIEndpointGetUserProfile = "/v2/bot/profile/%s"
 
 	EventTypeMessage  = "message"
 	EventTypeFollow   = "follow"
@@ -221,6 +222,17 @@ func (client *Client) doCtx(ctx context.Context, req *http.Request) (*http.Respo
 	return ctxhttp.Do(ctx, client.httpClient, req)
 }
 
+func (client *Client) getCtx(ctx context.Context, endpoint string) (res *http.Response, err error) {
+	url, err := client.url(endpoint)
+	if err != nil {
+		return
+	}
+	req, err := http.NewRequest("GET", url.String(), nil)
+	if err != nil {
+		return
+	}
+	return client.doCtx(ctx, req)
+}
 func (client *Client) postCtx(ctx context.Context, endpoint string, body io.Reader) (*http.Response, error) {
 	url, err := client.url(endpoint)
 	if err != nil {
