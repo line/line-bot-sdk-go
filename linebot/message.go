@@ -1,42 +1,131 @@
 package linebot
 
-// SingleMessage type
-type SingleMessage struct {
-	To        []string             `json:"to"`
-	ToChannel int64                `json:"toChannel"`
-	EventType EventType            `json:"eventType"`
-	Content   SingleMessageContent `json:"content"`
+import (
+	"encoding/json"
+)
+
+// MessageType type
+type MessageType string
+
+// MessageType constants
+const (
+	MessageTypeText     = "text"
+	MessageTypeImage    = "image"
+	MessageTypeVideo    = "video"
+	MessageTypeAudio    = "audio"
+	MessageTypeLocation = "location"
+	MessageTypeSticker  = "sticker"
+)
+
+// Message inteface
+type Message interface {
+	MarshalJSON() ([]byte, error)
 }
 
-// MultipleMessage type
-type MultipleMessage struct {
-	To        []string               `json:"to"`
-	ToChannel int64                  `json:"toChannel"`
-	EventType EventType              `json:"eventType"`
-	Content   MultipleMessageContent `json:"content"`
+// TextMessage type
+type TextMessage struct {
+	ID   string
+	Text string
 }
 
-// SingleMessageContent type
-type SingleMessageContent struct {
-	ContentType        ContentType             `json:"contentType"`
-	ToType             RecipientType           `json:"toType,omitempty"`
-	Text               string                  `json:"text,omitempty"`
-	OriginalContentURL string                  `json:"originalContentUrl,omitempty"`
-	PreviewImageURL    string                  `json:"previewImageUrl,omitempty"`
-	ContentMetaData    map[string]string       `json:"contentMetadata,omitempty"`
-	Location           *MessageContentLocation `json:"location,omitempty"`
+// MarshalJSON method of TextMessage
+func (m *TextMessage) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		Type MessageType `json:"type"`
+		Text string      `json:"text"`
+	}{
+		Type: MessageTypeText,
+		Text: m.Text,
+	})
 }
 
-// MultipleMessageContent type
-type MultipleMessageContent struct {
-	MessageNotified int                    `json:"messageNotified,omitempty"`
-	Messages        []SingleMessageContent `json:"messages"`
+// ImageMessage type
+type ImageMessage struct {
+	ID                 string
+	OriginalContentURL string
+	PreviewImageURL    string
 }
 
-// MessageContentLocation type
-type MessageContentLocation struct {
-	Title     string  `json:"title"`
-	Address   string  `json:"address"`
-	Latitude  float64 `json:"latitude"`
-	Longitude float64 `json:"longitude"`
+// MarshalJSON method of ImageMessage
+func (m *ImageMessage) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		Type               MessageType `json:"type"`
+		OriginalContentURL string      `json:"originalContentUrl"`
+		PreviewImageURL    string      `json:"previewImageUrl"`
+	}{
+		Type:               MessageTypeImage,
+		OriginalContentURL: m.OriginalContentURL,
+		PreviewImageURL:    m.PreviewImageURL,
+	})
+}
+
+// LocationMessage type
+type LocationMessage struct {
+	ID        string
+	Title     string
+	Address   string
+	Latitude  float64
+	Longitude float64
+}
+
+// MarshalJSON method of LocationMessage
+func (m *LocationMessage) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		Type      MessageType `json:"type"`
+		Title     string      `json:"title"`
+		Address   string      `json:"address"`
+		Latitude  float64     `json:"latitude"`
+		Longitude float64     `json:"longitude"`
+	}{
+		Type:      MessageTypeLocation,
+		Title:     m.Title,
+		Address:   m.Address,
+		Latitude:  m.Latitude,
+		Longitude: m.Longitude,
+	})
+}
+
+// StickerMessage type
+type StickerMessage struct {
+	ID        string
+	PackageID string
+	StickerID string
+}
+
+// MarshalJSON method of StickerMessage
+func (m *StickerMessage) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		Type      MessageType `json:"type"`
+		PackageID string      `json:"packageId"`
+		StickerID string      `json:"stickerId"`
+	}{
+		Type:      MessageTypeSticker,
+		PackageID: m.PackageID,
+		StickerID: m.StickerID,
+	})
+}
+
+// NewTextMessage function
+func NewTextMessage(content string) *TextMessage {
+	return &TextMessage{
+		Text: content,
+	}
+}
+
+// NewLocationMessage function
+func NewLocationMessage(title, address string, latitude, longitude float64) *LocationMessage {
+	return &LocationMessage{
+		Title:     title,
+		Address:   address,
+		Latitude:  latitude,
+		Longitude: longitude,
+	}
+}
+
+// NewStickerMessage function
+func NewStickerMessage(packageID, stickerID string) *StickerMessage {
+	return &StickerMessage{
+		PackageID: packageID,
+		StickerID: stickerID,
+	}
 }
