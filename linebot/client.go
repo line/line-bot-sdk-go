@@ -15,6 +15,7 @@ const (
 
 	APIEndpointEventsPush     = "/v2/bot/message/push"
 	APIEndpointEventsReply    = "/v2/bot/message/reply"
+	APIEndpointMessageContent = "/v2/bot/message/%s/content"
 	APIEndpointLeaveGroup     = "/v2/bot/group/%s/leave"
 	APIEndpointLeaveRoom      = "/v2/bot/room/%s/leave"
 	APIEndpointGetUserProfile = "/v2/bot/profile/%s"
