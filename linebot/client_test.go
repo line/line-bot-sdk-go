@@ -7,10 +7,9 @@ import (
 )
 
 func mockClient(server *httptest.Server) (*Client, error) {
-	client, err := NewClient(
-		1000000000,
+	client, err := New(
 		"testsecret",
-		"TEST_MID",
+		"testtoken",
 		WithHTTPClient(&http.Client{
 			Transport: &http.Transport{
 				TLSClientConfig: &tls.Config{
