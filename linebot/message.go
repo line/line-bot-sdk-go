@@ -59,6 +59,46 @@ func (m *ImageMessage) MarshalJSON() ([]byte, error) {
 	})
 }
 
+// VideoMessage type
+type VideoMessage struct {
+	ID                 string
+	OriginalContentURL string
+	PreviewImageURL    string
+}
+
+// MarshalJSON method of VideoMessage
+func (m *VideoMessage) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		Type               MessageType `json:"type"`
+		OriginalContentURL string      `json:"originalContentUrl"`
+		PreviewImageURL    string      `json:"previewImageUrl"`
+	}{
+		Type:               MessageTypeVideo,
+		OriginalContentURL: m.OriginalContentURL,
+		PreviewImageURL:    m.PreviewImageURL,
+	})
+}
+
+// AudioMessage type
+type AudioMessage struct {
+	ID                 string
+	OriginalContentURL string
+	Duration           int
+}
+
+// MarshalJSON method of AudioMessage
+func (m *AudioMessage) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		Type               MessageType `json:"type"`
+		OriginalContentURL string      `json:"originalContentUrl"`
+		Duration           int         `json:"duration"`
+	}{
+		Type:               MessageTypeAudio,
+		OriginalContentURL: m.OriginalContentURL,
+		Duration:           m.Duration,
+	})
+}
+
 // LocationMessage type
 type LocationMessage struct {
 	ID        string
@@ -117,6 +157,22 @@ func NewImageMessage(originalContentURL, previewImageURL string) *ImageMessage {
 	return &ImageMessage{
 		OriginalContentURL: originalContentURL,
 		PreviewImageURL:    previewImageURL,
+	}
+}
+
+// NewVideoMessage function
+func NewVideoMessage(originalContentURL, previewImageURL string) *VideoMessage {
+	return &VideoMessage{
+		OriginalContentURL: originalContentURL,
+		PreviewImageURL:    previewImageURL,
+	}
+}
+
+// NewAudioMessage function
+func NewAudioMessage(originalContentURL string, duration int) *AudioMessage {
+	return &AudioMessage{
+		OriginalContentURL: originalContentURL,
+		Duration:           duration,
 	}
 }
 
