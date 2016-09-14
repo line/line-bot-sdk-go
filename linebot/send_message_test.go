@@ -151,7 +151,7 @@ func TestPushMessagesWithContext(t *testing.T) {
 	defer cancel()
 	_, err = client.Push("U0cc15697597f61dd8b01cea8b027050e", []Message{NewTextMessage("Hello, world")}).WithContext(ctx).Do()
 	if err != context.DeadlineExceeded {
-		t.Errorf("err %v; want %v", err, context.Canceled)
+		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
 	}
 }
 
@@ -295,7 +295,7 @@ func TestReplyMessagesWithContext(t *testing.T) {
 	defer cancel()
 	_, err = client.Reply("nHuyWiB7yP5Zw52FIkcQobQuGDXCTA", []Message{NewTextMessage("Hello, world")}).WithContext(ctx).Do()
 	if err != context.DeadlineExceeded {
-		t.Errorf("err %v; want %v", err, context.Canceled)
+		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
 	}
 }
 

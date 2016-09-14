@@ -130,7 +130,7 @@ func TestGetMessageContentWithContext(t *testing.T) {
 	defer cancel()
 	_, err = client.GetMessageContent("325708A").WithContext(ctx).Do()
 	if err != context.DeadlineExceeded {
-		t.Errorf("err %v; want %v", err, context.Canceled)
+		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
 	}
 }
 
