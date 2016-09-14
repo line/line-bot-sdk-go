@@ -9,7 +9,6 @@ import (
 
 // BasicResponse type
 type BasicResponse struct {
-	RequestID string `json:"requestId"`
 }
 
 type errorResponseDetail struct {
@@ -19,14 +18,12 @@ type errorResponseDetail struct {
 
 // ErrorResponse type
 type ErrorResponse struct {
-	RequestID string                `json:"requestId"`
-	Message   string                `json:"message"`
-	Details   []errorResponseDetail `json:"details"`
+	Message string                `json:"message"`
+	Details []errorResponseDetail `json:"details"`
 }
 
 // UserProfileResponse type
 type UserProfileResponse struct {
-	RequestID     string `json:"requestId"`
 	UserID        string `json:"userId"`
 	DisplayName   string `json:"displayName"`
 	PicutureURL   string `json:"pictureUrl"`
