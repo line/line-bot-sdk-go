@@ -35,6 +35,16 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
+			// A image message
+			Messages:     []Message{NewImageMessage("http://example.com/original.jpg", "http://example.com/preview.jpg")},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"image","originalContentUrl":"http://example.com/original.jpg","previewImageUrl":"http://example.com/preview.jpg"}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
 			// A location message
 			Messages:     []Message{NewLocationMessage("title", "address", 35.65910807942215, 139.70372892916203)},
 			ResponseCode: 200,
@@ -87,7 +97,6 @@ func TestPushMessages(t *testing.T) {
 		tc := testCases[currentTestIdx]
 		if r.Method != http.MethodPost {
 			t.Errorf("Method %s; want %s", r.Method, http.MethodPost)
-			return
 		}
 		if r.URL.Path != APIEndpointEventsPush {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, APIEndpointEventsPush)
@@ -95,7 +104,6 @@ func TestPushMessages(t *testing.T) {
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
 			t.Error(err)
-			return
 		}
 		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
 			t.Errorf("RequestBody %s; want %s", body, tc.Want.RequestBody)
@@ -107,7 +115,6 @@ func TestPushMessages(t *testing.T) {
 	client, err := mockClient(server)
 	if err != nil {
 		t.Error(err)
-		return
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
@@ -119,7 +126,6 @@ func TestPushMessages(t *testing.T) {
 		} else {
 			if err != nil {
 				t.Error(err)
-				return
 			}
 		}
 		if tc.Want.Response != nil {
@@ -140,14 +146,12 @@ func TestPushMessagesWithContext(t *testing.T) {
 	client, err := mockClient(server)
 	if err != nil {
 		t.Error(err)
-		return
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
 	defer cancel()
 	_, err = client.Push("U0cc15697597f61dd8b01cea8b027050e", []Message{NewTextMessage("Hello, world")}).WithContext(ctx).Do()
 	if err != context.DeadlineExceeded {
 		t.Errorf("err %v; want %v", err, context.Canceled)
-		return
 	}
 }
 
@@ -181,6 +185,16 @@ func TestReplyMessages(t *testing.T) {
 			Response:     []byte(`{}`),
 			Want: want{
 				RequestBody: []byte(`{"replyToken":"nHuyWiB7yP5Zw52FIkcQobQuGDXCTA","messages":[{"type":"location","title":"title","address":"address","latitude":35.65910807942215,"longitude":139.70372892916203}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A image message
+			Messages:     []Message{NewImageMessage("http://example.com/original.jpg", "http://example.com/preview.jpg")},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"replyToken":"nHuyWiB7yP5Zw52FIkcQobQuGDXCTA","messages":[{"type":"image","originalContentUrl":"http://example.com/original.jpg","previewImageUrl":"http://example.com/preview.jpg"}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
@@ -226,7 +240,6 @@ func TestReplyMessages(t *testing.T) {
 		defer r.Body.Close()
 		if r.Method != http.MethodPost {
 			t.Errorf("Method %s; want %s", r.Method, http.MethodPost)
-			return
 		}
 		if r.URL.Path != APIEndpointEventsReply {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, APIEndpointEventsReply)
@@ -234,7 +247,6 @@ func TestReplyMessages(t *testing.T) {
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
 			t.Error(err)
-			return
 		}
 		tc := testCases[currentTestIdx]
 		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
@@ -247,7 +259,6 @@ func TestReplyMessages(t *testing.T) {
 	client, err := mockClient(server)
 	if err != nil {
 		t.Error(err)
-		return
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
@@ -259,7 +270,6 @@ func TestReplyMessages(t *testing.T) {
 		} else {
 			if err != nil {
 				t.Error(err)
-				return
 			}
 		}
 		if tc.Want.Response != nil {
@@ -280,14 +290,12 @@ func TestReplyMessagesWithContext(t *testing.T) {
 	client, err := mockClient(server)
 	if err != nil {
 		t.Error(err)
-		return
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
 	defer cancel()
 	_, err = client.Reply("nHuyWiB7yP5Zw52FIkcQobQuGDXCTA", []Message{NewTextMessage("Hello, world")}).WithContext(ctx).Do()
 	if err != context.DeadlineExceeded {
 		t.Errorf("err %v; want %v", err, context.Canceled)
-		return
 	}
 }
 
@@ -300,7 +308,6 @@ func BenchmarkPushMessages(b *testing.B) {
 	client, err := mockClient(server)
 	if err != nil {
 		b.Error(err)
-		return
 	}
 	messages := []Message{NewTextMessage("Hello, world")}
 	b.ResetTimer()
@@ -318,7 +325,6 @@ func BenchmarkReplyMessages(b *testing.B) {
 	client, err := mockClient(server)
 	if err != nil {
 		b.Error(err)
-		return
 	}
 	messages := []Message{NewTextMessage("Hello, world")}
 	b.ResetTimer()

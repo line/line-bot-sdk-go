@@ -12,44 +12,45 @@ import (
 	"golang.org/x/net/context"
 )
 
-func TestGetUserProfile(t *testing.T) {
+func TestGetMessageContent(t *testing.T) {
 	type want struct {
-		URLPath     string
-		RequestBody []byte
-		Response    *UserProfileResponse
-		Error       error
+		URLPath         string
+		RequestBody     []byte
+		Response        *MessageContentResponse
+		ResponseContent []byte
+		Error           error
 	}
 	var testCases = []struct {
-		UserID       string
-		ResponseCode int
-		Response     []byte
-		Want         want
+		MessageID      string
+		ResponseCode   int
+		Response       []byte
+		ResponseHeader map[string]string
+		Want           want
 	}{
 		{
-			UserID:       "U0047556f2e40dba2456887320ba7c76d",
-			ResponseCode: 200,
-			Response:     []byte(`{"userId":"U0047556f2e40dba2456887320ba7c76d","displayName":"BOT API","pictureUrl":"http://dl.profile.line.naver.jp/abcdefghijklmn","statusMessage":"Hello, LINE!"}`),
+			MessageID:      "325708",
+			ResponseCode:   200,
+			Response:       []byte{0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10},
+			ResponseHeader: map[string]string{"Content-Disposition": `attachment; filename="example.jpg"`},
 			Want: want{
-				URLPath:     fmt.Sprintf(APIEndpointGetUserProfile, "U0047556f2e40dba2456887320ba7c76d"),
+				URLPath:     fmt.Sprintf(APIEndpointMessageContent, "325708"),
 				RequestBody: []byte(""),
-				Response: &UserProfileResponse{
-					UserID:        "U0047556f2e40dba2456887320ba7c76d",
-					DisplayName:   "BOT API",
-					PicutureURL:   "http://dl.profile.line.naver.jp/abcdefghijklmn",
-					StatusMessage: "Hello, LINE!",
+				Response: &MessageContentResponse{
+					FileName: "example.jpg",
 				},
+				ResponseContent: []byte{0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10},
 			},
 		},
 		{
-			// Internal server error
-			UserID:       "U0047556f2e40dba2456887320ba7c76d",
-			ResponseCode: 500,
-			Response:     []byte("500 Internal server error"),
+			// 503 Service Unavailable
+			MessageID:    "325708",
+			ResponseCode: 503,
+			Response:     []byte("Service Unavailable"),
 			Want: want{
-				URLPath:     fmt.Sprintf(APIEndpointGetUserProfile, "U0047556f2e40dba2456887320ba7c76d"),
+				URLPath:     fmt.Sprintf(APIEndpointMessageContent, "325708"),
 				RequestBody: []byte(""),
 				Error: &APIError{
-					Code: 500,
+					Code: 503,
 				},
 			},
 		},
@@ -72,6 +73,9 @@ func TestGetUserProfile(t *testing.T) {
 		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
 			t.Errorf("RequestBody %s; want %s", body, tc.Want.RequestBody)
 		}
+		for k, v := range tc.ResponseHeader {
+			w.Header().Add(k, v)
+		}
 		w.WriteHeader(tc.ResponseCode)
 		w.Write(tc.Response)
 	}))
@@ -82,7 +86,7 @@ func TestGetUserProfile(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		res, err := client.GetUserProfile(tc.UserID).Do()
+		res, err := client.GetMessageContent(tc.MessageID).Do()
 		if tc.Want.Error != nil {
 			if !reflect.DeepEqual(err, tc.Want.Error) {
 				t.Errorf("Error %d %q; want %q", i, err, tc.Want.Error)
@@ -92,17 +96,30 @@ func TestGetUserProfile(t *testing.T) {
 				t.Error(err)
 			}
 		}
-		if !reflect.DeepEqual(res, tc.Want.Response) {
-			t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+		if tc.Want.Response != nil {
+			body := res.Content
+			defer body.Close()
+			res.Content = nil // Set nil because streams aren't comparable.
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+			}
+			bodyGot, err := ioutil.ReadAll(body)
+			if err != nil {
+				t.Error(err)
+			}
+			if !reflect.DeepEqual(bodyGot, tc.Want.ResponseContent) {
+				t.Errorf("ResponseContent %d %X; want %X", i, bodyGot, tc.Want.ResponseContent)
+			}
 		}
 	}
 }
 
-func TestGetUserProfileWithContext(t *testing.T) {
+func TestGetMessageContentWithContext(t *testing.T) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 		time.Sleep(10 * time.Millisecond)
-		w.Write([]byte("{}"))
+		w.Header().Add("Content-Disposition", `attachment; filename="example.jpg"`)
+		w.Write([]byte{0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10})
 	}))
 	defer server.Close()
 	client, err := mockClient(server)
@@ -111,16 +128,17 @@ func TestGetUserProfileWithContext(t *testing.T) {
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
 	defer cancel()
-	_, err = client.GetUserProfile("U0047556f2e40dba2456887320ba7c76d").WithContext(ctx).Do()
+	_, err = client.GetMessageContent("325708A").WithContext(ctx).Do()
 	if err != context.DeadlineExceeded {
 		t.Errorf("err %v; want %v", err, context.Canceled)
 	}
 }
 
-func BenchmarkGetUserProfile(b *testing.B) {
+func BenchmarkGetMessageContent(b *testing.B) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
-		w.Write([]byte(`{"userId":"U","displayName":"A","pictureUrl":"http://","statusMessage":"B"}`))
+		w.Header().Add("Content-Disposition", `attachment; filename="example.jpg"`)
+		w.Write([]byte{0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10})
 	}))
 	defer server.Close()
 	client, err := mockClient(server)
@@ -129,6 +147,6 @@ func BenchmarkGetUserProfile(b *testing.B) {
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		client.GetUserProfile("U0047556f2e40dba2456887320ba7c76d").Do()
+		client.GetMessageContent("325708A").Do()
 	}
 }

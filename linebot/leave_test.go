@@ -59,7 +59,6 @@ func TestLeaveGroup(t *testing.T) {
 		tc := testCases[currentTestIdx]
 		if r.Method != http.MethodPost {
 			t.Errorf("Method %s; want %s", r.Method, http.MethodPost)
-			return
 		}
 		if r.URL.Path != tc.Want.URLPath {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
@@ -67,7 +66,6 @@ func TestLeaveGroup(t *testing.T) {
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
 			t.Error(err)
-			return
 		}
 		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
 			t.Errorf("RequestBody %s; want %s", body, tc.Want.RequestBody)
@@ -79,7 +77,6 @@ func TestLeaveGroup(t *testing.T) {
 	client, err := mockClient(server)
 	if err != nil {
 		t.Error(err)
-		return
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
@@ -91,7 +88,6 @@ func TestLeaveGroup(t *testing.T) {
 		} else {
 			if err != nil {
 				t.Error(err)
-				return
 			}
 		}
 		if tc.Want.Response != nil {
@@ -112,14 +108,12 @@ func TestLeaveGroupWithContext(t *testing.T) {
 	client, err := mockClient(server)
 	if err != nil {
 		t.Error(err)
-		return
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
 	defer cancel()
 	_, err = client.LeaveGroup("cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx").WithContext(ctx).Do()
 	if err != context.DeadlineExceeded {
 		t.Errorf("err %v; want %v", err, context.Canceled)
-		return
 	}
 }
 
@@ -170,7 +164,6 @@ func TestLeaveRoom(t *testing.T) {
 		tc := testCases[currentTestIdx]
 		if r.Method != http.MethodPost {
 			t.Errorf("Method %s; want %s", r.Method, http.MethodPost)
-			return
 		}
 		if r.URL.Path != tc.Want.URLPath {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
@@ -178,7 +171,6 @@ func TestLeaveRoom(t *testing.T) {
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
 			t.Error(err)
-			return
 		}
 		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
 			t.Errorf("RequestBody %s; want %s", body, tc.Want.RequestBody)
@@ -190,7 +182,6 @@ func TestLeaveRoom(t *testing.T) {
 	client, err := mockClient(server)
 	if err != nil {
 		t.Error(err)
-		return
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
@@ -202,7 +193,6 @@ func TestLeaveRoom(t *testing.T) {
 		} else {
 			if err != nil {
 				t.Error(err)
-				return
 			}
 		}
 		if tc.Want.Response != nil {
@@ -223,14 +213,12 @@ func TestTestLeaveRoomWithContext(t *testing.T) {
 	client, err := mockClient(server)
 	if err != nil {
 		t.Error(err)
-		return
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
 	defer cancel()
 	_, err = client.LeaveRoom("cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx").WithContext(ctx).Do()
 	if err != context.DeadlineExceeded {
 		t.Errorf("err %v; want %v", err, context.Canceled)
-		return
 	}
 }
 
@@ -243,7 +231,6 @@ func BenchmarkLeaveGroup(b *testing.B) {
 	client, err := mockClient(server)
 	if err != nil {
 		b.Error(err)
-		return
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -260,7 +247,6 @@ func BenchmarkLeaveRoom(b *testing.B) {
 	client, err := mockClient(server)
 	if err != nil {
 		b.Error(err)
-		return
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {

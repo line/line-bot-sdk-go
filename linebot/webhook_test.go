@@ -282,7 +282,6 @@ func TestParseRequest(t *testing.T) {
 		client, err := New("testsecret", "testtoken")
 		if err != nil {
 			t.Error(err)
-			return
 		}
 		gotEvents, err := client.ParseRequest(r)
 		if err != nil {
@@ -317,13 +316,11 @@ func TestParseRequest(t *testing.T) {
 		req, err := http.NewRequest("POST", server.URL, bytes.NewReader(body))
 		if err != nil {
 			t.Error(err)
-			return
 		}
 		req.Header.Set("X-LINE-Signature", "invalidsignatue")
 		res, err := httpClient.Do(req)
 		if err != nil {
 			t.Error(err)
-			return
 		}
 		if res.StatusCode != 400 {
 			t.Errorf("StatusCode %d; want %d", res.StatusCode, 400)
@@ -336,7 +333,6 @@ func TestParseRequest(t *testing.T) {
 		req, err := http.NewRequest("POST", server.URL, bytes.NewReader(body))
 		if err != nil {
 			t.Error(err)
-			return
 		}
 		// generate signature
 		mac := hmac.New(sha256.New, []byte("testsecret"))
@@ -346,15 +342,12 @@ func TestParseRequest(t *testing.T) {
 		res, err := httpClient.Do(req)
 		if err != nil {
 			t.Error(err)
-			return
 		}
 		if res == nil {
 			t.Error("response is nil")
-			return
 		}
 		if res.StatusCode != http.StatusOK {
 			t.Errorf("status: %d", res.StatusCode)
-			return
 		}
 	}
 }
@@ -364,7 +357,6 @@ func BenchmarkParseRequest(b *testing.B) {
 	client, err := New("testsecret", "testtoken")
 	if err != nil {
 		b.Error(err)
-		return
 	}
 	mac := hmac.New(sha256.New, []byte("testsecret"))
 	mac.Write(body)
