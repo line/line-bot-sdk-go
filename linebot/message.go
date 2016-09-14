@@ -112,6 +112,14 @@ func NewTextMessage(content string) *TextMessage {
 	}
 }
 
+// NewImageMessage function
+func NewImageMessage(originalContentURL, previewImageURL string) *ImageMessage {
+	return &ImageMessage{
+		OriginalContentURL: originalContentURL,
+		PreviewImageURL:    previewImageURL,
+	}
+}
+
 // NewLocationMessage function
 func NewLocationMessage(title, address string, latitude, longitude float64) *LocationMessage {
 	return &LocationMessage{
