@@ -12,7 +12,7 @@ import (
 	"testing"
 )
 
-var requestBody = `{
+var webhookTestRequestBody = `{
     "events": [
         {
             "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
@@ -151,7 +151,7 @@ var requestBody = `{
 }
 `
 
-var wantEvents = []Event{
+var webhookTestWantEvents = []Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeMessage,
@@ -294,11 +294,11 @@ func TestParseRequest(t *testing.T) {
 			}
 			return
 		}
-		if len(gotEvents) != len(wantEvents) {
-			t.Errorf("Event length %d; want %d", len(gotEvents), len(wantEvents))
+		if len(gotEvents) != len(webhookTestWantEvents) {
+			t.Errorf("Event length %d; want %d", len(gotEvents), len(webhookTestWantEvents))
 		}
 		for i, got := range gotEvents {
-			want := wantEvents[i]
+			want := webhookTestWantEvents[i]
 			if !reflect.DeepEqual(got, want) {
 				t.Errorf("Event %d %q; want %q", i, got, want)
 			}
@@ -313,7 +313,7 @@ func TestParseRequest(t *testing.T) {
 
 	// invalid signature
 	{
-		body := []byte(requestBody)
+		body := []byte(webhookTestRequestBody)
 		req, err := http.NewRequest("POST", server.URL, bytes.NewReader(body))
 		if err != nil {
 			t.Error(err)
@@ -332,7 +332,7 @@ func TestParseRequest(t *testing.T) {
 
 	// valid signature
 	{
-		body := []byte(requestBody)
+		body := []byte(webhookTestRequestBody)
 		req, err := http.NewRequest("POST", server.URL, bytes.NewReader(body))
 		if err != nil {
 			t.Error(err)
@@ -360,7 +360,7 @@ func TestParseRequest(t *testing.T) {
 }
 
 func BenchmarkParseRequest(b *testing.B) {
-	body := []byte(requestBody)
+	body := []byte(webhookTestRequestBody)
 	client, err := New("testsecret", "testtoken")
 	if err != nil {
 		b.Error(err)
@@ -374,6 +374,6 @@ func BenchmarkParseRequest(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		req, _ := http.NewRequest("POST", "", bytes.NewReader(body))
 		req.Header.Set("X-LINE-Signature", sign)
-		_, _ = client.ParseRequest(req)
+		client.ParseRequest(req)
 	}
 }

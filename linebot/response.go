@@ -10,14 +10,16 @@ type BasicResponse struct {
 	RequestID string `json:"requestId"`
 }
 
+type errorResponseDetail struct {
+	Message  string `json:"message"`
+	Property string `json:"property"`
+}
+
 // ErrorResponse type
 type ErrorResponse struct {
-	RequestID string `json:"requestId"`
-	Message   string `json:"message"`
-	Details   []struct {
-		Message  string `json:"message"`
-		Property string `json:"property"`
-	} `json:"details"`
+	RequestID string                `json:"requestId"`
+	Message   string                `json:"message"`
+	Details   []errorResponseDetail `json:"details"`
 }
 
 // UserProfileResponse type
