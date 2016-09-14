@@ -90,6 +90,12 @@ func (app *KitchenSink) Callback(w http.ResponseWriter, r *http.Request) {
 					continue
 				}
 				break
+			case *linebot.AudioMessage:
+				if err := app.handleAudio(message, event.ReplyToken); err != nil {
+					log.Print(err)
+					continue
+				}
+				break
 			case *linebot.LocationMessage:
 				if err := app.handleLocation(message, event.ReplyToken); err != nil {
 					log.Print(err)
@@ -200,6 +206,19 @@ func (app *KitchenSink) handleVideo(message *linebot.VideoMessage, replyToken st
 		previewImageURL := app.appBaseURL + "/downloaded/" + filepath.Base(previewImagePath)
 		messages := []linebot.Message{
 			linebot.NewVideoMessage(originalContentURL, previewImageURL),
+		}
+		if _, err := app.bot.Reply(replyToken, messages).Do(); err != nil {
+			return err
+		}
+		return nil
+	})
+}
+
+func (app *KitchenSink) handleAudio(message *linebot.AudioMessage, replyToken string) error {
+	return app.handleHeavyContent(message.ID, func(originalContent *os.File) error {
+		originalContentURL := app.appBaseURL + "/downloaded/" + filepath.Base(originalContent.Name())
+		messages := []linebot.Message{
+			linebot.NewAudioMessage(originalContentURL, 100),
 		}
 		if _, err := app.bot.Reply(replyToken, messages).Do(); err != nil {
 			return err

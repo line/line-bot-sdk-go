@@ -56,6 +56,7 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 			ID        string      `json:"id"`
 			Type      MessageType `json:"type"`
 			Text      string      `json:"text"`
+			Duration  int         `json:"duration"`
 			Title     string      `json:"title"`
 			Address   string      `json:"address"`
 			Latitude  float64     `json:"latitude"`
@@ -87,6 +88,11 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 		case MessageTypeVideo:
 			e.Message = &VideoMessage{
 				ID: rawEvent.Message.ID,
+			}
+		case MessageTypeAudio:
+			e.Message = &AudioMessage{
+				ID:       rawEvent.Message.ID,
+				Duration: rawEvent.Message.Duration,
 			}
 		case MessageTypeLocation:
 			e.Message = &LocationMessage{
