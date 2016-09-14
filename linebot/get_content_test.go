@@ -130,7 +130,7 @@ func TestGetMessageContentWithContext(t *testing.T) {
 	defer cancel()
 	_, err = client.GetMessageContent("325708A").WithContext(ctx).Do()
 	if err != context.DeadlineExceeded {
-		t.Errorf("err %v; want %v", err, context.Canceled)
+		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
 	}
 }
 
@@ -147,6 +147,8 @@ func BenchmarkGetMessageContent(b *testing.B) {
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		client.GetMessageContent("325708A").Do()
+		res, _ := client.GetMessageContent("325708A").Do()
+		defer res.Content.Close()
+		ioutil.ReadAll(res.Content)
 	}
 }

@@ -113,7 +113,7 @@ func TestGetUserProfileWithContext(t *testing.T) {
 	defer cancel()
 	_, err = client.GetUserProfile("U0047556f2e40dba2456887320ba7c76d").WithContext(ctx).Do()
 	if err != context.DeadlineExceeded {
-		t.Errorf("err %v; want %v", err, context.Canceled)
+		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
 	}
 }
 

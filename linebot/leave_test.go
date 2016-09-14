@@ -113,7 +113,7 @@ func TestLeaveGroupWithContext(t *testing.T) {
 	defer cancel()
 	_, err = client.LeaveGroup("cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx").WithContext(ctx).Do()
 	if err != context.DeadlineExceeded {
-		t.Errorf("err %v; want %v", err, context.Canceled)
+		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
 	}
 }
 
@@ -218,7 +218,7 @@ func TestTestLeaveRoomWithContext(t *testing.T) {
 	defer cancel()
 	_, err = client.LeaveRoom("cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx").WithContext(ctx).Do()
 	if err != context.DeadlineExceeded {
-		t.Errorf("err %v; want %v", err, context.Canceled)
+		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
 	}
 }
 
