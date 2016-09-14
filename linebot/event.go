@@ -84,6 +84,10 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 			e.Message = &ImageMessage{
 				ID: rawEvent.Message.ID,
 			}
+		case MessageTypeVideo:
+			e.Message = &VideoMessage{
+				ID: rawEvent.Message.ID,
+			}
 		case MessageTypeLocation:
 			e.Message = &LocationMessage{
 				ID:        rawEvent.Message.ID,

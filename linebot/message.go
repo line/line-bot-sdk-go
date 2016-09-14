@@ -59,6 +59,26 @@ func (m *ImageMessage) MarshalJSON() ([]byte, error) {
 	})
 }
 
+// VideoMessage type
+type VideoMessage struct {
+	ID                 string
+	OriginalContentURL string
+	PreviewImageURL    string
+}
+
+// MarshalJSON method of VideoMessage
+func (m *VideoMessage) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		Type               MessageType `json:"type"`
+		OriginalContentURL string      `json:"originalContentUrl"`
+		PreviewImageURL    string      `json:"previewImageUrl"`
+	}{
+		Type:               MessageTypeVideo,
+		OriginalContentURL: m.OriginalContentURL,
+		PreviewImageURL:    m.PreviewImageURL,
+	})
+}
+
 // LocationMessage type
 type LocationMessage struct {
 	ID        string
@@ -115,6 +135,14 @@ func NewTextMessage(content string) *TextMessage {
 // NewImageMessage function
 func NewImageMessage(originalContentURL, previewImageURL string) *ImageMessage {
 	return &ImageMessage{
+		OriginalContentURL: originalContentURL,
+		PreviewImageURL:    previewImageURL,
+	}
+}
+
+// NewVideoMessage function
+func NewVideoMessage(originalContentURL, previewImageURL string) *VideoMessage {
+	return &VideoMessage{
 		OriginalContentURL: originalContentURL,
 		PreviewImageURL:    previewImageURL,
 	}

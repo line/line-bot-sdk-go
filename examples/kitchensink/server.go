@@ -84,6 +84,12 @@ func (app *KitchenSink) Callback(w http.ResponseWriter, r *http.Request) {
 					continue
 				}
 				break
+			case *linebot.VideoMessage:
+				if err := app.handleVideo(message, event.ReplyToken); err != nil {
+					log.Print(err)
+					continue
+				}
+				break
 			case *linebot.LocationMessage:
 				if err := app.handleLocation(message, event.ReplyToken); err != nil {
 					log.Print(err)
@@ -157,30 +163,49 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 }
 
 func (app *KitchenSink) handleImage(message *linebot.ImageMessage, replyToken string) error {
-	content, err := app.bot.GetMessageContent(message.ID).Do()
-	if err != nil {
-		return err
-	}
-	log.Printf("Got filename: %s", content.FileName)
-	originalImage, err := app.saveContent(content.Content)
-	if err != nil {
-		return err
-	}
-	previewImagePath := originalImage.Name() + "-preview.jpg"
-	_, err = exec.Command("convert", "-resize", "240x", originalImage.Name(), previewImagePath).Output()
-	if err != nil {
-		return err
-	}
+	return app.handleHeavyContent(message.ID, func(originalContent *os.File) error {
+		// You need to install ImageMagick.
+		previewImagePath := originalContent.Name() + "-preview.jpg"
+		_, err := exec.Command("convert", "-resize", "240x", originalContent.Name(), previewImagePath).Output()
+		if err != nil {
+			return err
+		}
 
-	originalContentURL := app.appBaseURL + "/downloaded/" + filepath.Base(originalImage.Name())
-	previewImageURL := app.appBaseURL + "/downloaded/" + filepath.Base(previewImagePath)
-	messages := []linebot.Message{
-		linebot.NewImageMessage(originalContentURL, previewImageURL),
-	}
-	if _, err := app.bot.Reply(replyToken, messages).Do(); err != nil {
-		return err
-	}
-	return nil
+		originalContentURL := app.appBaseURL + "/downloaded/" + filepath.Base(originalContent.Name())
+		previewImageURL := app.appBaseURL + "/downloaded/" + filepath.Base(previewImagePath)
+		messages := []linebot.Message{
+			linebot.NewImageMessage(originalContentURL, previewImageURL),
+		}
+		if _, err := app.bot.Reply(replyToken, messages).Do(); err != nil {
+			return err
+		}
+		return nil
+	})
+}
+
+func (app *KitchenSink) handleVideo(message *linebot.VideoMessage, replyToken string) error {
+	return app.handleHeavyContent(message.ID, func(originalContent *os.File) error {
+		// You need to install FFmpeg and ImageMagick.
+		originalVideoPath := originalContent.Name() + ".mp4"
+		if err := os.Rename(originalContent.Name(), originalVideoPath); err != nil {
+			return err
+		}
+		previewImagePath := originalContent.Name() + "-preview.jpg"
+		_, err := exec.Command("convert", originalVideoPath+"[0]", previewImagePath).Output()
+		if err != nil {
+			return err
+		}
+
+		originalContentURL := app.appBaseURL + "/downloaded/" + filepath.Base(originalVideoPath)
+		previewImageURL := app.appBaseURL + "/downloaded/" + filepath.Base(previewImagePath)
+		messages := []linebot.Message{
+			linebot.NewVideoMessage(originalContentURL, previewImageURL),
+		}
+		if _, err := app.bot.Reply(replyToken, messages).Do(); err != nil {
+			return err
+		}
+		return nil
+	})
 }
 
 func (app *KitchenSink) handleLocation(message *linebot.LocationMessage, replyToken string) error {
@@ -208,6 +233,19 @@ func (app *KitchenSink) replyText(replyToken, text string) error {
 		return err
 	}
 	return nil
+}
+
+func (app *KitchenSink) handleHeavyContent(messageID string, callback func(*os.File) error) error {
+	content, err := app.bot.GetMessageContent(messageID).Do()
+	if err != nil {
+		return err
+	}
+	log.Printf("Got filename: %s", content.FileName)
+	originalConent, err := app.saveContent(content.Content)
+	if err != nil {
+		return err
+	}
+	return callback(originalConent)
 }
 
 func (app *KitchenSink) saveContent(content io.ReadCloser) (*os.File, error) {
