@@ -99,15 +99,11 @@ func decodeToMessageContentResponse(res *http.Response) (*MessageContentResponse
 	if err != nil {
 		return nil, err
 	}
-	len, err := strconv.ParseInt(res.Header.Get("Content-Length"), 10, 64)
-	if err != nil {
-		return nil, err
-	}
 
 	result := MessageContentResponse{
 		Content:       res.Body,
 		ContentType:   res.Header.Get("Content-Type"),
-		ContentLength: len,
+		ContentLength: res.ContentLength,
 		FileName:      params["filename"],
 	}
 	return &result, nil
