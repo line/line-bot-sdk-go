@@ -5,7 +5,6 @@ import (
 	"io"
 	"mime"
 	"net/http"
-	"strconv"
 )
 
 // BasicResponse type
