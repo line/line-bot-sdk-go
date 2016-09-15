@@ -70,47 +70,50 @@ func (app *KitchenSink) Callback(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Printf("Got events %v", events)
 	for _, event := range events {
-		if event.Type == linebot.EventTypeMessage {
+		switch event.Type {
+		case linebot.EventTypeMessage:
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
 				if err := app.handleText(message, event.ReplyToken, event.Source); err != nil {
 					log.Print(err)
-					continue
 				}
-				break
 			case *linebot.ImageMessage:
 				if err := app.handleImage(message, event.ReplyToken); err != nil {
 					log.Print(err)
-					continue
 				}
-				break
 			case *linebot.VideoMessage:
 				if err := app.handleVideo(message, event.ReplyToken); err != nil {
 					log.Print(err)
-					continue
 				}
-				break
 			case *linebot.AudioMessage:
 				if err := app.handleAudio(message, event.ReplyToken); err != nil {
 					log.Print(err)
-					continue
 				}
-				break
 			case *linebot.LocationMessage:
 				if err := app.handleLocation(message, event.ReplyToken); err != nil {
 					log.Print(err)
-					continue
 				}
-				break
 			case *linebot.StickerMessage:
 				if err := app.handleSticker(message, event.ReplyToken); err != nil {
 					log.Print(err)
-					continue
 				}
 			default:
-				// TODO
-				break
+				log.Printf("Unknown message: %v", message)
 			}
+		case linebot.EventTypeFollow:
+			// TODO
+		case linebot.EventTypeUnfollow:
+			// TODO
+		case linebot.EventTypeJoin:
+			// TODO
+		case linebot.EventTypeLeave:
+			// TODO
+		case linebot.EventTypePostback:
+			// TODO
+		case linebot.EventTypeBeacon:
+			// TODO
+		default:
+			log.Printf("Unknown event: %v", event)
 		}
 	}
 }
@@ -134,7 +137,6 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 		} else {
 			return app.replyText(replyToken, "Bot can't use profile API without user ID")
 		}
-		break
 	case "bye":
 		switch source.Type {
 		case linebot.EventSourceTypeUser:
@@ -154,7 +156,6 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 				return app.replyText(replyToken, err.Error())
 			}
 		}
-		break
 	default:
 		log.Printf("Echo message to %s: %s", replyToken, message.Text)
 		messages := []linebot.Message{
@@ -163,7 +164,6 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 		if _, err := app.bot.Reply(replyToken, messages).Do(); err != nil {
 			return err
 		}
-		break
 	}
 	return nil
 }
