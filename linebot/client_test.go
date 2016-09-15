@@ -41,7 +41,7 @@ func TestNewClient(t *testing.T) {
 		t.Errorf("channelToken %s; want %s", client.channelSecret, secret)
 	}
 	if client.endpointBase != APIEndpointBase {
-		t.Errorf("endpointBase %p; want %p", client.endpointBase, APIEndpointBase)
+		t.Errorf("endpointBase %s; want %s", client.endpointBase, APIEndpointBase)
 	}
 	if client.httpClient != http.DefaultClient {
 		t.Errorf("httpClient %p; want %p", client.httpClient, http.DefaultClient)
@@ -64,7 +64,7 @@ func TestNewClientWithOptions(t *testing.T) {
 		return
 	}
 	if client.endpointBase != endpoint {
-		t.Errorf("endpointBase %p; want %p", client.endpointBase, APIEndpointBase)
+		t.Errorf("endpointBase %s; want %s", client.endpointBase, APIEndpointBase)
 	}
 	if client.httpClient != &httpClient {
 		t.Errorf("httpClient %p; want %p", client.httpClient, &httpClient)

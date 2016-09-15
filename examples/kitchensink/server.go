@@ -259,6 +259,7 @@ func (app *KitchenSink) handleHeavyContent(messageID string, callback func(*os.F
 	if err != nil {
 		return err
 	}
+	defer content.Content.Close()
 	log.Printf("Got filename: %s", content.FileName)
 	originalConent, err := app.saveContent(content.Content)
 	if err != nil {
@@ -268,8 +269,6 @@ func (app *KitchenSink) handleHeavyContent(messageID string, callback func(*os.F
 }
 
 func (app *KitchenSink) saveContent(content io.ReadCloser) (*os.File, error) {
-	defer content.Close()
-
 	file, err := ioutil.TempFile(app.downloadDir, "")
 	if err != nil {
 		return nil, err
