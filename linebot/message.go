@@ -15,6 +15,7 @@ const (
 	MessageTypeAudio    = "audio"
 	MessageTypeLocation = "location"
 	MessageTypeSticker  = "sticker"
+	MessageTypeTemplate = "template"
 )
 
 // Message inteface
@@ -145,6 +146,25 @@ func (m *StickerMessage) MarshalJSON() ([]byte, error) {
 	})
 }
 
+// TemplateMessage type
+type TemplateMessage struct {
+	AltText  string
+	Template Template
+}
+
+// MarshalJSON method of TemplateMessage
+func (m *TemplateMessage) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		Type     MessageType `json:"type"`
+		AltText  string      `json:"altText"`
+		Template Template    `json:"template"`
+	}{
+		Type:     MessageTypeTemplate,
+		AltText:  m.AltText,
+		Template: m.Template,
+	})
+}
+
 // NewTextMessage function
 func NewTextMessage(content string) *TextMessage {
 	return &TextMessage{
@@ -191,5 +211,13 @@ func NewStickerMessage(packageID, stickerID string) *StickerMessage {
 	return &StickerMessage{
 		PackageID: packageID,
 		StickerID: stickerID,
+	}
+}
+
+// NewTemplateMessage function
+func NewTemplateMessage(altText string, template Template) *TemplateMessage {
+	return &TemplateMessage{
+		AltText:  altText,
+		Template: template,
 	}
 }
