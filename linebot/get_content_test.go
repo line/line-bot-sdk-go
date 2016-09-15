@@ -28,15 +28,21 @@ func TestGetMessageContent(t *testing.T) {
 		Want           want
 	}{
 		{
-			MessageID:      "325708",
-			ResponseCode:   200,
-			Response:       []byte{0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10},
-			ResponseHeader: map[string]string{"Content-Disposition": `attachment; filename="example.jpg"`},
+			MessageID:    "325708",
+			ResponseCode: 200,
+			Response:     []byte{0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10},
+			ResponseHeader: map[string]string{
+				"Content-Disposition": `attachment; filename="example.jpg"`,
+				"Content-Type":        "image/jpeg",
+				"Content-Length":      "6",
+			},
 			Want: want{
 				URLPath:     fmt.Sprintf(APIEndpointMessageContent, "325708"),
 				RequestBody: []byte(""),
 				Response: &MessageContentResponse{
-					FileName: "example.jpg",
+					FileName:      "example.jpg",
+					ContentType:   "image/jpeg",
+					ContentLength: 6,
 				},
 				ResponseContent: []byte{0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10},
 			},

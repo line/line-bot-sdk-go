@@ -32,8 +32,10 @@ type UserProfileResponse struct {
 
 // MessageContentResponse type
 type MessageContentResponse struct {
-	Content  io.ReadCloser
-	FileName string
+	Content       io.ReadCloser
+	ContentLength int64
+	ContentType   string
+	FileName      string
 }
 
 func decodeToBasicResponse(res *http.Response) (*BasicResponse, error) {
@@ -96,9 +98,12 @@ func decodeToMessageContentResponse(res *http.Response) (*MessageContentResponse
 	if err != nil {
 		return nil, err
 	}
+
 	result := MessageContentResponse{
-		Content:  res.Body,
-		FileName: params["filename"],
+		Content:       res.Body,
+		ContentType:   res.Header.Get("Content-Type"),
+		ContentLength: res.ContentLength,
+		FileName:      params["filename"],
 	}
 	return &result, nil
 }
