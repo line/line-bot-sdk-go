@@ -75,45 +75,25 @@ func (t *ConfirmTemplate) MarshalJSON() ([]byte, error) {
 
 // CarouselTemplate type
 type CarouselTemplate struct {
-	Columns []CarouselTemplateColumn
-}
-
-// CarouselTemplateColumn type
-type CarouselTemplateColumn interface {
-	json.Marshaler
+	Columns []*CarouselColumn
 }
 
 // CarouselColumn type
 type CarouselColumn struct {
-	ThumbnailImageURL string
-	Title             string
-	Text              string
-	Actions           []TemplateAction
+	ThumbnailImageURL string           `json:"thumbnailImageUrl"`
+	Title             string           `json:"title,omitempty"`
+	Text              string           `json:"text"`
+	Actions           []TemplateAction `json:"actions"`
 }
 
 // MarshalJSON method of CarouselTemplate
 func (t *CarouselTemplate) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type    TemplateType             `json:"type"`
-		Columns []CarouselTemplateColumn `json:"columns"`
+		Type    TemplateType      `json:"type"`
+		Columns []*CarouselColumn `json:"columns"`
 	}{
 		Type:    TemplateTypeCarousel,
 		Columns: t.Columns,
-	})
-}
-
-// MarshalJSON method of CarouselColumn
-func (c *CarouselColumn) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
-		ThumbnailImageURL string           `json:"thumbnailImageUrl"`
-		Title             string           `json:"title,omitempty"`
-		Text              string           `json:"text"`
-		Actions           []TemplateAction `json:"actions"`
-	}{
-		ThumbnailImageURL: c.ThumbnailImageURL,
-		Title:             c.Title,
-		Text:              c.Text,
-		Actions:           c.Actions,
 	})
 }
 
@@ -136,7 +116,7 @@ func NewButtonsTemplate(thumbnailImageURL, title, text string, actions []Templat
 }
 
 // NewCarouselTemplate function
-func NewCarouselTemplate(columns []CarouselTemplateColumn) *CarouselTemplate {
+func NewCarouselTemplate(columns []*CarouselColumn) *CarouselTemplate {
 	return &CarouselTemplate{
 		Columns: columns,
 	}
