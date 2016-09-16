@@ -38,20 +38,28 @@ type MessageContentResponse struct {
 	FileName      string
 }
 
-func decodeToBasicResponse(res *http.Response) (*BasicResponse, error) {
-	decoder := json.NewDecoder(res.Body)
+func checkResponse(res *http.Response) error {
 	if res.StatusCode != http.StatusOK {
+		decoder := json.NewDecoder(res.Body)
 		result := ErrorResponse{}
 		if err := decoder.Decode(&result); err != nil {
-			return nil, &APIError{
+			return &APIError{
 				Code: res.StatusCode,
 			}
 		}
-		return nil, &APIError{
+		return &APIError{
 			Code:     res.StatusCode,
 			Response: &result,
 		}
 	}
+	return nil
+}
+
+func decodeToBasicResponse(res *http.Response) (*BasicResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
 	result := BasicResponse{}
 	if err := decoder.Decode(&result); err != nil {
 		return nil, err
@@ -60,19 +68,10 @@ func decodeToBasicResponse(res *http.Response) (*BasicResponse, error) {
 }
 
 func decodeToUserProfileResponse(res *http.Response) (*UserProfileResponse, error) {
-	decoder := json.NewDecoder(res.Body)
-	if res.StatusCode != http.StatusOK {
-		result := ErrorResponse{}
-		if err := decoder.Decode(&result); err != nil {
-			return nil, &APIError{
-				Code: res.StatusCode,
-			}
-		}
-		return nil, &APIError{
-			Code:     res.StatusCode,
-			Response: &result,
-		}
+	if err := checkResponse(res); err != nil {
+		return nil, err
 	}
+	decoder := json.NewDecoder(res.Body)
 	result := UserProfileResponse{}
 	if err := decoder.Decode(&result); err != nil {
 		return nil, err
@@ -81,24 +80,13 @@ func decodeToUserProfileResponse(res *http.Response) (*UserProfileResponse, erro
 }
 
 func decodeToMessageContentResponse(res *http.Response) (*MessageContentResponse, error) {
-	decoder := json.NewDecoder(res.Body)
-	if res.StatusCode != http.StatusOK {
-		result := ErrorResponse{}
-		if err := decoder.Decode(&result); err != nil {
-			return nil, &APIError{
-				Code: res.StatusCode,
-			}
-		}
-		return nil, &APIError{
-			Code:     res.StatusCode,
-			Response: &result,
-		}
+	if err := checkResponse(res); err != nil {
+		return nil, err
 	}
 	_, params, err := mime.ParseMediaType(res.Header.Get("Content-Disposition"))
 	if err != nil {
 		return nil, err
 	}
-
 	result := MessageContentResponse{
 		Content:       res.Body,
 		ContentType:   res.Header.Get("Content-Type"),
