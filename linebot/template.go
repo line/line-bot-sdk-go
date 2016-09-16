@@ -106,7 +106,7 @@ func NewConfirmTemplate(text string, left, right TemplateAction) *ConfirmTemplat
 }
 
 // NewButtonsTemplate function
-func NewButtonsTemplate(thumbnailImageURL, title, text string, actions []TemplateAction) *ButtonsTemplate {
+func NewButtonsTemplate(thumbnailImageURL, title, text string, actions ...TemplateAction) *ButtonsTemplate {
 	return &ButtonsTemplate{
 		ThumbnailImageURL: thumbnailImageURL,
 		Title:             title,
@@ -116,14 +116,14 @@ func NewButtonsTemplate(thumbnailImageURL, title, text string, actions []Templat
 }
 
 // NewCarouselTemplate function
-func NewCarouselTemplate(columns []*CarouselColumn) *CarouselTemplate {
+func NewCarouselTemplate(columns ...*CarouselColumn) *CarouselTemplate {
 	return &CarouselTemplate{
 		Columns: columns,
 	}
 }
 
 // NewCarouselColumn function
-func NewCarouselColumn(thumbnailImageURL, title, text string, actions []TemplateAction) *CarouselColumn {
+func NewCarouselColumn(thumbnailImageURL, title, text string, actions ...TemplateAction) *CarouselColumn {
 	return &CarouselColumn{
 		ThumbnailImageURL: thumbnailImageURL,
 		Title:             title,
