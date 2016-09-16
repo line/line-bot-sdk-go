@@ -22,8 +22,13 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fileServer := http.FileServer(http.Dir(app.downloadDir))
-	http.HandleFunc("/downloaded/", http.StripPrefix("/downloaded/", fileServer).ServeHTTP)
+	// serve /static/** files
+	staticFileServer := http.FileServer(http.Dir("static"))
+	http.HandleFunc("/static/", http.StripPrefix("/static/", staticFileServer).ServeHTTP)
+	// serve /downloaded/** files
+	downloadedFileServer := http.FileServer(http.Dir(app.downloadDir))
+	http.HandleFunc("/downloaded/", http.StripPrefix("/downloaded/", downloadedFileServer).ServeHTTP)
+
 	http.HandleFunc("/callback", app.Callback)
 	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
 		log.Fatal(err)
@@ -109,7 +114,7 @@ func (app *KitchenSink) Callback(w http.ResponseWriter, r *http.Request) {
 		case linebot.EventTypeLeave:
 			// TODO
 		case linebot.EventTypePostback:
-			// TODO
+			app.replyText(event.ReplyToken, "Got postback: "+event.Postback.Data)
 		case linebot.EventTypeBeacon:
 			// TODO
 		default:
@@ -137,6 +142,61 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 		} else {
 			return app.replyText(replyToken, "Bot can't use profile API without user ID")
 		}
+	case "buttons":
+		imageURL := app.appBaseURL + "/static/buttons/1040.jpg"
+		template := linebot.NewButtonsTemplate(
+			imageURL, "My button sample", "Hello, my button",
+			[]linebot.TemplateAction{
+				linebot.NewURIAction("Go to line.me", "https://line.me"),
+				linebot.NewPostbackAction("Say hello1", "hello こんにちは", ""),
+				linebot.NewPostbackAction("言 hello2", "hello こんにちは", "hello こんにちは"),
+				linebot.NewMessageAction("Say message", "Rice=米"),
+			},
+		)
+		messages := []linebot.Message{
+			linebot.NewTemplateMessage("Buttons alt text", template),
+		}
+		if _, err := app.bot.Reply(replyToken, messages).Do(); err != nil {
+			return err
+		}
+	case "confirm":
+		template := linebot.NewConfirmTemplate(
+			"Do it?",
+			linebot.NewMessageAction("Yes", "Yes!"),
+			linebot.NewMessageAction("No", "No!"),
+		)
+		messages := []linebot.Message{
+			linebot.NewTemplateMessage("Confirm alt text", template),
+		}
+		if _, err := app.bot.Reply(replyToken, messages).Do(); err != nil {
+			return err
+		}
+	case "carousel":
+		imageURL := app.appBaseURL + "/static/buttons/1040.jpg"
+		template := linebot.NewCarouselTemplate(
+			[]*linebot.CarouselColumn{
+				linebot.NewCarouselColumn(
+					imageURL, "hoge", "fuga",
+					[]linebot.TemplateAction{
+						linebot.NewURIAction("Go to line.me", "https://line.me"),
+						linebot.NewPostbackAction("Say hello1", "hello こんにちは", ""),
+					},
+				),
+				linebot.NewCarouselColumn(
+					imageURL, "hoge", "fuga",
+					[]linebot.TemplateAction{
+						linebot.NewPostbackAction("言 hello2", "hello こんにちは", "hello こんにちは"),
+						linebot.NewMessageAction("Say message", "Rice=米"),
+					},
+				),
+			},
+		)
+		messages := []linebot.Message{
+			linebot.NewTemplateMessage("Carousel alt text", template),
+		}
+		if _, err := app.bot.Reply(replyToken, messages).Do(); err != nil {
+			return err
+		}
 	case "bye":
 		switch source.Type {
 		case linebot.EventSourceTypeUser:
@@ -149,7 +209,7 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 				return app.replyText(replyToken, err.Error())
 			}
 		case linebot.EventSourceTypeRoom:
-			if err := app.replyText(replyToken, "Leaving group"); err != nil {
+			if err := app.replyText(replyToken, "Leaving room"); err != nil {
 				return err
 			}
 			if _, err := app.bot.LeaveRoom(source.RoomID).Do(); err != nil {
