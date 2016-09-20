@@ -118,7 +118,7 @@ func TestPushMessages(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		res, err := client.Push(toUserID, tc.Messages).Do()
+		res, err := client.Push(toUserID, tc.Messages...).Do()
 		if tc.Want.Error != nil {
 			if !reflect.DeepEqual(err, tc.Want.Error) {
 				t.Errorf("Error %d %q; want %q", i, err, tc.Want.Error)
@@ -149,7 +149,7 @@ func TestPushMessagesWithContext(t *testing.T) {
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
 	defer cancel()
-	_, err = client.Push("U0cc15697597f61dd8b01cea8b027050e", []Message{NewTextMessage("Hello, world")}).WithContext(ctx).Do()
+	_, err = client.Push("U0cc15697597f61dd8b01cea8b027050e", NewTextMessage("Hello, world")).WithContext(ctx).Do()
 	if err != context.DeadlineExceeded {
 		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
 	}
@@ -262,7 +262,7 @@ func TestReplyMessages(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		res, err := client.Reply(replyToken, tc.Messages).Do()
+		res, err := client.Reply(replyToken, tc.Messages...).Do()
 		if tc.Want.Error != nil {
 			if !reflect.DeepEqual(err, tc.Want.Error) {
 				t.Errorf("Error %d %q; want %q", i, err, tc.Want.Error)
@@ -293,7 +293,7 @@ func TestReplyMessagesWithContext(t *testing.T) {
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
 	defer cancel()
-	_, err = client.Reply("nHuyWiB7yP5Zw52FIkcQobQuGDXCTA", []Message{NewTextMessage("Hello, world")}).WithContext(ctx).Do()
+	_, err = client.Reply("nHuyWiB7yP5Zw52FIkcQobQuGDXCTA", NewTextMessage("Hello, world")).WithContext(ctx).Do()
 	if err != context.DeadlineExceeded {
 		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
 	}
@@ -309,10 +309,9 @@ func BenchmarkPushMessages(b *testing.B) {
 	if err != nil {
 		b.Error(err)
 	}
-	messages := []Message{NewTextMessage("Hello, world")}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		client.Push("U0cc15697597f61dd8b01cea8b027050e", messages).Do()
+		client.Push("U0cc15697597f61dd8b01cea8b027050e", NewTextMessage("Hello, world")).Do()
 	}
 }
 
@@ -326,9 +325,8 @@ func BenchmarkReplyMessages(b *testing.B) {
 	if err != nil {
 		b.Error(err)
 	}
-	messages := []Message{NewTextMessage("Hello, world")}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		client.Reply("nHuyWiB7yP5Zw52FIkcQobQuGDXCTA", messages).Do()
+		client.Reply("nHuyWiB7yP5Zw52FIkcQobQuGDXCTA", NewTextMessage("Hello, world")).Do()
 	}
 }

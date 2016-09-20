@@ -9,7 +9,7 @@ import (
 )
 
 // Push method
-func (client *Client) Push(to string, messages []Message) *PushCall {
+func (client *Client) Push(to string, messages ...Message) *PushCall {
 	return &PushCall{
 		c:        client,
 		to:       to,
@@ -18,7 +18,7 @@ func (client *Client) Push(to string, messages []Message) *PushCall {
 }
 
 // Reply method
-func (client *Client) Reply(replyToken string, messages []Message) *ReplyCall {
+func (client *Client) Reply(replyToken string, messages ...Message) *ReplyCall {
 	return &ReplyCall{
 		c:          client,
 		replyToken: replyToken,
