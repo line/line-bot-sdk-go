@@ -44,6 +44,7 @@ type EventPostback struct {
 // EventBeacon type
 type EventBeacon struct {
 	Hwid string `json:"hwid"`
+	Type string `json:"type"`
 }
 
 // Event type

@@ -115,9 +115,13 @@ func (app *KitchenSink) Callback(w http.ResponseWriter, r *http.Request) {
 		case linebot.EventTypeLeave:
 			// TODO
 		case linebot.EventTypePostback:
-			app.replyText(event.ReplyToken, "Got postback: "+event.Postback.Data)
+			if err := app.replyText(event.ReplyToken, "Got postback: "+event.Postback.Data); err != nil {
+				log.Print(err)
+			}
 		case linebot.EventTypeBeacon:
-			// TODO
+			if err := app.replyText(event.ReplyToken, "Got beacon: "+event.Beacon.Hwid); err != nil {
+				log.Print(err)
+			}
 		default:
 			log.Printf("Unknown event: %v", event)
 		}
