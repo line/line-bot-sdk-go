@@ -98,6 +98,7 @@ func (t *CarouselTemplate) MarshalJSON() ([]byte, error) {
 	})
 }
 
+// implements Template interface
 func (*ConfirmTemplate) template()  {}
 func (*ButtonsTemplate) template()  {}
 func (*CarouselTemplate) template() {}
@@ -203,6 +204,7 @@ func (a *PostbackAction) MarshalJSON() ([]byte, error) {
 	})
 }
 
+// implements TemplateAction interface
 func (*URIAction) templateAction()      {}
 func (*MessageAction) templateAction()  {}
 func (*PostbackAction) templateAction() {}
