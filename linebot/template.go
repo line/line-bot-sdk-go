@@ -27,6 +27,7 @@ const (
 // Template interface
 type Template interface {
 	json.Marshaler
+	template()
 }
 
 // ButtonsTemplate type
@@ -97,6 +98,11 @@ func (t *CarouselTemplate) MarshalJSON() ([]byte, error) {
 	})
 }
 
+// implements Template interface
+func (*ConfirmTemplate) template()  {}
+func (*ButtonsTemplate) template()  {}
+func (*CarouselTemplate) template() {}
+
 // NewConfirmTemplate function
 func NewConfirmTemplate(text string, left, right TemplateAction) *ConfirmTemplate {
 	return &ConfirmTemplate{
@@ -135,6 +141,7 @@ func NewCarouselColumn(thumbnailImageURL, title, text string, actions ...Templat
 // TemplateAction interface
 type TemplateAction interface {
 	json.Marshaler
+	templateAction()
 }
 
 // URIAction type
@@ -196,6 +203,11 @@ func (a *PostbackAction) MarshalJSON() ([]byte, error) {
 		Text:  a.Text,
 	})
 }
+
+// implements TemplateAction interface
+func (*URIAction) templateAction()      {}
+func (*MessageAction) templateAction()  {}
+func (*PostbackAction) templateAction() {}
 
 // NewURIAction function
 func NewURIAction(label, uri string) *URIAction {

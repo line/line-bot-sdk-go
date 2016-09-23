@@ -21,6 +21,7 @@ const (
 // Message inteface
 type Message interface {
 	json.Marshaler
+	message()
 }
 
 // TextMessage type
@@ -164,6 +165,15 @@ func (m *TemplateMessage) MarshalJSON() ([]byte, error) {
 		Template: m.Template,
 	})
 }
+
+// implements Message interface
+func (*TextMessage) message()     {}
+func (*ImageMessage) message()    {}
+func (*VideoMessage) message()    {}
+func (*AudioMessage) message()    {}
+func (*LocationMessage) message() {}
+func (*StickerMessage) message()  {}
+func (*TemplateMessage) message() {}
 
 // NewTextMessage function
 func NewTextMessage(content string) *TextMessage {
