@@ -8,10 +8,7 @@ import (
 
 // errors
 var (
-	ErrInvalidSignature   = errors.New("Invalid Signature")
-	ErrInvalidContentType = errors.New("Invalid ContentType")
-	ErrInvalidEventType   = errors.New("Invalid EventType")
-	ErrUnknown            = errors.New("Unknown Error")
+	ErrInvalidSignature = errors.New("invalid signature")
 )
 
 // APIError type
