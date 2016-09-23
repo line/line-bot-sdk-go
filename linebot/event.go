@@ -2,6 +2,7 @@ package linebot
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // EventType type
@@ -51,12 +52,17 @@ type EventBeacon struct {
 type Event struct {
 	ReplyToken string
 	Type       EventType
-	Timestamp  int64
+	Timestamp  time.Time
 	Source     *EventSource
 	Message    Message
 	Postback   *EventPostback
 	Beacon     *EventBeacon
 }
+
+const (
+	millisecPerSec     = int64(time.Second / time.Millisecond)
+	nanosecPerMillisec = int64(time.Millisecond / time.Nanosecond)
+)
 
 // UnmarshalJSON constructs a Event from JSON-encoded data.
 func (e *Event) UnmarshalJSON(body []byte) (err error) {
@@ -86,7 +92,7 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 
 	e.ReplyToken = rawEvent.ReplyToken
 	e.Type = rawEvent.Type
-	e.Timestamp = rawEvent.Timestamp
+	e.Timestamp = time.Unix(rawEvent.Timestamp/millisecPerSec, (rawEvent.Timestamp%millisecPerSec)*nanosecPerMillisec)
 	e.Source = &rawEvent.Source
 
 	switch rawEvent.Type {

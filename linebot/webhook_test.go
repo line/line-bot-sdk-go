@@ -10,6 +10,7 @@ import (
 	"net/http/httptest"
 	"reflect"
 	"testing"
+	"time"
 )
 
 var webhookTestRequestBody = `{
@@ -155,7 +156,7 @@ var webhookTestWantEvents = []Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeMessage,
-		Timestamp:  1462629479859,
+		Timestamp:  time.Date(2016, time.May, 7, 22, 57, 59, int(859*time.Millisecond), time.Local),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
@@ -168,7 +169,7 @@ var webhookTestWantEvents = []Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeMessage,
-		Timestamp:  1462629479859,
+		Timestamp:  time.Date(2016, time.May, 7, 22, 57, 59, int(859*time.Millisecond), time.Local),
 		Source: &EventSource{
 			Type:    EventSourceTypeGroup,
 			UserID:  "u206d25c2ea6bd87c17655609a1c37cb8",
@@ -182,7 +183,7 @@ var webhookTestWantEvents = []Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeMessage,
-		Timestamp:  1462629479859,
+		Timestamp:  time.Date(2016, time.May, 7, 22, 57, 59, int(859*time.Millisecond), time.Local),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
@@ -194,7 +195,7 @@ var webhookTestWantEvents = []Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeMessage,
-		Timestamp:  1462629479859,
+		Timestamp:  time.Date(2016, time.May, 7, 22, 57, 59, int(859*time.Millisecond), time.Local),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
@@ -210,7 +211,7 @@ var webhookTestWantEvents = []Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeMessage,
-		Timestamp:  1462629479859,
+		Timestamp:  time.Date(2016, time.May, 7, 22, 57, 59, int(859*time.Millisecond), time.Local),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
@@ -224,7 +225,7 @@ var webhookTestWantEvents = []Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeFollow,
-		Timestamp:  1462629479859,
+		Timestamp:  time.Date(2016, time.May, 7, 22, 57, 59, int(859*time.Millisecond), time.Local),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
@@ -232,7 +233,7 @@ var webhookTestWantEvents = []Event{
 	},
 	{
 		Type:      EventTypeUnfollow,
-		Timestamp: 1462629479859,
+		Timestamp: time.Date(2016, time.May, 7, 22, 57, 59, int(859*time.Millisecond), time.Local),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
@@ -241,7 +242,7 @@ var webhookTestWantEvents = []Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeJoin,
-		Timestamp:  1462629479859,
+		Timestamp:  time.Date(2016, time.May, 7, 22, 57, 59, int(859*time.Millisecond), time.Local),
 		Source: &EventSource{
 			Type:    EventSourceTypeGroup,
 			GroupID: "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
@@ -249,7 +250,7 @@ var webhookTestWantEvents = []Event{
 	},
 	{
 		Type:      EventTypeLeave,
-		Timestamp: 1462629479859,
+		Timestamp: time.Date(2016, time.May, 7, 22, 57, 59, int(859*time.Millisecond), time.Local),
 		Source: &EventSource{
 			Type:    EventSourceTypeGroup,
 			GroupID: "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
@@ -258,7 +259,7 @@ var webhookTestWantEvents = []Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypePostback,
-		Timestamp:  1462629479859,
+		Timestamp:  time.Date(2016, time.May, 7, 22, 57, 59, int(859*time.Millisecond), time.Local),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
@@ -270,7 +271,7 @@ var webhookTestWantEvents = []Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeBeacon,
-		Timestamp:  1462629479859,
+		Timestamp:  time.Date(2016, time.May, 7, 22, 57, 59, int(859*time.Millisecond), time.Local),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "U012345678901234567890123456789ab",

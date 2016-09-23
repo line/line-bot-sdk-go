@@ -23,7 +23,7 @@ func TestPushMessagesWith17Context(t *testing.T) {
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
 	defer cancel()
-	_, err = client.Push("U0cc15697597f61dd8b01cea8b027050e", []Message{NewTextMessage("Hello, world")}).WithContext(ctx).Do()
+	_, err = client.Push("U0cc15697597f61dd8b01cea8b027050e", NewTextMessage("Hello, world")).WithContext(ctx).Do()
 	if err != context.DeadlineExceeded {
 		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
 	}
