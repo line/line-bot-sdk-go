@@ -150,10 +150,10 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 		imageURL := app.appBaseURL + "/static/buttons/1040.jpg"
 		template := linebot.NewButtonsTemplate(
 			imageURL, "My button sample", "Hello, my button",
-			linebot.NewURIAction("Go to line.me", "https://line.me"),
-			linebot.NewPostbackAction("Say hello1", "hello こんにちは", ""),
-			linebot.NewPostbackAction("言 hello2", "hello こんにちは", "hello こんにちは"),
-			linebot.NewMessageAction("Say message", "Rice=米"),
+			linebot.NewURITemplateAction("Go to line.me", "https://line.me"),
+			linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", ""),
+			linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは"),
+			linebot.NewMessageTemplateAction("Say message", "Rice=米"),
 		)
 		if _, err := app.bot.Reply(
 			replyToken,
@@ -164,8 +164,8 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 	case "confirm":
 		template := linebot.NewConfirmTemplate(
 			"Do it?",
-			linebot.NewMessageAction("Yes", "Yes!"),
-			linebot.NewMessageAction("No", "No!"),
+			linebot.NewMessageTemplateAction("Yes", "Yes!"),
+			linebot.NewMessageTemplateAction("No", "No!"),
 		)
 		if _, err := app.bot.Reply(
 			replyToken,
@@ -178,13 +178,13 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 		template := linebot.NewCarouselTemplate(
 			linebot.NewCarouselColumn(
 				imageURL, "hoge", "fuga",
-				linebot.NewURIAction("Go to line.me", "https://line.me"),
-				linebot.NewPostbackAction("Say hello1", "hello こんにちは", ""),
+				linebot.NewURITemplateAction("Go to line.me", "https://line.me"),
+				linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", ""),
 			),
 			linebot.NewCarouselColumn(
 				imageURL, "hoge", "fuga",
-				linebot.NewPostbackAction("言 hello2", "hello こんにちは", "hello こんにちは"),
-				linebot.NewMessageAction("Say message", "Rice=米"),
+				linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは"),
+				linebot.NewMessageTemplateAction("Say message", "Rice=米"),
 			),
 		)
 		if _, err := app.bot.Reply(
