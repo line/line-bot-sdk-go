@@ -132,8 +132,7 @@ var webhookTestRequestBody = `{
                 "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
             },
             "postback": {
-                "data": "action=buyItem&itemId=123123&color=red",
-                "params": {}
+                "data": "action=buyItem&itemId=123123&color=red"
             }
         },
         {
@@ -145,7 +144,8 @@ var webhookTestRequestBody = `{
                 "userId": "U012345678901234567890123456789ab"
             },
             "beacon": {
-                "hwid":"374591320"
+                "hwid":"374591320",
+                "type":"enter"
             }
         }
     ]
@@ -278,6 +278,7 @@ var webhookTestWantEvents = []Event{
 		},
 		Beacon: &EventBeacon{
 			Hwid: "374591320",
+			Type: "enter",
 		},
 	},
 }
