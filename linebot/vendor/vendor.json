@@ -15,5 +15,5 @@
 			"revisionTime": "2016-09-07T15:25:26Z"
 		}
 	],
-	"rootPath": "github.com/line/line-bot-sdk-go-v2/linebot"
+	"rootPath": "github.com/line/line-bot-sdk-go/linebot"
 }
