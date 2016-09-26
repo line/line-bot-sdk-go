@@ -27,20 +27,21 @@ type ImagemapArea struct {
 // ImagemapAction type
 type ImagemapAction interface {
 	json.Marshaler
+	imagemapAction()
 }
 
 // ImagemapURIAction type
 type ImagemapURIAction struct {
 	LinkURL string
-	Area    *ImagemapArea
+	Area    ImagemapArea
 }
 
 // MarshalJSON method of ImagemapURIAction
 func (a *ImagemapURIAction) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type    string        `json:"type"`
-		LinkURL string        `json:"linkUri"`
-		Area    *ImagemapArea `json:"area"`
+		Type    string       `json:"type"`
+		LinkURL string       `json:"linkUri"`
+		Area    ImagemapArea `json:"area"`
 	}{
 		Type:    ImagemapActionTypeURI,
 		LinkURL: a.LinkURL,
@@ -51,15 +52,15 @@ func (a *ImagemapURIAction) MarshalJSON() ([]byte, error) {
 // ImagemapMessageAction type
 type ImagemapMessageAction struct {
 	Text string
-	Area *ImagemapArea
+	Area ImagemapArea
 }
 
 // MarshalJSON method of ImagemapMessageAction
 func (a *ImagemapMessageAction) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type string        `json:"type"`
-		Text string        `json:"text"`
-		Area *ImagemapArea `json:"area"`
+		Type string       `json:"type"`
+		Text string       `json:"text"`
+		Area ImagemapArea `json:"area"`
 	}{
 		Type: ImagemapActionTypeMessage,
 		Text: a.Text,
@@ -67,8 +68,12 @@ func (a *ImagemapMessageAction) MarshalJSON() ([]byte, error) {
 	})
 }
 
+// implements ImagemapAction interface
+func (a *ImagemapURIAction) imagemapAction()     {}
+func (a *ImagemapMessageAction) imagemapAction() {}
+
 // NewImagemapURIAction function
-func NewImagemapURIAction(linkURL string, area *ImagemapArea) *ImagemapURIAction {
+func NewImagemapURIAction(linkURL string, area ImagemapArea) *ImagemapURIAction {
 	return &ImagemapURIAction{
 		LinkURL: linkURL,
 		Area:    area,
@@ -76,7 +81,7 @@ func NewImagemapURIAction(linkURL string, area *ImagemapArea) *ImagemapURIAction
 }
 
 // NewImagemapMessageAction function
-func NewImagemapMessageAction(text string, area *ImagemapArea) *ImagemapMessageAction {
+func NewImagemapMessageAction(text string, area ImagemapArea) *ImagemapMessageAction {
 	return &ImagemapMessageAction{
 		Text: text,
 		Area: area,

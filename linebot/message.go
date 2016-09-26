@@ -171,18 +171,18 @@ func (m *TemplateMessage) MarshalJSON() ([]byte, error) {
 type ImagemapMessage struct {
 	BaseURL  string
 	AltText  string
-	BaseSize *ImagemapBaseSize
+	BaseSize ImagemapBaseSize
 	Actions  []ImagemapAction
 }
 
 // MarshalJSON method of ImagemapMessage
 func (m *ImagemapMessage) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type     MessageType       `json:"type"`
-		BaseURL  string            `json:"baseUrl"`
-		AltText  string            `json:"altText"`
-		BaseSize *ImagemapBaseSize `json:"baseSize"`
-		Actions  []ImagemapAction  `json:"actions"`
+		Type     MessageType      `json:"type"`
+		BaseURL  string           `json:"baseUrl"`
+		AltText  string           `json:"altText"`
+		BaseSize ImagemapBaseSize `json:"baseSize"`
+		Actions  []ImagemapAction `json:"actions"`
 	}{
 		Type:     MessageTypeImagemap,
 		BaseURL:  m.BaseURL,
@@ -260,7 +260,7 @@ func NewTemplateMessage(altText string, template Template) *TemplateMessage {
 }
 
 // NewImagemapMessage function
-func NewImagemapMessage(baseURL, altText string, baseSize *ImagemapBaseSize, actions ...ImagemapAction) *ImagemapMessage {
+func NewImagemapMessage(baseURL, altText string, baseSize ImagemapBaseSize, actions ...ImagemapAction) *ImagemapMessage {
 	return &ImagemapMessage{
 		BaseURL:  baseURL,
 		AltText:  altText,
