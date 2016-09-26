@@ -45,6 +45,26 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
+			// A video message
+			Messages:     []Message{NewVideoMessage("http://example.com/original.mp4", "http://example.com/preview.jpg")},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"video","originalContentUrl":"http://example.com/original.mp4","previewImageUrl":"http://example.com/preview.jpg"}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A audio message
+			Messages:     []Message{NewAudioMessage("http://example.com/original.m4a", 1000)},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"audio","originalContentUrl":"http://example.com/original.m4a","duration":1000}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
 			// A location message
 			Messages:     []Message{NewLocationMessage("title", "address", 35.65910807942215, 139.70372892916203)},
 			ResponseCode: 200,
@@ -61,6 +81,99 @@ func TestPushMessages(t *testing.T) {
 			Response:     []byte(`{}`),
 			Want: want{
 				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"sticker","packageId":"1","stickerId":"1"}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A buttons template message
+			Messages: []Message{
+				NewTemplateMessage(
+					"this is a buttons template",
+					NewButtonsTemplate(
+						"https://example.com/bot/images/image.jpg",
+						"Menu",
+						"Please select",
+						NewPostbackAction("Buy", "action=buy&itemid=123", ""),
+						NewPostbackAction("Buy", "action=buy&itemid=123", "text"),
+						NewURIAction("View detail", "http://example.com/page/123"),
+					),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a buttons template","template":{"type":"buttons","thumbnailImageUrl":"https://example.com/bot/images/image.jpg","title":"Menu","text":"Please select","actions":[{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123"},{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","text":"text"},{"type":"uri","label":"View detail","uri":"http://example.com/page/123"}]}}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A confirm template message
+			Messages: []Message{
+				NewTemplateMessage(
+					"this is a confirm template",
+					NewConfirmTemplate(
+						"Are you sure?",
+						NewMessageAction("Yes", "yes"),
+						NewMessageAction("No", "no"),
+					),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a confirm template","template":{"type":"confirm","text":"Are you sure?","actions":[{"type":"message","label":"Yes","text":"yes"},{"type":"message","label":"No","text":"no"}]}}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A carousel template message
+			Messages: []Message{
+				NewTemplateMessage(
+					"this is a carousel template",
+					NewCarouselTemplate(
+						NewCarouselColumn(
+							"https://example.com/bot/images/item1.jpg",
+							"this is menu",
+							"description",
+							NewPostbackAction("Buy", "action=buy&itemid=111", ""),
+							NewPostbackAction("Add to cart", "action=add&itemid=111", ""),
+							NewURIAction("View detail", "http://example.com/page/111"),
+						),
+					),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a carousel template","template":{"type":"carousel","columns":[{"thumbnailImageUrl":"https://example.com/bot/images/item1.jpg","title":"this is menu","text":"description","actions":[{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=111"},{"type":"postback","label":"Add to cart","data":"action=add\u0026itemid=111"},{"type":"uri","label":"View detail","uri":"http://example.com/page/111"}]}]}}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A imagemap message
+			Messages: []Message{
+				NewImagemapMessage(
+					"https://example.com/bot/images/rm001",
+					"this is an imagemap",
+					ImagemapBaseSize{1040, 1040},
+					NewImagemapURIAction("https://example.com/", ImagemapArea{520, 0, 520, 1040}),
+					NewImagemapMessageAction("hello", ImagemapArea{520, 0, 520, 1040}),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}]}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// Multiple messages
+			Messages:     []Message{NewTextMessage("Hello, world1"), NewTextMessage("Hello, world2")},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"text","text":"Hello, world1"},{"type":"text","text":"Hello, world2"}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
