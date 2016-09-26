@@ -15,41 +15,26 @@
 package main
 
 import (
-	"github.com/line/line-bot-sdk-go/linebot"
 	"log"
 	"net/http"
 	"os"
-	"strconv"
+
+	"github.com/line/line-bot-sdk-go-v2/linebot"
 )
 
 func main() {
-	os.Exit(Main())
-}
-
-// Main function for echo bot
-func Main() int {
-	var (
-		channelID     int64
-		channelSecret = os.Getenv("CHANNEL_SECRET")
-		channelMID    = os.Getenv("CHANNEL_MID")
-		err           error
+	bot, err := linebot.New(
+		os.Getenv("CHANNEL_SECRET"),
+		os.Getenv("CHANNEL_TOKEN"),
+		linebot.WithEndpointBase(os.Getenv("ENDPOINT_BASE")),
 	)
-
-	// Setup bot client
-	channelID, err = strconv.ParseInt(os.Getenv("CHANNEL_ID"), 10, 64)
 	if err != nil {
-		log.Print(err)
-		return 1
-	}
-	bot, err := linebot.NewClient(channelID, channelSecret, channelMID)
-	if err != nil {
-		log.Print(err)
-		return 1
+		log.Fatal(err)
 	}
 
 	// Setup HTTP Server for receiving requests from LINE platform
 	http.HandleFunc("/callback", func(w http.ResponseWriter, req *http.Request) {
-		received, err := bot.ParseRequest(req)
+		events, err := bot.ParseRequest(req)
 		if err != nil {
 			if err == linebot.ErrInvalidSignature {
 				w.WriteHeader(400)
@@ -58,20 +43,21 @@ func Main() int {
 			}
 			return
 		}
-		for _, result := range received.Results {
-			content := result.Content()
-			if content != nil && content.IsMessage && content.ContentType == linebot.ContentTypeText {
-				text, err := content.TextContent()
-				_, err = bot.SendText([]string{content.From}, text.Text)
-				if err != nil {
-					log.Print(err)
+		for _, event := range events {
+			if event.Type == linebot.EventTypeMessage {
+				switch message := event.Message.(type) {
+				case *linebot.TextMessage:
+					source := event.Source
+					if source.Type == linebot.EventSourceTypeUser {
+						if _, err = bot.PushMessage(source.UserID, linebot.NewTextMessage(message.Text)).Do(); err != nil {
+							log.Print(err)
+						}
+					}
 				}
 			}
 		}
 	})
-	if err := http.ListenAndServe(":8080", nil); err != nil {
-		log.Print(err)
-		return 1
+	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
+		log.Fatal(err)
 	}
-	return 0
 }
