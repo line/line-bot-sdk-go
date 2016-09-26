@@ -150,7 +150,7 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 			if err != nil {
 				return app.replyText(replyToken, err.Error())
 			}
-			if _, err := app.bot.Reply(
+			if _, err := app.bot.ReplyMessage(
 				replyToken,
 				linebot.NewTextMessage("Display name: "+profile.DisplayName),
 				linebot.NewTextMessage("Status message: "+profile.StatusMessage),
@@ -169,7 +169,7 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 			linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは"),
 			linebot.NewMessageTemplateAction("Say message", "Rice=米"),
 		)
-		if _, err := app.bot.Reply(
+		if _, err := app.bot.ReplyMessage(
 			replyToken,
 			linebot.NewTemplateMessage("Buttons alt text", template),
 		).Do(); err != nil {
@@ -181,7 +181,7 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 			linebot.NewMessageTemplateAction("Yes", "Yes!"),
 			linebot.NewMessageTemplateAction("No", "No!"),
 		)
-		if _, err := app.bot.Reply(
+		if _, err := app.bot.ReplyMessage(
 			replyToken,
 			linebot.NewTemplateMessage("Confirm alt text", template),
 		).Do(); err != nil {
@@ -201,14 +201,14 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 				linebot.NewMessageTemplateAction("Say message", "Rice=米"),
 			),
 		)
-		if _, err := app.bot.Reply(
+		if _, err := app.bot.ReplyMessage(
 			replyToken,
 			linebot.NewTemplateMessage("Carousel alt text", template),
 		).Do(); err != nil {
 			return err
 		}
 	case "imagemap":
-		if _, err := app.bot.Reply(
+		if _, err := app.bot.ReplyMessage(
 			replyToken,
 			linebot.NewImagemapMessage(
 				app.appBaseURL+"/static/rich",
@@ -243,7 +243,7 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 		}
 	default:
 		log.Printf("Echo message to %s: %s", replyToken, message.Text)
-		if _, err := app.bot.Reply(
+		if _, err := app.bot.ReplyMessage(
 			replyToken,
 			linebot.NewTextMessage(message.Text),
 		).Do(); err != nil {
@@ -264,7 +264,7 @@ func (app *KitchenSink) handleImage(message *linebot.ImageMessage, replyToken st
 
 		originalContentURL := app.appBaseURL + "/downloaded/" + filepath.Base(originalContent.Name())
 		previewImageURL := app.appBaseURL + "/downloaded/" + filepath.Base(previewImagePath)
-		if _, err := app.bot.Reply(
+		if _, err := app.bot.ReplyMessage(
 			replyToken,
 			linebot.NewImageMessage(originalContentURL, previewImageURL),
 		).Do(); err != nil {
@@ -289,7 +289,7 @@ func (app *KitchenSink) handleVideo(message *linebot.VideoMessage, replyToken st
 
 		originalContentURL := app.appBaseURL + "/downloaded/" + filepath.Base(originalVideoPath)
 		previewImageURL := app.appBaseURL + "/downloaded/" + filepath.Base(previewImagePath)
-		if _, err := app.bot.Reply(
+		if _, err := app.bot.ReplyMessage(
 			replyToken,
 			linebot.NewVideoMessage(originalContentURL, previewImageURL),
 		).Do(); err != nil {
@@ -302,7 +302,7 @@ func (app *KitchenSink) handleVideo(message *linebot.VideoMessage, replyToken st
 func (app *KitchenSink) handleAudio(message *linebot.AudioMessage, replyToken string) error {
 	return app.handleHeavyContent(message.ID, func(originalContent *os.File) error {
 		originalContentURL := app.appBaseURL + "/downloaded/" + filepath.Base(originalContent.Name())
-		if _, err := app.bot.Reply(
+		if _, err := app.bot.ReplyMessage(
 			replyToken,
 			linebot.NewAudioMessage(originalContentURL, 100),
 		).Do(); err != nil {
@@ -313,7 +313,7 @@ func (app *KitchenSink) handleAudio(message *linebot.AudioMessage, replyToken st
 }
 
 func (app *KitchenSink) handleLocation(message *linebot.LocationMessage, replyToken string) error {
-	if _, err := app.bot.Reply(
+	if _, err := app.bot.ReplyMessage(
 		replyToken,
 		linebot.NewLocationMessage(message.Title, message.Address, message.Latitude, message.Longitude),
 	).Do(); err != nil {
@@ -323,7 +323,7 @@ func (app *KitchenSink) handleLocation(message *linebot.LocationMessage, replyTo
 }
 
 func (app *KitchenSink) handleSticker(message *linebot.StickerMessage, replyToken string) error {
-	if _, err := app.bot.Reply(
+	if _, err := app.bot.ReplyMessage(
 		replyToken,
 		linebot.NewStickerMessage(message.PackageID, message.StickerID),
 	).Do(); err != nil {
@@ -333,7 +333,7 @@ func (app *KitchenSink) handleSticker(message *linebot.StickerMessage, replyToke
 }
 
 func (app *KitchenSink) replyText(replyToken, text string) error {
-	if _, err := app.bot.Reply(
+	if _, err := app.bot.ReplyMessage(
 		replyToken,
 		linebot.NewTextMessage(text),
 	).Do(); err != nil {

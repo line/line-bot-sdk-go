@@ -51,7 +51,7 @@ func TestGetMessageContent(t *testing.T) {
 				"Content-Length":      "6",
 			},
 			Want: want{
-				URLPath:     fmt.Sprintf(APIEndpointMessageContent, "325708"),
+				URLPath:     fmt.Sprintf(APIEndpointGetMessageContent, "325708"),
 				RequestBody: []byte(""),
 				Response: &MessageContentResponse{
 					FileName:      "example.jpg",
@@ -67,7 +67,7 @@ func TestGetMessageContent(t *testing.T) {
 			ResponseCode: 503,
 			Response:     []byte("Service Unavailable"),
 			Want: want{
-				URLPath:     fmt.Sprintf(APIEndpointMessageContent, "325708"),
+				URLPath:     fmt.Sprintf(APIEndpointGetMessageContent, "325708"),
 				RequestBody: []byte(""),
 				Error: &APIError{
 					Code: 503,

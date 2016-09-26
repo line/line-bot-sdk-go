@@ -22,26 +22,26 @@ import (
 	"golang.org/x/net/context"
 )
 
-// Push method
-func (client *Client) Push(to string, messages ...Message) *PushCall {
-	return &PushCall{
+// PushMessage method
+func (client *Client) PushMessage(to string, messages ...Message) *PushMessageCall {
+	return &PushMessageCall{
 		c:        client,
 		to:       to,
 		messages: messages,
 	}
 }
 
-// Reply method
-func (client *Client) Reply(replyToken string, messages ...Message) *ReplyCall {
-	return &ReplyCall{
+// ReplyMessage method
+func (client *Client) ReplyMessage(replyToken string, messages ...Message) *ReplyMessageCall {
+	return &ReplyMessageCall{
 		c:          client,
 		replyToken: replyToken,
 		messages:   messages,
 	}
 }
 
-// PushCall type
-type PushCall struct {
+// PushMessageCall type
+type PushMessageCall struct {
 	c   *Client
 	ctx context.Context
 
@@ -50,12 +50,12 @@ type PushCall struct {
 }
 
 // WithContext method
-func (call *PushCall) WithContext(ctx context.Context) *PushCall {
+func (call *PushMessageCall) WithContext(ctx context.Context) *PushMessageCall {
 	call.ctx = ctx
 	return call
 }
 
-func (call *PushCall) encodeJSON(w io.Writer) error {
+func (call *PushMessageCall) encodeJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
 	return enc.Encode(&struct {
 		To       string    `json:"to"`
@@ -67,12 +67,12 @@ func (call *PushCall) encodeJSON(w io.Writer) error {
 }
 
 // Do method
-func (call *PushCall) Do() (*BasicResponse, error) {
+func (call *PushMessageCall) Do() (*BasicResponse, error) {
 	var buf bytes.Buffer
 	if err := call.encodeJSON(&buf); err != nil {
 		return nil, err
 	}
-	res, err := call.c.post(call.ctx, APIEndpointEventsPush, &buf)
+	res, err := call.c.post(call.ctx, APIEndpointPushMessage, &buf)
 	if res != nil && res.Body != nil {
 		defer res.Body.Close()
 	}
@@ -82,8 +82,8 @@ func (call *PushCall) Do() (*BasicResponse, error) {
 	return decodeToBasicResponse(res)
 }
 
-// ReplyCall type
-type ReplyCall struct {
+// ReplyMessageCall type
+type ReplyMessageCall struct {
 	c   *Client
 	ctx context.Context
 
@@ -92,12 +92,12 @@ type ReplyCall struct {
 }
 
 // WithContext method
-func (call *ReplyCall) WithContext(ctx context.Context) *ReplyCall {
+func (call *ReplyMessageCall) WithContext(ctx context.Context) *ReplyMessageCall {
 	call.ctx = ctx
 	return call
 }
 
-func (call *ReplyCall) encodeJSON(w io.Writer) error {
+func (call *ReplyMessageCall) encodeJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
 	return enc.Encode(&struct {
 		ReplyToken string    `json:"replyToken"`
@@ -109,12 +109,12 @@ func (call *ReplyCall) encodeJSON(w io.Writer) error {
 }
 
 // Do method
-func (call *ReplyCall) Do() (*BasicResponse, error) {
+func (call *ReplyMessageCall) Do() (*BasicResponse, error) {
 	var buf bytes.Buffer
 	if err := call.encodeJSON(&buf); err != nil {
 		return nil, err
 	}
-	res, err := call.c.post(call.ctx, APIEndpointEventsReply, &buf)
+	res, err := call.c.post(call.ctx, APIEndpointReplyMessage, &buf)
 	if res != nil && res.Body != nil {
 		defer res.Body.Close()
 	}
