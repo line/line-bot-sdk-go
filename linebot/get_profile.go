@@ -29,7 +29,7 @@ func (call *GetProfileCall) WithContext(ctx context.Context) *GetProfileCall {
 }
 
 // Do method
-func (call *GetProfileCall) Do() (*ProfileResponse, error) {
+func (call *GetProfileCall) Do() (*UserProfileResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointGetProfile, call.userID)
 	res, err := call.c.get(call.ctx, endpoint)
 	if res != nil && res.Body != nil {
@@ -38,5 +38,5 @@ func (call *GetProfileCall) Do() (*ProfileResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	return decodeToProfileResponse(res)
+	return decodeToUserProfileResponse(res)
 }

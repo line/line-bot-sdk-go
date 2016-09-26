@@ -22,8 +22,8 @@ type ErrorResponse struct {
 	Details []errorResponseDetail `json:"details"`
 }
 
-// ProfileResponse type
-type ProfileResponse struct {
+// UserProfileResponse type
+type UserProfileResponse struct {
 	UserID        string `json:"userId"`
 	DisplayName   string `json:"displayName"`
 	PicutureURL   string `json:"pictureUrl"`
@@ -67,12 +67,12 @@ func decodeToBasicResponse(res *http.Response) (*BasicResponse, error) {
 	return &result, nil
 }
 
-func decodeToProfileResponse(res *http.Response) (*ProfileResponse, error) {
+func decodeToUserProfileResponse(res *http.Response) (*UserProfileResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
 	}
 	decoder := json.NewDecoder(res.Body)
-	result := ProfileResponse{}
+	result := UserProfileResponse{}
 	if err := decoder.Decode(&result); err != nil {
 		return nil, err
 	}

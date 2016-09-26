@@ -16,7 +16,7 @@ func TestGetProfile(t *testing.T) {
 	type want struct {
 		URLPath     string
 		RequestBody []byte
-		Response    *ProfileResponse
+		Response    *UserProfileResponse
 		Error       error
 	}
 	var testCases = []struct {
@@ -32,7 +32,7 @@ func TestGetProfile(t *testing.T) {
 			Want: want{
 				URLPath:     fmt.Sprintf(APIEndpointGetProfile, "U0047556f2e40dba2456887320ba7c76d"),
 				RequestBody: []byte(""),
-				Response: &ProfileResponse{
+				Response: &UserProfileResponse{
 					UserID:        "U0047556f2e40dba2456887320ba7c76d",
 					DisplayName:   "BOT API",
 					PicutureURL:   "http://dl.profile.line.naver.jp/abcdefghijklmn",
