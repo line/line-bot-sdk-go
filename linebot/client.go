@@ -77,6 +77,7 @@ func (client *Client) url(endpoint string) (url *url.URL, err error) {
 func (client *Client) do(ctx context.Context, req *http.Request) (*http.Response, error) {
 	req.Header.Set("X-LINE-ChannelToken", client.channelToken)
 	req.Header.Set("Authorization", "Bearer "+client.channelToken)
+	req.Header.Set("User-Agent", "LINE-BotSDK-Go/"+version)
 	if ctx == nil {
 		return client.httpClient.Do(req)
 	}
