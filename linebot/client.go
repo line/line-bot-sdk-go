@@ -25,7 +25,7 @@ import (
 
 // APIEndpoint constants
 const (
-	APIEndpointBase = "https://trialbot-api.line.me"
+	APIEndpointBase = "https://api.line.me"
 
 	APIEndpointPushMessage       = "/v2/bot/message/push"
 	APIEndpointReplyMessage      = "/v2/bot/message/reply"
