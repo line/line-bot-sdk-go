@@ -14,14 +14,14 @@ const (
 	TemplateTypeCarousel = "carousel"
 )
 
-// ActionType type
-type ActionType string
+// TemplateActionType type
+type TemplateActionType string
 
-// ActionType constants
+// TemplateActionType constants
 const (
-	ActionTypeURI      = "uri"
-	ActionTypeMessage  = "message"
-	ActionTypePostback = "postback"
+	TemplateActionTypeURI      = "uri"
+	TemplateActionTypeMessage  = "message"
+	TemplateActionTypePostback = "postback"
 )
 
 // Template interface
@@ -144,60 +144,60 @@ type TemplateAction interface {
 	templateAction()
 }
 
-// URIAction type
-type URIAction struct {
+// URITemplateAction type
+type URITemplateAction struct {
 	Label string
 	URI   string
 }
 
-// MarshalJSON method of URIAction
-func (a *URIAction) MarshalJSON() ([]byte, error) {
+// MarshalJSON method of URITemplateAction
+func (a *URITemplateAction) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type  ActionType `json:"type"`
-		Label string     `json:"label"`
-		URI   string     `json:"uri"`
+		Type  TemplateActionType `json:"type"`
+		Label string             `json:"label"`
+		URI   string             `json:"uri"`
 	}{
-		Type:  ActionTypeURI,
+		Type:  TemplateActionTypeURI,
 		Label: a.Label,
 		URI:   a.URI,
 	})
 }
 
-// MessageAction type
-type MessageAction struct {
+// MessageTemplateAction type
+type MessageTemplateAction struct {
 	Label string
 	Text  string
 }
 
 // MarshalJSON method of MessageAction
-func (a *MessageAction) MarshalJSON() ([]byte, error) {
+func (a *MessageTemplateAction) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type  ActionType `json:"type"`
-		Label string     `json:"label"`
-		Text  string     `json:"text"`
+		Type  TemplateActionType `json:"type"`
+		Label string             `json:"label"`
+		Text  string             `json:"text"`
 	}{
-		Type:  ActionTypeMessage,
+		Type:  TemplateActionTypeMessage,
 		Label: a.Label,
 		Text:  a.Text,
 	})
 }
 
-// PostbackAction type
-type PostbackAction struct {
+// PostbackTemplateAction type
+type PostbackTemplateAction struct {
 	Label string
 	Data  string
 	Text  string
 }
 
 // MarshalJSON method of PostbackAction
-func (a *PostbackAction) MarshalJSON() ([]byte, error) {
+func (a *PostbackTemplateAction) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type  ActionType `json:"type"`
-		Label string     `json:"label"`
-		Data  string     `json:"data"`
-		Text  string     `json:"text,omitempty"`
+		Type  TemplateActionType `json:"type"`
+		Label string             `json:"label"`
+		Data  string             `json:"data"`
+		Text  string             `json:"text,omitempty"`
 	}{
-		Type:  ActionTypePostback,
+		Type:  TemplateActionTypePostback,
 		Label: a.Label,
 		Data:  a.Data,
 		Text:  a.Text,
@@ -205,29 +205,29 @@ func (a *PostbackAction) MarshalJSON() ([]byte, error) {
 }
 
 // implements TemplateAction interface
-func (*URIAction) templateAction()      {}
-func (*MessageAction) templateAction()  {}
-func (*PostbackAction) templateAction() {}
+func (*URITemplateAction) templateAction()      {}
+func (*MessageTemplateAction) templateAction()  {}
+func (*PostbackTemplateAction) templateAction() {}
 
-// NewURIAction function
-func NewURIAction(label, uri string) *URIAction {
-	return &URIAction{
+// NewURITemplateAction function
+func NewURITemplateAction(label, uri string) *URITemplateAction {
+	return &URITemplateAction{
 		Label: label,
 		URI:   uri,
 	}
 }
 
-// NewMessageAction function
-func NewMessageAction(label, text string) *MessageAction {
-	return &MessageAction{
+// NewMessageTemplateAction function
+func NewMessageTemplateAction(label, text string) *MessageTemplateAction {
+	return &MessageTemplateAction{
 		Label: label,
 		Text:  text,
 	}
 }
 
-// NewPostbackAction function
-func NewPostbackAction(label, data, text string) *PostbackAction {
-	return &PostbackAction{
+// NewPostbackTemplateAction function
+func NewPostbackTemplateAction(label, data, text string) *PostbackTemplateAction {
+	return &PostbackTemplateAction{
 		Label: label,
 		Data:  data,
 		Text:  text,
