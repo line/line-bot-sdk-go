@@ -27,12 +27,12 @@ import (
 const (
 	APIEndpointBase = "https://trialbot-api.line.me"
 
-	APIEndpointEventsPush     = "/v2/bot/message/push"
-	APIEndpointEventsReply    = "/v2/bot/message/reply"
-	APIEndpointMessageContent = "/v2/bot/message/%s/content"
-	APIEndpointLeaveGroup     = "/v2/bot/group/%s/leave"
-	APIEndpointLeaveRoom      = "/v2/bot/room/%s/leave"
-	APIEndpointGetProfile     = "/v2/bot/profile/%s"
+	APIEndpointPushMessage       = "/v2/bot/message/push"
+	APIEndpointReplyMessage      = "/v2/bot/message/reply"
+	APIEndpointGetMessageContent = "/v2/bot/message/%s/content"
+	APIEndpointLeaveGroup        = "/v2/bot/group/%s/leave"
+	APIEndpointLeaveRoom         = "/v2/bot/room/%s/leave"
+	APIEndpointGetProfile        = "/v2/bot/profile/%s"
 )
 
 // Client type
