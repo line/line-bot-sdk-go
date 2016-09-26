@@ -132,8 +132,7 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 	switch message.Text {
 	case "profile":
 		if source.UserID != "" {
-			var profile *linebot.UserProfileResponse
-			profile, err := app.bot.GetUserProfile(source.UserID).Do()
+			profile, err := app.bot.GetProfile(source.UserID).Do()
 			if err != nil {
 				return app.replyText(replyToken, err.Error())
 			}
