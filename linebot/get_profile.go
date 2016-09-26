@@ -6,16 +6,16 @@ import (
 	"golang.org/x/net/context"
 )
 
-// GetUserProfile function
-func (client *Client) GetUserProfile(userID string) *GetUserProfileCall {
-	return &GetUserProfileCall{
+// GetProfile function
+func (client *Client) GetProfile(userID string) *GetProfileCall {
+	return &GetProfileCall{
 		c:      client,
 		userID: userID,
 	}
 }
 
-// GetUserProfileCall type
-type GetUserProfileCall struct {
+// GetProfileCall type
+type GetProfileCall struct {
 	c   *Client
 	ctx context.Context
 
@@ -23,14 +23,14 @@ type GetUserProfileCall struct {
 }
 
 // WithContext method
-func (call *GetUserProfileCall) WithContext(ctx context.Context) *GetUserProfileCall {
+func (call *GetProfileCall) WithContext(ctx context.Context) *GetProfileCall {
 	call.ctx = ctx
 	return call
 }
 
 // Do method
-func (call *GetUserProfileCall) Do() (*UserProfileResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointGetUserProfile, call.userID)
+func (call *GetProfileCall) Do() (*ProfileResponse, error) {
+	endpoint := fmt.Sprintf(APIEndpointGetProfile, call.userID)
 	res, err := call.c.get(call.ctx, endpoint)
 	if res != nil && res.Body != nil {
 		defer res.Body.Close()
@@ -38,5 +38,5 @@ func (call *GetUserProfileCall) Do() (*UserProfileResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	return decodeToUserProfileResponse(res)
+	return decodeToProfileResponse(res)
 }

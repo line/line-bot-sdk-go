@@ -12,11 +12,11 @@ import (
 	"golang.org/x/net/context"
 )
 
-func TestGetUserProfile(t *testing.T) {
+func TestGetProfile(t *testing.T) {
 	type want struct {
 		URLPath     string
 		RequestBody []byte
-		Response    *UserProfileResponse
+		Response    *ProfileResponse
 		Error       error
 	}
 	var testCases = []struct {
@@ -30,9 +30,9 @@ func TestGetUserProfile(t *testing.T) {
 			ResponseCode: 200,
 			Response:     []byte(`{"userId":"U0047556f2e40dba2456887320ba7c76d","displayName":"BOT API","pictureUrl":"http://dl.profile.line.naver.jp/abcdefghijklmn","statusMessage":"Hello, LINE!"}`),
 			Want: want{
-				URLPath:     fmt.Sprintf(APIEndpointGetUserProfile, "U0047556f2e40dba2456887320ba7c76d"),
+				URLPath:     fmt.Sprintf(APIEndpointGetProfile, "U0047556f2e40dba2456887320ba7c76d"),
 				RequestBody: []byte(""),
-				Response: &UserProfileResponse{
+				Response: &ProfileResponse{
 					UserID:        "U0047556f2e40dba2456887320ba7c76d",
 					DisplayName:   "BOT API",
 					PicutureURL:   "http://dl.profile.line.naver.jp/abcdefghijklmn",
@@ -46,7 +46,7 @@ func TestGetUserProfile(t *testing.T) {
 			ResponseCode: 500,
 			Response:     []byte("500 Internal server error"),
 			Want: want{
-				URLPath:     fmt.Sprintf(APIEndpointGetUserProfile, "U0047556f2e40dba2456887320ba7c76d"),
+				URLPath:     fmt.Sprintf(APIEndpointGetProfile, "U0047556f2e40dba2456887320ba7c76d"),
 				RequestBody: []byte(""),
 				Error: &APIError{
 					Code: 500,
@@ -82,7 +82,7 @@ func TestGetUserProfile(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		res, err := client.GetUserProfile(tc.UserID).Do()
+		res, err := client.GetProfile(tc.UserID).Do()
 		if tc.Want.Error != nil {
 			if !reflect.DeepEqual(err, tc.Want.Error) {
 				t.Errorf("Error %d %q; want %q", i, err, tc.Want.Error)
@@ -98,7 +98,7 @@ func TestGetUserProfile(t *testing.T) {
 	}
 }
 
-func TestGetUserProfileWithContext(t *testing.T) {
+func TestGetProfileWithContext(t *testing.T) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 		time.Sleep(10 * time.Millisecond)
@@ -111,13 +111,13 @@ func TestGetUserProfileWithContext(t *testing.T) {
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
 	defer cancel()
-	_, err = client.GetUserProfile("U0047556f2e40dba2456887320ba7c76d").WithContext(ctx).Do()
+	_, err = client.GetProfile("U0047556f2e40dba2456887320ba7c76d").WithContext(ctx).Do()
 	if err != context.DeadlineExceeded {
 		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
 	}
 }
 
-func BenchmarkGetUserProfile(b *testing.B) {
+func BenchmarkGetProfile(b *testing.B) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 		w.Write([]byte(`{"userId":"U","displayName":"A","pictureUrl":"http://","statusMessage":"B"}`))
@@ -129,6 +129,6 @@ func BenchmarkGetUserProfile(b *testing.B) {
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		client.GetUserProfile("U0047556f2e40dba2456887320ba7c76d").Do()
+		client.GetProfile("U0047556f2e40dba2456887320ba7c76d").Do()
 	}
 }
