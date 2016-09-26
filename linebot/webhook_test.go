@@ -145,7 +145,7 @@ var webhookTestRequestBody = `{
             },
             "beacon": {
                 "hwid":"374591320",
-				"type":"enter"
+                "type":"enter"
             }
         }
     ]
