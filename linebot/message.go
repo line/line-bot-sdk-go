@@ -16,6 +16,7 @@ const (
 	MessageTypeLocation = "location"
 	MessageTypeSticker  = "sticker"
 	MessageTypeTemplate = "template"
+	MessageTypeImagemap = "imagemap"
 )
 
 // Message inteface
@@ -166,6 +167,31 @@ func (m *TemplateMessage) MarshalJSON() ([]byte, error) {
 	})
 }
 
+// ImagemapMessage type
+type ImagemapMessage struct {
+	BaseURL  string
+	AltText  string
+	BaseSize ImagemapBaseSize
+	Actions  []ImagemapAction
+}
+
+// MarshalJSON method of ImagemapMessage
+func (m *ImagemapMessage) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		Type     MessageType      `json:"type"`
+		BaseURL  string           `json:"baseUrl"`
+		AltText  string           `json:"altText"`
+		BaseSize ImagemapBaseSize `json:"baseSize"`
+		Actions  []ImagemapAction `json:"actions"`
+	}{
+		Type:     MessageTypeImagemap,
+		BaseURL:  m.BaseURL,
+		AltText:  m.AltText,
+		BaseSize: m.BaseSize,
+		Actions:  m.Actions,
+	})
+}
+
 // implements Message interface
 func (*TextMessage) message()     {}
 func (*ImageMessage) message()    {}
@@ -174,6 +200,7 @@ func (*AudioMessage) message()    {}
 func (*LocationMessage) message() {}
 func (*StickerMessage) message()  {}
 func (*TemplateMessage) message() {}
+func (*ImagemapMessage) message() {}
 
 // NewTextMessage function
 func NewTextMessage(content string) *TextMessage {
@@ -229,5 +256,15 @@ func NewTemplateMessage(altText string, template Template) *TemplateMessage {
 	return &TemplateMessage{
 		AltText:  altText,
 		Template: template,
+	}
+}
+
+// NewImagemapMessage function
+func NewImagemapMessage(baseURL, altText string, baseSize ImagemapBaseSize, actions ...ImagemapAction) *ImagemapMessage {
+	return &ImagemapMessage{
+		BaseURL:  baseURL,
+		AltText:  altText,
+		BaseSize: baseSize,
+		Actions:  actions,
 	}
 }
