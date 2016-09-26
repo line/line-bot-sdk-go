@@ -1,42 +1,43 @@
 package linebot
 
 import (
-	"bytes"
-	"encoding/json"
-	"errors"
-	"fmt"
 	"io"
 	"net/http"
 	"net/url"
-	"strconv"
+
+	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 )
 
-// errors
-var (
-	ErrInvalidSignature   = errors.New("Invalid Signature")
-	ErrInvalidContentType = errors.New("Invalid ContentType")
-	ErrInvalidEventType   = errors.New("Invalid EventType")
+// APIEndpoint constants
+const (
+	APIEndpointBase = "https://trialbot-api.line.me"
+
+	APIEndpointEventsPush     = "/v2/bot/message/push"
+	APIEndpointEventsReply    = "/v2/bot/message/reply"
+	APIEndpointMessageContent = "/v2/bot/message/%s/content"
+	APIEndpointLeaveGroup     = "/v2/bot/group/%s/leave"
+	APIEndpointLeaveRoom      = "/v2/bot/room/%s/leave"
+	APIEndpointGetProfile     = "/v2/bot/profile/%s"
 )
 
 // Client type
 type Client struct {
-	channelID     int64
 	channelSecret string
-	mid           string
-	endpointBase  string       // default APIEndpointBaseTrial
+	channelToken  string
+	endpointBase  string       // default APIEndpointBase
 	httpClient    *http.Client // default http.DefaultClient
 }
 
 // ClientOption type
 type ClientOption func(*Client) error
 
-// NewClient function
-func NewClient(channelID int64, channelSecret, mid string, options ...ClientOption) (*Client, error) {
+// New returns a new bot client instance.
+func New(channelSecret, channelToken string, options ...ClientOption) (*Client, error) {
 	c := &Client{
-		channelID:     channelID,
 		channelSecret: channelSecret,
-		mid:           mid,
-		endpointBase:  APIEndpointBaseTrial,
+		channelToken:  channelToken,
+		endpointBase:  APIEndpointBase,
 		httpClient:    http.DefaultClient,
 	}
 	for _, option := range options {
@@ -64,90 +65,6 @@ func WithEndpointBase(endpointBase string) ClientOption {
 	}
 }
 
-func (client *Client) sendSingleMessage(to []string, content SingleMessageContent) (result *ResponseContent, err error) {
-	message := SingleMessage{
-		To:        to,
-		ToChannel: SendingMessageChannelID,
-		EventType: EventTypeSendingMessage,
-		Content:   content,
-	}
-	body, err := json.Marshal(message)
-	if err != nil {
-		return
-	}
-	result, err = client.post(APIEndpointEvents, bytes.NewReader(body))
-	return
-}
-
-func (client *Client) sendMultipleMessage(to []string, content MultipleMessageContent) (result *ResponseContent, err error) {
-	message := MultipleMessage{
-		To:        to,
-		ToChannel: SendingMessageChannelID,
-		EventType: EventTypeSendingMultipleMessage,
-		Content:   content,
-	}
-	body, err := json.Marshal(message)
-	if err != nil {
-		return
-	}
-	result, err = client.post(APIEndpointEvents, bytes.NewReader(body))
-	return
-}
-
-func (client *Client) get(endpoint, rawQuery string) (res *http.Response, err error) {
-	url, err := client.url(endpoint)
-	if err != nil {
-		return
-	}
-	url.RawQuery = rawQuery
-	req, err := http.NewRequest("GET", url.String(), nil)
-	if err != nil {
-		return
-	}
-	return client.do(req)
-}
-
-func (client *Client) post(endpoint string, body io.Reader) (result *ResponseContent, err error) {
-	url, err := client.url(endpoint)
-	if err != nil {
-		return
-	}
-	req, err := http.NewRequest("POST", url.String(), body)
-	if err != nil {
-		return
-	}
-	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
-	res, err := client.do(req)
-	if err != nil {
-		return
-	}
-	defer res.Body.Close()
-	decoder := json.NewDecoder(res.Body)
-
-	if res.StatusCode != http.StatusOK {
-		var content ErrorResponseContent
-		if err = decoder.Decode(&content); err != nil {
-			return
-		}
-		return nil, fmt.Errorf("%s: %s", content.Code, content.Message)
-	}
-
-	result = &ResponseContent{}
-	err = decoder.Decode(result)
-	if err != nil {
-		return
-	}
-	return
-}
-
-func (client *Client) do(req *http.Request) (res *http.Response, err error) {
-	req.Header.Set("X-Line-ChannelID", strconv.FormatInt(client.channelID, 10))
-	req.Header.Set("X-Line-ChannelSecret", client.channelSecret)
-	req.Header.Set("X-Line-Trusted-User-With-ACL", client.mid)
-	res, err = client.httpClient.Do(req)
-	return
-}
-
 func (client *Client) url(endpoint string) (url *url.URL, err error) {
 	url, err = url.Parse(client.endpointBase)
 	if err != nil {
@@ -155,4 +72,38 @@ func (client *Client) url(endpoint string) (url *url.URL, err error) {
 	}
 	url.Path = endpoint
 	return
+}
+
+func (client *Client) do(ctx context.Context, req *http.Request) (*http.Response, error) {
+	req.Header.Set("X-LINE-ChannelToken", client.channelToken)
+	req.Header.Set("Authorization", "Bearer "+client.channelToken)
+	if ctx == nil {
+		return client.httpClient.Do(req)
+	}
+	return ctxhttp.Do(ctx, client.httpClient, req)
+}
+
+func (client *Client) get(ctx context.Context, endpoint string) (res *http.Response, err error) {
+	url, err := client.url(endpoint)
+	if err != nil {
+		return
+	}
+	req, err := http.NewRequest("GET", url.String(), nil)
+	if err != nil {
+		return
+	}
+	return client.do(ctx, req)
+}
+
+func (client *Client) post(ctx context.Context, endpoint string, body io.Reader) (*http.Response, error) {
+	url, err := client.url(endpoint)
+	if err != nil {
+		return nil, err
+	}
+	req, err := http.NewRequest("POST", url.String(), body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
+	return client.do(ctx, req)
 }

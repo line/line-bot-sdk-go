@@ -1,43 +1,39 @@
 package linebot
 
 import (
-	"io"
-	"mime"
-	"net/http"
+	"fmt"
+
+	"golang.org/x/net/context"
 )
 
-// MessageContentResponse type
-type MessageContentResponse struct {
-	Content  io.ReadCloser
-	FileName string
-}
-
-func newMessageContentResponse(res *http.Response) (mc *MessageContentResponse) {
-	mc = &MessageContentResponse{
-		Content: res.Body,
-	}
-	_, params, err := mime.ParseMediaType(res.Header.Get("Content-Disposition"))
-	if err != nil {
-		return
-	}
-	mc.FileName = params["filename"]
-	return
-}
-
 // GetMessageContent function
-func (client *Client) GetMessageContent(content *ReceivedContent) (mc *MessageContentResponse, err error) {
-	res, err := client.get(APIEndpointMessage+"/"+content.ID+"/content", "")
-	if err != nil {
-		return
+func (client *Client) GetMessageContent(messageID string) *GetMessageContentCall {
+	return &GetMessageContentCall{
+		c:         client,
+		messageID: messageID,
 	}
-	return newMessageContentResponse(res), nil
 }
 
-// GetMessageContentPreview function
-func (client *Client) GetMessageContentPreview(content *ReceivedContent) (mc *MessageContentResponse, err error) {
-	res, err := client.get(APIEndpointMessage+"/"+content.ID+"/content/preview", "")
+// GetMessageContentCall type
+type GetMessageContentCall struct {
+	c   *Client
+	ctx context.Context
+
+	messageID string
+}
+
+// WithContext method
+func (call *GetMessageContentCall) WithContext(ctx context.Context) *GetMessageContentCall {
+	call.ctx = ctx
+	return call
+}
+
+// Do method
+func (call *GetMessageContentCall) Do() (*MessageContentResponse, error) {
+	endpoint := fmt.Sprintf(APIEndpointMessageContent, call.messageID)
+	res, err := call.c.get(call.ctx, endpoint)
 	if err != nil {
-		return
+		return nil, err
 	}
-	return newMessageContentResponse(res), nil
+	return decodeToMessageContentResponse(res)
 }

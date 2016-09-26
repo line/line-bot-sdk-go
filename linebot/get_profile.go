@@ -1,51 +1,42 @@
 package linebot
 
 import (
-	"encoding/json"
 	"fmt"
-	"net/http"
-	"net/url"
-	"strings"
+
+	"golang.org/x/net/context"
 )
 
-// UserProfile type
-type UserProfile struct {
-	Contacts []ContactInfo `json:"contacts"`
-	Count    int           `json:"count"`
-	Start    int           `json:"start"`
-	Display  int           `json:"display"`
+// GetProfile function
+func (client *Client) GetProfile(userID string) *GetProfileCall {
+	return &GetProfileCall{
+		c:      client,
+		userID: userID,
+	}
 }
 
-// ContactInfo type
-type ContactInfo struct {
-	DisplayName   string `json:"displayName"`
-	MID           string `json:"mid"`
-	PictureURL    string `json:"pictureUrl"`
-	StatusMessage string `json:"statusMessage"`
+// GetProfileCall type
+type GetProfileCall struct {
+	c   *Client
+	ctx context.Context
+
+	userID string
 }
 
-// GetUserProfile function
-func (client *Client) GetUserProfile(mids []string) (result *UserProfile, err error) {
-	query := url.Values{}
-	query.Set("mids", strings.Join(mids, ","))
-	res, err := client.get(APIEndpointProfiles, query.Encode())
-	if err != nil {
-		return
-	}
-	defer res.Body.Close()
-	decoder := json.NewDecoder(res.Body)
-	if res.StatusCode != http.StatusOK {
-		var content ErrorResponseContent
-		if err = decoder.Decode(&content); err != nil {
-			return
-		}
-		return nil, fmt.Errorf("%s: %s", content.Code, content.Message)
-	}
+// WithContext method
+func (call *GetProfileCall) WithContext(ctx context.Context) *GetProfileCall {
+	call.ctx = ctx
+	return call
+}
 
-	result = &UserProfile{}
-	err = decoder.Decode(result)
-	if err != nil {
-		return
+// Do method
+func (call *GetProfileCall) Do() (*UserProfileResponse, error) {
+	endpoint := fmt.Sprintf(APIEndpointGetProfile, call.userID)
+	res, err := call.c.get(call.ctx, endpoint)
+	if res != nil && res.Body != nil {
+		defer res.Body.Close()
 	}
-	return
+	if err != nil {
+		return nil, err
+	}
+	return decodeToUserProfileResponse(res)
 }
