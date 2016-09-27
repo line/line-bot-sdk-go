@@ -51,15 +51,23 @@ type EventSource struct {
 	RoomID  string          `json:"roomId"`
 }
 
-// EventPostback type
-type EventPostback struct {
+// Postback type
+type Postback struct {
 	Data string `json:"data"`
 }
 
-// EventBeacon type
-type EventBeacon struct {
-	Hwid string `json:"hwid"`
-	Type string `json:"type"`
+// BeaconEventType type
+type BeaconEventType string
+
+// EventType constants
+const (
+	BeaconEventTypeEnter BeaconEventType = "enter"
+)
+
+// Beacon type
+type Beacon struct {
+	Hwid string          `json:"hwid"`
+	Type BeaconEventType `json:"type"`
 }
 
 // Event type
@@ -69,8 +77,8 @@ type Event struct {
 	Timestamp  time.Time
 	Source     *EventSource
 	Message    Message
-	Postback   *EventPostback
-	Beacon     *EventBeacon
+	Postback   *Postback
+	Beacon     *Beacon
 }
 
 const (
@@ -97,8 +105,8 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 			PackageID string      `json:"packageId"`
 			StickerID string      `json:"stickerId"`
 		} `json:"message"`
-		Postback EventPostback `json:"postback"`
-		Beacon   EventBeacon   `json:"beacon"`
+		Postback `json:"postback"`
+		Beacon   `json:"beacon"`
 	}{}
 	if err = json.Unmarshal(body, &rawEvent); err != nil {
 		return
