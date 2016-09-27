@@ -31,15 +31,6 @@ func (client *Client) PushMessage(to string, messages ...Message) *PushMessageCa
 	}
 }
 
-// ReplyMessage method
-func (client *Client) ReplyMessage(replyToken string, messages ...Message) *ReplyMessageCall {
-	return &ReplyMessageCall{
-		c:          client,
-		replyToken: replyToken,
-		messages:   messages,
-	}
-}
-
 // PushMessageCall type
 type PushMessageCall struct {
 	c   *Client
@@ -80,6 +71,15 @@ func (call *PushMessageCall) Do() (*BasicResponse, error) {
 		return nil, err
 	}
 	return decodeToBasicResponse(res)
+}
+
+// ReplyMessage method
+func (client *Client) ReplyMessage(replyToken string, messages ...Message) *ReplyMessageCall {
+	return &ReplyMessageCall{
+		c:          client,
+		replyToken: replyToken,
+		messages:   messages,
+	}
 }
 
 // ReplyMessageCall type

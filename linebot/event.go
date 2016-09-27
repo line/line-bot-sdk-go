@@ -78,7 +78,7 @@ const (
 	nanosecPerMillisec = int64(time.Millisecond / time.Nanosecond)
 )
 
-// UnmarshalJSON constructs a Event from JSON-encoded data.
+// UnmarshalJSON method of Event
 func (e *Event) UnmarshalJSON(body []byte) (err error) {
 	rawEvent := struct {
 		ReplyToken string      `json:"replyToken"`
