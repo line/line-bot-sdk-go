@@ -20,7 +20,7 @@ import (
 	"golang.org/x/net/context"
 )
 
-// GetMessageContent function
+// GetMessageContent method
 func (client *Client) GetMessageContent(messageID string) *GetMessageContentCall {
 	return &GetMessageContentCall{
 		c:         client,

@@ -20,7 +20,7 @@ import (
 	"golang.org/x/net/context"
 )
 
-// GetProfile function
+// GetProfile method
 func (client *Client) GetProfile(userID string) *GetProfileCall {
 	return &GetProfileCall{
 		c:      client,

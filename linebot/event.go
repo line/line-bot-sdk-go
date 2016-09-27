@@ -59,7 +59,7 @@ type Postback struct {
 // BeaconEventType type
 type BeaconEventType string
 
-// EventType constants
+// BeaconEventType constants
 const (
 	BeaconEventTypeEnter BeaconEventType = "enter"
 )

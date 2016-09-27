@@ -52,7 +52,7 @@ type ButtonsTemplate struct {
 	Actions           []TemplateAction
 }
 
-// MarshalJSON method of ComfirmTemlate
+// MarshalJSON method of ButtonsTemplate
 func (t *ButtonsTemplate) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type              TemplateType     `json:"type"`
@@ -75,7 +75,7 @@ type ConfirmTemplate struct {
 	Actions []TemplateAction
 }
 
-// MarshalJSON method of ConfirmTemlate
+// MarshalJSON method of ConfirmTemplate
 func (t *ConfirmTemplate) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type    TemplateType     `json:"type"`
@@ -183,7 +183,7 @@ type MessageTemplateAction struct {
 	Text  string
 }
 
-// MarshalJSON method of MessageAction
+// MarshalJSON method of MessageTemplateAction
 func (a *MessageTemplateAction) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type  TemplateActionType `json:"type"`
@@ -203,7 +203,7 @@ type PostbackTemplateAction struct {
 	Text  string
 }
 
-// MarshalJSON method of PostbackAction
+// MarshalJSON method of PostbackTemplateAction
 func (a *PostbackTemplateAction) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type  TemplateActionType `json:"type"`
