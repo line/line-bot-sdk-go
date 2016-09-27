@@ -42,6 +42,9 @@ func main() {
 	...
 ```
 
+## Requirements
+
+This library requires Go 1.6 or later.
 
 ## LICENSE
 
