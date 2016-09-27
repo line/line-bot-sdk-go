@@ -278,7 +278,7 @@ var webhookTestWantEvents = []Event{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
 		},
-		Postback: &EventPostback{
+		Postback: &Postback{
 			Data: "action=buyItem&itemId=123123&color=red",
 		},
 	},
@@ -290,9 +290,9 @@ var webhookTestWantEvents = []Event{
 			Type:   EventSourceTypeUser,
 			UserID: "U012345678901234567890123456789ab",
 		},
-		Beacon: &EventBeacon{
+		Beacon: &Beacon{
 			Hwid: "374591320",
-			Type: "enter",
+			Type: BeaconEventTypeEnter,
 		},
 	},
 }
