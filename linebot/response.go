@@ -17,7 +17,6 @@ package linebot
 import (
 	"encoding/json"
 	"io"
-	"mime"
 	"net/http"
 )
 
@@ -49,7 +48,6 @@ type MessageContentResponse struct {
 	Content       io.ReadCloser
 	ContentLength int64
 	ContentType   string
-	FileName      string
 }
 
 func checkResponse(res *http.Response) error {
@@ -97,15 +95,10 @@ func decodeToMessageContentResponse(res *http.Response) (*MessageContentResponse
 	if err := checkResponse(res); err != nil {
 		return nil, err
 	}
-	_, params, err := mime.ParseMediaType(res.Header.Get("Content-Disposition"))
-	if err != nil {
-		return nil, err
-	}
 	result := MessageContentResponse{
 		Content:       res.Body,
 		ContentType:   res.Header.Get("Content-Type"),
 		ContentLength: res.ContentLength,
-		FileName:      params["filename"],
 	}
 	return &result, nil
 }
