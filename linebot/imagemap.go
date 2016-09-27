@@ -18,10 +18,13 @@ import (
 	"encoding/json"
 )
 
+// ImagemapActionType type
+type ImagemapActionType string
+
 // ImagemapActionType constants
 const (
-	ImagemapActionTypeURI     = "uri"
-	ImagemapActionTypeMessage = "message"
+	ImagemapActionTypeURI     ImagemapActionType = "uri"
+	ImagemapActionTypeMessage ImagemapActionType = "message"
 )
 
 // ImagemapBaseSize type
@@ -53,9 +56,9 @@ type URIImagemapAction struct {
 // MarshalJSON method of ImagemapURIAction
 func (a *URIImagemapAction) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type    string       `json:"type"`
-		LinkURL string       `json:"linkUri"`
-		Area    ImagemapArea `json:"area"`
+		Type    ImagemapActionType `json:"type"`
+		LinkURL string             `json:"linkUri"`
+		Area    ImagemapArea       `json:"area"`
 	}{
 		Type:    ImagemapActionTypeURI,
 		LinkURL: a.LinkURL,
@@ -72,9 +75,9 @@ type MessageImagemapAction struct {
 // MarshalJSON method of MessageImagemapAction
 func (a *MessageImagemapAction) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type string       `json:"type"`
-		Text string       `json:"text"`
-		Area ImagemapArea `json:"area"`
+		Type ImagemapActionType `json:"type"`
+		Text string             `json:"text"`
+		Area ImagemapArea       `json:"area"`
 	}{
 		Type: ImagemapActionTypeMessage,
 		Text: a.Text,

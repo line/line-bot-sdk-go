@@ -24,13 +24,13 @@ type EventType string
 
 // EventType constants
 const (
-	EventTypeMessage  = "message"
-	EventTypeFollow   = "follow"
-	EventTypeUnfollow = "unfollow"
-	EventTypeJoin     = "join"
-	EventTypeLeave    = "leave"
-	EventTypePostback = "postback"
-	EventTypeBeacon   = "beacon"
+	EventTypeMessage  EventType = "message"
+	EventTypeFollow   EventType = "follow"
+	EventTypeUnfollow EventType = "unfollow"
+	EventTypeJoin     EventType = "join"
+	EventTypeLeave    EventType = "leave"
+	EventTypePostback EventType = "postback"
+	EventTypeBeacon   EventType = "beacon"
 )
 
 // EventSourceType type
@@ -38,9 +38,9 @@ type EventSourceType string
 
 // EventSourceType constants
 const (
-	EventSourceTypeUser  = "user"
-	EventSourceTypeGroup = "group"
-	EventSourceTypeRoom  = "room"
+	EventSourceTypeUser  EventSourceType = "user"
+	EventSourceTypeGroup EventSourceType = "group"
+	EventSourceTypeRoom  EventSourceType = "room"
 )
 
 // EventSource type

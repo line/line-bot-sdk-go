@@ -23,14 +23,14 @@ type MessageType string
 
 // MessageType constants
 const (
-	MessageTypeText     = "text"
-	MessageTypeImage    = "image"
-	MessageTypeVideo    = "video"
-	MessageTypeAudio    = "audio"
-	MessageTypeLocation = "location"
-	MessageTypeSticker  = "sticker"
-	MessageTypeTemplate = "template"
-	MessageTypeImagemap = "imagemap"
+	MessageTypeText     MessageType = "text"
+	MessageTypeImage    MessageType = "image"
+	MessageTypeVideo    MessageType = "video"
+	MessageTypeAudio    MessageType = "audio"
+	MessageTypeLocation MessageType = "location"
+	MessageTypeSticker  MessageType = "sticker"
+	MessageTypeTemplate MessageType = "template"
+	MessageTypeImagemap MessageType = "imagemap"
 )
 
 // Message inteface

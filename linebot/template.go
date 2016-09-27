@@ -23,9 +23,9 @@ type TemplateType string
 
 // TemplateType constants
 const (
-	TemplateTypeButtons  = "buttons"
-	TemplateTypeConfirm  = "confirm"
-	TemplateTypeCarousel = "carousel"
+	TemplateTypeButtons  TemplateType = "buttons"
+	TemplateTypeConfirm  TemplateType = "confirm"
+	TemplateTypeCarousel TemplateType = "carousel"
 )
 
 // TemplateActionType type
@@ -33,9 +33,9 @@ type TemplateActionType string
 
 // TemplateActionType constants
 const (
-	TemplateActionTypeURI      = "uri"
-	TemplateActionTypeMessage  = "message"
-	TemplateActionTypePostback = "postback"
+	TemplateActionTypeURI      TemplateActionType = "uri"
+	TemplateActionTypeMessage  TemplateActionType = "message"
+	TemplateActionTypePostback TemplateActionType = "postback"
 )
 
 // Template interface
