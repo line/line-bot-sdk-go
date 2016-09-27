@@ -96,20 +96,21 @@ func (client *Client) do(ctx context.Context, req *http.Request) (*http.Response
 	req.Header.Set("X-LINE-ChannelToken", client.channelToken)
 	req.Header.Set("Authorization", "Bearer "+client.channelToken)
 	req.Header.Set("User-Agent", "LINE-BotSDK-Go/"+version)
-	if ctx == nil {
-		return client.httpClient.Do(req)
+	if ctx != nil {
+		return ctxhttp.Do(ctx, client.httpClient, req)
 	}
-	return ctxhttp.Do(ctx, client.httpClient, req)
+	return client.httpClient.Do(req)
+
 }
 
-func (client *Client) get(ctx context.Context, endpoint string) (res *http.Response, err error) {
+func (client *Client) get(ctx context.Context, endpoint string) (*http.Response, error) {
 	url, err := client.url(endpoint)
 	if err != nil {
-		return
+		return nil, err
 	}
 	req, err := http.NewRequest("GET", url.String(), nil)
 	if err != nil {
-		return
+		return nil, err
 	}
 	return client.do(ctx, req)
 }

@@ -53,7 +53,7 @@ type URIImagemapAction struct {
 	Area    ImagemapArea
 }
 
-// MarshalJSON method of ImagemapURIAction
+// MarshalJSON method of URIImagemapAction
 func (a *URIImagemapAction) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type    ImagemapActionType `json:"type"`

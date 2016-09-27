@@ -23,7 +23,7 @@ import (
 	"net/http"
 )
 
-// ParseRequest function
+// ParseRequest method
 func (client *Client) ParseRequest(r *http.Request) (events []Event, err error) {
 	defer r.Body.Close()
 	body, err := ioutil.ReadAll(r.Body)
