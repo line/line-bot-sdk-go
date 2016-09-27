@@ -74,17 +74,21 @@ func WithHTTPClient(c *http.Client) ClientOption {
 // WithEndpointBase function
 func WithEndpointBase(endpointBase string) ClientOption {
 	return func(client *Client) error {
+		_, err := url.ParseRequestURI(endpointBase)
+		if err != nil {
+			return err
+		}
 		client.endpointBase = endpointBase
 		return nil
 	}
 }
 
-func (client *Client) url(endpoint string) (url *url.URL, err error) {
-	url, err = url.Parse(client.endpointBase)
+func (client *Client) url(endpoint string) (_url *url.URL, err error) {
+	_url, err = url.ParseRequestURI(client.endpointBase)
 	if err != nil {
 		return
 	}
-	url.Path = endpoint
+	_url.Path = endpoint
 	return
 }
 
