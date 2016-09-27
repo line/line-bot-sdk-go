@@ -46,15 +46,13 @@ func TestGetMessageContent(t *testing.T) {
 			ResponseCode: 200,
 			Response:     []byte{0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10},
 			ResponseHeader: map[string]string{
-				"Content-Disposition": `attachment; filename="example.jpg"`,
-				"Content-Type":        "image/jpeg",
-				"Content-Length":      "6",
+				"Content-Type":   "image/jpeg",
+				"Content-Length": "6",
 			},
 			Want: want{
 				URLPath:     fmt.Sprintf(APIEndpointGetMessageContent, "325708"),
 				RequestBody: []byte(""),
 				Response: &MessageContentResponse{
-					FileName:      "example.jpg",
 					ContentType:   "image/jpeg",
 					ContentLength: 6,
 				},
@@ -138,7 +136,6 @@ func TestGetMessageContentWithContext(t *testing.T) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 		time.Sleep(10 * time.Millisecond)
-		w.Header().Add("Content-Disposition", `attachment; filename="example.jpg"`)
 		w.Write([]byte{0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10})
 	}))
 	defer server.Close()
@@ -157,7 +154,6 @@ func TestGetMessageContentWithContext(t *testing.T) {
 func BenchmarkGetMessageContent(b *testing.B) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
-		w.Header().Add("Content-Disposition", `attachment; filename="example.jpg"`)
 		w.Write([]byte{0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10})
 	}))
 	defer server.Close()
