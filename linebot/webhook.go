@@ -24,11 +24,11 @@ import (
 )
 
 // ParseRequest method
-func (client *Client) ParseRequest(r *http.Request) (events []Event, err error) {
+func (client *Client) ParseRequest(r *http.Request) ([]Event, error) {
 	defer r.Body.Close()
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		return
+		return nil, err
 	}
 	if !client.validateSignature(r.Header.Get("X-LINE-Signature"), body) {
 		return nil, ErrInvalidSignature
