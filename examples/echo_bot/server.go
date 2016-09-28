@@ -23,11 +23,18 @@ import (
 )
 
 func main() {
-	bot, err := linebot.New(
-		os.Getenv("CHANNEL_SECRET"),
-		os.Getenv("CHANNEL_TOKEN"),
-		linebot.WithEndpointBase(os.Getenv("ENDPOINT_BASE")),
+	var (
+		bot             *linebot.Client
+		err             error
+		channelSecret   = os.Getenv("CHANNEL_SECRET")
+		channelToken    = os.Getenv("CHANNEL_TOKEN")
+		apiEndpointBase = os.Getenv("ENDPOINT_BASE")
 	)
+	if apiEndpointBase != "" {
+		bot, err = linebot.New(channelSecret, channelToken, linebot.WithEndpointBase(apiEndpointBase))
+	} else {
+		bot, err = linebot.New(channelSecret, channelToken)
+	}
 	if err != nil {
 		log.Fatal(err)
 	}
