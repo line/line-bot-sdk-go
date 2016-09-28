@@ -58,7 +58,15 @@ type KitchenSink struct {
 
 // NewKitchenSink function
 func NewKitchenSink(channelSecret, channelToken, appBaseURL string) (*KitchenSink, error) {
-	bot, err := linebot.New(channelSecret, channelToken)
+	apiEndpointBase := os.Getenv("ENDPOINT_BASE")
+	if apiEndpointBase == "" {
+		apiEndpointBase = linebot.APIEndpointBase
+	}
+	bot, err := linebot.New(
+		channelSecret,
+		channelToken,
+		linebot.WithEndpointBase(apiEndpointBase), // Usually you omit this.
+	)
 	if err != nil {
 		return nil, err
 	}
