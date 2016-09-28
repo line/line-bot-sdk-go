@@ -30,7 +30,6 @@ func main() {
 	app, err := NewKitchenSink(
 		os.Getenv("CHANNEL_SECRET"),
 		os.Getenv("CHANNEL_TOKEN"),
-		os.Getenv("ENDPOINT_BASE"),
 		os.Getenv("APP_BASE_URL"),
 	)
 	if err != nil {
@@ -58,8 +57,16 @@ type KitchenSink struct {
 }
 
 // NewKitchenSink function
-func NewKitchenSink(channelSecret, channelToken, apiEndpointBase, appBaseURL string) (*KitchenSink, error) {
-	bot, err := linebot.New(channelSecret, channelToken, linebot.WithEndpointBase(apiEndpointBase))
+func NewKitchenSink(channelSecret, channelToken, appBaseURL string) (*KitchenSink, error) {
+	apiEndpointBase := os.Getenv("ENDPOINT_BASE")
+	if apiEndpointBase == "" {
+		apiEndpointBase = linebot.APIEndpointBase
+	}
+	bot, err := linebot.New(
+		channelSecret,
+		channelToken,
+		linebot.WithEndpointBase(apiEndpointBase), // Usually you omit this.
+	)
 	if err != nil {
 		return nil, err
 	}

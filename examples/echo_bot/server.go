@@ -26,7 +26,6 @@ func main() {
 	bot, err := linebot.New(
 		os.Getenv("CHANNEL_SECRET"),
 		os.Getenv("CHANNEL_TOKEN"),
-		linebot.WithEndpointBase(os.Getenv("ENDPOINT_BASE")),
 	)
 	if err != nil {
 		log.Fatal(err)
