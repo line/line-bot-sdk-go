@@ -260,8 +260,9 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 func (app *KitchenSink) handleImage(message *linebot.ImageMessage, replyToken string) error {
 	return app.handleHeavyContent(message.ID, func(originalContent *os.File) error {
 		// You need to install ImageMagick.
-		previewImagePath := originalContent.Name() + "-preview.jpg"
-		_, err := exec.Command("convert", "-resize", "240x", originalContent.Name(), previewImagePath).Output()
+		// And you should consider about security and scalability.
+		previewImagePath := originalContent.Name() + "-preview"
+		_, err := exec.Command("convert", "-resize", "240x", "jpeg:"+originalContent.Name(), "jpeg:"+previewImagePath).Output()
 		if err != nil {
 			return err
 		}
@@ -281,17 +282,14 @@ func (app *KitchenSink) handleImage(message *linebot.ImageMessage, replyToken st
 func (app *KitchenSink) handleVideo(message *linebot.VideoMessage, replyToken string) error {
 	return app.handleHeavyContent(message.ID, func(originalContent *os.File) error {
 		// You need to install FFmpeg and ImageMagick.
-		originalVideoPath := originalContent.Name() + ".mp4"
-		if err := os.Rename(originalContent.Name(), originalVideoPath); err != nil {
-			return err
-		}
-		previewImagePath := originalContent.Name() + "-preview.jpg"
-		_, err := exec.Command("convert", originalVideoPath+"[0]", previewImagePath).Output()
+		// And you should consider about security and scalability.
+		previewImagePath := originalContent.Name() + "-preview"
+		_, err := exec.Command("convert", "mp4:"+originalContent.Name()+"[0]", "jpeg:"+previewImagePath).Output()
 		if err != nil {
 			return err
 		}
 
-		originalContentURL := app.appBaseURL + "/downloaded/" + filepath.Base(originalVideoPath)
+		originalContentURL := app.appBaseURL + "/downloaded/" + filepath.Base(originalContent.Name())
 		previewImageURL := app.appBaseURL + "/downloaded/" + filepath.Base(previewImagePath)
 		if _, err := app.bot.ReplyMessage(
 			replyToken,
