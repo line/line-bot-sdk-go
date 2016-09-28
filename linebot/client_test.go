@@ -18,6 +18,8 @@ import (
 	"crypto/tls"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
+	"reflect"
 	"testing"
 )
 
@@ -43,6 +45,7 @@ func mockClient(server *httptest.Server) (*Client, error) {
 func TestNewClient(t *testing.T) {
 	secret := "testsecret"
 	token := "testtoken"
+	wantURL, _ := url.Parse(APIEndpointBase)
 	client, err := New(secret, token)
 	if err != nil {
 		t.Error(err)
@@ -53,8 +56,8 @@ func TestNewClient(t *testing.T) {
 	if client.channelToken != token {
 		t.Errorf("channelToken %s; want %s", client.channelSecret, secret)
 	}
-	if client.endpointBase != APIEndpointBase {
-		t.Errorf("endpointBase %s; want %s", client.endpointBase, APIEndpointBase)
+	if !reflect.DeepEqual(client.endpointBase, wantURL) {
+		t.Errorf("endpointBase %q; want %q", client.endpointBase, wantURL)
 	}
 	if client.httpClient != http.DefaultClient {
 		t.Errorf("httpClient %p; want %p", client.httpClient, http.DefaultClient)
@@ -66,6 +69,7 @@ func TestNewClientWithOptions(t *testing.T) {
 	token := "testtoken"
 	endpoint := "https://example.test/"
 	httpClient := http.Client{}
+	wantURL, _ := url.Parse(endpoint)
 	client, err := New(
 		secret,
 		token,
@@ -75,8 +79,8 @@ func TestNewClientWithOptions(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	if client.endpointBase != endpoint {
-		t.Errorf("endpointBase %s; want %s", client.endpointBase, APIEndpointBase)
+	if !reflect.DeepEqual(client.endpointBase, wantURL) {
+		t.Errorf("endpointBase %q; want %q", client.endpointBase, wantURL)
 	}
 	if client.httpClient != &httpClient {
 		t.Errorf("httpClient %p; want %p", client.httpClient, &httpClient)

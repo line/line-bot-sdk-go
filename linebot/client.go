@@ -18,6 +18,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"path"
 
 	"golang.org/x/net/context"
 	"golang.org/x/net/context/ctxhttp"
@@ -39,7 +40,7 @@ const (
 type Client struct {
 	channelSecret string
 	channelToken  string
-	endpointBase  string       // default APIEndpointBase
+	endpointBase  *url.URL     // default APIEndpointBase
 	httpClient    *http.Client // default http.DefaultClient
 }
 
@@ -51,7 +52,6 @@ func New(channelSecret, channelToken string, options ...ClientOption) (*Client, 
 	c := &Client{
 		channelSecret: channelSecret,
 		channelToken:  channelToken,
-		endpointBase:  APIEndpointBase,
 		httpClient:    http.DefaultClient,
 	}
 	for _, option := range options {
@@ -59,6 +59,13 @@ func New(channelSecret, channelToken string, options ...ClientOption) (*Client, 
 		if err != nil {
 			return nil, err
 		}
+	}
+	if c.endpointBase == nil {
+		u, err := url.ParseRequestURI(APIEndpointBase)
+		if err != nil {
+			return nil, err
+		}
+		c.endpointBase = u
 	}
 	return c, nil
 }
@@ -74,22 +81,19 @@ func WithHTTPClient(c *http.Client) ClientOption {
 // WithEndpointBase function
 func WithEndpointBase(endpointBase string) ClientOption {
 	return func(client *Client) error {
-		_, err := url.ParseRequestURI(endpointBase)
+		u, err := url.ParseRequestURI(endpointBase)
 		if err != nil {
 			return err
 		}
-		client.endpointBase = endpointBase
+		client.endpointBase = u
 		return nil
 	}
 }
 
-func (client *Client) url(endpoint string) (_url *url.URL, err error) {
-	_url, err = url.ParseRequestURI(client.endpointBase)
-	if err != nil {
-		return
-	}
-	_url.Path = endpoint
-	return
+func (client *Client) url(endpoint string) string {
+	u := *client.endpointBase
+	u.Path = path.Join(u.Path, endpoint)
+	return u.String()
 }
 
 func (client *Client) do(ctx context.Context, req *http.Request) (*http.Response, error) {
@@ -104,11 +108,7 @@ func (client *Client) do(ctx context.Context, req *http.Request) (*http.Response
 }
 
 func (client *Client) get(ctx context.Context, endpoint string) (*http.Response, error) {
-	url, err := client.url(endpoint)
-	if err != nil {
-		return nil, err
-	}
-	req, err := http.NewRequest("GET", url.String(), nil)
+	req, err := http.NewRequest("GET", client.url(endpoint), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -116,11 +116,7 @@ func (client *Client) get(ctx context.Context, endpoint string) (*http.Response,
 }
 
 func (client *Client) post(ctx context.Context, endpoint string, body io.Reader) (*http.Response, error) {
-	url, err := client.url(endpoint)
-	if err != nil {
-		return nil, err
-	}
-	req, err := http.NewRequest("POST", url.String(), body)
+	req, err := http.NewRequest("POST", client.url(endpoint), body)
 	if err != nil {
 		return nil, err
 	}
