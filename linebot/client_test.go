@@ -45,7 +45,7 @@ func TestNewClient(t *testing.T) {
 	token := "testtoken"
 	client, err := New(secret, token)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	if client.channelSecret != secret {
 		t.Errorf("channelSecret %s; want %s", client.channelSecret, secret)
@@ -73,7 +73,7 @@ func TestNewClientWithOptions(t *testing.T) {
 		WithEndpointBase(endpoint),
 	)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	if client.endpointBase != endpoint {
 		t.Errorf("endpointBase %s; want %s", client.endpointBase, APIEndpointBase)
