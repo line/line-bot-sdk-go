@@ -230,7 +230,7 @@ func TestPushMessages(t *testing.T) {
 		}
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
-			t.Error(err)
+			t.Fatal(err)
 		}
 		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
 			t.Errorf("RequestBody %s; want %s", body, tc.Want.RequestBody)
@@ -241,7 +241,7 @@ func TestPushMessages(t *testing.T) {
 	defer server.Close()
 	client, err := mockClient(server)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
@@ -272,7 +272,7 @@ func TestPushMessagesWithContext(t *testing.T) {
 	defer server.Close()
 	client, err := mockClient(server)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
 	defer cancel()
@@ -373,7 +373,7 @@ func TestReplyMessages(t *testing.T) {
 		}
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
-			t.Error(err)
+			t.Fatal(err)
 		}
 		tc := testCases[currentTestIdx]
 		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
@@ -385,7 +385,7 @@ func TestReplyMessages(t *testing.T) {
 	defer server.Close()
 	client, err := mockClient(server)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
@@ -416,7 +416,7 @@ func TestReplyMessagesWithContext(t *testing.T) {
 	defer server.Close()
 	client, err := mockClient(server)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
 	defer cancel()
@@ -434,7 +434,7 @@ func BenchmarkPushMessages(b *testing.B) {
 	defer server.Close()
 	client, err := mockClient(server)
 	if err != nil {
-		b.Error(err)
+		b.Fatal(err)
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -450,7 +450,7 @@ func BenchmarkReplyMessages(b *testing.B) {
 	defer server.Close()
 	client, err := mockClient(server)
 	if err != nil {
-		b.Error(err)
+		b.Fatal(err)
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {

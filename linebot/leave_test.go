@@ -79,7 +79,7 @@ func TestLeaveGroup(t *testing.T) {
 		}
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
-			t.Error(err)
+			t.Fatal(err)
 		}
 		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
 			t.Errorf("RequestBody %s; want %s", body, tc.Want.RequestBody)
@@ -90,7 +90,7 @@ func TestLeaveGroup(t *testing.T) {
 	defer server.Close()
 	client, err := mockClient(server)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
@@ -121,7 +121,7 @@ func TestLeaveGroupWithContext(t *testing.T) {
 	defer server.Close()
 	client, err := mockClient(server)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
 	defer cancel()
@@ -184,7 +184,7 @@ func TestLeaveRoom(t *testing.T) {
 		}
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
-			t.Error(err)
+			t.Fatal(err)
 		}
 		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
 			t.Errorf("RequestBody %s; want %s", body, tc.Want.RequestBody)
@@ -195,7 +195,7 @@ func TestLeaveRoom(t *testing.T) {
 	defer server.Close()
 	client, err := mockClient(server)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
@@ -226,7 +226,7 @@ func TestTestLeaveRoomWithContext(t *testing.T) {
 	defer server.Close()
 	client, err := mockClient(server)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
 	defer cancel()
@@ -244,7 +244,7 @@ func BenchmarkLeaveGroup(b *testing.B) {
 	defer server.Close()
 	client, err := mockClient(server)
 	if err != nil {
-		b.Error(err)
+		b.Fatal(err)
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -260,7 +260,7 @@ func BenchmarkLeaveRoom(b *testing.B) {
 	defer server.Close()
 	client, err := mockClient(server)
 	if err != nil {
-		b.Error(err)
+		b.Fatal(err)
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
