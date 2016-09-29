@@ -20,6 +20,7 @@ import (
 	"os"
 
 	"github.com/line/line-bot-sdk-go/linebot"
+	"github.com/line/line-bot-sdk-go/linebot/httphandler"
 )
 
 func main() {
@@ -32,20 +33,10 @@ func main() {
 	}
 
 	// Setup HTTP Server for receiving requests from LINE platform
-	http.HandleFunc("/callback", func(w http.ResponseWriter, req *http.Request) {
-		events, err := bot.ParseRequest(req)
-		if err != nil {
-			if err == linebot.ErrInvalidSignature {
-				w.WriteHeader(400)
-			} else {
-				w.WriteHeader(500)
-			}
-			return
-		}
+	http.Handle("/callback", httphandler.New(bot, func(events []*linebot.Event) {
 		for _, event := range events {
 			if event.Type == linebot.EventTypeMessage {
-				switch message := event.Message.(type) {
-				case *linebot.TextMessage:
+				if message, ok := event.Message.(*linebot.TextMessage); ok {
 					source := event.Source
 					if source.Type == linebot.EventSourceTypeUser {
 						if _, err = bot.PushMessage(source.UserID, linebot.NewTextMessage(message.Text)).Do(); err != nil {
@@ -55,7 +46,7 @@ func main() {
 				}
 			}
 		}
-	})
+	}))
 	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
 		log.Fatal(err)
 	}
