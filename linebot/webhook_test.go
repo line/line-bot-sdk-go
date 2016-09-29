@@ -170,7 +170,7 @@ var webhookTestWantEvents = []Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeMessage,
-		Timestamp:  time.Date(2016, time.May, 7, 22, 57, 59, int(859*time.Millisecond), time.Local),
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
@@ -183,7 +183,7 @@ var webhookTestWantEvents = []Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeMessage,
-		Timestamp:  time.Date(2016, time.May, 7, 22, 57, 59, int(859*time.Millisecond), time.Local),
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:    EventSourceTypeGroup,
 			UserID:  "u206d25c2ea6bd87c17655609a1c37cb8",
@@ -197,7 +197,7 @@ var webhookTestWantEvents = []Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeMessage,
-		Timestamp:  time.Date(2016, time.May, 7, 22, 57, 59, int(859*time.Millisecond), time.Local),
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
@@ -209,7 +209,7 @@ var webhookTestWantEvents = []Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeMessage,
-		Timestamp:  time.Date(2016, time.May, 7, 22, 57, 59, int(859*time.Millisecond), time.Local),
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
@@ -225,7 +225,7 @@ var webhookTestWantEvents = []Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeMessage,
-		Timestamp:  time.Date(2016, time.May, 7, 22, 57, 59, int(859*time.Millisecond), time.Local),
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
@@ -239,7 +239,7 @@ var webhookTestWantEvents = []Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeFollow,
-		Timestamp:  time.Date(2016, time.May, 7, 22, 57, 59, int(859*time.Millisecond), time.Local),
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
@@ -247,7 +247,7 @@ var webhookTestWantEvents = []Event{
 	},
 	{
 		Type:      EventTypeUnfollow,
-		Timestamp: time.Date(2016, time.May, 7, 22, 57, 59, int(859*time.Millisecond), time.Local),
+		Timestamp: time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
@@ -256,7 +256,7 @@ var webhookTestWantEvents = []Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeJoin,
-		Timestamp:  time.Date(2016, time.May, 7, 22, 57, 59, int(859*time.Millisecond), time.Local),
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:    EventSourceTypeGroup,
 			GroupID: "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
@@ -264,7 +264,7 @@ var webhookTestWantEvents = []Event{
 	},
 	{
 		Type:      EventTypeLeave,
-		Timestamp: time.Date(2016, time.May, 7, 22, 57, 59, int(859*time.Millisecond), time.Local),
+		Timestamp: time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:    EventSourceTypeGroup,
 			GroupID: "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
@@ -273,7 +273,7 @@ var webhookTestWantEvents = []Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypePostback,
-		Timestamp:  time.Date(2016, time.May, 7, 22, 57, 59, int(859*time.Millisecond), time.Local),
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
@@ -285,7 +285,7 @@ var webhookTestWantEvents = []Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeBeacon,
-		Timestamp:  time.Date(2016, time.May, 7, 22, 57, 59, int(859*time.Millisecond), time.Local),
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "U012345678901234567890123456789ab",
