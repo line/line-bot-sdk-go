@@ -114,7 +114,7 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 
 	e.ReplyToken = rawEvent.ReplyToken
 	e.Type = rawEvent.Type
-	e.Timestamp = time.Unix(rawEvent.Timestamp/millisecPerSec, (rawEvent.Timestamp%millisecPerSec)*nanosecPerMillisec)
+	e.Timestamp = time.Unix(rawEvent.Timestamp/millisecPerSec, (rawEvent.Timestamp%millisecPerSec)*nanosecPerMillisec).UTC()
 	e.Source = &rawEvent.Source
 
 	switch rawEvent.Type {
