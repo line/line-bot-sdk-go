@@ -1,43 +1,53 @@
+// Copyright 2016 LINE Corporation
+//
+// LINE Corporation licenses this file to you under the Apache License,
+// version 2.0 (the "License"); you may not use this file except in compliance
+// with the License. You may obtain a copy of the License at:
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+// WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+// License for the specific language governing permissions and limitations
+// under the License.
+
 package linebot
 
 import (
-	"io"
-	"mime"
-	"net/http"
+	"fmt"
+
+	"golang.org/x/net/context"
 )
 
-// MessageContentResponse type
-type MessageContentResponse struct {
-	Content  io.ReadCloser
-	FileName string
+// GetMessageContent method
+func (client *Client) GetMessageContent(messageID string) *GetMessageContentCall {
+	return &GetMessageContentCall{
+		c:         client,
+		messageID: messageID,
+	}
 }
 
-func newMessageContentResponse(res *http.Response) (mc *MessageContentResponse) {
-	mc = &MessageContentResponse{
-		Content: res.Body,
-	}
-	_, params, err := mime.ParseMediaType(res.Header.Get("Content-Disposition"))
-	if err != nil {
-		return
-	}
-	mc.FileName = params["filename"]
-	return
+// GetMessageContentCall type
+type GetMessageContentCall struct {
+	c   *Client
+	ctx context.Context
+
+	messageID string
 }
 
-// GetMessageContent function
-func (client *Client) GetMessageContent(content *ReceivedContent) (mc *MessageContentResponse, err error) {
-	res, err := client.get(APIEndpointMessage+"/"+content.ID+"/content", "")
-	if err != nil {
-		return
-	}
-	return newMessageContentResponse(res), nil
+// WithContext method
+func (call *GetMessageContentCall) WithContext(ctx context.Context) *GetMessageContentCall {
+	call.ctx = ctx
+	return call
 }
 
-// GetMessageContentPreview function
-func (client *Client) GetMessageContentPreview(content *ReceivedContent) (mc *MessageContentResponse, err error) {
-	res, err := client.get(APIEndpointMessage+"/"+content.ID+"/content/preview", "")
+// Do method
+func (call *GetMessageContentCall) Do() (*MessageContentResponse, error) {
+	endpoint := fmt.Sprintf(APIEndpointGetMessageContent, call.messageID)
+	res, err := call.c.get(call.ctx, endpoint)
 	if err != nil {
-		return
+		return nil, err
 	}
-	return newMessageContentResponse(res), nil
+	return decodeToMessageContentResponse(res)
 }

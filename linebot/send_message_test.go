@@ -1,305 +1,459 @@
+// Copyright 2016 LINE Corporation
+//
+// LINE Corporation licenses this file to you under the Apache License,
+// version 2.0 (the "License"); you may not use this file except in compliance
+// with the License. You may obtain a copy of the License at:
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+// WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+// License for the specific language governing permissions and limitations
+// under the License.
+
 package linebot
 
 import (
-	"encoding/json"
+	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
 	"testing"
+	"time"
+
+	"golang.org/x/net/context"
 )
 
-func TestSendText(t *testing.T) {
+func TestPushMessages(t *testing.T) {
+	var toUserID = "U0cc15697597f61dd8b01cea8b027050e"
+	type want struct {
+		RequestBody []byte
+		Response    *BasicResponse
+		Error       error
+	}
+	var testCases = []struct {
+		Messages     []Message
+		Response     []byte
+		ResponseCode int
+		Want         want
+	}{
+		{
+			// A test message
+			Messages:     []Message{NewTextMessage("Hello, world")},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"text","text":"Hello, world"}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A image message
+			Messages:     []Message{NewImageMessage("http://example.com/original.jpg", "http://example.com/preview.jpg")},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"image","originalContentUrl":"http://example.com/original.jpg","previewImageUrl":"http://example.com/preview.jpg"}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A video message
+			Messages:     []Message{NewVideoMessage("http://example.com/original.mp4", "http://example.com/preview.jpg")},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"video","originalContentUrl":"http://example.com/original.mp4","previewImageUrl":"http://example.com/preview.jpg"}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A audio message
+			Messages:     []Message{NewAudioMessage("http://example.com/original.m4a", 1000)},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"audio","originalContentUrl":"http://example.com/original.m4a","duration":1000}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A location message
+			Messages:     []Message{NewLocationMessage("title", "address", 35.65910807942215, 139.70372892916203)},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"location","title":"title","address":"address","latitude":35.65910807942215,"longitude":139.70372892916203}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A sticker message
+			Messages:     []Message{NewStickerMessage("1", "1")},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"sticker","packageId":"1","stickerId":"1"}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A buttons template message
+			Messages: []Message{
+				NewTemplateMessage(
+					"this is a buttons template",
+					NewButtonsTemplate(
+						"https://example.com/bot/images/image.jpg",
+						"Menu",
+						"Please select",
+						NewPostbackTemplateAction("Buy", "action=buy&itemid=123", ""),
+						NewPostbackTemplateAction("Buy", "action=buy&itemid=123", "text"),
+						NewURITemplateAction("View detail", "http://example.com/page/123"),
+					),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a buttons template","template":{"type":"buttons","thumbnailImageUrl":"https://example.com/bot/images/image.jpg","title":"Menu","text":"Please select","actions":[{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123"},{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","text":"text"},{"type":"uri","label":"View detail","uri":"http://example.com/page/123"}]}}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A confirm template message
+			Messages: []Message{
+				NewTemplateMessage(
+					"this is a confirm template",
+					NewConfirmTemplate(
+						"Are you sure?",
+						NewMessageTemplateAction("Yes", "yes"),
+						NewMessageTemplateAction("No", "no"),
+					),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a confirm template","template":{"type":"confirm","text":"Are you sure?","actions":[{"type":"message","label":"Yes","text":"yes"},{"type":"message","label":"No","text":"no"}]}}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A carousel template message
+			Messages: []Message{
+				NewTemplateMessage(
+					"this is a carousel template",
+					NewCarouselTemplate(
+						NewCarouselColumn(
+							"https://example.com/bot/images/item1.jpg",
+							"this is menu",
+							"description",
+							NewPostbackTemplateAction("Buy", "action=buy&itemid=111", ""),
+							NewPostbackTemplateAction("Add to cart", "action=add&itemid=111", ""),
+							NewURITemplateAction("View detail", "http://example.com/page/111"),
+						),
+					),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a carousel template","template":{"type":"carousel","columns":[{"thumbnailImageUrl":"https://example.com/bot/images/item1.jpg","title":"this is menu","text":"description","actions":[{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=111"},{"type":"postback","label":"Add to cart","data":"action=add\u0026itemid=111"},{"type":"uri","label":"View detail","uri":"http://example.com/page/111"}]}]}}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A imagemap message
+			Messages: []Message{
+				NewImagemapMessage(
+					"https://example.com/bot/images/rm001",
+					"this is an imagemap",
+					ImagemapBaseSize{1040, 1040},
+					NewURIImagemapAction("https://example.com/", ImagemapArea{520, 0, 520, 1040}),
+					NewMessageImagemapAction("hello", ImagemapArea{520, 0, 520, 1040}),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}]}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// Multiple messages
+			Messages:     []Message{NewTextMessage("Hello, world1"), NewTextMessage("Hello, world2")},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"text","text":"Hello, world1"},{"type":"text","text":"Hello, world2"}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// Bad request
+			Messages:     []Message{NewTextMessage(""), NewTextMessage("")},
+			ResponseCode: 400,
+			Response:     []byte(`{"message":"Request body has 2 error(s).","details":[{"message":"may not be empty","property":"messages[0].text"},{"message":"may not be empty","property":"messages[1].text"}]}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"text","text":""},{"type":"text","text":""}]}` + "\n"),
+				Error: &APIError{
+					Code: 400,
+					Response: &ErrorResponse{
+						Message: "Request body has 2 error(s).",
+						Details: []errorResponseDetail{
+							{
+								Message:  "may not be empty",
+								Property: "messages[0].text",
+							},
+							{
+								Message:  "may not be empty",
+								Property: "messages[1].text",
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+
+	var currentTestIdx int
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != "POST" || r.URL.Path != "/v1/events" {
-			t.Errorf("invalid request: %s %s", r.Method, r.URL.Path)
-			return
-		}
-		if r.Header.Get("Content-Type") != "application/json; charset=UTF-8" ||
-			r.Header.Get("X-Line-ChannelID") != "1000000000" ||
-			r.Header.Get("X-Line-ChannelSecret") != "testsecret" ||
-			r.Header.Get("X-Line-Trusted-User-With-ACL") != "TEST_MID" {
-			t.Errorf("invalid request header: %v", r.Header)
-			return
-		}
-
 		defer r.Body.Close()
-		var message SingleMessage
-		err := json.NewDecoder(r.Body).Decode(&message)
+		tc := testCases[currentTestIdx]
+		if r.Method != http.MethodPost {
+			t.Errorf("Method %s; want %s", r.Method, http.MethodPost)
+		}
+		if r.URL.Path != APIEndpointPushMessage {
+			t.Errorf("URLPath %s; want %s", r.URL.Path, APIEndpointPushMessage)
+		}
+		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
-			t.Error(err)
-			return
+			t.Fatal(err)
 		}
-		if message.EventType != "138311608800106203" {
-			t.Errorf("invalid request event type: %v", message.EventType)
-			return
+		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
+			t.Errorf("RequestBody %s; want %s", body, tc.Want.RequestBody)
 		}
-		if message.ToChannel != 1383378250 {
-			t.Errorf("invalid request to_channel: %v", message.ToChannel)
-			return
-		}
-		if !reflect.DeepEqual(message.To, []string{"DUMMY_MID"}) {
-			t.Errorf("invalid request to: %v", message.To)
-			return
-		}
-
-		if message.Content.Text != "hello!" {
-			t.Errorf("invalid request content text: %v", message.Content.Text)
-			return
-		}
-		if message.Content.ContentType != ContentTypeText {
-			t.Errorf("invalid request content type: %v", message.Content.ContentType)
-			return
-		}
-		if message.Content.ToType != RecipientTypeUser {
-			t.Errorf("invalid request content to_type: %v", message.Content.ToType)
-			return
-		}
-
-		w.Write([]byte(`{"failed":[],"messageId":"1347940533207","timestamp":1347940533207,"version":1}`))
+		w.WriteHeader(tc.ResponseCode)
+		w.Write(tc.Response)
 	}))
 	defer server.Close()
 	client, err := mockClient(server)
 	if err != nil {
-		t.Error(err)
-		return
+		t.Fatal(err)
 	}
-
-	res, err := client.SendText([]string{"DUMMY_MID"}, "hello!")
-	if err != nil {
-		t.Error(err)
-		return
-	}
-	if res == nil {
-		t.Error("response is nil")
-		return
-	}
-	if res.Version != 1 {
-		t.Errorf("invalid version: %v", res.Version)
-	}
-	if res.MessageID != "1347940533207" {
-		t.Errorf("invalid messageID: %v", res.MessageID)
-	}
-	if len(res.Failed) > 0 {
-		t.Errorf("failed: %v", len(res.Failed))
-	}
-	if res.Timestamp != 1347940533207 {
-		t.Errorf("invalid timestamp: %v", res.Timestamp)
+	for i, tc := range testCases {
+		currentTestIdx = i
+		res, err := client.PushMessage(toUserID, tc.Messages...).Do()
+		if tc.Want.Error != nil {
+			if !reflect.DeepEqual(err, tc.Want.Error) {
+				t.Errorf("Error %d %q; want %q", i, err, tc.Want.Error)
+			}
+		} else {
+			if err != nil {
+				t.Error(err)
+			}
+		}
+		if tc.Want.Response != nil {
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+			}
+		}
 	}
 }
 
-func TestSendImage(t *testing.T) {
+func TestPushMessagesWithContext(t *testing.T) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
-		var message SingleMessage
-		err := json.NewDecoder(r.Body).Decode(&message)
-		if err != nil {
-			t.Error(err)
-			return
-		}
-		if message.Content.ContentType != ContentTypeImage {
-			t.Errorf("invalid request content type: %v", message.Content.ContentType)
-			return
-		}
-		if message.Content.ToType != RecipientTypeUser {
-			t.Errorf("invalid request content to_type: %v", message.Content.ToType)
-			return
-		}
-		if message.Content.OriginalContentURL != "http://example.com/image.jpg" {
-			t.Errorf("invalid request content original_content_url: %v", message.Content.OriginalContentURL)
-			return
-		}
-		if message.Content.PreviewImageURL != "http://example.com/image_preview.jpg" {
-			t.Errorf("invalid request content preview_image_url: %v", message.Content.PreviewImageURL)
-			return
-		}
-		w.Write([]byte(`{"failed":[],"messageId":"1347940533207","timestamp":1347940533207,"version":1}`))
+		time.Sleep(10 * time.Millisecond)
+		w.Write([]byte("{}"))
 	}))
 	defer server.Close()
 	client, err := mockClient(server)
 	if err != nil {
-		t.Error(err)
-		return
+		t.Fatal(err)
 	}
-
-	res, err := client.SendImage([]string{"DUMMY_MID"}, "http://example.com/image.jpg", "http://example.com/image_preview.jpg")
-	if err != nil {
-		t.Error(err)
-		return
-	}
-	if res == nil {
-		t.Error("response is nil")
-		return
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
+	defer cancel()
+	_, err = client.PushMessage("U0cc15697597f61dd8b01cea8b027050e", NewTextMessage("Hello, world")).WithContext(ctx).Do()
+	if err != context.DeadlineExceeded {
+		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
 	}
 }
 
-func TestSendVideo(t *testing.T) {
+func TestReplyMessages(t *testing.T) {
+	var replyToken = "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA"
+	type want struct {
+		RequestBody []byte
+		Response    *BasicResponse
+		Error       error
+	}
+	var testCases = []struct {
+		Messages     []Message
+		Response     []byte
+		ResponseCode int
+		Want         want
+	}{
+		{
+			// A test message
+			Messages:     []Message{NewTextMessage("Hello, world")},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"replyToken":"nHuyWiB7yP5Zw52FIkcQobQuGDXCTA","messages":[{"type":"text","text":"Hello, world"}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A location message
+			Messages:     []Message{NewLocationMessage("title", "address", 35.65910807942215, 139.70372892916203)},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"replyToken":"nHuyWiB7yP5Zw52FIkcQobQuGDXCTA","messages":[{"type":"location","title":"title","address":"address","latitude":35.65910807942215,"longitude":139.70372892916203}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A image message
+			Messages:     []Message{NewImageMessage("http://example.com/original.jpg", "http://example.com/preview.jpg")},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"replyToken":"nHuyWiB7yP5Zw52FIkcQobQuGDXCTA","messages":[{"type":"image","originalContentUrl":"http://example.com/original.jpg","previewImageUrl":"http://example.com/preview.jpg"}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A sticker message
+			Messages:     []Message{NewStickerMessage("1", "1")},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"replyToken":"nHuyWiB7yP5Zw52FIkcQobQuGDXCTA","messages":[{"type":"sticker","packageId":"1","stickerId":"1"}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// Bad request
+			Messages:     []Message{NewTextMessage(""), NewTextMessage("")},
+			ResponseCode: 400,
+			Response:     []byte(`{"message":"Request body has 2 error(s).","details":[{"message":"may not be empty","property":"messages[0].text"},{"message":"may not be empty","property":"messages[1].text"}]}`),
+			Want: want{
+				RequestBody: []byte(`{"replyToken":"nHuyWiB7yP5Zw52FIkcQobQuGDXCTA","messages":[{"type":"text","text":""},{"type":"text","text":""}]}` + "\n"),
+				Error: &APIError{
+					Code: 400,
+					Response: &ErrorResponse{
+						Message: "Request body has 2 error(s).",
+						Details: []errorResponseDetail{
+							{
+								Message:  "may not be empty",
+								Property: "messages[0].text",
+							},
+							{
+								Message:  "may not be empty",
+								Property: "messages[1].text",
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+
+	var currentTestIdx int
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
-		var message SingleMessage
-		err := json.NewDecoder(r.Body).Decode(&message)
+		if r.Method != http.MethodPost {
+			t.Errorf("Method %s; want %s", r.Method, http.MethodPost)
+		}
+		if r.URL.Path != APIEndpointReplyMessage {
+			t.Errorf("URLPath %s; want %s", r.URL.Path, APIEndpointReplyMessage)
+		}
+		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
-			t.Error(err)
-			return
+			t.Fatal(err)
 		}
-		if message.Content.ContentType != ContentTypeVideo {
-			t.Errorf("invalid request content type: %v", message.Content.ContentType)
-			return
+		tc := testCases[currentTestIdx]
+		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
+			t.Errorf("RequestBody %s; want %s", body, tc.Want.RequestBody)
 		}
-		if message.Content.ToType != RecipientTypeUser {
-			t.Errorf("invalid request content to_type: %v", message.Content.ToType)
-			return
-		}
-		if message.Content.OriginalContentURL != "http://example.com/video.mp4" {
-			t.Errorf("invalid request content original_content_url: %v", message.Content.OriginalContentURL)
-			return
-		}
-		if message.Content.PreviewImageURL != "http://example.com/image_preview.jpg" {
-			t.Errorf("invalid request content preview_image_url: %v", message.Content.PreviewImageURL)
-			return
-		}
-		w.Write([]byte(`{"failed":[],"messageId":"1347940533207","timestamp":1347940533207,"version":1}`))
+		w.WriteHeader(tc.ResponseCode)
+		w.Write(tc.Response)
 	}))
 	defer server.Close()
 	client, err := mockClient(server)
 	if err != nil {
-		t.Error(err)
-		return
+		t.Fatal(err)
 	}
-
-	res, err := client.SendVideo([]string{"DUMMY_MID"}, "http://example.com/video.mp4", "http://example.com/image_preview.jpg")
-	if err != nil {
-		t.Error(err)
-		return
-	}
-	if res == nil {
-		t.Error("response is nil")
-		return
+	for i, tc := range testCases {
+		currentTestIdx = i
+		res, err := client.ReplyMessage(replyToken, tc.Messages...).Do()
+		if tc.Want.Error != nil {
+			if !reflect.DeepEqual(err, tc.Want.Error) {
+				t.Errorf("Error %d %q; want %q", i, err, tc.Want.Error)
+			}
+		} else {
+			if err != nil {
+				t.Error(err)
+			}
+		}
+		if tc.Want.Response != nil {
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+			}
+		}
 	}
 }
 
-func TestSendAudio(t *testing.T) {
+func TestReplyMessagesWithContext(t *testing.T) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
-		var message SingleMessage
-		err := json.NewDecoder(r.Body).Decode(&message)
-		if err != nil {
-			t.Error(err)
-			return
-		}
-		if message.Content.ContentType != ContentTypeAudio {
-			t.Errorf("invalid request content type: %v", message.Content.ContentType)
-			return
-		}
-		if message.Content.ToType != RecipientTypeUser {
-			t.Errorf("invalid request content to_type: %v", message.Content.ToType)
-			return
-		}
-		if message.Content.OriginalContentURL != "http://example.com/audio.mp3" {
-			t.Errorf("invalid request content original_content_url: %v", message.Content.OriginalContentURL)
-			return
-		}
-		if !reflect.DeepEqual(message.Content.ContentMetaData, map[string]string{"AUDLEN": "3601"}) {
-			t.Errorf("invalid request content content_meta_data: %v", message.Content.ContentMetaData)
-			return
-		}
-		w.Write([]byte(`{"failed":[],"messageId":"1347940533207","timestamp":1347940533207,"version":1}`))
+		time.Sleep(10 * time.Millisecond)
+		w.Write([]byte("{}"))
 	}))
 	defer server.Close()
 	client, err := mockClient(server)
 	if err != nil {
-		t.Error(err)
-		return
+		t.Fatal(err)
 	}
-
-	res, err := client.SendAudio([]string{"DUMMY_MID"}, "http://example.com/audio.mp3", 3601)
-	if err != nil {
-		t.Error(err)
-		return
-	}
-	if res == nil {
-		t.Error("response is nil")
-		return
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
+	defer cancel()
+	_, err = client.ReplyMessage("nHuyWiB7yP5Zw52FIkcQobQuGDXCTA", NewTextMessage("Hello, world")).WithContext(ctx).Do()
+	if err != context.DeadlineExceeded {
+		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
 	}
 }
 
-func TestSendLocation(t *testing.T) {
+func BenchmarkPushMessages(b *testing.B) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
-		var message SingleMessage
-		err := json.NewDecoder(r.Body).Decode(&message)
-		if err != nil {
-			t.Error(err)
-			return
-		}
-		if message.Content.ContentType != ContentTypeLocation {
-			t.Errorf("invalid request content type: %v", message.Content.ContentType)
-			return
-		}
-		if message.Content.ToType != RecipientTypeUser {
-			t.Errorf("invalid request content to_type: %v", message.Content.ToType)
-			return
-		}
-		if message.Content.Location.Title != "位置ラベル" || message.Content.Location.Address != "tokyo shibuya-ku" {
-			t.Errorf("invalid location: %v", message.Content.Location)
-			return
-		}
-		w.Write([]byte(`{"failed":[],"messageId":"1347940533207","timestamp":1347940533207,"version":1}`))
+		w.Write([]byte("{}"))
 	}))
 	defer server.Close()
 	client, err := mockClient(server)
 	if err != nil {
-		t.Error(err)
-		return
+		b.Fatal(err)
 	}
-
-	res, err := client.SendLocation([]string{"DUMMY_MID"}, "位置ラベル", "tokyo shibuya-ku", 35.61823286112982, 139.72824096679688)
-	if err != nil {
-		t.Error(err)
-		return
-	}
-	if res == nil {
-		t.Error("response is nil")
-		return
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		client.PushMessage("U0cc15697597f61dd8b01cea8b027050e", NewTextMessage("Hello, world")).Do()
 	}
 }
 
-func TestSendSticker(t *testing.T) {
+func BenchmarkReplyMessages(b *testing.B) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
-		var message SingleMessage
-		err := json.NewDecoder(r.Body).Decode(&message)
-		if err != nil {
-			t.Error(err)
-			return
-		}
-		if message.Content.ContentType != ContentTypeSticker {
-			t.Errorf("invalid request content type: %v", message.Content.ContentType)
-			return
-		}
-		if message.Content.ToType != RecipientTypeUser {
-			t.Errorf("invalid request content to_type: %v", message.Content.ToType)
-			return
-		}
-		if !reflect.DeepEqual(message.Content.ContentMetaData, map[string]string{"STKID": "1", "STKPKGID": "2", "STKVER": "3"}) {
-			t.Errorf("invalid request content content_meta_data: %v", message.Content.ContentMetaData)
-			return
-		}
-		w.Write([]byte(`{"failed":[],"messageId":"1347940533207","timestamp":1347940533207,"version":1}`))
+		w.Write([]byte("{}"))
 	}))
 	defer server.Close()
 	client, err := mockClient(server)
 	if err != nil {
-		t.Error(err)
-		return
+		b.Fatal(err)
 	}
-
-	res, err := client.SendSticker([]string{"DUMMY_MID"}, 1, 2, 3)
-	if err != nil {
-		t.Error(err)
-		return
-	}
-	if res == nil {
-		t.Error("response is nil")
-		return
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		client.ReplyMessage("nHuyWiB7yP5Zw52FIkcQobQuGDXCTA", NewTextMessage("Hello, world")).Do()
 	}
 }

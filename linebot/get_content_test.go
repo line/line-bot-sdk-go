@@ -1,95 +1,170 @@
+// Copyright 2016 LINE Corporation
+//
+// LINE Corporation licenses this file to you under the Apache License,
+// version 2.0 (the "License"); you may not use this file except in compliance
+// with the License. You may obtain a copy of the License at:
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+// WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+// License for the specific language governing permissions and limitations
+// under the License.
+
 package linebot
 
 import (
+	"fmt"
+	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
+	"reflect"
 	"testing"
+	"time"
+
+	"golang.org/x/net/context"
 )
 
-func TestGetContent(t *testing.T) {
-	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != "GET" || r.URL.Path != "/v1/bot/message/123456789/content" {
-			t.Errorf("invalid request: %s %s", r.Method, r.URL.Path)
-			return
-		}
-		if r.Header.Get("X-Line-ChannelID") != "1000000000" ||
-			r.Header.Get("X-Line-ChannelSecret") != "testsecret" ||
-			r.Header.Get("X-Line-Trusted-User-With-ACL") != "TEST_MID" {
-			t.Errorf("invalid request header: %v", r.Header)
-			return
-		}
-		w.Header().Set("Content-type", "image/jpeg")
-		w.Header().Set("Content-Disposition", `attachment; filename="image.jpg"`)
-		w.WriteHeader(200)
-	}))
-	client, err := mockClient(server)
-	if err != nil {
-		t.Error(err)
-		return
+func TestGetMessageContent(t *testing.T) {
+	type want struct {
+		URLPath         string
+		RequestBody     []byte
+		Response        *MessageContentResponse
+		ResponseContent []byte
+		Error           error
+	}
+	var testCases = []struct {
+		MessageID      string
+		ResponseCode   int
+		Response       []byte
+		ResponseHeader map[string]string
+		Want           want
+	}{
+		{
+			MessageID:    "325708",
+			ResponseCode: 200,
+			Response:     []byte{0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10},
+			ResponseHeader: map[string]string{
+				"Content-Type":   "image/jpeg",
+				"Content-Length": "6",
+			},
+			Want: want{
+				URLPath:     fmt.Sprintf(APIEndpointGetMessageContent, "325708"),
+				RequestBody: []byte(""),
+				Response: &MessageContentResponse{
+					ContentType:   "image/jpeg",
+					ContentLength: 6,
+				},
+				ResponseContent: []byte{0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10},
+			},
+		},
+		{
+			// 503 Service Unavailable
+			MessageID:    "325708",
+			ResponseCode: 503,
+			Response:     []byte("Service Unavailable"),
+			Want: want{
+				URLPath:     fmt.Sprintf(APIEndpointGetMessageContent, "325708"),
+				RequestBody: []byte(""),
+				Error: &APIError{
+					Code: 503,
+				},
+			},
+		},
 	}
 
-	// success
-	{
-		res, err := client.GetMessageContent(&ReceivedContent{
-			ID:          "123456789",
-			ContentType: ContentTypeImage,
-		})
+	var currentTestIdx int
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		tc := testCases[currentTestIdx]
+		if r.Method != http.MethodGet {
+			t.Errorf("Method %s; want %s", r.Method, http.MethodGet)
+		}
+		if r.URL.Path != tc.Want.URLPath {
+			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
+		}
+		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
-			t.Error(err)
-			return
+			t.Fatal(err)
 		}
-		if res == nil {
-			t.Error("response is nil")
-			return
+		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
+			t.Errorf("RequestBody %s; want %s", body, tc.Want.RequestBody)
 		}
-		defer res.Content.Close()
-		if res.FileName != "image.jpg" {
-			t.Errorf("content: %v", res)
-			return
+		for k, v := range tc.ResponseHeader {
+			w.Header().Add(k, v)
+		}
+		w.WriteHeader(tc.ResponseCode)
+		w.Write(tc.Response)
+	}))
+	defer server.Close()
+	client, err := mockClient(server)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for i, tc := range testCases {
+		currentTestIdx = i
+		res, err := client.GetMessageContent(tc.MessageID).Do()
+		if tc.Want.Error != nil {
+			if !reflect.DeepEqual(err, tc.Want.Error) {
+				t.Errorf("Error %d %q; want %q", i, err, tc.Want.Error)
+			}
+		} else {
+			if err != nil {
+				t.Error(err)
+			}
+		}
+		if tc.Want.Response != nil {
+			body := res.Content
+			defer body.Close()
+			res.Content = nil // Set nil because streams aren't comparable.
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+			}
+			bodyGot, err := ioutil.ReadAll(body)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if !reflect.DeepEqual(bodyGot, tc.Want.ResponseContent) {
+				t.Errorf("ResponseContent %d %X; want %X", i, bodyGot, tc.Want.ResponseContent)
+			}
 		}
 	}
 }
 
-func TestGetContentPreview(t *testing.T) {
+func TestGetMessageContentWithContext(t *testing.T) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != "GET" || r.URL.Path != "/v1/bot/message/123456789/content/preview" {
-			t.Errorf("invalid request: %s %s", r.Method, r.URL.Path)
-			return
-		}
-		if r.Header.Get("X-Line-ChannelID") != "1000000000" ||
-			r.Header.Get("X-Line-ChannelSecret") != "testsecret" ||
-			r.Header.Get("X-Line-Trusted-User-With-ACL") != "TEST_MID" {
-			t.Errorf("invalid request header: %v", r.Header)
-			return
-		}
-		w.Header().Set("Content-type", "image/jpeg")
-		w.Header().Set("Content-Disposition", `attachment; filename="image.jpg"`)
-		w.WriteHeader(200)
+		defer r.Body.Close()
+		time.Sleep(10 * time.Millisecond)
+		w.Write([]byte{0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10})
 	}))
+	defer server.Close()
 	client, err := mockClient(server)
 	if err != nil {
-		t.Error(err)
-		return
+		t.Fatal(err)
 	}
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
+	defer cancel()
+	_, err = client.GetMessageContent("325708A").WithContext(ctx).Do()
+	if err != context.DeadlineExceeded {
+		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
+	}
+}
 
-	// success
-	{
-		res, err := client.GetMessageContentPreview(&ReceivedContent{
-			ID:          "123456789",
-			ContentType: ContentTypeImage,
-		})
-		if err != nil {
-			t.Error(err)
-			return
-		}
-		if res == nil {
-			t.Error("response is nil")
-			return
-		}
+func BenchmarkGetMessageContent(b *testing.B) {
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		w.Write([]byte{0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10})
+	}))
+	defer server.Close()
+	client, err := mockClient(server)
+	if err != nil {
+		b.Fatal(err)
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		res, _ := client.GetMessageContent("325708A").Do()
 		defer res.Content.Close()
-		if res.FileName != "image.jpg" {
-			t.Errorf("content: %v", res)
-			return
-		}
+		ioutil.ReadAll(res.Content)
 	}
 }
