@@ -166,7 +166,7 @@ var webhookTestRequestBody = `{
 }
 `
 
-var webhookTestWantEvents = []Event{
+var webhookTestWantEvents = []*Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeMessage,

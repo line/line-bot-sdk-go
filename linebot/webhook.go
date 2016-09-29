@@ -24,7 +24,7 @@ import (
 )
 
 // ParseRequest method
-func (client *Client) ParseRequest(r *http.Request) ([]Event, error) {
+func (client *Client) ParseRequest(r *http.Request) ([]*Event, error) {
 	defer r.Body.Close()
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -35,7 +35,7 @@ func (client *Client) ParseRequest(r *http.Request) ([]Event, error) {
 	}
 
 	request := &struct {
-		Events []Event `json:"events"`
+		Events []*Event `json:"events"`
 	}{}
 	if err = json.Unmarshal(body, request); err != nil {
 		return nil, err
