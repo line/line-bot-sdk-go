@@ -337,7 +337,7 @@ func TestParseRequest(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		req.Header.Set("X-LINE-Signature", "invalidsignatue")
+		req.Header.Set("X-Line-Signature", "invalidsignatue")
 		res, err := httpClient.Do(req)
 		if err != nil {
 			t.Fatal(err)
@@ -358,7 +358,7 @@ func TestParseRequest(t *testing.T) {
 		mac := hmac.New(sha256.New, []byte("testsecret"))
 		mac.Write(body)
 
-		req.Header.Set("X-LINE-Signature", base64.StdEncoding.EncodeToString(mac.Sum(nil)))
+		req.Header.Set("X-Line-Signature", base64.StdEncoding.EncodeToString(mac.Sum(nil)))
 		res, err := httpClient.Do(req)
 		if err != nil {
 			t.Fatal(err)
@@ -385,7 +385,7 @@ func BenchmarkParseRequest(b *testing.B) {
 
 	for i := 0; i < b.N; i++ {
 		req, _ := http.NewRequest("POST", "", bytes.NewReader(body))
-		req.Header.Set("X-LINE-Signature", sign)
+		req.Header.Set("X-Line-Signature", sign)
 		client.ParseRequest(req)
 	}
 }
