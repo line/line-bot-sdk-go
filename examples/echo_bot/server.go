@@ -20,42 +20,38 @@ import (
 	"os"
 
 	"github.com/line/line-bot-sdk-go/linebot"
+	"github.com/line/line-bot-sdk-go/linebot/httphandler"
 )
 
 func main() {
-	bot, err := linebot.New(
+	handler := httphandler.New(
 		os.Getenv("CHANNEL_SECRET"),
 		os.Getenv("CHANNEL_TOKEN"),
+		// // You can use custom http.Client if you need.
+		// // This function is execute for each request.
+		// httphandler.WithNewClientFunc(func() (*linebot.Client, error) {
+		// 	client := &http.Client{}
+		// 	return linebot.New(
+		// 		"<channel secret>",
+		// 		"<channel accsss token>",
+		// 		linebot.WithHTTPClient(client),
+		// 	)
+		// }),
 	)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Setup HTTP Server for receiving requests from LINE platform
-	http.HandleFunc("/callback", func(w http.ResponseWriter, req *http.Request) {
-		events, err := bot.ParseRequest(req)
-		if err != nil {
-			if err == linebot.ErrInvalidSignature {
-				w.WriteHeader(400)
-			} else {
-				w.WriteHeader(500)
-			}
-			return
-		}
-		for _, event := range events {
-			if event.Type == linebot.EventTypeMessage {
-				switch message := event.Message.(type) {
-				case *linebot.TextMessage:
-					source := event.Source
-					if source.Type == linebot.EventSourceTypeUser {
-						if _, err = bot.PushMessage(source.UserID, linebot.NewTextMessage(message.Text)).Do(); err != nil {
-							log.Print(err)
-						}
-					}
-				}
+	handler.HandleTextMessage(func(bot *linebot.Client, event *linebot.Event, message *linebot.TextMessage) {
+		if event.Source.Type == linebot.EventSourceTypeUser {
+			_, err := bot.PushMessage(event.Source.UserID, linebot.NewTextMessage(message.Text)).Do()
+			if err != nil {
+				log.Print(err)
 			}
 		}
 	})
+	handler.HandleError(func(err error) {
+		log.Print(err)
+	})
+
+	// Setup HTTP Server for receiving requests from LINE platform
+	http.Handle("/callback", handler)
 	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
 		log.Fatal(err)
 	}
