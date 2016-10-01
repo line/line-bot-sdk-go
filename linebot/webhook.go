@@ -30,7 +30,7 @@ func (client *Client) ParseRequest(r *http.Request) ([]*Event, error) {
 	if err != nil {
 		return nil, err
 	}
-	if !client.validateSignature(r.Header.Get("X-LINE-Signature"), body) {
+	if !client.validateSignature(r.Header.Get("X-Line-Signature"), body) {
 		return nil, ErrInvalidSignature
 	}
 
