@@ -46,9 +46,9 @@ const (
 // EventSource type
 type EventSource struct {
 	Type    EventSourceType `json:"type"`
-	UserID  string          `json:"userId"`
-	GroupID string          `json:"groupId"`
-	RoomID  string          `json:"roomId"`
+	UserID  string          `json:"userId,omitempty"`
+	GroupID string          `json:"groupId,omitempty"`
+	RoomID  string          `json:"roomId,omitempty"`
 }
 
 // Postback type
@@ -81,33 +81,91 @@ type Event struct {
 	Beacon     *Beacon
 }
 
+type rawEvent struct {
+	ReplyToken string           `json:"replyToken,omitempty"`
+	Type       EventType        `json:"type"`
+	Timestamp  int64            `json:"timestamp"`
+	Source     *EventSource     `json:"source"`
+	Message    *rawEventMessage `json:"message,omitempty"`
+	*Postback  `json:"postback,omitempty"`
+	*Beacon    `json:"beacon,omitempty"`
+}
+
+type rawEventMessage struct {
+	ID        string      `json:"id"`
+	Type      MessageType `json:"type"`
+	Text      string      `json:"text,omitempty"`
+	Duration  int         `json:"duration,omitempty"`
+	Title     string      `json:"title,omitempty"`
+	Address   string      `json:"address,omitempty"`
+	Latitude  float64     `json:"latitude,omitempty"`
+	Longitude float64     `json:"longitude,omitempty"`
+	PackageID string      `json:"packageId,omitempty"`
+	StickerID string      `json:"stickerId,omitempty"`
+}
+
 const (
 	millisecPerSec     = int64(time.Second / time.Millisecond)
 	nanosecPerMillisec = int64(time.Millisecond / time.Nanosecond)
 )
 
+// MarshalJSON method of Event
+func (e *Event) MarshalJSON() ([]byte, error) {
+	raw := rawEvent{
+		ReplyToken: e.ReplyToken,
+		Type:       e.Type,
+		Timestamp:  e.Timestamp.Unix()*millisecPerSec + int64(e.Timestamp.Nanosecond())/int64(time.Millisecond),
+		Source:     e.Source,
+		Postback:   e.Postback,
+		Beacon:     e.Beacon,
+	}
+
+	switch m := e.Message.(type) {
+	case *TextMessage:
+		raw.Message = &rawEventMessage{
+			Type: MessageTypeText,
+			ID:   m.ID,
+			Text: m.Text,
+		}
+	case *ImageMessage:
+		raw.Message = &rawEventMessage{
+			Type: MessageTypeImage,
+			ID:   m.ID,
+		}
+	case *VideoMessage:
+		raw.Message = &rawEventMessage{
+			Type: MessageTypeVideo,
+			ID:   m.ID,
+		}
+	case *AudioMessage:
+		raw.Message = &rawEventMessage{
+			Type:     MessageTypeAudio,
+			ID:       m.ID,
+			Duration: m.Duration,
+		}
+	case *LocationMessage:
+		raw.Message = &rawEventMessage{
+			Type:      MessageTypeLocation,
+			ID:        m.ID,
+			Title:     m.Title,
+			Address:   m.Address,
+			Latitude:  m.Latitude,
+			Longitude: m.Longitude,
+		}
+	case *StickerMessage:
+		raw.Message = &rawEventMessage{
+			Type:      MessageTypeSticker,
+			ID:        m.ID,
+			PackageID: m.PackageID,
+			StickerID: m.StickerID,
+		}
+	}
+	return json.Marshal(&raw)
+}
+
 // UnmarshalJSON method of Event
 func (e *Event) UnmarshalJSON(body []byte) (err error) {
-	rawEvent := struct {
-		ReplyToken string      `json:"replyToken"`
-		Type       EventType   `json:"type"`
-		Timestamp  int64       `json:"timestamp"`
-		Source     EventSource `json:"source"`
-		Message    struct {
-			ID        string      `json:"id"`
-			Type      MessageType `json:"type"`
-			Text      string      `json:"text"`
-			Duration  int         `json:"duration"`
-			Title     string      `json:"title"`
-			Address   string      `json:"address"`
-			Latitude  float64     `json:"latitude"`
-			Longitude float64     `json:"longitude"`
-			PackageID string      `json:"packageId"`
-			StickerID string      `json:"stickerId"`
-		} `json:"message"`
-		Postback `json:"postback"`
-		Beacon   `json:"beacon"`
-	}{}
+	rawEvent := rawEvent{}
 	if err = json.Unmarshal(body, &rawEvent); err != nil {
 		return
 	}
@@ -115,7 +173,7 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 	e.ReplyToken = rawEvent.ReplyToken
 	e.Type = rawEvent.Type
 	e.Timestamp = time.Unix(rawEvent.Timestamp/millisecPerSec, (rawEvent.Timestamp%millisecPerSec)*nanosecPerMillisec).UTC()
-	e.Source = &rawEvent.Source
+	e.Source = rawEvent.Source
 
 	switch rawEvent.Type {
 	case EventTypeMessage:
@@ -154,9 +212,9 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 			}
 		}
 	case EventTypePostback:
-		e.Postback = &rawEvent.Postback
+		e.Postback = rawEvent.Postback
 	case EventTypeBeacon:
-		e.Beacon = &rawEvent.Beacon
+		e.Beacon = rawEvent.Beacon
 	}
 	return
 }
