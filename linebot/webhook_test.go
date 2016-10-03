@@ -20,6 +20,7 @@ import (
 	"crypto/sha256"
 	"crypto/tls"
 	"encoding/base64"
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -368,6 +369,35 @@ func TestParseRequest(t *testing.T) {
 		}
 		if res.StatusCode != http.StatusOK {
 			t.Errorf("status: %d", res.StatusCode)
+		}
+	}
+}
+
+func TestEventMarshaling(t *testing.T) {
+	testCases := &struct {
+		Events []map[string]interface{} `json:"events"`
+	}{}
+	err := json.Unmarshal([]byte(webhookTestRequestBody), testCases)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for i, want := range testCases.Events {
+		if err != nil {
+			t.Fatal(err)
+		}
+		e := webhookTestWantEvents[i]
+		gotJSON, err := json.Marshal(&e)
+		if err != nil {
+			t.Error(err)
+			continue
+		}
+		got := map[string]interface{}{}
+		err = json.Unmarshal(gotJSON, &got)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !reflect.DeepEqual(got, want) {
+			t.Errorf("Event marshal %d %q; want %q", i, got, want)
 		}
 	}
 }
