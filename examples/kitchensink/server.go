@@ -24,6 +24,7 @@ import (
 	"path/filepath"
 
 	"github.com/line/line-bot-sdk-go/linebot"
+	"github.com/line/line-bot-sdk-go/linebot/httphandler"
 )
 
 func main() {
@@ -43,7 +44,7 @@ func main() {
 	downloadedFileServer := http.FileServer(http.Dir(app.downloadDir))
 	http.HandleFunc("/downloaded/", http.StripPrefix("/downloaded/", downloadedFileServer).ServeHTTP)
 
-	http.HandleFunc("/callback", app.Callback)
+	http.Handle("/callback", httphandler.New(app.bot, app.handleEvnet))
 	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
 		log.Fatal(err)
 	}
@@ -84,17 +85,8 @@ func NewKitchenSink(channelSecret, channelToken, appBaseURL string) (*KitchenSin
 	}, nil
 }
 
-// Callback function for http server
-func (app *KitchenSink) Callback(w http.ResponseWriter, r *http.Request) {
-	events, err := app.bot.ParseRequest(r)
-	if err != nil {
-		if err == linebot.ErrInvalidSignature {
-			w.WriteHeader(400)
-		} else {
-			w.WriteHeader(500)
-		}
-		return
-	}
+// callback function for events
+func (app *KitchenSink) handleEvnet(events []*linebot.Event) {
 	log.Printf("Got events %v", events)
 	for _, event := range events {
 		switch event.Type {
