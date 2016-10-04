@@ -19,11 +19,14 @@ import (
 	"net/http"
 	"os"
 
+	"golang.org/x/net/context"
+
 	"github.com/line/line-bot-sdk-go/linebot"
+	"github.com/line/line-bot-sdk-go/linebot/httphandler"
 )
 
 func main() {
-	bot, err := linebot.New(
+	handler, err := httphandler.New(
 		os.Getenv("CHANNEL_SECRET"),
 		os.Getenv("CHANNEL_TOKEN"),
 	)
@@ -32,30 +35,19 @@ func main() {
 	}
 
 	// Setup HTTP Server for receiving requests from LINE platform
-	http.HandleFunc("/callback", func(w http.ResponseWriter, req *http.Request) {
-		events, err := bot.ParseRequest(req)
-		if err != nil {
-			if err == linebot.ErrInvalidSignature {
-				w.WriteHeader(400)
-			} else {
-				w.WriteHeader(500)
-			}
-			return
-		}
-		for _, event := range events {
-			if event.Type == linebot.EventTypeMessage {
-				switch message := event.Message.(type) {
-				case *linebot.TextMessage:
-					source := event.Source
-					if source.Type == linebot.EventSourceTypeUser {
-						if _, err = bot.PushMessage(source.UserID, linebot.NewTextMessage(message.Text)).Do(); err != nil {
-							log.Print(err)
-						}
-					}
+	handler.HandleMessage(func(ctx context.Context, bot *linebot.Client, event *linebot.Event) {
+		switch message := event.Message.(type) {
+		case *linebot.TextMessage:
+			if event.Source.Type == linebot.EventSourceTypeUser {
+				_, err := bot.PushMessage(event.Source.UserID, linebot.NewTextMessage(message.Text)).Do()
+				if err != nil {
+					log.Print(err)
 				}
 			}
 		}
 	})
+
+	http.Handle("/callback", handler)
 	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
 		log.Fatal(err)
 	}

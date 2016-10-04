@@ -17,42 +17,54 @@ package httphandler
 import (
 	"net/http"
 
+	"golang.org/x/net/context"
+
 	"github.com/line/line-bot-sdk-go/linebot"
 )
 
-type FollowHandlerFunc func(*linebot.Client, *linebot.Event)
-type UnfollowHandlerFunc func(*linebot.Client, *linebot.Event)
-type JoinHandlerFunc func(*linebot.Client, *linebot.Event)
-type LeaveHandlerFunc func(*linebot.Client, *linebot.Event)
-type PostbackHandlerFunc func(*linebot.Client, *linebot.Event, *linebot.Postback)
-type BeaconHandlerFunc func(*linebot.Client, *linebot.Event, *linebot.Beacon)
-type TextMessageHandlerFunc func(*linebot.Client, *linebot.Event, *linebot.TextMessage)
+type (
+	// EventHandlerFunc type
+	EventHandlerFunc func(context.Context, *linebot.Client, *linebot.Event)
+	// ErrorHandlerFunc tyoe
+	ErrorHandlerFunc func(context.Context, error)
+)
 
-type OptionNewClientFunc func() (*linebot.Client, error)
+type (
+	// OptionNewContextFunc type
+	OptionNewContextFunc func(*http.Request) (context.Context, error)
+	// OptionNewClientFunc type
+	OptionNewClientFunc func(context.Context, string, string) (*linebot.Client, error)
+)
 
+// EventHandler type
 type EventHandler struct {
-	channelSecret       string
-	channelToken        string
-	optionNewClientFunc OptionNewClientFunc
+	channelSecret        string
+	channelToken         string
+	optionNewContextFunc OptionNewContextFunc
+	optionNewClientFunc  OptionNewClientFunc
 
-	handleFollow          FollowHandlerFunc
-	handleUnfollow        UnfollowHandlerFunc
-	handleJoin            JoinHandlerFunc
-	handleLeave           LeaveHandlerFunc
-	handlePostback        PostbackHandlerFunc
-	handleBeacon          BeaconHandlerFunc
-	handleTextMessage     TextMessageHandlerFunc
-	handleImageMessage    func(*linebot.Client, *linebot.Event, *linebot.ImageMessage)
-	handleVideoMessage    func(*linebot.Client, *linebot.Event, *linebot.VideoMessage)
-	handleAudioMessage    func(*linebot.Client, *linebot.Event, *linebot.AudioMessage)
-	handleLocationMessage func(*linebot.Client, *linebot.Event, *linebot.LocationMessage)
-	handleStickerMessage  func(*linebot.Client, *linebot.Event, *linebot.StickerMessage)
+	handleFollow   EventHandlerFunc
+	handleUnfollow EventHandlerFunc
+	handleJoin     EventHandlerFunc
+	handleLeave    EventHandlerFunc
+	handlePostback EventHandlerFunc
+	handleBeacon   EventHandlerFunc
+	handleMessage  EventHandlerFunc
+	handleUnknown  EventHandlerFunc
 
-	handleError func(error)
+	handleError ErrorHandlerFunc
 }
 
 // EventHandlerOption type
 type EventHandlerOption func(*EventHandler) error
+
+// WithNewContextFunc function
+func WithNewContextFunc(f OptionNewContextFunc) EventHandlerOption {
+	return func(eh *EventHandler) error {
+		eh.optionNewContextFunc = f
+		return nil
+	}
+}
 
 // WithNewClientFunc function
 func WithNewClientFunc(f OptionNewClientFunc) EventHandlerOption {
@@ -62,51 +74,72 @@ func WithNewClientFunc(f OptionNewClientFunc) EventHandlerOption {
 	}
 }
 
-func New(channelSecret, channelToken string, options ...EventHandlerOption) *EventHandler {
-	return &EventHandler{
+// New returns a new EventHandler instance.
+func New(channelSecret, channelToken string, options ...EventHandlerOption) (*EventHandler, error) {
+	h := &EventHandler{
 		channelSecret: channelSecret,
 		channelToken:  channelToken,
 	}
+	for _, option := range options {
+		err := option(h)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return h, nil
 }
 
-func (eh *EventHandler) HandleFollow(f FollowHandlerFunc) {
+// HandleFollow method
+func (eh *EventHandler) HandleFollow(f EventHandlerFunc) {
 	eh.handleFollow = f
 }
 
-func (eh *EventHandler) HandleUnfollow(f UnfollowHandlerFunc) {
+// HandleUnfollow method
+func (eh *EventHandler) HandleUnfollow(f EventHandlerFunc) {
 	eh.handleUnfollow = f
 }
 
-func (eh *EventHandler) HandleJoin(f JoinHandlerFunc) {
+// HandleJoin method
+func (eh *EventHandler) HandleJoin(f EventHandlerFunc) {
 	eh.handleJoin = f
 }
 
-func (eh *EventHandler) HandleLeave(f LeaveHandlerFunc) {
+// HandleLeave method
+func (eh *EventHandler) HandleLeave(f EventHandlerFunc) {
 	eh.handleLeave = f
 }
 
-func (eh *EventHandler) HandlePostback(f PostbackHandlerFunc) {
+// HandlePostback method
+func (eh *EventHandler) HandlePostback(f EventHandlerFunc) {
 	eh.handlePostback = f
 }
 
-func (eh *EventHandler) HandleBeacon(f BeaconHandlerFunc) {
+// HandleBeacon method
+func (eh *EventHandler) HandleBeacon(f EventHandlerFunc) {
 	eh.handleBeacon = f
 }
 
-func (eh *EventHandler) HandleTextMessage(f TextMessageHandlerFunc) {
-	eh.handleTextMessage = f
+// HandleMessage method
+func (eh *EventHandler) HandleMessage(f EventHandlerFunc) {
+	eh.handleMessage = f
 }
 
-func (eh *EventHandler) HandleError(f func(error)) {
+// HandleUnknown method
+func (eh *EventHandler) HandleUnknown(f EventHandlerFunc) {
+	eh.handleUnknown = f
+}
+
+// HandleError method
+func (eh *EventHandler) HandleError(f ErrorHandlerFunc) {
 	eh.handleError = f
 }
 
 func (eh *EventHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	handleError := func(err error) {
+	handleError := func(c context.Context, e error) {
 		if eh.handleError != nil {
-			eh.handleError(err)
+			eh.handleError(c, e)
 		}
-		if err == linebot.ErrInvalidSignature {
+		if e == linebot.ErrInvalidSignature {
 			w.WriteHeader(400)
 		} else {
 			w.WriteHeader(500)
@@ -114,59 +147,68 @@ func (eh *EventHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var (
+		ctx context.Context
 		bot *linebot.Client
 		err error
 	)
-	if eh.optionNewClientFunc != nil {
-		bot, err = eh.optionNewClientFunc()
-		if err != nil {
-			handleError(err)
-			return
-		}
+	if eh.optionNewContextFunc != nil {
+		ctx, err = eh.optionNewContextFunc(r)
 	} else {
-		bot, err = linebot.New(eh.channelSecret, eh.channelToken)
-		if err != nil {
-			handleError(err)
-			return
-		}
+		ctx, err = eh.DefaultNewContext(r)
+	}
+	if err != nil {
+		handleError(nil, err)
+		return
+	}
+	if eh.optionNewClientFunc != nil {
+		bot, err = eh.optionNewClientFunc(ctx, eh.channelSecret, eh.channelToken)
+	} else {
+		bot, err = eh.DefaultNewClient(ctx, eh.channelSecret, eh.channelToken)
+	}
+	if err != nil {
+		handleError(ctx, err)
+		return
 	}
 
 	events, err := bot.ParseRequest(r)
 	if err != nil {
-		handleError(err)
+		handleError(ctx, err)
 		return
 	}
 	for _, event := range events {
 		switch event.Type {
-		case linebot.EventTypeMessage:
-			switch m := event.Message.(type) {
-			case *linebot.TextMessage:
-				if eh.handleTextMessage != nil {
-					eh.handleTextMessage(bot, event, m)
-				}
-			case *linebot.ImageMessage:
-				if eh.handleImageMessage != nil {
-					eh.handleImageMessage(bot, event, m)
-				}
-				// TODO: handle other messages
-			}
 		case linebot.EventTypeFollow:
 			if eh.handleFollow != nil {
-				eh.handleFollow(bot, event)
+				eh.handleFollow(ctx, bot, event)
 			}
 		case linebot.EventTypeUnfollow:
 			if eh.handleUnfollow != nil {
-				eh.handleUnfollow(bot, event)
+				eh.handleUnfollow(ctx, bot, event)
 			}
 		case linebot.EventTypeJoin:
 			if eh.handleJoin != nil {
-				eh.handleJoin(bot, event)
+				eh.handleJoin(ctx, bot, event)
 			}
 		case linebot.EventTypeLeave:
 			if eh.handleLeave != nil {
-				eh.handleLeave(bot, event)
+				eh.handleLeave(ctx, bot, event)
 			}
-			// TODO: handle other events
+		case linebot.EventTypePostback:
+			if eh.handlePostback != nil {
+				eh.handlePostback(ctx, bot, event)
+			}
+		case linebot.EventTypeBeacon:
+			if eh.handleBeacon != nil {
+				eh.handleBeacon(ctx, bot, event)
+			}
+		case linebot.EventTypeMessage:
+			if eh.handleMessage != nil {
+				eh.handleMessage(ctx, bot, event)
+			}
+		default:
+			if eh.handleUnknown != nil {
+				eh.handleUnknown(ctx, bot, event)
+			}
 		}
 	}
 }
