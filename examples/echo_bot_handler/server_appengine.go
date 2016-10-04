@@ -12,7 +12,7 @@
 // License for the specific language governing permissions and limitations
 // under the License.
 
-// +build !appengine
+// +build appengine
 
 package main
 
@@ -27,7 +27,7 @@ import (
 	"github.com/line/line-bot-sdk-go/linebot/httphandler"
 )
 
-func main() {
+func init() {
 	handler, err := httphandler.New(
 		os.Getenv("CHANNEL_SECRET"),
 		os.Getenv("CHANNEL_TOKEN"),
@@ -50,7 +50,4 @@ func main() {
 	})
 
 	http.Handle("/callback", handler)
-	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
-		log.Fatal(err)
-	}
 }
