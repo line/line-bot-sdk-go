@@ -15,6 +15,7 @@
 package linebot
 
 import (
+	"errors"
 	"io"
 	"net/http"
 	"net/url"
@@ -49,6 +50,12 @@ type ClientOption func(*Client) error
 
 // New returns a new bot client instance.
 func New(channelSecret, channelToken string, options ...ClientOption) (*Client, error) {
+	if channelSecret == "" {
+		return nil, errors.New("missing channel secret")
+	}
+	if channelToken == "" {
+		return nil, errors.New("missing channel access token")
+	}
 	c := &Client{
 		channelSecret: channelSecret,
 		channelToken:  channelToken,
@@ -97,7 +104,6 @@ func (client *Client) url(endpoint string) string {
 }
 
 func (client *Client) do(ctx context.Context, req *http.Request) (*http.Response, error) {
-	req.Header.Set("X-LINE-ChannelToken", client.channelToken)
 	req.Header.Set("Authorization", "Bearer "+client.channelToken)
 	req.Header.Set("User-Agent", "LINE-BotSDK-Go/"+version)
 	if ctx != nil {
