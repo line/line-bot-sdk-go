@@ -25,12 +25,17 @@ import (
 
 // ParseRequest method
 func (client *Client) ParseRequest(r *http.Request) ([]*Event, error) {
+	return ParseRequest(client.channelSecret, r)
+}
+
+// ParseRequest func
+func ParseRequest(channelSecret string, r *http.Request) ([]*Event, error) {
 	defer r.Body.Close()
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		return nil, err
 	}
-	if !client.validateSignature(r.Header.Get("X-Line-Signature"), body) {
+	if !validateSignature(channelSecret, r.Header.Get("X-Line-Signature"), body) {
 		return nil, ErrInvalidSignature
 	}
 
@@ -43,12 +48,12 @@ func (client *Client) ParseRequest(r *http.Request) ([]*Event, error) {
 	return request.Events, nil
 }
 
-func (client *Client) validateSignature(signature string, body []byte) bool {
+func validateSignature(channelSecret, signature string, body []byte) bool {
 	decoded, err := base64.StdEncoding.DecodeString(signature)
 	if err != nil {
 		return false
 	}
-	hash := hmac.New(sha256.New, []byte(client.channelSecret))
+	hash := hmac.New(sha256.New, []byte(channelSecret))
 	hash.Write(body)
 	return hmac.Equal(decoded, hash.Sum(nil))
 }
