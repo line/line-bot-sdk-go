@@ -21,8 +21,6 @@ import (
 	"net/http"
 	"os"
 
-	"golang.org/x/net/context"
-
 	"github.com/line/line-bot-sdk-go/linebot"
 	"github.com/line/line-bot-sdk-go/linebot/httphandler"
 )
@@ -37,12 +35,15 @@ func main() {
 	}
 
 	// Setup HTTP Server for receiving requests from LINE platform
-	handler.HandleMessage(func(ctx context.Context, bot *linebot.Client, event *linebot.Event) {
-		switch message := event.Message.(type) {
-		case *linebot.TextMessage:
-			if event.Source.Type == linebot.EventSourceTypeUser {
-				_, err := bot.PushMessage(event.Source.UserID, linebot.NewTextMessage(message.Text)).Do()
-				if err != nil {
+	handler.HandleEvents(func(events []*linebot.Event, r *http.Request) {
+		bot, err := handler.NewClient()
+		if err != nil {
+			log.Print(err)
+		}
+		for _, event := range events {
+			switch message := event.Message.(type) {
+			case *linebot.TextMessage:
+				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
 					log.Print(err)
 				}
 			}

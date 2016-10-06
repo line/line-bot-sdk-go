@@ -21,7 +21,9 @@ import (
 	"net/http"
 	"os"
 
-	"golang.org/x/net/context"
+	"google.golang.org/appengine"
+	aelog "google.golang.org/appengine/log"
+	"google.golang.org/appengine/urlfetch"
 
 	"github.com/line/line-bot-sdk-go/linebot"
 	"github.com/line/line-bot-sdk-go/linebot/httphandler"
@@ -37,13 +39,17 @@ func init() {
 	}
 
 	// Setup HTTP Server for receiving requests from LINE platform
-	handler.HandleMessage(func(ctx context.Context, bot *linebot.Client, event *linebot.Event) {
-		switch message := event.Message.(type) {
-		case *linebot.TextMessage:
-			if event.Source.Type == linebot.EventSourceTypeUser {
-				_, err := bot.PushMessage(event.Source.UserID, linebot.NewTextMessage(message.Text)).Do()
-				if err != nil {
-					log.Print(err)
+	handler.HandleEvents(func(events []*linebot.Event, r *http.Request) {
+		ctx := appengine.NewContext(r)
+		bot, err := handler.NewClient(linebot.WithHTTPClient(urlfetch.Client(ctx)))
+		if err != nil {
+			aelog.Errorf(ctx, "%v", err)
+		}
+		for _, event := range events {
+			switch message := event.Message.(type) {
+			case *linebot.TextMessage:
+				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).WithContext(ctx).Do(); err != nil {
+					aelog.Errorf(ctx, "%v", err)
 				}
 			}
 		}
