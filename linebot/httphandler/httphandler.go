@@ -15,6 +15,7 @@
 package httphandler
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/line/line-bot-sdk-go/linebot"
@@ -37,6 +38,12 @@ type WebhookHandler struct {
 
 // New returns a new WebhookHandler instance.
 func New(channelSecret, channelToken string) (*WebhookHandler, error) {
+	if channelSecret == "" {
+		return nil, errors.New("missing channel secret")
+	}
+	if channelToken == "" {
+		return nil, errors.New("missing channel access token")
+	}
 	h := &WebhookHandler{
 		channelSecret: channelSecret,
 		channelToken:  channelToken,
