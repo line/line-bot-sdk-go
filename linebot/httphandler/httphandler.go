@@ -45,25 +45,25 @@ func New(channelSecret, channelToken string) (*WebhookHandler, error) {
 }
 
 // HandleEvents method
-func (eh *WebhookHandler) HandleEvents(f EventsHandlerFunc) {
-	eh.handleEvents = f
+func (wh *WebhookHandler) HandleEvents(f EventsHandlerFunc) {
+	wh.handleEvents = f
 }
 
 // HandleError method
-func (eh *WebhookHandler) HandleError(f ErrorHandlerFunc) {
-	eh.handleError = f
+func (wh *WebhookHandler) HandleError(f ErrorHandlerFunc) {
+	wh.handleError = f
 }
 
 // NewClient method
-func (eh *WebhookHandler) NewClient(options ...linebot.ClientOption) (*linebot.Client, error) {
-	return linebot.New(eh.channelSecret, eh.channelToken, options...)
+func (wh *WebhookHandler) NewClient(options ...linebot.ClientOption) (*linebot.Client, error) {
+	return linebot.New(wh.channelSecret, wh.channelToken, options...)
 }
 
-func (eh *WebhookHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	events, err := linebot.ParseRequest(eh.channelSecret, r)
+func (wh *WebhookHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	events, err := linebot.ParseRequest(wh.channelSecret, r)
 	if err != nil {
-		if eh.handleError != nil {
-			eh.handleError(err, r)
+		if wh.handleError != nil {
+			wh.handleError(err, r)
 		}
 		if err == linebot.ErrInvalidSignature {
 			w.WriteHeader(400)
@@ -72,5 +72,5 @@ func (eh *WebhookHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-	eh.handleEvents(events, r)
+	wh.handleEvents(events, r)
 }
