@@ -51,7 +51,7 @@ func main() {
 	})
 
 	http.Handle("/callback", handler)
-	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
+	if err := http.ListenAndServeTLS(":"+os.Getenv("PORT"), os.Getenv("CERT_FILE"), os.Getenv("KEY_FILE"), nil); err != nil {
 		log.Fatal(err)
 	}
 }
