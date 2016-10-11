@@ -49,8 +49,9 @@ func main() {
 			}
 		}
 	})
-
 	http.Handle("/callback", handler)
+	// This is just a sample code.
+	// For actually use, you must support HTTPS by using `ListenAndServeTLS`, reverse proxy or etc.
 	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
 		log.Fatal(err)
 	}
