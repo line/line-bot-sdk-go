@@ -56,7 +56,7 @@ type ButtonsTemplate struct {
 func (t *ButtonsTemplate) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type              TemplateType     `json:"type"`
-		ThumbnailImageURL string           `json:"thumbnailImageUrl"`
+		ThumbnailImageURL string           `json:"thumbnailImageUrl,omitempty"`
 		Title             string           `json:"title,omitempty"`
 		Text              string           `json:"text"`
 		Actions           []TemplateAction `json:"actions"`
@@ -95,7 +95,7 @@ type CarouselTemplate struct {
 
 // CarouselColumn type
 type CarouselColumn struct {
-	ThumbnailImageURL string           `json:"thumbnailImageUrl"`
+	ThumbnailImageURL string           `json:"thumbnailImageUrl,omitempty"`
 	Title             string           `json:"title,omitempty"`
 	Text              string           `json:"text"`
 	Actions           []TemplateAction `json:"actions"`
@@ -126,6 +126,7 @@ func NewConfirmTemplate(text string, left, right TemplateAction) *ConfirmTemplat
 }
 
 // NewButtonsTemplate function
+// `thumbnailImageURL` and `title` are optional. they can be empty.
 func NewButtonsTemplate(thumbnailImageURL, title, text string, actions ...TemplateAction) *ButtonsTemplate {
 	return &ButtonsTemplate{
 		ThumbnailImageURL: thumbnailImageURL,
@@ -143,6 +144,7 @@ func NewCarouselTemplate(columns ...*CarouselColumn) *CarouselTemplate {
 }
 
 // NewCarouselColumn function
+// `thumbnailImageURL` and `title` are optional. they can be empty.
 func NewCarouselColumn(thumbnailImageURL, title, text string, actions ...TemplateAction) *CarouselColumn {
 	return &CarouselColumn{
 		ThumbnailImageURL: thumbnailImageURL,

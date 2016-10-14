@@ -121,6 +121,72 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
+			// A buttons template message without thumbnailImageURL
+			Messages: []Message{
+				NewTemplateMessage(
+					"this is a buttons template",
+					NewButtonsTemplate(
+						"",
+						"Menu",
+						"Please select",
+						NewPostbackTemplateAction("Buy", "action=buy&itemid=123", ""),
+						NewPostbackTemplateAction("Buy", "action=buy&itemid=123", "text"),
+						NewURITemplateAction("View detail", "http://example.com/page/123"),
+					),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a buttons template","template":{"type":"buttons","title":"Menu","text":"Please select","actions":[{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123"},{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","text":"text"},{"type":"uri","label":"View detail","uri":"http://example.com/page/123"}]}}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A buttons template message without title
+			Messages: []Message{
+				NewTemplateMessage(
+					"this is a buttons template",
+					NewButtonsTemplate(
+						"https://example.com/bot/images/image.jpg",
+						"",
+						"Please select",
+						NewPostbackTemplateAction("Buy", "action=buy&itemid=123", ""),
+						NewPostbackTemplateAction("Buy", "action=buy&itemid=123", "text"),
+						NewURITemplateAction("View detail", "http://example.com/page/123"),
+					),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a buttons template","template":{"type":"buttons","thumbnailImageUrl":"https://example.com/bot/images/image.jpg","text":"Please select","actions":[{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123"},{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","text":"text"},{"type":"uri","label":"View detail","uri":"http://example.com/page/123"}]}}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A buttons template message without thumbnailImageURL and title
+			Messages: []Message{
+				NewTemplateMessage(
+					"this is a buttons template",
+					NewButtonsTemplate(
+						"",
+						"",
+						"Please select",
+						NewPostbackTemplateAction("Buy", "action=buy&itemid=123", ""),
+						NewPostbackTemplateAction("Buy", "action=buy&itemid=123", "text"),
+						NewURITemplateAction("View detail", "http://example.com/page/123"),
+					),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a buttons template","template":{"type":"buttons","text":"Please select","actions":[{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123"},{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","text":"text"},{"type":"uri","label":"View detail","uri":"http://example.com/page/123"}]}}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
 			// A confirm template message
 			Messages: []Message{
 				NewTemplateMessage(
