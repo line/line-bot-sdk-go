@@ -42,7 +42,7 @@ func main() {
 	...
 ```
 
-## Handle Events ##
+## How to Start ##
 
 Line Messaging API use JSON to format data.
 ```ParseRequest()``` will help you to parse the ```*http.Request``` content and return a slice of Event Object.
@@ -51,7 +51,7 @@ Line Messaging API use JSON to format data.
     events := bot.ParseRequest(req)
 ```
 
-Line Messaging API define 7 types of events - ```EventTypeMessage```, ```EventTypeFollow```, ```EventTypeUnfollow```, ```EventTypeJoin``` , ```EventTypeLeave``` , ```EventTypePostback```, ```EventTypeBeacon```. You can check this by  ```event.Type```
+Line Messaging API define 7 types of event - ```EventTypeMessage```, ```EventTypeFollow```, ```EventTypeUnfollow```, ```EventTypeJoin``` , ```EventTypeLeave``` , ```EventTypePostback```, ```EventTypeBeacon```. You can check this by  ```event.Type```
 
 ```go
     for _, event := range events {
@@ -91,7 +91,7 @@ Line Messaging API supply many types of message, just use the ```New<Type>Messag
 ```
 ### Send Message ###
 
-With ID, you can send message via ‘‘‘PushMessage‘‘‘
+With ID, you can send message via ```PushMessage```
 
 ```go
     var messages []linebot.Message
