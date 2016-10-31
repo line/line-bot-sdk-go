@@ -54,7 +54,7 @@ Line Messaging API use JSON to format data.
 	}
 ```
 
-Line Messaging API define 7 types of event - ```EventTypeMessage```, ```EventTypeFollow```, ```EventTypeUnfollow```, ```EventTypeJoin``` , ```EventTypeLeave``` , ```EventTypePostback```, ```EventTypeBeacon```. You can check this by  ```event.Type```
+Line Messaging API define 7 types of event - ```EventTypeMessage```, ```EventTypeFollow```, ```EventTypeUnfollow```, ```EventTypeJoin```, ```EventTypeLeave```, ```EventTypePostback```, ```EventTypeBeacon```. You can check this by  ```event.Type```
 
 ```go
 	for _, event := range events {
@@ -92,6 +92,7 @@ Line Messaging API supply many types of message, just use the ```New<Type>Messag
 
 	messgage := linebot.NewTemplateMessage("Sorry :(, please update your app.", template)
 ```
+
 ### Send Message ###
 
 With ID, you can send message via ```PushMessage```
@@ -101,7 +102,7 @@ With ID, you can send message via ```PushMessage```
 
 	// append some message to messages
 
-	_, err := bot.PushMessage(ID, messages... ).Do()
+	_, err := bot.PushMessage(ID, messages...).Do()
 	if err != nil {
 		// Do something when some bad happened
 	}
@@ -114,7 +115,7 @@ With reply token, you can reply message via ```ReplyMessage()```
 
 	// append some message to messages
 
-	_, err := bot.PushMessage( replyToken, messages... ).Do()
+	_, err := bot.PushMessage(replyToken, messages...).Do()
 	if err != nil {
 		// Do something when some bad happened
 	}
