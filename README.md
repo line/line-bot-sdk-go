@@ -45,10 +45,13 @@ func main() {
 ## How to Start ##
 
 Line Messaging API use JSON to format data.
-```ParseRequest()``` will help you to parse the ```*http.Request``` content and return a slice of Event Object.
+```ParseRequest()``` will help you to parse the ```*http.Request``` content and return a slice of Pointer point to Event Object.
 
 ```go
-	events := bot.ParseRequest(req)
+	events, err := bot.ParseRequest(req)
+	if err != nil {
+		// Do something when something bad happened.
+	}
 ```
 
 Line Messaging API define 7 types of event - ```EventTypeMessage```, ```EventTypeFollow```, ```EventTypeUnfollow```, ```EventTypeJoin``` , ```EventTypeLeave``` , ```EventTypePostback```, ```EventTypeBeacon```. You can check this by  ```event.Type```
