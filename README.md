@@ -42,9 +42,9 @@ func main() {
 	...
 ```
 
-## How to Start ##
+## How to start ##
 
-Line Messaging API use JSON to format data.
+The LINE Messaging API uses the JSON data format.
 ```ParseRequest()``` will help you to parse the ```*http.Request``` content and return a slice of Pointer point to Event Object.
 
 ```go
@@ -54,7 +54,7 @@ Line Messaging API use JSON to format data.
 	}
 ```
 
-Line Messaging API define 7 types of event - ```EventTypeMessage```, ```EventTypeFollow```, ```EventTypeUnfollow```, ```EventTypeJoin```, ```EventTypeLeave```, ```EventTypePostback```, ```EventTypeBeacon```. You can check this by  ```event.Type```
+The LINE Messaging API defines 7 types of event - ```EventTypeMessage```, ```EventTypeFollow```, ```EventTypeUnfollow```, ```EventTypeJoin```, ```EventTypeLeave```, ```EventTypePostback```, ```EventTypeBeacon```. You can check the event type by using ```event.Type```
 
 ```go
 	for _, event := range events {
@@ -66,7 +66,7 @@ Line Messaging API define 7 types of event - ```EventTypeMessage```, ```EventTyp
 
 ### Receiver ###
 
-To send a message to user/group/room, you might need an ID
+To send a message to a user, group, or room, you need either an ID
 
 ```go
 	userID := event.Source.UserID
@@ -74,15 +74,15 @@ To send a message to user/group/room, you might need an ID
 	RoomID := event.Source.RoomID
 ```
 
-or reply token
+or a reply token.
 
 ```go
 	replyToken := event.ReplyToken
 ```
 
-### Create Message ###
+### Create message ###
 
-Line Messaging API supply many types of message, just use the ```New<Type>Message()``` to create it.
+The LINE Messaging API provides various types of message. To create a message, use ```New<Type>Message()```.
 
 ```go
 	leftBtn := linebot.NewMessageTemplateAction("left", "left clicked")
@@ -93,9 +93,9 @@ Line Messaging API supply many types of message, just use the ```New<Type>Messag
 	messgage := linebot.NewTemplateMessage("Sorry :(, please update your app.", template)
 ```
 
-### Send Message ###
+### Send message ###
 
-With ID, you can send message via ```PushMessage```
+With an ID, you can send message using ```PushMessage()```
 
 ```go
 	var messages []linebot.Message
@@ -108,7 +108,7 @@ With ID, you can send message via ```PushMessage```
 	}
 ```
 
-With reply token, you can reply message via ```ReplyMessage()```
+With a reply token, you can reply to messages using ```ReplyMessage()```
 
 ```go
 	var messages []linebot.Message
