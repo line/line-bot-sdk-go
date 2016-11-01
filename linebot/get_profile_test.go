@@ -49,7 +49,7 @@ func TestGetProfile(t *testing.T) {
 				Response: &UserProfileResponse{
 					UserID:        "U0047556f2e40dba2456887320ba7c76d",
 					DisplayName:   "BOT API",
-					PicutureURL:   "http://dl.profile.line.naver.jp/abcdefghijklmn",
+					PictureURL:    "http://dl.profile.line.naver.jp/abcdefghijklmn",
 					StatusMessage: "Hello, LINE!",
 				},
 			},
