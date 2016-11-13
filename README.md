@@ -113,7 +113,7 @@ With a reply token, you can reply to messages using ```ReplyMessage()```
 
 	// append some message to messages
 
-	_, err := bot.PushMessage(replyToken, messages...).Do()
+	_, err := bot.ReplyMessage(replyToken, messages...).Do()
 	if err != nil {
 		// Do something when some bad happened
 	}
