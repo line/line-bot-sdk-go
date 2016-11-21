@@ -140,7 +140,7 @@ func (app *KitchenSink) Callback(w http.ResponseWriter, r *http.Request) {
 				log.Print(err)
 			}
 		case linebot.EventTypeLeave:
-			log.Printf("Leaved: %v", event)
+			log.Printf("Left: %v", event)
 		case linebot.EventTypePostback:
 			if err := app.replyText(event.ReplyToken, "Got postback: "+event.Postback.Data); err != nil {
 				log.Print(err)
