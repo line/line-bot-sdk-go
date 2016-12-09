@@ -62,6 +62,7 @@ type BeaconEventType string
 // BeaconEventType constants
 const (
 	BeaconEventTypeEnter BeaconEventType = "enter"
+	BeaconEventTypeLeave BeaconEventType = "leave"
 )
 
 // Beacon type
