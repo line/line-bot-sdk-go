@@ -39,7 +39,7 @@ func TestPushMessages(t *testing.T) {
 		Want         want
 	}{
 		{
-			// A test message
+			// A text message
 			Messages:     []Message{NewTextMessage("Hello, world")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
@@ -362,7 +362,7 @@ func TestReplyMessages(t *testing.T) {
 		Want         want
 	}{
 		{
-			// A test message
+			// A text message
 			Messages:     []Message{NewTextMessage("Hello, world")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
@@ -492,6 +492,153 @@ func TestReplyMessagesWithContext(t *testing.T) {
 	}
 }
 
+func TestMulticastMessages(t *testing.T) {
+	var toUserIDs = []string{
+		"U0cc15697597f61dd8b01cea8b027050e",
+		"U38ecbecfade326557b6971140741a4a6",
+	}
+	type want struct {
+		RequestBody []byte
+		Response    *BasicResponse
+		Error       error
+	}
+	var testCases = []struct {
+		Messages     []Message
+		Response     []byte
+		ResponseCode int
+		Want         want
+	}{
+		{
+			// A text message
+			Messages:     []Message{NewTextMessage("Hello, world")},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":["U0cc15697597f61dd8b01cea8b027050e","U38ecbecfade326557b6971140741a4a6"],"messages":[{"type":"text","text":"Hello, world"}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A location message
+			Messages:     []Message{NewLocationMessage("title", "address", 35.65910807942215, 139.70372892916203)},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":["U0cc15697597f61dd8b01cea8b027050e","U38ecbecfade326557b6971140741a4a6"],"messages":[{"type":"location","title":"title","address":"address","latitude":35.65910807942215,"longitude":139.70372892916203}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A image message
+			Messages:     []Message{NewImageMessage("http://example.com/original.jpg", "http://example.com/preview.jpg")},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":["U0cc15697597f61dd8b01cea8b027050e","U38ecbecfade326557b6971140741a4a6"],"messages":[{"type":"image","originalContentUrl":"http://example.com/original.jpg","previewImageUrl":"http://example.com/preview.jpg"}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A sticker message
+			Messages:     []Message{NewStickerMessage("1", "1")},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":["U0cc15697597f61dd8b01cea8b027050e","U38ecbecfade326557b6971140741a4a6"],"messages":[{"type":"sticker","packageId":"1","stickerId":"1"}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// Bad request
+			Messages:     []Message{NewTextMessage(""), NewTextMessage("")},
+			ResponseCode: 400,
+			Response:     []byte(`{"message":"Request body has 2 error(s).","details":[{"message":"may not be empty","property":"messages[0].text"},{"message":"may not be empty","property":"messages[1].text"}]}`),
+			Want: want{
+				RequestBody: []byte(`{"to":["U0cc15697597f61dd8b01cea8b027050e","U38ecbecfade326557b6971140741a4a6"],"messages":[{"type":"text","text":""},{"type":"text","text":""}]}` + "\n"),
+				Error: &APIError{
+					Code: 400,
+					Response: &ErrorResponse{
+						Message: "Request body has 2 error(s).",
+						Details: []errorResponseDetail{
+							{
+								Message:  "may not be empty",
+								Property: "messages[0].text",
+							},
+							{
+								Message:  "may not be empty",
+								Property: "messages[1].text",
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+
+	var currentTestIdx int
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		if r.Method != http.MethodPost {
+			t.Errorf("Method %s; want %s", r.Method, http.MethodPost)
+		}
+		if r.URL.Path != APIEndpointMulticast {
+			t.Errorf("URLPath %s; want %s", r.URL.Path, APIEndpointMulticast)
+		}
+		body, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+		tc := testCases[currentTestIdx]
+		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
+			t.Errorf("RequestBody %s; want %s", body, tc.Want.RequestBody)
+		}
+		w.WriteHeader(tc.ResponseCode)
+		w.Write(tc.Response)
+	}))
+	defer server.Close()
+	client, err := mockClient(server)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for i, tc := range testCases {
+		currentTestIdx = i
+		res, err := client.Multicast(toUserIDs, tc.Messages...).Do()
+		if tc.Want.Error != nil {
+			if !reflect.DeepEqual(err, tc.Want.Error) {
+				t.Errorf("Error %d %q; want %q", i, err, tc.Want.Error)
+			}
+		} else {
+			if err != nil {
+				t.Error(err)
+			}
+		}
+		if tc.Want.Response != nil {
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+			}
+		}
+	}
+}
+
+func TestMulticastMessagesWithContext(t *testing.T) {
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		time.Sleep(10 * time.Millisecond)
+		w.Write([]byte("{}"))
+	}))
+	defer server.Close()
+	client, err := mockClient(server)
+	if err != nil {
+		t.Fatal(err)
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
+	defer cancel()
+	_, err = client.Multicast([]string{"U0cc15697597f61dd8b01cea8b027050e", "U38ecbecfade326557b6971140741a4a6"}, NewTextMessage("Hello, world")).WithContext(ctx).Do()
+	if err != context.DeadlineExceeded {
+		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
+	}
+}
+
 func BenchmarkPushMessages(b *testing.B) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
@@ -521,5 +668,21 @@ func BenchmarkReplyMessages(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		client.ReplyMessage("nHuyWiB7yP5Zw52FIkcQobQuGDXCTA", NewTextMessage("Hello, world")).Do()
+	}
+}
+
+func BenchmarkMulticast(b *testing.B) {
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		w.Write([]byte("{}"))
+	}))
+	defer server.Close()
+	client, err := mockClient(server)
+	if err != nil {
+		b.Fatal(err)
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		client.Multicast([]string{"U0cc15697597f61dd8b01cea8b027050e", "U38ecbecfade326557b6971140741a4a6"}, NewTextMessage("Hello, world")).Do()
 	}
 }

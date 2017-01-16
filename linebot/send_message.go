@@ -123,3 +123,54 @@ func (call *ReplyMessageCall) Do() (*BasicResponse, error) {
 	}
 	return decodeToBasicResponse(res)
 }
+
+// Multicast method
+func (client *Client) Multicast(to []string, messages ...Message) *MulticastCall {
+	return &MulticastCall{
+		c:        client,
+		to:       to,
+		messages: messages,
+	}
+}
+
+// MulticastCall type
+type MulticastCall struct {
+	c   *Client
+	ctx context.Context
+
+	to       []string
+	messages []Message
+}
+
+// WithContext method
+func (call *MulticastCall) WithContext(ctx context.Context) *MulticastCall {
+	call.ctx = ctx
+	return call
+}
+
+func (call *MulticastCall) encodeJSON(w io.Writer) error {
+	enc := json.NewEncoder(w)
+	return enc.Encode(&struct {
+		To       []string  `json:"to"`
+		Messages []Message `json:"messages"`
+	}{
+		To:       call.to,
+		Messages: call.messages,
+	})
+}
+
+// Do method
+func (call *MulticastCall) Do() (*BasicResponse, error) {
+	var buf bytes.Buffer
+	if err := call.encodeJSON(&buf); err != nil {
+		return nil, err
+	}
+	res, err := call.c.post(call.ctx, APIEndpointMulticast, &buf)
+	if res != nil && res.Body != nil {
+		defer res.Body.Close()
+	}
+	if err != nil {
+		return nil, err
+	}
+	return decodeToBasicResponse(res)
+}
