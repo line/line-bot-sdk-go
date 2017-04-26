@@ -230,9 +230,10 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 	case EventTypePostback:
 		e.Postback = rawEvent.Postback
 	case EventTypeBeacon:
-		deviceMessage, err := hex.DecodeString(rawEvent.Beacon.DM)
+		var deviceMessage []byte
+		deviceMessage, err = hex.DecodeString(rawEvent.Beacon.DM)
 		if err != nil {
-			return err
+			return
 		}
 		e.Beacon = &Beacon{
 			Hwid:          rawEvent.Beacon.Hwid,
