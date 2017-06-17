@@ -54,7 +54,7 @@ func TestNewClient(t *testing.T) {
 		t.Errorf("channelSecret %s; want %s", client.channelSecret, secret)
 	}
 	if client.channelToken != token {
-		t.Errorf("channelToken %s; want %s", client.channelSecret, secret)
+		t.Errorf("channelToken %s; want %s", client.channelToken, token)
 	}
 	if !reflect.DeepEqual(client.endpointBase, wantURL) {
 		t.Errorf("endpointBase %q; want %q", client.endpointBase, wantURL)
