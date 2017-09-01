@@ -120,8 +120,8 @@ type ImageCarouselTemplate struct {
 
 // ImageCarouselColumn type
 type ImageCarouselColumn struct {
-	ImageURL string           `json:"imageUrl"`
-	Actions  []TemplateAction `json:"actions"`
+	ImageURL string         `json:"imageUrl"`
+	Action   TemplateAction `json:"action"`
 }
 
 // MarshalJSON method of ImageCarouselTemplate
@@ -186,10 +186,10 @@ func NewImageCarouselTemplate(columns ...*ImageCarouselColumn) *ImageCarouselTem
 }
 
 // NewImageCarouselColumn function
-func NewImageCarouselColumn(imageURL string, actions ...TemplateAction) *ImageCarouselColumn {
+func NewImageCarouselColumn(imageURL string, action TemplateAction) *ImageCarouselColumn {
 	return &ImageCarouselColumn{
 		ImageURL: imageURL,
-		Actions:  actions,
+		Action:   action,
 	}
 }
 
