@@ -230,6 +230,26 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
+			// A imagecarousel template message
+			Messages: []Message{
+				NewTemplateMessage(
+					"this is a image carousel template",
+					NewImageCarouselTemplate(
+						NewImageCarouselColumn(
+							"https://example.com/bot/images/item1.jpg",
+							NewURITemplateAction("View detail", "http://example.com/page/111"),
+						),
+					),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a image carousel template","template":{"type":"image_carousel","columns":[{"imageUrl":"https://example.com/bot/images/item1.jpg","action":{"type":"uri","label":"View detail","uri":"http://example.com/page/111"}}]}}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
 			// A imagemap message
 			Messages: []Message{
 				NewImagemapMessage(

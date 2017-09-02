@@ -23,9 +23,10 @@ type TemplateType string
 
 // TemplateType constants
 const (
-	TemplateTypeButtons  TemplateType = "buttons"
-	TemplateTypeConfirm  TemplateType = "confirm"
-	TemplateTypeCarousel TemplateType = "carousel"
+	TemplateTypeButtons       TemplateType = "buttons"
+	TemplateTypeConfirm       TemplateType = "confirm"
+	TemplateTypeCarousel      TemplateType = "carousel"
+	TemplateTypeImageCarousel TemplateType = "image_carousel"
 )
 
 // TemplateActionType type
@@ -112,10 +113,33 @@ func (t *CarouselTemplate) MarshalJSON() ([]byte, error) {
 	})
 }
 
+// ImageCarouselTemplate type
+type ImageCarouselTemplate struct {
+	Columns []*ImageCarouselColumn
+}
+
+// ImageCarouselColumn type
+type ImageCarouselColumn struct {
+	ImageURL string         `json:"imageUrl"`
+	Action   TemplateAction `json:"action"`
+}
+
+// MarshalJSON method of ImageCarouselTemplate
+func (t *ImageCarouselTemplate) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		Type    TemplateType           `json:"type"`
+		Columns []*ImageCarouselColumn `json:"columns"`
+	}{
+		Type:    TemplateTypeImageCarousel,
+		Columns: t.Columns,
+	})
+}
+
 // implements Template interface
-func (*ConfirmTemplate) template()  {}
-func (*ButtonsTemplate) template()  {}
-func (*CarouselTemplate) template() {}
+func (*ConfirmTemplate) template()       {}
+func (*ButtonsTemplate) template()       {}
+func (*CarouselTemplate) template()      {}
+func (*ImageCarouselTemplate) template() {}
 
 // NewConfirmTemplate function
 func NewConfirmTemplate(text string, left, right TemplateAction) *ConfirmTemplate {
@@ -151,6 +175,21 @@ func NewCarouselColumn(thumbnailImageURL, title, text string, actions ...Templat
 		Title:             title,
 		Text:              text,
 		Actions:           actions,
+	}
+}
+
+// NewImageCarouselTemplate function
+func NewImageCarouselTemplate(columns ...*ImageCarouselColumn) *ImageCarouselTemplate {
+	return &ImageCarouselTemplate{
+		Columns: columns,
+	}
+}
+
+// NewImageCarouselColumn function
+func NewImageCarouselColumn(imageURL string, action TemplateAction) *ImageCarouselColumn {
+	return &ImageCarouselColumn{
+		ImageURL: imageURL,
+		Action:   action,
 	}
 }
 
