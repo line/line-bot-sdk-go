@@ -52,9 +52,17 @@ type EventSource struct {
 	RoomID  string          `json:"roomId,omitempty"`
 }
 
+// Params type
+type Params struct {
+	Date     string `json:"date,omitempty"`
+	Time     string `json:"time,omitempty"`
+	Datetime string `json:"datetime,omitempty"`
+}
+
 // Postback type
 type Postback struct {
-	Data string `json:"data"`
+	Data   string  `json:"data"`
+	Params *Params `json:"params,omitempty"`
 }
 
 // BeaconEventType type

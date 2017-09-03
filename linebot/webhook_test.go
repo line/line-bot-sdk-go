@@ -152,6 +152,51 @@ var webhookTestRequestBody = `{
         },
         {
             "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+            "type": "postback",
+            "timestamp": 1462629479859,
+            "source": {
+                "type": "user",
+                "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
+            },
+            "postback": {
+                "data": "action=sel&only=date",
+				"params": {
+					"date": "2017-09-03"
+				}
+            }
+        },
+        {
+            "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+            "type": "postback",
+            "timestamp": 1462629479859,
+            "source": {
+                "type": "user",
+                "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
+            },
+            "postback": {
+                "data": "action=sel&only=time",
+				"params": {
+					"time": "15:38"
+				}
+            }
+        },
+        {
+            "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+            "type": "postback",
+            "timestamp": 1462629479859,
+            "source": {
+                "type": "user",
+                "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
+            },
+            "postback": {
+                "data": "action=sel",
+				"params": {
+					"datetime": "2017-09-03T15:38"
+				}
+            }
+        },
+        {
+            "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
             "type": "beacon",
             "timestamp": 1462629479859,
             "source": {
@@ -295,6 +340,51 @@ var webhookTestWantEvents = []*Event{
 		},
 		Postback: &Postback{
 			Data: "action=buyItem&itemId=123123&color=red",
+		},
+	},
+	{
+		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+		Type:       EventTypePostback,
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
+		Source: &EventSource{
+			Type:   EventSourceTypeUser,
+			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
+		},
+		Postback: &Postback{
+			Data: "action=sel&only=date",
+			Params: &Params{
+				Date: "2017-09-03",
+			},
+		},
+	},
+	{
+		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+		Type:       EventTypePostback,
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
+		Source: &EventSource{
+			Type:   EventSourceTypeUser,
+			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
+		},
+		Postback: &Postback{
+			Data: "action=sel&only=time",
+			Params: &Params{
+				Time: "15:38",
+			},
+		},
+	},
+	{
+		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+		Type:       EventTypePostback,
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
+		Source: &EventSource{
+			Type:   EventSourceTypeUser,
+			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
+		},
+		Postback: &Postback{
+			Data: "action=sel",
+			Params: &Params{
+				Datetime: "2017-09-03T15:38",
+			},
 		},
 	},
 	{
