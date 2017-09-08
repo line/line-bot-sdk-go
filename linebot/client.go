@@ -29,13 +29,15 @@ import (
 const (
 	APIEndpointBase = "https://api.line.me"
 
-	APIEndpointPushMessage       = "/v2/bot/message/push"
-	APIEndpointReplyMessage      = "/v2/bot/message/reply"
-	APIEndpointMulticast         = "/v2/bot/message/multicast"
-	APIEndpointGetMessageContent = "/v2/bot/message/%s/content"
-	APIEndpointLeaveGroup        = "/v2/bot/group/%s/leave"
-	APIEndpointLeaveRoom         = "/v2/bot/room/%s/leave"
-	APIEndpointGetProfile        = "/v2/bot/profile/%s"
+	APIEndpointPushMessage           = "/v2/bot/message/push"
+	APIEndpointReplyMessage          = "/v2/bot/message/reply"
+	APIEndpointMulticast             = "/v2/bot/message/multicast"
+	APIEndpointGetMessageContent     = "/v2/bot/message/%s/content"
+	APIEndpointLeaveGroup            = "/v2/bot/group/%s/leave"
+	APIEndpointLeaveRoom             = "/v2/bot/room/%s/leave"
+	APIEndpointGetProfile            = "/v2/bot/profile/%s"
+	APIEndpointGetGroupMemberProfile = "/v2/bot/group/%s/member/%s"
+	APIEndpointGetRoomMemberProfile  = "/v2/bot/room/%s/member/%s"
 )
 
 // Client type
