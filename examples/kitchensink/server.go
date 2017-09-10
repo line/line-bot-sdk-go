@@ -225,6 +225,32 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 		).Do(); err != nil {
 			return err
 		}
+	case "image carousel":
+		imageURL := app.appBaseURL + "/static/buttons/1040.jpg"
+		template := linebot.NewImageCarouselTemplate(
+			linebot.NewImageCarouselColumn(
+				imageURL,
+				linebot.NewURITemplateAction("Go to LINE", "https://line.me"),
+			),
+			linebot.NewImageCarouselColumn(
+				imageURL,
+				linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", ""),
+			),
+			linebot.NewImageCarouselColumn(
+				imageURL,
+				linebot.NewMessageTemplateAction("Say message", "Rice=米"),
+			),
+			linebot.NewImageCarouselColumn(
+				imageURL,
+				linebot.NewDatetimePickerTemplateAction("datetime", "DATETIME", "datetime", "", "", ""),
+			),
+		)
+		if _, err := app.bot.ReplyMessage(
+			replyToken,
+			linebot.NewTemplateMessage("Image carousel alt text", template),
+		).Do(); err != nil {
+			return err
+		}
 	case "datetime":
 		template := linebot.NewButtonsTemplate(
 			"", "", "Select date / time !",
