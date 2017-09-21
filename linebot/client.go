@@ -38,6 +38,8 @@ const (
 	APIEndpointGetProfile            = "/v2/bot/profile/%s"
 	APIEndpointGetGroupMemberProfile = "/v2/bot/group/%s/member/%s"
 	APIEndpointGetRoomMemberProfile  = "/v2/bot/room/%s/member/%s"
+	APIEndpointGetGroupMemberIDs     = "/v2/bot/group/%s/members/ids"
+	APIEndpointGetRoomMemberIDs      = "/v2/bot/room/%s/members/ids"
 )
 
 // Client type
@@ -116,10 +118,13 @@ func (client *Client) do(ctx context.Context, req *http.Request) (*http.Response
 
 }
 
-func (client *Client) get(ctx context.Context, endpoint string) (*http.Response, error) {
+func (client *Client) get(ctx context.Context, endpoint string, query url.Values) (*http.Response, error) {
 	req, err := http.NewRequest("GET", client.url(endpoint), nil)
 	if err != nil {
 		return nil, err
+	}
+	if query != nil {
+		req.URL.RawQuery = query.Encode()
 	}
 	return client.do(ctx, req)
 }
