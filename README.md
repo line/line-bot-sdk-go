@@ -9,8 +9,8 @@ Go SDK for the LINE Messaging API
 
 See the official API documentation for more information.
 
-English: https://devdocs.line.me/en/<br>
-Japanese: https://devdocs.line.me/ja/
+English: https://developers.line.me/en/docs/messaging-api/reference/<br>
+Japanese: https://developers.line.me/ja/docs/messaging-api/reference/
 
 ## Installation ##
 
