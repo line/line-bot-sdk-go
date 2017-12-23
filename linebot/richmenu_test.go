@@ -122,7 +122,7 @@ func TestGetRichMenu(t *testing.T) {
 		}
 		if tc.Want.Response != nil {
 			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+				t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
 			}
 		}
 	}
@@ -378,7 +378,7 @@ func TestListRichMenu(t *testing.T) {
 		}
 		if tc.Want.Response != nil {
 			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d\n %q; want\n %q", i, res, tc.Want.Response)
+				t.Errorf("Response %d\n %v; want\n %v", i, res, tc.Want.Response)
 			}
 		}
 	}
