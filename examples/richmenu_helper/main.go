@@ -56,9 +56,11 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		log.Printf("%v\n", res)
+		for _, richmenu := range res {
+			log.Printf("%v\n", richmenu)
+		}
 	case "create":
-		richMenu1 := linebot.RichMenu{
+		richMenu := linebot.RichMenu{
 			Size:        linebot.RichMenuSize{Width: 2500, Height: 1686},
 			Selected:    false,
 			Name:        "Menu1",
@@ -96,7 +98,7 @@ func main() {
 				},
 			},
 		}
-		res, err := bot.CreateRichMenu(richMenu1).Do()
+		res, err := bot.CreateRichMenu(richMenu).Do()
 		if err != nil {
 			log.Fatal(err)
 		}
