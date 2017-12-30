@@ -56,6 +56,21 @@ type MessageContentResponse struct {
 	ContentType   string
 }
 
+// RichMenuIDResponse type
+type RichMenuIDResponse struct {
+	RichMenuID string `json:"richMenuId"`
+}
+
+// RichMenuResponse type
+type RichMenuResponse struct {
+	RichMenuID  string       `json:"richMenuId"`
+	Size        RichMenuSize `json:"size"`
+	Selected    bool         `json:"selected"`
+	Name        string       `json:"name"`
+	ChatBarText string       `json:"chatBarText"`
+	Areas       []AreaDetail `json:"areas"`
+}
+
 func checkResponse(res *http.Response) error {
 	if res.StatusCode != http.StatusOK {
 		decoder := json.NewDecoder(res.Body)
@@ -117,6 +132,44 @@ func decodeToMessageContentResponse(res *http.Response) (*MessageContentResponse
 		Content:       res.Body,
 		ContentType:   res.Header.Get("Content-Type"),
 		ContentLength: res.ContentLength,
+	}
+	return &result, nil
+}
+
+func decodeToRichMenuResponse(res *http.Response) (*RichMenuResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := RichMenuResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
+
+func decodeToRichMenuListResponse(res *http.Response) ([]*RichMenuResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	var result = struct {
+		RichMenus []*RichMenuResponse `json:"richmenus"`
+	}{}
+	if err := decoder.Decode(&result); err != nil {
+		return nil, err
+	}
+	return result.RichMenus, nil
+}
+
+func decodeToRichMenuIDResponse(res *http.Response) (*RichMenuIDResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := RichMenuIDResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return nil, err
 	}
 	return &result, nil
 }
