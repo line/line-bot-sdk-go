@@ -48,27 +48,44 @@ type Template interface {
 
 // ButtonsTemplate type
 type ButtonsTemplate struct {
-	ThumbnailImageURL string
-	Title             string
-	Text              string
-	Actions           []TemplateAction
+	ThumbnailImageURL    string
+	ImageAspectRatio     string
+	ImageSize            string
+	ImageBackgroundColor string
+	Title                string
+	Text                 string
+	Actions              []TemplateAction
 }
 
 // MarshalJSON method of ButtonsTemplate
 func (t *ButtonsTemplate) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type              TemplateType     `json:"type"`
-		ThumbnailImageURL string           `json:"thumbnailImageUrl,omitempty"`
-		Title             string           `json:"title,omitempty"`
-		Text              string           `json:"text"`
-		Actions           []TemplateAction `json:"actions"`
+		Type                 TemplateType     `json:"type"`
+		ThumbnailImageURL    string           `json:"thumbnailImageUrl,omitempty"`
+		ImageAspectRatio     string           `json:"imageAspectRatio,omitempty"`
+		ImageSize            string           `json:"imageSize,omitempty"`
+		ImageBackgroundColor string           `json:"imageBackgroundColor,omitempty"`
+		Title                string           `json:"title,omitempty"`
+		Text                 string           `json:"text"`
+		Actions              []TemplateAction `json:"actions"`
 	}{
-		Type:              TemplateTypeButtons,
-		ThumbnailImageURL: t.ThumbnailImageURL,
-		Title:             t.Title,
-		Text:              t.Text,
-		Actions:           t.Actions,
+		Type:                 TemplateTypeButtons,
+		ThumbnailImageURL:    t.ThumbnailImageURL,
+		ImageAspectRatio:     t.ImageAspectRatio,
+		ImageSize:            t.ImageSize,
+		ImageBackgroundColor: t.ImageBackgroundColor,
+		Title:                t.Title,
+		Text:                 t.Text,
+		Actions:              t.Actions,
 	})
+}
+
+// WithImageOptions method, ButtonsTemplate can set imageAspectRatio, imageSize and imageBackgroundColor
+func (t *ButtonsTemplate) WithImageOptions(imageAspectRatio, imageSize, imageBackgroundColor string) *ButtonsTemplate {
+	t.ImageAspectRatio = imageAspectRatio
+	t.ImageSize = imageSize
+	t.ImageBackgroundColor = imageBackgroundColor
+	return t
 }
 
 // ConfirmTemplate type
@@ -92,26 +109,46 @@ func (t *ConfirmTemplate) MarshalJSON() ([]byte, error) {
 
 // CarouselTemplate type
 type CarouselTemplate struct {
-	Columns []*CarouselColumn
+	Columns          []*CarouselColumn
+	ImageAspectRatio string
+	ImageSize        string
 }
 
 // CarouselColumn type
 type CarouselColumn struct {
-	ThumbnailImageURL string           `json:"thumbnailImageUrl,omitempty"`
-	Title             string           `json:"title,omitempty"`
-	Text              string           `json:"text"`
-	Actions           []TemplateAction `json:"actions"`
+	ThumbnailImageURL    string           `json:"thumbnailImageUrl,omitempty"`
+	ImageBackgroundColor string           `json:"imageBackgroundColor,omitempty"`
+	Title                string           `json:"title,omitempty"`
+	Text                 string           `json:"text"`
+	Actions              []TemplateAction `json:"actions"`
 }
 
 // MarshalJSON method of CarouselTemplate
 func (t *CarouselTemplate) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type    TemplateType      `json:"type"`
-		Columns []*CarouselColumn `json:"columns"`
+		Type             TemplateType      `json:"type"`
+		Columns          []*CarouselColumn `json:"columns"`
+		ImageAspectRatio string            `json:"imageAspectRatio,omitempty"`
+		ImageSize        string            `json:"imageSize,omitempty"`
 	}{
-		Type:    TemplateTypeCarousel,
-		Columns: t.Columns,
+		Type:             TemplateTypeCarousel,
+		Columns:          t.Columns,
+		ImageAspectRatio: t.ImageAspectRatio,
+		ImageSize:        t.ImageSize,
 	})
+}
+
+// WithImageOptions method, CarouselTemplate can set imageAspectRatio and imageSize
+func (t *CarouselTemplate) WithImageOptions(imageAspectRatio, imageSize string) *CarouselTemplate {
+	t.ImageAspectRatio = imageAspectRatio
+	t.ImageSize = imageSize
+	return t
+}
+
+// WithImageOptions method, CarouselColumn can set imageBackgroundColor
+func (t *CarouselColumn) WithImageOptions(imageBackgroundColor string) *CarouselColumn {
+	t.ImageBackgroundColor = imageBackgroundColor
+	return t
 }
 
 // ImageCarouselTemplate type
