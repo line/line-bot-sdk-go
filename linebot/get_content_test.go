@@ -15,6 +15,7 @@
 package linebot
 
 import (
+	"context"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -22,8 +23,6 @@ import (
 	"reflect"
 	"testing"
 	"time"
-
-	"golang.org/x/net/context"
 )
 
 func TestGetMessageContent(t *testing.T) {

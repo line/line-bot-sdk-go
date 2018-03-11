@@ -16,13 +16,12 @@ package linebot
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"os"
-
-	"golang.org/x/net/context"
 )
 
 // RichMenuActionType type

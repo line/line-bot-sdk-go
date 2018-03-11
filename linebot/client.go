@@ -15,14 +15,12 @@
 package linebot
 
 import (
+	"context"
 	"errors"
 	"io"
 	"net/http"
 	"net/url"
 	"path"
-
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
 )
 
 // APIEndpoint constants
@@ -121,7 +119,16 @@ func (client *Client) do(ctx context.Context, req *http.Request) (*http.Response
 	req.Header.Set("Authorization", "Bearer "+client.channelToken)
 	req.Header.Set("User-Agent", "LINE-BotSDK-Go/"+version)
 	if ctx != nil {
-		return ctxhttp.Do(ctx, client.httpClient, req)
+		res, err := client.httpClient.Do(req.WithContext(ctx))
+		if err != nil {
+			select {
+			case <-ctx.Done():
+				err = ctx.Err()
+			default:
+			}
+		}
+
+		return res, err
 	}
 	return client.httpClient.Do(req)
 

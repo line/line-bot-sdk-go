@@ -15,9 +15,8 @@
 package linebot
 
 import (
+	"context"
 	"fmt"
-
-	"golang.org/x/net/context"
 )
 
 // GetProfile method
