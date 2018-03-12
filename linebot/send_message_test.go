@@ -15,14 +15,13 @@
 package linebot
 
 import (
+	"context"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
 	"testing"
 	"time"
-
-	"golang.org/x/net/context"
 )
 
 func TestPushMessages(t *testing.T) {

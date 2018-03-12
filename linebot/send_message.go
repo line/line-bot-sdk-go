@@ -16,10 +16,9 @@ package linebot
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"io"
-
-	"golang.org/x/net/context"
 )
 
 // PushMessage method

@@ -15,6 +15,7 @@
 package linebot
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -23,8 +24,6 @@ import (
 	"reflect"
 	"testing"
 	"time"
-
-	"golang.org/x/net/context"
 )
 
 func TestGetGroupMemberIDs(t *testing.T) {

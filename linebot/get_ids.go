@@ -15,10 +15,9 @@
 package linebot
 
 import (
+	"context"
 	"fmt"
 	"net/url"
-
-	"golang.org/x/net/context"
 )
 
 // GetGroupMemberIDs method
