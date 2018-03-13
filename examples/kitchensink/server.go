@@ -183,8 +183,8 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 		template := linebot.NewButtonsTemplate(
 			imageURL, "My button sample", "Hello, my button",
 			linebot.NewURITemplateAction("Go to line.me", "https://line.me"),
-			linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", ""),
-			linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは"),
+			linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", "", "hello こんにちは"),
+			linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは", ""),
 			linebot.NewMessageTemplateAction("Say message", "Rice=米"),
 		)
 		if _, err := app.bot.ReplyMessage(
@@ -211,11 +211,11 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 			linebot.NewCarouselColumn(
 				imageURL, "hoge", "fuga",
 				linebot.NewURITemplateAction("Go to line.me", "https://line.me"),
-				linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", ""),
+				linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", "", ""),
 			),
 			linebot.NewCarouselColumn(
 				imageURL, "hoge", "fuga",
-				linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは"),
+				linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは", ""),
 				linebot.NewMessageTemplateAction("Say message", "Rice=米"),
 			),
 		)
@@ -234,7 +234,7 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 			),
 			linebot.NewImageCarouselColumn(
 				imageURL,
-				linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", ""),
+				linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", "", ""),
 			),
 			linebot.NewImageCarouselColumn(
 				imageURL,
