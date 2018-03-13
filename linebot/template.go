@@ -295,23 +295,26 @@ func (a *MessageTemplateAction) MarshalJSON() ([]byte, error) {
 
 // PostbackTemplateAction type
 type PostbackTemplateAction struct {
-	Label string
-	Data  string
-	Text  string
+	Label       string
+	Data        string
+	Text        string
+	DisplayText string
 }
 
 // MarshalJSON method of PostbackTemplateAction
 func (a *PostbackTemplateAction) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type  TemplateActionType `json:"type"`
-		Label string             `json:"label"`
-		Data  string             `json:"data"`
-		Text  string             `json:"text,omitempty"`
+		Type        TemplateActionType `json:"type"`
+		Label       string             `json:"label"`
+		Data        string             `json:"data"`
+		Text        string             `json:"text,omitempty"`
+		DisplayText string             `json:"displayText,omitempty"`
 	}{
-		Type:  TemplateActionTypePostback,
-		Label: a.Label,
-		Data:  a.Data,
-		Text:  a.Text,
+		Type:        TemplateActionTypePostback,
+		Label:       a.Label,
+		Data:        a.Data,
+		Text:        a.Text,
+		DisplayText: a.DisplayText,
 	})
 }
 
@@ -369,11 +372,12 @@ func NewMessageTemplateAction(label, text string) *MessageTemplateAction {
 }
 
 // NewPostbackTemplateAction function
-func NewPostbackTemplateAction(label, data, text string) *PostbackTemplateAction {
+func NewPostbackTemplateAction(label, data, text, displayText string) *PostbackTemplateAction {
 	return &PostbackTemplateAction{
-		Label: label,
-		Data:  data,
-		Text:  text,
+		Label:       label,
+		Data:        data,
+		Text:        text,
+		DisplayText: displayText,
 	}
 }
 
