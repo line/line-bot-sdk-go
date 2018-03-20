@@ -61,7 +61,7 @@ const (
 // Template interface
 type Template interface {
 	json.Marshaler
-	template()
+	Template()
 }
 
 // ButtonsTemplate type
@@ -192,10 +192,10 @@ func (t *ImageCarouselTemplate) MarshalJSON() ([]byte, error) {
 }
 
 // implements Template interface
-func (*ConfirmTemplate) template()       {}
-func (*ButtonsTemplate) template()       {}
-func (*CarouselTemplate) template()      {}
-func (*ImageCarouselTemplate) template() {}
+func (*ConfirmTemplate) Template()       {}
+func (*ButtonsTemplate) Template()       {}
+func (*CarouselTemplate) Template()      {}
+func (*ImageCarouselTemplate) Template() {}
 
 // NewConfirmTemplate function
 func NewConfirmTemplate(text string, left, right TemplateAction) *ConfirmTemplate {
@@ -252,7 +252,7 @@ func NewImageCarouselColumn(imageURL string, action TemplateAction) *ImageCarous
 // TemplateAction interface
 type TemplateAction interface {
 	json.Marshaler
-	templateAction()
+	TemplateAction()
 }
 
 // URITemplateAction type
@@ -350,10 +350,10 @@ func (a *DatetimePickerTemplateAction) MarshalJSON() ([]byte, error) {
 }
 
 // implements TemplateAction interface
-func (*URITemplateAction) templateAction()            {}
-func (*MessageTemplateAction) templateAction()        {}
-func (*PostbackTemplateAction) templateAction()       {}
-func (*DatetimePickerTemplateAction) templateAction() {}
+func (*URITemplateAction) TemplateAction()            {}
+func (*MessageTemplateAction) TemplateAction()        {}
+func (*PostbackTemplateAction) TemplateAction()       {}
+func (*DatetimePickerTemplateAction) TemplateAction() {}
 
 // NewURITemplateAction function
 func NewURITemplateAction(label, uri string) *URITemplateAction {
