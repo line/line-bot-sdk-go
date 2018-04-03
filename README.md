@@ -88,7 +88,7 @@ The LINE Messaging API provides various types of message. To create a message, u
 
 	template := linebot.NewConfirmTemplate("Hello World", leftBtn, rightBtn)
 
-	messgage := linebot.NewTemplateMessage("Sorry :(, please update your app.", template)
+	message := linebot.NewTemplateMessage("Sorry :(, please update your app.", template)
 ```
 
 ### Send message ###
