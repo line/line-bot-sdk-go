@@ -265,7 +265,7 @@ type URITemplateAction struct {
 func (a *URITemplateAction) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type  TemplateActionType `json:"type"`
-		Label string             `json:"label"`
+		Label string             `json:"label,omitempty"`
 		URI   string             `json:"uri"`
 	}{
 		Type:  TemplateActionTypeURI,
@@ -284,7 +284,7 @@ type MessageTemplateAction struct {
 func (a *MessageTemplateAction) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type  TemplateActionType `json:"type"`
-		Label string             `json:"label"`
+		Label string             `json:"label,omitempty"`
 		Text  string             `json:"text"`
 	}{
 		Type:  TemplateActionTypeMessage,
@@ -305,7 +305,7 @@ type PostbackTemplateAction struct {
 func (a *PostbackTemplateAction) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type        TemplateActionType `json:"type"`
-		Label       string             `json:"label"`
+		Label       string             `json:"label,omitempty"`
 		Data        string             `json:"data"`
 		Text        string             `json:"text,omitempty"`
 		DisplayText string             `json:"displayText,omitempty"`
@@ -332,7 +332,7 @@ type DatetimePickerTemplateAction struct {
 func (a *DatetimePickerTemplateAction) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type    TemplateActionType `json:"type"`
-		Label   string             `json:"label"`
+		Label   string             `json:"label,omitempty"`
 		Data    string             `json:"data"`
 		Mode    string             `json:"mode"`
 		Initial string             `json:"initial,omitempty"`
