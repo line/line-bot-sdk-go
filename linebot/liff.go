@@ -27,6 +27,10 @@ type LIFFAPP struct {
 	View   View   `json:"view"`
 }
 
+type ViewRequest struct {
+	View View `json:"view"`
+}
+
 type View struct {
 	Type LIFFViewType `json:"type"`
 	Url  string 	  `json:"url"`
@@ -65,7 +69,7 @@ func (call *GetLIFFAllCall) Do() (*LIFFResponse, error) {
 
 
 // AddLIFFCall method
-func (client *Client) AddLIFF(view View) *AddLIFFCall {
+func (client *Client) AddLIFF(view ViewRequest) *AddLIFFCall {
 	return &AddLIFFCall{
 		c:          client,
 		View:		view,
@@ -77,7 +81,7 @@ type AddLIFFCall struct {
 	c   *Client
 	ctx context.Context
 
-	View View
+	View ViewRequest
 }
 
 // WithContext method
@@ -92,8 +96,8 @@ func (call *AddLIFFCall) encodeJSON(w io.Writer) error {
 		Type    LIFFViewType   `json:"type"`
 		Url		string		   `json:"url"`
 	}{
-		Type: call.View.Type,
-		Url: call.View.Url,
+		Type: call.View.View.Type,
+		Url: call.View.View.Url,
 	})
 }
 
@@ -114,7 +118,7 @@ func (call *AddLIFFCall) Do() (*LIFFIDResponse, error) {
 }
 
 // DeleteRichMenu method
-func (client *Client) UpdateLIFFCall(liffId string, view View) *UpdateLIFFCall {
+func (client *Client) UpdateLIFFCall(liffId string, view ViewRequest) *UpdateLIFFCall {
 	return &UpdateLIFFCall{
 		c:          client,
 		LIFFID: 	liffId,
@@ -128,7 +132,7 @@ type UpdateLIFFCall struct {
 	ctx context.Context
 
 	LIFFID string
-	View View
+	View ViewRequest
 }
 
 // WithContext method
@@ -143,8 +147,8 @@ func (call *UpdateLIFFCall) encodeJSON(w io.Writer) error {
 		Type    LIFFViewType   `json:"type"`
 		Url		string		   `json:"url"`
 	}{
-		Type: call.View.Type,
-		Url: call.View.Url,
+		Type: call.View.View.Type,
+		Url: call.View.View.Url,
 	})
 }
 
