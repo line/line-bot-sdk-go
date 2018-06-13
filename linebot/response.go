@@ -71,6 +71,11 @@ type RichMenuResponse struct {
 	Areas       []AreaDetail `json:"areas"`
 }
 
+// LIFFResponse type
+type LIFFResponse struct {
+	Apps []LIFFAPP `json:"apps"`
+}
+
 func checkResponse(res *http.Response) error {
 	if res.StatusCode != http.StatusOK {
 		decoder := json.NewDecoder(res.Body)
@@ -168,6 +173,30 @@ func decodeToRichMenuIDResponse(res *http.Response) (*RichMenuIDResponse, error)
 	}
 	decoder := json.NewDecoder(res.Body)
 	result := RichMenuIDResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
+
+func decodeToLIFFResponse(res *http.Response) (*LIFFResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := &LIFFResponse{}
+	if err := decoder.Decode(result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func decodeToLIFFIDResponse(res *http.Response) (*LIFFIDResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := LIFFIDResponse{}
 	if err := decoder.Decode(&result); err != nil {
 		return nil, err
 	}

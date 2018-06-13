@@ -47,6 +47,11 @@ const (
 	APIEndpointUnlinkUserRichMenu    = "/v2/bot/user/%s/richmenu"
 	APIEndpointDownloadRichMenuImage = "/v2/bot/richmenu/%s/content" // Download: GET / Upload: POST
 	APIEndpointUploadRichMenuImage   = "/v2/bot/richmenu/%s/content" // Download: GET / Upload: POST
+
+	APIEndpointGetLIFFAPP			 = "/liff/v1/apps"
+	APIEndpointAddLIFFAPP			 = "/liff/v1/apps"
+	APIEndpointUpdateLIFFAPP		 = "/liff/v1/apps/%s/view"
+	APIEndpointDeleteLIFFAPP		 = "/liff/v1/apps/%s"
 )
 
 // Client type
@@ -147,6 +152,15 @@ func (client *Client) get(ctx context.Context, endpoint string, query url.Values
 
 func (client *Client) post(ctx context.Context, endpoint string, body io.Reader) (*http.Response, error) {
 	req, err := http.NewRequest("POST", client.url(endpoint), body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
+	return client.do(ctx, req)
+}
+
+func (client *Client) put(ctx context.Context, endpoint string, body io.Reader) (*http.Response, error) {
+	req, err := http.NewRequest("PUT", client.url(endpoint), body)
 	if err != nil {
 		return nil, err
 	}
