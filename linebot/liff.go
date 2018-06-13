@@ -166,6 +166,14 @@ func (call *UpdateLIFFCall) Do() (*BasicResponse, error) {
 	return decodeToBasicResponse(res)
 }
 
+// DeleteRichMenu method
+func (client *Client) DeleteLIFFCall(liffId string) *DeleteLIFFCall {
+	return &DeleteLIFFCall{
+		c:          client,
+		LIFFID: 	liffId,
+	}
+}
+
 //DeleteLIFFCall type
 type DeleteLIFFCall struct {
 	c   *Client
