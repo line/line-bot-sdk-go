@@ -100,7 +100,12 @@ func decodeToBasicResponse(res *http.Response) (*BasicResponse, error) {
 	decoder := json.NewDecoder(res.Body)
 	result := BasicResponse{}
 	if err := decoder.Decode(&result); err != nil {
-		return nil, err
+		switch {
+		case err == io.EOF:
+			return &result, nil
+		case err != nil:
+			return nil, err
+		}
 	}
 	return &result, nil
 }

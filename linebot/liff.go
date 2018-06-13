@@ -120,7 +120,7 @@ func (client *Client) UpdateLIFFCall(liffId string, view View) *UpdateLIFFCall {
 	return &UpdateLIFFCall{
 		c:          client,
 		LIFFID: 	liffId,
-		View:       view,
+		view:       view,
 	}
 }
 
@@ -130,7 +130,7 @@ type UpdateLIFFCall struct {
 	ctx context.Context
 
 	LIFFID string
-	View View
+	view View
 }
 
 // WithContext method
@@ -142,11 +142,11 @@ func (call *UpdateLIFFCall) WithContext(ctx context.Context) *UpdateLIFFCall {
 func (call *UpdateLIFFCall) encodeJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
 	return enc.Encode(&struct {
-		Type LIFFViewType `json:"type"`
-		Url  string 	  `json:"url"`
+		Type LIFFViewType 	`json:"type"`
+		Url  string 	`json:"url"`
 	}{
-		Type: call.View.Type,
-		Url: call.View.Url,
+		Type: call.view.Type,
+		Url: call.view.Url,
 	})
 }
 
