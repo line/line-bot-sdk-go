@@ -93,11 +93,9 @@ func (call *AddLIFFCall) WithContext(ctx context.Context) *AddLIFFCall {
 func (call *AddLIFFCall) encodeJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
 	return enc.Encode(&struct {
-		Type    LIFFViewType   `json:"type"`
-		Url		string		   `json:"url"`
+		View    ViewRequest		`json:"view"`
 	}{
-		Type: call.View.View.Type,
-		Url: call.View.View.Url,
+		View: call.View,
 	})
 }
 
@@ -144,11 +142,9 @@ func (call *UpdateLIFFCall) WithContext(ctx context.Context) *UpdateLIFFCall {
 func (call *UpdateLIFFCall) encodeJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
 	return enc.Encode(&struct {
-		Type    LIFFViewType   `json:"type"`
-		Url		string		   `json:"url"`
+		View    ViewRequest		`json:"view"`
 	}{
-		Type: call.View.View.Type,
-		Url: call.View.View.Url,
+		View: call.View,
 	})
 }
 
