@@ -459,3 +459,137 @@ func (*ImageComponent) FlexComponent() {}
 func (*SeparatorComponent) FlexComponent() {}
 func (*SpacerComponent) FlexComponent() {}
 func (*TextComponent) FlexComponent() {}
+
+// NewFlex function
+func NewFlex(AltText string, Contents FlexContainer) *Flex {
+	return &Flex{
+		AltText: AltText,
+		Contents: Contents,
+	}
+}
+
+// NewCarouselFlex function
+func NewCarouselFlex(bubbleFlexs ...BubbleFlex) *CarouselFlex {
+	return &CarouselFlex{
+		Contents: bubbleFlexs,
+	}
+}
+
+// NewBubbleFlex function
+func NewBubbleFlex(direction DirectionType, header FlexComponent, hero FlexComponent, body FlexComponent, footer FlexComponent, styles FlexStylesBlock) *BubbleFlex {
+	return &BubbleFlex{
+		Direction: 	direction,
+		Header:		header,
+		Hero:		hero,
+		Body:		body,
+		Footer:		footer,
+		Styles:		styles,
+	}
+}
+
+// NewFlexStylesBlock function
+func NewFlexStylesBlock(header FlexStyle, hero FlexStyle, body FlexStyle, footer FlexStyle) *FlexStylesBlock {
+	return &FlexStylesBlock{
+		Header:	header,
+		Hero:	hero,
+		Body:	body,
+		Footer:	footer,
+	}
+}
+
+// NewFlexStyle function
+func NewFlexStyle(backgroundColor string, separator bool, separatorColor string) *FlexStyle {
+	return &FlexStyle{
+		BackgroundColor: backgroundColor,
+		Separator: separator,
+		SeparatorColor: separatorColor,
+	}
+
+}
+// NewBoxComponent function
+func NewBoxComponent(layout LayoutType, flex int, spacing SizeType, margin SizeType, contents ...FlexComponent) *BoxComponent {
+	return &BoxComponent{
+		Layout:	layout,
+		Contents: contents,
+		Flex: flex,
+		Spacing: spacing,
+		Margin: margin,
+	}
+}
+
+// NewButtonComponent
+func NewButtonComponent(action TemplateAction, flex int, margin SizeType, height SizeHeightType, style ButtonStyleType, color string, gravity GravityType) *ButtonComponent {
+	return &ButtonComponent{
+		Action: action,
+		Flex: flex,
+		Margin: margin,
+		Height: height,
+		Style: style,
+		Color: color,
+		Gravity: gravity,
+	}
+}
+
+// NewFillerComponent
+func NewFillerComponent() *FillerComponent {
+	return &FillerComponent{}
+}
+
+// NewIconComponent
+func NewIconComponent(url string, margin SizeType, size SizeType, aspectRatio AspectRatioType) *IconComponent {
+	return &IconComponent{
+		Url:url,
+		Margin: margin,
+		Size: size,
+		AspectRatio: aspectRatio,
+	}
+}
+
+//NewImageComponent
+func NewImageComponent(url string, flex int, margin SizeType, align AlignType, gravity GravityType, size SizeType, aspectRatio AspectRatioType, aspectMode AspectModeType, backgroundColor string, action TemplateAction) *ImageComponent {
+	return &ImageComponent{
+		Url: url,
+		Flex: flex,
+		Margin: margin,
+		Align: align,
+		Gravity: gravity,
+		Size: size,
+		AspectRatio: aspectRatio,
+		AspectMode: aspectMode,
+		BackgroundColor: backgroundColor,
+		Action: action,
+	}
+}
+
+// NewSeparatorComponent
+func NewSeparatorComponent(margin SizeType, color string) *SeparatorComponent {
+	return &SeparatorComponent{
+		Margin: margin,
+		Color:color,
+	}
+}
+
+// NewSpacerComponent
+func NewSpacerComponent(size SizeType) *SpacerComponent {
+	return &SpacerComponent{
+		Size: size,
+	}
+}
+
+// NewTextComponent
+func NewTextComponent(text string, flex int, margin SizeType, size SizeType, align AlignType, gravity GravityType, wrap bool, weight SizeWeightType, color string) *TextComponent {
+	return &TextComponent{
+		Text: text,
+		Flex: flex,
+		Margin: margin,
+		Size: size,
+		Align: align,
+		Gravity: gravity,
+		Wrap: wrap,
+		Weight: weight,
+		Color: color,
+	}
+}
+
+
+
