@@ -31,6 +31,7 @@ const (
 	MessageTypeSticker  MessageType = "sticker"
 	MessageTypeTemplate MessageType = "template"
 	MessageTypeImagemap MessageType = "imagemap"
+	MessageTypeFlex     MessageType = "flex"
 )
 
 // Message interface
@@ -206,6 +207,25 @@ func (m *ImagemapMessage) MarshalJSON() ([]byte, error) {
 	})
 }
 
+// FlexMessage type
+type FlexMessage struct {
+	AltText  string
+	Contents map[string]interface{}
+}
+
+// MarshalJSON method of FlexMessage
+func (m *FlexMessage) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		Type     string                 `json:"type"`
+		AltText  string                 `json:"altText"`
+		Contents map[string]interface{} `json:"contents"`
+	}{
+		Type:     "flex",
+		AltText:  m.AltText,
+		Contents: m.Contents,
+	})
+}
+
 // implements Message interface
 func (*TextMessage) Message()     {}
 func (*ImageMessage) Message()    {}
@@ -215,6 +235,7 @@ func (*LocationMessage) Message() {}
 func (*StickerMessage) Message()  {}
 func (*TemplateMessage) Message() {}
 func (*ImagemapMessage) Message() {}
+func (*FlexMessage) Message()     {}
 
 // NewTextMessage function
 func NewTextMessage(content string) *TextMessage {
@@ -280,5 +301,13 @@ func NewImagemapMessage(baseURL, altText string, baseSize ImagemapBaseSize, acti
 		AltText:  altText,
 		BaseSize: baseSize,
 		Actions:  actions,
+	}
+}
+
+// NewFlexMessage function
+func NewFlexMessage(altText string, contents map[string]interface{}) *FlexMessage {
+	return &FlexMessage{
+		AltText:  altText,
+		Contents: contents,
 	}
 }
