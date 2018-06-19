@@ -216,11 +216,11 @@ type FlexMessage struct {
 // MarshalJSON method of FlexMessage
 func (m *FlexMessage) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type     string                 `json:"type"`
+		Type     MessageType            `json:"type"`
 		AltText  string                 `json:"altText"`
 		Contents map[string]interface{} `json:"contents"`
 	}{
-		Type:     "flex",
+		Type:     MessageTypeFlex,
 		AltText:  m.AltText,
 		Contents: m.Contents,
 	})
