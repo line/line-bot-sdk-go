@@ -264,6 +264,43 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 		).Do(); err != nil {
 			return err
 		}
+	case "flex":
+		// {
+		//   "type": "bubble",
+		//   "body": {
+		//     "type": "box",
+		//     "layout": "horizontal",
+		//     "contents": [
+		//       {
+		//         "type": "text",
+		//         "text": "Hello,"
+		//       },
+		//       {
+		//         "type": "text",
+		//         "text": "World!"
+		//       }
+		//     ]
+		//   }
+		// }
+		contents := linebot.NewBubbleContainerBuilder().
+			Body(linebot.NewBoxComponentBuilder().
+				Layout(linebot.FlexBoxLayoutTypeHorizontal).
+				Contents([]linebot.FlexComponent{
+					linebot.NewTextComponentBuilder().
+						Text("Hello,").
+						Build(),
+					linebot.NewTextComponentBuilder().
+						Text("World!").
+						Build(),
+				}).
+				Build()).
+			Build()
+		if _, err := app.bot.ReplyMessage(
+			replyToken,
+			linebot.NewFlexMessage("flex", contents),
+		).Do(); err != nil {
+			return err
+		}
 	case "imagemap":
 		if _, err := app.bot.ReplyMessage(
 			replyToken,

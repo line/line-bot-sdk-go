@@ -235,29 +235,24 @@ const (
 	FlexTextSizeType5xl FlexTextSizeType = "5xl"
 )
 
-// FlexMessage type
-type FlexMessage struct {
-	AltText  string
-	Contents FlexContainer
-}
-
 // FlexContainer interface
 type FlexContainer interface {
 }
 
 // BubbleContainer type
 type BubbleContainer struct {
-	Direction FlexBubbleDirectionType
-	Header    BoxComponent
-	Hero      ImageComponent
-	Body      BoxComponent
-	Footer    BoxComponent
-	Styles    BubbleStyle
+	Type      FlexContainerType       `json:"type"`
+	Direction FlexBubbleDirectionType `json:"direction,omitempty"`
+	Header    *BoxComponent           `json:"header,omitempty"`
+	Hero      *ImageComponent         `json:"hero,omitempty"`
+	Body      *BoxComponent           `json:"body,omitempty"`
+	Footer    *BoxComponent           `json:"footer,omitempty"`
+	Styles    *BubbleStyle            `json:"styles,omitempty"`
 }
 
 // CarouselContainer type
 type CarouselContainer struct {
-	Contents []BubbleContainer
+	Contents []*BubbleContainer
 }
 
 // BubbleStyle type
@@ -281,11 +276,12 @@ type FlexComponent interface {
 
 // BoxComponent type
 type BoxComponent struct {
-	Layout   FlexBoxLayoutType
-	Contents []FlexComponent
-	Flex     int
-	Spacing  FlexComponentSpacingType
-	Margin   FlexComponentMarginType
+	Type     FlexComponentType        `json:"type"`
+	Layout   FlexBoxLayoutType        `json:"layout"`
+	Contents []FlexComponent          `json:"contents"`
+	Flex     *int                     `json:"flex,omitempty"`
+	Spacing  FlexComponentSpacingType `json:"spacing,omitempty"`
+	Margin   FlexComponentMarginType  `json:"margin,omitempty"`
 }
 
 // ButtonComponent type
@@ -338,14 +334,83 @@ type SpacerComponent struct {
 
 // TextComponent type
 type TextComponent struct {
-	Text    string
-	Flex    int
-	Margin  FlexComponentMarginType
-	Size    FlexTextSizeType
-	Align   FlexComponentAlignType
-	Gravity FlexComponentGravityType
-	Wrap    bool
-	Weight  FlexTextWeightType
-	Color   string
-	Action  TemplateAction
+	Type    FlexComponentType         `json:"type"`
+	Text    string                    `json:"text"`
+	Flex    *int                      `json:"flex,omitempty"`
+	Margin  *FlexComponentMarginType  `json:"margin,omitempty"`
+	Size    *FlexTextSizeType         `json:"size,omitempty"`
+	Align   *FlexComponentAlignType   `json:"align,omitempty"`
+	Gravity *FlexComponentGravityType `json:"gravity,omitempty"`
+	Wrap    *bool                     `json:"wrap,omitempty"`
+	Weight  *FlexTextWeightType       `json:"weight,omitempty"`
+	Color   *string                   `json:"color,omitempty"`
+	Action  *TemplateAction           `json:"action,omitempty"`
+}
+
+type FlexBubbleContainerBuilder struct {
+	container *BubbleContainer
+}
+
+func NewBubbleContainerBuilder() *FlexBubbleContainerBuilder {
+	return &FlexBubbleContainerBuilder{
+		container: &BubbleContainer{
+			Type: FlexContainerTypeBubble,
+		},
+	}
+}
+
+func (b *FlexBubbleContainerBuilder) Body(body *BoxComponent) *FlexBubbleContainerBuilder {
+	b.container.Body = body
+	return b
+}
+
+func (b *FlexBubbleContainerBuilder) Build() *BubbleContainer {
+	return b.container
+}
+
+type FlexBoxComponentBuilder struct {
+	component *BoxComponent
+}
+
+func NewBoxComponentBuilder() *FlexBoxComponentBuilder {
+	return &FlexBoxComponentBuilder{
+		component: &BoxComponent{
+			Type: FlexComponentTypeBox,
+		},
+	}
+}
+
+func (b *FlexBoxComponentBuilder) Layout(layout FlexBoxLayoutType) *FlexBoxComponentBuilder {
+	b.component.Layout = layout
+	return b
+}
+
+func (b *FlexBoxComponentBuilder) Contents(contents []FlexComponent) *FlexBoxComponentBuilder {
+	b.component.Contents = contents
+	return b
+}
+
+func (b *FlexBoxComponentBuilder) Build() *BoxComponent {
+	return b.component
+}
+
+type FlexTextComponentBuilder struct {
+	component *TextComponent
+}
+
+func NewTextComponentBuilder() *FlexTextComponentBuilder {
+	return &FlexTextComponentBuilder{
+		component: &TextComponent{
+			Type: FlexComponentTypeText,
+		},
+	}
+}
+
+func (b *FlexTextComponentBuilder) Text(text string) *FlexTextComponentBuilder {
+	b.component.Text = text
+	return b
+}
+
+func (b *FlexTextComponentBuilder) Build() *TextComponent {
+	return b.component
 }
