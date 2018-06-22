@@ -151,16 +151,16 @@ const (
 
 
 type FlexStyle struct {
-	BackgroundColor 	string		`json:"backgroundColor, omitempty"`
-	Separator 			bool		`json:"separator, omitempty"`
-	SeparatorColor 		string		`json:"separatorColor, omitempty"`
+	BackgroundColor 	string		`json:"backgroundColor", omitempty"`
+	Separator 			bool		`json:"separator", omitempty"`
+	SeparatorColor 		string		`json:"separatorColor", omitempty"`
 }
 
 type FlexStylesBlock struct {
-	Header	FlexStyle	`json:"header, omitempty"`
-	Hero	FlexStyle	`json:"hero, omitempty"`
-	Body	FlexStyle	`json:"body, omitempty"`
-	Footer	FlexStyle	`json:"footer, omitempty"`
+	Header	FlexStyle	`json:"header", omitempty"`
+	Hero	FlexStyle	`json:"hero", omitempty"`
+	Body	FlexStyle	`json:"body", omitempty"`
+	Footer	FlexStyle	`json:"footer", omitempty"`
 }
 
 type Flex struct {
@@ -200,12 +200,12 @@ type BubbleFlex struct {
 func (b *BubbleFlex) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type				ContainerType		`json:"type"`
-		Direction           string       		`json:"direction, omitempty"`
-		Header				FlexComponent		`json:"header, omitempty"`
-		Hero				FlexComponent		`json:"hero, omitempty"`
-		Body				FlexComponent		`json:"body, omitempty"`
-		Footer				FlexComponent		`json:"footer, omitempty"`
-		Styles				FlexStylesBlock		`json:"styles, omitempty"`
+		Direction           string       		`json:"direction", omitempty"`
+		Header				FlexComponent		`json:"header", omitempty"`
+		Hero				FlexComponent		`json:"hero", omitempty"`
+		Body				FlexComponent		`json:"body", omitempty"`
+		Footer				FlexComponent		`json:"footer", omitempty"`
+		Styles				FlexStylesBlock		`json:"styles", omitempty"`
 	}{
 		Type:               ContainerTypeBubble,
 		Direction:          b.Direction,
@@ -259,9 +259,9 @@ func (b *BoxComponent) MarshalJSON() ([]byte, error) {
 		Type				ComponentType		`json:"type"`
 		Layout				string				`json:"layout"`
 		Contents 			[]FlexComponent		`json:"contents"`
-		Flex				int					`json:"flex, omitempty"`
-		Spacing				string				`json:"spacing, omitempty"`
-		Margin				string				`json:"margin, omitempty"`
+		Flex				int					`json:"flex", omitempty"`
+		Spacing				string				`json:"spacing", omitempty"`
+		Margin				string				`json:"margin", omitempty"`
 	}{
 		Type:               ComponentTypeBox,
 		Layout:				b.Layout,
@@ -287,12 +287,12 @@ func (b *ButtonComponent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type				ComponentType		`json:"type"`
 		Action				TemplateAction		`json:"action"`
-		Flex				int					`json:"flex, omitempty"`
-		Margin				string				`json:"margin, omitempty"`
-		Height				string				`json:"height, omitempty"`
-		Style				string				`json:"style, omitempty"`
-		Color				string				`json:"color, omitempty"`
-		Gravity				string				`json:"gravity, omitempty"`
+		Flex				int					`json:"flex", omitempty"`
+		Margin				string				`json:"margin", omitempty"`
+		Height				string				`json:"height", omitempty"`
+		Style				string				`json:"style", omitempty"`
+		Color				string				`json:"color", omitempty"`
+		Gravity				string				`json:"gravity", omitempty"`
 	}{
 		Type:               ComponentTypeBox,
 		Action:				b.Action,
@@ -330,9 +330,9 @@ func (i *IconComponent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type				ComponentType		`json:"type"`
 		Url					string				`json:"url"`
-		Margin				string				`json:"margin, omitempty"`
-		Size				string				`json:"size, omitempty"`
-		AspectRatio			string				`json:"aspectRatio, omitempty"`
+		Margin				string				`json:"margin", omitempty"`
+		Size				string				`json:"size", omitempty"`
+		AspectRatio			string				`json:"aspectRatio", omitempty"`
 	}{
 		Type:               ComponentTypeIcon,
 		Url:				i.Url,
@@ -360,14 +360,14 @@ func (i *ImageComponent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type				ComponentType		`json:"type"`
 		Url					string				`json:"url"`
-		Flex				int					`json:"flex, omitempty"`
-		Margin				string				`json:"margin, omitempty"`
-		Align				string				`json:"align, omitempty"`
-		Gravity				string				`json:"gravity, omitempty"`
-		Size				string				`json:"size, omitempty"`
-		AspectRatio			string				`json:"aspectRatio, omitempty"`
-		AspectMode			string				`json:"aspectMode, omitempty"`
-		BackgroundColor		string				`json:"backgroundColor, omitempty"`
+		Flex				int					`json:"flex", omitempty"`
+		Margin				string				`json:"margin", omitempty"`
+		Align				string				`json:"align", omitempty"`
+		Gravity				string				`json:"gravity", omitempty"`
+		Size				string				`json:"size", omitempty"`
+		AspectRatio			string				`json:"aspectRatio", omitempty"`
+		AspectMode			string				`json:"aspectMode", omitempty"`
+		BackgroundColor		string				`json:"backgroundColor", omitempty"`
 		Action				TemplateAction		`json:"action"`
 	}{
 		Type:               ComponentTypeImage,
@@ -393,8 +393,8 @@ type SeparatorComponent struct {
 func (s *SeparatorComponent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type				ComponentType		`json:"type"`
-		Margin				string				`json:"margin, omitempty"`
-		Color				string				`json:"color, omitempty"`
+		Margin				string				`json:"margin", omitempty"`
+		Color				string				`json:"color", omitempty"`
 	}{
 		Type:               ComponentTypeSeparator,
 		Margin:				s.Margin,
@@ -410,7 +410,7 @@ type SpacerComponent struct {
 func (s *SpacerComponent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type				ComponentType		`json:"type"`
-		Size				string				`json:"size, omitempty"`
+		Size				string				`json:"size", omitempty"`
 	}{
 		Type:               ComponentTypeSpacer,
 		Size:				s.Size,
@@ -434,14 +434,14 @@ func (t *TextComponent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type				ComponentType		`json:"type"`
 		Text				string				`json:"text"`
-		Flex				int					`json:"flex, omitempty"`
-		Margin				string				`json:"margin, omitempty"`
-		Size				string				`json:"size, omitempty"`
-		Align				string				`json:"align, omitempty"`
-		Gravity				string				`json:"gravity, omitempty"`
-		Wrap				bool				`json:"wrap, omitempty"`
-		Weight				string				`json:"weight, omitempty"`
-		Color				string				`json:"color, omitempty"`
+		Flex				int					`json:"flex", omitempty"`
+		Margin				string				`json:"margin", omitempty"`
+		Size				string				`json:"size", omitempty"`
+		Align				string				`json:"align", omitempty"`
+		Gravity				string				`json:"gravity", omitempty"`
+		Wrap				bool				`json:"wrap", omitempty"`
+		Weight				string				`json:"weight", omitempty"`
+		Color				string				`json:"color", omitempty"`
 	}{
 		Type:               ComponentTypeText,
 		Text:				t.Text,
