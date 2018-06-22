@@ -208,6 +208,12 @@ func (b *BubbleFlex) MarshalJSON() ([]byte, error) {
 		Styles				FlexStylesBlock		`json:"styles, omitempty"`
 	}{
 		Type:               ContainerTypeBubble,
+		Direction:          b.Direction,
+		Header:				b.Header,
+		Hero:				b.Hero,
+		Body:				b.Body,
+		Footer:				b.Footer,
+		Styles:				b.Styles,
 	})
 }
 
