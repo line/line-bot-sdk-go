@@ -237,6 +237,7 @@ const (
 
 // FlexContainer interface
 type FlexContainer interface {
+	FlexContainer()
 }
 
 // BubbleContainer type
@@ -250,10 +251,17 @@ type BubbleContainer struct {
 	Styles    *BubbleStyle            `json:"styles,omitempty"`
 }
 
+// FlexContainer method
+func (*BubbleContainer) FlexContainer() {}
+
 // CarouselContainer type
 type CarouselContainer struct {
-	Contents []*BubbleContainer
+	Type     FlexContainerType  `json:"type"`
+	Contents []*BubbleContainer `json:"contents"`
 }
+
+// FlexContainer method
+func (*CarouselContainer) FlexContainer() {}
 
 // BubbleStyle type
 type BubbleStyle struct {
@@ -345,72 +353,4 @@ type TextComponent struct {
 	Weight  *FlexTextWeightType       `json:"weight,omitempty"`
 	Color   *string                   `json:"color,omitempty"`
 	Action  *TemplateAction           `json:"action,omitempty"`
-}
-
-type FlexBubbleContainerBuilder struct {
-	container *BubbleContainer
-}
-
-func NewBubbleContainerBuilder() *FlexBubbleContainerBuilder {
-	return &FlexBubbleContainerBuilder{
-		container: &BubbleContainer{
-			Type: FlexContainerTypeBubble,
-		},
-	}
-}
-
-func (b *FlexBubbleContainerBuilder) Body(body *BoxComponent) *FlexBubbleContainerBuilder {
-	b.container.Body = body
-	return b
-}
-
-func (b *FlexBubbleContainerBuilder) Build() *BubbleContainer {
-	return b.container
-}
-
-type FlexBoxComponentBuilder struct {
-	component *BoxComponent
-}
-
-func NewBoxComponentBuilder() *FlexBoxComponentBuilder {
-	return &FlexBoxComponentBuilder{
-		component: &BoxComponent{
-			Type: FlexComponentTypeBox,
-		},
-	}
-}
-
-func (b *FlexBoxComponentBuilder) Layout(layout FlexBoxLayoutType) *FlexBoxComponentBuilder {
-	b.component.Layout = layout
-	return b
-}
-
-func (b *FlexBoxComponentBuilder) Contents(contents []FlexComponent) *FlexBoxComponentBuilder {
-	b.component.Contents = contents
-	return b
-}
-
-func (b *FlexBoxComponentBuilder) Build() *BoxComponent {
-	return b.component
-}
-
-type FlexTextComponentBuilder struct {
-	component *TextComponent
-}
-
-func NewTextComponentBuilder() *FlexTextComponentBuilder {
-	return &FlexTextComponentBuilder{
-		component: &TextComponent{
-			Type: FlexComponentTypeText,
-		},
-	}
-}
-
-func (b *FlexTextComponentBuilder) Text(text string) *FlexTextComponentBuilder {
-	b.component.Text = text
-	return b
-}
-
-func (b *FlexTextComponentBuilder) Build() *TextComponent {
-	return b.component
 }

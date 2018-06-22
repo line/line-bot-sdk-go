@@ -25,6 +25,7 @@ import (
 	"path/filepath"
 
 	"github.com/line/line-bot-sdk-go/linebot"
+	"github.com/line/line-bot-sdk-go/linebot/flex"
 )
 
 func main() {
@@ -282,19 +283,80 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 		//     ]
 		//   }
 		// }
-		contents := linebot.NewBubbleContainerBuilder().
-			Body(linebot.NewBoxComponentBuilder().
+		contents := flex.NewBubbleContainerBuilder().
+			Body(flex.NewBoxComponentBuilder().
 				Layout(linebot.FlexBoxLayoutTypeHorizontal).
 				Contents([]linebot.FlexComponent{
-					linebot.NewTextComponentBuilder().
+					flex.NewTextComponentBuilder().
 						Text("Hello,").
 						Build(),
-					linebot.NewTextComponentBuilder().
+					flex.NewTextComponentBuilder().
 						Text("World!").
 						Build(),
 				}).
 				Build()).
 			Build()
+		if _, err := app.bot.ReplyMessage(
+			replyToken,
+			linebot.NewFlexMessage("flex", contents),
+		).Do(); err != nil {
+			return err
+		}
+	case "flex carousel":
+		// {
+		//   "type": "carousel",
+		//   "contents": [
+		//     {
+		//       "type": "bubble",
+		//       "body": {
+		//         "type": "box",
+		//         "layout": "vertical",
+		//         "contents": [
+		//           {
+		//             "type": "text",
+		//             "text": "First bubble"
+		//           }
+		//         ]
+		//       }
+		//     },
+		//     {
+		//       "type": "bubble",
+		//       "body": {
+		//         "type": "box",
+		//         "layout": "vertical",
+		//         "contents": [
+		//           {
+		//             "type": "text",
+		//             "text": "Second bubble"
+		//           }
+		//         ]
+		//       }
+		//     }
+		//   ]
+		// }
+		contents := flex.NewCarouselContainerBuilder().
+			Contents([]*linebot.BubbleContainer{
+				flex.NewBubbleContainerBuilder().
+					Body(flex.NewBoxComponentBuilder().
+						Layout(linebot.FlexBoxLayoutTypeVertical).
+						Contents([]linebot.FlexComponent{
+							flex.NewTextComponentBuilder().
+								Text("First bubble").
+								Build(),
+						}).
+						Build(),
+					).Build(),
+				flex.NewBubbleContainerBuilder().
+					Body(flex.NewBoxComponentBuilder().
+						Layout(linebot.FlexBoxLayoutTypeVertical).
+						Contents([]linebot.FlexComponent{
+							flex.NewTextComponentBuilder().
+								Text("Second bubble").
+								Build(),
+						}).
+						Build(),
+					).Build(),
+			}).Build()
 		if _, err := app.bot.ReplyMessage(
 			replyToken,
 			linebot.NewFlexMessage("flex", contents),
