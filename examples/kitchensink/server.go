@@ -15,7 +15,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -526,8 +525,8 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
     "flex": 0
   }
 }`
-		var contents *linebot.BubbleContainer
-		if err := json.Unmarshal([]byte(jsonString), &contents); err != nil {
+		contents, err := linebot.UnmarshalFlexMessageJSON([]byte(jsonString))
+		if err != nil {
 			return err
 		}
 		if _, err := app.bot.ReplyMessage(

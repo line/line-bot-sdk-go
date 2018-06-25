@@ -296,62 +296,6 @@ type BoxComponent struct {
 	Margin   FlexComponentMarginType  `json:"margin,omitempty"`
 }
 
-// UnmarshalJSON method for BoxComponent
-func (c *BoxComponent) UnmarshalJSON(data []byte) error {
-	type alias BoxComponent
-	a := struct {
-		Contents []json.RawMessage `json:"contents"`
-		*alias
-	}{
-		alias: (*alias)(c),
-	}
-	if err := json.Unmarshal(data, &a); err != nil {
-		return err
-	}
-	c.Contents = make([]FlexComponent, 0, len(a.Contents))
-	for _, content := range a.Contents {
-		t := struct {
-			Type string `json:"type"`
-		}{}
-		if err := json.Unmarshal(content, &t); err != nil {
-			return err
-		}
-		switch t.Type {
-		case "box":
-			var component BoxComponent
-			if err := json.Unmarshal(content, &component); err != nil {
-				return err
-			}
-			c.Contents = append(c.Contents, &component)
-		case "button":
-			var component ButtonComponent
-			if err := json.Unmarshal(content, &component); err != nil {
-				return err
-			}
-			c.Contents = append(c.Contents, &component)
-		case "icon":
-			var component IconComponent
-			if err := json.Unmarshal(content, &component); err != nil {
-				return err
-			}
-			c.Contents = append(c.Contents, &component)
-		case "spacer":
-			var component SpacerComponent
-			if err := json.Unmarshal(content, &component); err != nil {
-				return err
-			}
-			c.Contents = append(c.Contents, &component)
-		case "text":
-			var component TextComponent
-			if err := json.Unmarshal(content, &component); err != nil {
-				return err
-			}
-			c.Contents = append(c.Contents, &component)
-		}
-	}
-	return nil
-}
-
 // ButtonComponent type
 type ButtonComponent struct {
 	Type    FlexComponentType        `json:"type"`
