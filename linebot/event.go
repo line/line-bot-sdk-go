@@ -110,6 +110,8 @@ type rawEventMessage struct {
 	Duration  int         `json:"duration,omitempty"`
 	Title     string      `json:"title,omitempty"`
 	Address   string      `json:"address,omitempty"`
+	FileName  string      `json:"fileName,omitempty"`
+	FileSize  int         `json:"fileSize,omitempty"`
 	Latitude  float64     `json:"latitude,omitempty"`
 	Longitude float64     `json:"longitude,omitempty"`
 	PackageID string      `json:"packageId,omitempty"`
@@ -219,6 +221,12 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 			e.Message = &AudioMessage{
 				ID:       rawEvent.Message.ID,
 				Duration: rawEvent.Message.Duration,
+			}
+		case MessageTypeFile:
+			e.Message = &FileMessage{
+				ID:       rawEvent.Message.ID,
+				FileName: rawEvent.Message.FileName,
+				FileSize: rawEvent.Message.FileSize,
 			}
 		case MessageTypeLocation:
 			e.Message = &LocationMessage{

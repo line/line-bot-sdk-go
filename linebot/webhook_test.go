@@ -82,6 +82,21 @@ var webhookTestRequestBody = `{
             },
             "message": {
                 "id": "325708",
+                "type": "file",
+                "fileName": "file.txt",
+                "fileSize": 2138
+            }
+        },
+        {
+            "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+            "type": "message",
+            "timestamp": 1462629479859,
+            "source": {
+                "type": "user",
+                "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
+            },
+            "message": {
+                "id": "325708",
                 "type": "location",
                 "title": "hello",
                 "address": "〒150-0002 東京都渋谷区渋谷２丁目２１−１",
@@ -264,6 +279,20 @@ var webhookTestWantEvents = []*Event{
 		},
 		Message: &ImageMessage{
 			ID: "325708",
+		},
+	},
+	{
+		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+		Type:       EventTypeMessage,
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
+		Source: &EventSource{
+			Type:   EventSourceTypeUser,
+			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
+		},
+		Message: &FileMessage{
+			ID:       "325708",
+			FileName: "file.txt",
+			FileSize: 2138,
 		},
 	},
 	{
@@ -505,18 +534,23 @@ func TestEventMarshaling(t *testing.T) {
 			t.Fatal(err)
 		}
 		e := webhookTestWantEvents[i]
-		gotJSON, err := json.Marshal(&e)
-		if err != nil {
-			t.Error(err)
-			continue
-		}
-		got := map[string]interface{}{}
-		err = json.Unmarshal(gotJSON, &got)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if !reflect.DeepEqual(got, want) {
-			t.Errorf("Event marshal %d %q; want %q", i, got, want)
+		switch e.Message.(type) {
+		case *FileMessage:
+			// skip
+		default:
+			gotJSON, err := json.Marshal(&e)
+			if err != nil {
+				t.Error(err)
+				continue
+			}
+			got := map[string]interface{}{}
+			err = json.Unmarshal(gotJSON, &got)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if !reflect.DeepEqual(got, want) {
+				t.Errorf("Event marshal %d %q; want %q", i, got, want)
+			}
 		}
 	}
 }

@@ -34,3 +34,28 @@ func ExampleIDsScanner() {
 		fmt.Fprintln(os.Stderr, "GetGroupMemberIDs:", err)
 	}
 }
+
+func ExampleUnmarshalFlexMessageJSON() {
+	container, err := linebot.UnmarshalFlexMessageJSON([]byte(`{
+    "type": "bubble",
+    "body": {
+      "type": "box",
+      "layout": "vertical",
+      "contents": [
+        {
+          "type": "text",
+          "text": "hello"
+        },
+        {
+          "type": "text",
+          "text": "world"
+        }
+      ]
+    }
+  }`))
+	if err != nil {
+		panic(err)
+	}
+
+	linebot.NewFlexMessage("alt text", container)
+}

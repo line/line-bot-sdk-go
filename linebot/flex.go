@@ -1,512 +1,367 @@
+// Copyright 2018 LINE Corporation
+//
+// LINE Corporation licenses this file to you under the Apache License,
+// version 2.0 (the "License"); you may not use this file except in compliance
+// with the License. You may obtain a copy of the License at:
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+// WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+// License for the specific language governing permissions and limitations
+// under the License.
+
 package linebot
 
-import (
-	"encoding/json"
-)
+// FlexContainerType type
+type FlexContainerType string
 
-// FlexType type
-type FlexType string
-
-// FlexType constants
+// FlexContainerType constants
 const (
-	FlexTypeFlex FlexType = "flex"
+	FlexContainerTypeBubble   FlexContainerType = "bubble"
+	FlexContainerTypeCarousel FlexContainerType = "carousel"
 )
 
-// ContainerType type
-type ContainerType string
+// FlexComponentType type
+type FlexComponentType string
 
-// ContainerType constants
+// FlexComponentType constants
 const (
-	ContainerTypeBubble   ContainerType = "bubble"
-	ContainerTypeCarousel ContainerType = "carousel"
+	FlexComponentTypeBox       FlexComponentType = "box"
+	FlexComponentTypeButton    FlexComponentType = "button"
+	FlexComponentTypeFiller    FlexComponentType = "filler"
+	FlexComponentTypeIcon      FlexComponentType = "icon"
+	FlexComponentTypeImage     FlexComponentType = "image"
+	FlexComponentTypeSeparator FlexComponentType = "separator"
+	FlexComponentTypeSpacer    FlexComponentType = "spacer"
+	FlexComponentTypeText      FlexComponentType = "text"
 )
 
-// ComponentType type
-type ComponentType string
+// FlexBubbleDirectionType type
+type FlexBubbleDirectionType string
 
-// ContainerType constants
+// FlexBubbleDirectionType constants
 const (
-	ComponentTypeBox       ComponentType = "box"
-	ComponentTypeButton    ComponentType = "button"
-	ComponentTypeFiller    ComponentType = "filler"
-	ComponentTypeIcon      ComponentType = "icon"
-	ComponentTypeImage     ComponentType = "image"
-	ComponentTypeSeparator ComponentType = "separator"
-	ComponentTypeSpacer    ComponentType = "spacer"
-	ComponentTypeText      ComponentType = "text"
+	FlexBubbleDirectionTypeLTR FlexBubbleDirectionType = "ltr"
+	FlexBubbleDirectionTypeRTL FlexBubbleDirectionType = "rtl"
 )
 
-// LayoutType type
-type LayoutType string
+// FlexButtonStyleType type
+type FlexButtonStyleType string
 
-// ContainerType constants
+// FlexButtonStyleType constants
 const (
-	LayoutTypeHorizontal LayoutType = "horizontal"
-	LayoutTypeVertical   LayoutType = "vertical"
-	LayoutTypeBaseline   LayoutType = "baseline"
+	FlexButtonStyleTypeLink      FlexButtonStyleType = "link"
+	FlexButtonStyleTypePrimary   FlexButtonStyleType = "primary"
+	FlexButtonStyleTypeSecondary FlexButtonStyleType = "secondary"
 )
 
-// SizeType type
-type SizeType string
+// FlexButtonHeightType type
+type FlexButtonHeightType string
 
-// SizeType constants
+// FlexButtonHeightType constants
 const (
-	SizeTypeNone SizeType = "none"
-	SizeTypeXxs  SizeType = "xxs"
-	SizeTypeXs   SizeType = "xs"
-	SizeTypeSm   SizeType = "sm"
-	SizeTypeMd   SizeType = "md"
-	SizeTypeLg   SizeType = "lg"
-	SizeTypeXl   SizeType = "xl"
-	SizeTypeXxl  SizeType = "xxl"
-	SizeType3xl  SizeType = "3xl"
-	SizeType4xl  SizeType = "4xl"
+	FlexButtonHeightTypeMd FlexButtonHeightType = "md"
+	FlexButtonHeightTypeSm FlexButtonHeightType = "sm"
 )
 
-// AlignType type
-type AlignType string
+// FlexIconAspectRatioType type
+type FlexIconAspectRatioType string
 
-// AlignType constants
+// FlexIconAspectRatioType constants
 const (
-	AlignTypeStart  AlignType = "start"
-	AlignTypeEnd    AlignType = "end"
-	AlignTypeCenter AlignType = "center"
+	FlexIconAspectRatioType1to1 FlexIconAspectRatioType = "1:1"
+	FlexIconAspectRatioType2to1 FlexIconAspectRatioType = "2:1"
+	FlexIconAspectRatioType3to1 FlexIconAspectRatioType = "3:1"
 )
 
-// AspectModeType type
-type AspectModeType string
+// FlexImageSizeType type
+type FlexImageSizeType string
 
-//AspectModeType constants
+// FlexImageSizeType constants
 const (
-	AspectModeTypeCover AspectModeType = "cover"
-	AspectModeTypeFit   AspectModeType = "fit"
+	FlexImageSizeTypeXxs  FlexImageSizeType = "xxs"
+	FlexImageSizeTypeXs   FlexImageSizeType = "xs"
+	FlexImageSizeTypeSm   FlexImageSizeType = "sm"
+	FlexImageSizeTypeMd   FlexImageSizeType = "md"
+	FlexImageSizeTypeLg   FlexImageSizeType = "lg"
+	FlexImageSizeTypeXl   FlexImageSizeType = "xl"
+	FlexImageSizeTypeXxl  FlexImageSizeType = "xxl"
+	FlexImageSizeType3xl  FlexImageSizeType = "3xl"
+	FlexImageSizeType4xl  FlexImageSizeType = "4xl"
+	FlexImageSizeType5xl  FlexImageSizeType = "5xl"
+	FlexImageSizeTypeFull FlexImageSizeType = "full"
 )
 
-//	AspectRatioType type
-type AspectRatioType string
+// FlexImageAspectRatioType type
+type FlexImageAspectRatioType string
 
-// AspectRatioType constants
+// FlexImageAspectRatioType constants
 const (
-	AspectRatioType1To1    AspectRatioType = "1:1"
-	AspectRatioType151To1  AspectRatioType = "1.51:1"
-	AspectRatioType1911To1 AspectRatioType = "1.911:1"
-	AspectRatioType4To3    AspectRatioType = "4:3"
-	AspectRatioType16To9   AspectRatioType = "16:9"
-	AspectRatioType20To13  AspectRatioType = "20:13"
-	AspectRatioType2To1    AspectRatioType = "2:1"
-	AspectRatioType3To1    AspectRatioType = "3:1"
-	AspectRatioType3To4    AspectRatioType = "3:4"
-	AspectRatioType9To16   AspectRatioType = "9:16"
-	AspectRatioType1To2    AspectRatioType = "1:2"
-	AspectRatioType1To3    AspectRatioType = "1:3"
+	FlexImageAspectRatioType1to1    FlexImageAspectRatioType = "1:1"
+	FlexImageAspectRatioType1_51to1 FlexImageAspectRatioType = "1.51:1"
+	FlexImageAspectRatioType1_91to1 FlexImageAspectRatioType = "1.91:1"
+	FlexImageAspectRatioType4to3    FlexImageAspectRatioType = "4:3"
+	FlexImageAspectRatioType16to9   FlexImageAspectRatioType = "16:9"
+	FlexImageAspectRatioType20to13  FlexImageAspectRatioType = "20:13"
+	FlexImageAspectRatioType2to1    FlexImageAspectRatioType = "2:1"
+	FlexImageAspectRatioType3to1    FlexImageAspectRatioType = "3:1"
+	FlexImageAspectRatioType3to4    FlexImageAspectRatioType = "3:4"
+	FlexImageAspectRatioType9to16   FlexImageAspectRatioType = "9:16"
+	FlexImageAspectRatioType1to2    FlexImageAspectRatioType = "1:2"
+	FlexImageAspectRatioType1to3    FlexImageAspectRatioType = "1:3"
 )
 
-// SizeHeightType type
-type SizeHeightType string
+// FlexImageAspectModeType type
+type FlexImageAspectModeType string
 
-// SizeHeightType constants
+// FlexImageAspectModeType constants
 const (
-	SizeHeightTypeSm SizeHeightType = "Sm"
-	SizeHeightTypeMd SizeHeightType = "Md"
+	FlexImageAspectModeTypeCover FlexImageAspectModeType = "cover"
+	FlexImageAspectModeTypeFit   FlexImageAspectModeType = "fit"
 )
 
-// SizeWeightType type
-type SizeWeightType string
+// FlexBoxLayoutType type
+type FlexBoxLayoutType string
 
-// SizeWeightType constants
+// FlexBoxLayoutType constants
 const (
-	SizeWeightTypeRegular SizeHeightType = "regular"
-	SizeWeightTypeBold    SizeHeightType = "bold"
+	FlexBoxLayoutTypeHorizontal FlexBoxLayoutType = "horizontal"
+	FlexBoxLayoutTypeVertical   FlexBoxLayoutType = "vertical"
+	FlexBoxLayoutTypeBaseline   FlexBoxLayoutType = "baseline"
 )
 
-// ButtonStyleType type
-type ButtonStyleType string
+// FlexComponentSpacingType type
+type FlexComponentSpacingType string
 
-// SizeHeightType constants
+// FlexComponentSpacingType constants
 const (
-	ButtonStyleTypeLink      ButtonStyleType = "link"
-	ButtonStyleTypePrimary   ButtonStyleType = "primary"
-	ButtonStyleTypeSecondary ButtonStyleType = "secondary"
+	FlexComponentSpacingTypeNone FlexComponentSpacingType = "none"
+	FlexComponentSpacingTypeXs   FlexComponentSpacingType = "xs"
+	FlexComponentSpacingTypeSm   FlexComponentSpacingType = "sm"
+	FlexComponentSpacingTypeMd   FlexComponentSpacingType = "md"
+	FlexComponentSpacingTypeLg   FlexComponentSpacingType = "lg"
+	FlexComponentSpacingTypeXl   FlexComponentSpacingType = "xl"
+	FlexComponentSpacingTypeXxl  FlexComponentSpacingType = "xxl"
 )
 
-// ButtonStyleType type
-type GravityType string
+// FlexComponentMarginType type
+type FlexComponentMarginType string
 
-// SizeHeightType constants
+// FlexComponentMarginType constants
 const (
-	GravityTypeTop    GravityType = "top"
-	GravityTypeBottom GravityType = "bottom"
-	GravityTypeCenter GravityType = "center"
+	FlexComponentMarginTypeNone FlexComponentMarginType = "none"
+	FlexComponentMarginTypeXs   FlexComponentMarginType = "xs"
+	FlexComponentMarginTypeSm   FlexComponentMarginType = "sm"
+	FlexComponentMarginTypeMd   FlexComponentMarginType = "md"
+	FlexComponentMarginTypeLg   FlexComponentMarginType = "lg"
+	FlexComponentMarginTypeXl   FlexComponentMarginType = "xl"
+	FlexComponentMarginTypeXxl  FlexComponentMarginType = "xxl"
 )
 
-// DirectionType type
-type DirectionType string
+// FlexComponentGravityType type
+type FlexComponentGravityType string
 
-// FlexType constants
+// FlexComponentGravityType constants
 const (
-	DirectionTypeLtr DirectionType = "ltr"
-	DirectionTypeRtl DirectionType = "rtl"
+	FlexComponentGravityTypeTop    FlexComponentGravityType = "top"
+	FlexComponentGravityTypeBottom FlexComponentGravityType = "bottom"
+	FlexComponentGravityTypeCenter FlexComponentGravityType = "center"
 )
 
-type FlexStyle struct {
+// FlexComponentAlignType type
+type FlexComponentAlignType string
+
+// FlexComponentAlignType constants
+const (
+	FlexComponentAlignTypeStart  FlexComponentAlignType = "start"
+	FlexComponentAlignTypeEnd    FlexComponentAlignType = "end"
+	FlexComponentAlignTypeCenter FlexComponentAlignType = "center"
+)
+
+// FlexIconSizeType type
+type FlexIconSizeType string
+
+// FlexIconSizeType constants
+const (
+	FlexIconSizeTypeXxs FlexIconSizeType = "xxs"
+	FlexIconSizeTypeXs  FlexIconSizeType = "xs"
+	FlexIconSizeTypeSm  FlexIconSizeType = "sm"
+	FlexIconSizeTypeMd  FlexIconSizeType = "md"
+	FlexIconSizeTypeLg  FlexIconSizeType = "lg"
+	FlexIconSizeTypeXl  FlexIconSizeType = "xl"
+	FlexIconSizeTypeXxl FlexIconSizeType = "xxl"
+	FlexIconSizeType3xl FlexIconSizeType = "3xl"
+	FlexIconSizeType4xl FlexIconSizeType = "4xl"
+	FlexIconSizeType5xl FlexIconSizeType = "5xl"
+)
+
+// FlexSpacerSizeType type
+type FlexSpacerSizeType string
+
+// FlexSpacerSizeType constants
+const (
+	FlexSpacerSizeTypeXs  FlexSpacerSizeType = "xs"
+	FlexSpacerSizeTypeSm  FlexSpacerSizeType = "sm"
+	FlexSpacerSizeTypeMd  FlexSpacerSizeType = "md"
+	FlexSpacerSizeTypeLg  FlexSpacerSizeType = "lg"
+	FlexSpacerSizeTypeXl  FlexSpacerSizeType = "xl"
+	FlexSpacerSizeTypeXxl FlexSpacerSizeType = "xxl"
+)
+
+// FlexTextWeightType type
+type FlexTextWeightType string
+
+// FlexTextWeightType constants
+const (
+	FlexTextWeightTypeRegular FlexTextWeightType = "regular"
+	FlexTextWeightTypeBold    FlexTextWeightType = "bold"
+)
+
+// FlexTextSizeType type
+type FlexTextSizeType string
+
+// FlexTextSizeType constants
+const (
+	FlexTextSizeTypeXxs FlexTextSizeType = "xxs"
+	FlexTextSizeTypeXs  FlexTextSizeType = "xs"
+	FlexTextSizeTypeSm  FlexTextSizeType = "sm"
+	FlexTextSizeTypeMd  FlexTextSizeType = "md"
+	FlexTextSizeTypeLg  FlexTextSizeType = "lg"
+	FlexTextSizeTypeXl  FlexTextSizeType = "xl"
+	FlexTextSizeTypeXxl FlexTextSizeType = "xxl"
+	FlexTextSizeType3xl FlexTextSizeType = "3xl"
+	FlexTextSizeType4xl FlexTextSizeType = "4xl"
+	FlexTextSizeType5xl FlexTextSizeType = "5xl"
+)
+
+// FlexContainer interface
+type FlexContainer interface {
+	FlexContainer()
+}
+
+// BubbleContainer type
+type BubbleContainer struct {
+	Type      FlexContainerType       `json:"type"`
+	Direction FlexBubbleDirectionType `json:"direction,omitempty"`
+	Header    *BoxComponent           `json:"header,omitempty"`
+	Hero      *ImageComponent         `json:"hero,omitempty"`
+	Body      *BoxComponent           `json:"body,omitempty"`
+	Footer    *BoxComponent           `json:"footer,omitempty"`
+	Styles    *BubbleStyle            `json:"styles,omitempty"`
+}
+
+// CarouselContainer type
+type CarouselContainer struct {
+	Type     FlexContainerType  `json:"type"`
+	Contents []*BubbleContainer `json:"contents"`
+}
+
+// implements FlexContainer interface
+func (*BubbleContainer) FlexContainer()   {}
+func (*CarouselContainer) FlexContainer() {}
+
+// BubbleStyle type
+type BubbleStyle struct {
+	Header *BlockStyle `json:"header,omitempty"`
+	Hero   *BlockStyle `json:"hero,omitempty"`
+	Body   *BlockStyle `json:"body,omitempty"`
+	Footer *BlockStyle `json:"footer,omitempty"`
+}
+
+// BlockStyle type
+type BlockStyle struct {
 	BackgroundColor string `json:"backgroundColor,omitempty"`
 	Separator       bool   `json:"separator,omitempty"`
 	SeparatorColor  string `json:"separatorColor,omitempty"`
 }
 
-type FlexStylesBlock struct {
-	Header *FlexStyle `json:"header,omitempty"`
-	Hero   *FlexStyle `json:"hero,omitempty"`
-	Body   *FlexStyle `json:"body,omitempty"`
-	Footer *FlexStyle `json:"footer,omitempty"`
-}
-
-type Flex struct {
-	AltText  string        `json:"altText"`
-	Contents FlexContainer `json:"contents"`
-}
-
-// MarshalJSON method of ButtonsTemplate
-func (f *Flex) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
-		Type     FlexType      `json:"type"`
-		AltText  string        `json:"altText"`
-		Contents FlexContainer `json:"contents"`
-	}{
-		Type:     FlexTypeFlex,
-		AltText:  f.AltText,
-		Contents: f.Contents,
-	})
-}
-
-// FlexContainer interface
-type FlexContainer interface {
-	json.Marshaler
-	FlexContainer()
-}
-
-type BubbleFlex struct {
-	Header FlexComponent    `json:"header,omitempty"`
-	Hero   FlexComponent    `json:"hero,omitempty"`
-	Body   FlexComponent    `json:"body,omitempty"`
-	Footer FlexComponent    `json:"footer,omitempty"`
-	Styles *FlexStylesBlock `json:"styles,omitempty"`
-}
-
-// MarshalJSON method of ButtonsTemplate
-func (b *BubbleFlex) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
-		Type   ContainerType    `json:"type"`
-		Header FlexComponent    `json:"header,omitempty"`
-		Hero   FlexComponent    `json:"hero,omitempty"`
-		Body   FlexComponent    `json:"body,omitempty"`
-		Footer FlexComponent    `json:"footer,omitempty"`
-		Styles *FlexStylesBlock `json:"styles,omitempty"`
-	}{
-		Type:   ContainerTypeBubble,
-		Header: b.Header,
-		Hero:   b.Hero,
-		Body:   b.Body,
-		Footer: b.Footer,
-		Styles: b.Styles,
-	})
-}
-
-type CarouselFlex struct {
-	Contents []*BubbleFlex `json:"contents"`
-}
-
-// MarshalJSON method of ButtonsTemplate
-func (c *CarouselFlex) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
-		Type     ContainerType `json:"type"`
-		Contents []*BubbleFlex `json:"contents"`
-	}{
-		Type:     ContainerTypeCarousel,
-		Contents: c.Contents,
-	})
-}
-
-// implements TemplateAction interface
-func (*BubbleFlex) FlexContainer()   {}
-func (*CarouselFlex) FlexContainer() {}
-
-// FlexContainer interface
+// FlexComponent interface
 type FlexComponent interface {
-	json.Marshaler
 	FlexComponent()
 }
 
+// BoxComponent type
 type BoxComponent struct {
-	Layout   string          `json:"layout"`
-	Contents []FlexComponent `json:"contents"`
-	Flex     *int            `json:"flex,omitempty"`
-	Spacing  *SizeType       `json:"spacing,omitempty"`
-	Margin   *SizeType       `json:"margin,omitempty"`
+	Type     FlexComponentType        `json:"type"`
+	Layout   FlexBoxLayoutType        `json:"layout"`
+	Contents []FlexComponent          `json:"contents"`
+	Flex     int                      `json:"flex,omitempty"`
+	Spacing  FlexComponentSpacingType `json:"spacing,omitempty"`
+	Margin   FlexComponentMarginType  `json:"margin,omitempty"`
 }
 
-// MarshalJSON method of BoxComponent
-func (b *BoxComponent) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
-		Type     ComponentType   `json:"type"`
-		Layout   string          `json:"layout"`
-		Contents []FlexComponent `json:"contents"`
-		Flex     *int            `json:"flex,omitempty"`
-		Spacing  *SizeType       `json:"spacing,omitempty"`
-		Margin   *SizeType       `json:"margin,omitempty"`
-	}{
-		Type:     ComponentTypeBox,
-		Layout:   b.Layout,
-		Contents: b.Contents,
-		Flex:     b.Flex,
-		Spacing:  b.Spacing,
-		Margin:   b.Margin,
-	})
-}
-
-func (b *BoxComponent) WithBoxComponentSizeOptions(flex *int, spacing *SizeType, margin *SizeType) *BoxComponent {
-	b.Flex = flex
-	b.Spacing = spacing
-	b.Margin = margin
-	return b
-}
-
+// ButtonComponent type
 type ButtonComponent struct {
-	Action  TemplateAction   `json:"action"`
-	Flex    *int             `json:"flex,omitempty"`
-	Margin  *SizeType        `json:"margin,omitempty"`
-	Height  *SizeHeightType  `json:"height,omitempty"`
-	Style   *ButtonStyleType `json:"style,omitempty"`
-	Color   *string          `json:"color,omitempty"`
-	Gravity *GravityType     `json:"gravity,omitempty"`
+	Type    FlexComponentType        `json:"type"`
+	Action  TemplateAction           `json:"action"`
+	Flex    int                      `json:"flex,omitempty"`
+	Margin  FlexComponentMarginType  `json:"margin,omitempty"`
+	Height  FlexButtonHeightType     `json:"height,omitempty"`
+	Style   FlexButtonStyleType      `json:"style,omitempty"`
+	Color   string                   `json:"color,omitempty"`
+	Gravity FlexComponentGravityType `json:"gravity,omitempty"`
 }
 
-// MarshalJSON method of ButtonComponent
-func (b *ButtonComponent) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
-		Type    ComponentType    `json:"type"`
-		Action  TemplateAction   `json:"action"`
-		Flex    *int             `json:"flex,omitempty"`
-		Margin  *SizeType        `json:"margin,omitempty"`
-		Height  *SizeHeightType  `json:"height,omitempty"`
-		Style   *ButtonStyleType `json:"style,omitempty"`
-		Color   *string          `json:"color,omitempty"`
-		Gravity *GravityType     `json:"gravity,omitempty"`
-	}{
-		Type:    ComponentTypeButton,
-		Action:  b.Action,
-		Flex:    b.Flex,
-		Margin:  b.Margin,
-		Height:  b.Height,
-		Style:   b.Style,
-		Color:   b.Color,
-		Gravity: b.Gravity,
-	})
-}
-
-func (b *ButtonComponent) WithButtonComponentStyleOptions(flex *int, margin *SizeType, height *SizeHeightType, style *ButtonStyleType, color *string, gravity *GravityType) *ButtonComponent {
-	b.Flex = flex
-	b.Margin = margin
-	b.Height = height
-	b.Style = style
-	b.Color = color
-	b.Gravity = gravity
-	return b
-}
-
+// FillerComponent type
 type FillerComponent struct {
+	Type FlexComponentType `json:"type"`
 }
 
-// MarshalJSON method of FillerComponent
-func (f *FillerComponent) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
-		Type ComponentType `json:"type"`
-	}{
-		Type: ComponentTypeFiller,
-	})
-}
-
+// IconComponent type
 type IconComponent struct {
-	Url         string           `json:"url"`
-	Margin      *SizeType        `json:"margin,omitempty"`
-	Size        *SizeType        `json:"size,omitempty"`
-	AspectRatio *AspectRatioType `json:"aspectRatio,omitempty"`
+	Type        FlexComponentType       `json:"type"`
+	URL         string                  `json:"url"`
+	Margin      FlexComponentMarginType `json:"margin,omitempty"`
+	Size        FlexIconSizeType        `json:"size,omitempty"`
+	AspectRatio FlexIconAspectRatioType `json:"aspectRatio,omitempty"`
 }
 
-// MarshalJSON method of IconComponent
-func (i *IconComponent) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
-		Type        ComponentType    `json:"type"`
-		Url         string           `json:"url"`
-		Margin      *SizeType        `json:"margin,omitempty"`
-		Size        *SizeType        `json:"size,omitempty"`
-		AspectRatio *AspectRatioType `json:"aspectRatio,omitempty"`
-	}{
-		Type:        ComponentTypeIcon,
-		Url:         i.Url,
-		Margin:      i.Margin,
-		Size:        i.Size,
-		AspectRatio: i.AspectRatio,
-	})
-}
-
-func (i *IconComponent) WithIconComponentStyleOptions(margin *SizeType, size *SizeType, aspectRatio *AspectRatioType) *IconComponent {
-	i.Margin = margin
-	i.Size = size
-	i.AspectRatio = aspectRatio
-	return i
-}
-
+// ImageComponent type
 type ImageComponent struct {
-	Url             string           `json:"url"`
-	Flex            *int             `json:"flex,omitempty"`
-	Align           *AlignType       `json:"align,omitempty"`
-	Size            *SizeType        `json:"size,omitempty"`
-	AspectRatio     *AspectRatioType `json:"aspectRatio,omitempty"`
-	AspectMode      *AspectModeType  `json:"aspectMode,omitempty"`
-	BackgroundColor *string          `json:"backgroundColor,omitempty"`
-	Margin          *SizeType        `json:"margin,omitempty"`
-	Gravity         *GravityType     `json:"gravity,omitempty"`
-	Action          TemplateAction   `json:"action,omitempty"`
+	Type            FlexComponentType        `json:"type"`
+	URL             string                   `json:"url"`
+	Flex            int                      `json:"flex,omitempty"`
+	Margin          FlexComponentMarginType  `json:"margin,omitempty"`
+	Align           FlexComponentAlignType   `json:"align,omitempty"`
+	Gravity         FlexComponentGravityType `json:"gravity,omitempty"`
+	Size            FlexImageSizeType        `json:"size,omitempty"`
+	AspectRatio     FlexImageAspectRatioType `json:"aspectRatio,omitempty"`
+	AspectMode      FlexImageAspectModeType  `json:"aspectMode,omitempty"`
+	BackgroundColor string                   `json:"backgroundColor,omitempty"`
+	Action          TemplateAction           `json:"action,omitempty"`
 }
 
-// MarshalJSON method of ImageComponent
-func (i *ImageComponent) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
-		Type            ComponentType    `json:"type"`
-		Url             string           `json:"url"`
-		Flex            *int             `json:"flex,omitempty"`
-		Align           *AlignType       `json:"align,omitempty"`
-		Size            *SizeType        `json:"size,omitempty"`
-		AspectRatio     *AspectRatioType `json:"aspectRatio,omitempty"`
-		AspectMode      *AspectModeType  `json:"aspectMode,omitempty"`
-		BackgroundColor *string          `json:"backgroundColor,omitempty"`
-		Margin          *SizeType        `json:"margin,omitempty"`
-		Gravity         *GravityType     `json:"gravity,omitempty"`
-		Action          TemplateAction   `json:"action,omitempty"`
-	}{
-		Type:            ComponentTypeImage,
-		Url:             i.Url,
-		Flex:            i.Flex,
-		Align:           i.Align,
-		Size:            i.Size,
-		AspectRatio:     i.AspectRatio,
-		AspectMode:      i.AspectMode,
-		BackgroundColor: i.BackgroundColor,
-		Margin:          i.Margin,
-		Gravity:         i.Gravity,
-		Action:          i.Action,
-	})
-}
-
-func (i *ImageComponent) WithImageComponentStyleOption(flex *int, align *AlignType, size *SizeType, aspectRatio *AspectRatioType, aspectMode *AspectModeType, backgroundColor *string, margin *SizeType, gravity *GravityType) *ImageComponent {
-	i.Flex = flex
-	i.Align = align
-	i.Size = size
-	i.AspectRatio = aspectRatio
-	i.AspectMode = aspectMode
-	i.BackgroundColor = backgroundColor
-	i.Margin = margin
-	i.Gravity = gravity
-	return i
-}
-
-func (i *ImageComponent) WithImageComponentActionOption(action TemplateAction) *ImageComponent {
-	i.Action = action
-	return i
-}
-
+// SeparatorComponent type
 type SeparatorComponent struct {
-	Margin *SizeType `json:"margin,omitempty"`
-	Color  *string   `json:"color,omitempty"`
+	Type   FlexComponentType       `json:"type"`
+	Margin FlexComponentMarginType `json:"margin,omitempty"`
+	Color  string                  `json:"color,omitempty"`
 }
 
-// MarshalJSON method of SeparatorComponent
-func (s *SeparatorComponent) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
-		Type   ComponentType `json:"type"`
-		Margin *SizeType     `json:"margin,omitempty"`
-		Color  *string       `json:"color,omitempty"`
-	}{
-		Type:   ComponentTypeSeparator,
-		Margin: s.Margin,
-		Color:  s.Color,
-	})
-}
-
-func (s *SeparatorComponent) WithSeparatorComponentStyleOption(margin *SizeType, color *string) *SeparatorComponent {
-	s.Margin = margin
-	s.Color = color
-	return s
-}
-
+// SpacerComponent type
 type SpacerComponent struct {
-	Size string `json:"size"`
+	Type FlexComponentType  `json:"type"`
+	Size FlexSpacerSizeType `json:"size"`
 }
 
-// MarshalJSON method of SpacerComponent
-func (s *SpacerComponent) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
-		Type ComponentType `json:"type"`
-		Size string        `json:"size"`
-	}{
-		Type: ComponentTypeSpacer,
-		Size: s.Size,
-	})
-}
-
+// TextComponent type
 type TextComponent struct {
-	Text    string          `json:"text"`
-	Flex    *int            `json:"flex,omitempty"`
-	Margin  *SizeType       `json:"margin,omitempty"`
-	Size    *SizeType       `json:"size,omitempty"`
-	Align   *AlignType      `json:"align,omitempty"`
-	Weight  *SizeWeightType `json:"weight,omitempty"`
-	Color   *string         `json:"color,omitempty"`
-	Wrap    bool            `json:"wrap,omitempty"`
-	Gravity *GravityType    `json:"gravity,omitempty"`
+	Type    FlexComponentType        `json:"type"`
+	Text    string                   `json:"text"`
+	Flex    int                      `json:"flex,omitempty"`
+	Margin  FlexComponentMarginType  `json:"margin,omitempty"`
+	Size    FlexTextSizeType         `json:"size,omitempty"`
+	Align   FlexComponentAlignType   `json:"align,omitempty"`
+	Gravity FlexComponentGravityType `json:"gravity,omitempty"`
+	Wrap    bool                     `json:"wrap,omitempty"`
+	Weight  FlexTextWeightType       `json:"weight,omitempty"`
+	Color   string                   `json:"color,omitempty"`
+	Action  TemplateAction           `json:"action,omitempty"`
 }
 
-// MarshalJSON method of TextComponent
-func (t *TextComponent) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
-		Type    ComponentType   `json:"type"`
-		Text    string          `json:"text"`
-		Flex    *int            `json:"flex,omitempty"`
-		Margin  *SizeType       `json:"margin,omitempty"`
-		Size    *SizeType       `json:"size,omitempty"`
-		Align   *AlignType      `json:"align,omitempty"`
-		Weight  *SizeWeightType `json:"weight,omitempty"`
-		Color   *string         `json:"color,omitempty"`
-		Wrap    bool            `json:"wrap,omitempty"`
-		Gravity *GravityType    `json:"gravity,omitempty"`
-	}{
-		Type:    ComponentTypeText,
-		Text:    t.Text,
-		Flex:    t.Flex,
-		Margin:  t.Margin,
-		Size:    t.Size,
-		Weight:  t.Weight,
-		Color:   t.Color,
-		Wrap:    t.Wrap,
-		Align:   t.Align,
-		Gravity: t.Gravity,
-	})
-}
-
-func (t *TextComponent) WithTextComponentStyleOption(flex *int, margin *SizeType, size *SizeType, weight *SizeWeightType, color *string, wrap bool, align *AlignType, gravity *GravityType) *TextComponent {
-	t.Flex = flex
-	t.Margin = margin
-	t.Size = size
-	t.Weight = weight
-	t.Color = color
-	t.Wrap = wrap
-	t.Align = align
-	t.Gravity = gravity
-	return t
-}
-
-// implements TemplateAction interface
+// implements FlexComponent interface
 func (*BoxComponent) FlexComponent()       {}
 func (*ButtonComponent) FlexComponent()    {}
 func (*FillerComponent) FlexComponent()    {}
@@ -514,87 +369,4 @@ func (*IconComponent) FlexComponent()      {}
 func (*ImageComponent) FlexComponent()     {}
 func (*SeparatorComponent) FlexComponent() {}
 func (*SpacerComponent) FlexComponent()    {}
-func (*TextComponent) FlexComponent()      {}
-
-// NewFlex function
-func NewFlex() *Flex {
-	return &Flex{}
-}
-
-// NewCarouselFlex function
-func NewCarouselFlex() *CarouselFlex {
-	return &CarouselFlex{}
-}
-
-// NewBubbleFlex function
-func NewBubbleFlex() *BubbleFlex {
-	return &BubbleFlex{}
-}
-
-// NewFlexStylesBlock function
-func NewFlexStylesBlock() *FlexStylesBlock {
-	return &FlexStylesBlock{}
-}
-
-// NewFlexStyle function
-func NewFlexStyle(backgroundColor string, separator bool, separatorColor string) *FlexStyle {
-	return &FlexStyle{
-		BackgroundColor: backgroundColor,
-		Separator:       separator,
-		SeparatorColor:  separatorColor,
-	}
-
-}
-
-// NewBoxComponent function
-func NewBoxComponent(layout string, contents ...FlexComponent) *BoxComponent {
-	return &BoxComponent{
-		Layout:   layout,
-		Contents: contents,
-	}
-}
-
-// NewButtonComponent
-func NewButtonComponent(action TemplateAction) *ButtonComponent {
-	return &ButtonComponent{
-		Action: action,
-	}
-}
-
-// NewFillerComponent
-func NewFillerComponent() *FillerComponent {
-	return &FillerComponent{}
-}
-
-// NewIconComponent
-func NewIconComponent(url string) *IconComponent {
-	return &IconComponent{
-		Url: url,
-	}
-}
-
-//NewImageComponent
-func NewImageComponent(url string) *ImageComponent {
-	return &ImageComponent{
-		Url: url,
-	}
-}
-
-// NewSeparatorComponent
-func NewSeparatorComponent() *SeparatorComponent {
-	return &SeparatorComponent{}
-}
-
-// NewSpacerComponent
-func NewSpacerComponent(size string) *SpacerComponent {
-	return &SpacerComponent{
-		Size: size,
-	}
-}
-
-// NewTextComponent
-func NewTextComponent(text string) *TextComponent {
-	return &TextComponent{
-		Text: text,
-	}
-}
+func (*TextComponent) FlexComponent() {}
