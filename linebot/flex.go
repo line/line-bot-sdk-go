@@ -124,9 +124,9 @@ type ButtonStyleType string
 
 // SizeHeightType constants
 const (
-	SizeHeightTypeLink		ButtonStyleType = "link"
-	SizeHeightTypePrimary	ButtonStyleType = "primary"
-	SizeHeightTypeSecondary	ButtonStyleType = "secondary"
+	ButtonStyleTypeLink			ButtonStyleType = "link"
+	ButtonStyleTypePrimary		ButtonStyleType = "primary"
+	ButtonStyleTypeSecondary	ButtonStyleType = "secondary"
 )
 
 // ButtonStyleType type
@@ -151,21 +151,21 @@ const (
 
 
 type FlexStyle struct {
-	BackgroundColor 	string		`json:"backgroundColor, string, omitempty"`
-	Separator 			bool		`json:"separator, omitempty"`
-	SeparatorColor 		string		`json:"separatorColor, string, omitempty"`
+	BackgroundColor 	string		`json:"backgroundColor,omitempty"`
+	Separator 			bool		`json:"separator,omitempty"`
+	SeparatorColor 		string		`json:"separatorColor,omitempty"`
 }
 
 type FlexStylesBlock struct {
-	Header	FlexStyle	`json:"header, omitempty"`
-	Hero	FlexStyle	`json:"hero, omitempty"`
-	Body	FlexStyle	`json:"body, omitempty"`
-	Footer	FlexStyle	`json:"footer, omitempty"`
+	Header	*FlexStyle	`json:"header,omitempty"`
+	Hero	*FlexStyle	`json:"hero,omitempty"`
+	Body	*FlexStyle	`json:"body,omitempty"`
+	Footer	*FlexStyle	`json:"footer,omitempty"`
 }
 
 type Flex struct {
-	AltText 	string
-	Contents	FlexContainer
+	AltText 	string			`json:"altText"`
+	Contents	FlexContainer	`json:"contents"`
 }
 
 // MarshalJSON method of ButtonsTemplate
@@ -188,27 +188,24 @@ type FlexContainer interface {
 }
 
 type BubbleFlex struct {
-	Direction 	string
-	Header		FlexComponent
-	Hero		FlexComponent
-	Body		FlexComponent
-	Footer		FlexComponent
-	Styles		FlexStylesBlock
+	Header		FlexComponent		`json:"header,omitempty"`
+	Hero		FlexComponent		`json:"hero,omitempty"`
+	Body		FlexComponent		`json:"body,omitempty"`
+	Footer		FlexComponent		`json:"footer,omitempty"`
+	Styles		*FlexStylesBlock	`json:"styles,omitempty"`
 }
 
 // MarshalJSON method of ButtonsTemplate
 func (b *BubbleFlex) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type				ContainerType		`json:"type"`
-		Direction           string       		`json:"direction, string, omitempty"`
-		Header				FlexComponent		`json:"header, omitempty"`
-		Hero				FlexComponent		`json:"hero, omitempty"`
-		Body				FlexComponent		`json:"body, omitempty"`
-		Footer				FlexComponent		`json:"footer, omitempty"`
-		Styles				FlexStylesBlock		`json:"styles, omitempty"`
+		Type				ContainerType			`json:"type"`
+		Header				FlexComponent			`json:"header,omitempty"`
+		Hero				FlexComponent			`json:"hero,omitempty"`
+		Body				FlexComponent			`json:"body,omitempty"`
+		Footer				FlexComponent			`json:"footer,omitempty"`
+		Styles				*FlexStylesBlock		`json:"styles,omitempty"`
 	}{
 		Type:               ContainerTypeBubble,
-		Direction:          b.Direction,
 		Header:				b.Header,
 		Hero:				b.Hero,
 		Body:				b.Body,
@@ -217,10 +214,8 @@ func (b *BubbleFlex) MarshalJSON() ([]byte, error) {
 	})
 }
 
-
-
 type CarouselFlex struct {
-	Contents []BubbleFlex
+	Contents []BubbleFlex	`json:"contents"`
 }
 
 // MarshalJSON method of ButtonsTemplate
@@ -246,11 +241,11 @@ type FlexComponent interface {
 }
 
 type BoxComponent struct {
-	Layout		string
-	Contents	[]FlexComponent
-	Flex		int
-	Spacing		string
-	Margin		string
+	Layout		string				`json:"layout"`
+	Contents	[]FlexComponent		`json:"contents"`
+	Flex		*int				`json:"flex,omitempty"`
+	Spacing		*SizeType			`json:"spacing,omitempty"`
+	Margin		*SizeType			`json:"margin,omitempty"`
 }
 
 // MarshalJSON method of BoxComponent
@@ -259,9 +254,9 @@ func (b *BoxComponent) MarshalJSON() ([]byte, error) {
 		Type				ComponentType		`json:"type"`
 		Layout				string				`json:"layout"`
 		Contents 			[]FlexComponent		`json:"contents"`
-		Flex				int					`json:"flex, omitempty"`
-		Spacing				string				`json:"spacing, string, omitempty"`
-		Margin				string				`json:"margin, string, omitempty"`
+		Flex				*int				`json:"flex,omitempty"`
+		Spacing				*SizeType			`json:"spacing,omitempty"`
+		Margin				*SizeType			`json:"margin,omitempty"`
 	}{
 		Type:               ComponentTypeBox,
 		Layout:				b.Layout,
@@ -272,14 +267,21 @@ func (b *BoxComponent) MarshalJSON() ([]byte, error) {
 	})
 }
 
+func (b *BoxComponent) WithBoxComponentSizeOptions(flex *int, spacing *SizeType, margin *SizeType) *BoxComponent {
+	b.Flex = flex
+	b.Spacing = spacing
+	b.Margin = margin
+	return b
+}
+
 type ButtonComponent struct {
-	Action		TemplateAction
-	Flex		int
-	Margin		string
-	Height		string
-	Style		string
-	Color		string
-	Gravity		string
+	Action		TemplateAction		`json:"action"`
+	Flex		*int				`json:"flex,omitempty"`
+	Margin		*SizeType			`json:"margin,omitempty"`
+	Height		*SizeHeightType		`json:"height,omitempty"`
+	Style		*ButtonStyleType	`json:"style,omitempty"`
+	Color		*string				`json:"color,omitempty"`
+	Gravity		*GravityType		`json:"gravity,omitempty"`
 }
 
 // MarshalJSON method of ButtonComponent
@@ -287,14 +289,14 @@ func (b *ButtonComponent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type				ComponentType		`json:"type"`
 		Action				TemplateAction		`json:"action"`
-		Flex				int					`json:"flex, omitempty"`
-		Margin				string				`json:"margin, string, omitempty"`
-		Height				string				`json:"height, string, omitempty"`
-		Style				string				`json:"style, string, omitempty"`
-		Color				string				`json:"color, string, omitempty"`
-		Gravity				string				`json:"gravity, string, omitempty"`
+		Flex				*int				`json:"flex,omitempty"`
+		Margin				*SizeType			`json:"margin,omitempty"`
+		Height				*SizeHeightType		`json:"height,omitempty"`
+		Style				*ButtonStyleType	`json:"style,omitempty"`
+		Color				*string				`json:"color,omitempty"`
+		Gravity				*GravityType		`json:"gravity,omitempty"`
 	}{
-		Type:               ComponentTypeBox,
+		Type:               ComponentTypeButton,
 		Action:				b.Action,
 		Flex:				b.Flex,
 		Margin:				b.Margin,
@@ -303,6 +305,16 @@ func (b *ButtonComponent) MarshalJSON() ([]byte, error) {
 		Color:				b.Color,
 		Gravity:			b.Gravity,
 	})
+}
+
+func (b *ButtonComponent) WithButtonComponentStyleOptions(flex *int, margin *SizeType, height *SizeHeightType, style *ButtonStyleType, color *string, gravity *GravityType) *ButtonComponent {
+	b.Flex = flex
+	b.Margin = margin
+	b.Height = height
+	b.Style = style
+	b.Color = color
+	b.Gravity = gravity
+	return b
 }
 
 type FillerComponent struct {
@@ -319,10 +331,10 @@ func (f *FillerComponent) MarshalJSON() ([]byte, error) {
 }
 
 type IconComponent struct {
-	Url			string
-	Margin		string
-	Size		string
-	AspectRatio	string
+	Url			string					`json:"url"`
+	Margin		*SizeType				`json:"margin,omitempty"`
+	Size		*SizeType				`json:"size,omitempty"`
+	AspectRatio	*AspectRatioType		`json:"aspectRatio,omitempty"`
 }
 
 // MarshalJSON method of IconComponent
@@ -330,9 +342,9 @@ func (i *IconComponent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type				ComponentType		`json:"type"`
 		Url					string				`json:"url"`
-		Margin				string				`json:"margin, string, omitempty"`
-		Size				string				`json:"size, string, omitempty"`
-		AspectRatio			string				`json:"aspectRatio, string, omitempty"`
+		Margin				*SizeType			`json:"margin,omitempty"`
+		Size				*SizeType			`json:"size,omitempty"`
+		AspectRatio			*AspectRatioType	`json:"aspectRatio,omitempty"`
 	}{
 		Type:               ComponentTypeIcon,
 		Url:				i.Url,
@@ -342,17 +354,24 @@ func (i *IconComponent) MarshalJSON() ([]byte, error) {
 	})
 }
 
+func (i *IconComponent) WithIconComponentStyleOptions(margin *SizeType, size *SizeType, aspectRatio *AspectRatioType) *IconComponent {
+	i.Margin = margin
+	i.Size = size
+	i.AspectRatio = aspectRatio
+	return i
+}
+
 type ImageComponent struct {
-	Url					string
-	Flex				int
-	Margin				string
-	Align				string
-	Gravity				string
-	Size				string
-	AspectRatio			string
-	AspectMode			string
-	BackgroundColor		string
-	Action				TemplateAction
+	Url					string				`json:"url"`
+	Flex				*int				`json:"flex,omitempty"`
+	Align				*AlignType			`json:"align,omitempty"`
+	Size				*SizeType			`json:"size,omitempty"`
+	AspectRatio			*AspectRatioType	`json:"aspectRatio,omitempty"`
+	AspectMode			*AspectModeType		`json:"aspectMode,omitempty"`
+	BackgroundColor		*string				`json:"backgroundColor,omitempty"`
+	Margin				*SizeType			`json:"margin,omitempty"`
+	Gravity				*GravityType		`json:"gravity,omitempty"`
+	Action				TemplateAction		`json:"action"`
 }
 
 // MarshalJSON method of ImageComponent
@@ -360,41 +379,58 @@ func (i *ImageComponent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type				ComponentType		`json:"type"`
 		Url					string				`json:"url"`
-		Flex				int					`json:"flex, omitempty"`
-		Margin				string				`json:"margin, string, omitempty"`
-		Align				string				`json:"align, string, omitempty"`
-		Gravity				string				`json:"gravity, string, omitempty"`
-		Size				string				`json:"size, string, omitempty"`
-		AspectRatio			string				`json:"aspectRatio, string, omitempty"`
-		AspectMode			string				`json:"aspectMode, string, omitempty"`
-		BackgroundColor		string				`json:"backgroundColor, string, omitempty"`
+		Flex				*int				`json:"flex,omitempty"`
+		Align				*AlignType			`json:"align,omitempty"`
+		Size				*SizeType			`json:"size,omitempty"`
+		AspectRatio			*AspectRatioType	`json:"aspectRatio,omitempty"`
+		AspectMode			*AspectModeType		`json:"aspectMode,omitempty"`
+		BackgroundColor		*string				`json:"backgroundColor,omitempty"`
+		Margin				*SizeType			`json:"margin,omitempty"`
+		Gravity				*GravityType		`json:"gravity,omitempty"`
 		Action				TemplateAction		`json:"action"`
 	}{
 		Type:               ComponentTypeImage,
 		Url:				i.Url,
 		Flex:				i.Flex,
-		Margin:				i.Margin,
 		Align:				i.Align,
-		Gravity:			i.Gravity,
 		Size:				i.Size,
 		AspectRatio:		i.AspectRatio,
 		AspectMode:			i.AspectMode,
 		BackgroundColor:	i.BackgroundColor,
+		Margin:				i.Margin,
+		Gravity:			i.Gravity,
 		Action:				i.Action,
 	})
 }
 
+func (i *ImageComponent) WithImageComponentStyleOption(flex *int, align *AlignType, size *SizeType, aspectRatio *AspectRatioType, aspectMode *AspectModeType, backgroundColor *string, margin *SizeType, gravity *GravityType) *ImageComponent {
+	i.Flex = flex
+	i.Align = align
+	i.Size = size
+	i.AspectRatio = aspectRatio
+	i.AspectMode = aspectMode
+	i.BackgroundColor = backgroundColor
+	i.Margin = margin
+	i.Gravity = gravity
+	return i
+}
+
+func (i *ImageComponent) WithImageComponentActionOption(action TemplateAction) *ImageComponent {
+	i.Action = action
+	return i
+}
+
 type SeparatorComponent struct {
-	Margin				string
-	Color				string
+	Margin				*SizeType		`json:"margin,omitempty"`
+	Color				*string			`json:"color,omitempty"`
 }
 
 // MarshalJSON method of SeparatorComponent
 func (s *SeparatorComponent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type				ComponentType		`json:"type"`
-		Margin				string				`json:"margin, string, omitempty"`
-		Color				string				`json:"color, string, omitempty"`
+		Margin				*SizeType			`json:"margin,omitempty"`
+		Color				*string				`json:"color,omitempty"`
 	}{
 		Type:               ComponentTypeSeparator,
 		Margin:				s.Margin,
@@ -402,15 +438,21 @@ func (s *SeparatorComponent) MarshalJSON() ([]byte, error) {
 	})
 }
 
+func (s *SeparatorComponent) WithSeparatorComponentStyleOption(margin *SizeType, color *string) *SeparatorComponent {
+	s.Margin = margin
+	s.Color = color
+	return s
+}
+
 type SpacerComponent struct {
-	Size				string
+	Size				string		`json:"size"`
 }
 
 // MarshalJSON method of SpacerComponent
 func (s *SpacerComponent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type				ComponentType		`json:"type"`
-		Size				string				`json:"size, string, omitempty"`
+		Type				ComponentType	`json:"type"`
+		Size				string			`json:"size"`
 	}{
 		Type:               ComponentTypeSpacer,
 		Size:				s.Size,
@@ -418,15 +460,15 @@ func (s *SpacerComponent) MarshalJSON() ([]byte, error) {
 }
 
 type TextComponent struct {
-	Text				string
-	Flex				int
-	Margin				string
-	Size				string
-	Align				string
-	Gravity				string
-	Weight				string
-	Color				string
-	Wrap				bool
+	Text				string				`json:"text"`
+	Flex				*int				`json:"flex,omitempty"`
+	Margin				*SizeType			`json:"margin,omitempty"`
+	Size				*SizeType			`json:"size,omitempty"`
+	Align				*AlignType			`json:"align,omitempty"`
+	Weight				*SizeWeightType		`json:"weight,omitempty"`
+	Color				*string				`json:"color,omitempty"`
+	Wrap				bool				`json:"wrap,omitempty"`
+	Gravity				*GravityType		`json:"gravity,omitempty"`
 }
 
 // MarshalJSON method of TextComponent
@@ -434,26 +476,38 @@ func (t *TextComponent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type				ComponentType		`json:"type"`
 		Text				string				`json:"text"`
-		Flex				int					`json:"flex, omitempty"`
-		Margin				string				`json:"margin, string, omitempty"`
-		Size				string				`json:"size, string, omitempty"`
-		Align				string				`json:"align, string, omitempty"`
-		Gravity				string				`json:"gravity, string, omitempty"`
-		Weight				string				`json:"weight, string, omitempty"`
-		Color				string				`json:"color, string, omitempty"`
-		Wrap				bool				`json:"wrap, omitempty"`
+		Flex				*int				`json:"flex,omitempty"`
+		Margin				*SizeType			`json:"margin,omitempty"`
+		Size				*SizeType			`json:"size,omitempty"`
+		Align				*AlignType			`json:"align,omitempty"`
+		Weight				*SizeWeightType		`json:"weight,omitempty"`
+		Color				*string				`json:"color,omitempty"`
+		Wrap				bool				`json:"wrap,omitempty"`
+		Gravity				*GravityType		`json:"gravity,omitempty"`
 	}{
 		Type:               ComponentTypeText,
 		Text:				t.Text,
 		Flex:				t.Flex,
 		Margin:				t.Margin,
 		Size:				t.Size,
-		Align:				t.Align,
-		Gravity:			t.Gravity,
-		Wrap:				t.Wrap,
 		Weight:				t.Weight,
 		Color:				t.Color,
+		Wrap:				t.Wrap,
+		Align:				t.Align,
+		Gravity:			t.Gravity,
 	})
+}
+
+func (t *TextComponent) WithTextComponentStyleOption(flex *int, margin *SizeType, size *SizeType, weight *SizeWeightType, color *string, wrap bool, align *AlignType, gravity *GravityType) *TextComponent {
+	t.Flex = flex
+	t.Margin = margin
+	t.Size = size
+	t.Weight = weight
+	t.Color = color
+	t.Wrap = wrap
+	t.Align = align
+	t.Gravity = gravity
+	return t
 }
 
 // implements TemplateAction interface
@@ -467,11 +521,8 @@ func (*SpacerComponent) FlexComponent() {}
 func (*TextComponent) FlexComponent() {}
 
 // NewFlex function
-func NewFlex(AltText string, Contents FlexContainer) *Flex {
-	return &Flex{
-		AltText: AltText,
-		Contents: Contents,
-	}
+func NewFlex() *Flex {
+	return &Flex{}
 }
 
 // NewCarouselFlex function
@@ -482,25 +533,13 @@ func NewCarouselFlex(bubbleFlexs ...BubbleFlex) *CarouselFlex {
 }
 
 // NewBubbleFlex function
-func NewBubbleFlex(direction string, header FlexComponent, hero FlexComponent, body FlexComponent, footer FlexComponent, styles FlexStylesBlock) *BubbleFlex {
-	return &BubbleFlex{
-		Direction: 	direction,
-		Header:		header,
-		Hero:		hero,
-		Body:		body,
-		Footer:		footer,
-		Styles:		styles,
-	}
+func NewBubbleFlex() *BubbleFlex {
+	return &BubbleFlex{}
 }
 
 // NewFlexStylesBlock function
-func NewFlexStylesBlock(header FlexStyle, hero FlexStyle, body FlexStyle, footer FlexStyle) *FlexStylesBlock {
-	return &FlexStylesBlock{
-		Header:	header,
-		Hero:	hero,
-		Body:	body,
-		Footer:	footer,
-	}
+func NewFlexStylesBlock() *FlexStylesBlock {
+	return &FlexStylesBlock{}
 }
 
 // NewFlexStyle function
@@ -512,27 +551,19 @@ func NewFlexStyle(backgroundColor string, separator bool, separatorColor string)
 	}
 
 }
+
 // NewBoxComponent function
-func NewBoxComponent(layout string, flex int, spacing string, margin string, contents ...FlexComponent) *BoxComponent {
+func NewBoxComponent(layout string, contents ...FlexComponent) *BoxComponent {
 	return &BoxComponent{
 		Layout:	layout,
 		Contents: contents,
-		Flex: flex,
-		Spacing: spacing,
-		Margin: margin,
 	}
 }
 
 // NewButtonComponent
-func NewButtonComponent(action TemplateAction, flex int, margin string, height string, style string, color string, gravity string) *ButtonComponent {
+func NewButtonComponent(action TemplateAction) *ButtonComponent {
 	return &ButtonComponent{
 		Action: action,
-		Flex: flex,
-		Margin: margin,
-		Height: height,
-		Style: style,
-		Color: color,
-		Gravity: gravity,
 	}
 }
 
@@ -542,37 +573,22 @@ func NewFillerComponent() *FillerComponent {
 }
 
 // NewIconComponent
-func NewIconComponent(url string, margin string, size string, aspectRatio string) *IconComponent {
+func NewIconComponent(url string) *IconComponent {
 	return &IconComponent{
 		Url:url,
-		Margin: margin,
-		Size: size,
-		AspectRatio: aspectRatio,
 	}
 }
 
 //NewImageComponent
-func NewImageComponent(url string, flex int, margin string, align string, gravity string, size string, aspectRatio string, aspectMode string, backgroundColor string, action TemplateAction) *ImageComponent {
+func NewImageComponent(url string) *ImageComponent {
 	return &ImageComponent{
 		Url: url,
-		Flex: flex,
-		Margin: margin,
-		Align: align,
-		Gravity: gravity,
-		Size: size,
-		AspectRatio: aspectRatio,
-		AspectMode: aspectMode,
-		BackgroundColor: backgroundColor,
-		Action: action,
 	}
 }
 
 // NewSeparatorComponent
-func NewSeparatorComponent(margin string, color string) *SeparatorComponent {
-	return &SeparatorComponent{
-		Margin: margin,
-		Color:color,
-	}
+func NewSeparatorComponent() *SeparatorComponent {
+	return &SeparatorComponent{}
 }
 
 // NewSpacerComponent
@@ -583,17 +599,9 @@ func NewSpacerComponent(size string) *SpacerComponent {
 }
 
 // NewTextComponent
-func NewTextComponent(text string, flex int, margin string, size string, align string, gravity string, wrap bool, weight string, color string) *TextComponent {
+func NewTextComponent(text string) *TextComponent {
 	return &TextComponent{
 		Text: text,
-		Flex: flex,
-		Margin: margin,
-		Size: size,
-		Align: align,
-		Gravity: gravity,
-		Wrap: wrap,
-		Weight: weight,
-		Color: color,
 	}
 }
 
