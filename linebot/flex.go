@@ -83,16 +83,17 @@ type FlexImageSizeType string
 
 // FlexImageSizeType constants
 const (
-	FlexImageSizeTypeXxs FlexImageSizeType = "xxs"
-	FlexImageSizeTypeXs  FlexImageSizeType = "xs"
-	FlexImageSizeTypeSm  FlexImageSizeType = "sm"
-	FlexImageSizeTypeMd  FlexImageSizeType = "md"
-	FlexImageSizeTypeLg  FlexImageSizeType = "lg"
-	FlexImageSizeTypeXl  FlexImageSizeType = "xl"
-	FlexImageSizeTypeXxl FlexImageSizeType = "xxl"
-	FlexImageSizeType3xl FlexImageSizeType = "3xl"
-	FlexImageSizeType4xl FlexImageSizeType = "4xl"
-	FlexImageSizeType5xl FlexImageSizeType = "5xl"
+	FlexImageSizeTypeXxs  FlexImageSizeType = "xxs"
+	FlexImageSizeTypeXs   FlexImageSizeType = "xs"
+	FlexImageSizeTypeSm   FlexImageSizeType = "sm"
+	FlexImageSizeTypeMd   FlexImageSizeType = "md"
+	FlexImageSizeTypeLg   FlexImageSizeType = "lg"
+	FlexImageSizeTypeXl   FlexImageSizeType = "xl"
+	FlexImageSizeTypeXxl  FlexImageSizeType = "xxl"
+	FlexImageSizeType3xl  FlexImageSizeType = "3xl"
+	FlexImageSizeType4xl  FlexImageSizeType = "4xl"
+	FlexImageSizeType5xl  FlexImageSizeType = "5xl"
+	FlexImageSizeTypeFull FlexImageSizeType = "full"
 )
 
 // FlexImageAspectRatioType type
@@ -275,9 +276,9 @@ type BubbleStyle struct {
 
 // BlockStyle type
 type BlockStyle struct {
-	BackgroundColor *string `json:"backgroundColor,omitempty"`
-	Separator       *bool   `json:"separator,omitempty"`
-	SeparatorColor  *string `json:"separatorColor,omitempty"`
+	BackgroundColor string `json:"backgroundColor,omitempty"`
+	Separator       bool   `json:"separator,omitempty"`
+	SeparatorColor  string `json:"separatorColor,omitempty"`
 }
 
 // FlexComponent interface
@@ -287,24 +288,24 @@ type FlexComponent interface {
 
 // BoxComponent type
 type BoxComponent struct {
-	Type     FlexComponentType         `json:"type"`
-	Layout   FlexBoxLayoutType         `json:"layout"`
-	Contents []FlexComponent           `json:"contents"`
-	Flex     *int                      `json:"flex,omitempty"`
-	Spacing  *FlexComponentSpacingType `json:"spacing,omitempty"`
-	Margin   *FlexComponentMarginType  `json:"margin,omitempty"`
+	Type     FlexComponentType        `json:"type"`
+	Layout   FlexBoxLayoutType        `json:"layout"`
+	Contents []FlexComponent          `json:"contents"`
+	Flex     int                      `json:"flex,omitempty"`
+	Spacing  FlexComponentSpacingType `json:"spacing,omitempty"`
+	Margin   FlexComponentMarginType  `json:"margin,omitempty"`
 }
 
 // ButtonComponent type
 type ButtonComponent struct {
-	Type    FlexComponentType         `json:"type"`
-	Action  TemplateAction            `json:"action"`
-	Flex    *int                      `json:"flex,omitempty"`
-	Margin  *FlexComponentMarginType  `json:"margin,omitempty"`
-	Height  *FlexButtonHeightType     `json:"height,omitempty"`
-	Style   *FlexButtonStyleType      `json:"style,omitempty"`
-	Color   *string                   `json:"color,omitempty"`
-	Gravity *FlexComponentGravityType `json:"gravity,omitempty"`
+	Type    FlexComponentType        `json:"type"`
+	Action  TemplateAction           `json:"action"`
+	Flex    int                      `json:"flex,omitempty"`
+	Margin  FlexComponentMarginType  `json:"margin,omitempty"`
+	Height  FlexButtonHeightType     `json:"height,omitempty"`
+	Style   FlexButtonStyleType      `json:"style,omitempty"`
+	Color   string                   `json:"color,omitempty"`
+	Gravity FlexComponentGravityType `json:"gravity,omitempty"`
 }
 
 // FillerComponent type
@@ -314,33 +315,33 @@ type FillerComponent struct {
 
 // IconComponent type
 type IconComponent struct {
-	Type        FlexComponentType        `json:"type"`
-	URL         string                   `json:"url"`
-	Margin      *FlexComponentMarginType `json:"margin,omitempty"`
-	Size        *FlexIconSizeType        `json:"size,omitempty"`
-	AspectRatio *FlexIconAspectRatioType `json:"aspectRatio,omitempty"`
+	Type        FlexComponentType       `json:"type"`
+	URL         string                  `json:"url"`
+	Margin      FlexComponentMarginType `json:"margin,omitempty"`
+	Size        FlexIconSizeType        `json:"size,omitempty"`
+	AspectRatio FlexIconAspectRatioType `json:"aspectRatio,omitempty"`
 }
 
 // ImageComponent type
 type ImageComponent struct {
-	Type            FlexComponentType         `json:"type"`
-	URL             string                    `json:"url"`
-	Flex            *int                      `json:"flex,omitempty"`
-	Margin          *FlexComponentMarginType  `json:"margin,omitempty"`
-	Align           *FlexComponentAlignType   `json:"align,omitempty"`
-	Gravity         *FlexComponentGravityType `json:"gravity,omitempty"`
-	Size            *FlexImageSizeType        `json:"size,omitempty"`
-	AspectRatio     *FlexImageAspectRatioType `json:"aspectRatio,omitempty"`
-	AspectMode      *FlexImageAspectModeType  `json:"aspectMode,omitempty"`
-	BackgroundColor *string                   `json:"backgroundColor,omitempty"`
-	Action          TemplateAction            `json:"action,omitempty"`
+	Type            FlexComponentType        `json:"type"`
+	URL             string                   `json:"url"`
+	Flex            int                      `json:"flex,omitempty"`
+	Margin          FlexComponentMarginType  `json:"margin,omitempty"`
+	Align           FlexComponentAlignType   `json:"align,omitempty"`
+	Gravity         FlexComponentGravityType `json:"gravity,omitempty"`
+	Size            FlexImageSizeType        `json:"size,omitempty"`
+	AspectRatio     FlexImageAspectRatioType `json:"aspectRatio,omitempty"`
+	AspectMode      FlexImageAspectModeType  `json:"aspectMode,omitempty"`
+	BackgroundColor string                   `json:"backgroundColor,omitempty"`
+	Action          TemplateAction           `json:"action,omitempty"`
 }
 
 // SeparatorComponent type
 type SeparatorComponent struct {
-	Type   FlexComponentType        `json:"type"`
-	Margin *FlexComponentMarginType `json:"margin,omitempty"`
-	Color  *string                  `json:"color,omitempty"`
+	Type   FlexComponentType       `json:"type"`
+	Margin FlexComponentMarginType `json:"margin,omitempty"`
+	Color  string                  `json:"color,omitempty"`
 }
 
 // SpacerComponent type
@@ -351,15 +352,15 @@ type SpacerComponent struct {
 
 // TextComponent type
 type TextComponent struct {
-	Type    FlexComponentType         `json:"type"`
-	Text    string                    `json:"text"`
-	Flex    *int                      `json:"flex,omitempty"`
-	Margin  *FlexComponentMarginType  `json:"margin,omitempty"`
-	Size    *FlexTextSizeType         `json:"size,omitempty"`
-	Align   *FlexComponentAlignType   `json:"align,omitempty"`
-	Gravity *FlexComponentGravityType `json:"gravity,omitempty"`
-	Wrap    *bool                     `json:"wrap,omitempty"`
-	Weight  *FlexTextWeightType       `json:"weight,omitempty"`
-	Color   *string                   `json:"color,omitempty"`
-	Action  TemplateAction            `json:"action,omitempty"`
+	Type    FlexComponentType        `json:"type"`
+	Text    string                   `json:"text"`
+	Flex    int                      `json:"flex,omitempty"`
+	Margin  FlexComponentMarginType  `json:"margin,omitempty"`
+	Size    FlexTextSizeType         `json:"size,omitempty"`
+	Align   FlexComponentAlignType   `json:"align,omitempty"`
+	Gravity FlexComponentGravityType `json:"gravity,omitempty"`
+	Wrap    bool                     `json:"wrap,omitempty"`
+	Weight  FlexTextWeightType       `json:"weight,omitempty"`
+	Color   string                   `json:"color,omitempty"`
+	Action  TemplateAction           `json:"action,omitempty"`
 }
