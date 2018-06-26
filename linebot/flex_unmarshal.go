@@ -136,7 +136,13 @@ func (c *ButtonComponent) UnmarshalJSON(data []byte) error {
 
 // UnmarshalJSON method for FillerComponent
 func (c *FillerComponent) UnmarshalJSON(data []byte) error {
-	return nil
+	type alias FillerComponent
+	a := struct {
+		*alias
+	}{
+		alias: (*alias)(c),
+	}
+	return json.Unmarshal(data, &a)
 }
 
 // UnmarshalJSON method for IconComponent
