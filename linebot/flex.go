@@ -215,14 +215,14 @@ func (b *BubbleFlex) MarshalJSON() ([]byte, error) {
 }
 
 type CarouselFlex struct {
-	Contents []BubbleFlex	`json:"contents"`
+	Contents []*BubbleFlex	`json:"contents"`
 }
 
 // MarshalJSON method of ButtonsTemplate
 func (c *CarouselFlex) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type				ContainerType		`json:"type"`
-		Contents 			[]BubbleFlex		`json:"contents"`
+		Contents 			[]*BubbleFlex		`json:"contents"`
 	}{
 		Type:               ContainerTypeCarousel,
 		Contents:			c.Contents,
@@ -526,10 +526,8 @@ func NewFlex() *Flex {
 }
 
 // NewCarouselFlex function
-func NewCarouselFlex(bubbleFlexs ...BubbleFlex) *CarouselFlex {
-	return &CarouselFlex{
-		Contents: bubbleFlexs,
-	}
+func NewCarouselFlex() *CarouselFlex {
+	return &CarouselFlex{}
 }
 
 // NewBubbleFlex function
