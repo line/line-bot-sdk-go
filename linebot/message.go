@@ -236,7 +236,7 @@ func (*StickerMessage) Message()  {}
 func (*TemplateMessage) Message() {}
 func (*ImagemapMessage) Message() {}
 func (*FlexMessage) Message()     {}
-func (*Flex) Message() {}
+func (*Flex) Message()            {}
 
 // NewTextMessage function
 func NewTextMessage(content string) *TextMessage {

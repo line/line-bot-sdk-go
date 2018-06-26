@@ -1,20 +1,21 @@
 package linebot
 
 import (
-	"context"
-	"io"
-	"encoding/json"
 	"bytes"
+	"context"
+	"encoding/json"
 	"fmt"
+	"io"
 )
+
 // LIFFViewType type
 type LIFFViewType string
 
 // LIFFViewType constants
 const (
-	LIFFViewTypeCompact     LIFFViewType = "compact"
-	LIFFViewTypeTail     	LIFFViewType = "tail"
-	LIFFViewTypeFull	    LIFFViewType = "full"
+	LIFFViewTypeCompact LIFFViewType = "compact"
+	LIFFViewTypeTail    LIFFViewType = "tail"
+	LIFFViewTypeFull    LIFFViewType = "full"
 )
 
 // LIFFIDResponse type
@@ -33,13 +34,13 @@ type ViewRequest struct {
 
 type View struct {
 	Type LIFFViewType `json:"type"`
-	Url  string 	  `json:"url"`
+	Url  string       `json:"url"`
 }
 
 // GetRichMenu method
 func (client *Client) GetLIFF() *GetLIFFAllCall {
 	return &GetLIFFAllCall{
-		c:          client,
+		c: client,
 	}
 }
 
@@ -67,12 +68,11 @@ func (call *GetLIFFAllCall) Do() (*LIFFResponse, error) {
 	return decodeToLIFFResponse(res)
 }
 
-
 // AddLIFFCall method
 func (client *Client) AddLIFF(view View) *AddLIFFCall {
 	return &AddLIFFCall{
-		c:          client,
-		View:		view,
+		c:    client,
+		View: view,
 	}
 }
 
@@ -93,7 +93,7 @@ func (call *AddLIFFCall) WithContext(ctx context.Context) *AddLIFFCall {
 func (call *AddLIFFCall) encodeJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
 	return enc.Encode(&struct {
-		View    View	`json:"view"`
+		View View `json:"view"`
 	}{
 		View: call.View,
 	})
@@ -118,9 +118,9 @@ func (call *AddLIFFCall) Do() (*LIFFIDResponse, error) {
 // DeleteRichMenu method
 func (client *Client) UpdateLIFFCall(liffId string, view View) *UpdateLIFFCall {
 	return &UpdateLIFFCall{
-		c:          client,
-		LIFFID: 	liffId,
-		view:       view,
+		c:      client,
+		LIFFID: liffId,
+		view:   view,
 	}
 }
 
@@ -130,7 +130,7 @@ type UpdateLIFFCall struct {
 	ctx context.Context
 
 	LIFFID string
-	view View
+	view   View
 }
 
 // WithContext method
@@ -142,11 +142,11 @@ func (call *UpdateLIFFCall) WithContext(ctx context.Context) *UpdateLIFFCall {
 func (call *UpdateLIFFCall) encodeJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
 	return enc.Encode(&struct {
-		Type LIFFViewType 	`json:"type"`
-		Url  string 	`json:"url"`
+		Type LIFFViewType `json:"type"`
+		Url  string       `json:"url"`
 	}{
 		Type: call.view.Type,
-		Url: call.view.Url,
+		Url:  call.view.Url,
 	})
 }
 
@@ -171,8 +171,8 @@ func (call *UpdateLIFFCall) Do() (*BasicResponse, error) {
 // DeleteRichMenu method
 func (client *Client) DeleteLIFFCall(liffId string) *DeleteLIFFCall {
 	return &DeleteLIFFCall{
-		c:          client,
-		LIFFID: 	liffId,
+		c:      client,
+		LIFFID: liffId,
 	}
 }
 
