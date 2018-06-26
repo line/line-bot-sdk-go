@@ -257,8 +257,8 @@ type TemplateAction interface {
 
 // URITemplateAction type
 type URITemplateAction struct {
-	Label string `json:"label,omitempty"`
-	URI   string `json:"uri"`
+	Label string
+	URI   string
 }
 
 // MarshalJSON method of URITemplateAction

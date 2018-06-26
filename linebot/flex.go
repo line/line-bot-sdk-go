@@ -14,9 +14,7 @@
 
 package linebot
 
-import (
-	"encoding/json"
-)
+import "encoding/json"
 
 // FlexContainerType type
 type FlexContainerType string
@@ -269,88 +267,58 @@ func (*CarouselContainer) FlexContainer() {}
 
 // BubbleStyle type
 type BubbleStyle struct {
-	Header BlockStyle
-	Hero   BlockStyle
-	Body   BlockStyle
-	Footer BlockStyle
+	Header *BlockStyle `json:"header,omitempty"`
+	Hero   *BlockStyle `json:"hero,omitempty"`
+	Body   *BlockStyle `json:"body,omitempty"`
+	Footer *BlockStyle `json:"footer,omitempty"`
 }
 
 // BlockStyle type
 type BlockStyle struct {
-	BackgroundColor string
-	Separator       bool
-	SeparatorColor  string
+	BackgroundColor *string `json:"backgroundColor,omitempty"`
+	Separator       *bool   `json:"separator,omitempty"`
+	SeparatorColor  *string `json:"separatorColor,omitempty"`
 }
 
 // FlexComponent interface
 type FlexComponent interface {
+	json.Unmarshaler
 }
 
 // BoxComponent type
 type BoxComponent struct {
-	Type     FlexComponentType        `json:"type"`
-	Layout   FlexBoxLayoutType        `json:"layout"`
-	Contents []FlexComponent          `json:"contents"`
-	Flex     *int                     `json:"flex,omitempty"`
-	Spacing  FlexComponentSpacingType `json:"spacing,omitempty"`
-	Margin   FlexComponentMarginType  `json:"margin,omitempty"`
+	Type     FlexComponentType         `json:"type"`
+	Layout   FlexBoxLayoutType         `json:"layout"`
+	Contents []FlexComponent           `json:"contents"`
+	Flex     *int                      `json:"flex,omitempty"`
+	Spacing  *FlexComponentSpacingType `json:"spacing,omitempty"`
+	Margin   *FlexComponentMarginType  `json:"margin,omitempty"`
 }
 
 // ButtonComponent type
 type ButtonComponent struct {
-	Type    FlexComponentType        `json:"type"`
-	Action  TemplateAction           `json:"action"`
-	Flex    *int                     `json:"flex,omitempty"`
-	Margin  FlexComponentMarginType  `json:"margin,omitempty"`
-	Height  FlexButtonHeightType     `json:"height,omitempty"`
-	Style   FlexButtonStyleType      `json:"style,omitempty"`
-	Color   *string                  `json:"color,omitempty"`
-	Gravity FlexComponentGravityType `json:"gravity,omitempty"`
-}
-
-// UnmarshalJSON method for ButtonComponent
-func (c *ButtonComponent) UnmarshalJSON(data []byte) error {
-	type alias ButtonComponent
-	a := struct {
-		Action json.RawMessage `json:"action,omitempty"`
-		*alias
-	}{
-		alias: (*alias)(c),
-	}
-	if err := json.Unmarshal(data, &a); err != nil {
-		return err
-	}
-
-	t := struct {
-		Type string `json:"type"`
-	}{}
-	if err := json.Unmarshal(a.Action, &t); err != nil {
-		return err
-	}
-	switch t.Type {
-	case "uri":
-		var action URITemplateAction
-		if err := json.Unmarshal(a.Action, &action); err != nil {
-			return err
-		}
-		c.Action = &action
-	default:
-		// TODO
-	}
-	return nil
+	Type    FlexComponentType         `json:"type"`
+	Action  TemplateAction            `json:"action"`
+	Flex    *int                      `json:"flex,omitempty"`
+	Margin  *FlexComponentMarginType  `json:"margin,omitempty"`
+	Height  *FlexButtonHeightType     `json:"height,omitempty"`
+	Style   *FlexButtonStyleType      `json:"style,omitempty"`
+	Color   *string                   `json:"color,omitempty"`
+	Gravity *FlexComponentGravityType `json:"gravity,omitempty"`
 }
 
 // FillerComponent type
 type FillerComponent struct {
+	Type FlexComponentType `json:"type"`
 }
 
 // IconComponent type
 type IconComponent struct {
-	Type        FlexComponentType       `json:"type"`
-	URL         string                  `json:"url"`
-	Margin      FlexComponentMarginType `json:"margin,omitempty"`
-	Size        FlexIconSizeType        `json:"size,omitempty"`
-	AspectRatio FlexIconAspectRatioType `json:"aspectRatio,omitempty"`
+	Type        FlexComponentType        `json:"type"`
+	URL         string                   `json:"url"`
+	Margin      *FlexComponentMarginType `json:"margin,omitempty"`
+	Size        *FlexIconSizeType        `json:"size,omitempty"`
+	AspectRatio *FlexIconAspectRatioType `json:"aspectRatio,omitempty"`
 }
 
 // ImageComponent type
@@ -368,43 +336,11 @@ type ImageComponent struct {
 	Action          TemplateAction            `json:"action,omitempty"`
 }
 
-// UnmarshalJSON method for ImageComponent
-func (c *ImageComponent) UnmarshalJSON(data []byte) error {
-	type alias ImageComponent
-	a := struct {
-		Action json.RawMessage `json:"action,omitempty"`
-		*alias
-	}{
-		alias: (*alias)(c),
-	}
-	if err := json.Unmarshal(data, &a); err != nil {
-		return err
-	}
-
-	t := struct {
-		Type string `json:"type"`
-	}{}
-	if err := json.Unmarshal(a.Action, &t); err != nil {
-		return err
-	}
-	switch t.Type {
-	case "uri":
-		var action URITemplateAction
-		if err := json.Unmarshal(a.Action, &action); err != nil {
-			return err
-		}
-		c.Action = &action
-	default:
-		// TODO
-	}
-	return nil
-}
-
 // SeparatorComponent type
 type SeparatorComponent struct {
-	Type   FlexComponentType       `json:"type"`
-	Margin FlexComponentMarginType `json:"margin,omitempty"`
-	Color  string                  `json:"color,omitempty"`
+	Type   FlexComponentType        `json:"type"`
+	Margin *FlexComponentMarginType `json:"margin,omitempty"`
+	Color  *string                  `json:"color,omitempty"`
 }
 
 // SpacerComponent type

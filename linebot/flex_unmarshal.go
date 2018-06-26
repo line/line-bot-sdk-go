@@ -20,8 +20,9 @@ import (
 	"reflect"
 )
 
-type typedObject struct {
-	Type string `json:"type"`
+var flexContainerTypeMapping = map[FlexContainerType]FlexContainer{
+	FlexContainerTypeBubble:   &BubbleContainer{},
+	FlexContainerTypeCarousel: &CarouselContainer{},
 }
 
 var flexComponentTypeMapping = map[FlexComponentType]FlexComponent{
@@ -35,29 +36,32 @@ var flexComponentTypeMapping = map[FlexComponentType]FlexComponent{
 	FlexComponentTypeText:      &TextComponent{},
 }
 
+var templateActionTypeMapping = map[TemplateActionType]TemplateAction{
+	TemplateActionTypeURI:            &URITemplateAction{},
+	TemplateActionTypeMessage:        &MessageTemplateAction{},
+	TemplateActionTypePostback:       &PostbackTemplateAction{},
+	TemplateActionTypeDatetimePicker: &DatetimePickerTemplateAction{},
+}
+
 // UnmarshalFlexMessageJSON function
 func UnmarshalFlexMessageJSON(data []byte) (FlexContainer, error) {
-	var o typedObject
+	o := struct {
+		Type FlexContainerType `json:"type"`
+	}{}
 	err := json.Unmarshal(data, &o)
 	if err != nil {
 		return nil, err
 	}
-	switch FlexContainerType(o.Type) {
-	case FlexContainerTypeBubble:
-		var container BubbleContainer
-		if err := json.Unmarshal(data, &container); err != nil {
+	if v, ok := flexContainerTypeMapping[o.Type]; ok {
+		i := reflect.New(reflect.TypeOf(v)).Interface()
+		if err := json.Unmarshal(data, i); err != nil {
 			return nil, err
 		}
-		return &container, nil
-	case FlexContainerTypeCarousel:
-		var container CarouselContainer
-		if err := json.Unmarshal(data, &container); err != nil {
-			return nil, err
+		if container, ok := reflect.Indirect(reflect.ValueOf(i)).Interface().(FlexContainer); ok {
+			return container, nil
 		}
-		return &container, nil
-	default:
-		return nil, errors.New("invalid container type")
 	}
+	return nil, errors.New("invalid container type")
 }
 
 // UnmarshalJSON method for BoxComponent
@@ -72,24 +76,165 @@ func (c *BoxComponent) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &a); err != nil {
 		return err
 	}
+
 	c.Contents = make([]FlexComponent, 0, len(a.Contents))
-	for _, content := range a.Contents {
+	for _, contentData := range a.Contents {
 		o := struct {
 			Type FlexComponentType `json:"type"`
 		}{}
-		if err := json.Unmarshal(content, &o); err != nil {
+		if err := json.Unmarshal(contentData, &o); err != nil {
 			return err
 		}
-
 		if v, ok := flexComponentTypeMapping[o.Type]; ok {
-			t := reflect.TypeOf(v)
-			component := reflect.New(t).Interface()
-			if err := json.Unmarshal(content, component); err != nil {
+			i := reflect.New(reflect.TypeOf(v)).Interface()
+			if err := json.Unmarshal(contentData, i); err != nil {
 				return err
 			}
-			c.Contents = append(c.Contents, component)
+			if content, ok := reflect.Indirect(reflect.ValueOf(i)).Interface().(FlexComponent); ok {
+				c.Contents = append(c.Contents, content)
+			}
 		} else {
 			return errors.New("invalid component type")
+		}
+	}
+	return nil
+}
+
+// UnmarshalJSON method for ButtonComponent
+func (c *ButtonComponent) UnmarshalJSON(data []byte) error {
+	type alias ButtonComponent
+	a := struct {
+		Action json.RawMessage `json:"action"`
+		*alias
+	}{
+		alias: (*alias)(c),
+	}
+	if err := json.Unmarshal(data, &a); err != nil {
+		return err
+	}
+	{
+		o := struct {
+			Type TemplateActionType `json:"type"`
+		}{}
+		if err := json.Unmarshal(a.Action, &o); err != nil {
+			return err
+		}
+		if v, ok := templateActionTypeMapping[o.Type]; ok {
+			i := reflect.New(reflect.TypeOf(v)).Interface()
+			if err := json.Unmarshal(a.Action, i); err != nil {
+				return err
+			}
+			if action, ok := reflect.Indirect(reflect.ValueOf(i)).Interface().(TemplateAction); ok {
+				c.Action = action
+			}
+		} else {
+			return errors.New("invalid action type")
+		}
+	}
+	return nil
+}
+
+// UnmarshalJSON method for FillerComponent
+func (c *FillerComponent) UnmarshalJSON(data []byte) error {
+	return nil
+}
+
+// UnmarshalJSON method for IconComponent
+func (c *IconComponent) UnmarshalJSON(data []byte) error {
+	type alias IconComponent
+	a := struct {
+		*alias
+	}{
+		alias: (*alias)(c),
+	}
+	return json.Unmarshal(data, &a)
+}
+
+// UnmarshalJSON method for ImageComponent
+func (c *ImageComponent) UnmarshalJSON(data []byte) error {
+	type alias ImageComponent
+	a := struct {
+		Action json.RawMessage `json:"action"`
+		*alias
+	}{
+		alias: (*alias)(c),
+	}
+	if err := json.Unmarshal(data, &a); err != nil {
+		return err
+	}
+	if len(a.Action) > 0 {
+		o := struct {
+			Type TemplateActionType `json:"type"`
+		}{}
+		if err := json.Unmarshal(a.Action, &o); err != nil {
+			return err
+		}
+		if v, ok := templateActionTypeMapping[o.Type]; ok {
+			i := reflect.New(reflect.TypeOf(v)).Interface()
+			if err := json.Unmarshal(a.Action, i); err != nil {
+				return err
+			}
+			if action, ok := reflect.Indirect(reflect.ValueOf(i)).Interface().(TemplateAction); ok {
+				c.Action = action
+			}
+		} else {
+			return errors.New("invalid action type")
+		}
+	}
+	return nil
+}
+
+// UnmarshalJSON method for SeparatorComponent
+func (c *SeparatorComponent) UnmarshalJSON(data []byte) error {
+	type alias SeparatorComponent
+	a := struct {
+		*alias
+	}{
+		alias: (*alias)(c),
+	}
+	return json.Unmarshal(data, &a)
+}
+
+// UnmarshalJSON method for SpacerComponent
+func (c *SpacerComponent) UnmarshalJSON(data []byte) error {
+	type alias SpacerComponent
+	a := struct {
+		*alias
+	}{
+		alias: (*alias)(c),
+	}
+	return json.Unmarshal(data, &a)
+}
+
+// UnmarshalJSON method for TextComponent
+func (c *TextComponent) UnmarshalJSON(data []byte) error {
+	type alias TextComponent
+	a := struct {
+		Action json.RawMessage `json:"action"`
+		*alias
+	}{
+		alias: (*alias)(c),
+	}
+	if err := json.Unmarshal(data, &a); err != nil {
+		return err
+	}
+	if len(a.Action) > 0 {
+		o := struct {
+			Type TemplateActionType `json:"type"`
+		}{}
+		if err := json.Unmarshal(a.Action, &o); err != nil {
+			return err
+		}
+		if v, ok := templateActionTypeMapping[o.Type]; ok {
+			i := reflect.New(reflect.TypeOf(v)).Interface()
+			if err := json.Unmarshal(a.Action, i); err != nil {
+				return err
+			}
+			if action, ok := reflect.Indirect(reflect.ValueOf(i)).Interface().(TemplateAction); ok {
+				c.Action = action
+			}
+		} else {
+			return errors.New("invalid action type")
 		}
 	}
 	return nil
