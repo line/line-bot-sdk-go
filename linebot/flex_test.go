@@ -19,8 +19,113 @@ import (
 	"testing"
 )
 
-func TestFlexMessage(t *testing.T) {
-	jsonStr := `{
+func TestUnmarshalFlexMessageJSON(t *testing.T) {
+	var testCases = []struct {
+		JSON []byte
+		Want FlexContainer
+	}{
+		{
+			JSON: []byte(`{
+    "type": "bubble",
+    "body": {
+      "type": "box",
+      "layout": "vertical",
+      "contents": [
+        {
+          "type": "text",
+          "text": "hello"
+        },
+        {
+          "type": "text",
+          "text": "world"
+        }
+      ]
+    }
+  }`),
+			Want: &BubbleContainer{
+				Type: FlexContainerTypeBubble,
+				Body: &BoxComponent{
+					Type:   FlexComponentTypeBox,
+					Layout: FlexBoxLayoutTypeVertical,
+					Contents: []FlexComponent{
+						&TextComponent{
+							Type: FlexComponentTypeText,
+							Text: "hello",
+						},
+						&TextComponent{
+							Type: FlexComponentTypeText,
+							Text: "world",
+						},
+					},
+				},
+			},
+		},
+		{
+			JSON: []byte(`{
+  "type": "carousel",
+  "contents": [
+    {
+      "type": "bubble",
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "First bubble"
+          }
+        ]
+      }
+    },
+    {
+      "type": "bubble",
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Second bubble"
+          }
+        ]
+      }
+    }
+  ]
+}`),
+			Want: &CarouselContainer{
+				Type: FlexContainerTypeCarousel,
+				Contents: []*BubbleContainer{
+					&BubbleContainer{
+						Type: FlexContainerTypeBubble,
+						Body: &BoxComponent{
+							Type:   FlexComponentTypeBox,
+							Layout: FlexBoxLayoutTypeVertical,
+							Contents: []FlexComponent{
+								&TextComponent{
+									Type: FlexComponentTypeText,
+									Text: "First bubble",
+								},
+							},
+						},
+					},
+					&BubbleContainer{
+						Type: FlexContainerTypeBubble,
+						Body: &BoxComponent{
+							Type:   FlexComponentTypeBox,
+							Layout: FlexBoxLayoutTypeVertical,
+							Contents: []FlexComponent{
+								&TextComponent{
+									Type: FlexComponentTypeText,
+									Text: "Second bubble",
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+		{
+			JSON: []byte(`{
   "type": "bubble",
   "hero": {
     "type": "image",
@@ -169,156 +274,160 @@ func TestFlexMessage(t *testing.T) {
     ],
     "flex": 0
   }
-}`
-	want := &BubbleContainer{
-		Type: FlexContainerTypeBubble,
-		Hero: &ImageComponent{
-			Type:        FlexComponentTypeImage,
-			URL:         "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
-			Size:        FlexImageSizeTypeFull,
-			AspectRatio: FlexImageAspectRatioType20to13,
-			AspectMode:  FlexImageAspectModeTypeCover,
-			Action:      &URITemplateAction{URI: "http://linecorp.com/"},
-		},
-		Body: &BoxComponent{
-			Type:   FlexComponentTypeBox,
-			Layout: FlexBoxLayoutTypeVertical,
-			Contents: []FlexComponent{
-				&TextComponent{
-					Type:   FlexComponentTypeText,
-					Text:   "Brown Cafe",
-					Size:   FlexTextSizeTypeXl,
-					Weight: FlexTextWeightTypeBold,
+}`),
+			Want: &BubbleContainer{
+				Type: FlexContainerTypeBubble,
+				Hero: &ImageComponent{
+					Type:        FlexComponentTypeImage,
+					URL:         "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
+					Size:        FlexImageSizeTypeFull,
+					AspectRatio: FlexImageAspectRatioType20to13,
+					AspectMode:  FlexImageAspectModeTypeCover,
+					Action:      &URITemplateAction{URI: "http://linecorp.com/"},
 				},
-				&BoxComponent{
-					Type:   FlexComponentTypeBox,
-					Layout: FlexBoxLayoutTypeBaseline,
-					Contents: []FlexComponent{
-						&IconComponent{
-							Type: FlexComponentTypeIcon,
-							URL:  "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png",
-							Size: FlexIconSizeTypeSm,
-						},
-						&IconComponent{
-							Type: FlexComponentTypeIcon,
-							URL:  "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png",
-							Size: FlexIconSizeTypeSm,
-						},
-						&IconComponent{
-							Type: FlexComponentTypeIcon,
-							URL:  "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png",
-							Size: FlexIconSizeTypeSm,
-						},
-						&IconComponent{
-							Type: FlexComponentTypeIcon,
-							URL:  "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png",
-							Size: FlexIconSizeTypeSm,
-						},
-						&IconComponent{
-							Type: FlexComponentTypeIcon,
-							URL:  "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png",
-							Size: FlexIconSizeTypeSm,
-						},
-						&TextComponent{
-							Type:   FlexComponentTypeText,
-							Text:   "4.0",
-							Flex:   0,
-							Margin: FlexComponentMarginTypeMd,
-							Size:   FlexTextSizeTypeSm,
-							Color:  "#999999",
-						},
-					},
-					Margin: FlexComponentMarginTypeMd,
-				},
-				&BoxComponent{
+				Body: &BoxComponent{
 					Type:   FlexComponentTypeBox,
 					Layout: FlexBoxLayoutTypeVertical,
 					Contents: []FlexComponent{
-						&BoxComponent{
-							Type:   FlexComponentTypeBox,
-							Layout: FlexBoxLayoutTypeBaseline,
-							Contents: []FlexComponent{
-								&TextComponent{
-									Type:  FlexComponentTypeText,
-									Text:  "Place",
-									Flex:  1,
-									Size:  FlexTextSizeTypeSm,
-									Color: "#aaaaaa",
-								},
-								&TextComponent{
-									Type:  FlexComponentTypeText,
-									Text:  "Miraina Tower, 4-1-6 Shinjuku, Tokyo",
-									Flex:  5,
-									Size:  FlexTextSizeTypeSm,
-									Wrap:  true,
-									Color: "#666666",
-								},
-							},
-							Spacing: FlexComponentSpacingTypeSm,
+						&TextComponent{
+							Type:   FlexComponentTypeText,
+							Text:   "Brown Cafe",
+							Size:   FlexTextSizeTypeXl,
+							Weight: FlexTextWeightTypeBold,
 						},
 						&BoxComponent{
 							Type:   FlexComponentTypeBox,
 							Layout: FlexBoxLayoutTypeBaseline,
 							Contents: []FlexComponent{
-								&TextComponent{
-									Type:  FlexComponentTypeText,
-									Text:  "Time",
-									Flex:  1,
-									Size:  FlexTextSizeTypeSm,
-									Color: "#aaaaaa",
+								&IconComponent{
+									Type: FlexComponentTypeIcon,
+									URL:  "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png",
+									Size: FlexIconSizeTypeSm,
+								},
+								&IconComponent{
+									Type: FlexComponentTypeIcon,
+									URL:  "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png",
+									Size: FlexIconSizeTypeSm,
+								},
+								&IconComponent{
+									Type: FlexComponentTypeIcon,
+									URL:  "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png",
+									Size: FlexIconSizeTypeSm,
+								},
+								&IconComponent{
+									Type: FlexComponentTypeIcon,
+									URL:  "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png",
+									Size: FlexIconSizeTypeSm,
+								},
+								&IconComponent{
+									Type: FlexComponentTypeIcon,
+									URL:  "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png",
+									Size: FlexIconSizeTypeSm,
 								},
 								&TextComponent{
-									Type:  FlexComponentTypeText,
-									Text:  "10:00 - 23:00",
-									Flex:  5,
-									Size:  FlexTextSizeTypeSm,
-									Wrap:  true,
-									Color: "#666666",
+									Type:   FlexComponentTypeText,
+									Text:   "4.0",
+									Flex:   0,
+									Margin: FlexComponentMarginTypeMd,
+									Size:   FlexTextSizeTypeSm,
+									Color:  "#999999",
+								},
+							},
+							Margin: FlexComponentMarginTypeMd,
+						},
+						&BoxComponent{
+							Type:   FlexComponentTypeBox,
+							Layout: FlexBoxLayoutTypeVertical,
+							Contents: []FlexComponent{
+								&BoxComponent{
+									Type:   FlexComponentTypeBox,
+									Layout: FlexBoxLayoutTypeBaseline,
+									Contents: []FlexComponent{
+										&TextComponent{
+											Type:  FlexComponentTypeText,
+											Text:  "Place",
+											Flex:  1,
+											Size:  FlexTextSizeTypeSm,
+											Color: "#aaaaaa",
+										},
+										&TextComponent{
+											Type:  FlexComponentTypeText,
+											Text:  "Miraina Tower, 4-1-6 Shinjuku, Tokyo",
+											Flex:  5,
+											Size:  FlexTextSizeTypeSm,
+											Wrap:  true,
+											Color: "#666666",
+										},
+									},
+									Spacing: FlexComponentSpacingTypeSm,
+								},
+								&BoxComponent{
+									Type:   FlexComponentTypeBox,
+									Layout: FlexBoxLayoutTypeBaseline,
+									Contents: []FlexComponent{
+										&TextComponent{
+											Type:  FlexComponentTypeText,
+											Text:  "Time",
+											Flex:  1,
+											Size:  FlexTextSizeTypeSm,
+											Color: "#aaaaaa",
+										},
+										&TextComponent{
+											Type:  FlexComponentTypeText,
+											Text:  "10:00 - 23:00",
+											Flex:  5,
+											Size:  FlexTextSizeTypeSm,
+											Wrap:  true,
+											Color: "#666666",
+										},
+									},
+									Spacing: FlexComponentSpacingTypeSm,
 								},
 							},
 							Spacing: FlexComponentSpacingTypeSm,
+							Margin:  FlexComponentMarginTypeLg,
+						},
+					},
+				},
+				Footer: &BoxComponent{
+					Type:   FlexComponentTypeBox,
+					Layout: FlexBoxLayoutTypeVertical,
+					Contents: []FlexComponent{
+						&ButtonComponent{
+							Type: FlexComponentTypeButton,
+							Action: &URITemplateAction{
+								Label: "CALL",
+								URI:   "https://linecorp.com",
+							},
+							Height: FlexButtonHeightTypeSm,
+							Style:  FlexButtonStyleTypeLink,
+						},
+						&ButtonComponent{
+							Type: FlexComponentTypeButton,
+							Action: &URITemplateAction{
+								Label: "WEBSITE",
+								URI:   "https://linecorp.com",
+							},
+							Height: FlexButtonHeightTypeSm,
+							Style:  FlexButtonStyleTypeLink,
+						},
+						&SpacerComponent{
+							Type: FlexComponentTypeSpacer,
+							Size: FlexSpacerSizeTypeSm,
 						},
 					},
 					Spacing: FlexComponentSpacingTypeSm,
-					Margin:  FlexComponentMarginTypeLg,
 				},
 			},
 		},
-		Footer: &BoxComponent{
-			Type:   FlexComponentTypeBox,
-			Layout: FlexBoxLayoutTypeVertical,
-			Contents: []FlexComponent{
-				&ButtonComponent{
-					Type: FlexComponentTypeButton,
-					Action: &URITemplateAction{
-						Label: "CALL",
-						URI:   "https://linecorp.com",
-					},
-					Height: FlexButtonHeightTypeSm,
-					Style:  FlexButtonStyleTypeLink,
-				},
-				&ButtonComponent{
-					Type: FlexComponentTypeButton,
-					Action: &URITemplateAction{
-						Label: "WEBSITE",
-						URI:   "https://linecorp.com",
-					},
-					Height: FlexButtonHeightTypeSm,
-					Style:  FlexButtonStyleTypeLink,
-				},
-				&SpacerComponent{
-					Type: FlexComponentTypeSpacer,
-					Size: FlexSpacerSizeTypeSm,
-				},
-			},
-			Spacing: FlexComponentSpacingTypeSm,
-		},
 	}
-	container, err := UnmarshalFlexMessageJSON([]byte(jsonStr))
-	if err != nil {
-		t.Fatal(err)
-	}
-	if !reflect.DeepEqual(container, want) {
-		t.Errorf("Container %v, want %v", container, want)
+	for i, tc := range testCases {
+		container, err := UnmarshalFlexMessageJSON([]byte(tc.JSON))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !reflect.DeepEqual(container, tc.Want) {
+			t.Errorf("Container %d %v, want %v", i, container, tc.Want)
+		}
 	}
 }
