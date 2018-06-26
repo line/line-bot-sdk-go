@@ -17,31 +17,7 @@ package linebot
 import (
 	"encoding/json"
 	"errors"
-	"reflect"
 )
-
-var flexContainerTypeMapping = map[FlexContainerType]FlexContainer{
-	FlexContainerTypeBubble:   &BubbleContainer{},
-	FlexContainerTypeCarousel: &CarouselContainer{},
-}
-
-var flexComponentTypeMapping = map[FlexComponentType]FlexComponent{
-	FlexComponentTypeBox:       &BoxComponent{},
-	FlexComponentTypeButton:    &ButtonComponent{},
-	FlexComponentTypeFiller:    &FillerComponent{},
-	FlexComponentTypeIcon:      &IconComponent{},
-	FlexComponentTypeImage:     &ImageComponent{},
-	FlexComponentTypeSeparator: &SeparatorComponent{},
-	FlexComponentTypeSpacer:    &SpacerComponent{},
-	FlexComponentTypeText:      &TextComponent{},
-}
-
-var templateActionTypeMapping = map[TemplateActionType]TemplateAction{
-	TemplateActionTypeURI:            &URITemplateAction{},
-	TemplateActionTypeMessage:        &MessageTemplateAction{},
-	TemplateActionTypePostback:       &PostbackTemplateAction{},
-	TemplateActionTypeDatetimePicker: &DatetimePickerTemplateAction{},
-}
 
 // UnmarshalFlexMessageJSON function
 func UnmarshalFlexMessageJSON(data []byte) (FlexContainer, error) {
@@ -52,16 +28,22 @@ func UnmarshalFlexMessageJSON(data []byte) (FlexContainer, error) {
 	if err != nil {
 		return nil, err
 	}
-	if v, ok := flexContainerTypeMapping[o.Type]; ok {
-		i := reflect.New(reflect.TypeOf(v)).Interface()
-		if err := json.Unmarshal(data, i); err != nil {
+	switch o.Type {
+	case FlexContainerTypeBubble:
+		container := BubbleContainer{}
+		if err := json.Unmarshal(data, &container); err != nil {
 			return nil, err
 		}
-		if container, ok := reflect.Indirect(reflect.ValueOf(i)).Interface().(FlexContainer); ok {
-			return container, nil
+		return &container, nil
+	case FlexContainerTypeCarousel:
+		container := CarouselContainer{}
+		if err := json.Unmarshal(data, &container); err != nil {
+			return nil, err
 		}
+		return &container, nil
+	default:
+		return nil, errors.New("invalid container type")
 	}
-	return nil, errors.New("invalid container type")
 }
 
 // UnmarshalJSON method for BoxComponent
@@ -77,23 +59,64 @@ func (c *BoxComponent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
-	c.Contents = make([]FlexComponent, 0, len(a.Contents))
-	for _, contentData := range a.Contents {
+	c.Contents = make([]FlexComponent, len(a.Contents))
+	for i, contentData := range a.Contents {
 		o := struct {
 			Type FlexComponentType `json:"type"`
 		}{}
 		if err := json.Unmarshal(contentData, &o); err != nil {
 			return err
 		}
-		if v, ok := flexComponentTypeMapping[o.Type]; ok {
-			i := reflect.New(reflect.TypeOf(v)).Interface()
-			if err := json.Unmarshal(contentData, i); err != nil {
+		switch o.Type {
+		case FlexComponentTypeBox:
+			component := BoxComponent{}
+			if err := json.Unmarshal(contentData, &component); err != nil {
 				return err
 			}
-			if content, ok := reflect.Indirect(reflect.ValueOf(i)).Interface().(FlexComponent); ok {
-				c.Contents = append(c.Contents, content)
+			c.Contents[i] = &component
+		case FlexComponentTypeButton:
+			component := ButtonComponent{}
+			if err := json.Unmarshal(contentData, &component); err != nil {
+				return err
 			}
-		} else {
+			c.Contents[i] = &component
+		case FlexComponentTypeFiller:
+			component := FillerComponent{}
+			if err := json.Unmarshal(contentData, &component); err != nil {
+				return err
+			}
+			c.Contents[i] = &component
+		case FlexComponentTypeIcon:
+			component := IconComponent{}
+			if err := json.Unmarshal(contentData, &component); err != nil {
+				return err
+			}
+			c.Contents[i] = &component
+		case FlexComponentTypeImage:
+			component := ImageComponent{}
+			if err := json.Unmarshal(contentData, &component); err != nil {
+				return err
+			}
+			c.Contents[i] = &component
+		case FlexComponentTypeSeparator:
+			component := SeparatorComponent{}
+			if err := json.Unmarshal(contentData, &component); err != nil {
+				return err
+			}
+			c.Contents[i] = &component
+		case FlexComponentTypeSpacer:
+			component := SpacerComponent{}
+			if err := json.Unmarshal(contentData, &component); err != nil {
+				return err
+			}
+			c.Contents[i] = &component
+		case FlexComponentTypeText:
+			component := TextComponent{}
+			if err := json.Unmarshal(contentData, &component); err != nil {
+				return err
+			}
+			c.Contents[i] = &component
+		default:
 			return errors.New("invalid component type")
 		}
 	}
@@ -113,23 +136,11 @@ func (c *ButtonComponent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	{
-		o := struct {
-			Type TemplateActionType `json:"type"`
-		}{}
-		if err := json.Unmarshal(a.Action, &o); err != nil {
+		action, err := unmarshalTemplateAction(a.Action)
+		if err != nil {
 			return err
 		}
-		if v, ok := templateActionTypeMapping[o.Type]; ok {
-			i := reflect.New(reflect.TypeOf(v)).Interface()
-			if err := json.Unmarshal(a.Action, i); err != nil {
-				return err
-			}
-			if action, ok := reflect.Indirect(reflect.ValueOf(i)).Interface().(TemplateAction); ok {
-				c.Action = action
-			}
-		} else {
-			return errors.New("invalid action type")
-		}
+		c.Action = action
 	}
 	return nil
 }
@@ -169,23 +180,11 @@ func (c *ImageComponent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	if len(a.Action) > 0 {
-		o := struct {
-			Type TemplateActionType `json:"type"`
-		}{}
-		if err := json.Unmarshal(a.Action, &o); err != nil {
+		action, err := unmarshalTemplateAction(a.Action)
+		if err != nil {
 			return err
 		}
-		if v, ok := templateActionTypeMapping[o.Type]; ok {
-			i := reflect.New(reflect.TypeOf(v)).Interface()
-			if err := json.Unmarshal(a.Action, i); err != nil {
-				return err
-			}
-			if action, ok := reflect.Indirect(reflect.ValueOf(i)).Interface().(TemplateAction); ok {
-				c.Action = action
-			}
-		} else {
-			return errors.New("invalid action type")
-		}
+		c.Action = action
 	}
 	return nil
 }
@@ -225,23 +224,48 @@ func (c *TextComponent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	if len(a.Action) > 0 {
-		o := struct {
-			Type TemplateActionType `json:"type"`
-		}{}
-		if err := json.Unmarshal(a.Action, &o); err != nil {
+		action, err := unmarshalTemplateAction(a.Action)
+		if err != nil {
 			return err
 		}
-		if v, ok := templateActionTypeMapping[o.Type]; ok {
-			i := reflect.New(reflect.TypeOf(v)).Interface()
-			if err := json.Unmarshal(a.Action, i); err != nil {
-				return err
-			}
-			if action, ok := reflect.Indirect(reflect.ValueOf(i)).Interface().(TemplateAction); ok {
-				c.Action = action
-			}
-		} else {
-			return errors.New("invalid action type")
-		}
+		c.Action = action
 	}
 	return nil
+}
+
+func unmarshalTemplateAction(data []byte) (TemplateAction, error) {
+	o := struct {
+		Type TemplateActionType `json:"type"`
+	}{}
+	if err := json.Unmarshal(data, &o); err != nil {
+		return nil, err
+	}
+	switch o.Type {
+	case TemplateActionTypeURI:
+		action := URITemplateAction{}
+		if err := json.Unmarshal(data, &action); err != nil {
+			return nil, err
+		}
+		return &action, nil
+	case TemplateActionTypeMessage:
+		action := MessageTemplateAction{}
+		if err := json.Unmarshal(data, &action); err != nil {
+			return nil, err
+		}
+		return &action, nil
+	case TemplateActionTypePostback:
+		action := PostbackTemplateAction{}
+		if err := json.Unmarshal(data, &action); err != nil {
+			return nil, err
+		}
+		return &action, nil
+	case TemplateActionTypeDatetimePicker:
+		action := DatetimePickerTemplateAction{}
+		if err := json.Unmarshal(data, &action); err != nil {
+			return nil, err
+		}
+		return &action, nil
+	default:
+		return nil, errors.New("invalid action type")
+	}
 }
