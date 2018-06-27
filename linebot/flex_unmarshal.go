@@ -21,11 +21,23 @@ import (
 
 // UnmarshalFlexMessageJSON function
 func UnmarshalFlexMessageJSON(data []byte) (FlexContainer, error) {
-	raw := struct {
-		Type FlexContainerType `json:"type"`
-	}{}
+	raw := rawFlexContainer{}
 	if err := json.Unmarshal(data, &raw); err != nil {
 		return nil, err
+	}
+	return raw.Container, nil
+}
+
+type rawFlexContainer struct {
+	Type      FlexContainerType `json:"type"`
+	Container FlexContainer     `json:"-"`
+}
+
+func (c *rawFlexContainer) UnmarshalJSON(data []byte) error {
+	type alias rawFlexContainer
+	raw := alias{}
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
 	}
 	var container FlexContainer
 	switch raw.Type {
@@ -34,12 +46,14 @@ func UnmarshalFlexMessageJSON(data []byte) (FlexContainer, error) {
 	case FlexContainerTypeCarousel:
 		container = &CarouselContainer{}
 	default:
-		return nil, errors.New("invalid container type")
+		return errors.New("invalid container type")
 	}
-	if err := json.Unmarshal(data, &container); err != nil {
-		return nil, err
+	if err := json.Unmarshal(data, container); err != nil {
+		return err
 	}
-	return container, nil
+	c.Type = raw.Type
+	c.Container = container
+	return nil
 }
 
 type rawFlexComponent struct {
