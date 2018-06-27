@@ -14,8 +14,6 @@
 
 package linebot
 
-import "encoding/json"
-
 // FlexContainerType type
 type FlexContainerType string
 
@@ -254,16 +252,14 @@ type BubbleContainer struct {
 	Styles    *BubbleStyle            `json:"styles,omitempty"`
 }
 
-// FlexContainer method
-func (*BubbleContainer) FlexContainer() {}
-
 // CarouselContainer type
 type CarouselContainer struct {
 	Type     FlexContainerType  `json:"type"`
 	Contents []*BubbleContainer `json:"contents"`
 }
 
-// FlexContainer method
+// implements FlexContainer interface
+func (*BubbleContainer) FlexContainer()   {}
 func (*CarouselContainer) FlexContainer() {}
 
 // BubbleStyle type
@@ -283,7 +279,7 @@ type BlockStyle struct {
 
 // FlexComponent interface
 type FlexComponent interface {
-	json.Unmarshaler
+	FlexComponent()
 }
 
 // BoxComponent type
@@ -364,3 +360,13 @@ type TextComponent struct {
 	Color   string                   `json:"color,omitempty"`
 	Action  TemplateAction           `json:"action,omitempty"`
 }
+
+// implements FlexComponent interface
+func (*BoxComponent) FlexComponent()       {}
+func (*ButtonComponent) FlexComponent()    {}
+func (*FillerComponent) FlexComponent()    {}
+func (*IconComponent) FlexComponent()      {}
+func (*ImageComponent) FlexComponent()     {}
+func (*SeparatorComponent) FlexComponent() {}
+func (*SpacerComponent) FlexComponent()    {}
+func (*TextComponent) FlexComponent()      {}
