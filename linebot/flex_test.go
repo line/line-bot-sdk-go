@@ -431,3 +431,128 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 		}
 	}
 }
+
+func BenchmarkUnmarshalFlexMessageJSON(b *testing.B) {
+	var json = []byte(`{
+		"type": "bubble",
+		"header": {
+			"type": "box",
+			"layout": "horizontal",
+			"contents": [
+				{
+					"type": "text",
+					"text": "NEWS DIGEST",
+					"weight": "bold",
+					"color": "#aaaaaa",
+					"size": "sm"
+				}
+			]
+		},
+		"hero": {
+			"type": "image",
+			"url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_4_news.png",
+			"size": "full",
+			"aspectRatio": "20:13",
+			"aspectMode": "cover",
+			"action": {
+				"type": "uri",
+				"uri": "http://linecorp.com/"
+			}
+		},
+		"body": {
+			"type": "box",
+			"layout": "horizontal",
+			"spacing": "md",
+			"contents": [
+				{
+					"type": "box",
+					"layout": "vertical",
+					"flex": 1,
+					"contents": [
+						{
+							"type": "image",
+							"url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/02_1_news_thumbnail_1.png",
+							"aspectMode": "cover",
+							"aspectRatio": "4:3",
+							"size": "sm",
+							"gravity": "bottom"
+						},
+						{
+							"type": "image",
+							"url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/02_1_news_thumbnail_2.png",
+							"aspectMode": "cover",
+							"aspectRatio": "4:3",
+							"margin": "md",
+							"size": "sm"
+						}
+					]
+				},
+				{
+					"type": "box",
+					"layout": "vertical",
+					"flex": 2,
+					"contents": [
+						{
+							"type": "text",
+							"text": "7 Things to Know for Today",
+							"gravity": "top",
+							"size": "xs",
+							"flex": 1
+						},
+						{
+							"type": "separator"
+						},
+						{
+							"type": "text",
+							"text": "Hay fever goes wild",
+							"gravity": "center",
+							"size": "xs",
+							"flex": 2
+						},
+						{
+							"type": "separator"
+						},
+						{
+							"type": "text",
+							"text": "LINE Pay Begins Barcode Payment Service",
+							"gravity": "center",
+							"size": "xs",
+							"flex": 2
+						},
+						{
+							"type": "separator"
+						},
+						{
+							"type": "text",
+							"text": "LINE Adds LINE Wallet",
+							"gravity": "bottom",
+							"size": "xs",
+							"flex": 1
+						}
+					]
+				}
+			]
+		},
+		"footer": {
+			"type": "box",
+			"layout": "horizontal",
+			"contents": [
+				{
+					"type": "button",
+					"action": {
+						"type": "uri",
+						"label": "More",
+						"uri": "https://linecorp.com"
+					}
+				}
+			]
+		}
+	}`)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, err := UnmarshalFlexMessageJSON(json)
+		if err != nil {
+			b.Error(err)
+		}
+	}
+}
