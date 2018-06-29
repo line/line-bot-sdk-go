@@ -233,17 +233,35 @@ func (m *FlexMessage) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// implements Message interface
-func (*TextMessage) Message()     {}
-func (*ImageMessage) Message()    {}
-func (*VideoMessage) Message()    {}
-func (*AudioMessage) Message()    {}
-func (*FileMessage) Message()     {}
+// Message implements Message interface
+func (*FileMessage) Message() {}
+
+// Message implements Message interface
+func (*TextMessage) Message() {}
+
+// Message implements Message interface
+func (*ImageMessage) Message() {}
+
+// Message implements Message interface
+func (*VideoMessage) Message() {}
+
+// Message implements Message interface
+func (*AudioMessage) Message() {}
+
+// Message implements Message interface
 func (*LocationMessage) Message() {}
-func (*StickerMessage) Message()  {}
+
+// Message implements Message interface
+func (*StickerMessage) Message() {}
+
+// Message implements Message interface
 func (*TemplateMessage) Message() {}
+
+// Message implements Message interface
 func (*ImagemapMessage) Message() {}
-func (*FlexMessage) Message()     {}
+
+// Message implements Message interface
+func (*FlexMessage) Message() {}
 
 // NewTextMessage function
 func NewTextMessage(content string) *TextMessage {

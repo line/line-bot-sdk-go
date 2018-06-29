@@ -6,3 +6,11 @@ go:
   - '1.10'
   - tip
 sudo: false
+
+install:
+  - go get golang.org/x/lint/golint
+
+script:
+  - golint $(go list ./... | grep -v /examples/)
+  - go vet $(go list ./... | grep -v /examples/)
+  - go test -v ./...

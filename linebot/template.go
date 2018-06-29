@@ -191,10 +191,16 @@ func (t *ImageCarouselTemplate) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// implements Template interface
-func (*ConfirmTemplate) Template()       {}
-func (*ButtonsTemplate) Template()       {}
-func (*CarouselTemplate) Template()      {}
+// Template implements Template interface
+func (*ConfirmTemplate) Template() {}
+
+// Template implements Template interface
+func (*ButtonsTemplate) Template() {}
+
+// Template implements Template interface
+func (*CarouselTemplate) Template() {}
+
+// Template implements Template interface
 func (*ImageCarouselTemplate) Template() {}
 
 // NewConfirmTemplate function
@@ -349,10 +355,16 @@ func (a *DatetimePickerTemplateAction) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// implements TemplateAction interface
-func (*URITemplateAction) TemplateAction()            {}
-func (*MessageTemplateAction) TemplateAction()        {}
-func (*PostbackTemplateAction) TemplateAction()       {}
+// TemplateAction implements TemplateAction interface
+func (*URITemplateAction) TemplateAction() {}
+
+// TemplateAction implements TemplateAction interface
+func (*MessageTemplateAction) TemplateAction() {}
+
+// TemplateAction implements TemplateAction interface
+func (*PostbackTemplateAction) TemplateAction() {}
+
+// TemplateAction implements TemplateAction interface
 func (*DatetimePickerTemplateAction) TemplateAction() {}
 
 // NewURITemplateAction function
