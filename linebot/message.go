@@ -217,15 +217,15 @@ func (m *ImagemapMessage) MarshalJSON() ([]byte, error) {
 // FlexMessage type
 type FlexMessage struct {
 	AltText  string
-	Contents map[string]interface{}
+	Contents FlexContainer
 }
 
 // MarshalJSON method of FlexMessage
 func (m *FlexMessage) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type     MessageType            `json:"type"`
-		AltText  string                 `json:"altText"`
-		Contents map[string]interface{} `json:"contents"`
+		Type     MessageType `json:"type"`
+		AltText  string      `json:"altText"`
+		Contents interface{} `json:"contents"`
 	}{
 		Type:     MessageTypeFlex,
 		AltText:  m.AltText,
@@ -313,7 +313,7 @@ func NewImagemapMessage(baseURL, altText string, baseSize ImagemapBaseSize, acti
 }
 
 // NewFlexMessage function
-func NewFlexMessage(altText string, contents map[string]interface{}) *FlexMessage {
+func NewFlexMessage(altText string, contents FlexContainer) *FlexMessage {
 	return &FlexMessage{
 		AltText:  altText,
 		Contents: contents,

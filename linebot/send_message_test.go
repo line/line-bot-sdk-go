@@ -335,6 +335,37 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
+			// A flex message
+			Messages: []Message{
+				NewFlexMessage(
+					"this is a flex message",
+					&BubbleContainer{
+						Type: FlexContainerTypeBubble,
+						Body: &BoxComponent{
+							Type:   FlexComponentTypeBox,
+							Layout: FlexBoxLayoutTypeVertical,
+							Contents: []FlexComponent{
+								&TextComponent{
+									Type: FlexComponentTypeText,
+									Text: "hello",
+								},
+								&TextComponent{
+									Type: FlexComponentTypeText,
+									Text: "world",
+								},
+							},
+						},
+					},
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"flex","altText":"this is a flex message","contents":{"type":"bubble","body":{"type":"box","layout":"vertical","contents":[{"type":"text","text":"hello"},{"type":"text","text":"world"}]}}}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
 			// Multiple messages
 			Messages:     []Message{NewTextMessage("Hello, world1"), NewTextMessage("Hello, world2")},
 			ResponseCode: 200,
