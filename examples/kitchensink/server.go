@@ -119,6 +119,10 @@ func (app *KitchenSink) Callback(w http.ResponseWriter, r *http.Request) {
 				if err := app.handleAudio(message, event.ReplyToken); err != nil {
 					log.Print(err)
 				}
+			case *linebot.FileMessage:
+				if err := app.handleFile(message, event.ReplyToken); err != nil {
+					log.Print(err)
+				}
 			case *linebot.LocationMessage:
 				if err := app.handleLocation(message, event.ReplyToken); err != nil {
 					log.Print(err)
@@ -365,6 +369,10 @@ func (app *KitchenSink) handleAudio(message *linebot.AudioMessage, replyToken st
 		}
 		return nil
 	})
+}
+
+func (app *KitchenSink) handleFile(message *linebot.FileMessage, replyToken string) error {
+	return app.replyText(replyToken, fmt.Sprintf("File `%s` (%d bytes) received.", message.FileName, message.FileSize))
 }
 
 func (app *KitchenSink) handleLocation(message *linebot.LocationMessage, replyToken string) error {

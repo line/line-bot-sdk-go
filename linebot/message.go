@@ -27,6 +27,7 @@ const (
 	MessageTypeImage    MessageType = "image"
 	MessageTypeVideo    MessageType = "video"
 	MessageTypeAudio    MessageType = "audio"
+	MessageTypeFile     MessageType = "file"
 	MessageTypeLocation MessageType = "location"
 	MessageTypeSticker  MessageType = "sticker"
 	MessageTypeTemplate MessageType = "template"
@@ -36,7 +37,6 @@ const (
 
 // Message interface
 type Message interface {
-	json.Marshaler
 	Message()
 }
 
@@ -115,6 +115,13 @@ func (m *AudioMessage) MarshalJSON() ([]byte, error) {
 		OriginalContentURL: m.OriginalContentURL,
 		Duration:           m.Duration,
 	})
+}
+
+// FileMessage type
+type FileMessage struct {
+	ID       string
+	FileName string
+	FileSize int
 }
 
 // LocationMessage type
@@ -231,6 +238,7 @@ func (*TextMessage) Message()     {}
 func (*ImageMessage) Message()    {}
 func (*VideoMessage) Message()    {}
 func (*AudioMessage) Message()    {}
+func (*FileMessage) Message()     {}
 func (*LocationMessage) Message() {}
 func (*StickerMessage) Message()  {}
 func (*TemplateMessage) Message() {}
