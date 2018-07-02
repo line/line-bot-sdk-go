@@ -378,7 +378,7 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 		).Do(); err != nil {
 			return err
 		}
-	case "flex test":
+	case "flex json":
 		jsonString := `{
   "type": "bubble",
   "hero": {
