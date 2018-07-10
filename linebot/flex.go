@@ -369,4 +369,4 @@ func (*IconComponent) FlexComponent()      {}
 func (*ImageComponent) FlexComponent()     {}
 func (*SeparatorComponent) FlexComponent() {}
 func (*SpacerComponent) FlexComponent()    {}
-func (*TextComponent) FlexComponent() {}
+func (*TextComponent) FlexComponent()      {}
