@@ -25,13 +25,14 @@ type EventType string
 
 // EventType constants
 const (
-	EventTypeMessage  EventType = "message"
-	EventTypeFollow   EventType = "follow"
-	EventTypeUnfollow EventType = "unfollow"
-	EventTypeJoin     EventType = "join"
-	EventTypeLeave    EventType = "leave"
-	EventTypePostback EventType = "postback"
-	EventTypeBeacon   EventType = "beacon"
+	EventTypeMessage     EventType = "message"
+	EventTypeFollow      EventType = "follow"
+	EventTypeUnfollow    EventType = "unfollow"
+	EventTypeJoin        EventType = "join"
+	EventTypeLeave       EventType = "leave"
+	EventTypePostback    EventType = "postback"
+	EventTypeBeacon      EventType = "beacon"
+	EventTypeAccountLink EventType = "accountLink"
 )
 
 // EventSourceType type
@@ -82,25 +83,33 @@ type Beacon struct {
 	DeviceMessage []byte
 }
 
+// AccountLink type
+type AccountLink struct {
+	Result string
+	Nonce  string
+}
+
 // Event type
 type Event struct {
-	ReplyToken string
-	Type       EventType
-	Timestamp  time.Time
-	Source     *EventSource
-	Message    Message
-	Postback   *Postback
-	Beacon     *Beacon
+	ReplyToken  string
+	Type        EventType
+	Timestamp   time.Time
+	Source      *EventSource
+	Message     Message
+	Postback    *Postback
+	Beacon      *Beacon
+	AccountLink *AccountLink `json:"link"`
 }
 
 type rawEvent struct {
-	ReplyToken string           `json:"replyToken,omitempty"`
-	Type       EventType        `json:"type"`
-	Timestamp  int64            `json:"timestamp"`
-	Source     *EventSource     `json:"source"`
-	Message    *rawEventMessage `json:"message,omitempty"`
-	*Postback  `json:"postback,omitempty"`
-	Beacon     *rawBeaconEvent `json:"beacon,omitempty"`
+	ReplyToken  string           `json:"replyToken,omitempty"`
+	Type        EventType        `json:"type"`
+	Timestamp   int64            `json:"timestamp"`
+	Source      *EventSource     `json:"source"`
+	Message     *rawEventMessage `json:"message,omitempty"`
+	*Postback   `json:"postback,omitempty"`
+	Beacon      *rawBeaconEvent      `json:"beacon,omitempty"`
+	AccountLink *rawAccountLinkEvent `json:"link,omitempty"`
 }
 
 type rawEventMessage struct {
@@ -122,6 +131,11 @@ type rawBeaconEvent struct {
 	Hwid string          `json:"hwid"`
 	Type BeaconEventType `json:"type"`
 	DM   string          `json:"dm,omitempty"`
+}
+
+type rawAccountLinkEvent struct {
+	Result string `json:"result"`
+	Nonce  string `json:"nonce"`
 }
 
 const (
@@ -255,6 +269,11 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 			Hwid:          rawEvent.Beacon.Hwid,
 			Type:          rawEvent.Beacon.Type,
 			DeviceMessage: deviceMessage,
+		}
+	case EventTypeAccountLink:
+		e.AccountLink = &AccountLink{
+			Result: rawEvent.AccountLink.Result,
+			Nonce:  rawEvent.AccountLink.Nonce,
 		}
 	}
 	return
