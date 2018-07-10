@@ -258,8 +258,10 @@ type CarouselContainer struct {
 	Contents []*BubbleContainer `json:"contents"`
 }
 
-// implements FlexContainer interface
-func (*BubbleContainer) FlexContainer()   {}
+// FlexContainer implements FlexContainer interface
+func (*BubbleContainer) FlexContainer() {}
+
+// FlexContainer implements FlexContainer interface
 func (*CarouselContainer) FlexContainer() {}
 
 // BubbleStyle type
@@ -361,12 +363,26 @@ type TextComponent struct {
 	Action  TemplateAction           `json:"action,omitempty"`
 }
 
-// implements FlexComponent interface
-func (*BoxComponent) FlexComponent()       {}
-func (*ButtonComponent) FlexComponent()    {}
-func (*FillerComponent) FlexComponent()    {}
-func (*IconComponent) FlexComponent()      {}
-func (*ImageComponent) FlexComponent()     {}
+// FlexComponent implements FlexComponent interface
+func (*BoxComponent) FlexComponent() {}
+
+// FlexComponent implements FlexComponent interface
+func (*ButtonComponent) FlexComponent() {}
+
+// FlexComponent implements FlexComponent interface
+func (*FillerComponent) FlexComponent() {}
+
+// FlexComponent implements FlexComponent interface
+func (*IconComponent) FlexComponent() {}
+
+// FlexComponent implements FlexComponent interface
+func (*ImageComponent) FlexComponent() {}
+
+// FlexComponent implements FlexComponent interface
 func (*SeparatorComponent) FlexComponent() {}
-func (*SpacerComponent) FlexComponent()    {}
-func (*TextComponent) FlexComponent()      {}
+
+// FlexComponent implements FlexComponent interface
+func (*SpacerComponent) FlexComponent() {}
+
+// FlexComponent implements FlexComponent interface
+func (*TextComponent) FlexComponent() {}
