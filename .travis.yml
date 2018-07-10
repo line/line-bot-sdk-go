@@ -1,19 +1,19 @@
 language: go
 go:
-- 1.7
-- 1.8
-- 1.9
-- '1.10'
-- tip
+  - 1.7
+  - 1.8
+  - 1.9
+  - '1.10'
+  - tip
 sudo: false
 
 install:
-- go get golang.org/x/lint/golint
-- go get github.com/haya14busa/reviewdog/cmd/reviewdog
+  - go get golang.org/x/lint/golint
+  - go get github.com/haya14busa/reviewdog/cmd/reviewdog
 
 script:
-- reviewdog -reporter=github-pr-check
-- go test -v -race ./...
+  - reviewdog -reporter=github-pr-check
+  - go test -v -race ./...
 
 env:
   global:
