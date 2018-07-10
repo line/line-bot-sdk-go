@@ -367,7 +367,7 @@ type ImageComponent struct {
 	BackgroundColor *string          `json:"backgroundColor,omitempty"`
 	Margin          *SizeType        `json:"margin,omitempty"`
 	Gravity         *GravityType     `json:"gravity,omitempty"`
-	Action          TemplateAction   `json:"action"`
+	Action          TemplateAction   `json:"action,omitempty"`
 }
 
 // MarshalJSON method of ImageComponent
@@ -383,7 +383,7 @@ func (i *ImageComponent) MarshalJSON() ([]byte, error) {
 		BackgroundColor *string          `json:"backgroundColor,omitempty"`
 		Margin          *SizeType        `json:"margin,omitempty"`
 		Gravity         *GravityType     `json:"gravity,omitempty"`
-		Action          TemplateAction   `json:"action"`
+		Action          TemplateAction   `json:"action,omitempty"`
 	}{
 		Type:            ComponentTypeImage,
 		Url:             i.Url,
