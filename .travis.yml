@@ -6,3 +6,15 @@ go:
   - '1.10'
   - tip
 sudo: false
+
+install:
+  - go get golang.org/x/lint/golint
+  - go get github.com/haya14busa/reviewdog/cmd/reviewdog
+
+script:
+  - reviewdog -reporter=github-pr-check
+  - go test -v -race ./...
+
+env:
+  global:
+    secure: l6X+laB0vTHJJOs6hJgDvzZoO4QqiAxYQjpsevEhvjAbnu3ndftT0wxhtGVUYcFmpoS2d/WKTqABrphvVcF9wjQ3jSHNAB5IgDSqNUcynVyqmN+jrxsKc4EXYHdopp+NX9qxQG1C1TxR8OQUuHvKjUEL1F2r4FV62NSb/ncw34W0ejtjbsnsS8iYA0rqQZMWuDcWIRSM2RbFzK24w7IUTtObQ7gBUnngr5Q4phNkZDd3AavEC4NDrFxIhrJnvJ326+Bb5TGzcIWQEEIYC7TqO/+wanJnNW7XQKlVaiiQFJnF7kOehNkMW87tXp5bI13ELFFY2n+wza1uvHlFNraF+/eUmjPKlXKmFHB00SNkNyUn3hC7nXv2N6SBHO/QMfs1uJBtpSxPKd4zFrrKOaQ0N1o+uG4VBDIt33jthKAhm2d3QXcp/E9Fg25BTfYgJPXdyyxxBp9IAIejgbrH9l1Q9VmEW8rUfh53pT5QaYdnxT4mUQ5DW7MHjZQmQDO02T/cVYeHYfH+uib999vdV7ouO3BG/G7ClO3Td+WsHMYbemJ2ECiHgEbjcL1k0Q996b34hBNQCRS81p/xhUCyYKyQkahL91LloUla6ZStUK7TWksfT8VYfCYTJyWrw5YU81tRnUNljD00VIyIVKre2Tr1S0pgf82DrClOFt8F8e2N8o4=

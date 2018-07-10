@@ -85,8 +85,10 @@ func (a *MessageImagemapAction) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// implements ImagemapAction interface
-func (a *URIImagemapAction) ImagemapAction()     {}
+// ImagemapAction implements ImagemapAction interface
+func (a *URIImagemapAction) ImagemapAction() {}
+
+// ImagemapAction implements ImagemapAction interface
 func (a *MessageImagemapAction) ImagemapAction() {}
 
 // NewURIImagemapAction function
