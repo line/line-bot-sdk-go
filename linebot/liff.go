@@ -47,7 +47,7 @@ func (client *Client) GetLIFF() *GetLIFFAllCall {
 	}
 }
 
-//GetLIFFAllCall type
+// GetLIFFAllCall type
 type GetLIFFAllCall struct {
 	c   *Client
 	ctx context.Context
@@ -79,7 +79,7 @@ func (client *Client) AddLIFF(view View) *AddLIFFCall {
 	}
 }
 
-//AddLIFFCall type
+// AddLIFFCall type
 type AddLIFFCall struct {
 	c   *Client
 	ctx context.Context
@@ -119,16 +119,16 @@ func (call *AddLIFFCall) Do() (*LIFFIDResponse, error) {
 }
 
 // UpdateLIFF method
-func (client *Client) UpdateLIFF(liffID string, view View) *UpdateLIFF {
-	return &UpdateLIFF{
+func (client *Client) UpdateLIFF(liffID string, view View) *UpdateLIFFCall {
+	return &UpdateLIFFCall{
 		c:      client,
 		LIFFID: liffID,
 		view:   view,
 	}
 }
 
-//UpdateLIFF type
-type UpdateLIFF struct {
+// UpdateLIFFCall type
+type UpdateLIFFCall struct {
 	c   *Client
 	ctx context.Context
 
@@ -137,12 +137,12 @@ type UpdateLIFF struct {
 }
 
 // WithContext method
-func (call *UpdateLIFF) WithContext(ctx context.Context) *UpdateLIFF {
+func (call *UpdateLIFFCall) WithContext(ctx context.Context) *UpdateLIFFCall {
 	call.ctx = ctx
 	return call
 }
 
-func (call *UpdateLIFF) encodeJSON(w io.Writer) error {
+func (call *UpdateLIFFCall) encodeJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
 	return enc.Encode(&struct {
 		Type LIFFViewType `json:"type"`
@@ -154,7 +154,7 @@ func (call *UpdateLIFF) encodeJSON(w io.Writer) error {
 }
 
 // Do method
-func (call *UpdateLIFF) Do() (*BasicResponse, error) {
+func (call *UpdateLIFFCall) Do() (*BasicResponse, error) {
 	var buf bytes.Buffer
 	if err := call.encodeJSON(&buf); err != nil {
 		return nil, err
@@ -172,15 +172,15 @@ func (call *UpdateLIFF) Do() (*BasicResponse, error) {
 }
 
 // DeleteLIFF method
-func (client *Client) DeleteLIFF(liffID string) *DeleteLIFF {
-	return &DeleteLIFF{
+func (client *Client) DeleteLIFF(liffID string) *DeleteLIFFCall {
+	return &DeleteLIFFCall{
 		c:      client,
 		LIFFID: liffID,
 	}
 }
 
-//DeleteLIFF type
-type DeleteLIFF struct {
+// DeleteLIFFCall type
+type DeleteLIFFCall struct {
 	c   *Client
 	ctx context.Context
 
@@ -188,13 +188,13 @@ type DeleteLIFF struct {
 }
 
 // WithContext method
-func (call *DeleteLIFF) WithContext(ctx context.Context) *DeleteLIFF {
+func (call *DeleteLIFFCall) WithContext(ctx context.Context) *DeleteLIFFCall {
 	call.ctx = ctx
 	return call
 }
 
 // Do method
-func (call *DeleteLIFF) Do() (*BasicResponse, error) {
+func (call *DeleteLIFFCall) Do() (*BasicResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointDeleteLIFFAPP, call.LIFFID)
 	res, err := call.c.delete(call.ctx, endpoint)
 	if res != nil && res.Body != nil {
