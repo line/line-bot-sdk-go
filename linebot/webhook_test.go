@@ -236,6 +236,19 @@ var webhookTestRequestBody = `{
                 "type":"enter",
                 "dm":"1234567890abcdef"
             }
+        },
+        {
+          "type": "accountLink",
+          "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+          "source": {
+            "userId": "U012345678901234567890123456789ab",
+            "type": "user"
+          },
+          "timestamp": 1462629479859,
+          "link": {
+            "result": "ok",
+            "nonce": "xxxxxxxxxxxxxxx"
+          }
         }
     ]
 }
@@ -442,6 +455,19 @@ var webhookTestWantEvents = []*Event{
 			Hwid:          "374591320",
 			Type:          BeaconEventTypeEnter,
 			DeviceMessage: []byte{0x12, 0x34, 0x56, 0x78, 0x90, 0xab, 0xcd, 0xef},
+		},
+	},
+	{
+		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+		Type:       EventTypeAccountLink,
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
+		Source: &EventSource{
+			Type:   EventSourceTypeUser,
+			UserID: "U012345678901234567890123456789ab",
+		},
+		AccountLink: &AccountLink{
+			Result: AccountLinkResultOK,
+			Nonce:  "xxxxxxxxxxxxxxx",
 		},
 	},
 }
