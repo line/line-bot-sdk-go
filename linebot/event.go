@@ -83,9 +83,18 @@ type Beacon struct {
 	DeviceMessage []byte
 }
 
+// AccountLinkResult type
+type AccountLinkResult string
+
+// AccountLinkResult constants
+const (
+	AccountLinkResultOK     AccountLinkResult = "ok"
+	AccountLinkResultFailed AccountLinkResult = "failed"
+)
+
 // AccountLink type
 type AccountLink struct {
-	Result string
+	Result AccountLinkResult
 	Nonce  string
 }
 
@@ -98,7 +107,7 @@ type Event struct {
 	Message     Message
 	Postback    *Postback
 	Beacon      *Beacon
-	AccountLink *AccountLink `json:"link"`
+	AccountLink *AccountLink
 }
 
 type rawEvent struct {
@@ -134,8 +143,8 @@ type rawBeaconEvent struct {
 }
 
 type rawAccountLinkEvent struct {
-	Result string `json:"result"`
-	Nonce  string `json:"nonce"`
+	Result AccountLinkResult `json:"result"`
+	Nonce  string            `json:"nonce"`
 }
 
 const (
