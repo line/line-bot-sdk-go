@@ -168,6 +168,12 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 			DM:   hex.EncodeToString(e.Beacon.DeviceMessage),
 		}
 	}
+	if e.AccountLink != nil {
+		raw.AccountLink = &rawAccountLinkEvent{
+			Result: e.AccountLink.Result,
+			Nonce:  e.AccountLink.Nonce,
+		}
+	}
 
 	switch m := e.Message.(type) {
 	case *TextMessage:
