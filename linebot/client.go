@@ -52,6 +52,8 @@ const (
 	APIEndpointAddLIFFAPP    = "/liff/v1/apps"
 	APIEndpointUpdateLIFFAPP = "/liff/v1/apps/%s/view"
 	APIEndpointDeleteLIFFAPP = "/liff/v1/apps/%s"
+
+	APIEndpointLinkToken = "/v2/bot/user/%s/linkToken"
 )
 
 // Client type

@@ -76,6 +76,11 @@ type LIFFResponse struct {
 	Apps []LIFFAPP `json:"apps"`
 }
 
+// LinkTokenResponse type
+type LinkTokenResponse struct {
+	LinkToken string `json:"linkToken"`
+}
+
 func checkResponse(res *http.Response) error {
 	if res.StatusCode != http.StatusOK {
 		decoder := json.NewDecoder(res.Body)
@@ -200,6 +205,18 @@ func decodeToLIFFIDResponse(res *http.Response) (*LIFFIDResponse, error) {
 	}
 	decoder := json.NewDecoder(res.Body)
 	result := LIFFIDResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
+
+func decodeToLinkTokenResponse(res *http.Response) (*LinkTokenResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := LinkTokenResponse{}
 	if err := decoder.Decode(&result); err != nil {
 		return nil, err
 	}
