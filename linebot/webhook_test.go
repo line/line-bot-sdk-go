@@ -237,7 +237,7 @@ var webhookTestRequestBody = `{
                 "dm":"1234567890abcdef"
             }
         },
-				{
+        {
           "type": "accountLink",
           "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
           "source": {
@@ -466,7 +466,7 @@ var webhookTestWantEvents = []*Event{
 			UserID: "U012345678901234567890123456789ab",
 		},
 		AccountLink: &AccountLink{
-			Result: "ok",
+			Result: AccountLinkResultOK,
 			Nonce:  "xxxxxxxxxxxxxxx",
 		},
 	},
