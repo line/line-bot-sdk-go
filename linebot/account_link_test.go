@@ -36,7 +36,6 @@ func TestIssueLinkToken(t *testing.T) {
 		Want         want
 	}{
 		{
-			// A text message
 			UserID:       "u206d25c2ea6bd87c17655609a1c37cb8",
 			ResponseCode: 200,
 			Response:     []byte(`{"linkToken":"NMZTNuVrPTqlr2IF8Bnymkb7rXfYv5EY"}`),
