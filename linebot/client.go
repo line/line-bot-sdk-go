@@ -63,7 +63,8 @@ const (
 
 	APIEndpointGetMessageDelivery = "/v2/bot/message/delivery/%s"
 
-	APIEndpointIssueAccessToken = "/v2/oauth/accessToken"
+	APIEndpointIssueAccessToken  = "/v2/oauth/accessToken"
+	APIEndpointRevokeAccessToken = "/v2/oauth/revoke"
 )
 
 // Client type

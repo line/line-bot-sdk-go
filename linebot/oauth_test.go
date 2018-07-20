@@ -91,3 +91,71 @@ func TestIssueAccessToken(t *testing.T) {
 		}
 	}
 }
+
+func TestRevokeAccessToken(t *testing.T) {
+	type want struct {
+		RequestBody []byte
+		Response    *BasicResponse
+		Error       error
+	}
+	var testCases = []struct {
+		AccessToken  string
+		Response     []byte
+		ResponseCode int
+		Want         want
+	}{
+		{
+			AccessToken:  "testtoken",
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte("access_token=testtoken"),
+				Response:    &BasicResponse{},
+			},
+		},
+	}
+
+	var currentTestIdx int
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		if r.Method != http.MethodPost {
+			t.Errorf("Method %s; want %s", r.Method, http.MethodPost)
+		}
+		if r.URL.Path != APIEndpointRevokeAccessToken {
+			t.Errorf("URLPath %s; want %s", r.URL.Path, APIEndpointIssueAccessToken)
+		}
+		body, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+		tc := testCases[currentTestIdx]
+		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
+			t.Errorf("RequestBody %s; want %s", body, tc.Want.RequestBody)
+		}
+		w.WriteHeader(tc.ResponseCode)
+		w.Write(tc.Response)
+	}))
+	defer server.Close()
+	client, err := mockClient(server)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for i, tc := range testCases {
+		currentTestIdx = i
+		res, err := client.RevokeAccessToken(tc.AccessToken).Do()
+		if tc.Want.Error != nil {
+			if !reflect.DeepEqual(err, tc.Want.Error) {
+				t.Errorf("Error %d %q; want %q", i, err, tc.Want.Error)
+			}
+		} else {
+			if err != nil {
+				t.Error(err)
+			}
+		}
+		if tc.Want.Response != nil {
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+			}
+		}
+	}
+}

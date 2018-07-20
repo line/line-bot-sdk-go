@@ -15,8 +15,6 @@
 package linebot
 
 import (
-	"encoding/json"
-	"io"
 	"net/url"
 	"strings"
 
@@ -47,19 +45,6 @@ func (call *IssueAccessTokenCall) WithContext(ctx context.Context) *IssueAccessT
 	return call
 }
 
-func (call *IssueAccessTokenCall) encodeJSON(w io.Writer) error {
-	enc := json.NewEncoder(w)
-	return enc.Encode(&struct {
-		GrantType    string `json:"grant_type"`
-		ClientID     string `json:"client_id"`
-		ClientSecret string `json:"client_secret"`
-	}{
-		GrantType:    "client_credentials",
-		ClientID:     call.channelID,
-		ClientSecret: call.channelSecret,
-	})
-}
-
 // Do method
 func (call *IssueAccessTokenCall) Do() (*AccessTokenResponse, error) {
 	vs := url.Values{}
@@ -76,4 +61,42 @@ func (call *IssueAccessTokenCall) Do() (*AccessTokenResponse, error) {
 		return nil, err
 	}
 	return decodeToAccessTokenResponse(res)
+}
+
+// RevokeAccessToken method
+func (client *Client) RevokeAccessToken(accessToken string) *RevokeAccessTokenCall {
+	return &RevokeAccessTokenCall{
+		c:           client,
+		accessToken: accessToken,
+	}
+}
+
+// RevokeAccessTokenCall type
+type RevokeAccessTokenCall struct {
+	c   *Client
+	ctx context.Context
+
+	accessToken string
+}
+
+// WithContext method
+func (call *RevokeAccessTokenCall) WithContext(ctx context.Context) *RevokeAccessTokenCall {
+	call.ctx = ctx
+	return call
+}
+
+// Do method
+func (call *RevokeAccessTokenCall) Do() (*BasicResponse, error) {
+	vs := url.Values{}
+	vs.Set("access_token", call.accessToken)
+	body := strings.NewReader(vs.Encode())
+
+	res, err := call.c.postform(call.ctx, APIEndpointRevokeAccessToken, body)
+	if res != nil && res.Body != nil {
+		defer res.Body.Close()
+	}
+	if err != nil {
+		return nil, err
+	}
+	return decodeToBasicResponse(res)
 }
