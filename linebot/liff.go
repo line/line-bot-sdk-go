@@ -32,11 +32,6 @@ const (
 	LIFFViewTypeFull    LIFFViewType = "full"
 )
 
-// LIFFIDResponse type
-type LIFFIDResponse struct {
-	LIFFID string `json:"liffId"`
-}
-
 // LIFFAPP type
 type LIFFAPP struct {
 	LIFFID string `json:"liffId"`
