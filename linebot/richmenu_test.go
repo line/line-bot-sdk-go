@@ -141,7 +141,6 @@ func TestCreateRichMenu(t *testing.T) {
 		Want         want
 	}{
 		{
-			// A text message
 			Request: RichMenu{
 				Size:        RichMenuSize{Width: 2500, Height: 1686},
 				Selected:    false,

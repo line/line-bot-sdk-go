@@ -1,3 +1,17 @@
+// Copyright 2018 LINE Corporation
+//
+// LINE Corporation licenses this file to you under the Apache License,
+// version 2.0 (the "License"); you may not use this file except in compliance
+// with the License. You may obtain a copy of the License at:
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+// WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+// License for the specific language governing permissions and limitations
+// under the License.
+
 package linebot
 
 import (
@@ -14,7 +28,7 @@ type LIFFViewType string
 // LIFFViewType constants
 const (
 	LIFFViewTypeCompact LIFFViewType = "compact"
-	LIFFViewTypeTail    LIFFViewType = "tail"
+	LIFFViewTypeTall    LIFFViewType = "tall"
 	LIFFViewTypeFull    LIFFViewType = "full"
 )
 
@@ -75,7 +89,7 @@ func (call *GetLIFFAllCall) Do() (*LIFFResponse, error) {
 func (client *Client) AddLIFF(view View) *AddLIFFCall {
 	return &AddLIFFCall{
 		c:    client,
-		View: view,
+		view: view,
 	}
 }
 
@@ -84,7 +98,7 @@ type AddLIFFCall struct {
 	c   *Client
 	ctx context.Context
 
-	View View
+	view View
 }
 
 // WithContext method
@@ -98,7 +112,7 @@ func (call *AddLIFFCall) encodeJSON(w io.Writer) error {
 	return enc.Encode(&struct {
 		View View `json:"view"`
 	}{
-		View: call.View,
+		View: call.view,
 	})
 }
 
@@ -122,7 +136,7 @@ func (call *AddLIFFCall) Do() (*LIFFIDResponse, error) {
 func (client *Client) UpdateLIFF(liffID string, view View) *UpdateLIFFCall {
 	return &UpdateLIFFCall{
 		c:      client,
-		LIFFID: liffID,
+		liffID: liffID,
 		view:   view,
 	}
 }
@@ -132,7 +146,7 @@ type UpdateLIFFCall struct {
 	c   *Client
 	ctx context.Context
 
-	LIFFID string
+	liffID string
 	view   View
 }
 
@@ -160,7 +174,7 @@ func (call *UpdateLIFFCall) Do() (*BasicResponse, error) {
 		return nil, err
 	}
 
-	endpoint := fmt.Sprintf(APIEndpointUpdateLIFFAPP, call.LIFFID)
+	endpoint := fmt.Sprintf(APIEndpointUpdateLIFFAPP, call.liffID)
 	res, err := call.c.put(call.ctx, endpoint, &buf)
 	if res != nil && res.Body != nil {
 		defer res.Body.Close()
@@ -175,7 +189,7 @@ func (call *UpdateLIFFCall) Do() (*BasicResponse, error) {
 func (client *Client) DeleteLIFF(liffID string) *DeleteLIFFCall {
 	return &DeleteLIFFCall{
 		c:      client,
-		LIFFID: liffID,
+		liffID: liffID,
 	}
 }
 
@@ -184,7 +198,7 @@ type DeleteLIFFCall struct {
 	c   *Client
 	ctx context.Context
 
-	LIFFID string
+	liffID string
 }
 
 // WithContext method
@@ -195,7 +209,7 @@ func (call *DeleteLIFFCall) WithContext(ctx context.Context) *DeleteLIFFCall {
 
 // Do method
 func (call *DeleteLIFFCall) Do() (*BasicResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointDeleteLIFFAPP, call.LIFFID)
+	endpoint := fmt.Sprintf(APIEndpointDeleteLIFFAPP, call.liffID)
 	res, err := call.c.delete(call.ctx, endpoint)
 	if res != nil && res.Body != nil {
 		defer res.Body.Close()

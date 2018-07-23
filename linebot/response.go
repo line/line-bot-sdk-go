@@ -73,7 +73,7 @@ type RichMenuResponse struct {
 
 // LIFFResponse type
 type LIFFResponse struct {
-	Apps []LIFFAPP `json:"apps"`
+	Apps []*LIFFAPP `json:"apps"`
 }
 
 // LinkTokenResponse type
