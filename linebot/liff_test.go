@@ -26,7 +26,7 @@ import (
 func TestGetLIFF(t *testing.T) {
 	type want struct {
 		RequestBody []byte
-		Response    *LIFFResponse
+		Response    *LIFFAppsResponse
 		Error       error
 	}
 	var testCases = []struct {
@@ -39,16 +39,16 @@ func TestGetLIFF(t *testing.T) {
 			Response:     []byte(`{"apps":[{"liffId":"testliffId1","view":{"type":"full","url":"https://example.com/myservice"}},{"liffId":"testliffId2","view":{"type":"tall","url":"https://example.com/myservice2"}}]}`),
 			Want: want{
 				RequestBody: []byte(``),
-				Response: &LIFFResponse{
-					Apps: []LIFFAPP{
-						LIFFAPP{
+				Response: &LIFFAppsResponse{
+					Apps: []LIFFApp{
+						LIFFApp{
 							LIFFID: "testliffId1",
 							View: View{
 								Type: LIFFViewTypeFull,
 								URL:  "https://example.com/myservice",
 							},
 						},
-						LIFFAPP{
+						LIFFApp{
 							LIFFID: "testliffId2",
 							View: View{
 								Type: LIFFViewTypeTall,
@@ -67,7 +67,7 @@ func TestGetLIFF(t *testing.T) {
 		if r.Method != http.MethodGet {
 			t.Errorf("Method %s; want %s", r.Method, http.MethodGet)
 		}
-		endpoint := APIEndpointGetLIFFAPP
+		endpoint := APIEndpointGetAllLIFFApps
 		if r.URL.Path != endpoint {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, endpoint)
 		}
@@ -129,7 +129,7 @@ func TestAddLIFF(t *testing.T) {
 		if r.Method != http.MethodPost {
 			t.Errorf("Method %s; want %s", r.Method, http.MethodPost)
 		}
-		endpoint := APIEndpointAddLIFFAPP
+		endpoint := APIEndpointAddLIFFApp
 		if r.URL.Path != endpoint {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, endpoint)
 		}
@@ -193,7 +193,7 @@ func TestUpdateLIFF(t *testing.T) {
 		if r.Method != http.MethodPut {
 			t.Errorf("Method %s; want %s", r.Method, http.MethodPut)
 		}
-		endpoint := fmt.Sprintf(APIEndpointUpdateLIFFAPP, tc.LIFFID)
+		endpoint := fmt.Sprintf(APIEndpointUpdateLIFFApp, tc.LIFFID)
 		if r.URL.Path != endpoint {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, endpoint)
 		}
@@ -252,7 +252,7 @@ func TestDeleteLIFF(t *testing.T) {
 		if r.Method != http.MethodDelete {
 			t.Errorf("Method %s; want %s", r.Method, http.MethodPut)
 		}
-		endpoint := fmt.Sprintf(APIEndpointDeleteLIFFAPP, tc.LIFFID)
+		endpoint := fmt.Sprintf(APIEndpointDeleteLIFFApp, tc.LIFFID)
 		if r.URL.Path != endpoint {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, endpoint)
 		}

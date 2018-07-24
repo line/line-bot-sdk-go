@@ -32,8 +32,8 @@ const (
 	LIFFViewTypeFull    LIFFViewType = "full"
 )
 
-// LIFFAPP type
-type LIFFAPP struct {
+// LIFFApp type
+type LIFFApp struct {
 	LIFFID string `json:"liffId"`
 	View   View   `json:"view"`
 }
@@ -69,8 +69,8 @@ func (call *GetLIFFAllCall) WithContext(ctx context.Context) *GetLIFFAllCall {
 }
 
 // Do method
-func (call *GetLIFFAllCall) Do() (*LIFFResponse, error) {
-	res, err := call.c.get(call.ctx, APIEndpointGetLIFFAPP, nil)
+func (call *GetLIFFAllCall) Do() (*LIFFAppsResponse, error) {
+	res, err := call.c.get(call.ctx, APIEndpointGetAllLIFFApps, nil)
 	if res != nil && res.Body != nil {
 		defer res.Body.Close()
 	}
@@ -117,7 +117,7 @@ func (call *AddLIFFCall) Do() (*LIFFIDResponse, error) {
 	if err := call.encodeJSON(&buf); err != nil {
 		return nil, err
 	}
-	res, err := call.c.post(call.ctx, APIEndpointAddLIFFAPP, &buf)
+	res, err := call.c.post(call.ctx, APIEndpointAddLIFFApp, &buf)
 	if res != nil && res.Body != nil {
 		defer res.Body.Close()
 	}
@@ -169,7 +169,7 @@ func (call *UpdateLIFFCall) Do() (*BasicResponse, error) {
 		return nil, err
 	}
 
-	endpoint := fmt.Sprintf(APIEndpointUpdateLIFFAPP, call.liffID)
+	endpoint := fmt.Sprintf(APIEndpointUpdateLIFFApp, call.liffID)
 	res, err := call.c.put(call.ctx, endpoint, &buf)
 	if res != nil && res.Body != nil {
 		defer res.Body.Close()
@@ -204,7 +204,7 @@ func (call *DeleteLIFFCall) WithContext(ctx context.Context) *DeleteLIFFCall {
 
 // Do method
 func (call *DeleteLIFFCall) Do() (*BasicResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointDeleteLIFFAPP, call.liffID)
+	endpoint := fmt.Sprintf(APIEndpointDeleteLIFFApp, call.liffID)
 	res, err := call.c.delete(call.ctx, endpoint)
 	if res != nil && res.Body != nil {
 		defer res.Body.Close()

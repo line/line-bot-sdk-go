@@ -48,10 +48,10 @@ const (
 	APIEndpointDownloadRichMenuImage = "/v2/bot/richmenu/%s/content" // Download: GET / Upload: POST
 	APIEndpointUploadRichMenuImage   = "/v2/bot/richmenu/%s/content" // Download: GET / Upload: POST
 
-	APIEndpointGetLIFFAPP    = "/liff/v1/apps"
-	APIEndpointAddLIFFAPP    = "/liff/v1/apps"
-	APIEndpointUpdateLIFFAPP = "/liff/v1/apps/%s/view"
-	APIEndpointDeleteLIFFAPP = "/liff/v1/apps/%s"
+	APIEndpointGetAllLIFFApps = "/liff/v1/apps"
+	APIEndpointAddLIFFApp     = "/liff/v1/apps"
+	APIEndpointUpdateLIFFApp  = "/liff/v1/apps/%s/view"
+	APIEndpointDeleteLIFFApp  = "/liff/v1/apps/%s"
 
 	APIEndpointLinkToken = "/v2/bot/user/%s/linkToken"
 )
