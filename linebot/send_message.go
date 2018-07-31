@@ -22,7 +22,7 @@ import (
 )
 
 // PushMessage method
-func (client *Client) PushMessage(to string, messages ...Message) *PushMessageCall {
+func (client *Client) PushMessage(to string, messages ...SendingMessage) *PushMessageCall {
 	return &PushMessageCall{
 		c:        client,
 		to:       to,
@@ -36,7 +36,7 @@ type PushMessageCall struct {
 	ctx context.Context
 
 	to       string
-	messages []Message
+	messages []SendingMessage
 }
 
 // WithContext method
@@ -48,8 +48,8 @@ func (call *PushMessageCall) WithContext(ctx context.Context) *PushMessageCall {
 func (call *PushMessageCall) encodeJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
 	return enc.Encode(&struct {
-		To       string    `json:"to"`
-		Messages []Message `json:"messages"`
+		To       string           `json:"to"`
+		Messages []SendingMessage `json:"messages"`
 	}{
 		To:       call.to,
 		Messages: call.messages,
@@ -73,7 +73,7 @@ func (call *PushMessageCall) Do() (*BasicResponse, error) {
 }
 
 // ReplyMessage method
-func (client *Client) ReplyMessage(replyToken string, messages ...Message) *ReplyMessageCall {
+func (client *Client) ReplyMessage(replyToken string, messages ...SendingMessage) *ReplyMessageCall {
 	return &ReplyMessageCall{
 		c:          client,
 		replyToken: replyToken,
@@ -87,7 +87,7 @@ type ReplyMessageCall struct {
 	ctx context.Context
 
 	replyToken string
-	messages   []Message
+	messages   []SendingMessage
 }
 
 // WithContext method
@@ -99,8 +99,8 @@ func (call *ReplyMessageCall) WithContext(ctx context.Context) *ReplyMessageCall
 func (call *ReplyMessageCall) encodeJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
 	return enc.Encode(&struct {
-		ReplyToken string    `json:"replyToken"`
-		Messages   []Message `json:"messages"`
+		ReplyToken string           `json:"replyToken"`
+		Messages   []SendingMessage `json:"messages"`
 	}{
 		ReplyToken: call.replyToken,
 		Messages:   call.messages,
@@ -124,7 +124,7 @@ func (call *ReplyMessageCall) Do() (*BasicResponse, error) {
 }
 
 // Multicast method
-func (client *Client) Multicast(to []string, messages ...Message) *MulticastCall {
+func (client *Client) Multicast(to []string, messages ...SendingMessage) *MulticastCall {
 	return &MulticastCall{
 		c:        client,
 		to:       to,
@@ -138,7 +138,7 @@ type MulticastCall struct {
 	ctx context.Context
 
 	to       []string
-	messages []Message
+	messages []SendingMessage
 }
 
 // WithContext method
@@ -150,8 +150,8 @@ func (call *MulticastCall) WithContext(ctx context.Context) *MulticastCall {
 func (call *MulticastCall) encodeJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
 	return enc.Encode(&struct {
-		To       []string  `json:"to"`
-		Messages []Message `json:"messages"`
+		To       []string         `json:"to"`
+		Messages []SendingMessage `json:"messages"`
 	}{
 		To:       call.to,
 		Messages: call.messages,

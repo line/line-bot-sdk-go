@@ -96,27 +96,27 @@ func (c *rawFlexComponent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-type rawTemplateAction struct {
-	Type   TemplateActionType `json:"type"`
-	Action TemplateAction     `json:"-"`
+type rawAction struct {
+	Type   ActionType     `json:"type"`
+	Action TemplateAction `json:"-"`
 }
 
-func (c *rawTemplateAction) UnmarshalJSON(data []byte) error {
-	type alias rawTemplateAction
+func (c *rawAction) UnmarshalJSON(data []byte) error {
+	type alias rawAction
 	raw := alias{}
 	if err := json.Unmarshal(data, &raw); err != nil {
 		return err
 	}
 	var action TemplateAction
 	switch raw.Type {
-	case TemplateActionTypeURI:
-		action = &URITemplateAction{}
-	case TemplateActionTypeMessage:
-		action = &MessageTemplateAction{}
-	case TemplateActionTypePostback:
-		action = &PostbackTemplateAction{}
-	case TemplateActionTypeDatetimePicker:
-		action = &DatetimePickerTemplateAction{}
+	case ActionTypeURI:
+		action = &URIAction{}
+	case ActionTypeMessage:
+		action = &MessageAction{}
+	case ActionTypePostback:
+		action = &PostbackAction{}
+	case ActionTypeDatetimePicker:
+		action = &DatetimePickerAction{}
 	default:
 		return errors.New("invalid action type")
 	}
@@ -152,7 +152,7 @@ func (c *BoxComponent) UnmarshalJSON(data []byte) error {
 func (c *ButtonComponent) UnmarshalJSON(data []byte) error {
 	type alias ButtonComponent
 	raw := struct {
-		Action rawTemplateAction `json:"action"`
+		Action rawAction `json:"action"`
 		*alias
 	}{
 		alias: (*alias)(c),
@@ -168,7 +168,7 @@ func (c *ButtonComponent) UnmarshalJSON(data []byte) error {
 func (c *ImageComponent) UnmarshalJSON(data []byte) error {
 	type alias ImageComponent
 	raw := struct {
-		Action rawTemplateAction `json:"action"`
+		Action rawAction `json:"action"`
 		*alias
 	}{
 		alias: (*alias)(c),
@@ -184,7 +184,7 @@ func (c *ImageComponent) UnmarshalJSON(data []byte) error {
 func (c *TextComponent) UnmarshalJSON(data []byte) error {
 	type alias TextComponent
 	raw := struct {
-		Action rawTemplateAction `json:"action"`
+		Action rawAction `json:"action"`
 		*alias
 	}{
 		alias: (*alias)(c),
