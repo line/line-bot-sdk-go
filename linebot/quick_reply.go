@@ -14,6 +14,10 @@
 
 package linebot
 
+import (
+	"encoding/json"
+)
+
 // QuickReplyItems struct
 type QuickReplyItems struct {
 	Items []*QuickReplyButton `json:"items"`
@@ -28,8 +32,21 @@ func NewQuickReplyItems(buttons ...*QuickReplyButton) *QuickReplyItems {
 
 // QuickReplyButton type
 type QuickReplyButton struct {
-	ImageURL string           `json:"imageUrl,omitempty"`
-	Action   QuickReplyAction `json:"action"`
+	ImageURL string
+	Action   QuickReplyAction
+}
+
+// MarshalJSON method of QuickReplyButton
+func (b *QuickReplyButton) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		Type     string           `json:"type"`
+		ImageURL string           `json:"imageUrl,omitempty"`
+		Action   QuickReplyAction `json:"action"`
+	}{
+		Type:     "action",
+		ImageURL: b.ImageURL,
+		Action:   b.Action,
+	})
 }
 
 // NewQuickReplyButton function
