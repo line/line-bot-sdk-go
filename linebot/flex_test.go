@@ -283,7 +283,7 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 					Size:        FlexImageSizeTypeFull,
 					AspectRatio: FlexImageAspectRatioType20to13,
 					AspectMode:  FlexImageAspectModeTypeCover,
-					Action:      &URITemplateAction{URI: "http://linecorp.com/"},
+					Action:      &URIAction{URI: "http://linecorp.com/"},
 				},
 				Body: &BoxComponent{
 					Type:   FlexComponentTypeBox,
@@ -395,7 +395,7 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 					Contents: []FlexComponent{
 						&ButtonComponent{
 							Type: FlexComponentTypeButton,
-							Action: &URITemplateAction{
+							Action: &URIAction{
 								Label: "CALL",
 								URI:   "https://linecorp.com",
 							},
@@ -404,7 +404,7 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 						},
 						&ButtonComponent{
 							Type: FlexComponentTypeButton,
-							Action: &URITemplateAction{
+							Action: &URIAction{
 								Label: "WEBSITE",
 								URI:   "https://linecorp.com",
 							},
