@@ -16,7 +16,7 @@ package linebot
 
 import "encoding/json"
 
-// ActionType string
+// ActionType type
 type ActionType string
 
 // ActionType constants
