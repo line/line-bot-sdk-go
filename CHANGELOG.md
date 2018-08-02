@@ -1,5 +1,14 @@
 # Changelog
 
+## [3.0.0](https://github.com/line/line-bot-sdk-go/tree/3.0.0) (2018-08-02)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/2.0.0...3.0.0)
+
+**Merged pull requests:**
+
+- Rename actions, and related function names [\#98](https://github.com/line/line-bot-sdk-go/pull/98) ([sugyan](https://github.com/sugyan))
+- Add changelog [\#96](https://github.com/line/line-bot-sdk-go/pull/96) ([sugyan](https://github.com/sugyan))
+
 ## [2.0.0](https://github.com/line/line-bot-sdk-go/tree/2.0.0) (2018-07-24)
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.3.0...2.0.0)
@@ -12,18 +21,24 @@
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.2.1...1.3.0)
 
-**Merged pull requests:**
+**Implemented enhancements:**
 
 - Support issue link token api [\#94](https://github.com/line/line-bot-sdk-go/pull/94) ([suzuki-shunsuke](https://github.com/suzuki-shunsuke))
+
+**Merged pull requests:**
+
 - Add status badges and a link to LICENSE.txt in README [\#92](https://github.com/line/line-bot-sdk-go/pull/92) ([suzuki-shunsuke](https://github.com/suzuki-shunsuke))
 
 ## [1.2.1](https://github.com/line/line-bot-sdk-go/tree/1.2.1) (2018-07-12)
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.2.0...1.2.1)
 
-**Merged pull requests:**
+**Implemented enhancements:**
 
 - Add AccountLink event [\#91](https://github.com/line/line-bot-sdk-go/pull/91) ([suzuki-shunsuke](https://github.com/suzuki-shunsuke))
+
+**Merged pull requests:**
+
 - \#issue-liff add liff api [\#90](https://github.com/line/line-bot-sdk-go/pull/90) ([justdomepaul](https://github.com/justdomepaul))
 - Add lint [\#88](https://github.com/line/line-bot-sdk-go/pull/88) ([k2wanko](https://github.com/k2wanko))
 
