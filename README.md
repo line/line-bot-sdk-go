@@ -85,8 +85,8 @@ or a reply token.
 The LINE Messaging API provides various types of message. To create a message, use ```New<Type>Message()```.
 
 ```go
-	leftBtn := linebot.NewMessageTemplateAction("left", "left clicked")
-	rightBtn := linebot.NewMessageTemplateAction("right", "right clicked")
+	leftBtn := linebot.NewMessageAction("left", "left clicked")
+	rightBtn := linebot.NewMessageAction("right", "right clicked")
 
 	template := linebot.NewConfirmTemplate("Hello World", leftBtn, rightBtn)
 

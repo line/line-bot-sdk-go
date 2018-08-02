@@ -97,8 +97,8 @@ func (c *rawFlexComponent) UnmarshalJSON(data []byte) error {
 }
 
 type rawTemplateAction struct {
-	Type   TemplateActionType `json:"type"`
-	Action TemplateAction     `json:"-"`
+	Type   ActionType     `json:"type"`
+	Action TemplateAction `json:"-"`
 }
 
 func (c *rawTemplateAction) UnmarshalJSON(data []byte) error {
@@ -109,14 +109,14 @@ func (c *rawTemplateAction) UnmarshalJSON(data []byte) error {
 	}
 	var action TemplateAction
 	switch raw.Type {
-	case TemplateActionTypeURI:
-		action = &URITemplateAction{}
-	case TemplateActionTypeMessage:
-		action = &MessageTemplateAction{}
-	case TemplateActionTypePostback:
-		action = &PostbackTemplateAction{}
-	case TemplateActionTypeDatetimePicker:
-		action = &DatetimePickerTemplateAction{}
+	case ActionTypeURI:
+		action = &URIAction{}
+	case ActionTypeMessage:
+		action = &MessageAction{}
+	case ActionTypePostback:
+		action = &PostbackAction{}
+	case ActionTypeDatetimePicker:
+		action = &DatetimePickerAction{}
 	default:
 		return errors.New("invalid action type")
 	}

@@ -186,10 +186,10 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 		imageURL := app.appBaseURL + "/static/buttons/1040.jpg"
 		template := linebot.NewButtonsTemplate(
 			imageURL, "My button sample", "Hello, my button",
-			linebot.NewURITemplateAction("Go to line.me", "https://line.me"),
-			linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", "", "hello こんにちは"),
-			linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは", ""),
-			linebot.NewMessageTemplateAction("Say message", "Rice=米"),
+			linebot.NewURIAction("Go to line.me", "https://line.me"),
+			linebot.NewPostbackAction("Say hello1", "hello こんにちは", "", "hello こんにちは"),
+			linebot.NewPostbackAction("言 hello2", "hello こんにちは", "hello こんにちは", ""),
+			linebot.NewMessageAction("Say message", "Rice=米"),
 		)
 		if _, err := app.bot.ReplyMessage(
 			replyToken,
@@ -200,8 +200,8 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 	case "confirm":
 		template := linebot.NewConfirmTemplate(
 			"Do it?",
-			linebot.NewMessageTemplateAction("Yes", "Yes!"),
-			linebot.NewMessageTemplateAction("No", "No!"),
+			linebot.NewMessageAction("Yes", "Yes!"),
+			linebot.NewMessageAction("No", "No!"),
 		)
 		if _, err := app.bot.ReplyMessage(
 			replyToken,
@@ -214,13 +214,13 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 		template := linebot.NewCarouselTemplate(
 			linebot.NewCarouselColumn(
 				imageURL, "hoge", "fuga",
-				linebot.NewURITemplateAction("Go to line.me", "https://line.me"),
-				linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", "", ""),
+				linebot.NewURIAction("Go to line.me", "https://line.me"),
+				linebot.NewPostbackAction("Say hello1", "hello こんにちは", "", ""),
 			),
 			linebot.NewCarouselColumn(
 				imageURL, "hoge", "fuga",
-				linebot.NewPostbackTemplateAction("言 hello2", "hello こんにちは", "hello こんにちは", ""),
-				linebot.NewMessageTemplateAction("Say message", "Rice=米"),
+				linebot.NewPostbackAction("言 hello2", "hello こんにちは", "hello こんにちは", ""),
+				linebot.NewMessageAction("Say message", "Rice=米"),
 			),
 		)
 		if _, err := app.bot.ReplyMessage(
@@ -234,19 +234,19 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 		template := linebot.NewImageCarouselTemplate(
 			linebot.NewImageCarouselColumn(
 				imageURL,
-				linebot.NewURITemplateAction("Go to LINE", "https://line.me"),
+				linebot.NewURIAction("Go to LINE", "https://line.me"),
 			),
 			linebot.NewImageCarouselColumn(
 				imageURL,
-				linebot.NewPostbackTemplateAction("Say hello1", "hello こんにちは", "", ""),
+				linebot.NewPostbackAction("Say hello1", "hello こんにちは", "", ""),
 			),
 			linebot.NewImageCarouselColumn(
 				imageURL,
-				linebot.NewMessageTemplateAction("Say message", "Rice=米"),
+				linebot.NewMessageAction("Say message", "Rice=米"),
 			),
 			linebot.NewImageCarouselColumn(
 				imageURL,
-				linebot.NewDatetimePickerTemplateAction("datetime", "DATETIME", "datetime", "", "", ""),
+				linebot.NewDatetimePickerAction("datetime", "DATETIME", "datetime", "", "", ""),
 			),
 		)
 		if _, err := app.bot.ReplyMessage(
@@ -258,9 +258,9 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 	case "datetime":
 		template := linebot.NewButtonsTemplate(
 			"", "", "Select date / time !",
-			linebot.NewDatetimePickerTemplateAction("date", "DATE", "date", "", "", ""),
-			linebot.NewDatetimePickerTemplateAction("time", "TIME", "time", "", "", ""),
-			linebot.NewDatetimePickerTemplateAction("datetime", "DATETIME", "datetime", "", "", ""),
+			linebot.NewDatetimePickerAction("date", "DATE", "date", "", "", ""),
+			linebot.NewDatetimePickerAction("time", "TIME", "time", "", "", ""),
+			linebot.NewDatetimePickerAction("datetime", "DATETIME", "datetime", "", "", ""),
 		)
 		if _, err := app.bot.ReplyMessage(
 			replyToken,
