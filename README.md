@@ -37,9 +37,9 @@ func main() {
 ### Configuration with http.Client ###
 
 ```go
-	client := &http.Client{}
-	bot, err := linebot.New("<channel secret>", "<channel accsss token>", linebot.WithHTTPClient(client))
-	...
+client := &http.Client{}
+bot, err := linebot.New("<channel secret>", "<channel accsss token>", linebot.WithHTTPClient(client))
+...
 ```
 
 ## How to start ##
@@ -48,20 +48,20 @@ The LINE Messaging API uses the JSON data format.
 ```ParseRequest()``` will help you to parse the ```*http.Request``` content and return a slice of Pointer point to Event Object.
 
 ```go
-	events, err := bot.ParseRequest(req)
-	if err != nil {
-		// Do something when something bad happened.
-	}
+events, err := bot.ParseRequest(req)
+if err != nil {
+	// Do something when something bad happened.
+}
 ```
 
 The LINE Messaging API defines 7 types of event - ```EventTypeMessage```, ```EventTypeFollow```, ```EventTypeUnfollow```, ```EventTypeJoin```, ```EventTypeLeave```, ```EventTypePostback```, ```EventTypeBeacon```. You can check the event type by using ```event.Type```
 
 ```go
-	for _, event := range events {
-		if event.Type == linebot.EventTypeMessage {
-			// Do Something...
-		}
+for _, event := range events {
+	if event.Type == linebot.EventTypeMessage {
+		// Do Something...
 	}
+}
 ```
 
 ### Receiver ###
@@ -69,15 +69,15 @@ The LINE Messaging API defines 7 types of event - ```EventTypeMessage```, ```Eve
 To send a message to a user, group, or room, you need either an ID
 
 ```go
-	userID := event.Source.UserID
-	groupID := event.Source.GroupID
-	RoomID := event.Source.RoomID
+userID := event.Source.UserID
+groupID := event.Source.GroupID
+RoomID := event.Source.RoomID
 ```
 
 or a reply token.
 
 ```go
-	replyToken := event.ReplyToken
+replyToken := event.ReplyToken
 ```
 
 ### Create message ###
@@ -85,12 +85,12 @@ or a reply token.
 The LINE Messaging API provides various types of message. To create a message, use ```New<Type>Message()```.
 
 ```go
-	leftBtn := linebot.NewMessageAction("left", "left clicked")
-	rightBtn := linebot.NewMessageAction("right", "right clicked")
+leftBtn := linebot.NewMessageAction("left", "left clicked")
+rightBtn := linebot.NewMessageAction("right", "right clicked")
 
-	template := linebot.NewConfirmTemplate("Hello World", leftBtn, rightBtn)
+template := linebot.NewConfirmTemplate("Hello World", leftBtn, rightBtn)
 
-	message := linebot.NewTemplateMessage("Sorry :(, please update your app.", template)
+message := linebot.NewTemplateMessage("Sorry :(, please update your app.", template)
 ```
 
 ### Send message ###
@@ -98,27 +98,27 @@ The LINE Messaging API provides various types of message. To create a message, u
 With an ID, you can send message using ```PushMessage()```
 
 ```go
-	var messages []linebot.Message
+var messages []linebot.Message
 
-	// append some message to messages
+// append some message to messages
 
-	_, err := bot.PushMessage(ID, messages...).Do()
-	if err != nil {
-		// Do something when some bad happened
-	}
+_, err := bot.PushMessage(ID, messages...).Do()
+if err != nil {
+	// Do something when some bad happened
+}
 ```
 
 With a reply token, you can reply to messages using ```ReplyMessage()```
 
 ```go
-	var messages []linebot.Message
+var messages []linebot.Message
 
-	// append some message to messages
+// append some message to messages
 
-	_, err := bot.ReplyMessage(replyToken, messages...).Do()
-	if err != nil {
-		// Do something when some bad happened
-	}
+_, err := bot.ReplyMessage(replyToken, messages...).Do()
+if err != nil {
+	// Do something when some bad happened
+}
 ```
 
 ## Requirements
