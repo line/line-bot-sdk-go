@@ -9,7 +9,8 @@ sudo: false
 
 install:
   - go get golang.org/x/lint/golint
-  - go get github.com/haya14busa/reviewdog/cmd/reviewdog
+  - curl -L -o $HOME/bin/reviewdog https://github.com/haya14busa/reviewdog/releases/download/0.9.11/reviewdog_linux_amd64
+  - chmod a+x $HOME/bin/reviewdog
 
 script:
   - reviewdog -reporter=github-pr-check
