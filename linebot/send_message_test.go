@@ -32,14 +32,14 @@ func TestPushMessages(t *testing.T) {
 		Error       error
 	}
 	var testCases = []struct {
-		Messages     []Message
+		Messages     []SendingMessage
 		Response     []byte
 		ResponseCode int
 		Want         want
 	}{
 		{
 			// A text message
-			Messages:     []Message{NewTextMessage("Hello, world")},
+			Messages:     []SendingMessage{NewTextMessage("Hello, world")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
@@ -49,7 +49,7 @@ func TestPushMessages(t *testing.T) {
 		},
 		{
 			// A image message
-			Messages:     []Message{NewImageMessage("http://example.com/original.jpg", "http://example.com/preview.jpg")},
+			Messages:     []SendingMessage{NewImageMessage("http://example.com/original.jpg", "http://example.com/preview.jpg")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
@@ -59,7 +59,7 @@ func TestPushMessages(t *testing.T) {
 		},
 		{
 			// A video message
-			Messages:     []Message{NewVideoMessage("http://example.com/original.mp4", "http://example.com/preview.jpg")},
+			Messages:     []SendingMessage{NewVideoMessage("http://example.com/original.mp4", "http://example.com/preview.jpg")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
@@ -69,7 +69,7 @@ func TestPushMessages(t *testing.T) {
 		},
 		{
 			// A audio message
-			Messages:     []Message{NewAudioMessage("http://example.com/original.m4a", 1000)},
+			Messages:     []SendingMessage{NewAudioMessage("http://example.com/original.m4a", 1000)},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
@@ -79,7 +79,7 @@ func TestPushMessages(t *testing.T) {
 		},
 		{
 			// A location message
-			Messages:     []Message{NewLocationMessage("title", "address", 35.65910807942215, 139.70372892916203)},
+			Messages:     []SendingMessage{NewLocationMessage("title", "address", 35.65910807942215, 139.70372892916203)},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
@@ -89,7 +89,7 @@ func TestPushMessages(t *testing.T) {
 		},
 		{
 			// A sticker message
-			Messages:     []Message{NewStickerMessage("1", "1")},
+			Messages:     []SendingMessage{NewStickerMessage("1", "1")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
@@ -99,7 +99,7 @@ func TestPushMessages(t *testing.T) {
 		},
 		{
 			// A buttons template message
-			Messages: []Message{
+			Messages: []SendingMessage{
 				NewTemplateMessage(
 					"this is a buttons template",
 					NewButtonsTemplate(
@@ -121,7 +121,7 @@ func TestPushMessages(t *testing.T) {
 		},
 		{
 			// A buttons template message with datetimepicker action
-			Messages: []Message{
+			Messages: []SendingMessage{
 				NewTemplateMessage(
 					"this is a buttons template",
 					NewButtonsTemplate(
@@ -143,7 +143,7 @@ func TestPushMessages(t *testing.T) {
 		},
 		{
 			// A buttons template message without thumbnailImageURL
-			Messages: []Message{
+			Messages: []SendingMessage{
 				NewTemplateMessage(
 					"this is a buttons template",
 					NewButtonsTemplate(
@@ -165,7 +165,7 @@ func TestPushMessages(t *testing.T) {
 		},
 		{
 			// A buttons template message without title
-			Messages: []Message{
+			Messages: []SendingMessage{
 				NewTemplateMessage(
 					"this is a buttons template",
 					NewButtonsTemplate(
@@ -187,7 +187,7 @@ func TestPushMessages(t *testing.T) {
 		},
 		{
 			// A buttons template message without title, with image options
-			Messages: []Message{
+			Messages: []SendingMessage{
 				NewTemplateMessage(
 					"this is a buttons template",
 					NewButtonsTemplate(
@@ -209,7 +209,7 @@ func TestPushMessages(t *testing.T) {
 		},
 		{
 			// A buttons template message without thumbnailImageURL and title
-			Messages: []Message{
+			Messages: []SendingMessage{
 				NewTemplateMessage(
 					"this is a buttons template",
 					NewButtonsTemplate(
@@ -231,7 +231,7 @@ func TestPushMessages(t *testing.T) {
 		},
 		{
 			// A confirm template message
-			Messages: []Message{
+			Messages: []SendingMessage{
 				NewTemplateMessage(
 					"this is a confirm template",
 					NewConfirmTemplate(
@@ -250,7 +250,7 @@ func TestPushMessages(t *testing.T) {
 		},
 		{
 			// A carousel template message
-			Messages: []Message{
+			Messages: []SendingMessage{
 				NewTemplateMessage(
 					"this is a carousel template",
 					NewCarouselTemplate(
@@ -274,7 +274,7 @@ func TestPushMessages(t *testing.T) {
 		},
 		{
 			// A carousel template message, with new image options
-			Messages: []Message{
+			Messages: []SendingMessage{
 				NewTemplateMessage(
 					"this is a carousel template with imageAspectRatio, imageSize and imageBackgroundColor",
 					NewCarouselTemplate(
@@ -298,7 +298,7 @@ func TestPushMessages(t *testing.T) {
 		},
 		{
 			// A imagecarousel template message
-			Messages: []Message{
+			Messages: []SendingMessage{
 				NewTemplateMessage(
 					"this is a image carousel template",
 					NewImageCarouselTemplate(
@@ -318,7 +318,7 @@ func TestPushMessages(t *testing.T) {
 		},
 		{
 			// A imagemap message
-			Messages: []Message{
+			Messages: []SendingMessage{
 				NewImagemapMessage(
 					"https://example.com/bot/images/rm001",
 					"this is an imagemap",
@@ -336,7 +336,7 @@ func TestPushMessages(t *testing.T) {
 		},
 		{
 			// A flex message
-			Messages: []Message{
+			Messages: []SendingMessage{
 				NewFlexMessage(
 					"this is a flex message",
 					&BubbleContainer{
@@ -366,8 +366,28 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
+			// A text message with quick replies
+			Messages: []SendingMessage{
+				NewTextMessage(
+					"Select your favorite food category or send me your location!",
+				).WithQuickReplies(
+					NewQuickReplyItems(
+						NewQuickReplyButton("https://example.com/sushi.png", NewMessageAction("Sushi", "Sushi")),
+						NewQuickReplyButton("https://example.com/tempura.png", NewMessageAction("Tempura", "Tempura")),
+						NewQuickReplyButton("", NewLocationAction("Send location")),
+					),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"text","text":"Select your favorite food category or send me your location!","quickReply":{"items":[{"type":"action","imageUrl":"https://example.com/sushi.png","action":{"type":"message","label":"Sushi","text":"Sushi"}},{"type":"action","imageUrl":"https://example.com/tempura.png","action":{"type":"message","label":"Tempura","text":"Tempura"}},{"type":"action","action":{"type":"location","label":"Send location"}}]}}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
 			// Multiple messages
-			Messages:     []Message{NewTextMessage("Hello, world1"), NewTextMessage("Hello, world2")},
+			Messages:     []SendingMessage{NewTextMessage("Hello, world1"), NewTextMessage("Hello, world2")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
@@ -377,7 +397,7 @@ func TestPushMessages(t *testing.T) {
 		},
 		{
 			// Bad request
-			Messages:     []Message{NewTextMessage(""), NewTextMessage("")},
+			Messages:     []SendingMessage{NewTextMessage(""), NewTextMessage("")},
 			ResponseCode: 400,
 			Response:     []byte(`{"message":"Request body has 2 error(s).","details":[{"message":"may not be empty","property":"messages[0].text"},{"message":"may not be empty","property":"messages[1].text"}]}`),
 			Want: want{
@@ -474,14 +494,14 @@ func TestReplyMessages(t *testing.T) {
 		Error       error
 	}
 	var testCases = []struct {
-		Messages     []Message
+		Messages     []SendingMessage
 		Response     []byte
 		ResponseCode int
 		Want         want
 	}{
 		{
 			// A text message
-			Messages:     []Message{NewTextMessage("Hello, world")},
+			Messages:     []SendingMessage{NewTextMessage("Hello, world")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
@@ -491,7 +511,7 @@ func TestReplyMessages(t *testing.T) {
 		},
 		{
 			// A location message
-			Messages:     []Message{NewLocationMessage("title", "address", 35.65910807942215, 139.70372892916203)},
+			Messages:     []SendingMessage{NewLocationMessage("title", "address", 35.65910807942215, 139.70372892916203)},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
@@ -501,7 +521,7 @@ func TestReplyMessages(t *testing.T) {
 		},
 		{
 			// A image message
-			Messages:     []Message{NewImageMessage("http://example.com/original.jpg", "http://example.com/preview.jpg")},
+			Messages:     []SendingMessage{NewImageMessage("http://example.com/original.jpg", "http://example.com/preview.jpg")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
@@ -511,7 +531,7 @@ func TestReplyMessages(t *testing.T) {
 		},
 		{
 			// A sticker message
-			Messages:     []Message{NewStickerMessage("1", "1")},
+			Messages:     []SendingMessage{NewStickerMessage("1", "1")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
@@ -521,7 +541,7 @@ func TestReplyMessages(t *testing.T) {
 		},
 		{
 			// Bad request
-			Messages:     []Message{NewTextMessage(""), NewTextMessage("")},
+			Messages:     []SendingMessage{NewTextMessage(""), NewTextMessage("")},
 			ResponseCode: 400,
 			Response:     []byte(`{"message":"Request body has 2 error(s).","details":[{"message":"may not be empty","property":"messages[0].text"},{"message":"may not be empty","property":"messages[1].text"}]}`),
 			Want: want{
@@ -621,14 +641,14 @@ func TestMulticastMessages(t *testing.T) {
 		Error       error
 	}
 	var testCases = []struct {
-		Messages     []Message
+		Messages     []SendingMessage
 		Response     []byte
 		ResponseCode int
 		Want         want
 	}{
 		{
 			// A text message
-			Messages:     []Message{NewTextMessage("Hello, world")},
+			Messages:     []SendingMessage{NewTextMessage("Hello, world")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
@@ -638,7 +658,7 @@ func TestMulticastMessages(t *testing.T) {
 		},
 		{
 			// A location message
-			Messages:     []Message{NewLocationMessage("title", "address", 35.65910807942215, 139.70372892916203)},
+			Messages:     []SendingMessage{NewLocationMessage("title", "address", 35.65910807942215, 139.70372892916203)},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
@@ -648,7 +668,7 @@ func TestMulticastMessages(t *testing.T) {
 		},
 		{
 			// A image message
-			Messages:     []Message{NewImageMessage("http://example.com/original.jpg", "http://example.com/preview.jpg")},
+			Messages:     []SendingMessage{NewImageMessage("http://example.com/original.jpg", "http://example.com/preview.jpg")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
@@ -658,7 +678,7 @@ func TestMulticastMessages(t *testing.T) {
 		},
 		{
 			// A sticker message
-			Messages:     []Message{NewStickerMessage("1", "1")},
+			Messages:     []SendingMessage{NewStickerMessage("1", "1")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
@@ -668,7 +688,7 @@ func TestMulticastMessages(t *testing.T) {
 		},
 		{
 			// Bad request
-			Messages:     []Message{NewTextMessage(""), NewTextMessage("")},
+			Messages:     []SendingMessage{NewTextMessage(""), NewTextMessage("")},
 			ResponseCode: 400,
 			Response:     []byte(`{"message":"Request body has 2 error(s).","details":[{"message":"may not be empty","property":"messages[0].text"},{"message":"may not be empty","property":"messages[1].text"}]}`),
 			Want: want{

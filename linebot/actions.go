@@ -19,18 +19,32 @@ import "encoding/json"
 // ActionType type
 type ActionType string
 
-// TemplateActionType constants
+// ActionType constants
 const (
 	ActionTypeURI            ActionType = "uri"
 	ActionTypeMessage        ActionType = "message"
 	ActionTypePostback       ActionType = "postback"
 	ActionTypeDatetimePicker ActionType = "datetimepicker"
+	ActionTypeCamera         ActionType = "camera"
+	ActionTypeCameraRoll     ActionType = "cameraRoll"
+	ActionTypeLocation       ActionType = "location"
 )
+
+// Action interface
+type Action interface {
+	json.Marshaler
+}
 
 // TemplateAction interface
 type TemplateAction interface {
-	json.Marshaler
+	Action
 	TemplateAction()
+}
+
+// QuickReplyAction type
+type QuickReplyAction interface {
+	Action
+	QuickReplyAction()
 }
 
 // URIAction type
@@ -127,6 +141,54 @@ func (a *DatetimePickerAction) MarshalJSON() ([]byte, error) {
 	})
 }
 
+// CameraAction type
+type CameraAction struct {
+	Label string
+}
+
+// MarshalJSON method of CameraAction
+func (a *CameraAction) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		Type  ActionType `json:"type"`
+		Label string     `json:"label"`
+	}{
+		Type:  ActionTypeCamera,
+		Label: a.Label,
+	})
+}
+
+// CameraRollAction type
+type CameraRollAction struct {
+	Label string
+}
+
+// MarshalJSON method of CameraRollAction
+func (a *CameraRollAction) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		Type  ActionType `json:"type"`
+		Label string     `json:"label"`
+	}{
+		Type:  ActionTypeCameraRoll,
+		Label: a.Label,
+	})
+}
+
+// LocationAction type
+type LocationAction struct {
+	Label string
+}
+
+// MarshalJSON method of LocationAction
+func (a *LocationAction) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		Type  ActionType `json:"type"`
+		Label string     `json:"label"`
+	}{
+		Type:  ActionTypeLocation,
+		Label: a.Label,
+	})
+}
+
 // TemplateAction implements TemplateAction interface
 func (*URIAction) TemplateAction() {}
 
@@ -138,6 +200,24 @@ func (*PostbackAction) TemplateAction() {}
 
 // TemplateAction implements TemplateAction interface
 func (*DatetimePickerAction) TemplateAction() {}
+
+// QuickReplyAction implements QuickReplyAction interface
+func (*MessageAction) QuickReplyAction() {}
+
+// QuickReplyAction implements QuickReplyAction interface
+func (*PostbackAction) QuickReplyAction() {}
+
+// QuickReplyAction implements QuickReplyAction interface
+func (*DatetimePickerAction) QuickReplyAction() {}
+
+// QuickReplyAction implements QuickReplyAction interface
+func (*CameraAction) QuickReplyAction() {}
+
+// QuickReplyAction implements QuickReplyAction interface
+func (*CameraRollAction) QuickReplyAction() {}
+
+// QuickReplyAction implements QuickReplyAction interface
+func (*LocationAction) QuickReplyAction() {}
 
 // NewURIAction function
 func NewURIAction(label, uri string) *URIAction {
@@ -174,5 +254,26 @@ func NewDatetimePickerAction(label, data, mode, initial, max, min string) *Datet
 		Initial: initial,
 		Max:     max,
 		Min:     min,
+	}
+}
+
+// NewCameraAction function
+func NewCameraAction(label string) *CameraAction {
+	return &CameraAction{
+		Label: label,
+	}
+}
+
+// NewCameraRollAction function
+func NewCameraRollAction(label string) *CameraRollAction {
+	return &CameraRollAction{
+		Label: label,
+	}
+}
+
+// NewLocationAction function
+func NewLocationAction(label string) *LocationAction {
+	return &LocationAction{
+		Label: label,
 	}
 }
