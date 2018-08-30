@@ -1,75 +1,70 @@
-# Changelog
+# Change Log
 
-## [3.0.0](https://github.com/line/line-bot-sdk-go/tree/3.0.0) (2018-08-02)
+## [v4.0.0](https://github.com/line/line-bot-sdk-go/tree/v4.0.0) (2018-08-30)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v3.0.0...v4.0.0)
 
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/2.0.0...3.0.0)
+**Merged pull requests:**
+
+-  Fix the version of linebot/version.go and  add a shell script to prevent to forget update of linebot/version.go . [\#103](https://github.com/line/line-bot-sdk-go/pull/103) ([suzuki-shunsuke](https://github.com/suzuki-shunsuke))
+- Remove useless indents for sample code [\#100](https://github.com/line/line-bot-sdk-go/pull/100) ([mingrammer](https://github.com/mingrammer))
+- Implement quick reply [\#99](https://github.com/line/line-bot-sdk-go/pull/99) ([sugyan](https://github.com/sugyan))
+
+## [v3.0.0](https://github.com/line/line-bot-sdk-go/tree/v3.0.0) (2018-08-02)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v2.0.0...v3.0.0)
 
 **Merged pull requests:**
 
 - Rename actions, and related function names [\#98](https://github.com/line/line-bot-sdk-go/pull/98) ([sugyan](https://github.com/sugyan))
 - Add changelog [\#96](https://github.com/line/line-bot-sdk-go/pull/96) ([sugyan](https://github.com/sugyan))
 
-## [2.0.0](https://github.com/line/line-bot-sdk-go/tree/2.0.0) (2018-07-24)
-
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.3.0...2.0.0)
+## [v2.0.0](https://github.com/line/line-bot-sdk-go/tree/v2.0.0) (2018-07-24)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.3.0...v2.0.0)
 
 **Merged pull requests:**
 
 - Update around LIFF API [\#95](https://github.com/line/line-bot-sdk-go/pull/95) ([sugyan](https://github.com/sugyan))
 
-## [1.3.0](https://github.com/line/line-bot-sdk-go/tree/1.3.0) (2018-07-17)
+## [v1.3.0](https://github.com/line/line-bot-sdk-go/tree/v1.3.0) (2018-07-17)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.2.1...v1.3.0)
 
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.2.1...1.3.0)
-
-**Implemented enhancements:**
+**Merged pull requests:**
 
 - Support issue link token api [\#94](https://github.com/line/line-bot-sdk-go/pull/94) ([suzuki-shunsuke](https://github.com/suzuki-shunsuke))
-
-**Merged pull requests:**
-
 - Add status badges and a link to LICENSE.txt in README [\#92](https://github.com/line/line-bot-sdk-go/pull/92) ([suzuki-shunsuke](https://github.com/suzuki-shunsuke))
 
-## [1.2.1](https://github.com/line/line-bot-sdk-go/tree/1.2.1) (2018-07-12)
-
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.2.0...1.2.1)
-
-**Implemented enhancements:**
-
-- Add AccountLink event [\#91](https://github.com/line/line-bot-sdk-go/pull/91) ([suzuki-shunsuke](https://github.com/suzuki-shunsuke))
+## [v1.2.1](https://github.com/line/line-bot-sdk-go/tree/v1.2.1) (2018-07-12)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.2.0...v1.2.1)
 
 **Merged pull requests:**
 
+- Add AccountLink event [\#91](https://github.com/line/line-bot-sdk-go/pull/91) ([suzuki-shunsuke](https://github.com/suzuki-shunsuke))
 - \#issue-liff add liff api [\#90](https://github.com/line/line-bot-sdk-go/pull/90) ([justdomepaul](https://github.com/justdomepaul))
 - Add lint [\#88](https://github.com/line/line-bot-sdk-go/pull/88) ([k2wanko](https://github.com/k2wanko))
 
-## [1.2.0](https://github.com/line/line-bot-sdk-go/tree/1.2.0) (2018-06-29)
-
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.1.2...1.2.0)
+## [v1.2.0](https://github.com/line/line-bot-sdk-go/tree/v1.2.0) (2018-06-29)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.1.2...v1.2.0)
 
 **Merged pull requests:**
 
 - Add `FileMessage` type [\#87](https://github.com/line/line-bot-sdk-go/pull/87) ([sugyan](https://github.com/sugyan))
 - Add types and functions for Flex messages [\#86](https://github.com/line/line-bot-sdk-go/pull/86) ([sugyan](https://github.com/sugyan))
 
-## [1.1.2](https://github.com/line/line-bot-sdk-go/tree/1.1.2) (2018-06-19)
-
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.1.1...1.1.2)
+## [v1.1.2](https://github.com/line/line-bot-sdk-go/tree/v1.1.2) (2018-06-19)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.1.1...v1.1.2)
 
 **Merged pull requests:**
 
 - use var MessageTypeFlex for set type flexMessage [\#80](https://github.com/line/line-bot-sdk-go/pull/80) ([TonPC64](https://github.com/TonPC64))
 
-## [1.1.1](https://github.com/line/line-bot-sdk-go/tree/1.1.1) (2018-06-19)
-
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.1.0...1.1.1)
+## [v1.1.1](https://github.com/line/line-bot-sdk-go/tree/v1.1.1) (2018-06-19)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.1.0...v1.1.1)
 
 **Merged pull requests:**
 
 - Add FlexMessage Type [\#78](https://github.com/line/line-bot-sdk-go/pull/78) ([TonPC64](https://github.com/TonPC64))
 
-## [1.1.0](https://github.com/line/line-bot-sdk-go/tree/1.1.0) (2018-05-07)
-
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.0.0...1.1.0)
+## [v1.1.0](https://github.com/line/line-bot-sdk-go/tree/v1.1.0) (2018-05-07)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.0.0...v1.1.0)
 
 **Merged pull requests:**
 
@@ -113,10 +108,7 @@
 - Remove linebot/vendor directory [\#11](https://github.com/line/line-bot-sdk-go/pull/11) ([mokejp](https://github.com/mokejp))
 - change return values of `ParseRequest` to `\[\]\*Event` [\#8](https://github.com/line/line-bot-sdk-go/pull/8) ([sugyan](https://github.com/sugyan))
 
-## [1.0.0](https://github.com/line/line-bot-sdk-go/tree/1.0.0) (2016-09-29)
-
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/f3e3a38aee47ca24ded221ce4be6d9363e3d32e1...1.0.0)
-
+## [v1.0.0](https://github.com/line/line-bot-sdk-go/tree/v1.0.0) (2016-09-29)
 **Merged pull requests:**
 
 - V2 [\#6](https://github.com/line/line-bot-sdk-go/pull/6) ([sugyan](https://github.com/sugyan))
@@ -124,4 +116,4 @@
 
 
 
-\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)*
+\* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
