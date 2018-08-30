@@ -66,14 +66,14 @@ func main() {
 			Name:        "Menu1",
 			ChatBarText: "ChatText",
 			Areas: []linebot.AreaDetail{
-				linebot.AreaDetail{
+				{
 					Bounds: linebot.RichMenuBounds{X: 0, Y: 0, Width: 1250, Height: 843},
 					Action: linebot.RichMenuAction{
 						Type: linebot.RichMenuActionTypePostback,
 						Data: "action=buy&itemid=123",
 					},
 				},
-				linebot.AreaDetail{
+				{
 					Bounds: linebot.RichMenuBounds{X: 1250, Y: 0, Width: 1250, Height: 843},
 					Action: linebot.RichMenuAction{
 						Type: linebot.RichMenuActionTypeURI,
@@ -81,14 +81,14 @@ func main() {
 						Text: "click me",
 					},
 				},
-				linebot.AreaDetail{
+				{
 					Bounds: linebot.RichMenuBounds{X: 0, Y: 843, Width: 1250, Height: 843},
 					Action: linebot.RichMenuAction{
 						Type: linebot.RichMenuActionTypeMessage,
 						Text: "hello world!",
 					},
 				},
-				linebot.AreaDetail{
+				{
 					Bounds: linebot.RichMenuBounds{X: 1250, Y: 843, Width: 1250, Height: 843},
 					Action: linebot.RichMenuAction{
 						Type: linebot.RichMenuActionTypeDatetimePicker,

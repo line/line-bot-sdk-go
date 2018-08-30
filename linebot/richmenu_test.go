@@ -50,7 +50,7 @@ func TestGetRichMenu(t *testing.T) {
 					Selected:    false,
 					ChatBarText: "",
 					Areas: []AreaDetail{
-						AreaDetail{
+						{
 							Bounds: RichMenuBounds{X: 0, Y: 0, Width: 2500, Height: 1686},
 							Action: RichMenuAction{Type: RichMenuActionTypePostback, Data: "action=buy&itemid=123"},
 						},
@@ -71,7 +71,7 @@ func TestGetRichMenu(t *testing.T) {
 					Selected:    false,
 					ChatBarText: "",
 					Areas: []AreaDetail{
-						AreaDetail{
+						{
 							Bounds: RichMenuBounds{X: 0, Y: 0, Width: 2500, Height: 1686},
 							Action: RichMenuAction{Type: RichMenuActionTypePostback, Data: "action=buy&itemid=123"},
 						},
@@ -147,7 +147,7 @@ func TestCreateRichMenu(t *testing.T) {
 				Name:        "Menu1",
 				ChatBarText: "ChatText",
 				Areas: []AreaDetail{
-					AreaDetail{
+					{
 						Bounds: RichMenuBounds{X: 0, Y: 0, Width: 2500, Height: 1686},
 						Action: RichMenuAction{Type: RichMenuActionTypePostback, Data: "action=buy&itemid=123"},
 					},
@@ -300,37 +300,37 @@ func TestListRichMenu(t *testing.T) {
 			Want: want{
 				URLPath: APIEndpointListRichMenu,
 				Response: []*RichMenuResponse{
-					&RichMenuResponse{
+					{
 						RichMenuID:  "123",
 						Size:        RichMenuSize{Width: 2500, Height: 1686},
 						Selected:    false,
 						ChatBarText: "",
 						Areas: []AreaDetail{
-							AreaDetail{
+							{
 								Bounds: RichMenuBounds{X: 0, Y: 0, Width: 2500, Height: 1686},
 								Action: RichMenuAction{Type: RichMenuActionTypePostback, Data: "action=buy&itemid=123"},
 							},
 						},
 					},
-					&RichMenuResponse{
+					{
 						RichMenuID:  "456",
 						Size:        RichMenuSize{Width: 2500, Height: 1686},
 						Selected:    false,
 						ChatBarText: "hello",
 						Areas: []AreaDetail{
-							AreaDetail{
+							{
 								Bounds: RichMenuBounds{X: 0, Y: 0, Width: 2500, Height: 1686},
 								Action: RichMenuAction{Type: RichMenuActionTypeMessage, Text: "text"},
 							},
 						},
 					},
-					&RichMenuResponse{
+					{
 						RichMenuID:  "789",
 						Size:        RichMenuSize{Width: 2500, Height: 1686},
 						Selected:    false,
 						ChatBarText: "line.me",
 						Areas: []AreaDetail{
-							AreaDetail{
+							{
 								Bounds: RichMenuBounds{X: 0, Y: 0, Width: 2500, Height: 1686},
 								Action: RichMenuAction{Type: RichMenuActionTypeURI, URI: "http://line.me/"},
 							},
