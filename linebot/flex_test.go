@@ -95,7 +95,7 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 			Want: &CarouselContainer{
 				Type: FlexContainerTypeCarousel,
 				Contents: []*BubbleContainer{
-					&BubbleContainer{
+					{
 						Type: FlexContainerTypeBubble,
 						Body: &BoxComponent{
 							Type:   FlexComponentTypeBox,
@@ -108,7 +108,7 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 							},
 						},
 					},
-					&BubbleContainer{
+					{
 						Type: FlexContainerTypeBubble,
 						Body: &BoxComponent{
 							Type:   FlexComponentTypeBox,

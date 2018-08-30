@@ -344,7 +344,7 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 		contents := &linebot.CarouselContainer{
 			Type: linebot.FlexContainerTypeCarousel,
 			Contents: []*linebot.BubbleContainer{
-				&linebot.BubbleContainer{
+				{
 					Type: linebot.FlexContainerTypeBubble,
 					Body: &linebot.BoxComponent{
 						Type:   linebot.FlexComponentTypeBox,
@@ -357,7 +357,7 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 						},
 					},
 				},
-				&linebot.BubbleContainer{
+				{
 					Type: linebot.FlexContainerTypeBubble,
 					Body: &linebot.BoxComponent{
 						Type:   linebot.FlexComponentTypeBox,

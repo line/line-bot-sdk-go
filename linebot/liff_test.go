@@ -41,14 +41,14 @@ func TestGetLIFF(t *testing.T) {
 				RequestBody: []byte(``),
 				Response: &LIFFAppsResponse{
 					Apps: []LIFFApp{
-						LIFFApp{
+						{
 							LIFFID: "testliffId1",
 							View: View{
 								Type: LIFFViewTypeFull,
 								URL:  "https://example.com/myservice",
 							},
 						},
-						LIFFApp{
+						{
 							LIFFID: "testliffId2",
 							View: View{
 								Type: LIFFViewTypeTall,
