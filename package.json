@@ -1,8 +1,0 @@
-{
-  "scripts": {
-    "test": "bash script/test.sh",
-    "fmt": "bash script/fmt.sh",
-    "changelog": "bash script/generate_changelog.sh",
-    "tag": "bash script/tag.sh"
-  }
-}
