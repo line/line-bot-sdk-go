@@ -54,6 +54,11 @@ func validateSignature(channelSecret, signature string, body []byte) bool {
 		return false
 	}
 	hash := hmac.New(sha256.New, []byte(channelSecret))
-	hash.Write(body)
+
+	_, err = hash.Write(body)
+	if err != nil {
+		return false
+	}
+
 	return hmac.Equal(decoded, hash.Sum(nil))
 }
