@@ -452,7 +452,7 @@ func TestPushMessages(t *testing.T) {
 		res, err := client.PushMessage(toUserID, tc.Messages...).Do()
 		if tc.Want.Error != nil {
 			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %q; want %q", i, err, tc.Want.Error)
+				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
 			}
 		} else {
 			if err != nil {
@@ -461,7 +461,7 @@ func TestPushMessages(t *testing.T) {
 		}
 		if tc.Want.Response != nil {
 			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+				t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
 			}
 		}
 	}
@@ -596,7 +596,7 @@ func TestReplyMessages(t *testing.T) {
 		res, err := client.ReplyMessage(replyToken, tc.Messages...).Do()
 		if tc.Want.Error != nil {
 			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %q; want %q", i, err, tc.Want.Error)
+				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
 			}
 		} else {
 			if err != nil {
@@ -605,7 +605,7 @@ func TestReplyMessages(t *testing.T) {
 		}
 		if tc.Want.Response != nil {
 			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+				t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
 			}
 		}
 	}
@@ -743,7 +743,7 @@ func TestMulticastMessages(t *testing.T) {
 		res, err := client.Multicast(toUserIDs, tc.Messages...).Do()
 		if tc.Want.Error != nil {
 			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %q; want %q", i, err, tc.Want.Error)
+				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
 			}
 		} else {
 			if err != nil {
@@ -752,7 +752,7 @@ func TestMulticastMessages(t *testing.T) {
 		}
 		if tc.Want.Response != nil {
 			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+				t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
 			}
 		}
 	}

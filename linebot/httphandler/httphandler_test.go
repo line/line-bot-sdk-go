@@ -109,7 +109,7 @@ func TestWebhookHandler(t *testing.T) {
 	// invalid signature
 	handler.HandleError(func(err error, r *http.Request) {
 		if err != linebot.ErrInvalidSignature {
-			t.Errorf("err %q; want %q", err, linebot.ErrInvalidSignature)
+			t.Errorf("err %v; want %v", err, linebot.ErrInvalidSignature)
 		}
 		if r == nil {
 			t.Errorf("r is nil")

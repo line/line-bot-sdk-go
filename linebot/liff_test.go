@@ -92,7 +92,7 @@ func TestGetLIFF(t *testing.T) {
 			t.Error(err)
 		}
 		if !reflect.DeepEqual(res, tc.Want.Response) {
-			t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+			t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
 		}
 	}
 }
@@ -154,7 +154,7 @@ func TestAddLIFF(t *testing.T) {
 			t.Error(err)
 		}
 		if !reflect.DeepEqual(res, tc.Want.Response) {
-			t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+			t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
 		}
 	}
 }
@@ -218,7 +218,7 @@ func TestUpdateLIFF(t *testing.T) {
 			t.Error(err)
 		}
 		if !reflect.DeepEqual(res, tc.Want.Response) {
-			t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+			t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
 		}
 	}
 }
@@ -277,7 +277,7 @@ func TestDeleteLIFF(t *testing.T) {
 			t.Error(err)
 		}
 		if !reflect.DeepEqual(res, tc.Want.Response) {
-			t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+			t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
 		}
 	}
 }

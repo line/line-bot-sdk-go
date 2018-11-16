@@ -125,7 +125,7 @@ func TestGetGroupMemberIDs(t *testing.T) {
 		res, err := client.GetGroupMemberIDs(tc.GroupID, tc.ContinuationToken).Do()
 		if tc.Want.Error != nil {
 			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %q; want %q", i, err, tc.Want.Error)
+				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
 			}
 		} else {
 			if err != nil {
@@ -133,7 +133,7 @@ func TestGetGroupMemberIDs(t *testing.T) {
 			}
 		}
 		if !reflect.DeepEqual(res, tc.Want.Response) {
-			t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+			t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
 		}
 	}
 }
@@ -272,7 +272,7 @@ func TestGetRoomMemberIDs(t *testing.T) {
 		res, err := client.GetRoomMemberIDs(tc.RoomID, tc.ContinuationToken).Do()
 		if tc.Want.Error != nil {
 			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %q; want %q", i, err, tc.Want.Error)
+				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
 			}
 		} else {
 			if err != nil {
@@ -280,7 +280,7 @@ func TestGetRoomMemberIDs(t *testing.T) {
 			}
 		}
 		if !reflect.DeepEqual(res, tc.Want.Response) {
-			t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+			t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
 		}
 	}
 }

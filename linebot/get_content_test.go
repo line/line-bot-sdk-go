@@ -106,7 +106,7 @@ func TestGetMessageContent(t *testing.T) {
 		res, err := client.GetMessageContent(tc.MessageID).Do()
 		if tc.Want.Error != nil {
 			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %q; want %q", i, err, tc.Want.Error)
+				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
 			}
 		} else {
 			if err != nil {
@@ -118,7 +118,7 @@ func TestGetMessageContent(t *testing.T) {
 			defer body.Close()
 			res.Content = nil // Set nil because streams aren't comparable.
 			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+				t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
 			}
 			bodyGot, err := ioutil.ReadAll(body)
 			if err != nil {

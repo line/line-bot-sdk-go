@@ -96,7 +96,7 @@ func TestLeaveGroup(t *testing.T) {
 		res, err := client.LeaveGroup(tc.GroupID).Do()
 		if tc.Want.Error != nil {
 			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %q; want %q", i, err, tc.Want.Error)
+				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
 			}
 		} else {
 			if err != nil {
@@ -105,7 +105,7 @@ func TestLeaveGroup(t *testing.T) {
 		}
 		if tc.Want.Response != nil {
 			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+				t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
 			}
 		}
 	}
@@ -201,7 +201,7 @@ func TestLeaveRoom(t *testing.T) {
 		res, err := client.LeaveRoom(tc.RoomID).Do()
 		if tc.Want.Error != nil {
 			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %q; want %q", i, err, tc.Want.Error)
+				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
 			}
 		} else {
 			if err != nil {
@@ -210,7 +210,7 @@ func TestLeaveRoom(t *testing.T) {
 		}
 		if tc.Want.Response != nil {
 			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+				t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
 			}
 		}
 	}

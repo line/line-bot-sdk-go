@@ -113,7 +113,7 @@ func TestGetRichMenu(t *testing.T) {
 		}
 		if tc.Want.Error != nil {
 			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %q; want %q", i, err, tc.Want.Error)
+				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
 			}
 		} else {
 			if err != nil {
@@ -192,7 +192,7 @@ func TestCreateRichMenu(t *testing.T) {
 		res, err := client.CreateRichMenu(tc.Request).Do()
 		if tc.Want.Error != nil {
 			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %q; want %q", i, err, tc.Want.Error)
+				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
 			}
 		} else {
 			if err != nil {
@@ -201,7 +201,7 @@ func TestCreateRichMenu(t *testing.T) {
 		}
 		if tc.Want.Response != nil {
 			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+				t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
 			}
 		}
 	}
@@ -262,7 +262,7 @@ func TestLinkRichMenu(t *testing.T) {
 		res, err = client.LinkUserRichMenu(tc.UserID, tc.RichMenuID).Do()
 		if tc.Want.Error != nil {
 			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %q; want %q", i, err, tc.Want.Error)
+				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
 			}
 		} else {
 			if err != nil {
@@ -271,7 +271,7 @@ func TestLinkRichMenu(t *testing.T) {
 		}
 		if tc.Want.Response != nil {
 			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+				t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
 			}
 		}
 	}
@@ -368,7 +368,7 @@ func TestListRichMenu(t *testing.T) {
 		res, err := client.GetRichMenuList().Do()
 		if tc.Want.Error != nil {
 			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %q; want %q", i, err, tc.Want.Error)
+				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
 			}
 		} else {
 			if err != nil {
