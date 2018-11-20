@@ -57,7 +57,7 @@ func TestNewClient(t *testing.T) {
 		t.Errorf("channelToken %s; want %s", client.channelToken, token)
 	}
 	if !reflect.DeepEqual(client.endpointBase, wantURL) {
-		t.Errorf("endpointBase %q; want %q", client.endpointBase, wantURL)
+		t.Errorf("endpointBase %v; want %v", client.endpointBase, wantURL)
 	}
 	if client.httpClient != http.DefaultClient {
 		t.Errorf("httpClient %p; want %p", client.httpClient, http.DefaultClient)
@@ -80,7 +80,7 @@ func TestNewClientWithOptions(t *testing.T) {
 		t.Fatal(err)
 	}
 	if !reflect.DeepEqual(client.endpointBase, wantURL) {
-		t.Errorf("endpointBase %q; want %q", client.endpointBase, wantURL)
+		t.Errorf("endpointBase %v; want %v", client.endpointBase, wantURL)
 	}
 	if client.httpClient != &httpClient {
 		t.Errorf("httpClient %p; want %p", client.httpClient, &httpClient)

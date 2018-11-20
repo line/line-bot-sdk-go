@@ -494,7 +494,7 @@ func TestParseRequest(t *testing.T) {
 		for i, got := range gotEvents {
 			want := webhookTestWantEvents[i]
 			if !reflect.DeepEqual(got, want) {
-				t.Errorf("Event %d %q; want %q", i, got, want)
+				t.Errorf("Event %d %v; want %v", i, got, want)
 			}
 		}
 	}))
@@ -575,7 +575,7 @@ func TestEventMarshaling(t *testing.T) {
 				t.Fatal(err)
 			}
 			if !reflect.DeepEqual(got, want) {
-				t.Errorf("Event marshal %d %q; want %q", i, got, want)
+				t.Errorf("Event marshal %d %v; want %v", i, got, want)
 			}
 		}
 	}

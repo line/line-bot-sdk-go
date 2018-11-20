@@ -98,7 +98,7 @@ func TestGetProfile(t *testing.T) {
 		res, err := client.GetProfile(tc.UserID).Do()
 		if tc.Want.Error != nil {
 			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %q; want %q", i, err, tc.Want.Error)
+				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
 			}
 		} else {
 			if err != nil {
@@ -106,7 +106,7 @@ func TestGetProfile(t *testing.T) {
 			}
 		}
 		if !reflect.DeepEqual(res, tc.Want.Response) {
-			t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+			t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
 		}
 	}
 }
@@ -222,7 +222,7 @@ func TestGetGroupMemberProfile(t *testing.T) {
 		res, err := client.GetGroupMemberProfile(tc.GroupID, tc.UserID).Do()
 		if tc.Want.Error != nil {
 			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %q; want %q", i, err, tc.Want.Error)
+				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
 			}
 		} else {
 			if err != nil {
@@ -230,7 +230,7 @@ func TestGetGroupMemberProfile(t *testing.T) {
 			}
 		}
 		if !reflect.DeepEqual(res, tc.Want.Response) {
-			t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+			t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
 		}
 	}
 }
@@ -346,7 +346,7 @@ func TestGetRoomMemberProfile(t *testing.T) {
 		res, err := client.GetRoomMemberProfile(tc.RoomID, tc.UserID).Do()
 		if tc.Want.Error != nil {
 			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %q; want %q", i, err, tc.Want.Error)
+				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
 			}
 		} else {
 			if err != nil {
@@ -354,7 +354,7 @@ func TestGetRoomMemberProfile(t *testing.T) {
 			}
 		}
 		if !reflect.DeepEqual(res, tc.Want.Response) {
-			t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+			t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
 		}
 	}
 }
