@@ -43,13 +43,16 @@ type ImagemapArea struct {
 
 // ImagemapVideo type
 type ImagemapVideo struct {
-	OriginalContentURL string       `json:"originalContentUrl"`
-	PreviewImageURL    string       `json:"previewImageUrl"`
-	Area               ImagemapArea `json:"area"`
-	ExternalLink       *struct {
-		LinkUri string `json:"linkUri"`
-		Label   string `json:"label"`
-	} `json:"externalLink,omitempty"`
+	OriginalContentURL string        `json:"originalContentUrl"`
+	PreviewImageURL    string        `json:"previewImageUrl"`
+	Area               ImagemapArea  `json:"area"`
+	ExternalLink       *ExternalLink `json:"externalLink,omitempty"`
+}
+
+// ExternalLink type
+type ExternalLink struct {
+	LinkURI string `json:"linkUri"`
+	Label   string `json:"label"`
 }
 
 // ImagemapAction type
