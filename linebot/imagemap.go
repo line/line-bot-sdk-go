@@ -41,6 +41,20 @@ type ImagemapArea struct {
 	Height int `json:"height"`
 }
 
+// ImagemapVideo type
+type ImagemapVideo struct {
+	OriginalContentURL string        `json:"originalContentUrl"`
+	PreviewImageURL    string        `json:"previewImageUrl"`
+	Area               ImagemapArea  `json:"area"`
+	ExternalLink       *ExternalLink `json:"externalLink,omitempty"`
+}
+
+// ExternalLink type
+type ExternalLink struct {
+	LinkURI string `json:"linkUri"`
+	Label   string `json:"label"`
+}
+
 // ImagemapAction type
 type ImagemapAction interface {
 	json.Marshaler

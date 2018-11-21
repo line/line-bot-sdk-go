@@ -271,6 +271,7 @@ type ImagemapMessage struct {
 	AltText  string
 	BaseSize ImagemapBaseSize
 	Actions  []ImagemapAction
+	Video    *ImagemapVideo
 
 	quickReplyitems *QuickReplyItems
 }
@@ -283,6 +284,7 @@ func (m *ImagemapMessage) MarshalJSON() ([]byte, error) {
 		AltText    string           `json:"altText"`
 		BaseSize   ImagemapBaseSize `json:"baseSize"`
 		Actions    []ImagemapAction `json:"actions"`
+		Video      *ImagemapVideo   `json:"video,omitempty"`
 		QuickReply *QuickReplyItems `json:"quickReply,omitempty"`
 	}{
 		Type:       MessageTypeImagemap,
@@ -290,6 +292,7 @@ func (m *ImagemapMessage) MarshalJSON() ([]byte, error) {
 		AltText:    m.AltText,
 		BaseSize:   m.BaseSize,
 		Actions:    m.Actions,
+		Video:      m.Video,
 		QuickReply: m.quickReplyitems,
 	})
 }

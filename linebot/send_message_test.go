@@ -326,11 +326,43 @@ func TestPushMessages(t *testing.T) {
 					NewURIImagemapAction("https://example.com/", ImagemapArea{520, 0, 520, 1040}),
 					NewMessageImagemapAction("hello", ImagemapArea{520, 0, 520, 1040}),
 				),
+				&ImagemapMessage{
+					BaseURL:  "https://example.com/bot/images/rm001",
+					AltText:  "this is an imagemap",
+					BaseSize: ImagemapBaseSize{1040, 1040},
+					Actions: []ImagemapAction{
+						NewURIImagemapAction("https://example.com/", ImagemapArea{520, 0, 520, 1040}),
+						NewMessageImagemapAction("hello", ImagemapArea{520, 0, 520, 1040}),
+					},
+					Video: &ImagemapVideo{
+						OriginalContentURL: "https://example.com/original.mp4",
+						PreviewImageURL:    "http://example.com/preview.jpg",
+						Area:               ImagemapArea{10, 10, 100, 200},
+					},
+				},
+				&ImagemapMessage{
+					BaseURL:  "https://example.com/bot/images/rm001",
+					AltText:  "this is an imagemap external link",
+					BaseSize: ImagemapBaseSize{1040, 1040},
+					Actions: []ImagemapAction{
+						NewURIImagemapAction("https://example.com/", ImagemapArea{520, 0, 520, 1040}),
+						NewMessageImagemapAction("hello", ImagemapArea{520, 0, 520, 1040}),
+					},
+					Video: &ImagemapVideo{
+						OriginalContentURL: "https://example.com/original.mp4",
+						PreviewImageURL:    "http://example.com/preview.jpg",
+						Area:               ImagemapArea{10, 10, 100, 200},
+						ExternalLink: &ExternalLink{
+							LinkURI: "https://example.com/",
+							Label:   "external link",
+						},
+					},
+				},
 			},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
-				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}]}]}` + "\n"),
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}]},{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}],"video":{"originalContentUrl":"https://example.com/original.mp4","previewImageUrl":"http://example.com/preview.jpg","area":{"x":10,"y":10,"width":100,"height":200}}},{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap external link","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}],"video":{"originalContentUrl":"https://example.com/original.mp4","previewImageUrl":"http://example.com/preview.jpg","area":{"x":10,"y":10,"width":100,"height":200},"externalLink":{"linkUri":"https://example.com/","label":"external link"}}}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
