@@ -1,5 +1,20 @@
 # Change Log
 
+## [v4.1.0](https://github.com/line/line-bot-sdk-go/tree/v4.1.0) (2018-11-28)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v4.0.0...v4.1.0)
+
+**Merged pull requests:**
+
+- Implement MarshalJSON for Flex Components and Containers [\#115](https://github.com/line/line-bot-sdk-go/pull/115) ([acoshift](https://github.com/acoshift))
+- Replace format strings of tests from `%q` to `%v` [\#114](https://github.com/line/line-bot-sdk-go/pull/114) ([sugyan](https://github.com/sugyan))
+- Retire reviewdog and update travis.yml [\#113](https://github.com/line/line-bot-sdk-go/pull/113) ([sugyan](https://github.com/sugyan))
+- Add ImagemapVideo [\#112](https://github.com/line/line-bot-sdk-go/pull/112) ([galigalikun](https://github.com/galigalikun))
+- ci: stop support of Go 1.7 and 1.8 [\#111](https://github.com/line/line-bot-sdk-go/pull/111) ([suzuki-shunsuke](https://github.com/suzuki-shunsuke))
+- Fix not to ignore Hash.write error [\#110](https://github.com/line/line-bot-sdk-go/pull/110) ([shuheiktgw](https://github.com/shuheiktgw))
+- Update CONTRIBUTING.md [\#107](https://github.com/line/line-bot-sdk-go/pull/107) ([syleeeee](https://github.com/syleeeee))
+- Lint [\#105](https://github.com/line/line-bot-sdk-go/pull/105) ([suzuki-shunsuke](https://github.com/suzuki-shunsuke))
+- Update supported versions [\#104](https://github.com/line/line-bot-sdk-go/pull/104) ([sugyan](https://github.com/sugyan))
+
 ## [v4.0.0](https://github.com/line/line-bot-sdk-go/tree/v4.0.0) (2018-08-30)
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v3.0.0...v4.0.0)
 
