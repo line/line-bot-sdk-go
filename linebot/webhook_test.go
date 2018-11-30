@@ -249,6 +249,47 @@ var webhookTestRequestBody = `{
             "result": "ok",
             "nonce": "xxxxxxxxxxxxxxx"
           }
+        },
+        {
+          "replyToken": "0f3779fba3b349968c5d07db31eabf65",
+          "type": "memberJoined",
+          "timestamp": 1462629479859,
+          "source": {
+            "type": "group",
+            "groupId": "C4af498062901234567890123456789ab"
+          },
+          "joined": {
+            "members": [
+              {
+                "type": "user",
+                "userId": "U4af498062901234567890123456789ab"
+              },
+              {
+                "type": "user",
+                "userId": "U91eeaf62d901234567890123456789ab"
+              }
+            ]
+          }
+        },
+        {
+          "type": "memberLeft",
+          "timestamp": 1462629479960,
+          "source": {
+            "type": "group",
+            "groupId": "C4af498062901234567890123456789ab"
+          },
+          "left": {
+            "members": [
+              {
+                "type": "user",
+                "userId": "U4af498062901234567890123456789ab"
+              },
+              {
+                "type": "user",
+                "userId": "U91eeaf62d901234567890123456789ab"
+              }
+            ]
+          }
         }
     ]
 }
@@ -468,6 +509,43 @@ var webhookTestWantEvents = []*Event{
 		AccountLink: &AccountLink{
 			Result: AccountLinkResultOK,
 			Nonce:  "xxxxxxxxxxxxxxx",
+		},
+	},
+	{
+		ReplyToken: "0f3779fba3b349968c5d07db31eabf65",
+		Type:       EventTypeMemberJoin,
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
+		Source: &EventSource{
+			Type:    EventSourceTypeGroup,
+			GroupID: "C4af498062901234567890123456789ab",
+		},
+		Members: []*EventSource{
+			&EventSource{
+				Type:   EventSourceTypeUser,
+				UserID: "U4af498062901234567890123456789ab",
+			},
+			&EventSource{
+				Type:   EventSourceTypeUser,
+				UserID: "U91eeaf62d901234567890123456789ab",
+			},
+		},
+	},
+	{
+		Type:      EventTypeMemberLeave,
+		Timestamp: time.Date(2016, time.May, 7, 13, 57, 59, int(960*time.Millisecond), time.UTC),
+		Source: &EventSource{
+			Type:    EventSourceTypeGroup,
+			GroupID: "C4af498062901234567890123456789ab",
+		},
+		Members: []*EventSource{
+			&EventSource{
+				Type:   EventSourceTypeUser,
+				UserID: "U4af498062901234567890123456789ab",
+			},
+			&EventSource{
+				Type:   EventSourceTypeUser,
+				UserID: "U91eeaf62d901234567890123456789ab",
+			},
 		},
 	},
 }
