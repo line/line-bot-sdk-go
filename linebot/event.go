@@ -25,17 +25,17 @@ type EventType string
 
 // EventType constants
 const (
-	EventTypeMessage     EventType = "message"
-	EventTypeFollow      EventType = "follow"
-	EventTypeUnfollow    EventType = "unfollow"
-	EventTypeJoin        EventType = "join"
-	EventTypeLeave       EventType = "leave"
-	EventTypeMemberJoin  EventType = "memberJoined"
-	EventTypeMemberLeave EventType = "memberLeft"
-	EventTypePostback    EventType = "postback"
-	EventTypeBeacon      EventType = "beacon"
-	EventTypeAccountLink EventType = "accountLink"
-	EventTypeThings      EventType = "things"
+	EventTypeMessage      EventType = "message"
+	EventTypeFollow       EventType = "follow"
+	EventTypeUnfollow     EventType = "unfollow"
+	EventTypeJoin         EventType = "join"
+	EventTypeLeave        EventType = "leave"
+	EventTypeMemberJoined EventType = "memberJoined"
+	EventTypeMemberLeft   EventType = "memberLeft"
+	EventTypePostback     EventType = "postback"
+	EventTypeBeacon       EventType = "beacon"
+	EventTypeAccountLink  EventType = "accountLink"
+	EventTypeThings       EventType = "things"
 )
 
 // EventSourceType type
@@ -201,11 +201,11 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 	}
 
 	switch e.Type {
-	case EventTypeMemberJoin:
+	case EventTypeMemberJoined:
 		raw.Joined = &rawMemberEvent{
 			Members: e.Members,
 		}
-	case EventTypeMemberLeave:
+	case EventTypeMemberLeft:
 		raw.Left = &rawMemberEvent{
 			Members: e.Members,
 		}
@@ -331,9 +331,9 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 			Result: rawEvent.AccountLink.Result,
 			Nonce:  rawEvent.AccountLink.Nonce,
 		}
-	case EventTypeMemberJoin:
+	case EventTypeMemberJoined:
 		e.Members = rawEvent.Joined.Members
-	case EventTypeMemberLeave:
+	case EventTypeMemberLeft:
 		e.Members = rawEvent.Left.Members
 	case EventTypeThings:
 		e.Things = new(Things)

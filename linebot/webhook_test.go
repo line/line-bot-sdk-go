@@ -537,7 +537,7 @@ var webhookTestWantEvents = []*Event{
 	},
 	{
 		ReplyToken: "0f3779fba3b349968c5d07db31eabf65",
-		Type:       EventTypeMemberJoin,
+		Type:       EventTypeMemberJoined,
 		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:    EventSourceTypeGroup,
@@ -555,7 +555,7 @@ var webhookTestWantEvents = []*Event{
 		},
 	},
 	{
-		Type:      EventTypeMemberLeave,
+		Type:      EventTypeMemberLeft,
 		Timestamp: time.Date(2016, time.May, 7, 13, 57, 59, int(960*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:    EventSourceTypeGroup,
