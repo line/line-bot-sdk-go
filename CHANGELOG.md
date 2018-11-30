@@ -1,5 +1,13 @@
 # Change Log
 
+## [v4.2.0](https://github.com/line/line-bot-sdk-go/tree/v4.2.0) (2018-11-30)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v4.1.0...v4.2.0)
+
+**Merged pull requests:**
+
+- Add new EventType. [\#117](https://github.com/line/line-bot-sdk-go/pull/117) ([toyo](https://github.com/toyo))
+- Add member join/leave event [\#116](https://github.com/line/line-bot-sdk-go/pull/116) ([clsung](https://github.com/clsung))
+
 ## [v4.1.0](https://github.com/line/line-bot-sdk-go/tree/v4.1.0) (2018-11-28)
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v4.0.0...v4.1.0)
 
