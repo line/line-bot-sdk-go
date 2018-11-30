@@ -125,6 +125,7 @@ type Event struct {
 	Beacon      *Beacon
 	AccountLink *AccountLink
 	Things      *Things
+	Members     []*EventSource
 }
 
 type rawEvent struct {
@@ -136,6 +137,12 @@ type rawEvent struct {
 	*Postback   `json:"postback,omitempty"`
 	Beacon      *rawBeaconEvent      `json:"beacon,omitempty"`
 	AccountLink *rawAccountLinkEvent `json:"link,omitempty"`
+	Joined      *rawMemberEvent      `json:"joined,omitempty"`
+	Left        *rawMemberEvent      `json:"left,omitempty"`
+}
+
+type rawMemberEvent struct {
+	Members []*EventSource `json:"members"`
 }
 
 type rawEventMessage struct {
@@ -189,6 +196,17 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 		raw.AccountLink = &rawAccountLinkEvent{
 			Result: e.AccountLink.Result,
 			Nonce:  e.AccountLink.Nonce,
+		}
+	}
+
+	switch e.Type {
+	case EventTypeMemberJoin:
+		raw.Joined = &rawMemberEvent{
+			Members: e.Members,
+		}
+	case EventTypeMemberLeave:
+		raw.Left = &rawMemberEvent{
+			Members: e.Members,
 		}
 	}
 
@@ -307,6 +325,10 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 			Result: rawEvent.AccountLink.Result,
 			Nonce:  rawEvent.AccountLink.Nonce,
 		}
+	case EventTypeMemberJoin:
+		e.Members = rawEvent.Joined.Members
+	case EventTypeMemberLeave:
+		e.Members = rawEvent.Left.Members
 	}
 	return
 }
