@@ -289,6 +289,30 @@ var webhookTestRequestBody = `{
                 "userId": "U91eeaf62d901234567890123456789ab"
               }
             ]
+		  }
+        },
+        {
+          "type": "things",
+          "timestamp": 1462629479859,
+          "source": {
+            "type": "user",
+            "userId": "U91eeaf62d901234567890123456789ab"
+          },
+          "things": {
+            "deviceId": "t2c449c9d1...",
+            "type": "link"
+          }
+        },
+        {
+          "type": "things",
+          "timestamp": 1462629479859,
+          "source": {
+            "type": "user",
+            "userId": "U91eeaf62d901234567890123456789ab"
+          },
+          "things": {
+            "deviceId": "t2c449c9d1...",
+            "type": "unlink"
           }
         }
     ]
@@ -513,7 +537,7 @@ var webhookTestWantEvents = []*Event{
 	},
 	{
 		ReplyToken: "0f3779fba3b349968c5d07db31eabf65",
-		Type:       EventTypeMemberJoin,
+		Type:       EventTypeMemberJoined,
 		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:    EventSourceTypeGroup,
@@ -531,7 +555,7 @@ var webhookTestWantEvents = []*Event{
 		},
 	},
 	{
-		Type:      EventTypeMemberLeave,
+		Type:      EventTypeMemberLeft,
 		Timestamp: time.Date(2016, time.May, 7, 13, 57, 59, int(960*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:    EventSourceTypeGroup,
@@ -546,6 +570,30 @@ var webhookTestWantEvents = []*Event{
 				Type:   EventSourceTypeUser,
 				UserID: "U91eeaf62d901234567890123456789ab",
 			},
+		},
+	},
+	{
+		Type:      EventTypeThings,
+		Timestamp: time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
+		Source: &EventSource{
+			Type:   EventSourceTypeUser,
+			UserID: "U91eeaf62d901234567890123456789ab",
+		},
+		Things: &Things{
+			DeviceID: `t2c449c9d1...`,
+			Type:     `link`,
+		},
+	},
+	{
+		Type:      EventTypeThings,
+		Timestamp: time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
+		Source: &EventSource{
+			Type:   EventSourceTypeUser,
+			UserID: "U91eeaf62d901234567890123456789ab",
+		},
+		Things: &Things{
+			DeviceID: `t2c449c9d1...`,
+			Type:     `unlink`,
 		},
 	},
 }

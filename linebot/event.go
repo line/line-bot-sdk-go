@@ -25,16 +25,17 @@ type EventType string
 
 // EventType constants
 const (
-	EventTypeMessage     EventType = "message"
-	EventTypeFollow      EventType = "follow"
-	EventTypeUnfollow    EventType = "unfollow"
-	EventTypeJoin        EventType = "join"
-	EventTypeLeave       EventType = "leave"
-	EventTypeMemberJoin  EventType = "memberJoined"
-	EventTypeMemberLeave EventType = "memberLeft"
-	EventTypePostback    EventType = "postback"
-	EventTypeBeacon      EventType = "beacon"
-	EventTypeAccountLink EventType = "accountLink"
+	EventTypeMessage      EventType = "message"
+	EventTypeFollow       EventType = "follow"
+	EventTypeUnfollow     EventType = "unfollow"
+	EventTypeJoin         EventType = "join"
+	EventTypeLeave        EventType = "leave"
+	EventTypeMemberJoined EventType = "memberJoined"
+	EventTypeMemberLeft   EventType = "memberLeft"
+	EventTypePostback     EventType = "postback"
+	EventTypeBeacon       EventType = "beacon"
+	EventTypeAccountLink  EventType = "accountLink"
+	EventTypeThings       EventType = "things"
 )
 
 // EventSourceType type
@@ -60,6 +61,11 @@ type Params struct {
 	Date     string `json:"date,omitempty"`
 	Time     string `json:"time,omitempty"`
 	Datetime string `json:"datetime,omitempty"`
+}
+
+// Members type
+type Members struct {
+	Members []EventSource `json:"members"`
 }
 
 // Postback type
@@ -100,6 +106,12 @@ type AccountLink struct {
 	Nonce  string
 }
 
+// Things type
+type Things struct {
+	DeviceID string `json:"deviceId"`
+	Type     string `json:"type"`
+}
+
 // Event type
 type Event struct {
 	ReplyToken  string
@@ -107,9 +119,12 @@ type Event struct {
 	Timestamp   time.Time
 	Source      *EventSource
 	Message     Message
+	Joined      *Members `json:"joined"`
+	Left        *Members `json:"left"`
 	Postback    *Postback
 	Beacon      *Beacon
 	AccountLink *AccountLink
+	Things      *Things `json:"things"`
 	Members     []*EventSource
 }
 
@@ -124,6 +139,7 @@ type rawEvent struct {
 	AccountLink *rawAccountLinkEvent `json:"link,omitempty"`
 	Joined      *rawMemberEvent      `json:"joined,omitempty"`
 	Left        *rawMemberEvent      `json:"left,omitempty"`
+	Things      *Things              `json:"things,omitempty"`
 }
 
 type rawMemberEvent struct {
@@ -185,13 +201,18 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 	}
 
 	switch e.Type {
-	case EventTypeMemberJoin:
+	case EventTypeMemberJoined:
 		raw.Joined = &rawMemberEvent{
 			Members: e.Members,
 		}
-	case EventTypeMemberLeave:
+	case EventTypeMemberLeft:
 		raw.Left = &rawMemberEvent{
 			Members: e.Members,
+		}
+	case EventTypeThings:
+		raw.Things = &Things{
+			DeviceID: e.Things.DeviceID,
+			Type:     e.Things.Type,
 		}
 	}
 
@@ -310,10 +331,14 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 			Result: rawEvent.AccountLink.Result,
 			Nonce:  rawEvent.AccountLink.Nonce,
 		}
-	case EventTypeMemberJoin:
+	case EventTypeMemberJoined:
 		e.Members = rawEvent.Joined.Members
-	case EventTypeMemberLeave:
+	case EventTypeMemberLeft:
 		e.Members = rawEvent.Left.Members
+	case EventTypeThings:
+		e.Things = new(Things)
+		e.Things.Type = rawEvent.Things.Type
+		e.Things.DeviceID = rawEvent.Things.DeviceID
 	}
 	return
 }
