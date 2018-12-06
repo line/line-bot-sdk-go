@@ -59,6 +59,20 @@ func main() {
 		for _, richmenu := range res {
 			log.Printf("%v\n", richmenu)
 		}
+	case "get_default":
+		res, err := bot.GetDefaultRichMenu().Do()
+		if err != nil {
+			log.Fatal(err)
+		}
+		log.Printf("%v\n", res)
+	case "set_default":
+		if _, err = bot.SetDefaultRichMenu(*rid).Do(); err != nil {
+			log.Fatal(err)
+		}
+	case "cancel_default":
+		if _, err = bot.CancelDefaultRichMenu().Do(); err != nil {
+			log.Fatal(err)
+		}
 	case "create":
 		richMenu := linebot.RichMenu{
 			Size:        linebot.RichMenuSize{Width: 2500, Height: 1686},
