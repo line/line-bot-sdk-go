@@ -45,6 +45,8 @@ const (
 	APIEndpointGetUserRichMenu       = "/v2/bot/user/%s/richmenu"
 	APIEndpointLinkUserRichMenu      = "/v2/bot/user/%s/richmenu/%s"
 	APIEndpointUnlinkUserRichMenu    = "/v2/bot/user/%s/richmenu"
+	APIEndpointSetDefaultRichMenu    = "/v2/bot/user/all/richmenu/%s"
+	APIEndpointDefaultRichMenu       = "/v2/bot/user/all/richmenu"   // Get: GET / Delete: DELETE
 	APIEndpointDownloadRichMenuImage = "/v2/bot/richmenu/%s/content" // Download: GET / Upload: POST
 	APIEndpointUploadRichMenuImage   = "/v2/bot/richmenu/%s/content" // Download: GET / Upload: POST
 

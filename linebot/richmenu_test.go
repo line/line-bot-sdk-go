@@ -277,6 +277,122 @@ func TestLinkRichMenu(t *testing.T) {
 	}
 }
 
+// Test method for GetDefaultRichMenu
+func (call *GetDefaultRichMenuCall) Test() {
+}
+
+// Test method for CancelDefaultRichMenu
+func (call *CancelDefaultRichMenuCall) Test() {
+}
+
+// Test method for SetDefaultRichMenu
+func (call *SetDefaultRichMenuCall) Test() {
+}
+
+// TestDefaultRichMenu tests SetDefaultRichMenu, CancelDefaultRichMenu, GetDefaultRichMenu
+func TestDefaultRichMenu(t *testing.T) {
+	type testMethod interface {
+		Test()
+	}
+	type want struct {
+		URLPath     string
+		HTTPMethod  string
+		RequestBody []byte
+		Response    interface{}
+		Error       error
+	}
+	var testCases = []struct {
+		TestMethod   testMethod
+		RichMenuID   string
+		ResponseCode int
+		Response     []byte
+		Want         want
+	}{
+		{
+			RichMenuID:   "654321",
+			TestMethod:   new(SetDefaultRichMenuCall),
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				HTTPMethod: http.MethodPost,
+				URLPath:    fmt.Sprintf(APIEndpointSetDefaultRichMenu, "654321"),
+				Response:   &BasicResponse{},
+			},
+		},
+		{
+			RichMenuID:   "N/A",
+			TestMethod:   new(GetDefaultRichMenuCall),
+			ResponseCode: 200,
+			Response:     []byte(`{"richMenuId": "654321"}`),
+			Want: want{
+				HTTPMethod: http.MethodGet,
+				URLPath:    APIEndpointDefaultRichMenu,
+				Response:   &RichMenuIDResponse{RichMenuID: "654321"},
+			},
+		},
+		{
+			RichMenuID:   "N/A",
+			TestMethod:   new(CancelDefaultRichMenuCall),
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				HTTPMethod: http.MethodDelete,
+				URLPath:    APIEndpointDefaultRichMenu,
+				Response:   &BasicResponse{},
+			},
+		},
+	}
+
+	var currentTestIdx int
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		tc := testCases[currentTestIdx]
+		if r.Method != tc.Want.HTTPMethod {
+			t.Errorf("Method %s; want %s", r.Method, tc.Want.HTTPMethod)
+		}
+		if r.URL.Path != tc.Want.URLPath {
+			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
+		}
+		_, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+		w.WriteHeader(tc.ResponseCode)
+		w.Write(tc.Response)
+	}))
+	defer server.Close()
+	client, err := mockClient(server)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var res interface{}
+	for i, tc := range testCases {
+		currentTestIdx = i
+		switch tc.TestMethod.(type) {
+		case *SetDefaultRichMenuCall:
+			res, err = client.SetDefaultRichMenu(tc.RichMenuID).Do()
+		case *CancelDefaultRichMenuCall:
+			res, err = client.CancelDefaultRichMenu().Do()
+		case *GetDefaultRichMenuCall:
+			res, err = client.GetDefaultRichMenu().Do()
+		}
+		if tc.Want.Error != nil {
+			if !reflect.DeepEqual(err, tc.Want.Error) {
+				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+			}
+		} else {
+			if err != nil {
+				t.Error(err)
+			}
+		}
+		if tc.Want.Response != nil {
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
+			}
+		}
+	}
+}
+
 // TestListRichMenu
 func TestListRichMenu(t *testing.T) {
 	type want struct {

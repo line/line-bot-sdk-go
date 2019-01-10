@@ -337,6 +337,103 @@ func (call *UnlinkUserRichMenuCall) Do() (*BasicResponse, error) {
 	return decodeToBasicResponse(res)
 }
 
+// SetDefaultRichMenu method
+func (client *Client) SetDefaultRichMenu(richMenuID string) *SetDefaultRichMenuCall {
+	return &SetDefaultRichMenuCall{
+		c:          client,
+		richMenuID: richMenuID,
+	}
+}
+
+//SetDefaultRichMenuCall type
+type SetDefaultRichMenuCall struct {
+	c   *Client
+	ctx context.Context
+
+	richMenuID string
+}
+
+// WithContext method
+func (call *SetDefaultRichMenuCall) WithContext(ctx context.Context) *SetDefaultRichMenuCall {
+	call.ctx = ctx
+	return call
+}
+
+// Do method
+func (call *SetDefaultRichMenuCall) Do() (*BasicResponse, error) {
+	endpoint := fmt.Sprintf(APIEndpointSetDefaultRichMenu, call.richMenuID)
+	res, err := call.c.post(call.ctx, endpoint, nil)
+	if res != nil && res.Body != nil {
+		defer res.Body.Close()
+	}
+	if err != nil {
+		return nil, err
+	}
+	return decodeToBasicResponse(res)
+}
+
+// CancelDefaultRichMenu method
+func (client *Client) CancelDefaultRichMenu() *CancelDefaultRichMenuCall {
+	return &CancelDefaultRichMenuCall{
+		c: client,
+	}
+}
+
+// CancelDefaultRichMenuCall type
+type CancelDefaultRichMenuCall struct {
+	c   *Client
+	ctx context.Context
+}
+
+// WithContext method
+func (call *CancelDefaultRichMenuCall) WithContext(ctx context.Context) *CancelDefaultRichMenuCall {
+	call.ctx = ctx
+	return call
+}
+
+// Do method
+func (call *CancelDefaultRichMenuCall) Do() (*BasicResponse, error) {
+	res, err := call.c.delete(call.ctx, APIEndpointDefaultRichMenu)
+	if res != nil && res.Body != nil {
+		defer res.Body.Close()
+	}
+	if err != nil {
+		return nil, err
+	}
+	return decodeToBasicResponse(res)
+}
+
+// GetDefaultRichMenu method
+func (client *Client) GetDefaultRichMenu() *GetDefaultRichMenuCall {
+	return &GetDefaultRichMenuCall{
+		c: client,
+	}
+}
+
+// GetDefaultRichMenuCall type
+type GetDefaultRichMenuCall struct {
+	c   *Client
+	ctx context.Context
+}
+
+// WithContext method
+func (call *GetDefaultRichMenuCall) WithContext(ctx context.Context) *GetDefaultRichMenuCall {
+	call.ctx = ctx
+	return call
+}
+
+// Do method
+func (call *GetDefaultRichMenuCall) Do() (*RichMenuIDResponse, error) {
+	res, err := call.c.get(call.ctx, APIEndpointDefaultRichMenu, nil)
+	if res != nil && res.Body != nil {
+		defer res.Body.Close()
+	}
+	if err != nil {
+		return nil, err
+	}
+	return decodeToRichMenuIDResponse(res)
+}
+
 // GetRichMenuList method
 func (client *Client) GetRichMenuList() *GetRichMenuListCall {
 	return &GetRichMenuListCall{
