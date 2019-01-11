@@ -1,5 +1,12 @@
 # Change Log
 
+## [v4.3.0](https://github.com/line/line-bot-sdk-go/tree/v4.3.0) (2019-01-10)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v4.2.0...v4.3.0)
+
+**Merged pull requests:**
+
+- Add default rich menu API. [\#118](https://github.com/line/line-bot-sdk-go/pull/118) ([clsung](https://github.com/clsung))
+
 ## [v4.2.0](https://github.com/line/line-bot-sdk-go/tree/v4.2.0) (2018-11-30)
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v4.1.0...v4.2.0)
 
