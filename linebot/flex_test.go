@@ -271,13 +271,13 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
         "type": "spacer",
         "size": "sm"
       },
-			{
-				"type": "spacer"
-			},
-			{
-				"type": "spacer",
-				"size": "xs"
-			}
+      {
+        "type": "spacer"
+      },
+      {
+        "type": "spacer",
+        "size": "xs"
+      }
     ],
     "flex": 0
   }
