@@ -98,7 +98,7 @@ message := linebot.NewTemplateMessage("Sorry :(, please update your app.", templ
 With an ID, you can send message using ```PushMessage()```
 
 ```go
-var messages []linebot.Message
+var messages []linebot.SendingMessage
 
 // append some message to messages
 
@@ -111,7 +111,7 @@ if err != nil {
 With a reply token, you can reply to messages using ```ReplyMessage()```
 
 ```go
-var messages []linebot.Message
+var messages []linebot.SendingMessage
 
 // append some message to messages
 
