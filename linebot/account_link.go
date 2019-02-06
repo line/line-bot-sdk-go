@@ -46,11 +46,9 @@ func (call *IssueLinkTokenCall) WithContext(ctx context.Context) *IssueLinkToken
 func (call *IssueLinkTokenCall) Do() (*LinkTokenResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointLinkToken, call.userID)
 	res, err := call.c.post(call.ctx, endpoint, nil)
-	if res != nil && res.Body != nil {
-		defer res.Body.Close()
-	}
 	if err != nil {
 		return nil, err
 	}
+	defer closeResponse(res)
 	return decodeToLinkTokenResponse(res)
 }

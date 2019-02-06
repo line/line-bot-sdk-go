@@ -131,12 +131,10 @@ func (call *GetRichMenuCall) WithContext(ctx context.Context) *GetRichMenuCall {
 func (call *GetRichMenuCall) Do() (*RichMenuResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointGetRichMenu, call.richMenuID)
 	res, err := call.c.get(call.ctx, endpoint, nil)
-	if res != nil && res.Body != nil {
-		defer res.Body.Close()
-	}
 	if err != nil {
 		return nil, err
 	}
+	defer closeResponse(res)
 	return decodeToRichMenuResponse(res)
 }
 
@@ -166,12 +164,10 @@ func (call *GetUserRichMenuCall) WithContext(ctx context.Context) *GetUserRichMe
 func (call *GetUserRichMenuCall) Do() (*RichMenuResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointGetUserRichMenu, call.userID)
 	res, err := call.c.get(call.ctx, endpoint, nil)
-	if res != nil && res.Body != nil {
-		defer res.Body.Close()
-	}
 	if err != nil {
 		return nil, err
 	}
+	defer closeResponse(res)
 	return decodeToRichMenuResponse(res)
 }
 
@@ -221,12 +217,10 @@ func (call *CreateRichMenuCall) Do() (*RichMenuIDResponse, error) {
 		return nil, err
 	}
 	res, err := call.c.post(call.ctx, APIEndpointCreateRichMenu, &buf)
-	if res != nil && res.Body != nil {
-		defer res.Body.Close()
-	}
 	if err != nil {
 		return nil, err
 	}
+	defer closeResponse(res)
 	return decodeToRichMenuIDResponse(res)
 }
 
@@ -256,12 +250,10 @@ func (call *DeleteRichMenuCall) WithContext(ctx context.Context) *DeleteRichMenu
 func (call *DeleteRichMenuCall) Do() (*BasicResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointDeleteRichMenu, call.richMenuID)
 	res, err := call.c.delete(call.ctx, endpoint)
-	if res != nil && res.Body != nil {
-		defer res.Body.Close()
-	}
 	if err != nil {
 		return nil, err
 	}
+	defer closeResponse(res)
 	return decodeToBasicResponse(res)
 }
 
@@ -293,12 +285,10 @@ func (call *LinkUserRichMenuCall) WithContext(ctx context.Context) *LinkUserRich
 func (call *LinkUserRichMenuCall) Do() (*BasicResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointLinkUserRichMenu, call.userID, call.richMenuID)
 	res, err := call.c.post(call.ctx, endpoint, nil)
-	if res != nil && res.Body != nil {
-		defer res.Body.Close()
-	}
 	if err != nil {
 		return nil, err
 	}
+	defer closeResponse(res)
 	return decodeToBasicResponse(res)
 }
 
@@ -328,12 +318,10 @@ func (call *UnlinkUserRichMenuCall) WithContext(ctx context.Context) *UnlinkUser
 func (call *UnlinkUserRichMenuCall) Do() (*BasicResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointUnlinkUserRichMenu, call.userID)
 	res, err := call.c.delete(call.ctx, endpoint)
-	if res != nil && res.Body != nil {
-		defer res.Body.Close()
-	}
 	if err != nil {
 		return nil, err
 	}
+	defer closeResponse(res)
 	return decodeToBasicResponse(res)
 }
 
@@ -363,12 +351,10 @@ func (call *SetDefaultRichMenuCall) WithContext(ctx context.Context) *SetDefault
 func (call *SetDefaultRichMenuCall) Do() (*BasicResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointSetDefaultRichMenu, call.richMenuID)
 	res, err := call.c.post(call.ctx, endpoint, nil)
-	if res != nil && res.Body != nil {
-		defer res.Body.Close()
-	}
 	if err != nil {
 		return nil, err
 	}
+	defer closeResponse(res)
 	return decodeToBasicResponse(res)
 }
 
@@ -394,12 +380,10 @@ func (call *CancelDefaultRichMenuCall) WithContext(ctx context.Context) *CancelD
 // Do method
 func (call *CancelDefaultRichMenuCall) Do() (*BasicResponse, error) {
 	res, err := call.c.delete(call.ctx, APIEndpointDefaultRichMenu)
-	if res != nil && res.Body != nil {
-		defer res.Body.Close()
-	}
 	if err != nil {
 		return nil, err
 	}
+	defer closeResponse(res)
 	return decodeToBasicResponse(res)
 }
 
@@ -425,12 +409,10 @@ func (call *GetDefaultRichMenuCall) WithContext(ctx context.Context) *GetDefault
 // Do method
 func (call *GetDefaultRichMenuCall) Do() (*RichMenuIDResponse, error) {
 	res, err := call.c.get(call.ctx, APIEndpointDefaultRichMenu, nil)
-	if res != nil && res.Body != nil {
-		defer res.Body.Close()
-	}
 	if err != nil {
 		return nil, err
 	}
+	defer closeResponse(res)
 	return decodeToRichMenuIDResponse(res)
 }
 
@@ -456,12 +438,10 @@ func (call *GetRichMenuListCall) WithContext(ctx context.Context) *GetRichMenuLi
 // Do method
 func (call *GetRichMenuListCall) Do() ([]*RichMenuResponse, error) {
 	res, err := call.c.get(call.ctx, APIEndpointListRichMenu, nil)
-	if res != nil && res.Body != nil {
-		defer res.Body.Close()
-	}
 	if err != nil {
 		return nil, err
 	}
+	defer closeResponse(res)
 	return decodeToRichMenuListResponse(res)
 }
 
@@ -549,5 +529,6 @@ func (call *UploadRichMenuImageCall) Do() (*BasicResponse, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer closeResponse(res)
 	return decodeToBasicResponse(res)
 }

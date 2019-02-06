@@ -63,12 +63,10 @@ func (call *PushMessageCall) Do() (*BasicResponse, error) {
 		return nil, err
 	}
 	res, err := call.c.post(call.ctx, APIEndpointPushMessage, &buf)
-	if res != nil && res.Body != nil {
-		defer res.Body.Close()
-	}
 	if err != nil {
 		return nil, err
 	}
+	defer closeResponse(res)
 	return decodeToBasicResponse(res)
 }
 
@@ -114,12 +112,10 @@ func (call *ReplyMessageCall) Do() (*BasicResponse, error) {
 		return nil, err
 	}
 	res, err := call.c.post(call.ctx, APIEndpointReplyMessage, &buf)
-	if res != nil && res.Body != nil {
-		defer res.Body.Close()
-	}
 	if err != nil {
 		return nil, err
 	}
+	defer closeResponse(res)
 	return decodeToBasicResponse(res)
 }
 
@@ -165,11 +161,9 @@ func (call *MulticastCall) Do() (*BasicResponse, error) {
 		return nil, err
 	}
 	res, err := call.c.post(call.ctx, APIEndpointMulticast, &buf)
-	if res != nil && res.Body != nil {
-		defer res.Body.Close()
-	}
 	if err != nil {
 		return nil, err
 	}
+	defer closeResponse(res)
 	return decodeToBasicResponse(res)
 }
