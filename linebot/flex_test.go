@@ -424,7 +424,6 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 						},
 						&SpacerComponent{
 							Type: FlexComponentTypeSpacer,
-							Size: FlexSpacerSizeTypeMd,
 						},
 						&SpacerComponent{
 							Type: FlexComponentTypeSpacer,

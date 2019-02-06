@@ -195,14 +195,3 @@ func (c *TextComponent) UnmarshalJSON(data []byte) error {
 	c.Action = raw.Action.Action
 	return nil
 }
-
-// UnmarshalJSON method for SpacerComponent
-func (c *SpacerComponent) UnmarshalJSON(data []byte) error {
-	type alias SpacerComponent
-	raw := (*alias)(c)
-	raw.Size = FlexSpacerSizeTypeMd
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	return nil
-}
