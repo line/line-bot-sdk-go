@@ -15,8 +15,10 @@
 package linebot
 
 import (
+	"bytes"
 	"encoding/json"
 	"io"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -146,8 +148,12 @@ func decodeToMessageContentResponse(res *http.Response) (*MessageContentResponse
 	if err := checkResponse(res); err != nil {
 		return nil, err
 	}
+	var buf bytes.Buffer
+	if _, err := io.Copy(&buf, res.Body); err != nil {
+		return nil, err
+	}
 	result := MessageContentResponse{
-		Content:       res.Body,
+		Content:       ioutil.NopCloser(&buf),
 		ContentType:   res.Header.Get("Content-Type"),
 		ContentLength: res.ContentLength,
 	}

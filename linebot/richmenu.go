@@ -474,6 +474,7 @@ func (call *DownloadRichMenuImageCall) Do() (*MessageContentResponse, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer closeResponse(res)
 	return decodeToMessageContentResponse(res)
 }
 
