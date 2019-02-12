@@ -431,6 +431,7 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 						},
 					},
 					Spacing: FlexComponentSpacingTypeSm,
+					Flex:    FlexInt(0),
 				},
 			},
 		},
