@@ -496,7 +496,7 @@ type SpacerComponent struct {
 func (c *SpacerComponent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type FlexComponentType  `json:"type"`
-		Size FlexSpacerSizeType `json:"size"`
+		Size FlexSpacerSizeType `json:"size,omitempty"`
 	}{
 		Type: FlexComponentTypeSpacer,
 		Size: c.Size,

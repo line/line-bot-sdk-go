@@ -385,6 +385,9 @@ func TestPushMessages(t *testing.T) {
 									Type: FlexComponentTypeText,
 									Text: "world",
 								},
+								&SpacerComponent{
+									Type: FlexComponentTypeSpacer,
+								},
 							},
 						},
 					},
@@ -393,7 +396,7 @@ func TestPushMessages(t *testing.T) {
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
-				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"flex","altText":"this is a flex message","contents":{"type":"bubble","body":{"type":"box","layout":"vertical","contents":[{"type":"text","text":"hello"},{"type":"text","text":"world"}]}}}]}` + "\n"),
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"flex","altText":"this is a flex message","contents":{"type":"bubble","body":{"type":"box","layout":"vertical","contents":[{"type":"text","text":"hello"},{"type":"text","text":"world"},{"type":"spacer"}]}}}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},

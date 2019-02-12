@@ -270,6 +270,13 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
       {
         "type": "spacer",
         "size": "sm"
+      },
+      {
+        "type": "spacer"
+      },
+      {
+        "type": "spacer",
+        "size": "xs"
       }
     ],
     "flex": 0
@@ -414,6 +421,13 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 						&SpacerComponent{
 							Type: FlexComponentTypeSpacer,
 							Size: FlexSpacerSizeTypeSm,
+						},
+						&SpacerComponent{
+							Type: FlexComponentTypeSpacer,
+						},
+						&SpacerComponent{
+							Type: FlexComponentTypeSpacer,
+							Size: FlexSpacerSizeTypeXs,
 						},
 					},
 					Spacing: FlexComponentSpacingTypeSm,
