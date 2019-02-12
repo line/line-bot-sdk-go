@@ -71,12 +71,10 @@ func (call *GetLIFFAllCall) WithContext(ctx context.Context) *GetLIFFAllCall {
 // Do method
 func (call *GetLIFFAllCall) Do() (*LIFFAppsResponse, error) {
 	res, err := call.c.get(call.ctx, APIEndpointGetAllLIFFApps, nil)
-	if res != nil && res.Body != nil {
-		defer res.Body.Close()
-	}
 	if err != nil {
 		return nil, err
 	}
+	defer closeResponse(res)
 	return decodeToLIFFResponse(res)
 }
 
@@ -118,12 +116,10 @@ func (call *AddLIFFCall) Do() (*LIFFIDResponse, error) {
 		return nil, err
 	}
 	res, err := call.c.post(call.ctx, APIEndpointAddLIFFApp, &buf)
-	if res != nil && res.Body != nil {
-		defer res.Body.Close()
-	}
 	if err != nil {
 		return nil, err
 	}
+	defer closeResponse(res)
 	return decodeToLIFFIDResponse(res)
 }
 
@@ -171,12 +167,10 @@ func (call *UpdateLIFFCall) Do() (*BasicResponse, error) {
 
 	endpoint := fmt.Sprintf(APIEndpointUpdateLIFFApp, call.liffID)
 	res, err := call.c.put(call.ctx, endpoint, &buf)
-	if res != nil && res.Body != nil {
-		defer res.Body.Close()
-	}
 	if err != nil {
 		return nil, err
 	}
+	defer closeResponse(res)
 	return decodeToBasicResponse(res)
 }
 
@@ -206,11 +200,9 @@ func (call *DeleteLIFFCall) WithContext(ctx context.Context) *DeleteLIFFCall {
 func (call *DeleteLIFFCall) Do() (*BasicResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointDeleteLIFFApp, call.liffID)
 	res, err := call.c.delete(call.ctx, endpoint)
-	if res != nil && res.Body != nil {
-		defer res.Body.Close()
-	}
 	if err != nil {
 		return nil, err
 	}
+	defer closeResponse(res)
 	return decodeToBasicResponse(res)
 }
