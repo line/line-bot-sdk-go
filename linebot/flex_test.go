@@ -334,7 +334,7 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 								&TextComponent{
 									Type:   FlexComponentTypeText,
 									Text:   "4.0",
-									Flex:   0,
+									Flex:   FlexValue(0),
 									Margin: FlexComponentMarginTypeMd,
 									Size:   FlexTextSizeTypeSm,
 									Color:  "#999999",
@@ -353,14 +353,14 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 										&TextComponent{
 											Type:  FlexComponentTypeText,
 											Text:  "Place",
-											Flex:  1,
+											Flex:  FlexValue(1),
 											Size:  FlexTextSizeTypeSm,
 											Color: "#aaaaaa",
 										},
 										&TextComponent{
 											Type:  FlexComponentTypeText,
 											Text:  "Miraina Tower, 4-1-6 Shinjuku, Tokyo",
-											Flex:  5,
+											Flex:  FlexValue(5),
 											Size:  FlexTextSizeTypeSm,
 											Wrap:  true,
 											Color: "#666666",
@@ -375,14 +375,14 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 										&TextComponent{
 											Type:  FlexComponentTypeText,
 											Text:  "Time",
-											Flex:  1,
+											Flex:  FlexValue(1),
 											Size:  FlexTextSizeTypeSm,
 											Color: "#aaaaaa",
 										},
 										&TextComponent{
 											Type:  FlexComponentTypeText,
 											Text:  "10:00 - 23:00",
-											Flex:  5,
+											Flex:  FlexValue(5),
 											Size:  FlexTextSizeTypeSm,
 											Wrap:  true,
 											Color: "#666666",
