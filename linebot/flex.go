@@ -22,8 +22,8 @@ type FlexContainerType string
 // FlexValueType type
 type FlexValueType *int
 
-// FlexValue is helper function for using FlexValueType values
-func FlexValue(v int) FlexValueType {
+// FlexInt is a helper function for using FlexValueType values
+func FlexInt(v int) FlexValueType {
 	return &v
 }
 

@@ -384,7 +384,7 @@ func TestPushMessages(t *testing.T) {
 								&TextComponent{
 									Type: FlexComponentTypeText,
 									Text: "world",
-									Flex: FlexValue(0),
+									Flex: FlexInt(0),
 								},
 								&SpacerComponent{
 									Type: FlexComponentTypeSpacer,
