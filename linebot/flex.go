@@ -17,10 +17,10 @@ package linebot
 import "encoding/json"
 
 // FlexContainerType type
-type FlexContainerType string
+type FlexContainerType = string // alias type
 
 // FlexValueType type
-type FlexValueType *int
+type FlexValueType = *int // alias type
 
 // FlexInt is a helper function for using FlexValueType values
 func FlexInt(v int) FlexValueType {
