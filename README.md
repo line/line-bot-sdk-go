@@ -123,7 +123,7 @@ if err != nil {
 
 ## Requirements
 
-This library requires Go 1.7 or later.
+This library requires Go 1.10 or later.
 
 ## LICENSE
 
