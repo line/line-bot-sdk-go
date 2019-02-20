@@ -19,11 +19,8 @@ import "encoding/json"
 // FlexContainerType type
 type FlexContainerType = string // alias type
 
-// FlexValueType type
-type FlexValueType = int // alias type
-
-// FlexInt is a helper function for using *FlexValueType values
-func FlexInt(v int) *FlexValueType {
+// IntPtr is a helper function for using *int values
+func IntPtr(v int) *int {
 	return &v
 }
 
@@ -331,7 +328,7 @@ type BoxComponent struct {
 	Type     FlexComponentType
 	Layout   FlexBoxLayoutType
 	Contents []FlexComponent
-	Flex     *FlexValueType
+	Flex     *int
 	Spacing  FlexComponentSpacingType
 	Margin   FlexComponentMarginType
 }
@@ -342,7 +339,7 @@ func (c *BoxComponent) MarshalJSON() ([]byte, error) {
 		Type     FlexComponentType        `json:"type"`
 		Layout   FlexBoxLayoutType        `json:"layout"`
 		Contents []FlexComponent          `json:"contents"`
-		Flex     *FlexValueType           `json:"flex,omitempty"`
+		Flex     *int                     `json:"flex,omitempty"`
 		Spacing  FlexComponentSpacingType `json:"spacing,omitempty"`
 		Margin   FlexComponentMarginType  `json:"margin,omitempty"`
 	}{
@@ -359,7 +356,7 @@ func (c *BoxComponent) MarshalJSON() ([]byte, error) {
 type ButtonComponent struct {
 	Type    FlexComponentType
 	Action  TemplateAction
-	Flex    *FlexValueType
+	Flex    *int
 	Margin  FlexComponentMarginType
 	Height  FlexButtonHeightType
 	Style   FlexButtonStyleType
@@ -372,7 +369,7 @@ func (c *ButtonComponent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type    FlexComponentType        `json:"type"`
 		Action  TemplateAction           `json:"action"`
-		Flex    *FlexValueType           `json:"flex,omitempty"`
+		Flex    *int                     `json:"flex,omitempty"`
 		Margin  FlexComponentMarginType  `json:"margin,omitempty"`
 		Height  FlexButtonHeightType     `json:"height,omitempty"`
 		Style   FlexButtonStyleType      `json:"style,omitempty"`
@@ -434,7 +431,7 @@ func (c *IconComponent) MarshalJSON() ([]byte, error) {
 type ImageComponent struct {
 	Type            FlexComponentType
 	URL             string
-	Flex            *FlexValueType
+	Flex            *int
 	Margin          FlexComponentMarginType
 	Align           FlexComponentAlignType
 	Gravity         FlexComponentGravityType
@@ -450,7 +447,7 @@ func (c *ImageComponent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type            FlexComponentType        `json:"type"`
 		URL             string                   `json:"url"`
-		Flex            *FlexValueType           `json:"flex,omitempty"`
+		Flex            *int                     `json:"flex,omitempty"`
 		Margin          FlexComponentMarginType  `json:"margin,omitempty"`
 		Align           FlexComponentAlignType   `json:"align,omitempty"`
 		Gravity         FlexComponentGravityType `json:"gravity,omitempty"`
@@ -515,7 +512,7 @@ func (c *SpacerComponent) MarshalJSON() ([]byte, error) {
 type TextComponent struct {
 	Type    FlexComponentType
 	Text    string
-	Flex    *FlexValueType
+	Flex    *int
 	Margin  FlexComponentMarginType
 	Size    FlexTextSizeType
 	Align   FlexComponentAlignType
@@ -531,7 +528,7 @@ func (c *TextComponent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type    FlexComponentType        `json:"type"`
 		Text    string                   `json:"text"`
-		Flex    *FlexValueType           `json:"flex,omitempty"`
+		Flex    *int                     `json:"flex,omitempty"`
 		Margin  FlexComponentMarginType  `json:"margin,omitempty"`
 		Size    FlexTextSizeType         `json:"size,omitempty"`
 		Align   FlexComponentAlignType   `json:"align,omitempty"`
