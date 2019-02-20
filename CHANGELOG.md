@@ -1,5 +1,15 @@
 # Change Log
 
+## [v5.0.0](https://github.com/line/line-bot-sdk-go/tree/v5.0.0) (2019-02-20)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v4.3.0...v5.0.0)
+
+**Merged pull requests:**
+
+- Update FlexValue type [\#129](https://github.com/line/line-bot-sdk-go/pull/129) ([sugyan](https://github.com/sugyan))
+- Fix/nil body checking [\#128](https://github.com/line/line-bot-sdk-go/pull/128) ([nasa9084](https://github.com/nasa9084))
+- omitempty size in SpacerComponent of flex message [\#123](https://github.com/line/line-bot-sdk-go/pull/123) ([TonPC64](https://github.com/TonPC64))
+- update README.md [\#122](https://github.com/line/line-bot-sdk-go/pull/122) ([kweisamx](https://github.com/kweisamx))
+
 ## [v4.3.0](https://github.com/line/line-bot-sdk-go/tree/v4.3.0) (2019-01-10)
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v4.2.0...v4.3.0)
 
