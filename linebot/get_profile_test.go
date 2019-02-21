@@ -41,14 +41,14 @@ func TestGetProfile(t *testing.T) {
 		{
 			UserID:       "U0047556f2e40dba2456887320ba7c76d",
 			ResponseCode: 200,
-			Response:     []byte(`{"userId":"U0047556f2e40dba2456887320ba7c76d","displayName":"BOT API","pictureUrl":"http://dl.profile.line.naver.jp/abcdefghijklmn","statusMessage":"Hello, LINE!"}`),
+			Response:     []byte(`{"userId":"U0047556f2e40dba2456887320ba7c76d","displayName":"BOT API","pictureUrl":"https://obs.line-apps.com/abcdefghijklmn","statusMessage":"Hello, LINE!"}`),
 			Want: want{
 				URLPath:     fmt.Sprintf(APIEndpointGetProfile, "U0047556f2e40dba2456887320ba7c76d"),
 				RequestBody: []byte(""),
 				Response: &UserProfileResponse{
 					UserID:        "U0047556f2e40dba2456887320ba7c76d",
 					DisplayName:   "BOT API",
-					PictureURL:    "http://dl.profile.line.naver.jp/abcdefghijklmn",
+					PictureURL:    "https://obs.line-apps.com/abcdefghijklmn",
 					StatusMessage: "Hello, LINE!",
 				},
 			},
@@ -133,7 +133,7 @@ func TestGetProfileWithContext(t *testing.T) {
 func BenchmarkGetProfile(b *testing.B) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
-		w.Write([]byte(`{"userId":"U","displayName":"A","pictureUrl":"http://","statusMessage":"B"}`))
+		w.Write([]byte(`{"userId":"U","displayName":"A","pictureUrl":"https://","statusMessage":"B"}`))
 	}))
 	defer server.Close()
 	client, err := mockClient(server)
@@ -164,14 +164,14 @@ func TestGetGroupMemberProfile(t *testing.T) {
 			GroupID:      "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			UserID:       "U0047556f2e40dba2456887320ba7c76d",
 			ResponseCode: 200,
-			Response:     []byte(`{"userId":"U0047556f2e40dba2456887320ba7c76d","displayName":"BOT API","pictureUrl":"http://dl.profile.line.naver.jp/abcdefghijklmn","statusMessage":"Hello, LINE!"}`),
+			Response:     []byte(`{"userId":"U0047556f2e40dba2456887320ba7c76d","displayName":"BOT API","pictureUrl":"https://obs.line-apps.com/abcdefghijklmn","statusMessage":"Hello, LINE!"}`),
 			Want: want{
 				URLPath:     fmt.Sprintf(APIEndpointGetGroupMemberProfile, "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "U0047556f2e40dba2456887320ba7c76d"),
 				RequestBody: []byte(""),
 				Response: &UserProfileResponse{
 					UserID:        "U0047556f2e40dba2456887320ba7c76d",
 					DisplayName:   "BOT API",
-					PictureURL:    "http://dl.profile.line.naver.jp/abcdefghijklmn",
+					PictureURL:    "https://obs.line-apps.com/abcdefghijklmn",
 					StatusMessage: "Hello, LINE!",
 				},
 			},
@@ -257,7 +257,7 @@ func TestGetGroupMemberProfileWithContext(t *testing.T) {
 func BenchmarkGetGroupMemberProfile(b *testing.B) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
-		w.Write([]byte(`{"userId":"U","displayName":"A","pictureUrl":"http://","statusMessage":"B"}`))
+		w.Write([]byte(`{"userId":"U","displayName":"A","pictureUrl":"https://","statusMessage":"B"}`))
 	}))
 	defer server.Close()
 	client, err := mockClient(server)
@@ -288,14 +288,14 @@ func TestGetRoomMemberProfile(t *testing.T) {
 			RoomID:       "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			UserID:       "U0047556f2e40dba2456887320ba7c76d",
 			ResponseCode: 200,
-			Response:     []byte(`{"userId":"U0047556f2e40dba2456887320ba7c76d","displayName":"BOT API","pictureUrl":"http://dl.profile.line.naver.jp/abcdefghijklmn","statusMessage":"Hello, LINE!"}`),
+			Response:     []byte(`{"userId":"U0047556f2e40dba2456887320ba7c76d","displayName":"BOT API","pictureUrl":"https://obs.line-apps.com/abcdefghijklmn","statusMessage":"Hello, LINE!"}`),
 			Want: want{
 				URLPath:     fmt.Sprintf(APIEndpointGetRoomMemberProfile, "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "U0047556f2e40dba2456887320ba7c76d"),
 				RequestBody: []byte(""),
 				Response: &UserProfileResponse{
 					UserID:        "U0047556f2e40dba2456887320ba7c76d",
 					DisplayName:   "BOT API",
-					PictureURL:    "http://dl.profile.line.naver.jp/abcdefghijklmn",
+					PictureURL:    "https://obs.line-apps.com/abcdefghijklmn",
 					StatusMessage: "Hello, LINE!",
 				},
 			},
@@ -381,7 +381,7 @@ func TestGetRoomMemberProfileWithContext(t *testing.T) {
 func BenchmarkGetRoomMemberProfile(b *testing.B) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
-		w.Write([]byte(`{"userId":"U","displayName":"A","pictureUrl":"http://","statusMessage":"B"}`))
+		w.Write([]byte(`{"userId":"U","displayName":"A","pictureUrl":"https://","statusMessage":"B"}`))
 	}))
 	defer server.Close()
 	client, err := mockClient(server)

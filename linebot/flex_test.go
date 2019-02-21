@@ -135,7 +135,7 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
     "aspectMode": "cover",
     "action": {
       "type": "uri",
-      "uri": "http://linecorp.com/"
+      "uri": "https://linecorp.com/"
     }
   },
   "body": {
@@ -290,7 +290,7 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 					Size:        FlexImageSizeTypeFull,
 					AspectRatio: FlexImageAspectRatioType20to13,
 					AspectMode:  FlexImageAspectModeTypeCover,
-					Action:      &URIAction{URI: "http://linecorp.com/"},
+					Action:      &URIAction{URI: "https://linecorp.com/"},
 				},
 				Body: &BoxComponent{
 					Type:   FlexComponentTypeBox,
@@ -471,7 +471,7 @@ func BenchmarkUnmarshalFlexMessageJSON(b *testing.B) {
 			"aspectMode": "cover",
 			"action": {
 				"type": "uri",
-				"uri": "http://linecorp.com/"
+				"uri": "https://linecorp.com/"
 			}
 		},
 		"body": {

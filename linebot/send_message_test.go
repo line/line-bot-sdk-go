@@ -49,31 +49,31 @@ func TestPushMessages(t *testing.T) {
 		},
 		{
 			// A image message
-			Messages:     []SendingMessage{NewImageMessage("http://example.com/original.jpg", "http://example.com/preview.jpg")},
+			Messages:     []SendingMessage{NewImageMessage("https://example.com/original.jpg", "https://example.com/preview.jpg")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
-				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"image","originalContentUrl":"http://example.com/original.jpg","previewImageUrl":"http://example.com/preview.jpg"}]}` + "\n"),
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"image","originalContentUrl":"https://example.com/original.jpg","previewImageUrl":"https://example.com/preview.jpg"}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
 		{
 			// A video message
-			Messages:     []SendingMessage{NewVideoMessage("http://example.com/original.mp4", "http://example.com/preview.jpg")},
+			Messages:     []SendingMessage{NewVideoMessage("https://example.com/original.mp4", "https://example.com/preview.jpg")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
-				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"video","originalContentUrl":"http://example.com/original.mp4","previewImageUrl":"http://example.com/preview.jpg"}]}` + "\n"),
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"video","originalContentUrl":"https://example.com/original.mp4","previewImageUrl":"https://example.com/preview.jpg"}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
 		{
 			// A audio message
-			Messages:     []SendingMessage{NewAudioMessage("http://example.com/original.m4a", 1000)},
+			Messages:     []SendingMessage{NewAudioMessage("https://example.com/original.m4a", 1000)},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
-				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"audio","originalContentUrl":"http://example.com/original.m4a","duration":1000}]}` + "\n"),
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"audio","originalContentUrl":"https://example.com/original.m4a","duration":1000}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
@@ -108,14 +108,14 @@ func TestPushMessages(t *testing.T) {
 						"Please select",
 						NewPostbackAction("Buy", "action=buy&itemid=123", "", "displayText"),
 						NewPostbackAction("Buy", "action=buy&itemid=123", "text", ""),
-						NewURIAction("View detail", "http://example.com/page/123"),
+						NewURIAction("View detail", "https://example.com/page/123"),
 					),
 				),
 			},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
-				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a buttons template","template":{"type":"buttons","thumbnailImageUrl":"https://example.com/bot/images/image.jpg","title":"Menu","text":"Please select","actions":[{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","displayText":"displayText"},{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","text":"text"},{"type":"uri","label":"View detail","uri":"http://example.com/page/123"}]}}]}` + "\n"),
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a buttons template","template":{"type":"buttons","thumbnailImageUrl":"https://example.com/bot/images/image.jpg","title":"Menu","text":"Please select","actions":[{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","displayText":"displayText"},{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","text":"text"},{"type":"uri","label":"View detail","uri":"https://example.com/page/123"}]}}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
@@ -152,14 +152,14 @@ func TestPushMessages(t *testing.T) {
 						"Please select",
 						NewPostbackAction("Buy", "action=buy&itemid=123", "", "displayText"),
 						NewPostbackAction("Buy", "action=buy&itemid=123", "text", ""),
-						NewURIAction("View detail", "http://example.com/page/123"),
+						NewURIAction("View detail", "https://example.com/page/123"),
 					),
 				),
 			},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
-				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a buttons template","template":{"type":"buttons","title":"Menu","text":"Please select","actions":[{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","displayText":"displayText"},{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","text":"text"},{"type":"uri","label":"View detail","uri":"http://example.com/page/123"}]}}]}` + "\n"),
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a buttons template","template":{"type":"buttons","title":"Menu","text":"Please select","actions":[{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","displayText":"displayText"},{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","text":"text"},{"type":"uri","label":"View detail","uri":"https://example.com/page/123"}]}}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
@@ -174,14 +174,14 @@ func TestPushMessages(t *testing.T) {
 						"Please select",
 						NewPostbackAction("Buy", "action=buy&itemid=123", "", "displayText"),
 						NewPostbackAction("Buy", "action=buy&itemid=123", "text", ""),
-						NewURIAction("View detail", "http://example.com/page/123"),
+						NewURIAction("View detail", "https://example.com/page/123"),
 					),
 				),
 			},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
-				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a buttons template","template":{"type":"buttons","thumbnailImageUrl":"https://example.com/bot/images/image.jpg","text":"Please select","actions":[{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","displayText":"displayText"},{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","text":"text"},{"type":"uri","label":"View detail","uri":"http://example.com/page/123"}]}}]}` + "\n"),
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a buttons template","template":{"type":"buttons","thumbnailImageUrl":"https://example.com/bot/images/image.jpg","text":"Please select","actions":[{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","displayText":"displayText"},{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","text":"text"},{"type":"uri","label":"View detail","uri":"https://example.com/page/123"}]}}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
@@ -196,14 +196,14 @@ func TestPushMessages(t *testing.T) {
 						"Please select",
 						NewPostbackAction("Buy", "action=buy&itemid=123", "", "displayText"),
 						NewPostbackAction("Buy", "action=buy&itemid=123", "text", ""),
-						NewURIAction("View detail", "http://example.com/page/123"),
+						NewURIAction("View detail", "https://example.com/page/123"),
 					).WithImageOptions("rectangle", "cover", "#FFFFFF"),
 				),
 			},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
-				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a buttons template","template":{"type":"buttons","thumbnailImageUrl":"https://example.com/bot/images/image.jpg","imageAspectRatio":"rectangle","imageSize":"cover","imageBackgroundColor":"#FFFFFF","text":"Please select","actions":[{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","displayText":"displayText"},{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","text":"text"},{"type":"uri","label":"View detail","uri":"http://example.com/page/123"}]}}]}` + "\n"),
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a buttons template","template":{"type":"buttons","thumbnailImageUrl":"https://example.com/bot/images/image.jpg","imageAspectRatio":"rectangle","imageSize":"cover","imageBackgroundColor":"#FFFFFF","text":"Please select","actions":[{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","displayText":"displayText"},{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","text":"text"},{"type":"uri","label":"View detail","uri":"https://example.com/page/123"}]}}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
@@ -218,14 +218,14 @@ func TestPushMessages(t *testing.T) {
 						"Please select",
 						NewPostbackAction("Buy", "action=buy&itemid=123", "", "displayText"),
 						NewPostbackAction("Buy", "action=buy&itemid=123", "text", ""),
-						NewURIAction("View detail", "http://example.com/page/123"),
+						NewURIAction("View detail", "https://example.com/page/123"),
 					),
 				),
 			},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
-				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a buttons template","template":{"type":"buttons","text":"Please select","actions":[{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","displayText":"displayText"},{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","text":"text"},{"type":"uri","label":"View detail","uri":"http://example.com/page/123"}]}}]}` + "\n"),
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a buttons template","template":{"type":"buttons","text":"Please select","actions":[{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","displayText":"displayText"},{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","text":"text"},{"type":"uri","label":"View detail","uri":"https://example.com/page/123"}]}}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
@@ -260,7 +260,7 @@ func TestPushMessages(t *testing.T) {
 							"description",
 							NewPostbackAction("Buy", "action=buy&itemid=111", "", ""),
 							NewPostbackAction("Add to cart", "action=add&itemid=111", "", ""),
-							NewURIAction("View detail", "http://example.com/page/111"),
+							NewURIAction("View detail", "https://example.com/page/111"),
 						),
 					),
 				),
@@ -268,7 +268,7 @@ func TestPushMessages(t *testing.T) {
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
-				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a carousel template","template":{"type":"carousel","columns":[{"thumbnailImageUrl":"https://example.com/bot/images/item1.jpg","title":"this is menu","text":"description","actions":[{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=111"},{"type":"postback","label":"Add to cart","data":"action=add\u0026itemid=111"},{"type":"uri","label":"View detail","uri":"http://example.com/page/111"}]}]}}]}` + "\n"),
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a carousel template","template":{"type":"carousel","columns":[{"thumbnailImageUrl":"https://example.com/bot/images/item1.jpg","title":"this is menu","text":"description","actions":[{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=111"},{"type":"postback","label":"Add to cart","data":"action=add\u0026itemid=111"},{"type":"uri","label":"View detail","uri":"https://example.com/page/111"}]}]}}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
@@ -284,7 +284,7 @@ func TestPushMessages(t *testing.T) {
 							"description",
 							NewPostbackAction("Buy", "action=buy&itemid=111", "", ""),
 							NewPostbackAction("Add to cart", "action=add&itemid=111", "", ""),
-							NewURIAction("View detail", "http://example.com/page/111"),
+							NewURIAction("View detail", "https://example.com/page/111"),
 						).WithImageOptions("#FFFFFF"),
 					).WithImageOptions("rectangle", "cover"),
 				),
@@ -292,7 +292,7 @@ func TestPushMessages(t *testing.T) {
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
-				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a carousel template with imageAspectRatio, imageSize and imageBackgroundColor","template":{"type":"carousel","columns":[{"thumbnailImageUrl":"https://example.com/bot/images/item1.jpg","imageBackgroundColor":"#FFFFFF","title":"this is menu","text":"description","actions":[{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=111"},{"type":"postback","label":"Add to cart","data":"action=add\u0026itemid=111"},{"type":"uri","label":"View detail","uri":"http://example.com/page/111"}]}],"imageAspectRatio":"rectangle","imageSize":"cover"}}]}` + "\n"),
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a carousel template with imageAspectRatio, imageSize and imageBackgroundColor","template":{"type":"carousel","columns":[{"thumbnailImageUrl":"https://example.com/bot/images/item1.jpg","imageBackgroundColor":"#FFFFFF","title":"this is menu","text":"description","actions":[{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=111"},{"type":"postback","label":"Add to cart","data":"action=add\u0026itemid=111"},{"type":"uri","label":"View detail","uri":"https://example.com/page/111"}]}],"imageAspectRatio":"rectangle","imageSize":"cover"}}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
@@ -304,7 +304,7 @@ func TestPushMessages(t *testing.T) {
 					NewImageCarouselTemplate(
 						NewImageCarouselColumn(
 							"https://example.com/bot/images/item1.jpg",
-							NewURIAction("View detail", "http://example.com/page/111"),
+							NewURIAction("View detail", "https://example.com/page/111"),
 						),
 					),
 				),
@@ -312,7 +312,7 @@ func TestPushMessages(t *testing.T) {
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
-				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a image carousel template","template":{"type":"image_carousel","columns":[{"imageUrl":"https://example.com/bot/images/item1.jpg","action":{"type":"uri","label":"View detail","uri":"http://example.com/page/111"}}]}}]}` + "\n"),
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"template","altText":"this is a image carousel template","template":{"type":"image_carousel","columns":[{"imageUrl":"https://example.com/bot/images/item1.jpg","action":{"type":"uri","label":"View detail","uri":"https://example.com/page/111"}}]}}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
@@ -336,7 +336,7 @@ func TestPushMessages(t *testing.T) {
 					},
 					Video: &ImagemapVideo{
 						OriginalContentURL: "https://example.com/original.mp4",
-						PreviewImageURL:    "http://example.com/preview.jpg",
+						PreviewImageURL:    "https://example.com/preview.jpg",
 						Area:               ImagemapArea{10, 10, 100, 200},
 					},
 				},
@@ -350,7 +350,7 @@ func TestPushMessages(t *testing.T) {
 					},
 					Video: &ImagemapVideo{
 						OriginalContentURL: "https://example.com/original.mp4",
-						PreviewImageURL:    "http://example.com/preview.jpg",
+						PreviewImageURL:    "https://example.com/preview.jpg",
 						Area:               ImagemapArea{10, 10, 100, 200},
 						ExternalLink: &ExternalLink{
 							LinkURI: "https://example.com/",
@@ -362,7 +362,7 @@ func TestPushMessages(t *testing.T) {
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
-				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}]},{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}],"video":{"originalContentUrl":"https://example.com/original.mp4","previewImageUrl":"http://example.com/preview.jpg","area":{"x":10,"y":10,"width":100,"height":200}}},{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap external link","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}],"video":{"originalContentUrl":"https://example.com/original.mp4","previewImageUrl":"http://example.com/preview.jpg","area":{"x":10,"y":10,"width":100,"height":200},"externalLink":{"linkUri":"https://example.com/","label":"external link"}}}]}` + "\n"),
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}]},{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}],"video":{"originalContentUrl":"https://example.com/original.mp4","previewImageUrl":"https://example.com/preview.jpg","area":{"x":10,"y":10,"width":100,"height":200}}},{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap external link","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}],"video":{"originalContentUrl":"https://example.com/original.mp4","previewImageUrl":"https://example.com/preview.jpg","area":{"x":10,"y":10,"width":100,"height":200},"externalLink":{"linkUri":"https://example.com/","label":"external link"}}}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
@@ -557,11 +557,11 @@ func TestReplyMessages(t *testing.T) {
 		},
 		{
 			// A image message
-			Messages:     []SendingMessage{NewImageMessage("http://example.com/original.jpg", "http://example.com/preview.jpg")},
+			Messages:     []SendingMessage{NewImageMessage("https://example.com/original.jpg", "https://example.com/preview.jpg")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
-				RequestBody: []byte(`{"replyToken":"nHuyWiB7yP5Zw52FIkcQobQuGDXCTA","messages":[{"type":"image","originalContentUrl":"http://example.com/original.jpg","previewImageUrl":"http://example.com/preview.jpg"}]}` + "\n"),
+				RequestBody: []byte(`{"replyToken":"nHuyWiB7yP5Zw52FIkcQobQuGDXCTA","messages":[{"type":"image","originalContentUrl":"https://example.com/original.jpg","previewImageUrl":"https://example.com/preview.jpg"}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
@@ -704,11 +704,11 @@ func TestMulticastMessages(t *testing.T) {
 		},
 		{
 			// A image message
-			Messages:     []SendingMessage{NewImageMessage("http://example.com/original.jpg", "http://example.com/preview.jpg")},
+			Messages:     []SendingMessage{NewImageMessage("https://example.com/original.jpg", "https://example.com/preview.jpg")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
-				RequestBody: []byte(`{"to":["U0cc15697597f61dd8b01cea8b027050e","U38ecbecfade326557b6971140741a4a6"],"messages":[{"type":"image","originalContentUrl":"http://example.com/original.jpg","previewImageUrl":"http://example.com/preview.jpg"}]}` + "\n"),
+				RequestBody: []byte(`{"to":["U0cc15697597f61dd8b01cea8b027050e","U38ecbecfade326557b6971140741a4a6"],"messages":[{"type":"image","originalContentUrl":"https://example.com/original.jpg","previewImageUrl":"https://example.com/preview.jpg"}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},

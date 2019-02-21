@@ -411,7 +411,7 @@ func TestListRichMenu(t *testing.T) {
 			Response: []byte(`{"richmenus":[` +
 				`{"richMenuId":"123","size":{"width":2500,"height":1686},"selected":false,"areas":[{"bounds":{"x":0,"y":0,"width":2500,"height":1686},"action":{"type":"postback","data":"action=buy&itemid=123"}}]},` +
 				`{"richMenuId":"456","size":{"width":2500,"height":1686},"selected":false,"chatBarText":"hello","areas":[{"bounds":{"x":0,"y":0,"width":2500,"height":1686},"action":{"type":"message","text":"text"}}]},` +
-				`{"richMenuId":"789","size":{"width":2500,"height":1686},"selected":false,"chatBarText":"line.me","areas":[{"bounds":{"x":0,"y":0,"width":2500,"height":1686},"action":{"type":"uri","uri":"http://line.me/"}}]}` +
+				`{"richMenuId":"789","size":{"width":2500,"height":1686},"selected":false,"chatBarText":"line.me","areas":[{"bounds":{"x":0,"y":0,"width":2500,"height":1686},"action":{"type":"uri","uri":"https://line.me/"}}]}` +
 				`]}`),
 			Want: want{
 				URLPath: APIEndpointListRichMenu,
@@ -448,7 +448,7 @@ func TestListRichMenu(t *testing.T) {
 						Areas: []AreaDetail{
 							{
 								Bounds: RichMenuBounds{X: 0, Y: 0, Width: 2500, Height: 1686},
-								Action: RichMenuAction{Type: RichMenuActionTypeURI, URI: "http://line.me/"},
+								Action: RichMenuAction{Type: RichMenuActionTypeURI, URI: "https://line.me/"},
 							},
 						},
 					},
