@@ -544,11 +544,11 @@ var webhookTestWantEvents = []*Event{
 			GroupID: "C4af498062901234567890123456789ab",
 		},
 		Members: []*EventSource{
-			&EventSource{
+			{
 				Type:   EventSourceTypeUser,
 				UserID: "U4af498062901234567890123456789ab",
 			},
-			&EventSource{
+			{
 				Type:   EventSourceTypeUser,
 				UserID: "U91eeaf62d901234567890123456789ab",
 			},
@@ -562,11 +562,11 @@ var webhookTestWantEvents = []*Event{
 			GroupID: "C4af498062901234567890123456789ab",
 		},
 		Members: []*EventSource{
-			&EventSource{
+			{
 				Type:   EventSourceTypeUser,
 				UserID: "U4af498062901234567890123456789ab",
 			},
-			&EventSource{
+			{
 				Type:   EventSourceTypeUser,
 				UserID: "U91eeaf62d901234567890123456789ab",
 			},
