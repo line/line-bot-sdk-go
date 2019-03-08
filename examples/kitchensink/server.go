@@ -545,12 +545,32 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 			linebot.NewImagemapMessage(
 				app.appBaseURL+"/static/rich",
 				"Imagemap alt text",
-				linebot.ImagemapBaseSize{1040, 1040},
-				linebot.NewURIImagemapAction("https://store.line.me/family/manga/en", linebot.ImagemapArea{0, 0, 520, 520}),
-				linebot.NewURIImagemapAction("https://store.line.me/family/music/en", linebot.ImagemapArea{520, 0, 520, 520}),
-				linebot.NewURIImagemapAction("https://store.line.me/family/play/en", linebot.ImagemapArea{0, 520, 520, 520}),
-				linebot.NewMessageImagemapAction("URANAI!", linebot.ImagemapArea{520, 520, 520, 520}),
+				linebot.ImagemapBaseSize{Width: 1040, Height: 1040},
+				linebot.NewURIImagemapAction("https://store.line.me/family/manga/en", linebot.ImagemapArea{X: 0, Y: 0, Width: 520, Height: 520}),
+				linebot.NewURIImagemapAction("https://store.line.me/family/music/en", linebot.ImagemapArea{X: 520, Y: 0, Width: 520, Height: 520}),
+				linebot.NewURIImagemapAction("https://store.line.me/family/play/en", linebot.ImagemapArea{X: 0, Y: 520, Width: 520, Height: 520}),
+				linebot.NewMessageImagemapAction("URANAI!", linebot.ImagemapArea{X: 520, Y: 520, Width: 520, Height: 520}),
 			),
+		).Do(); err != nil {
+			return err
+		}
+	case "imagemap video":
+		if _, err := app.bot.ReplyMessage(
+			replyToken,
+			linebot.NewImagemapMessage(
+				app.appBaseURL+"/static/rich",
+				"Imagemap with video alt text",
+				linebot.ImagemapBaseSize{Width: 1040, Height: 1040},
+				linebot.NewURIImagemapAction("https://store.line.me/family/manga/en", linebot.ImagemapArea{X: 0, Y: 0, Width: 520, Height: 520}),
+				linebot.NewURIImagemapAction("https://store.line.me/family/music/en", linebot.ImagemapArea{X: 520, Y: 0, Width: 520, Height: 520}),
+				linebot.NewURIImagemapAction("https://store.line.me/family/play/en", linebot.ImagemapArea{X: 0, Y: 520, Width: 520, Height: 520}),
+				linebot.NewMessageImagemapAction("URANAI!", linebot.ImagemapArea{X: 520, Y: 520, Width: 520, Height: 520}),
+			).WithVideo(&linebot.ImagemapVideo{
+				OriginalContentURL: app.appBaseURL + "/static/imagemap/video.mp4",
+				PreviewImageURL:    app.appBaseURL + "/static/imagemap/preview.jpg",
+				Area:               linebot.ImagemapArea{X: 280, Y: 385, Width: 480, Height: 270},
+				ExternalLink:       &linebot.ImagemapVideoExternalLink{LinkURI: "https://line.me", Label: "LINE"},
+			}),
 		).Do(); err != nil {
 			return err
 		}
