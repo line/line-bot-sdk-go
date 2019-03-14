@@ -297,6 +297,12 @@ func (m *ImagemapMessage) MarshalJSON() ([]byte, error) {
 	})
 }
 
+// WithVideo method
+func (m *ImagemapMessage) WithVideo(video *ImagemapVideo) *ImagemapMessage {
+	m.Video = video
+	return m
+}
+
 // WithQuickReplies method of ImagemapMessage
 func (m *ImagemapMessage) WithQuickReplies(items *QuickReplyItems) SendingMessage {
 	m.quickReplyitems = items
