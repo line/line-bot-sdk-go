@@ -1,5 +1,14 @@
 # Change Log
 
+## [v6.0.0](https://github.com/line/line-bot-sdk-go/tree/v6.0.0) (2019-03-14)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v5.0.0...v6.0.0)
+
+**Merged pull requests:**
+
+- Update for playing videos in imagemap messages [\#135](https://github.com/line/line-bot-sdk-go/pull/135) ([sugyan](https://github.com/sugyan))
+- Support Go 1.12 [\#131](https://github.com/line/line-bot-sdk-go/pull/131) ([sugyan](https://github.com/sugyan))
+- Update tests [\#130](https://github.com/line/line-bot-sdk-go/pull/130) ([sugyan](https://github.com/sugyan))
+
 ## [v5.0.0](https://github.com/line/line-bot-sdk-go/tree/v5.0.0) (2019-02-20)
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v4.3.0...v5.0.0)
 
