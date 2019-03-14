@@ -16,4 +16,4 @@
 
 package linebot
 
-const version = "5.0.0"
+const version = "6.0.0"
