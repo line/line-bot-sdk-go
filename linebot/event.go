@@ -119,12 +119,12 @@ type Event struct {
 	Timestamp   time.Time
 	Source      *EventSource
 	Message     Message
-	Joined      *Members `json:"joined"`
-	Left        *Members `json:"left"`
+	Joined      *Members
+	Left        *Members
 	Postback    *Postback
 	Beacon      *Beacon
 	AccountLink *AccountLink
-	Things      *Things `json:"things"`
+	Things      *Things
 	Members     []*EventSource
 }
 
@@ -139,7 +139,7 @@ type rawEvent struct {
 	AccountLink *rawAccountLinkEvent `json:"link,omitempty"`
 	Joined      *rawMemberEvent      `json:"joined,omitempty"`
 	Left        *rawMemberEvent      `json:"left,omitempty"`
-	Things      *Things              `json:"things,omitempty"`
+	*Things     `json:"things,omitempty"`
 }
 
 type rawMemberEvent struct {
