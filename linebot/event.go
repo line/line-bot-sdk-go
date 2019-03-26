@@ -129,17 +129,17 @@ type Event struct {
 }
 
 type rawEvent struct {
-	ReplyToken  string           `json:"replyToken,omitempty"`
-	Type        EventType        `json:"type"`
-	Timestamp   int64            `json:"timestamp"`
-	Source      *EventSource     `json:"source"`
-	Message     *rawEventMessage `json:"message,omitempty"`
-	*Postback   `json:"postback,omitempty"`
+	ReplyToken  string               `json:"replyToken,omitempty"`
+	Type        EventType            `json:"type"`
+	Timestamp   int64                `json:"timestamp"`
+	Source      *EventSource         `json:"source"`
+	Message     *rawEventMessage     `json:"message,omitempty"`
+	Postback    *Postback            `json:"postback,omitempty"`
 	Beacon      *rawBeaconEvent      `json:"beacon,omitempty"`
 	AccountLink *rawAccountLinkEvent `json:"link,omitempty"`
 	Joined      *rawMemberEvent      `json:"joined,omitempty"`
 	Left        *rawMemberEvent      `json:"left,omitempty"`
-	*Things     `json:"things,omitempty"`
+	Things      *Things              `json:"things,omitempty"`
 }
 
 type rawMemberEvent struct {
