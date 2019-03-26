@@ -239,6 +239,13 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 			ID:       m.ID,
 			Duration: m.Duration,
 		}
+	case *FileMessage:
+		raw.Message = &rawEventMessage{
+			Type:     MessageTypeFile,
+			ID:       m.ID,
+			FileName: m.FileName,
+			FileSize: m.FileSize,
+		}
 	case *LocationMessage:
 		raw.Message = &rawEventMessage{
 			Type:      MessageTypeLocation,
