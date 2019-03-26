@@ -1,5 +1,13 @@
 # Change Log
 
+## [v6.1.0](https://github.com/line/line-bot-sdk-go/tree/v6.1.0) (2019-03-26)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v6.0.0...v6.1.0)
+
+**Merged pull requests:**
+
+- Update TestEventMarshaling [\#138](https://github.com/line/line-bot-sdk-go/pull/138) ([sugyan](https://github.com/sugyan))
+- Fix: support marshalling message type "file" [\#137](https://github.com/line/line-bot-sdk-go/pull/137) ([notsu](https://github.com/notsu))
+
 ## [v6.0.0](https://github.com/line/line-bot-sdk-go/tree/v6.0.0) (2019-03-14)
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v5.0.0...v6.0.0)
 
