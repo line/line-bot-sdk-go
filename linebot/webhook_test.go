@@ -682,27 +682,19 @@ func TestEventMarshaling(t *testing.T) {
 		t.Fatal(err)
 	}
 	for i, want := range testCases.Events {
+		gotJSON, err := json.Marshal(webhookTestWantEvents[i])
 		if err != nil {
-			t.Fatal(err)
+			t.Error(err)
+			continue
 		}
-		e := webhookTestWantEvents[i]
-		switch e.Message.(type) {
-		case *FileMessage:
-			// skip
-		default:
-			gotJSON, err := json.Marshal(&e)
-			if err != nil {
-				t.Error(err)
-				continue
-			}
-			got := map[string]interface{}{}
-			err = json.Unmarshal(gotJSON, &got)
-			if err != nil {
-				t.Fatal(err)
-			}
-			if !reflect.DeepEqual(got, want) {
-				t.Errorf("Event marshal %d %v; want %v", i, got, want)
-			}
+		got := map[string]interface{}{}
+		err = json.Unmarshal(gotJSON, &got)
+		if err != nil {
+			t.Error(err)
+			continue
+		}
+		if !reflect.DeepEqual(got, want) {
+			t.Errorf("Event marshal %d %v; want %v", i, got, want)
 		}
 	}
 }
