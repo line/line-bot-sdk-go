@@ -88,21 +88,27 @@ type LinkTokenResponse struct {
 	LinkToken string `json:"linkToken"`
 }
 
+// isSuccess checks if status code is 2xx: The action was successfully received,
+// understood, and accepted.
+func isSuccess(code int) bool {
+	return code/100 == 2
+}
+
 func checkResponse(res *http.Response) error {
-	if res.StatusCode != http.StatusOK {
-		decoder := json.NewDecoder(res.Body)
-		result := ErrorResponse{}
-		if err := decoder.Decode(&result); err != nil {
-			return &APIError{
-				Code: res.StatusCode,
-			}
-		}
+	if isSuccess(res.StatusCode) {
+		return nil
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := ErrorResponse{}
+	if err := decoder.Decode(&result); err != nil {
 		return &APIError{
-			Code:     res.StatusCode,
-			Response: &result,
+			Code: res.StatusCode,
 		}
 	}
-	return nil
+	return &APIError{
+		Code:     res.StatusCode,
+		Response: &result,
+	}
 }
 
 func decodeToBasicResponse(res *http.Response) (*BasicResponse, error) {
