@@ -498,3 +498,92 @@ func TestListRichMenu(t *testing.T) {
 		}
 	}
 }
+
+// TestBulkRichMenu tests BulkLinkRichMenu, BulkUnlinkRichMenu
+func TestBulkRichMenu(t *testing.T) {
+	type want struct {
+		URLPath     string
+		RequestBody []byte
+		Response    *BasicResponse
+		Error       error
+	}
+	var testCases = []struct {
+		UserIDs      []string
+		RichMenuID   string
+		ResponseCode int
+		Response     []byte
+		Want         want
+	}{
+		{
+			ResponseCode: 202,
+			Response:     []byte(`{}`),
+			UserIDs:      []string{"userId1", "userId2"},
+			RichMenuID:   "richMenuId",
+			Want: want{
+				RequestBody: []byte(`{"richMenuId":"richMenuId","userIds":["userId1","userId2"]}` + "\n"),
+				URLPath:     APIEndpointBulkLinkRichMenu,
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			ResponseCode: 202,
+			Response:     []byte(`{}`),
+			UserIDs:      []string{"userId1", "userId2"},
+			RichMenuID:   "", // bulk unlink has no richmenuid
+			Want: want{
+				RequestBody: []byte(`{"userIds":["userId1","userId2"]}` + "\n"),
+				URLPath:     APIEndpointBulkUnlinkRichMenu,
+				Response:    &BasicResponse{},
+			},
+		},
+	}
+
+	var currentTestIdx int
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		tc := testCases[currentTestIdx]
+		if r.Method != http.MethodPost {
+			t.Errorf("Method %s; want %s", r.Method, http.MethodPost)
+		}
+		if r.URL.Path != tc.Want.URLPath {
+			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
+		}
+		body, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
+			t.Errorf("RequestBody\n %s; want\n %s", body, tc.Want.RequestBody)
+		}
+		w.WriteHeader(tc.ResponseCode)
+		w.Write(tc.Response)
+	}))
+	defer server.Close()
+	client, err := mockClient(server)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var res interface{}
+	for i, tc := range testCases {
+		currentTestIdx = i
+		if tc.RichMenuID == "" { // unlink
+			res, err = client.BulkUnlinkRichMenu(tc.UserIDs...).Do()
+		} else { // bulk link
+			res, err = client.BulkLinkRichMenu(tc.RichMenuID, tc.UserIDs...).Do()
+		}
+		if tc.Want.Error != nil {
+			if !reflect.DeepEqual(err, tc.Want.Error) {
+				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+			}
+		} else {
+			if err != nil {
+				t.Error(err)
+			}
+		}
+		if tc.Want.Response != nil {
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %d\n %v; want\n %v", i, res, tc.Want.Response)
+			}
+		}
+	}
+}

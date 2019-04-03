@@ -533,3 +533,97 @@ func (call *UploadRichMenuImageCall) Do() (*BasicResponse, error) {
 	defer closeResponse(res)
 	return decodeToBasicResponse(res)
 }
+
+// BulkLinkRichMenu method
+func (client *Client) BulkLinkRichMenu(richMenuID string, userIDs ...string) *BulkLinkRichMenuCall {
+	return &BulkLinkRichMenuCall{
+		c:          client,
+		userIDs:    userIDs,
+		richMenuID: richMenuID,
+	}
+}
+
+// BulkLinkRichMenuCall type
+type BulkLinkRichMenuCall struct {
+	c   *Client
+	ctx context.Context
+
+	userIDs    []string
+	richMenuID string
+}
+
+// WithContext method
+func (call *BulkLinkRichMenuCall) WithContext(ctx context.Context) *BulkLinkRichMenuCall {
+	call.ctx = ctx
+	return call
+}
+
+func (call *BulkLinkRichMenuCall) encodeJSON(w io.Writer) error {
+	enc := json.NewEncoder(w)
+	return enc.Encode(&struct {
+		RichMenuID string   `json:"richMenuId"`
+		UserIDs    []string `json:"userIds"`
+	}{
+		RichMenuID: call.richMenuID,
+		UserIDs:    call.userIDs,
+	})
+}
+
+// Do method
+func (call *BulkLinkRichMenuCall) Do() (*BasicResponse, error) {
+	var buf bytes.Buffer
+	if err := call.encodeJSON(&buf); err != nil {
+		return nil, err
+	}
+	res, err := call.c.post(call.ctx, APIEndpointBulkLinkRichMenu, &buf)
+	if err != nil {
+		return nil, err
+	}
+	defer closeResponse(res)
+	return decodeToBasicResponse(res)
+}
+
+// BulkUnlinkRichMenu method
+func (client *Client) BulkUnlinkRichMenu(userIDs ...string) *BulkUnlinkRichMenuCall {
+	return &BulkUnlinkRichMenuCall{
+		c:       client,
+		userIDs: userIDs,
+	}
+}
+
+// BulkUnlinkRichMenuCall type
+type BulkUnlinkRichMenuCall struct {
+	c   *Client
+	ctx context.Context
+
+	userIDs []string
+}
+
+// WithContext method
+func (call *BulkUnlinkRichMenuCall) WithContext(ctx context.Context) *BulkUnlinkRichMenuCall {
+	call.ctx = ctx
+	return call
+}
+
+func (call *BulkUnlinkRichMenuCall) encodeJSON(w io.Writer) error {
+	enc := json.NewEncoder(w)
+	return enc.Encode(&struct {
+		UserIDs []string `json:"userIds"`
+	}{
+		UserIDs: call.userIDs,
+	})
+}
+
+// Do method
+func (call *BulkUnlinkRichMenuCall) Do() (*BasicResponse, error) {
+	var buf bytes.Buffer
+	if err := call.encodeJSON(&buf); err != nil {
+		return nil, err
+	}
+	res, err := call.c.post(call.ctx, APIEndpointBulkUnlinkRichMenu, &buf)
+	if err != nil {
+		return nil, err
+	}
+	defer closeResponse(res)
+	return decodeToBasicResponse(res)
+}
