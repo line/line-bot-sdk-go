@@ -57,6 +57,8 @@ const (
 	APIEndpointDeleteLIFFApp  = "/liff/v1/apps/%s"
 
 	APIEndpointLinkToken = "/v2/bot/user/%s/linkToken"
+
+	APIEndpointGetMessageDelivery = "/v2/bot/message/delivery/%s"
 )
 
 // Client type
