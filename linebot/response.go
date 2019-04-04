@@ -58,6 +58,12 @@ type MessageContentResponse struct {
 	ContentType   string
 }
 
+// MessagesNumberResponse type
+type MessagesNumberResponse struct {
+	Status  string
+	Success int64
+}
+
 // RichMenuIDResponse type
 type RichMenuIDResponse struct {
 	RichMenuID string `json:"richMenuId"`
@@ -234,6 +240,18 @@ func decodeToLinkTokenResponse(res *http.Response) (*LinkTokenResponse, error) {
 	}
 	decoder := json.NewDecoder(res.Body)
 	result := LinkTokenResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
+
+func decodeToMessagesNumberResponse(res *http.Response) (*MessagesNumberResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := MessagesNumberResponse{}
 	if err := decoder.Decode(&result); err != nil {
 		return nil, err
 	}
