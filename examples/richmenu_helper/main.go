@@ -24,7 +24,7 @@ import (
 
 func main() {
 	var (
-		mode     = flag.String("mode", "list", "mode of richmenu helper [list|create|link|unlink|get|delete|upload|download]")
+		mode     = flag.String("mode", "list", "mode of richmenu helper [list|create|link|unlink|bulklink|bulkunlink|get|delete|upload|download]")
 		uid      = flag.String("uid", "", "user id")
 		rid      = flag.String("rid", "", "richmenu id")
 		filePath = flag.String("image.path", "", "path to image, used in upload/download mode")
@@ -49,6 +49,14 @@ func main() {
 		}
 	case "unlink":
 		if _, err = bot.UnlinkUserRichMenu(*uid).Do(); err != nil {
+			log.Fatal(err)
+		}
+	case "bulklink":
+		if _, err = bot.BulkLinkRichMenu(*rid, *uid).Do(); err != nil {
+			log.Fatal(err)
+		}
+	case "bulkunlink":
+		if _, err = bot.BulkUnlinkRichMenu(*uid).Do(); err != nil {
 			log.Fatal(err)
 		}
 	case "list":
