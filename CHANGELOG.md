@@ -1,5 +1,14 @@
 # Change Log
 
+## [v6.2.0](https://github.com/line/line-bot-sdk-go/tree/v6.2.0) (2019-04-04)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v6.1.0...v6.2.0)
+
+**Merged pull requests:**
+
+- Add functions for \#120: get number of messages [\#141](https://github.com/line/line-bot-sdk-go/pull/141) ([clsung](https://github.com/clsung))
+- Richmenu for multiple user [\#140](https://github.com/line/line-bot-sdk-go/pull/140) ([clsung](https://github.com/clsung))
+- Tweak event.go [\#136](https://github.com/line/line-bot-sdk-go/pull/136) ([sugyan](https://github.com/sugyan))
+
 ## [v6.1.0](https://github.com/line/line-bot-sdk-go/tree/v6.1.0) (2019-03-26)
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v6.0.0...v6.1.0)
 
