@@ -1,6 +1,7 @@
 # line-bot-sdk-go
 
 [![Build Status](https://travis-ci.org/line/line-bot-sdk-go.svg?branch=master)](https://travis-ci.org/line/line-bot-sdk-go)
+[![codecov](https://codecov.io/gh/line/line-bot-sdk-go/branch/master/graph/badge.svg)](https://codecov.io/gh/line/line-bot-sdk-go)
 [![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](http://godoc.org/github.com/line/line-bot-sdk-go/linebot)
 [![Go Report Card](https://goreportcard.com/badge/github.com/line/line-bot-sdk-go)](https://goreportcard.com/report/github.com/line/line-bot-sdk-go)
 
