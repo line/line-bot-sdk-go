@@ -64,6 +64,12 @@ type MessagesNumberResponse struct {
 	Success int64
 }
 
+// MessageQuotaResponse type
+type MessageQuotaResponse struct {
+	Type  string
+	Value int64
+}
+
 // RichMenuIDResponse type
 type RichMenuIDResponse struct {
 	RichMenuID string `json:"richMenuId"`
@@ -170,6 +176,18 @@ func decodeToMessageContentResponse(res *http.Response) (*MessageContentResponse
 		ContentLength: res.ContentLength,
 	}
 	return &result, nil
+}
+
+func decodeToMessageQuotaResponse(res *http.Response) (*MessageQuotaResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := &MessageQuotaResponse{}
+	if err := decoder.Decode(result); err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func decodeToRichMenuResponse(res *http.Response) (*RichMenuResponse, error) {
