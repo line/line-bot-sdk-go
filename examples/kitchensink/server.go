@@ -518,7 +518,10 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
         "action": {
           "type": "uri",
           "label": "WEBSITE",
-          "uri": "https://linecorp.com"
+          "uri": "https://linecorp.com",
+          "altUri": {
+            "desktop": "https://line.me/ja/download"
+          }
         }
       },
       {

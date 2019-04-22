@@ -264,7 +264,10 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
         "action": {
           "type": "uri",
           "label": "WEBSITE",
-          "uri": "https://linecorp.com"
+          "uri": "https://linecorp.com",
+          "altUri": {
+            "desktop": "https://line.me/ja/download"
+          }
         }
       },
       {
@@ -414,6 +417,9 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 							Action: &URIAction{
 								Label: "WEBSITE",
 								URI:   "https://linecorp.com",
+								AltURI: &URIActionAltURI{
+									Desktop: "https://line.me/ja/download",
+								},
 							},
 							Height: FlexButtonHeightTypeSm,
 							Style:  FlexButtonStyleTypeLink,
