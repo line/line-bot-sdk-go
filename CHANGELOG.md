@@ -1,5 +1,14 @@
 # Change Log
 
+## [v6.3.0](https://github.com/line/line-bot-sdk-go/tree/v6.3.0) (2019-04-23)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v6.2.0...v6.3.0)
+
+**Merged pull requests:**
+
+- Add URIAction.AltURI.Desktop [\#147](https://github.com/line/line-bot-sdk-go/pull/147) ([sugyan](https://github.com/sugyan))
+- Add get message quota support [\#146](https://github.com/line/line-bot-sdk-go/pull/146) ([kkdai](https://github.com/kkdai))
+- Use CodeCov [\#142](https://github.com/line/line-bot-sdk-go/pull/142) ([suzuki-shunsuke](https://github.com/suzuki-shunsuke))
+
 ## [v6.2.0](https://github.com/line/line-bot-sdk-go/tree/v6.2.0) (2019-04-04)
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v6.1.0...v6.2.0)
 
