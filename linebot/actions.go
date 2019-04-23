@@ -49,20 +49,28 @@ type QuickReplyAction interface {
 
 // URIAction type
 type URIAction struct {
-	Label string
-	URI   string
+	Label  string
+	URI    string
+	AltURI *URIActionAltURI
+}
+
+// URIActionAltURI type
+type URIActionAltURI struct {
+	Desktop string `json:"desktop"`
 }
 
 // MarshalJSON method of URIAction
 func (a *URIAction) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type  ActionType `json:"type"`
-		Label string     `json:"label,omitempty"`
-		URI   string     `json:"uri"`
+		Type   ActionType       `json:"type"`
+		Label  string           `json:"label,omitempty"`
+		URI    string           `json:"uri"`
+		AltURI *URIActionAltURI `json:"altUri,omitempty"`
 	}{
-		Type:  ActionTypeURI,
-		Label: a.Label,
-		URI:   a.URI,
+		Type:   ActionTypeURI,
+		Label:  a.Label,
+		URI:    a.URI,
+		AltURI: a.AltURI,
 	})
 }
 
