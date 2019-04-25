@@ -61,7 +61,7 @@ type URIActionAltURI struct {
 
 // MarshalJSON method of URIAction
 func (a *URIAction) MarshalJSON() ([]byte, error) {
-	return json.Marshal(struct {
+	return json.Marshal(&struct {
 		Type   ActionType       `json:"type"`
 		Label  string           `json:"label,omitempty"`
 		URI    string           `json:"uri"`
@@ -82,7 +82,7 @@ type MessageAction struct {
 
 // MarshalJSON method of MessageAction
 func (a *MessageAction) MarshalJSON() ([]byte, error) {
-	return json.Marshal(struct {
+	return json.Marshal(&struct {
 		Type  ActionType `json:"type"`
 		Label string     `json:"label,omitempty"`
 		Text  string     `json:"text"`
@@ -103,7 +103,7 @@ type PostbackAction struct {
 
 // MarshalJSON method of PostbackAction
 func (a *PostbackAction) MarshalJSON() ([]byte, error) {
-	return json.Marshal(struct {
+	return json.Marshal(&struct {
 		Type        ActionType `json:"type"`
 		Label       string     `json:"label,omitempty"`
 		Data        string     `json:"data"`
@@ -130,7 +130,7 @@ type DatetimePickerAction struct {
 
 // MarshalJSON method of DatetimePickerAction
 func (a *DatetimePickerAction) MarshalJSON() ([]byte, error) {
-	return json.Marshal(struct {
+	return json.Marshal(&struct {
 		Type    ActionType `json:"type"`
 		Label   string     `json:"label,omitempty"`
 		Data    string     `json:"data"`
@@ -156,7 +156,7 @@ type CameraAction struct {
 
 // MarshalJSON method of CameraAction
 func (a *CameraAction) MarshalJSON() ([]byte, error) {
-	return json.Marshal(struct {
+	return json.Marshal(&struct {
 		Type  ActionType `json:"type"`
 		Label string     `json:"label"`
 	}{
@@ -172,7 +172,7 @@ type CameraRollAction struct {
 
 // MarshalJSON method of CameraRollAction
 func (a *CameraRollAction) MarshalJSON() ([]byte, error) {
-	return json.Marshal(struct {
+	return json.Marshal(&struct {
 		Type  ActionType `json:"type"`
 		Label string     `json:"label"`
 	}{
@@ -188,7 +188,7 @@ type LocationAction struct {
 
 // MarshalJSON method of LocationAction
 func (a *LocationAction) MarshalJSON() ([]byte, error) {
-	return json.Marshal(struct {
+	return json.Marshal(&struct {
 		Type  ActionType `json:"type"`
 		Label string     `json:"label"`
 	}{

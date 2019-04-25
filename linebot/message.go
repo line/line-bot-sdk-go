@@ -56,7 +56,7 @@ type TextMessage struct {
 
 // MarshalJSON method of TextMessage
 func (m *TextMessage) MarshalJSON() ([]byte, error) {
-	return json.Marshal(struct {
+	return json.Marshal(&struct {
 		Type       MessageType      `json:"type"`
 		Text       string           `json:"text"`
 		QuickReply *QuickReplyItems `json:"quickReply,omitempty"`
@@ -84,7 +84,7 @@ type ImageMessage struct {
 
 // MarshalJSON method of ImageMessage
 func (m *ImageMessage) MarshalJSON() ([]byte, error) {
-	return json.Marshal(struct {
+	return json.Marshal(&struct {
 		Type               MessageType      `json:"type"`
 		OriginalContentURL string           `json:"originalContentUrl"`
 		PreviewImageURL    string           `json:"previewImageUrl"`
@@ -114,7 +114,7 @@ type VideoMessage struct {
 
 // MarshalJSON method of VideoMessage
 func (m *VideoMessage) MarshalJSON() ([]byte, error) {
-	return json.Marshal(struct {
+	return json.Marshal(&struct {
 		Type               MessageType      `json:"type"`
 		OriginalContentURL string           `json:"originalContentUrl"`
 		PreviewImageURL    string           `json:"previewImageUrl"`
@@ -144,7 +144,7 @@ type AudioMessage struct {
 
 // MarshalJSON method of AudioMessage
 func (m *AudioMessage) MarshalJSON() ([]byte, error) {
-	return json.Marshal(struct {
+	return json.Marshal(&struct {
 		Type               MessageType      `json:"type"`
 		OriginalContentURL string           `json:"originalContentUrl"`
 		Duration           int              `json:"duration"`
@@ -183,7 +183,7 @@ type LocationMessage struct {
 
 // MarshalJSON method of LocationMessage
 func (m *LocationMessage) MarshalJSON() ([]byte, error) {
-	return json.Marshal(struct {
+	return json.Marshal(&struct {
 		Type       MessageType      `json:"type"`
 		Title      string           `json:"title"`
 		Address    string           `json:"address"`
@@ -217,7 +217,7 @@ type StickerMessage struct {
 
 // MarshalJSON method of StickerMessage
 func (m *StickerMessage) MarshalJSON() ([]byte, error) {
-	return json.Marshal(struct {
+	return json.Marshal(&struct {
 		Type       MessageType      `json:"type"`
 		PackageID  string           `json:"packageId"`
 		StickerID  string           `json:"stickerId"`
@@ -246,7 +246,7 @@ type TemplateMessage struct {
 
 // MarshalJSON method of TemplateMessage
 func (m *TemplateMessage) MarshalJSON() ([]byte, error) {
-	return json.Marshal(struct {
+	return json.Marshal(&struct {
 		Type       MessageType      `json:"type"`
 		AltText    string           `json:"altText"`
 		Template   Template         `json:"template"`
@@ -278,7 +278,7 @@ type ImagemapMessage struct {
 
 // MarshalJSON method of ImagemapMessage
 func (m *ImagemapMessage) MarshalJSON() ([]byte, error) {
-	return json.Marshal(struct {
+	return json.Marshal(&struct {
 		Type       MessageType      `json:"type"`
 		BaseURL    string           `json:"baseUrl"`
 		AltText    string           `json:"altText"`
@@ -319,7 +319,7 @@ type FlexMessage struct {
 
 // MarshalJSON method of FlexMessage
 func (m *FlexMessage) MarshalJSON() ([]byte, error) {
-	return json.Marshal(struct {
+	return json.Marshal(&struct {
 		Type       MessageType      `json:"type"`
 		AltText    string           `json:"altText"`
 		Contents   interface{}      `json:"contents"`

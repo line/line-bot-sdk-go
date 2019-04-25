@@ -66,7 +66,7 @@ type ButtonsTemplate struct {
 
 // MarshalJSON method of ButtonsTemplate
 func (t *ButtonsTemplate) MarshalJSON() ([]byte, error) {
-	return json.Marshal(struct {
+	return json.Marshal(&struct {
 		Type                 TemplateType         `json:"type"`
 		ThumbnailImageURL    string               `json:"thumbnailImageUrl,omitempty"`
 		ImageAspectRatio     ImageAspectRatioType `json:"imageAspectRatio,omitempty"`
@@ -103,7 +103,7 @@ type ConfirmTemplate struct {
 
 // MarshalJSON method of ConfirmTemplate
 func (t *ConfirmTemplate) MarshalJSON() ([]byte, error) {
-	return json.Marshal(struct {
+	return json.Marshal(&struct {
 		Type    TemplateType     `json:"type"`
 		Text    string           `json:"text"`
 		Actions []TemplateAction `json:"actions"`
@@ -132,7 +132,7 @@ type CarouselColumn struct {
 
 // MarshalJSON method of CarouselTemplate
 func (t *CarouselTemplate) MarshalJSON() ([]byte, error) {
-	return json.Marshal(struct {
+	return json.Marshal(&struct {
 		Type             TemplateType         `json:"type"`
 		Columns          []*CarouselColumn    `json:"columns"`
 		ImageAspectRatio ImageAspectRatioType `json:"imageAspectRatio,omitempty"`
@@ -171,7 +171,7 @@ type ImageCarouselColumn struct {
 
 // MarshalJSON method of ImageCarouselTemplate
 func (t *ImageCarouselTemplate) MarshalJSON() ([]byte, error) {
-	return json.Marshal(struct {
+	return json.Marshal(&struct {
 		Type    TemplateType           `json:"type"`
 		Columns []*ImageCarouselColumn `json:"columns"`
 	}{
