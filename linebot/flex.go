@@ -261,7 +261,7 @@ type BubbleContainer struct {
 
 // MarshalJSON method of BubbleContainer
 func (c *BubbleContainer) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
+	return json.Marshal(struct {
 		Type      FlexContainerType       `json:"type"`
 		Direction FlexBubbleDirectionType `json:"direction,omitempty"`
 		Header    *BoxComponent           `json:"header,omitempty"`
@@ -288,7 +288,7 @@ type CarouselContainer struct {
 
 // MarshalJSON method of CarouselContainer
 func (c *CarouselContainer) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
+	return json.Marshal(struct {
 		Type     FlexContainerType  `json:"type"`
 		Contents []*BubbleContainer `json:"contents"`
 	}{
@@ -335,7 +335,7 @@ type BoxComponent struct {
 
 // MarshalJSON method of BoxComponent
 func (c *BoxComponent) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
+	return json.Marshal(struct {
 		Type     FlexComponentType        `json:"type"`
 		Layout   FlexBoxLayoutType        `json:"layout"`
 		Contents []FlexComponent          `json:"contents"`
@@ -366,7 +366,7 @@ type ButtonComponent struct {
 
 // MarshalJSON method of ButtonComponent
 func (c *ButtonComponent) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
+	return json.Marshal(struct {
 		Type    FlexComponentType        `json:"type"`
 		Action  TemplateAction           `json:"action"`
 		Flex    *int                     `json:"flex,omitempty"`
@@ -394,7 +394,7 @@ type FillerComponent struct {
 
 // MarshalJSON method of FillerComponent
 func (c *FillerComponent) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
+	return json.Marshal(struct {
 		Type FlexComponentType `json:"type"`
 	}{
 		Type: FlexComponentTypeFiller,
@@ -412,7 +412,7 @@ type IconComponent struct {
 
 // MarshalJSON method of IconComponent
 func (c *IconComponent) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
+	return json.Marshal(struct {
 		Type        FlexComponentType       `json:"type"`
 		URL         string                  `json:"url"`
 		Margin      FlexComponentMarginType `json:"margin,omitempty"`
@@ -444,7 +444,7 @@ type ImageComponent struct {
 
 // MarshalJSON method of ImageComponent
 func (c *ImageComponent) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
+	return json.Marshal(struct {
 		Type            FlexComponentType        `json:"type"`
 		URL             string                   `json:"url"`
 		Flex            *int                     `json:"flex,omitempty"`
@@ -480,7 +480,7 @@ type SeparatorComponent struct {
 
 // MarshalJSON method of SeparatorComponent
 func (c *SeparatorComponent) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
+	return json.Marshal(struct {
 		Type   FlexComponentType       `json:"type"`
 		Margin FlexComponentMarginType `json:"margin,omitempty"`
 		Color  string                  `json:"color,omitempty"`
@@ -499,7 +499,7 @@ type SpacerComponent struct {
 
 // MarshalJSON method of SpacerComponent
 func (c *SpacerComponent) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
+	return json.Marshal(struct {
 		Type FlexComponentType  `json:"type"`
 		Size FlexSpacerSizeType `json:"size,omitempty"`
 	}{
@@ -525,7 +525,7 @@ type TextComponent struct {
 
 // MarshalJSON method of TextComponent
 func (c *TextComponent) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
+	return json.Marshal(struct {
 		Type    FlexComponentType        `json:"type"`
 		Text    string                   `json:"text"`
 		Flex    *int                     `json:"flex,omitempty"`

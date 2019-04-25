@@ -38,7 +38,7 @@ type QuickReplyButton struct {
 
 // MarshalJSON method of QuickReplyButton
 func (b *QuickReplyButton) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
+	return json.Marshal(struct {
 		Type     string           `json:"type"`
 		ImageURL string           `json:"imageUrl,omitempty"`
 		Action   QuickReplyAction `json:"action"`

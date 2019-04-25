@@ -533,9 +533,7 @@ func TestPushMessagesWithContext(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
 	defer cancel()
 	_, err = client.PushMessage("U0cc15697597f61dd8b01cea8b027050e", NewTextMessage("Hello, world")).WithContext(ctx).Do()
-	if err != context.DeadlineExceeded {
-		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
-	}
+	expectCtxDeadlineExceed(ctx, err, t)
 }
 
 func TestReplyMessages(t *testing.T) {
@@ -677,9 +675,7 @@ func TestReplyMessagesWithContext(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
 	defer cancel()
 	_, err = client.ReplyMessage("nHuyWiB7yP5Zw52FIkcQobQuGDXCTA", NewTextMessage("Hello, world")).WithContext(ctx).Do()
-	if err != context.DeadlineExceeded {
-		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
-	}
+	expectCtxDeadlineExceed(ctx, err, t)
 }
 
 func TestMulticastMessages(t *testing.T) {
@@ -824,9 +820,7 @@ func TestMulticastMessagesWithContext(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
 	defer cancel()
 	_, err = client.Multicast([]string{"U0cc15697597f61dd8b01cea8b027050e", "U38ecbecfade326557b6971140741a4a6"}, NewTextMessage("Hello, world")).WithContext(ctx).Do()
-	if err != context.DeadlineExceeded {
-		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
-	}
+	expectCtxDeadlineExceed(ctx, err, t)
 }
 
 func BenchmarkPushMessages(b *testing.B) {

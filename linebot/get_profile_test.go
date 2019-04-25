@@ -125,9 +125,7 @@ func TestGetProfileWithContext(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
 	defer cancel()
 	_, err = client.GetProfile("U0047556f2e40dba2456887320ba7c76d").WithContext(ctx).Do()
-	if err != context.DeadlineExceeded {
-		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
-	}
+	expectCtxDeadlineExceed(ctx, err, t)
 }
 
 func BenchmarkGetProfile(b *testing.B) {
@@ -249,9 +247,7 @@ func TestGetGroupMemberProfileWithContext(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
 	defer cancel()
 	_, err = client.GetGroupMemberProfile("cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "U0047556f2e40dba2456887320ba7c76d").WithContext(ctx).Do()
-	if err != context.DeadlineExceeded {
-		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
-	}
+	expectCtxDeadlineExceed(ctx, err, t)
 }
 
 func BenchmarkGetGroupMemberProfile(b *testing.B) {
@@ -373,9 +369,7 @@ func TestGetRoomMemberProfileWithContext(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
 	defer cancel()
 	_, err = client.GetRoomMemberProfile("cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "U0047556f2e40dba2456887320ba7c76d").WithContext(ctx).Do()
-	if err != context.DeadlineExceeded {
-		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
-	}
+	expectCtxDeadlineExceed(ctx, err, t)
 }
 
 func BenchmarkGetRoomMemberProfile(b *testing.B) {
