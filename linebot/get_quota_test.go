@@ -139,3 +139,119 @@ func BenchmarkGetMessageQuota(b *testing.B) {
 		client.GetMessageQuota().Do()
 	}
 }
+
+///
+func TestGetMessageConsumption(t *testing.T) {
+	type want struct {
+		URLPath     string
+		RequestBody []byte
+		Response    *MessageConsumptionResponse
+		Error       error
+	}
+	var testCases = []struct {
+		ResponseCode int
+		Response     []byte
+		Want         want
+	}{
+		{
+			ResponseCode: 200,
+			Response:     []byte(`{"totalUsage":500}`),
+			Want: want{
+				URLPath:     APIEndpointGetMessageConsumption,
+				RequestBody: []byte(""),
+				Response: &MessageConsumptionResponse{
+					TotalUsage: 500,
+				},
+			},
+		},
+		{
+			// Internal server error
+			ResponseCode: 500,
+			Response:     []byte("500 Internal server error"),
+			Want: want{
+				URLPath:     APIEndpointGetMessageConsumption,
+				RequestBody: []byte(""),
+				Error: &APIError{
+					Code: 500,
+				},
+			},
+		},
+	}
+
+	var currentTestIdx int
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		tc := testCases[currentTestIdx]
+		if r.Method != http.MethodGet {
+			t.Errorf("Method %s; want %s", r.Method, http.MethodGet)
+		}
+		if r.URL.Path != tc.Want.URLPath {
+			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
+		}
+		body, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
+			t.Errorf("RequestBody %s; want %s", body, tc.Want.RequestBody)
+		}
+		w.WriteHeader(tc.ResponseCode)
+		w.Write(tc.Response)
+	}))
+	defer server.Close()
+	client, err := mockClient(server)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for i, tc := range testCases {
+		currentTestIdx = i
+		res, err := client.GetMessageConsumption().Do()
+		if tc.Want.Error != nil {
+			if !reflect.DeepEqual(err, tc.Want.Error) {
+				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+			}
+		} else {
+			if err != nil {
+				t.Error(err)
+			}
+		}
+		if !reflect.DeepEqual(res, tc.Want.Response) {
+			t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
+		}
+	}
+}
+
+func TestGetMessageConsumptionWithContext(t *testing.T) {
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		time.Sleep(10 * time.Millisecond)
+		w.Write([]byte("{}"))
+	}))
+	defer server.Close()
+	client, err := mockClient(server)
+	if err != nil {
+		t.Fatal(err)
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
+	defer cancel()
+	_, err = client.GetMessageConsumption().WithContext(ctx).Do()
+	if err != context.DeadlineExceeded {
+		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
+	}
+}
+
+func BenchmarkGetMessageConsumption(b *testing.B) {
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		w.Write([]byte(`{"totalUsage":500}`))
+	}))
+	defer server.Close()
+	client, err := mockClient(server)
+	if err != nil {
+		b.Fatal(err)
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		client.GetMessageConsumption().Do()
+	}
+}

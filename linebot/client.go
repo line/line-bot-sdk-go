@@ -33,6 +33,7 @@ const (
 	APIEndpointMulticast             = "/v2/bot/message/multicast"
 	APIEndpointGetMessageContent     = "/v2/bot/message/%s/content"
 	APIEndpointGetMessageQuota       = "/v2/bot/message/quota"
+	APIEndpointGetMessageConsumption = "/v2/bot/message/quota/consumption"
 	APIEndpointLeaveGroup            = "/v2/bot/group/%s/leave"
 	APIEndpointLeaveRoom             = "/v2/bot/room/%s/leave"
 	APIEndpointGetProfile            = "/v2/bot/profile/%s"
