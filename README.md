@@ -1,19 +1,24 @@
-# line-bot-sdk-go
+# LINE Messaging API SDK for Go
 
 [![Build Status](https://travis-ci.org/line/line-bot-sdk-go.svg?branch=master)](https://travis-ci.org/line/line-bot-sdk-go)
 [![codecov](https://codecov.io/gh/line/line-bot-sdk-go/branch/master/graph/badge.svg)](https://codecov.io/gh/line/line-bot-sdk-go)
 [![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](http://godoc.org/github.com/line/line-bot-sdk-go/linebot)
 [![Go Report Card](https://goreportcard.com/badge/github.com/line/line-bot-sdk-go)](https://goreportcard.com/report/github.com/line/line-bot-sdk-go)
 
-Go SDK for the LINE Messaging API
 
+## Introduction
+The LINE Messaging API SDK for Go makes it easy to develop bots using LINE Messaging API, and you can create a sample bot within minutes.
 
-## About LINE Messaging API
+## Documentation
 
 See the official API documentation for more information.
 
-English: https://developers.line.me/en/docs/messaging-api/reference/<br>
-Japanese: https://developers.line.me/ja/docs/messaging-api/reference/
+- English: https://developers.line.biz/en/docs/messaging-api/overview/
+- Japanese: https://developers.line.biz/ja/docs/messaging-api/overview/
+
+## Requirements
+
+This library requires Go 1.10 or later.
 
 ## Installation ##
 
@@ -122,10 +127,42 @@ if err != nil {
 }
 ```
 
-## Requirements
+## Help and media
 
-This library requires Go 1.10 or later.
+FAQ: https://developers.line.biz/en/faq/
 
-## LICENSE
+Community Q&A: https://www.line-community.me/questions
 
-See [LICENSE.txt](LICENSE.txt)
+News: https://developers.line.biz/en/news/
+
+Twitter: @LINE_DEV
+
+
+## Versioning
+This project respects semantic versioning.
+
+See http://semver.org/
+
+
+## Contributing
+
+Please check [CONTRIBUTING](contributing.md) before making a contribution.
+
+
+## License
+
+```
+Copyright (C) 2016 LINE Corp.
+ 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+ 
+   http://www.apache.org/licenses/LICENSE-2.0
+ 
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
