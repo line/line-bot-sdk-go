@@ -15,10 +15,9 @@
 package linebot
 
 import (
+	"context"
 	"net/url"
 	"strings"
-
-	"golang.org/x/net/context"
 )
 
 // IssueAccessToken method
