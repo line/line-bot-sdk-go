@@ -54,12 +54,10 @@ func (call *IssueAccessTokenCall) Do() (*AccessTokenResponse, error) {
 	body := strings.NewReader(vs.Encode())
 
 	res, err := call.c.postform(call.ctx, APIEndpointIssueAccessToken, body)
-	if res != nil && res.Body != nil {
-		defer res.Body.Close()
-	}
 	if err != nil {
 		return nil, err
 	}
+	defer closeResponse(res)
 	return decodeToAccessTokenResponse(res)
 }
 
@@ -92,11 +90,9 @@ func (call *RevokeAccessTokenCall) Do() (*BasicResponse, error) {
 	body := strings.NewReader(vs.Encode())
 
 	res, err := call.c.postform(call.ctx, APIEndpointRevokeAccessToken, body)
-	if res != nil && res.Body != nil {
-		defer res.Body.Close()
-	}
 	if err != nil {
 		return nil, err
 	}
+	defer closeResponse(res)
 	return decodeToBasicResponse(res)
 }
