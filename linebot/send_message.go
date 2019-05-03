@@ -167,3 +167,48 @@ func (call *MulticastCall) Do() (*BasicResponse, error) {
 	defer closeResponse(res)
 	return decodeToBasicResponse(res)
 }
+
+// Broadcast method
+func (client *Client) BroadcastMessage(messages ...SendingMessage) *BroadcastMessageCall {
+	return &BroadcastMessageCall{
+		c:        client,
+		messages: messages,
+	}
+}
+
+// BroadcastMessageCall type
+type BroadcastMessageCall struct {
+	c   *Client
+	ctx context.Context
+
+	messages []SendingMessage
+}
+
+// WithContext method
+func (call *BroadcastMessageCall) WithContext(ctx context.Context) *BroadcastMessageCall {
+	call.ctx = ctx
+	return call
+}
+
+func (call *BroadcastMessageCall) encodeJSON(w io.Writer) error {
+	enc := json.NewEncoder(w)
+	return enc.Encode(&struct {
+		Messages []SendingMessage `json:"messages"`
+	}{
+		Messages: call.messages,
+	})
+}
+
+// Do method
+func (call *BroadcastMessageCall) Do() (*BasicResponse, error) {
+	var buf bytes.Buffer
+	if err := call.encodeJSON(&buf); err != nil {
+		return nil, err
+	}
+	res, err := call.c.post(call.ctx, APIEndpointBroadcastMessage, &buf)
+	if err != nil {
+		return nil, err
+	}
+	defer closeResponse(res)
+	return decodeToBasicResponse(res)
+}
