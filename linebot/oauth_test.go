@@ -15,6 +15,7 @@
 package linebot
 
 import (
+	"context"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -92,6 +93,55 @@ func TestIssueAccessToken(t *testing.T) {
 	}
 }
 
+func TestIssueAccessTokenCall_WithContext(t *testing.T) {
+	type fields struct {
+		c             *Client
+		ctx           context.Context
+		channelID     string
+		channelSecret string
+	}
+	type args struct {
+		ctx context.Context
+	}
+
+	oldCtx := context.Background()
+	type key string
+	newCtx := context.WithValue(oldCtx, key("foo"), "bar")
+
+	tests := []struct {
+		name   string
+		fields fields
+		args   args
+		want   context.Context
+	}{
+		{
+			name: "replace context",
+			fields: fields{
+				ctx: oldCtx,
+			},
+			args: args{
+				ctx: newCtx,
+			},
+			want: newCtx,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			call := &IssueAccessTokenCall{
+				c:             tt.fields.c,
+				ctx:           tt.fields.ctx,
+				channelID:     tt.fields.channelID,
+				channelSecret: tt.fields.channelSecret,
+			}
+			call = call.WithContext(tt.args.ctx)
+			got := call.ctx
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("IssueAccessTokenCall.WithContext() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
 func TestRevokeAccessToken(t *testing.T) {
 	type want struct {
 		RequestBody []byte
@@ -157,5 +207,52 @@ func TestRevokeAccessToken(t *testing.T) {
 				t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
 			}
 		}
+	}
+}
+
+func TestRevokeAccessTokenCall_WithContext(t *testing.T) {
+	type fields struct {
+		c           *Client
+		ctx         context.Context
+		accessToken string
+	}
+	type args struct {
+		ctx context.Context
+	}
+
+	oldCtx := context.Background()
+	type key string
+	newCtx := context.WithValue(oldCtx, key("foo"), "bar")
+
+	tests := []struct {
+		name   string
+		fields fields
+		args   args
+		want   context.Context
+	}{
+		{
+			name: "replace context",
+			fields: fields{
+				ctx: oldCtx,
+			},
+			args: args{
+				ctx: newCtx,
+			},
+			want: newCtx,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			call := &RevokeAccessTokenCall{
+				c:           tt.fields.c,
+				ctx:         tt.fields.ctx,
+				accessToken: tt.fields.accessToken,
+			}
+			call = call.WithContext(tt.args.ctx)
+			got := call.ctx
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("RevokeAccessTokenCall.WithContext() = %v, want %v", got, tt.want)
+			}
+		})
 	}
 }
