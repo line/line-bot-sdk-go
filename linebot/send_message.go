@@ -168,7 +168,7 @@ func (call *MulticastCall) Do() (*BasicResponse, error) {
 	return decodeToBasicResponse(res)
 }
 
-// Broadcast method
+// BroadcastMessage method
 func (client *Client) BroadcastMessage(messages ...SendingMessage) *BroadcastMessageCall {
 	return &BroadcastMessageCall{
 		c:        client,
