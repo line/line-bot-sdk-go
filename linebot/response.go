@@ -66,8 +66,9 @@ type MessagesNumberResponse struct {
 
 // MessageQuotaResponse type
 type MessageQuotaResponse struct {
-	Type  string
-	Value int64
+	Type       string
+	Value      int64
+	TotalUsage int64 `json:"totalUsage"`
 }
 
 // RichMenuIDResponse type
