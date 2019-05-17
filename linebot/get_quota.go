@@ -21,14 +21,24 @@ import (
 // GetMessageQuota method
 func (client *Client) GetMessageQuota() *GetMessageQuotaCall {
 	return &GetMessageQuotaCall{
-		c: client,
+		c:        client,
+		endpoint: APIEndpointGetMessageQuota,
+	}
+}
+
+// GetMessageQuotaConsumption method
+func (client *Client) GetMessageQuotaConsumption() *GetMessageQuotaCall {
+	return &GetMessageQuotaCall{
+		c:        client,
+		endpoint: APIEndpointGetMessageQuotaConsumption,
 	}
 }
 
 // GetMessageQuotaCall type
 type GetMessageQuotaCall struct {
-	c   *Client
-	ctx context.Context
+	c        *Client
+	ctx      context.Context
+	endpoint string
 }
 
 // WithContext method
@@ -39,7 +49,7 @@ func (call *GetMessageQuotaCall) WithContext(ctx context.Context) *GetMessageQuo
 
 // Do method
 func (call *GetMessageQuotaCall) Do() (*MessageQuotaResponse, error) {
-	res, err := call.c.get(call.ctx, APIEndpointGetMessageQuota, nil)
+	res, err := call.c.get(call.ctx, call.endpoint, nil)
 	if err != nil {
 		return nil, err
 	}
