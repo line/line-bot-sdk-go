@@ -46,3 +46,32 @@ func (call *GetMessageQuotaCall) Do() (*MessageQuotaResponse, error) {
 	defer closeResponse(res)
 	return decodeToMessageQuotaResponse(res)
 }
+
+// GetMessageConsumption method
+func (client *Client) GetMessageConsumption() *GetMessageConsumptionCall {
+	return &GetMessageConsumptionCall{
+		c: client,
+	}
+}
+
+// GetMessageConsumptionCall type
+type GetMessageConsumptionCall struct {
+	c   *Client
+	ctx context.Context
+}
+
+// WithContext method
+func (call *GetMessageConsumptionCall) WithContext(ctx context.Context) *GetMessageConsumptionCall {
+	call.ctx = ctx
+	return call
+}
+
+// Do method
+func (call *GetMessageConsumptionCall) Do() (*MessageConsumptionResponse, error) {
+	res, err := call.c.get(call.ctx, APIEndpointGetMessageConsumption, nil)
+	if err != nil {
+		return nil, err
+	}
+	defer closeResponse(res)
+	return decodeToMessageConsumptionResponse(res)
+}
