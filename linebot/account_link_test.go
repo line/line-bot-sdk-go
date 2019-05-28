@@ -21,6 +21,7 @@ import (
 	"net/http/httptest"
 	"reflect"
 	"strconv"
+	"strings"
 	"testing"
 )
 
@@ -45,6 +46,15 @@ func TestIssueLinkToken(t *testing.T) {
 				Response:    &LinkTokenResponse{LinkToken: "NMZTNuVrPTqlr2IF8Bnymkb7rXfYv5EY"},
 			},
 		},
+		{
+			UserID:       "",
+			ResponseCode: 400,
+			Response:     nil,
+			Want: want{
+				RequestBody: []byte(""),
+				Error:       &APIError{Code: 400, Response: nil},
+			},
+		},
 	}
 
 	var currentTestIdx int
@@ -54,7 +64,8 @@ func TestIssueLinkToken(t *testing.T) {
 		if r.Method != http.MethodPost {
 			t.Errorf("Method %s; want %s", r.Method, http.MethodPost)
 		}
-		endpoint := fmt.Sprintf(APIEndpointLinkToken, tc.UserID)
+		// if path variable is empty, "//" will be normalized in request
+		endpoint := strings.Replace(fmt.Sprintf(APIEndpointLinkToken, tc.UserID), "//", "/", -1)
 		if r.URL.Path != endpoint {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, endpoint)
 		}
