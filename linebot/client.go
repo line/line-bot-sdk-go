@@ -136,23 +136,14 @@ func (client *Client) do(ctx context.Context, req *http.Request) (*http.Response
 	req.Header.Set("Authorization", "Bearer "+client.channelToken)
 	req.Header.Set("User-Agent", "LINE-BotSDK-Go/"+version)
 	if ctx != nil {
-		res, err := client.httpClient.Do(req.WithContext(ctx))
-		if err != nil {
-			select {
-			case <-ctx.Done():
-				err = ctx.Err()
-			default:
-			}
-		}
-
-		return res, err
+		req = req.WithContext(ctx)
 	}
 	return client.httpClient.Do(req)
 
 }
 
 func (client *Client) get(ctx context.Context, endpoint string, query url.Values) (*http.Response, error) {
-	req, err := http.NewRequest("GET", client.url(endpoint), nil)
+	req, err := http.NewRequest(http.MethodGet, client.url(endpoint), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -163,7 +154,7 @@ func (client *Client) get(ctx context.Context, endpoint string, query url.Values
 }
 
 func (client *Client) post(ctx context.Context, endpoint string, body io.Reader) (*http.Response, error) {
-	req, err := http.NewRequest("POST", client.url(endpoint), body)
+	req, err := http.NewRequest(http.MethodPost, client.url(endpoint), body)
 	if err != nil {
 		return nil, err
 	}
@@ -172,7 +163,7 @@ func (client *Client) post(ctx context.Context, endpoint string, body io.Reader)
 }
 
 func (client *Client) put(ctx context.Context, endpoint string, body io.Reader) (*http.Response, error) {
-	req, err := http.NewRequest("PUT", client.url(endpoint), body)
+	req, err := http.NewRequest(http.MethodPut, client.url(endpoint), body)
 	if err != nil {
 		return nil, err
 	}
@@ -181,7 +172,7 @@ func (client *Client) put(ctx context.Context, endpoint string, body io.Reader) 
 }
 
 func (client *Client) delete(ctx context.Context, endpoint string) (*http.Response, error) {
-	req, err := http.NewRequest("DELETE", client.url(endpoint), nil)
+	req, err := http.NewRequest(http.MethodDelete, client.url(endpoint), nil)
 	if err != nil {
 		return nil, err
 	}

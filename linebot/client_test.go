@@ -15,6 +15,7 @@
 package linebot
 
 import (
+	"context"
 	"crypto/tls"
 	"net/http"
 	"net/http/httptest"
@@ -84,5 +85,11 @@ func TestNewClientWithOptions(t *testing.T) {
 	}
 	if client.httpClient != &httpClient {
 		t.Errorf("httpClient %p; want %p", client.httpClient, &httpClient)
+	}
+}
+
+func expectCtxDeadlineExceed(ctx context.Context, err error, t *testing.T) {
+	if err == nil || ctx.Err() != context.DeadlineExceeded {
+		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
 	}
 }

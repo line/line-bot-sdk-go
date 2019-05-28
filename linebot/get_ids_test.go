@@ -152,9 +152,7 @@ func TestGetGroupMemberIDsWithContext(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
 	defer cancel()
 	_, err = client.GetGroupMemberIDs("cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "xxxxx").WithContext(ctx).Do()
-	if err != context.DeadlineExceeded {
-		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
-	}
+	expectCtxDeadlineExceed(ctx, err, t)
 }
 
 func BenchmarkGetGroupMemberIDs(b *testing.B) {
@@ -299,9 +297,7 @@ func TestGetRoomMemberIDsWithContext(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
 	defer cancel()
 	_, err = client.GetRoomMemberIDs("cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "xxxxx").WithContext(ctx).Do()
-	if err != context.DeadlineExceeded {
-		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
-	}
+	expectCtxDeadlineExceed(ctx, err, t)
 }
 
 func BenchmarkGetRoomMemberIDs(b *testing.B) {

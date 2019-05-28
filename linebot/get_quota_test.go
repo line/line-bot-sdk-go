@@ -119,9 +119,7 @@ func TestGetMessageQuotaWithContext(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
 	defer cancel()
 	_, err = client.GetMessageQuota().WithContext(ctx).Do()
-	if err != context.DeadlineExceeded {
-		t.Errorf("err %v; want %v", err, context.DeadlineExceeded)
-	}
+	expectCtxDeadlineExceed(ctx, err, t)
 }
 
 func TestGetMessageQuotaConsumption(t *testing.T) {
