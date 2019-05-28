@@ -21,6 +21,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"reflect"
+	"strconv"
 	"testing"
 	"time"
 )
@@ -95,19 +96,21 @@ func TestGetProfile(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		res, err := client.GetProfile(tc.UserID).Do()
-		if tc.Want.Error != nil {
-			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			res, err := client.GetProfile(tc.UserID).Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
 			}
-		} else {
-			if err != nil {
-				t.Error(err)
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %v; want %v", res, tc.Want.Response)
 			}
-		}
-		if !reflect.DeepEqual(res, tc.Want.Response) {
-			t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
-		}
+		})
 	}
 }
 
@@ -219,19 +222,21 @@ func TestGetGroupMemberProfile(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		res, err := client.GetGroupMemberProfile(tc.GroupID, tc.UserID).Do()
-		if tc.Want.Error != nil {
-			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			res, err := client.GetGroupMemberProfile(tc.GroupID, tc.UserID).Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
 			}
-		} else {
-			if err != nil {
-				t.Error(err)
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %v; want %v", res, tc.Want.Response)
 			}
-		}
-		if !reflect.DeepEqual(res, tc.Want.Response) {
-			t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
-		}
+		})
 	}
 }
 
@@ -343,19 +348,21 @@ func TestGetRoomMemberProfile(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		res, err := client.GetRoomMemberProfile(tc.RoomID, tc.UserID).Do()
-		if tc.Want.Error != nil {
-			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			res, err := client.GetRoomMemberProfile(tc.RoomID, tc.UserID).Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
 			}
-		} else {
-			if err != nil {
-				t.Error(err)
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %v; want %v", res, tc.Want.Response)
 			}
-		}
-		if !reflect.DeepEqual(res, tc.Want.Response) {
-			t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
-		}
+		})
 	}
 }
 

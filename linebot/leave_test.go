@@ -21,6 +21,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"reflect"
+	"strconv"
 	"testing"
 	"time"
 )
@@ -93,21 +94,23 @@ func TestLeaveGroup(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		res, err := client.LeaveGroup(tc.GroupID).Do()
-		if tc.Want.Error != nil {
-			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			res, err := client.LeaveGroup(tc.GroupID).Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
 			}
-		} else {
-			if err != nil {
-				t.Error(err)
+			if tc.Want.Response != nil {
+				if !reflect.DeepEqual(res, tc.Want.Response) {
+					t.Errorf("Response %v; want %v", res, tc.Want.Response)
+				}
 			}
-		}
-		if tc.Want.Response != nil {
-			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
-			}
-		}
+		})
 	}
 }
 
@@ -198,21 +201,23 @@ func TestLeaveRoom(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		res, err := client.LeaveRoom(tc.RoomID).Do()
-		if tc.Want.Error != nil {
-			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			res, err := client.LeaveRoom(tc.RoomID).Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
 			}
-		} else {
-			if err != nil {
-				t.Error(err)
+			if tc.Want.Response != nil {
+				if !reflect.DeepEqual(res, tc.Want.Response) {
+					t.Errorf("Response %v; want %v", res, tc.Want.Response)
+				}
 			}
-		}
-		if tc.Want.Response != nil {
-			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
-			}
-		}
+		})
 	}
 }
 

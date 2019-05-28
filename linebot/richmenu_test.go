@@ -20,6 +20,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"reflect"
+	"strconv"
 	"testing"
 )
 
@@ -106,25 +107,27 @@ func TestGetRichMenu(t *testing.T) {
 	var res *RichMenuResponse
 	for i, tc := range testCases {
 		currentTestIdx = i
-		if tc.UserID != "" { // test get user
-			res, err = client.GetUserRichMenu(tc.UserID).Do()
-		} else {
-			res, err = client.GetRichMenu(tc.RichMenuID).Do()
-		}
-		if tc.Want.Error != nil {
-			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			if tc.UserID != "" { // test get user
+				res, err = client.GetUserRichMenu(tc.UserID).Do()
+			} else {
+				res, err = client.GetRichMenu(tc.RichMenuID).Do()
 			}
-		} else {
-			if err != nil {
-				t.Error(err)
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
 			}
-		}
-		if tc.Want.Response != nil {
-			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
+			if tc.Want.Response != nil {
+				if !reflect.DeepEqual(res, tc.Want.Response) {
+					t.Errorf("Response %v; want %v", res, tc.Want.Response)
+				}
 			}
-		}
+		})
 	}
 }
 
@@ -189,21 +192,23 @@ func TestCreateRichMenu(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		res, err := client.CreateRichMenu(tc.Request).Do()
-		if tc.Want.Error != nil {
-			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			res, err := client.CreateRichMenu(tc.Request).Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
 			}
-		} else {
-			if err != nil {
-				t.Error(err)
+			if tc.Want.Response != nil {
+				if !reflect.DeepEqual(res, tc.Want.Response) {
+					t.Errorf("Response %v; want %v", res, tc.Want.Response)
+				}
 			}
-		}
-		if tc.Want.Response != nil {
-			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
-			}
-		}
+		})
 	}
 }
 
@@ -259,21 +264,23 @@ func TestLinkRichMenu(t *testing.T) {
 	var res *BasicResponse
 	for i, tc := range testCases {
 		currentTestIdx = i
-		res, err = client.LinkUserRichMenu(tc.UserID, tc.RichMenuID).Do()
-		if tc.Want.Error != nil {
-			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			res, err = client.LinkUserRichMenu(tc.UserID, tc.RichMenuID).Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
 			}
-		} else {
-			if err != nil {
-				t.Error(err)
+			if tc.Want.Response != nil {
+				if !reflect.DeepEqual(res, tc.Want.Response) {
+					t.Errorf("Response %v; want %v", res, tc.Want.Response)
+				}
 			}
-		}
-		if tc.Want.Response != nil {
-			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
-			}
-		}
+		})
 	}
 }
 
@@ -368,28 +375,30 @@ func TestDefaultRichMenu(t *testing.T) {
 	var res interface{}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		switch tc.TestMethod.(type) {
-		case *SetDefaultRichMenuCall:
-			res, err = client.SetDefaultRichMenu(tc.RichMenuID).Do()
-		case *CancelDefaultRichMenuCall:
-			res, err = client.CancelDefaultRichMenu().Do()
-		case *GetDefaultRichMenuCall:
-			res, err = client.GetDefaultRichMenu().Do()
-		}
-		if tc.Want.Error != nil {
-			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			switch tc.TestMethod.(type) {
+			case *SetDefaultRichMenuCall:
+				res, err = client.SetDefaultRichMenu(tc.RichMenuID).Do()
+			case *CancelDefaultRichMenuCall:
+				res, err = client.CancelDefaultRichMenu().Do()
+			case *GetDefaultRichMenuCall:
+				res, err = client.GetDefaultRichMenu().Do()
 			}
-		} else {
-			if err != nil {
-				t.Error(err)
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
 			}
-		}
-		if tc.Want.Response != nil {
-			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
+			if tc.Want.Response != nil {
+				if !reflect.DeepEqual(res, tc.Want.Response) {
+					t.Errorf("Response %v; want %v", res, tc.Want.Response)
+				}
 			}
-		}
+		})
 	}
 }
 
@@ -481,21 +490,23 @@ func TestListRichMenu(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		res, err := client.GetRichMenuList().Do()
-		if tc.Want.Error != nil {
-			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			res, err := client.GetRichMenuList().Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
 			}
-		} else {
-			if err != nil {
-				t.Error(err)
+			if tc.Want.Response != nil {
+				if !reflect.DeepEqual(res, tc.Want.Response) {
+					t.Errorf("Response\n %v; want\n %v", res, tc.Want.Response)
+				}
 			}
-		}
-		if tc.Want.Response != nil {
-			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d\n %v; want\n %v", i, res, tc.Want.Response)
-			}
-		}
+		})
 	}
 }
 
@@ -566,24 +577,26 @@ func TestBulkRichMenu(t *testing.T) {
 	var res interface{}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		if tc.RichMenuID == "" { // unlink
-			res, err = client.BulkUnlinkRichMenu(tc.UserIDs...).Do()
-		} else { // bulk link
-			res, err = client.BulkLinkRichMenu(tc.RichMenuID, tc.UserIDs...).Do()
-		}
-		if tc.Want.Error != nil {
-			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			if tc.RichMenuID == "" { // unlink
+				res, err = client.BulkUnlinkRichMenu(tc.UserIDs...).Do()
+			} else { // bulk link
+				res, err = client.BulkLinkRichMenu(tc.RichMenuID, tc.UserIDs...).Do()
 			}
-		} else {
-			if err != nil {
-				t.Error(err)
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
 			}
-		}
-		if tc.Want.Response != nil {
-			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d\n %v; want\n %v", i, res, tc.Want.Response)
+			if tc.Want.Response != nil {
+				if !reflect.DeepEqual(res, tc.Want.Response) {
+					t.Errorf("Response\n %v; want\n %v", res, tc.Want.Response)
+				}
 			}
-		}
+		})
 	}
 }

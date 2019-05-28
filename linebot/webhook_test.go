@@ -24,6 +24,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"reflect"
+	"strconv"
 	"testing"
 	"time"
 )
@@ -682,20 +683,22 @@ func TestEventMarshaling(t *testing.T) {
 		t.Fatal(err)
 	}
 	for i, want := range testCases.Events {
-		gotJSON, err := json.Marshal(webhookTestWantEvents[i])
-		if err != nil {
-			t.Error(err)
-			continue
-		}
-		got := map[string]interface{}{}
-		err = json.Unmarshal(gotJSON, &got)
-		if err != nil {
-			t.Error(err)
-			continue
-		}
-		if !reflect.DeepEqual(got, want) {
-			t.Errorf("Event marshal %d %v; want %v", i, got, want)
-		}
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			gotJSON, err := json.Marshal(webhookTestWantEvents[i])
+			if err != nil {
+				t.Error(err)
+				return
+			}
+			got := map[string]interface{}{}
+			err = json.Unmarshal(gotJSON, &got)
+			if err != nil {
+				t.Error(err)
+				return
+			}
+			if !reflect.DeepEqual(got, want) {
+				t.Errorf("Event marshal %v; want %v", got, want)
+			}
+		})
 	}
 }
 
