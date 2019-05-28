@@ -34,12 +34,14 @@ func TestLeaveGroup(t *testing.T) {
 		Error       error
 	}
 	var testCases = []struct {
+		Label        string
 		GroupID      string
 		ResponseCode int
 		Response     []byte
 		Want         want
 	}{
 		{
+			Label:        "Success",
 			GroupID:      "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
@@ -50,7 +52,7 @@ func TestLeaveGroup(t *testing.T) {
 			},
 		},
 		{
-			// Too Many Requests
+			Label:        "Too Many Requests",
 			GroupID:      "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			ResponseCode: 429,
 			Response:     []byte(`{"message":"Too Many Requests"}`),
@@ -94,7 +96,7 @@ func TestLeaveGroup(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		t.Run(strconv.Itoa(i), func(t *testing.T) {
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
 			res, err := client.LeaveGroup(tc.GroupID).Do()
 			if tc.Want.Error != nil {
 				if !reflect.DeepEqual(err, tc.Want.Error) {
@@ -141,12 +143,14 @@ func TestLeaveRoom(t *testing.T) {
 		Error       error
 	}
 	var testCases = []struct {
+		Label        string
 		RoomID       string
 		ResponseCode int
 		Response     []byte
 		Want         want
 	}{
 		{
+			Label:        "Success",
 			RoomID:       "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
@@ -157,7 +161,7 @@ func TestLeaveRoom(t *testing.T) {
 			},
 		},
 		{
-			// Too Many Requests
+			Label:        "Too Many Requests",
 			RoomID:       "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			ResponseCode: 429,
 			Response:     []byte(`{"message":"Too Many Requests"}`),
@@ -201,7 +205,7 @@ func TestLeaveRoom(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		t.Run(strconv.Itoa(i), func(t *testing.T) {
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
 			res, err := client.LeaveRoom(tc.RoomID).Do()
 			if tc.Want.Error != nil {
 				if !reflect.DeepEqual(err, tc.Want.Error) {

@@ -33,11 +33,13 @@ func TestGetMessageQuota(t *testing.T) {
 		Error       error
 	}
 	var testCases = []struct {
+		Label        string
 		ResponseCode int
 		Response     []byte
 		Want         want
 	}{
 		{
+			Label:        "Success",
 			ResponseCode: 200,
 			Response:     []byte(`{"type":"limited","value":1000}`),
 			Want: want{
@@ -50,7 +52,7 @@ func TestGetMessageQuota(t *testing.T) {
 			},
 		},
 		{
-			// Internal server error
+			Label:        "Internal server error",
 			ResponseCode: 500,
 			Response:     []byte("500 Internal server error"),
 			Want: want{
@@ -90,7 +92,7 @@ func TestGetMessageQuota(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		t.Run(strconv.Itoa(i), func(t *testing.T) {
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
 			res, err := client.GetMessageQuota().Do()
 			if tc.Want.Error != nil {
 				if !reflect.DeepEqual(err, tc.Want.Error) {
@@ -135,11 +137,13 @@ func TestGetMessageQuotaConsumption(t *testing.T) {
 		Error       error
 	}
 	var testCases = []struct {
+		Label        string
 		ResponseCode int
 		Response     []byte
 		Want         want
 	}{
 		{
+			Label:        "Success",
 			ResponseCode: 200,
 			Response:     []byte(`{"totalUsage":7}`),
 			Want: want{
@@ -151,7 +155,7 @@ func TestGetMessageQuotaConsumption(t *testing.T) {
 			},
 		},
 		{
-			// Internal server error
+			Label:        "Internal server error",
 			ResponseCode: 500,
 			Response:     []byte("500 Internal server error"),
 			Want: want{
@@ -191,7 +195,7 @@ func TestGetMessageQuotaConsumption(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		t.Run(strconv.Itoa(i), func(t *testing.T) {
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
 			res, err := client.GetMessageQuotaConsumption().Do()
 			if tc.Want.Error != nil {
 				if !reflect.DeepEqual(err, tc.Want.Error) {
@@ -233,11 +237,13 @@ func TestGetMessageConsumption(t *testing.T) {
 		Error       error
 	}
 	var testCases = []struct {
+		Label        string
 		ResponseCode int
 		Response     []byte
 		Want         want
 	}{
 		{
+			Label:        "Success",
 			ResponseCode: 200,
 			Response:     []byte(`{"totalUsage":500}`),
 			Want: want{
@@ -249,7 +255,7 @@ func TestGetMessageConsumption(t *testing.T) {
 			},
 		},
 		{
-			// Internal server error
+			Label:        "Internal server error",
 			ResponseCode: 500,
 			Response:     []byte("500 Internal server error"),
 			Want: want{
@@ -289,7 +295,7 @@ func TestGetMessageConsumption(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		t.Run(strconv.Itoa(i), func(t *testing.T) {
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
 			res, err := client.GetMessageConsumption().Do()
 			if tc.Want.Error != nil {
 				if !reflect.DeepEqual(err, tc.Want.Error) {

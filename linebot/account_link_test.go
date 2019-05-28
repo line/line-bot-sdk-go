@@ -32,12 +32,14 @@ func TestIssueLinkToken(t *testing.T) {
 		Error       error
 	}
 	var testCases = []struct {
+		Label        string
 		UserID       string
 		Response     []byte
 		ResponseCode int
 		Want         want
 	}{
 		{
+			Label:        "Success",
 			UserID:       "u206d25c2ea6bd87c17655609a1c37cb8",
 			ResponseCode: 200,
 			Response:     []byte(`{"linkToken":"NMZTNuVrPTqlr2IF8Bnymkb7rXfYv5EY"}`),
@@ -47,6 +49,7 @@ func TestIssueLinkToken(t *testing.T) {
 			},
 		},
 		{
+			Label:        "Empty UserID",
 			UserID:       "",
 			ResponseCode: 400,
 			Response:     nil,
@@ -86,7 +89,7 @@ func TestIssueLinkToken(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		t.Run(strconv.Itoa(i), func(t *testing.T) {
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
 			res, err := client.IssueLinkToken(tc.UserID).Do()
 			if tc.Want.Error != nil {
 				if !reflect.DeepEqual(err, tc.Want.Error) {

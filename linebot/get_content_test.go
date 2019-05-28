@@ -35,6 +35,7 @@ func TestGetMessageContent(t *testing.T) {
 		Error           error
 	}
 	var testCases = []struct {
+		Label          string
 		MessageID      string
 		ResponseCode   int
 		Response       []byte
@@ -42,6 +43,7 @@ func TestGetMessageContent(t *testing.T) {
 		Want           want
 	}{
 		{
+			Label:        "Success",
 			MessageID:    "325708",
 			ResponseCode: 200,
 			Response:     []byte{0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10},
@@ -60,7 +62,7 @@ func TestGetMessageContent(t *testing.T) {
 			},
 		},
 		{
-			// 503 Service Unavailable
+			Label:        "503 Service Unavailable",
 			MessageID:    "325708",
 			ResponseCode: 503,
 			Response:     []byte("Service Unavailable"),
@@ -104,7 +106,7 @@ func TestGetMessageContent(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		t.Run(strconv.Itoa(i), func(t *testing.T) {
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
 			res, err := client.GetMessageContent(tc.MessageID).Do()
 			if tc.Want.Error != nil {
 				if !reflect.DeepEqual(err, tc.Want.Error) {

@@ -36,6 +36,7 @@ func TestGetGroupMemberIDs(t *testing.T) {
 		Error             error
 	}
 	var testCases = []struct {
+		Label             string
 		GroupID           string
 		ContinuationToken string
 		ResponseCode      int
@@ -43,6 +44,7 @@ func TestGetGroupMemberIDs(t *testing.T) {
 		Want              want
 	}{
 		{
+			Label:             "With ContinuationToken",
 			GroupID:           "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			ContinuationToken: "xxxxx",
 			ResponseCode:      200,
@@ -60,6 +62,7 @@ func TestGetGroupMemberIDs(t *testing.T) {
 			},
 		},
 		{
+			Label:        "Without ContinuationToken",
 			GroupID:      "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			ResponseCode: 200,
 			Response:     []byte(`{"memberIds": ["U0047556f2e40dba2456887320ba7c76d", "U0047556f2e40dba2456887320ba7c76e"], "next": "xxxxx"}`),
@@ -76,7 +79,7 @@ func TestGetGroupMemberIDs(t *testing.T) {
 			},
 		},
 		{
-			// Internal server error
+			Label:             "Internal server error",
 			GroupID:           "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			ContinuationToken: "xxxxx",
 			ResponseCode:      500,
@@ -123,7 +126,7 @@ func TestGetGroupMemberIDs(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		t.Run(strconv.Itoa(i), func(t *testing.T) {
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
 			res, err := client.GetGroupMemberIDs(tc.GroupID, tc.ContinuationToken).Do()
 			if tc.Want.Error != nil {
 				if !reflect.DeepEqual(err, tc.Want.Error) {
@@ -185,6 +188,7 @@ func TestGetRoomMemberIDs(t *testing.T) {
 		Error             error
 	}
 	var testCases = []struct {
+		Label             string
 		RoomID            string
 		ContinuationToken string
 		ResponseCode      int
@@ -192,6 +196,7 @@ func TestGetRoomMemberIDs(t *testing.T) {
 		Want              want
 	}{
 		{
+			Label:             "With ContinuationToken",
 			RoomID:            "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			ContinuationToken: "xxxxx",
 			ResponseCode:      200,
@@ -209,6 +214,7 @@ func TestGetRoomMemberIDs(t *testing.T) {
 			},
 		},
 		{
+			Label:        "Without ContinuationToken",
 			RoomID:       "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			ResponseCode: 200,
 			Response:     []byte(`{"memberIds": ["U0047556f2e40dba2456887320ba7c76d", "U0047556f2e40dba2456887320ba7c76e"], "next": "xxxxx"}`),
@@ -225,7 +231,7 @@ func TestGetRoomMemberIDs(t *testing.T) {
 			},
 		},
 		{
-			// Internal server error
+			Label:             "Internal server error",
 			RoomID:            "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			ContinuationToken: "xxxxx",
 			ResponseCode:      500,
@@ -272,7 +278,7 @@ func TestGetRoomMemberIDs(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		t.Run(strconv.Itoa(i), func(t *testing.T) {
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
 			res, err := client.GetRoomMemberIDs(tc.RoomID, tc.ContinuationToken).Do()
 			if tc.Want.Error != nil {
 				if !reflect.DeepEqual(err, tc.Want.Error) {

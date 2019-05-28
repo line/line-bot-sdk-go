@@ -117,7 +117,7 @@ func TestGetNumberMessages(t *testing.T) {
 	var res interface{}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		t.Run(strconv.Itoa(i), func(t *testing.T) {
+		t.Run(strconv.Itoa(i)+"/"+string(tc.TestType)+"."+tc.Date, func(t *testing.T) {
 			switch tc.TestType {
 			case DeliveryTypeMulticast:
 				res, err = client.GetNumberMulticastMessages(tc.Date).Do()

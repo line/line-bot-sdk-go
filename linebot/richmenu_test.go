@@ -33,6 +33,7 @@ func TestGetRichMenu(t *testing.T) {
 		Error       error
 	}
 	var testCases = []struct {
+		Label        string
 		UserID       string
 		RichMenuID   string
 		ResponseCode int
@@ -40,6 +41,7 @@ func TestGetRichMenu(t *testing.T) {
 		Want         want
 	}{
 		{
+			Label:        "Without UserID",
 			RichMenuID:   "123456",
 			ResponseCode: 200,
 			Response:     []byte(`{"richMenuId":"123456","size":{"width":2500,"height":1686},"selected":false,"areas":[{"bounds":{"x":0,"y":0,"width":2500,"height":1686},"action":{"type":"postback","data":"action=buy&itemid=123"}}]}`),
@@ -60,6 +62,7 @@ func TestGetRichMenu(t *testing.T) {
 			},
 		},
 		{
+			Label:        "With UserID",
 			RichMenuID:   "654321",
 			UserID:       "user1",
 			ResponseCode: 200,
@@ -107,7 +110,7 @@ func TestGetRichMenu(t *testing.T) {
 	var res *RichMenuResponse
 	for i, tc := range testCases {
 		currentTestIdx = i
-		t.Run(strconv.Itoa(i), func(t *testing.T) {
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
 			if tc.UserID != "" { // test get user
 				res, err = client.GetUserRichMenu(tc.UserID).Do()
 			} else {
@@ -375,7 +378,7 @@ func TestDefaultRichMenu(t *testing.T) {
 	var res interface{}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		t.Run(strconv.Itoa(i), func(t *testing.T) {
+		t.Run(strconv.Itoa(i)+"/"+tc.RichMenuID+"."+string(tc.Response), func(t *testing.T) {
 			switch tc.TestMethod.(type) {
 			case *SetDefaultRichMenuCall:
 				res, err = client.SetDefaultRichMenu(tc.RichMenuID).Do()
