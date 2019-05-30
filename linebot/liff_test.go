@@ -20,6 +20,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"reflect"
+	"strconv"
 	"testing"
 )
 
@@ -87,13 +88,15 @@ func TestGetLIFF(t *testing.T) {
 		t.Fatal(err)
 	}
 	for i, tc := range testCases {
-		res, err := client.GetLIFF().Do()
-		if err != nil {
-			t.Error(err)
-		}
-		if !reflect.DeepEqual(res, tc.Want.Response) {
-			t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
-		}
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			res, err := client.GetLIFF().Do()
+			if err != nil {
+				t.Error(err)
+			}
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %v; want %v", res, tc.Want.Response)
+			}
+		})
 	}
 }
 
@@ -149,13 +152,15 @@ func TestAddLIFF(t *testing.T) {
 		t.Fatal(err)
 	}
 	for i, tc := range testCases {
-		res, err := client.AddLIFF(tc.View).Do()
-		if err != nil {
-			t.Error(err)
-		}
-		if !reflect.DeepEqual(res, tc.Want.Response) {
-			t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
-		}
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			res, err := client.AddLIFF(tc.View).Do()
+			if err != nil {
+				t.Error(err)
+			}
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %v; want %v", res, tc.Want.Response)
+			}
+		})
 	}
 }
 
@@ -213,13 +218,15 @@ func TestUpdateLIFF(t *testing.T) {
 		t.Fatal(err)
 	}
 	for i, tc := range testCases {
-		res, err := client.UpdateLIFF(tc.LIFFID, tc.View).Do()
-		if err != nil {
-			t.Error(err)
-		}
-		if !reflect.DeepEqual(res, tc.Want.Response) {
-			t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
-		}
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			res, err := client.UpdateLIFF(tc.LIFFID, tc.View).Do()
+			if err != nil {
+				t.Error(err)
+			}
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %v; want %v", res, tc.Want.Response)
+			}
+		})
 	}
 }
 
@@ -272,12 +279,14 @@ func TestDeleteLIFF(t *testing.T) {
 		t.Fatal(err)
 	}
 	for i, tc := range testCases {
-		res, err := client.DeleteLIFF(tc.LIFFID).Do()
-		if err != nil {
-			t.Error(err)
-		}
-		if !reflect.DeepEqual(res, tc.Want.Response) {
-			t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
-		}
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			res, err := client.DeleteLIFF(tc.LIFFID).Do()
+			if err != nil {
+				t.Error(err)
+			}
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %v; want %v", res, tc.Want.Response)
+			}
+		})
 	}
 }

@@ -16,6 +16,7 @@ package linebot
 
 import (
 	"reflect"
+	"strconv"
 	"testing"
 )
 
@@ -443,13 +444,15 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 		},
 	}
 	for i, tc := range testCases {
-		container, err := UnmarshalFlexMessageJSON([]byte(tc.JSON))
-		if err != nil {
-			t.Fatal(err)
-		}
-		if !reflect.DeepEqual(container, tc.Want) {
-			t.Errorf("Container %d %v, want %v", i, container, tc.Want)
-		}
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			container, err := UnmarshalFlexMessageJSON([]byte(tc.JSON))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if !reflect.DeepEqual(container, tc.Want) {
+				t.Errorf("Container %v, want %v", container, tc.Want)
+			}
+		})
 	}
 }
 

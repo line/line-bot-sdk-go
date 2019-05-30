@@ -20,6 +20,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"reflect"
+	"strconv"
 	"testing"
 	"time"
 )
@@ -32,13 +33,14 @@ func TestPushMessages(t *testing.T) {
 		Error       error
 	}
 	var testCases = []struct {
+		Label        string
 		Messages     []SendingMessage
 		Response     []byte
 		ResponseCode int
 		Want         want
 	}{
 		{
-			// A text message
+			Label:        "A text message",
 			Messages:     []SendingMessage{NewTextMessage("Hello, world")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
@@ -48,7 +50,7 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
-			// A image message
+			Label:        "A image message",
 			Messages:     []SendingMessage{NewImageMessage("https://example.com/original.jpg", "https://example.com/preview.jpg")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
@@ -58,7 +60,7 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
-			// A video message
+			Label:        "A video message",
 			Messages:     []SendingMessage{NewVideoMessage("https://example.com/original.mp4", "https://example.com/preview.jpg")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
@@ -68,7 +70,7 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
-			// A audio message
+			Label:        "A audio message",
 			Messages:     []SendingMessage{NewAudioMessage("https://example.com/original.m4a", 1000)},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
@@ -78,7 +80,7 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
-			// A location message
+			Label:        "A location message",
 			Messages:     []SendingMessage{NewLocationMessage("title", "address", 35.65910807942215, 139.70372892916203)},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
@@ -88,7 +90,7 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
-			// A sticker message
+			Label:        "A sticker message",
 			Messages:     []SendingMessage{NewStickerMessage("1", "1")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
@@ -98,7 +100,7 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
-			// A buttons template message
+			Label: "A buttons template message",
 			Messages: []SendingMessage{
 				NewTemplateMessage(
 					"this is a buttons template",
@@ -120,7 +122,7 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
-			// A buttons template message with datetimepicker action
+			Label: "A buttons template message with datetimepicker action",
 			Messages: []SendingMessage{
 				NewTemplateMessage(
 					"this is a buttons template",
@@ -142,7 +144,7 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
-			// A buttons template message without thumbnailImageURL
+			Label: "A buttons template message without thumbnailImageURL",
 			Messages: []SendingMessage{
 				NewTemplateMessage(
 					"this is a buttons template",
@@ -164,7 +166,7 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
-			// A buttons template message without title
+			Label: "A buttons template message without title",
 			Messages: []SendingMessage{
 				NewTemplateMessage(
 					"this is a buttons template",
@@ -186,7 +188,7 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
-			// A buttons template message without title, with image options
+			Label: "A buttons template message without title, with image options",
 			Messages: []SendingMessage{
 				NewTemplateMessage(
 					"this is a buttons template",
@@ -208,7 +210,7 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
-			// A buttons template message without thumbnailImageURL and title
+			Label: "A buttons template message without thumbnailImageURL and title",
 			Messages: []SendingMessage{
 				NewTemplateMessage(
 					"this is a buttons template",
@@ -230,7 +232,7 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
-			// A confirm template message
+			Label: "A confirm template message",
 			Messages: []SendingMessage{
 				NewTemplateMessage(
 					"this is a confirm template",
@@ -249,7 +251,7 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
-			// A carousel template message
+			Label: "A carousel template message",
 			Messages: []SendingMessage{
 				NewTemplateMessage(
 					"this is a carousel template",
@@ -273,7 +275,7 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
-			// A carousel template message, with new image options
+			Label: "A carousel template message, with new image options",
 			Messages: []SendingMessage{
 				NewTemplateMessage(
 					"this is a carousel template with imageAspectRatio, imageSize and imageBackgroundColor",
@@ -297,7 +299,7 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
-			// A imagecarousel template message
+			Label: "A imagecarousel template message",
 			Messages: []SendingMessage{
 				NewTemplateMessage(
 					"this is a image carousel template",
@@ -317,7 +319,7 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
-			// A imagemap message
+			Label: "A imagemap message",
 			Messages: []SendingMessage{
 				NewImagemapMessage(
 					"https://example.com/bot/images/rm001",
@@ -335,7 +337,7 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
-			// A imagemap messages with video 1
+			Label: "A imagemap messages with video 1",
 			Messages: []SendingMessage{
 				NewImagemapMessage(
 					"https://example.com/bot/images/rm001",
@@ -357,7 +359,7 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
-			// A imagemap messages with video 2
+			Label: "A imagemap messages with video 2",
 			Messages: []SendingMessage{
 				NewImagemapMessage(
 					"https://example.com/bot/images/rm001",
@@ -383,7 +385,7 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
-			// A flex message
+			Label: "A flex message",
 			Messages: []SendingMessage{
 				NewFlexMessage(
 					"this is a flex message",
@@ -418,7 +420,7 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
-			// A text message with quick replies
+			Label: "A text message with quick replies",
 			Messages: []SendingMessage{
 				NewTextMessage(
 					"Select your favorite food category or send me your location!",
@@ -438,7 +440,7 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
-			// Multiple messages
+			Label:        "Multiple messages",
 			Messages:     []SendingMessage{NewTextMessage("Hello, world1"), NewTextMessage("Hello, world2")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
@@ -448,7 +450,7 @@ func TestPushMessages(t *testing.T) {
 			},
 		},
 		{
-			// Bad request
+			Label:        "Bad request",
 			Messages:     []SendingMessage{NewTextMessage(""), NewTextMessage("")},
 			ResponseCode: 400,
 			Response:     []byte(`{"message":"Request body has 2 error(s).","details":[{"message":"may not be empty","property":"messages[0].text"},{"message":"may not be empty","property":"messages[1].text"}]}`),
@@ -501,21 +503,23 @@ func TestPushMessages(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		res, err := client.PushMessage(toUserID, tc.Messages...).Do()
-		if tc.Want.Error != nil {
-			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
+			res, err := client.PushMessage(toUserID, tc.Messages...).Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
 			}
-		} else {
-			if err != nil {
-				t.Error(err)
+			if tc.Want.Response != nil {
+				if !reflect.DeepEqual(res, tc.Want.Response) {
+					t.Errorf("Response %v; want %v", res, tc.Want.Response)
+				}
 			}
-		}
-		if tc.Want.Response != nil {
-			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
-			}
-		}
+		})
 	}
 }
 
@@ -544,13 +548,14 @@ func TestReplyMessages(t *testing.T) {
 		Error       error
 	}
 	var testCases = []struct {
+		Label        string
 		Messages     []SendingMessage
 		Response     []byte
 		ResponseCode int
 		Want         want
 	}{
 		{
-			// A text message
+			Label:        "A text message",
 			Messages:     []SendingMessage{NewTextMessage("Hello, world")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
@@ -560,7 +565,7 @@ func TestReplyMessages(t *testing.T) {
 			},
 		},
 		{
-			// A location message
+			Label:        "A location message",
 			Messages:     []SendingMessage{NewLocationMessage("title", "address", 35.65910807942215, 139.70372892916203)},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
@@ -570,7 +575,7 @@ func TestReplyMessages(t *testing.T) {
 			},
 		},
 		{
-			// A image message
+			Label:        "A image message",
 			Messages:     []SendingMessage{NewImageMessage("https://example.com/original.jpg", "https://example.com/preview.jpg")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
@@ -580,7 +585,7 @@ func TestReplyMessages(t *testing.T) {
 			},
 		},
 		{
-			// A sticker message
+			Label:        "A sticker message",
 			Messages:     []SendingMessage{NewStickerMessage("1", "1")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
@@ -590,7 +595,7 @@ func TestReplyMessages(t *testing.T) {
 			},
 		},
 		{
-			// Bad request
+			Label:        "Bad request",
 			Messages:     []SendingMessage{NewTextMessage(""), NewTextMessage("")},
 			ResponseCode: 400,
 			Response:     []byte(`{"message":"Request body has 2 error(s).","details":[{"message":"may not be empty","property":"messages[0].text"},{"message":"may not be empty","property":"messages[1].text"}]}`),
@@ -643,21 +648,23 @@ func TestReplyMessages(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		res, err := client.ReplyMessage(replyToken, tc.Messages...).Do()
-		if tc.Want.Error != nil {
-			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
+			res, err := client.ReplyMessage(replyToken, tc.Messages...).Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
 			}
-		} else {
-			if err != nil {
-				t.Error(err)
+			if tc.Want.Response != nil {
+				if !reflect.DeepEqual(res, tc.Want.Response) {
+					t.Errorf("Response %v; want %v", res, tc.Want.Response)
+				}
 			}
-		}
-		if tc.Want.Response != nil {
-			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
-			}
-		}
+		})
 	}
 }
 
@@ -689,13 +696,14 @@ func TestMulticastMessages(t *testing.T) {
 		Error       error
 	}
 	var testCases = []struct {
+		Label        string
 		Messages     []SendingMessage
 		Response     []byte
 		ResponseCode int
 		Want         want
 	}{
 		{
-			// A text message
+			Label:        "A text message",
 			Messages:     []SendingMessage{NewTextMessage("Hello, world")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
@@ -705,7 +713,7 @@ func TestMulticastMessages(t *testing.T) {
 			},
 		},
 		{
-			// A location message
+			Label:        "A location message",
 			Messages:     []SendingMessage{NewLocationMessage("title", "address", 35.65910807942215, 139.70372892916203)},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
@@ -715,7 +723,7 @@ func TestMulticastMessages(t *testing.T) {
 			},
 		},
 		{
-			// A image message
+			Label:        "A image message",
 			Messages:     []SendingMessage{NewImageMessage("https://example.com/original.jpg", "https://example.com/preview.jpg")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
@@ -725,7 +733,7 @@ func TestMulticastMessages(t *testing.T) {
 			},
 		},
 		{
-			// A sticker message
+			Label:        "A sticker message",
 			Messages:     []SendingMessage{NewStickerMessage("1", "1")},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
@@ -735,7 +743,7 @@ func TestMulticastMessages(t *testing.T) {
 			},
 		},
 		{
-			// Bad request
+			Label:        "Bad request",
 			Messages:     []SendingMessage{NewTextMessage(""), NewTextMessage("")},
 			ResponseCode: 400,
 			Response:     []byte(`{"message":"Request body has 2 error(s).","details":[{"message":"may not be empty","property":"messages[0].text"},{"message":"may not be empty","property":"messages[1].text"}]}`),
@@ -788,21 +796,23 @@ func TestMulticastMessages(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		res, err := client.Multicast(toUserIDs, tc.Messages...).Do()
-		if tc.Want.Error != nil {
-			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
+			res, err := client.Multicast(toUserIDs, tc.Messages...).Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
 			}
-		} else {
-			if err != nil {
-				t.Error(err)
+			if tc.Want.Response != nil {
+				if !reflect.DeepEqual(res, tc.Want.Response) {
+					t.Errorf("Response %v; want %v", res, tc.Want.Response)
+				}
 			}
-		}
-		if tc.Want.Response != nil {
-			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
-			}
-		}
+		})
 	}
 }
 

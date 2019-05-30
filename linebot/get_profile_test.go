@@ -21,6 +21,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"reflect"
+	"strconv"
 	"testing"
 	"time"
 )
@@ -33,12 +34,14 @@ func TestGetProfile(t *testing.T) {
 		Error       error
 	}
 	var testCases = []struct {
+		Label        string
 		UserID       string
 		ResponseCode int
 		Response     []byte
 		Want         want
 	}{
 		{
+			Label:        "Success",
 			UserID:       "U0047556f2e40dba2456887320ba7c76d",
 			ResponseCode: 200,
 			Response:     []byte(`{"userId":"U0047556f2e40dba2456887320ba7c76d","displayName":"BOT API","pictureUrl":"https://obs.line-apps.com/abcdefghijklmn","statusMessage":"Hello, LINE!"}`),
@@ -54,7 +57,7 @@ func TestGetProfile(t *testing.T) {
 			},
 		},
 		{
-			// Internal server error
+			Label:        "Internal server error",
 			UserID:       "U0047556f2e40dba2456887320ba7c76d",
 			ResponseCode: 500,
 			Response:     []byte("500 Internal server error"),
@@ -95,19 +98,21 @@ func TestGetProfile(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		res, err := client.GetProfile(tc.UserID).Do()
-		if tc.Want.Error != nil {
-			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
+			res, err := client.GetProfile(tc.UserID).Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
 			}
-		} else {
-			if err != nil {
-				t.Error(err)
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %v; want %v", res, tc.Want.Response)
 			}
-		}
-		if !reflect.DeepEqual(res, tc.Want.Response) {
-			t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
-		}
+		})
 	}
 }
 
@@ -152,6 +157,7 @@ func TestGetGroupMemberProfile(t *testing.T) {
 		Error       error
 	}
 	var testCases = []struct {
+		Label        string
 		GroupID      string
 		UserID       string
 		ResponseCode int
@@ -159,6 +165,7 @@ func TestGetGroupMemberProfile(t *testing.T) {
 		Want         want
 	}{
 		{
+			Label:        "Success",
 			GroupID:      "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			UserID:       "U0047556f2e40dba2456887320ba7c76d",
 			ResponseCode: 200,
@@ -175,7 +182,7 @@ func TestGetGroupMemberProfile(t *testing.T) {
 			},
 		},
 		{
-			// Internal server error
+			Label:        "Internal server error",
 			GroupID:      "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			UserID:       "U0047556f2e40dba2456887320ba7c76d",
 			ResponseCode: 500,
@@ -217,19 +224,21 @@ func TestGetGroupMemberProfile(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		res, err := client.GetGroupMemberProfile(tc.GroupID, tc.UserID).Do()
-		if tc.Want.Error != nil {
-			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
+			res, err := client.GetGroupMemberProfile(tc.GroupID, tc.UserID).Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
 			}
-		} else {
-			if err != nil {
-				t.Error(err)
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %v; want %v", res, tc.Want.Response)
 			}
-		}
-		if !reflect.DeepEqual(res, tc.Want.Response) {
-			t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
-		}
+		})
 	}
 }
 
@@ -274,6 +283,7 @@ func TestGetRoomMemberProfile(t *testing.T) {
 		Error       error
 	}
 	var testCases = []struct {
+		Label        string
 		RoomID       string
 		UserID       string
 		ResponseCode int
@@ -281,6 +291,7 @@ func TestGetRoomMemberProfile(t *testing.T) {
 		Want         want
 	}{
 		{
+			Label:        "Success",
 			RoomID:       "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			UserID:       "U0047556f2e40dba2456887320ba7c76d",
 			ResponseCode: 200,
@@ -297,7 +308,7 @@ func TestGetRoomMemberProfile(t *testing.T) {
 			},
 		},
 		{
-			// Internal server error
+			Label:        "Internal server error",
 			RoomID:       "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			UserID:       "U0047556f2e40dba2456887320ba7c76d",
 			ResponseCode: 500,
@@ -339,19 +350,21 @@ func TestGetRoomMemberProfile(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		res, err := client.GetRoomMemberProfile(tc.RoomID, tc.UserID).Do()
-		if tc.Want.Error != nil {
-			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
+			res, err := client.GetRoomMemberProfile(tc.RoomID, tc.UserID).Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
 			}
-		} else {
-			if err != nil {
-				t.Error(err)
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %v; want %v", res, tc.Want.Response)
 			}
-		}
-		if !reflect.DeepEqual(res, tc.Want.Response) {
-			t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
-		}
+		})
 	}
 }
 

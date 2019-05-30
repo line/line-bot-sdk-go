@@ -20,6 +20,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"reflect"
+	"strconv"
 	"testing"
 	"time"
 )
@@ -32,11 +33,13 @@ func TestGetMessageQuota(t *testing.T) {
 		Error       error
 	}
 	var testCases = []struct {
+		Label        string
 		ResponseCode int
 		Response     []byte
 		Want         want
 	}{
 		{
+			Label:        "Success",
 			ResponseCode: 200,
 			Response:     []byte(`{"type":"limited","value":1000}`),
 			Want: want{
@@ -49,7 +52,7 @@ func TestGetMessageQuota(t *testing.T) {
 			},
 		},
 		{
-			// Internal server error
+			Label:        "Internal server error",
 			ResponseCode: 500,
 			Response:     []byte("500 Internal server error"),
 			Want: want{
@@ -89,19 +92,21 @@ func TestGetMessageQuota(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		res, err := client.GetMessageQuota().Do()
-		if tc.Want.Error != nil {
-			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
+			res, err := client.GetMessageQuota().Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
 			}
-		} else {
-			if err != nil {
-				t.Error(err)
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %v; want %v", res, tc.Want.Response)
 			}
-		}
-		if !reflect.DeepEqual(res, tc.Want.Response) {
-			t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
-		}
+		})
 	}
 }
 
@@ -130,11 +135,13 @@ func TestGetMessageQuotaConsumption(t *testing.T) {
 		Error       error
 	}
 	var testCases = []struct {
+		Label        string
 		ResponseCode int
 		Response     []byte
 		Want         want
 	}{
 		{
+			Label:        "Success",
 			ResponseCode: 200,
 			Response:     []byte(`{"totalUsage":7}`),
 			Want: want{
@@ -146,7 +153,7 @@ func TestGetMessageQuotaConsumption(t *testing.T) {
 			},
 		},
 		{
-			// Internal server error
+			Label:        "Internal server error",
 			ResponseCode: 500,
 			Response:     []byte("500 Internal server error"),
 			Want: want{
@@ -186,19 +193,21 @@ func TestGetMessageQuotaConsumption(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		res, err := client.GetMessageQuotaConsumption().Do()
-		if tc.Want.Error != nil {
-			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
+			res, err := client.GetMessageQuotaConsumption().Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
 			}
-		} else {
-			if err != nil {
-				t.Error(err)
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %v; want %v", res, tc.Want.Response)
 			}
-		}
-		if !reflect.DeepEqual(res, tc.Want.Response) {
-			t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
-		}
+		})
 	}
 }
 
@@ -218,7 +227,6 @@ func BenchmarkGetMessageQuota(b *testing.B) {
 	}
 }
 
-///
 func TestGetMessageConsumption(t *testing.T) {
 	type want struct {
 		URLPath     string
@@ -227,11 +235,13 @@ func TestGetMessageConsumption(t *testing.T) {
 		Error       error
 	}
 	var testCases = []struct {
+		Label        string
 		ResponseCode int
 		Response     []byte
 		Want         want
 	}{
 		{
+			Label:        "Success",
 			ResponseCode: 200,
 			Response:     []byte(`{"totalUsage":500}`),
 			Want: want{
@@ -243,7 +253,7 @@ func TestGetMessageConsumption(t *testing.T) {
 			},
 		},
 		{
-			// Internal server error
+			Label:        "Internal server error",
 			ResponseCode: 500,
 			Response:     []byte("500 Internal server error"),
 			Want: want{
@@ -283,19 +293,21 @@ func TestGetMessageConsumption(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		res, err := client.GetMessageConsumption().Do()
-		if tc.Want.Error != nil {
-			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
+			res, err := client.GetMessageConsumption().Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
 			}
-		} else {
-			if err != nil {
-				t.Error(err)
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %v; want %v", res, tc.Want.Response)
 			}
-		}
-		if !reflect.DeepEqual(res, tc.Want.Response) {
-			t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
-		}
+		})
 	}
 }
 

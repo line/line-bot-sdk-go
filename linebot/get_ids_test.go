@@ -22,6 +22,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"reflect"
+	"strconv"
 	"testing"
 	"time"
 )
@@ -35,6 +36,7 @@ func TestGetGroupMemberIDs(t *testing.T) {
 		Error             error
 	}
 	var testCases = []struct {
+		Label             string
 		GroupID           string
 		ContinuationToken string
 		ResponseCode      int
@@ -42,6 +44,7 @@ func TestGetGroupMemberIDs(t *testing.T) {
 		Want              want
 	}{
 		{
+			Label:             "With ContinuationToken",
 			GroupID:           "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			ContinuationToken: "xxxxx",
 			ResponseCode:      200,
@@ -59,6 +62,7 @@ func TestGetGroupMemberIDs(t *testing.T) {
 			},
 		},
 		{
+			Label:        "Without ContinuationToken",
 			GroupID:      "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			ResponseCode: 200,
 			Response:     []byte(`{"memberIds": ["U0047556f2e40dba2456887320ba7c76d", "U0047556f2e40dba2456887320ba7c76e"], "next": "xxxxx"}`),
@@ -75,7 +79,7 @@ func TestGetGroupMemberIDs(t *testing.T) {
 			},
 		},
 		{
-			// Internal server error
+			Label:             "Internal server error",
 			GroupID:           "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			ContinuationToken: "xxxxx",
 			ResponseCode:      500,
@@ -122,19 +126,21 @@ func TestGetGroupMemberIDs(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		res, err := client.GetGroupMemberIDs(tc.GroupID, tc.ContinuationToken).Do()
-		if tc.Want.Error != nil {
-			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
+			res, err := client.GetGroupMemberIDs(tc.GroupID, tc.ContinuationToken).Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
 			}
-		} else {
-			if err != nil {
-				t.Error(err)
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %v; want %v", res, tc.Want.Response)
 			}
-		}
-		if !reflect.DeepEqual(res, tc.Want.Response) {
-			t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
-		}
+		})
 	}
 }
 
@@ -180,6 +186,7 @@ func TestGetRoomMemberIDs(t *testing.T) {
 		Error             error
 	}
 	var testCases = []struct {
+		Label             string
 		RoomID            string
 		ContinuationToken string
 		ResponseCode      int
@@ -187,6 +194,7 @@ func TestGetRoomMemberIDs(t *testing.T) {
 		Want              want
 	}{
 		{
+			Label:             "With ContinuationToken",
 			RoomID:            "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			ContinuationToken: "xxxxx",
 			ResponseCode:      200,
@@ -204,6 +212,7 @@ func TestGetRoomMemberIDs(t *testing.T) {
 			},
 		},
 		{
+			Label:        "Without ContinuationToken",
 			RoomID:       "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			ResponseCode: 200,
 			Response:     []byte(`{"memberIds": ["U0047556f2e40dba2456887320ba7c76d", "U0047556f2e40dba2456887320ba7c76e"], "next": "xxxxx"}`),
@@ -220,7 +229,7 @@ func TestGetRoomMemberIDs(t *testing.T) {
 			},
 		},
 		{
-			// Internal server error
+			Label:             "Internal server error",
 			RoomID:            "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			ContinuationToken: "xxxxx",
 			ResponseCode:      500,
@@ -267,19 +276,21 @@ func TestGetRoomMemberIDs(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		res, err := client.GetRoomMemberIDs(tc.RoomID, tc.ContinuationToken).Do()
-		if tc.Want.Error != nil {
-			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
+			res, err := client.GetRoomMemberIDs(tc.RoomID, tc.ContinuationToken).Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
 			}
-		} else {
-			if err != nil {
-				t.Error(err)
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %v; want %v", res, tc.Want.Response)
 			}
-		}
-		if !reflect.DeepEqual(res, tc.Want.Response) {
-			t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
-		}
+		})
 	}
 }
 
@@ -382,16 +393,17 @@ func TestGetGroupMemberIDsScanner(t *testing.T) {
 
 	for i := range testCases {
 		currentTestIdx = i
-
-		s := client.GetGroupMemberIDs("cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "").NewScanner()
-		for k := 0; s.Scan(); k++ {
-			if id, want := s.ID(), fmt.Sprintf("U%032d", k); id != want {
-				t.Fatalf("case[%d] id = %s; want %s; scanner = %#v", currentTestIdx, id, want, s)
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			s := client.GetGroupMemberIDs("cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "").NewScanner()
+			for k := 0; s.Scan(); k++ {
+				if got, want := s.ID(), fmt.Sprintf("U%032d", k); got != want {
+					t.Fatalf("got = %s; want %s; scanner = %#v", got, want, s)
+				}
 			}
-		}
-		if err := s.Err(); err != nil {
-			t.Fatal(err)
-		}
+			if err := s.Err(); err != nil {
+				t.Fatal(err)
+			}
+		})
 	}
 }
 
@@ -461,15 +473,16 @@ func TestGetRoomMemberIDsScanner(t *testing.T) {
 
 	for i := range testCases {
 		currentTestIdx = i
-
-		s := client.GetRoomMemberIDs("cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "").NewScanner()
-		for k := 0; s.Scan(); k++ {
-			if id, want := s.ID(), fmt.Sprintf("U%032d", k); id != want {
-				t.Fatalf("case[%d] id = %s; want %s; scanner = %#v", currentTestIdx, id, want, s)
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			s := client.GetRoomMemberIDs("cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "").NewScanner()
+			for k := 0; s.Scan(); k++ {
+				if got, want := s.ID(), fmt.Sprintf("U%032d", k); got != want {
+					t.Fatalf("got = %s; want %s; scanner = %#v", got, want, s)
+				}
 			}
-		}
-		if err := s.Err(); err != nil {
-			t.Fatal(err)
-		}
+			if err := s.Err(); err != nil {
+				t.Fatal(err)
+			}
+		})
 	}
 }

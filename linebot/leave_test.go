@@ -21,6 +21,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"reflect"
+	"strconv"
 	"testing"
 	"time"
 )
@@ -33,12 +34,14 @@ func TestLeaveGroup(t *testing.T) {
 		Error       error
 	}
 	var testCases = []struct {
+		Label        string
 		GroupID      string
 		ResponseCode int
 		Response     []byte
 		Want         want
 	}{
 		{
+			Label:        "Success",
 			GroupID:      "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
@@ -49,7 +52,7 @@ func TestLeaveGroup(t *testing.T) {
 			},
 		},
 		{
-			// Too Many Requests
+			Label:        "Too Many Requests",
 			GroupID:      "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			ResponseCode: 429,
 			Response:     []byte(`{"message":"Too Many Requests"}`),
@@ -93,21 +96,23 @@ func TestLeaveGroup(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		res, err := client.LeaveGroup(tc.GroupID).Do()
-		if tc.Want.Error != nil {
-			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
+			res, err := client.LeaveGroup(tc.GroupID).Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
 			}
-		} else {
-			if err != nil {
-				t.Error(err)
+			if tc.Want.Response != nil {
+				if !reflect.DeepEqual(res, tc.Want.Response) {
+					t.Errorf("Response %v; want %v", res, tc.Want.Response)
+				}
 			}
-		}
-		if tc.Want.Response != nil {
-			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
-			}
-		}
+		})
 	}
 }
 
@@ -136,12 +141,14 @@ func TestLeaveRoom(t *testing.T) {
 		Error       error
 	}
 	var testCases = []struct {
+		Label        string
 		RoomID       string
 		ResponseCode int
 		Response     []byte
 		Want         want
 	}{
 		{
+			Label:        "Success",
 			RoomID:       "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
@@ -152,7 +159,7 @@ func TestLeaveRoom(t *testing.T) {
 			},
 		},
 		{
-			// Too Many Requests
+			Label:        "Too Many Requests",
 			RoomID:       "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			ResponseCode: 429,
 			Response:     []byte(`{"message":"Too Many Requests"}`),
@@ -196,21 +203,23 @@ func TestLeaveRoom(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		res, err := client.LeaveRoom(tc.RoomID).Do()
-		if tc.Want.Error != nil {
-			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
+			res, err := client.LeaveRoom(tc.RoomID).Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
 			}
-		} else {
-			if err != nil {
-				t.Error(err)
+			if tc.Want.Response != nil {
+				if !reflect.DeepEqual(res, tc.Want.Response) {
+					t.Errorf("Response %v; want %v", res, tc.Want.Response)
+				}
 			}
-		}
-		if tc.Want.Response != nil {
-			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
-			}
-		}
+		})
 	}
 }
 

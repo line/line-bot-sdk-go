@@ -20,6 +20,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"reflect"
+	"strconv"
 	"testing"
 )
 
@@ -116,27 +117,29 @@ func TestGetNumberMessages(t *testing.T) {
 	var res interface{}
 	for i, tc := range testCases {
 		currentTestIdx = i
-		switch tc.TestType {
-		case DeliveryTypeMulticast:
-			res, err = client.GetNumberMulticastMessages(tc.Date).Do()
-		case DeliveryTypePush:
-			res, err = client.GetNumberPushMessages(tc.Date).Do()
-		case DeliveryTypeReply:
-			res, err = client.GetNumberReplyMessages(tc.Date).Do()
-		}
-		if tc.Want.Error != nil {
-			if !reflect.DeepEqual(err, tc.Want.Error) {
-				t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+		t.Run(strconv.Itoa(i)+"/"+string(tc.TestType)+"."+tc.Date, func(t *testing.T) {
+			switch tc.TestType {
+			case DeliveryTypeMulticast:
+				res, err = client.GetNumberMulticastMessages(tc.Date).Do()
+			case DeliveryTypePush:
+				res, err = client.GetNumberPushMessages(tc.Date).Do()
+			case DeliveryTypeReply:
+				res, err = client.GetNumberReplyMessages(tc.Date).Do()
 			}
-		} else {
-			if err != nil {
-				t.Error(err)
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
 			}
-		}
-		if tc.Want.Response != nil {
-			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
+			if tc.Want.Response != nil {
+				if !reflect.DeepEqual(res, tc.Want.Response) {
+					t.Errorf("Response %v; want %v", res, tc.Want.Response)
+				}
 			}
-		}
+		})
 	}
 }
