@@ -146,7 +146,7 @@ See http://semver.org/
 
 ## Contributing
 
-Please check [CONTRIBUTING](contributing.md) before making a contribution.
+Please check [CONTRIBUTING](CONTRIBUTING.md) before making a contribution.
 
 
 ## License
