@@ -1,8 +1,8 @@
 ---
-name: 
-about: 
+name: bug_report.md
+about: for Bug Report
 title: Bug Report
-labels: but
+labels: ''
 assignees: k2wanko
 
 ---
