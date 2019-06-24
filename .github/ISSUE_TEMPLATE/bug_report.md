@@ -2,7 +2,7 @@
 name: Bug Report Template
 about: for Bug Report
 title: Bug Report
-labels: but
+labels: bug
 assignees: k2wanko
 
 ---
