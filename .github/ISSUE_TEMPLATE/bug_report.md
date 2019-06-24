@@ -1,6 +1,6 @@
 ---
-name: 
-about: 
+name: Bug Report Template
+about: for Bug Report
 title: Bug Report
 labels: but
 assignees: k2wanko
