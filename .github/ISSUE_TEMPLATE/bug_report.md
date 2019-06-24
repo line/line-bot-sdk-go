@@ -2,7 +2,7 @@
 name: Bug Report Template
 about: for Bug Report
 title: Bug Report
-labels: but
+labels: bug
 assignees: k2wanko
 
 ---
@@ -15,7 +15,6 @@ assignees: k2wanko
 ## When creating an issue
 
 - Provide detailed information about the issue you had with the SDK as below
-- Provide logs if possible
 -->
 
 ## System Informations
