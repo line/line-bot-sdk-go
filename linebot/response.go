@@ -112,6 +112,13 @@ func isSuccess(code int) bool {
 	return code/100 == 2
 }
 
+// AccessTokenResponse type
+type AccessTokenResponse struct {
+	AccessToken string `json:"access_token"`
+	ExpiresIn   int64  `json:"expires_in"`
+	TokenType   string `json:"token_type"`
+}
+
 func checkResponse(res *http.Response) error {
 	if isSuccess(res.StatusCode) {
 		return nil
@@ -288,6 +295,18 @@ func decodeToMessagesNumberResponse(res *http.Response) (*MessagesNumberResponse
 	}
 	decoder := json.NewDecoder(res.Body)
 	result := MessagesNumberResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
+
+func decodeToAccessTokenResponse(res *http.Response) (*AccessTokenResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := AccessTokenResponse{}
 	if err := decoder.Decode(&result); err != nil {
 		return nil, err
 	}

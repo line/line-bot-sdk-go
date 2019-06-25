@@ -65,6 +65,9 @@ const (
 	APIEndpointLinkToken = "/v2/bot/user/%s/linkToken"
 
 	APIEndpointGetMessageDelivery = "/v2/bot/message/delivery/%s"
+
+	APIEndpointIssueAccessToken  = "/v2/oauth/accessToken"
+	APIEndpointRevokeAccessToken = "/v2/oauth/revoke"
 )
 
 // Client type
@@ -160,6 +163,15 @@ func (client *Client) post(ctx context.Context, endpoint string, body io.Reader)
 		return nil, err
 	}
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
+	return client.do(ctx, req)
+}
+
+func (client *Client) postform(ctx context.Context, endpoint string, body io.Reader) (*http.Response, error) {
+	req, err := http.NewRequest("POST", client.url(endpoint), body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	return client.do(ctx, req)
 }
 
