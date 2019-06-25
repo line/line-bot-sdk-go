@@ -24,9 +24,10 @@ import (
 // PushMessage method
 func (client *Client) PushMessage(to string, messages ...SendingMessage) *PushMessageCall {
 	return &PushMessageCall{
-		c:        client,
-		to:       to,
-		messages: messages,
+		c:                    client,
+		to:                   to,
+		messages:             messages,
+		notificationDisabled: false,
 	}
 }
 
@@ -35,8 +36,9 @@ type PushMessageCall struct {
 	c   *Client
 	ctx context.Context
 
-	to       string
-	messages []SendingMessage
+	to                   string
+	messages             []SendingMessage
+	notificationDisabled bool
 }
 
 // WithContext method
@@ -45,14 +47,22 @@ func (call *PushMessageCall) WithContext(ctx context.Context) *PushMessageCall {
 	return call
 }
 
+// WithNotificationDisabled method will disable push notification
+func (call *PushMessageCall) WithNotificationDisabled() *PushMessageCall {
+	call.notificationDisabled = true
+	return call
+}
+
 func (call *PushMessageCall) encodeJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
 	return enc.Encode(&struct {
-		To       string           `json:"to"`
-		Messages []SendingMessage `json:"messages"`
+		To                   string           `json:"to"`
+		Messages             []SendingMessage `json:"messages"`
+		NotificationDisabled bool             `json:"notificationDisabled,omitempty"`
 	}{
-		To:       call.to,
-		Messages: call.messages,
+		To:                   call.to,
+		Messages:             call.messages,
+		NotificationDisabled: call.notificationDisabled,
 	})
 }
 
@@ -73,9 +83,10 @@ func (call *PushMessageCall) Do() (*BasicResponse, error) {
 // ReplyMessage method
 func (client *Client) ReplyMessage(replyToken string, messages ...SendingMessage) *ReplyMessageCall {
 	return &ReplyMessageCall{
-		c:          client,
-		replyToken: replyToken,
-		messages:   messages,
+		c:                    client,
+		replyToken:           replyToken,
+		messages:             messages,
+		notificationDisabled: false,
 	}
 }
 
@@ -84,8 +95,9 @@ type ReplyMessageCall struct {
 	c   *Client
 	ctx context.Context
 
-	replyToken string
-	messages   []SendingMessage
+	replyToken           string
+	messages             []SendingMessage
+	notificationDisabled bool
 }
 
 // WithContext method
@@ -94,14 +106,22 @@ func (call *ReplyMessageCall) WithContext(ctx context.Context) *ReplyMessageCall
 	return call
 }
 
+// WithNotificationDisabled method will disable push notification
+func (call *ReplyMessageCall) WithNotificationDisabled() *ReplyMessageCall {
+	call.notificationDisabled = true
+	return call
+}
+
 func (call *ReplyMessageCall) encodeJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
 	return enc.Encode(&struct {
-		ReplyToken string           `json:"replyToken"`
-		Messages   []SendingMessage `json:"messages"`
+		ReplyToken           string           `json:"replyToken"`
+		Messages             []SendingMessage `json:"messages"`
+		NotificationDisabled bool             `json:"notificationDisabled,omitempty"`
 	}{
-		ReplyToken: call.replyToken,
-		Messages:   call.messages,
+		ReplyToken:           call.replyToken,
+		Messages:             call.messages,
+		NotificationDisabled: call.notificationDisabled,
 	})
 }
 
@@ -122,9 +142,10 @@ func (call *ReplyMessageCall) Do() (*BasicResponse, error) {
 // Multicast method
 func (client *Client) Multicast(to []string, messages ...SendingMessage) *MulticastCall {
 	return &MulticastCall{
-		c:        client,
-		to:       to,
-		messages: messages,
+		c:                    client,
+		to:                   to,
+		messages:             messages,
+		notificationDisabled: false,
 	}
 }
 
@@ -133,8 +154,9 @@ type MulticastCall struct {
 	c   *Client
 	ctx context.Context
 
-	to       []string
-	messages []SendingMessage
+	to                   []string
+	messages             []SendingMessage
+	notificationDisabled bool
 }
 
 // WithContext method
@@ -143,14 +165,22 @@ func (call *MulticastCall) WithContext(ctx context.Context) *MulticastCall {
 	return call
 }
 
+// WithNotificationDisabled method will disable push notification
+func (call *MulticastCall) WithNotificationDisabled() *MulticastCall {
+	call.notificationDisabled = true
+	return call
+}
+
 func (call *MulticastCall) encodeJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
 	return enc.Encode(&struct {
-		To       []string         `json:"to"`
-		Messages []SendingMessage `json:"messages"`
+		To                   []string         `json:"to"`
+		Messages             []SendingMessage `json:"messages"`
+		NotificationDisabled bool             `json:"notificationDisabled,omitempty"`
 	}{
-		To:       call.to,
-		Messages: call.messages,
+		To:                   call.to,
+		Messages:             call.messages,
+		NotificationDisabled: call.notificationDisabled,
 	})
 }
 
