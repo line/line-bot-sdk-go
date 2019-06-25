@@ -29,6 +29,7 @@ const (
 	APIEndpointBase = "https://api.line.me"
 
 	APIEndpointPushMessage                = "/v2/bot/message/push"
+	APIEndpointBroadcastMessage           = "/v2/bot/message/broadcast"
 	APIEndpointReplyMessage               = "/v2/bot/message/reply"
 	APIEndpointMulticast                  = "/v2/bot/message/multicast"
 	APIEndpointGetMessageContent          = "/v2/bot/message/%s/content"
