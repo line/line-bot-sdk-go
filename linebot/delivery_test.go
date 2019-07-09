@@ -24,8 +24,8 @@ import (
 	"testing"
 )
 
-// TestGetNumberMessages tests GetNumberReplyMessages, GetNumberPushMessages
-// and GetNumberMulticastMessages func
+// TestGetNumberMessages tests GetNumberReplyMessages, GetNumberPushMessages, GetNumberMulticastMessages
+// and GetNumberBroadcastMessages func
 func TestGetNumberMessages(t *testing.T) {
 	type want struct {
 		URLPath     string
@@ -125,6 +125,8 @@ func TestGetNumberMessages(t *testing.T) {
 				res, err = client.GetNumberPushMessages(tc.Date).Do()
 			case DeliveryTypeReply:
 				res, err = client.GetNumberReplyMessages(tc.Date).Do()
+			case DeliveryTypeBroadcast:
+				res, err = client.GetNumberBroadcastMessages(tc.Date).Do()
 			}
 			if tc.Want.Error != nil {
 				if !reflect.DeepEqual(err, tc.Want.Error) {

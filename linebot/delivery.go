@@ -28,6 +28,7 @@ const (
 	DeliveryTypeMulticast DeliveryType = "multicast"
 	DeliveryTypePush      DeliveryType = "push"
 	DeliveryTypeReply     DeliveryType = "reply"
+	DeliveryTypeBroadcast DeliveryType = "broadcast"
 )
 
 // GetNumberReplyMessages method
@@ -54,6 +55,15 @@ func (client *Client) GetNumberMulticastMessages(date string) *GetNumberMessages
 		c:            client,
 		date:         date,
 		deliveryType: DeliveryTypeMulticast,
+	}
+}
+
+// GetNumberBroadcastMessages method
+func (client *Client) GetNumberBroadcastMessages(date string) *GetNumberMessagesCall {
+	return &GetNumberMessagesCall{
+		c:            client,
+		date:         date,
+		deliveryType: DeliveryTypeBroadcast,
 	}
 }
 

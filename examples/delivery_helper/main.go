@@ -44,6 +44,8 @@ func main() {
 		res, err = bot.GetNumberPushMessages(*date).Do()
 	case "reply":
 		res, err = bot.GetNumberReplyMessages(*date).Do()
+	case "broadcast":
+		res, err = bot.GetNumberBroadcastMessages(*date).Do()
 	default:
 		log.Fatal("implement me")
 	}
