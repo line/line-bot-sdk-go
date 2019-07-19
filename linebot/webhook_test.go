@@ -315,7 +315,57 @@ var webhookTestRequestBody = `{
             "deviceId": "t2c449c9d1...",
             "type": "unlink"
           }
-        }
+        },
+        {
+          "type": "things",
+          "timestamp": 1462629479859,
+          "source": {
+            "type": "user",
+            "userId": "U91eeaf62d901234567890123456789ab"
+          },
+          "things": {
+            "deviceId": "t016b8dc6...",
+            "type": "scenarioResult",
+            "result": {
+              "scenarioId": "01DE9CH7H...",
+              "revision": 3,
+              "startTime": 1563511217095,
+              "endTime": 1563511217097,
+              "resultCode": "success",
+              "bleNotificationPayload": "AQ==",
+              "actionResults": [
+                {
+                  "type": "binary",
+                  "data": "/w=="
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type":"things",
+          "replyToken":"f026a377...",
+          "source":{
+            "userId":"U91eeaf62d901234567890123456789ab",
+            "type":"user"
+          },
+          "timestamp":1563511218376,
+          "things":{
+            "deviceId":"t016b8d...",
+            "result":{
+              "scenarioId":"01DE9CH7H...",
+              "revision":3,
+              "startTime":1563511217095,
+              "endTime":1563511217097,
+              "resultCode":"gatt_error",
+              "errorReason":"c.l.h.D: No characteristic is found for the given UUID.",
+              "actionResults":[
+
+              ]
+            },
+            "type":"scenarioResult"
+          }
+       }
     ]
 }
 `
@@ -597,6 +647,55 @@ var webhookTestWantEvents = []*Event{
 			Type:     `unlink`,
 		},
 	},
+	{
+		Type:      EventTypeThings,
+		Timestamp: time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
+		Source: &EventSource{
+			Type:   EventSourceTypeUser,
+			UserID: "U91eeaf62d901234567890123456789ab",
+		},
+		Things: &Things{
+			DeviceID: "t016b8dc6...",
+			Type:     "scenarioResult",
+			Result: &ThingsResult{
+				ScenarioID:             "01DE9CH7H...",
+				Revision:               3,
+				StartTime:              1563511217095,
+				EndTime:                1563511217097,
+				ResultCode:             ThingsResultCodeSuccess,
+				BLENotificationPayload: []byte(`AQ==`),
+				ActionResults: []*ThingsActionResult{
+					&ThingsActionResult{
+						Type: ThingsActionResultTypeBinary,
+						Data: []byte(`/w==`),
+					},
+				},
+			},
+		},
+	},
+	{
+		Type:       EventTypeThings,
+		ReplyToken: "f026a377...",
+		Timestamp:  time.Date(2019, time.July, 19, 4, 40, 18, int(376*time.Millisecond), time.UTC),
+		Source: &EventSource{
+			Type:   EventSourceTypeUser,
+			UserID: "U91eeaf62d901234567890123456789ab",
+		},
+		Things: &Things{
+			DeviceID: "t016b8d...",
+			Type:     "scenarioResult",
+			Result: &ThingsResult{
+				ScenarioID:             "01DE9CH7H...",
+				Revision:               3,
+				StartTime:              1563511217095,
+				EndTime:                1563511217097,
+				ResultCode:             ThingsResultCodeGattError,
+				ErrorReason:            "c.l.h.D: No characteristic is found for the given UUID.",
+				ActionResults:          []*ThingsActionResult{},
+				BLENotificationPayload: []byte{},
+			},
+		},
+	},
 }
 
 func TestParseRequest(t *testing.T) {
@@ -622,6 +721,15 @@ func TestParseRequest(t *testing.T) {
 			want := webhookTestWantEvents[i]
 			if !reflect.DeepEqual(got, want) {
 				t.Errorf("Event %d %v; want %v", i, got, want)
+				gota := got
+				if !reflect.DeepEqual(
+					gota.Things.Result.BLENotificationPayload,
+					want.Things.Result.BLENotificationPayload,
+				) {
+					t.Log("this")
+					t.Log(gota.Things.Result.BLENotificationPayload == nil)
+					t.Log(want.Things.Result.BLENotificationPayload == nil)
+				}
 			}
 		}
 	}))
