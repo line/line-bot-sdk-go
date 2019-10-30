@@ -57,9 +57,9 @@ func (call *GetNumberMessagesDeliveryCall) WithContext(ctx context.Context) *Get
 // Do method
 func (call *GetNumberMessagesDeliveryCall) Do() (*MessagesNumberDeliveryResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointInsight, call.insightType)
-	var q url.Values
+	q := url.Values{}
 	if call.date != "" {
-		q = url.Values{"date": []string{call.date}}
+		q.Add("date", call.date)
 	}
 	res, err := call.c.get(call.ctx, endpoint, q)
 	if err != nil {
@@ -96,9 +96,9 @@ func (call *GetNumberFollowersCall) WithContext(ctx context.Context) *GetNumberF
 // Do method
 func (call *GetNumberFollowersCall) Do() (*MessagesNumberFollowersResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointInsight, call.insightType)
-	var q url.Values
+	q := url.Values{}
 	if call.date != "" {
-		q = url.Values{"date": []string{call.date}}
+		q.Add("date", call.date)
 	}
 	res, err := call.c.get(call.ctx, endpoint, q)
 	if err != nil {
