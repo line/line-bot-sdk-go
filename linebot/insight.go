@@ -113,7 +113,6 @@ type GetFriendDemographicsCall struct {
 	c   *Client
 	ctx context.Context
 
-	date        string
 	insightType InsightType
 }
 
@@ -135,9 +134,7 @@ func (call *GetFriendDemographicsCall) WithContext(ctx context.Context) *GetFrie
 func (call *GetFriendDemographicsCall) Do() (*MessagesFriendDemographicsResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointInsight, call.insightType)
 	var q url.Values
-	if call.date != "" {
-		q = url.Values{"date": []string{call.date}}
-	}
+
 	res, err := call.c.get(call.ctx, endpoint, q)
 	if err != nil {
 		return nil, err
