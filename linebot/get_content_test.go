@@ -100,7 +100,7 @@ func TestGetMessageContent(t *testing.T) {
 		w.Write(tc.Response)
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+	client, err := mockDataClient(server)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -143,7 +143,7 @@ func TestGetMessageContentWithContext(t *testing.T) {
 		w.Write([]byte{0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10})
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+	client, err := mockDataClient(server)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -159,7 +159,7 @@ func BenchmarkGetMessageContent(b *testing.B) {
 		w.Write([]byte{0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10})
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+	client, err := mockDataClient(server)
 	if err != nil {
 		b.Fatal(err)
 	}
