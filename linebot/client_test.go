@@ -24,23 +24,26 @@ import (
 	"testing"
 )
 
+// mockClient creates Client with given server.
+// Because of a historical reason, this only supports sending requests to endpointBase, but endpointBaseData.
 func mockClient(server *httptest.Server) (*Client, error) {
-	client, err := New(
-		"testsecret",
-		"testtoken",
-		WithHTTPClient(&http.Client{
+	u, err := url.ParseRequestURI(server.URL)
+	if err != nil {
+		return nil, err
+	}
+	return &Client{
+		channelSecret:    "testsecret",
+		channelToken: "testtoken",
+		endpointBase: u,
+		endpointBaseData: nil, // Must fail when endpointBaseData is used accidentally.
+		httpClient: &http.Client{
 			Transport: &http.Transport{
 				TLSClientConfig: &tls.Config{
 					InsecureSkipVerify: true,
 				},
 			},
-		}),
-		WithEndpointBase(server.URL),
-	)
-	if err != nil {
-		return nil, err
-	}
-	return client, nil
+		},
+	}, nil
 }
 
 func TestNewClient(t *testing.T) {
