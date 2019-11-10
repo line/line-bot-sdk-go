@@ -89,7 +89,7 @@ func (call *GetNumberMessagesCall) Do() (*MessagesNumberResponse, error) {
 	if call.date != "" {
 		q = url.Values{"date": []string{call.date}}
 	}
-	res, err := call.c.get(call.ctx, endpoint, q)
+	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, q)
 	if err != nil {
 		return nil, err
 	}
