@@ -26,7 +26,8 @@ import (
 
 // APIEndpoint constants
 const (
-	APIEndpointBase = "https://api.line.me"
+	APIEndpointBase     = "https://api.line.me"
+	APIEndpointBaseData = "https://api-data.line.me"
 
 	APIEndpointPushMessage                = "/v2/bot/message/push"
 	APIEndpointBroadcastMessage           = "/v2/bot/message/broadcast"
@@ -72,10 +73,11 @@ const (
 
 // Client type
 type Client struct {
-	channelSecret string
-	channelToken  string
-	endpointBase  *url.URL     // default APIEndpointBase
-	httpClient    *http.Client // default http.DefaultClient
+	channelSecret    string
+	channelToken     string
+	endpointBase     *url.URL     // default APIEndpointBase
+	endpointBaseData *url.URL     // default APIEndpointBaseData
+	httpClient       *http.Client // default http.DefaultClient
 }
 
 // ClientOption type
@@ -107,6 +109,13 @@ func New(channelSecret, channelToken string, options ...ClientOption) (*Client, 
 		}
 		c.endpointBase = u
 	}
+	if c.endpointBaseData == nil {
+		u, err := url.ParseRequestURI(APIEndpointBaseData)
+		if err != nil {
+			return nil, err
+		}
+		c.endpointBaseData = u
+	}
 	return c, nil
 }
 
@@ -126,6 +135,18 @@ func WithEndpointBase(endpointBase string) ClientOption {
 			return err
 		}
 		client.endpointBase = u
+		return nil
+	}
+}
+
+// WithEndpointBaseData function
+func WithEndpointBaseData(endpointBaseData string) ClientOption {
+	return func(client *Client) error {
+		u, err := url.ParseRequestURI(endpointBaseData)
+		if err != nil {
+			return err
+		}
+		client.endpointBaseData = u
 		return nil
 	}
 }

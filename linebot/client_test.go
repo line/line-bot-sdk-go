@@ -47,6 +47,7 @@ func TestNewClient(t *testing.T) {
 	secret := "testsecret"
 	token := "testtoken"
 	wantURL, _ := url.Parse(APIEndpointBase)
+	wantDataURL, _ := url.Parse(APIEndpointBaseData)
 	client, err := New(secret, token)
 	if err != nil {
 		t.Fatal(err)
@@ -60,6 +61,9 @@ func TestNewClient(t *testing.T) {
 	if !reflect.DeepEqual(client.endpointBase, wantURL) {
 		t.Errorf("endpointBase %v; want %v", client.endpointBase, wantURL)
 	}
+	if !reflect.DeepEqual(client.endpointBaseData, wantDataURL) {
+		t.Errorf("endpointBase %v; want %v", client.endpointBaseData, wantDataURL)
+	}
 	if client.httpClient != http.DefaultClient {
 		t.Errorf("httpClient %p; want %p", client.httpClient, http.DefaultClient)
 	}
@@ -69,19 +73,25 @@ func TestNewClientWithOptions(t *testing.T) {
 	secret := "testsecret"
 	token := "testtoken"
 	endpoint := "https://example.test/"
+	dataEndpoint := "https://example-data.test/"
 	httpClient := http.Client{}
 	wantURL, _ := url.Parse(endpoint)
+	wantDataURL, _ := url.Parse(dataEndpoint)
 	client, err := New(
 		secret,
 		token,
 		WithHTTPClient(&httpClient),
 		WithEndpointBase(endpoint),
+		WithEndpointBaseData(dataEndpoint),
 	)
 	if err != nil {
 		t.Fatal(err)
 	}
 	if !reflect.DeepEqual(client.endpointBase, wantURL) {
 		t.Errorf("endpointBase %v; want %v", client.endpointBase, wantURL)
+	}
+	if !reflect.DeepEqual(client.endpointBaseData, wantDataURL) {
+		t.Errorf("endpointBaseData %v; want %v", client.endpointBaseData, wantDataURL)
 	}
 	if client.httpClient != &httpClient {
 		t.Errorf("httpClient %p; want %p", client.httpClient, &httpClient)
