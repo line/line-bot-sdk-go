@@ -127,6 +127,44 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 		},
 		{
 			JSON: []byte(`{
+	"type": "bubble",
+	"size": "nano",
+    "body": {
+      "type": "box",
+      "layout": "vertical",
+      "contents": [
+        {
+          "type": "text",
+          "text": "hello"
+        },
+        {
+          "type": "text",
+          "text": "world"
+        }
+      ]
+    }
+  }`),
+			Want: &BubbleContainer{
+				Type: FlexContainerTypeBubble,
+				Size: FlexBubbleSizeTypeNano,
+				Body: &BoxComponent{
+					Type:   FlexComponentTypeBox,
+					Layout: FlexBoxLayoutTypeVertical,
+					Contents: []FlexComponent{
+						&TextComponent{
+							Type: FlexComponentTypeText,
+							Text: "hello",
+						},
+						&TextComponent{
+							Type: FlexComponentTypeText,
+							Text: "world",
+						},
+					},
+				},
+			},
+		},
+		{
+			JSON: []byte(`{
   "type": "bubble",
   "hero": {
     "type": "image",
