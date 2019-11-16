@@ -15,6 +15,7 @@
 package linebot
 
 import (
+	"bytes"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -681,6 +682,103 @@ func TestUploadRichMenuImage(t *testing.T) {
 			if tc.Want.Response != nil {
 				if !reflect.DeepEqual(res, tc.Want.Response) {
 					t.Errorf("Response\n %v; want\n %v", res, tc.Want.Response)
+				}
+			}
+		})
+	}
+}
+
+func TestDownloadRichMenuImage(t *testing.T) {
+	filePath := filepath.Join("..", "testdata", "img", "richmenu.png")
+	file, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	type want struct {
+		URLPath  string
+		Response *MessageContentResponse
+		Error    error
+	}
+	var testCases = []struct {
+		RichMenuID     string
+		ImagePath      string
+		Response       []byte
+		ResponseCode   int
+		ResponseHeader map[string]string
+		Want           want
+	}{
+		{
+			RichMenuID:   "123456",
+			Response:     file,
+			ResponseCode: 200,
+			ResponseHeader: map[string]string{
+				"Content-Type":   "image/png",
+				"Content-Length": strconv.Itoa(len(file)),
+			},
+			Want: want{
+				URLPath: fmt.Sprintf(APIEndpointUploadRichMenuImage, "123456"),
+				Response: &MessageContentResponse{
+					ContentType:   "image/png",
+					ContentLength: int64(len(file)),
+					Content:       ioutil.NopCloser(bytes.NewReader(file)),
+				},
+			},
+		},
+	}
+
+	var currentTestIdx int
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		tc := testCases[currentTestIdx]
+		if r.Method != http.MethodGet {
+			t.Errorf("Method %s; want %s", r.Method, http.MethodGet)
+		}
+		if r.URL.Path != tc.Want.URLPath {
+			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
+		}
+		if err != nil {
+			t.Fatal(err)
+		}
+		for k, v := range tc.ResponseHeader {
+			w.Header().Add(k, v)
+		}
+		w.WriteHeader(tc.ResponseCode)
+		w.Write(tc.Response)
+	}))
+	defer server.Close()
+	client, err := mockDataClient(server)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	for i, tc := range testCases {
+		currentTestIdx = i
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			res, err := client.DownloadRichMenuImage(tc.RichMenuID).Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
+			}
+			if tc.Want.Response != nil {
+				body := res.Content
+				defer body.Close()
+				resImage, err := ioutil.ReadAll(body)
+				if err != nil {
+					t.Fatal(err)
+				}
+				if !bytes.Equal(resImage, tc.Response) {
+					t.Error("Expected image content is not returned")
+				}
+				res.Content = nil
+				tc.Want.Response.Content = nil
+				if !reflect.DeepEqual(res, tc.Want.Response) {
+					t.Errorf("Response\n %+v; want\n %+v", res, tc.Want.Response)
 				}
 			}
 		})

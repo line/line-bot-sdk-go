@@ -470,7 +470,7 @@ func (call *DownloadRichMenuImageCall) WithContext(ctx context.Context) *Downloa
 // Do method
 func (call *DownloadRichMenuImageCall) Do() (*MessageContentResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointDownloadRichMenuImage, call.richMenuID)
-	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, nil)
+	res, err := call.c.get(call.ctx, call.c.endpointBaseData, endpoint, nil)
 	if err != nil {
 		return nil, err
 	}
