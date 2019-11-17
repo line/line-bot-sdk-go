@@ -19,7 +19,6 @@ import "encoding/json"
 // FlexContainerType type
 type FlexContainerType string
 
-
 // IntPtr is a helper function for using *int values
 func IntPtr(v int) *int {
 	return &v
