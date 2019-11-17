@@ -45,6 +45,18 @@ const (
 	FlexComponentTypeText      FlexComponentType = "text"
 )
 
+// FlexBubbleSizeType type
+type FlexBubbleSizeType string
+
+// FlexBubbleSizeType constants
+const (
+	FlexBubbleSizeTypeNano  FlexBubbleSizeType = "nano"
+	FlexBubbleSizeTypeMicro FlexBubbleSizeType = "micro"
+	FlexBubbleSizeTypeKilo  FlexBubbleSizeType = "kilo"
+	FlexBubbleSizeTypeMega  FlexBubbleSizeType = "mega"
+	FlexBubbleSizeTypeGiga  FlexBubbleSizeType = "giga"
+)
+
 // FlexBubbleDirectionType type
 type FlexBubbleDirectionType string
 
@@ -251,6 +263,7 @@ type FlexContainer interface {
 // BubbleContainer type
 type BubbleContainer struct {
 	Type      FlexContainerType
+	Size      FlexBubbleSizeType
 	Direction FlexBubbleDirectionType
 	Header    *BoxComponent
 	Hero      *ImageComponent
@@ -263,6 +276,7 @@ type BubbleContainer struct {
 func (c *BubbleContainer) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type      FlexContainerType       `json:"type"`
+		Size      FlexBubbleSizeType      `json:"size,omitempty"`
 		Direction FlexBubbleDirectionType `json:"direction,omitempty"`
 		Header    *BoxComponent           `json:"header,omitempty"`
 		Hero      *ImageComponent         `json:"hero,omitempty"`
@@ -271,6 +285,7 @@ func (c *BubbleContainer) MarshalJSON() ([]byte, error) {
 		Styles    *BubbleStyle            `json:"styles,omitempty"`
 	}{
 		Type:      FlexContainerTypeBubble,
+		Size:      c.Size,
 		Direction: c.Direction,
 		Header:    c.Header,
 		Hero:      c.Hero,
