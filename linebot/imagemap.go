@@ -63,6 +63,7 @@ type ImagemapAction interface {
 
 // URIImagemapAction type
 type URIImagemapAction struct {
+	Label   string
 	LinkURL string
 	Area    ImagemapArea
 }
@@ -71,10 +72,12 @@ type URIImagemapAction struct {
 func (a *URIImagemapAction) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type    ImagemapActionType `json:"type"`
+		Label   string             `json:"label,omitempty"`
 		LinkURL string             `json:"linkUri"`
 		Area    ImagemapArea       `json:"area"`
 	}{
 		Type:    ImagemapActionTypeURI,
+		Label:   a.Label,
 		LinkURL: a.LinkURL,
 		Area:    a.Area,
 	})
@@ -82,20 +85,23 @@ func (a *URIImagemapAction) MarshalJSON() ([]byte, error) {
 
 // MessageImagemapAction type
 type MessageImagemapAction struct {
-	Text string
-	Area ImagemapArea
+	Label string
+	Text  string
+	Area  ImagemapArea
 }
 
 // MarshalJSON method of MessageImagemapAction
 func (a *MessageImagemapAction) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type ImagemapActionType `json:"type"`
-		Text string             `json:"text"`
-		Area ImagemapArea       `json:"area"`
+		Type  ImagemapActionType `json:"type"`
+		Label string             `json:"label,omitempty"`
+		Text  string             `json:"text"`
+		Area  ImagemapArea       `json:"area"`
 	}{
-		Type: ImagemapActionTypeMessage,
-		Text: a.Text,
-		Area: a.Area,
+		Type:  ImagemapActionTypeMessage,
+		Label: a.Label,
+		Text:  a.Text,
+		Area:  a.Area,
 	})
 }
 
@@ -106,17 +112,19 @@ func (a *URIImagemapAction) ImagemapAction() {}
 func (a *MessageImagemapAction) ImagemapAction() {}
 
 // NewURIImagemapAction function
-func NewURIImagemapAction(linkURL string, area ImagemapArea) *URIImagemapAction {
+func NewURIImagemapAction(label, linkURL string, area ImagemapArea) *URIImagemapAction {
 	return &URIImagemapAction{
+		Label:   label,
 		LinkURL: linkURL,
 		Area:    area,
 	}
 }
 
 // NewMessageImagemapAction function
-func NewMessageImagemapAction(text string, area ImagemapArea) *MessageImagemapAction {
+func NewMessageImagemapAction(label, text string, area ImagemapArea) *MessageImagemapAction {
 	return &MessageImagemapAction{
-		Text: text,
-		Area: area,
+		Label: label,
+		Text:  text,
+		Area:  area,
 	}
 }
