@@ -72,7 +72,7 @@ type URIImagemapAction struct {
 func (a *URIImagemapAction) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type    ImagemapActionType `json:"type"`
-		Label   string             `json:"label"`
+		Label   string             `json:"label,omitempty"`
 		LinkURL string             `json:"linkUri"`
 		Area    ImagemapArea       `json:"area"`
 	}{
@@ -94,7 +94,7 @@ type MessageImagemapAction struct {
 func (a *MessageImagemapAction) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type  ImagemapActionType `json:"type"`
-		Label string             `json:"label"`
+		Label string             `json:"label,omitempty"`
 		Text  string             `json:"text"`
 		Area  ImagemapArea       `json:"area"`
 	}{
