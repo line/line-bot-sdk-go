@@ -480,6 +480,54 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 				},
 			},
 		},
+		{
+			JSON: []byte(`{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "horizontal",
+    "contents": [
+      {
+        "type": "text",
+        "text": "hello",
+        "flex": 0
+      },
+      {
+        "type": "filler",
+        "flex": 4
+      },
+      {
+        "type": "text",
+        "text": "world",
+        "flex": 2
+      }
+    ]
+  }
+}`),
+			Want: &BubbleContainer{
+				Type: FlexContainerTypeBubble,
+				Body: &BoxComponent{
+					Type:   FlexComponentTypeBox,
+					Layout: FlexBoxLayoutTypeHorizontal,
+					Contents: []FlexComponent{
+						&TextComponent{
+							Type: FlexComponentTypeText,
+							Text: "hello",
+							Flex: IntPtr(0),
+						},
+						&FillerComponent{
+							Type: FlexComponentTypeFiller,
+							Flex: IntPtr(4),
+						},
+						&TextComponent{
+							Type: FlexComponentTypeText,
+							Text: "world",
+							Flex: IntPtr(2),
+						},
+					},
+				},
+			},
+		},
 	}
 	for i, tc := range testCases {
 		t.Run(strconv.Itoa(i), func(t *testing.T) {

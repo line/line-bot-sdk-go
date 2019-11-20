@@ -405,14 +405,17 @@ func (c *ButtonComponent) MarshalJSON() ([]byte, error) {
 // FillerComponent type
 type FillerComponent struct {
 	Type FlexComponentType
+	Flex *int
 }
 
 // MarshalJSON method of FillerComponent
 func (c *FillerComponent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type FlexComponentType `json:"type"`
+		Flex *int              `json:"flex,omitempty"`
 	}{
 		Type: FlexComponentTypeFiller,
+		Flex: c.Flex,
 	})
 }
 
