@@ -116,7 +116,7 @@ type GenderDetail struct {
 
 // AgeDetail type
 type AgeDetail struct {
-	Age        string  `json:"Age"`
+	Age        string  `json:"age"`
 	Percentage float64 `json:"percentage"`
 }
 
