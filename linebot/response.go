@@ -103,7 +103,7 @@ type MessagesFriendDemographicsResponse struct {
 	Available           bool                       `json:"available"`
 	Genders             []GenderDetail             `json:"genders"`
 	Ages                []AgeDetail                `json:"ages"`
-	Areas               []AreaArrayDetail          `json:"areas"`
+	Areas               []AreasDetail          `json:"areas"`
 	AppTypes            []AppTypeDetail            `json:"appTypes"`
 	SubscriptionPeriods []SubscriptionPeriodDetail `json:"subscriptionPeriods"`
 }
@@ -120,8 +120,8 @@ type AgeDetail struct {
 	Percentage float64 `json:"percentage"`
 }
 
-// AreaArrayDetail type
-type AreaArrayDetail struct {
+// AreasDetail type
+type AreasDetail struct {
 	Area       string  `json:"area"`
 	Percentage float64 `json:"percentage"`
 }

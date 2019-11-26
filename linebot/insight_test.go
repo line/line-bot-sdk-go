@@ -352,8 +352,8 @@ func TestGetFriendDemographics(t *testing.T) {
 					Ages: []AgeDetail{
 						AgeDetail{Age: "unknown", Percentage: 37.6},
 					},
-					Areas: []AreaArrayDetail{
-						AreaArrayDetail{Area: "unknown", Percentage: 42.9},
+					Areas: []AreasDetail{
+						AreasDetail{Area: "unknown", Percentage: 42.9},
 					},
 					AppTypes: []AppTypeDetail{
 						AppTypeDetail{AppType: "ios", Percentage: 62.4},
