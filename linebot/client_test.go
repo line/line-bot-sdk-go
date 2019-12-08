@@ -17,6 +17,7 @@ package linebot
 import (
 	"context"
 	"crypto/tls"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -24,36 +25,20 @@ import (
 	"testing"
 )
 
-func mockClient(server *httptest.Server) (*Client, error) {
+func mockClient(server *httptest.Server, dataServer *httptest.Server) (*Client, error) {
 	u, err := url.ParseRequestURI(server.URL)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse server.URL: %v", err)
+	}
+	du, err := url.ParseRequestURI(dataServer.URL)
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse dataServer.URL: %v", err)
 	}
 	return &Client{
 		channelSecret:    "testsecret",
 		channelToken:     "testtoken",
 		endpointBase:     u,
-		endpointBaseData: nil, // Must fail when endpointBaseData is used accidentally.
-		httpClient: &http.Client{
-			Transport: &http.Transport{
-				TLSClientConfig: &tls.Config{
-					InsecureSkipVerify: true,
-				},
-			},
-		},
-	}, nil
-}
-
-func mockDataClient(dataServer *httptest.Server) (*Client, error) {
-	u, err := url.ParseRequestURI(dataServer.URL)
-	if err != nil {
-		return nil, err
-	}
-	return &Client{
-		channelSecret:    "testsecret",
-		channelToken:     "testtoken",
-		endpointBase:     nil, // Must fail when endpointBase is used accidentally.
-		endpointBaseData: u,
+		endpointBaseData: du,
 		httpClient: &http.Client{
 			Transport: &http.Transport{
 				TLSClientConfig: &tls.Config{
