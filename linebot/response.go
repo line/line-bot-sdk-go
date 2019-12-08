@@ -76,6 +76,68 @@ type MessageConsumptionResponse struct {
 	TotalUsage int64
 }
 
+// MessagesNumberDeliveryResponse type
+type MessagesNumberDeliveryResponse struct {
+	Status          string `json:"status"`
+	Broadcast       int64  `json:"broadcast"`
+	Targeting       int64  `json:"targeting"`
+	AutoResponse    int64  `json:"autoResponse"`
+	WelcomeResponse int64  `json:"welcomeResponse"`
+	Chat            int64  `json:"chat"`
+	APIBroadcast    int64  `json:"apiBroadcast"`
+	APIPush         int64  `json:"apiPush"`
+	APIMulticast    int64  `json:"apiMulticast"`
+	APIReply        int64  `json:"apiReply"`
+}
+
+// MessagesNumberFollowersResponse type
+type MessagesNumberFollowersResponse struct {
+	Status          string `json:"status"`
+	Followers       int64  `json:"followers"`
+	TargetedReaches int64  `json:"targetedReaches"`
+	Blocks          int64  `json:"blocks"`
+}
+
+// MessagesFriendDemographicsResponse type
+type MessagesFriendDemographicsResponse struct {
+	Available           bool                       `json:"available"`
+	Genders             []GenderDetail             `json:"genders"`
+	Ages                []AgeDetail                `json:"ages"`
+	Areas               []AreasDetail          `json:"areas"`
+	AppTypes            []AppTypeDetail            `json:"appTypes"`
+	SubscriptionPeriods []SubscriptionPeriodDetail `json:"subscriptionPeriods"`
+}
+
+// GenderDetail type
+type GenderDetail struct {
+	Gender     string  `json:"gender"`
+	Percentage float64 `json:"percentage"`
+}
+
+// AgeDetail type
+type AgeDetail struct {
+	Age        string  `json:"age"`
+	Percentage float64 `json:"percentage"`
+}
+
+// AreasDetail type
+type AreasDetail struct {
+	Area       string  `json:"area"`
+	Percentage float64 `json:"percentage"`
+}
+
+// AppTypeDetail type
+type AppTypeDetail struct {
+	AppType    string  `json:"appType"`
+	Percentage float64 `json:"percentage"`
+}
+
+// SubscriptionPeriodDetail type
+type SubscriptionPeriodDetail struct {
+	SubscriptionPeriod string  `json:"subscriptionPeriod"`
+	Percentage         float64 `json:"percentage"`
+}
+
 // RichMenuIDResponse type
 type RichMenuIDResponse struct {
 	RichMenuID string `json:"richMenuId"`
@@ -295,6 +357,42 @@ func decodeToMessagesNumberResponse(res *http.Response) (*MessagesNumberResponse
 	}
 	decoder := json.NewDecoder(res.Body)
 	result := MessagesNumberResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
+
+func decodeToMessagesNumberDeliveryResponse(res *http.Response) (*MessagesNumberDeliveryResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := MessagesNumberDeliveryResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
+
+func decodeToMessagesNumberFollowersResponse(res *http.Response) (*MessagesNumberFollowersResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := MessagesNumberFollowersResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
+
+func decodeToMessagesFriendDemographicsResponse(res *http.Response) (*MessagesFriendDemographicsResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := MessagesFriendDemographicsResponse{}
 	if err := decoder.Decode(&result); err != nil {
 		return nil, err
 	}
