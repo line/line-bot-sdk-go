@@ -27,22 +27,22 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 	}{
 		{
 			JSON: []byte(`{
-    "type": "bubble",
-    "body": {
-      "type": "box",
-      "layout": "vertical",
-      "contents": [
-        {
-          "type": "text",
-          "text": "hello"
-        },
-        {
-          "type": "text",
-          "text": "world"
-        }
-      ]
-    }
-  }`),
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "hello"
+      },
+      {
+        "type": "text",
+        "text": "world"
+      }
+    ]
+  }
+}`),
 			Want: &BubbleContainer{
 				Type: FlexContainerTypeBubble,
 				Body: &BoxComponent{
@@ -120,6 +120,44 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 									Text: "Second bubble",
 								},
 							},
+						},
+					},
+				},
+			},
+		},
+		{
+			JSON: []byte(`{
+  "type": "bubble",
+  "size": "nano",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "hello"
+      },
+      {
+        "type": "text",
+        "text": "world"
+      }
+    ]
+  }
+}`),
+			Want: &BubbleContainer{
+				Type: FlexContainerTypeBubble,
+				Size: FlexBubbleSizeTypeNano,
+				Body: &BoxComponent{
+					Type:   FlexComponentTypeBox,
+					Layout: FlexBoxLayoutTypeVertical,
+					Contents: []FlexComponent{
+						&TextComponent{
+							Type: FlexComponentTypeText,
+							Text: "hello",
+						},
+						&TextComponent{
+							Type: FlexComponentTypeText,
+							Text: "world",
 						},
 					},
 				},
