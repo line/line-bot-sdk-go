@@ -16,7 +16,7 @@ package main
 
 import (
 	"flag"
-	"io/ioutil"
+	"io"
 	"log"
 	"os"
 
@@ -50,11 +50,11 @@ func main() {
 			log.Fatal(err)
 		}
 		defer res.Content.Close()
-		imgBody, err := ioutil.ReadAll(res.Content)
+		f, err := os.OpenFile(*filePath, os.O_CREATE|os.O_RDWR|os.O_TRUNC, 0644)
 		if err != nil {
 			log.Fatal(err)
 		}
-		err = ioutil.WriteFile(*filePath, imgBody, 0644)
+		_, err = io.Copy(f, res.Content)
 		if err != nil {
 			log.Fatal(err)
 		}
