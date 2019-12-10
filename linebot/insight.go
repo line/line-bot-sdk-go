@@ -61,7 +61,7 @@ func (call *GetNumberMessagesDeliveryCall) Do() (*MessagesNumberDeliveryResponse
 	if call.date != "" {
 		q.Add("date", call.date)
 	}
-	res, err := call.c.get(call.ctx, endpoint, q)
+	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, q)
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +100,7 @@ func (call *GetNumberFollowersCall) Do() (*MessagesNumberFollowersResponse, erro
 	if call.date != "" {
 		q.Add("date", call.date)
 	}
-	res, err := call.c.get(call.ctx, endpoint, q)
+	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, q)
 	if err != nil {
 		return nil, err
 	}
@@ -135,7 +135,7 @@ func (call *GetFriendDemographicsCall) Do() (*MessagesFriendDemographicsResponse
 	endpoint := fmt.Sprintf(APIEndpointInsight, call.insightType)
 	var q url.Values
 
-	res, err := call.c.get(call.ctx, endpoint, q)
+	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, q)
 	if err != nil {
 		return nil, err
 	}
