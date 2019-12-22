@@ -89,6 +89,7 @@ func TestGetMessageQuota(t *testing.T) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		t.Error("Unexpected Data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -128,6 +129,7 @@ func TestGetMessageQuotaWithContext(t *testing.T) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		t.Error("Unexpected Data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -206,6 +208,7 @@ func TestGetMessageQuotaConsumption(t *testing.T) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		t.Error("Unexpected Data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -244,6 +247,7 @@ func BenchmarkGetMessageQuota(b *testing.B) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		b.Error("Unexpected Data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -322,6 +326,7 @@ func TestGetMessageConsumption(t *testing.T) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		t.Error("Unexpected Data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -361,6 +366,7 @@ func TestGetMessageConsumptionWithContext(t *testing.T) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		t.Error("Unexpected Data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -385,6 +391,7 @@ func BenchmarkGetMessageConsumption(b *testing.B) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		b.Error("Unexpected Data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))

@@ -86,6 +86,7 @@ func TestGetLIFF(t *testing.T) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		t.Error("Unexpected data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -158,6 +159,7 @@ func TestAddLIFF(t *testing.T) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		t.Error("Unexpected data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -232,6 +234,7 @@ func TestUpdateLIFF(t *testing.T) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		t.Error("Unexpected data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -301,6 +304,7 @@ func TestDeleteLIFF(t *testing.T) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		t.Error("Unexpected data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))

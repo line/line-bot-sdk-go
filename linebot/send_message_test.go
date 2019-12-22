@@ -500,6 +500,7 @@ func TestPushMessages(t *testing.T) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		t.Error("Unexpected data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -541,6 +542,7 @@ func TestPushMessagesWithContext(t *testing.T) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		t.Error("Unexpected data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -661,6 +663,7 @@ func TestReplyMessages(t *testing.T) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		t.Error("Unexpected data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -702,6 +705,7 @@ func TestReplyMessagesWithContext(t *testing.T) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		t.Error("Unexpected data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -825,6 +829,7 @@ func TestMulticastMessages(t *testing.T) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		t.Error("Unexpected data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -866,6 +871,7 @@ func TestMulticastMessagesWithContext(t *testing.T) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		t.Error("Unexpected data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -1354,6 +1360,7 @@ func TestBroadcastMessages(t *testing.T) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		t.Error("Unexpected data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -1393,6 +1400,7 @@ func TestBroadcastMessagesWithContext(t *testing.T) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		t.Error("Unexpected data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -1484,6 +1492,7 @@ func TestMessagesWithNotificationDisabled(t *testing.T) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		t.Error("Unexpected data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -1532,6 +1541,7 @@ func BenchmarkPushMessages(b *testing.B) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		b.Error("Unexpected data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -1556,6 +1566,7 @@ func BenchmarkReplyMessages(b *testing.B) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		b.Error("Unexpected data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -1580,6 +1591,7 @@ func BenchmarkMulticast(b *testing.B) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		b.Error("Unexpected data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -1604,6 +1616,7 @@ func BenchmarkBroadcastMessage(b *testing.B) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		b.Error("Unexpected data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))

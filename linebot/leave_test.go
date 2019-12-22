@@ -93,6 +93,7 @@ func TestLeaveGroup(t *testing.T) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		t.Error("Unexpected data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -134,6 +135,7 @@ func TestLeaveGroupWithContext(t *testing.T) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		t.Error("Unexpected data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -216,6 +218,7 @@ func TestLeaveRoom(t *testing.T) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		t.Error("Unexpected data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -257,6 +260,7 @@ func TestTestLeaveRoomWithContext(t *testing.T) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		t.Error("Unexpected data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -281,6 +285,7 @@ func BenchmarkLeaveGroup(b *testing.B) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		b.Error("Unexpected data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -305,6 +310,7 @@ func BenchmarkLeaveRoom(b *testing.B) {
 
 	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		b.Error("Unexpected data API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))

@@ -78,6 +78,7 @@ func TestGetMessageContent(t *testing.T) {
 
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		t.Error("Unexpected API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -147,6 +148,7 @@ func TestGetMessageContent(t *testing.T) {
 func TestGetMessageContentWithContext(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		t.Error("Unexpected API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
@@ -172,6 +174,7 @@ func TestGetMessageContentWithContext(t *testing.T) {
 func BenchmarkGetMessageContent(b *testing.B) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		b.Error("Unexpected API call")
 		w.WriteHeader(404)
 		w.Write([]byte(`{"message":"Not found"}`))
 	}))
