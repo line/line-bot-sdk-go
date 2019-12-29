@@ -130,6 +130,7 @@ var webhookTestRequestBody = `{
         {
             "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
             "type": "message",
+            "mode": "active",
             "timestamp": 1462629479859,
             "source": {
                 "type": "user",
@@ -274,6 +275,7 @@ var webhookTestRequestBody = `{
         {
             "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
             "type": "beacon",
+            "mode": "active",
             "timestamp": 1462629479859,
             "source": {
                 "type": "user",
@@ -533,6 +535,7 @@ var webhookTestWantEvents = []*Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeMessage,
+		Mode:       EventModeActive,
 		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
@@ -677,6 +680,7 @@ var webhookTestWantEvents = []*Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeBeacon,
+		Mode:       EventModeActive,
 		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
