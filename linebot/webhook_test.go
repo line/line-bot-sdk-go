@@ -34,6 +34,7 @@ var webhookTestRequestBody = `{
         {
             "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
             "type": "message",
+            "mode": "active",
             "timestamp": 1462629479859,
             "source": {
                 "type": "user",
@@ -48,6 +49,7 @@ var webhookTestRequestBody = `{
         {
             "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
             "type": "message",
+            "mode": "active",
             "timestamp": 1462629479859,
             "source": {
                 "type": "group",
@@ -63,6 +65,7 @@ var webhookTestRequestBody = `{
         {
             "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
             "type": "message",
+            "mode": "active",
             "timestamp": 1462629479859,
             "source": {
                 "type": "user",
@@ -76,6 +79,7 @@ var webhookTestRequestBody = `{
         {
             "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
             "type": "message",
+            "mode": "active",
             "timestamp": 1462629479859,
             "source": {
                 "type": "user",
@@ -91,6 +95,7 @@ var webhookTestRequestBody = `{
         {
             "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
             "type": "message",
+            "mode": "active",
             "timestamp": 1462629479859,
             "source": {
                 "type": "user",
@@ -108,6 +113,7 @@ var webhookTestRequestBody = `{
         {
             "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
             "type": "message",
+            "mode": "active",
             "timestamp": 1462629479859,
             "source": {
                 "type": "user",
@@ -140,6 +146,7 @@ var webhookTestRequestBody = `{
         {
             "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
             "type": "follow",
+            "mode": "active",
             "timestamp": 1462629479859,
             "source": {
                 "type": "user",
@@ -148,6 +155,7 @@ var webhookTestRequestBody = `{
         },
         {
             "type": "unfollow",
+            "mode": "active",
             "timestamp": 1462629479859,
             "source": {
                 "type": "user",
@@ -157,6 +165,7 @@ var webhookTestRequestBody = `{
         {
             "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
             "type": "join",
+            "mode": "active",
             "timestamp": 1462629479859,
             "source": {
                 "type": "group",
@@ -165,6 +174,7 @@ var webhookTestRequestBody = `{
         },
         {
             "type": "leave",
+            "mode": "active",
             "timestamp": 1462629479859,
             "source": {
                 "type": "group",
@@ -174,6 +184,7 @@ var webhookTestRequestBody = `{
         {
             "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
             "type": "postback",
+            "mode": "active",
             "timestamp": 1462629479859,
             "source": {
                 "type": "user",
@@ -186,6 +197,7 @@ var webhookTestRequestBody = `{
         {
             "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
             "type": "postback",
+            "mode": "active",
             "timestamp": 1462629479859,
             "source": {
                 "type": "user",
@@ -201,6 +213,7 @@ var webhookTestRequestBody = `{
         {
             "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
             "type": "postback",
+            "mode": "active",
             "timestamp": 1462629479859,
             "source": {
                 "type": "user",
@@ -216,6 +229,7 @@ var webhookTestRequestBody = `{
         {
             "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
             "type": "postback",
+            "mode": "active",
             "timestamp": 1462629479859,
             "source": {
                 "type": "user",
@@ -231,6 +245,7 @@ var webhookTestRequestBody = `{
         {
             "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
             "type": "beacon",
+            "mode": "active",
             "timestamp": 1462629479859,
             "source": {
                 "type": "user",
@@ -244,6 +259,7 @@ var webhookTestRequestBody = `{
         {
             "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
             "type": "beacon",
+            "mode": "active",
             "timestamp": 1462629479859,
             "source": {
                 "type": "user",
@@ -271,6 +287,7 @@ var webhookTestRequestBody = `{
         },
         {
           "type": "accountLink",
+          "mode": "active",
           "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
           "source": {
             "userId": "U012345678901234567890123456789ab",
@@ -285,6 +302,7 @@ var webhookTestRequestBody = `{
         {
           "replyToken": "0f3779fba3b349968c5d07db31eabf65",
           "type": "memberJoined",
+          "mode": "active",
           "timestamp": 1462629479859,
           "source": {
             "type": "group",
@@ -305,6 +323,7 @@ var webhookTestRequestBody = `{
         },
         {
           "type": "memberLeft",
+          "mode": "active",
           "timestamp": 1462629479960,
           "source": {
             "type": "group",
@@ -325,6 +344,7 @@ var webhookTestRequestBody = `{
         },
         {
           "type": "things",
+          "mode": "active",
           "timestamp": 1462629479859,
           "source": {
             "type": "user",
@@ -337,6 +357,7 @@ var webhookTestRequestBody = `{
         },
         {
           "type": "things",
+          "mode": "active",
           "timestamp": 1462629479859,
           "source": {
             "type": "user",
@@ -349,6 +370,7 @@ var webhookTestRequestBody = `{
         },
         {
           "type": "things",
+          "mode": "active",
           "timestamp": 1462629479859,
           "source": {
             "type": "user",
@@ -375,6 +397,7 @@ var webhookTestRequestBody = `{
         },
         {
           "type":"things",
+          "mode": "active",
           "replyToken":"f026a377...",
           "source":{
             "userId":"U91eeaf62d901234567890123456789ab",
@@ -396,7 +419,22 @@ var webhookTestRequestBody = `{
             },
             "type":"scenarioResult"
           }
-       }
+        },
+        {
+            "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+            "type": "message",
+            "mode": "standby",
+            "timestamp": 1462629479859,
+            "source": {
+                "type": "user",
+                "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
+            },
+            "message": {
+                "id": "325708",
+                "type": "text",
+                "text": "Stand by me"
+            }
+        }
     ]
 }
 `
@@ -405,6 +443,7 @@ var webhookTestWantEvents = []*Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeMessage,
+		Mode:       EventModeActive,
 		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
@@ -418,6 +457,7 @@ var webhookTestWantEvents = []*Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeMessage,
+		Mode:       EventModeActive,
 		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:    EventSourceTypeGroup,
@@ -432,6 +472,7 @@ var webhookTestWantEvents = []*Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeMessage,
+		Mode:       EventModeActive,
 		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
@@ -444,6 +485,7 @@ var webhookTestWantEvents = []*Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeMessage,
+		Mode:       EventModeActive,
 		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
@@ -458,6 +500,7 @@ var webhookTestWantEvents = []*Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeMessage,
+		Mode:       EventModeActive,
 		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
@@ -474,6 +517,7 @@ var webhookTestWantEvents = []*Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeMessage,
+		Mode:       EventModeActive,
 		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
@@ -504,6 +548,7 @@ var webhookTestWantEvents = []*Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeFollow,
+		Mode:       EventModeActive,
 		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
@@ -512,6 +557,7 @@ var webhookTestWantEvents = []*Event{
 	},
 	{
 		Type:      EventTypeUnfollow,
+		Mode:      EventModeActive,
 		Timestamp: time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
@@ -521,6 +567,7 @@ var webhookTestWantEvents = []*Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeJoin,
+		Mode:       EventModeActive,
 		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:    EventSourceTypeGroup,
@@ -529,6 +576,7 @@ var webhookTestWantEvents = []*Event{
 	},
 	{
 		Type:      EventTypeLeave,
+		Mode:      EventModeActive,
 		Timestamp: time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:    EventSourceTypeGroup,
@@ -538,6 +586,7 @@ var webhookTestWantEvents = []*Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypePostback,
+		Mode:       EventModeActive,
 		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
@@ -550,6 +599,7 @@ var webhookTestWantEvents = []*Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypePostback,
+		Mode:       EventModeActive,
 		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
@@ -565,6 +615,7 @@ var webhookTestWantEvents = []*Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypePostback,
+		Mode:       EventModeActive,
 		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
@@ -580,6 +631,7 @@ var webhookTestWantEvents = []*Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypePostback,
+		Mode:       EventModeActive,
 		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
@@ -595,6 +647,7 @@ var webhookTestWantEvents = []*Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeBeacon,
+		Mode:       EventModeActive,
 		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
@@ -609,6 +662,7 @@ var webhookTestWantEvents = []*Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeBeacon,
+		Mode:       EventModeActive,
 		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
@@ -637,6 +691,7 @@ var webhookTestWantEvents = []*Event{
 	{
 		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
 		Type:       EventTypeAccountLink,
+		Mode:       EventModeActive,
 		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
@@ -650,6 +705,7 @@ var webhookTestWantEvents = []*Event{
 	{
 		ReplyToken: "0f3779fba3b349968c5d07db31eabf65",
 		Type:       EventTypeMemberJoined,
+		Mode:       EventModeActive,
 		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:    EventSourceTypeGroup,
@@ -668,6 +724,7 @@ var webhookTestWantEvents = []*Event{
 	},
 	{
 		Type:      EventTypeMemberLeft,
+		Mode:      EventModeActive,
 		Timestamp: time.Date(2016, time.May, 7, 13, 57, 59, int(960*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:    EventSourceTypeGroup,
@@ -686,6 +743,7 @@ var webhookTestWantEvents = []*Event{
 	},
 	{
 		Type:      EventTypeThings,
+		Mode:      EventModeActive,
 		Timestamp: time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
@@ -698,6 +756,7 @@ var webhookTestWantEvents = []*Event{
 	},
 	{
 		Type:      EventTypeThings,
+		Mode:      EventModeActive,
 		Timestamp: time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
@@ -710,6 +769,7 @@ var webhookTestWantEvents = []*Event{
 	},
 	{
 		Type:      EventTypeThings,
+		Mode:      EventModeActive,
 		Timestamp: time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
@@ -736,6 +796,7 @@ var webhookTestWantEvents = []*Event{
 	},
 	{
 		Type:       EventTypeThings,
+		Mode:       EventModeActive,
 		ReplyToken: "f026a377...",
 		Timestamp:  time.Date(2019, time.July, 19, 4, 40, 18, int(376*time.Millisecond), time.UTC),
 		Source: &EventSource{
@@ -755,6 +816,20 @@ var webhookTestWantEvents = []*Event{
 				ActionResults:          []*ThingsActionResult{},
 				BLENotificationPayload: []byte{},
 			},
+		},
+	},
+	{
+		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+		Type:       EventTypeMessage,
+		Mode:       EventModeStandby,
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
+		Source: &EventSource{
+			Type:   EventSourceTypeUser,
+			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
+		},
+		Message: &TextMessage{
+			ID:   "325708",
+			Text: "Stand by me",
 		},
 	},
 }
