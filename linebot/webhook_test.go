@@ -256,6 +256,20 @@ var webhookTestRequestBody = `{
             }
         },
         {
+            "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+            "type": "beacon",
+            "timestamp": 1462629479859,
+            "source": {
+                "type": "user",
+                "userId": "U012345678901234567890123456789ab"
+            },
+            "beacon": {
+                "hwid":"374591320",
+                "type":"stay",
+                "dm":"1234567890abcdef"
+            }
+        },
+        {
           "type": "accountLink",
           "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
           "source": {
@@ -603,6 +617,20 @@ var webhookTestWantEvents = []*Event{
 		Beacon: &Beacon{
 			Hwid:          "374591320",
 			Type:          BeaconEventTypeEnter,
+			DeviceMessage: []byte{0x12, 0x34, 0x56, 0x78, 0x90, 0xab, 0xcd, 0xef},
+		},
+	},
+	{
+		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+		Type:       EventTypeBeacon,
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
+		Source: &EventSource{
+			Type:   EventSourceTypeUser,
+			UserID: "U012345678901234567890123456789ab",
+		},
+		Beacon: &Beacon{
+			Hwid:          "374591320",
+			Type:          BeaconEventTypeStay,
 			DeviceMessage: []byte{0x12, 0x34, 0x56, 0x78, 0x90, 0xab, 0xcd, 0xef},
 		},
 	},
