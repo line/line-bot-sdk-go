@@ -208,9 +208,10 @@ func (m *LocationMessage) WithQuickReplies(items *QuickReplyItems) SendingMessag
 
 // StickerMessage type
 type StickerMessage struct {
-	ID        string
-	PackageID string
-	StickerID string
+	ID                  string
+	PackageID           string
+	StickerID           string
+	StickerResourceType StickerResourceType
 
 	quickReplyitems *QuickReplyItems
 }
@@ -218,15 +219,17 @@ type StickerMessage struct {
 // MarshalJSON method of StickerMessage
 func (m *StickerMessage) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type       MessageType      `json:"type"`
-		PackageID  string           `json:"packageId"`
-		StickerID  string           `json:"stickerId"`
-		QuickReply *QuickReplyItems `json:"quickReply,omitempty"`
+		Type                MessageType         `json:"type"`
+		PackageID           string              `json:"packageId"`
+		StickerID           string              `json:"stickerId"`
+		StickerResourceType StickerResourceType `json:"stickerResourceType,omitempty"`
+		QuickReply          *QuickReplyItems    `json:"quickReply,omitempty"`
 	}{
-		Type:       MessageTypeSticker,
-		PackageID:  m.PackageID,
-		StickerID:  m.StickerID,
-		QuickReply: m.quickReplyitems,
+		Type:                MessageTypeSticker,
+		PackageID:           m.PackageID,
+		StickerID:           m.StickerID,
+		StickerResourceType: m.StickerResourceType,
+		QuickReply:          m.quickReplyitems,
 	})
 }
 

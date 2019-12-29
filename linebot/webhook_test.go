@@ -117,7 +117,24 @@ var webhookTestRequestBody = `{
                 "id": "325708",
                 "type": "sticker",
                 "packageId": "1",
-                "stickerId": "1"
+                "stickerId": "1",
+                "stickerResourceType": "STATIC"
+            }
+        },
+        {
+            "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+            "type": "message",
+            "timestamp": 1462629479859,
+            "source": {
+                "type": "user",
+                "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
+            },
+            "message": {
+                "id": "325708",
+                "type": "sticker",
+                "packageId": "1",
+                "stickerId": "3",
+                "stickerResourceType": "ANIMATION_SOUND"
             }
         },
         {
@@ -449,9 +466,25 @@ var webhookTestWantEvents = []*Event{
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
 		},
 		Message: &StickerMessage{
-			ID:        "325708",
-			PackageID: "1",
-			StickerID: "1",
+			ID:                  "325708",
+			PackageID:           "1",
+			StickerID:           "1",
+			StickerResourceType: StickerResourceTypeStatic,
+		},
+	},
+	{
+		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+		Type:       EventTypeMessage,
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
+		Source: &EventSource{
+			Type:   EventSourceTypeUser,
+			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
+		},
+		Message: &StickerMessage{
+			ID:                  "325708",
+			PackageID:           "1",
+			StickerID:           "3",
+			StickerResourceType: StickerResourceTypeAnimationSound,
 		},
 	},
 	{

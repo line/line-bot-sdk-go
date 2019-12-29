@@ -150,6 +150,20 @@ type Things struct {
 	Result   *ThingsResult
 }
 
+// StickerResourceType type
+type StickerResourceType string
+
+// StickerResourceType constants
+const (
+	StickerResourceTypeStatic         StickerResourceType = "STATIC"
+	StickerResourceTypeAnimation      StickerResourceType = "ANIMATION"
+	StickerResourceTypeSound          StickerResourceType = "SOUND"
+	StickerResourceTypeAnimationSound StickerResourceType = "ANIMATION_SOUND"
+	StickerResourceTypePopup          StickerResourceType = "POPUP"
+	StickerResourceTypePopupSound     StickerResourceType = "POPUP_SOUND"
+	StickerResourceTypeNameText       StickerResourceType = "NAME_TEXT"
+)
+
 // Event type
 type Event struct {
 	ReplyToken  string
@@ -185,18 +199,19 @@ type rawMemberEvent struct {
 }
 
 type rawEventMessage struct {
-	ID        string      `json:"id"`
-	Type      MessageType `json:"type"`
-	Text      string      `json:"text,omitempty"`
-	Duration  int         `json:"duration,omitempty"`
-	Title     string      `json:"title,omitempty"`
-	Address   string      `json:"address,omitempty"`
-	FileName  string      `json:"fileName,omitempty"`
-	FileSize  int         `json:"fileSize,omitempty"`
-	Latitude  float64     `json:"latitude,omitempty"`
-	Longitude float64     `json:"longitude,omitempty"`
-	PackageID string      `json:"packageId,omitempty"`
-	StickerID string      `json:"stickerId,omitempty"`
+	ID                  string              `json:"id"`
+	Type                MessageType         `json:"type"`
+	Text                string              `json:"text,omitempty"`
+	Duration            int                 `json:"duration,omitempty"`
+	Title               string              `json:"title,omitempty"`
+	Address             string              `json:"address,omitempty"`
+	FileName            string              `json:"fileName,omitempty"`
+	FileSize            int                 `json:"fileSize,omitempty"`
+	Latitude            float64             `json:"latitude,omitempty"`
+	Longitude           float64             `json:"longitude,omitempty"`
+	PackageID           string              `json:"packageId,omitempty"`
+	StickerID           string              `json:"stickerId,omitempty"`
+	StickerResourceType StickerResourceType `json:"stickerResourceType,omitempty"`
 }
 
 type rawBeaconEvent struct {
@@ -338,10 +353,11 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 		}
 	case *StickerMessage:
 		raw.Message = &rawEventMessage{
-			Type:      MessageTypeSticker,
-			ID:        m.ID,
-			PackageID: m.PackageID,
-			StickerID: m.StickerID,
+			Type:                MessageTypeSticker,
+			ID:                  m.ID,
+			PackageID:           m.PackageID,
+			StickerID:           m.StickerID,
+			StickerResourceType: m.StickerResourceType,
 		}
 	}
 	return json.Marshal(&raw)
@@ -396,9 +412,10 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 			}
 		case MessageTypeSticker:
 			e.Message = &StickerMessage{
-				ID:        rawEvent.Message.ID,
-				PackageID: rawEvent.Message.PackageID,
-				StickerID: rawEvent.Message.StickerID,
+				ID:                  rawEvent.Message.ID,
+				PackageID:           rawEvent.Message.PackageID,
+				StickerID:           rawEvent.Message.StickerID,
+				StickerResourceType: rawEvent.Message.StickerResourceType,
 			}
 		}
 	case EventTypePostback:
