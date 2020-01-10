@@ -44,7 +44,7 @@ func (call *GetMessageContentCall) WithContext(ctx context.Context) *GetMessageC
 // Do method
 func (call *GetMessageContentCall) Do() (*MessageContentResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointGetMessageContent, call.messageID)
-	res, err := call.c.get(call.ctx, endpoint, nil)
+	res, err := call.c.get(call.ctx, call.c.endpointBaseData, endpoint, nil)
 	if err != nil {
 		return nil, err
 	}

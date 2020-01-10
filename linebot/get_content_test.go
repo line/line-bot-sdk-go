@@ -76,8 +76,16 @@ func TestGetMessageContent(t *testing.T) {
 		},
 	}
 
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer server.Close()
+
 	var currentTestIdx int
-	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	dataServer := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 		tc := testCases[currentTestIdx]
 		if r.Method != http.MethodGet {
@@ -99,8 +107,9 @@ func TestGetMessageContent(t *testing.T) {
 		w.WriteHeader(tc.ResponseCode)
 		w.Write(tc.Response)
 	}))
-	defer server.Close()
-	client, err := mockClient(server)
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -137,13 +146,22 @@ func TestGetMessageContent(t *testing.T) {
 }
 
 func TestGetMessageContentWithContext(t *testing.T) {
-	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer server.Close()
+
+	dataServer := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 		time.Sleep(10 * time.Millisecond)
 		w.Write([]byte{0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10})
 	}))
-	defer server.Close()
-	client, err := mockClient(server)
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -154,12 +172,21 @@ func TestGetMessageContentWithContext(t *testing.T) {
 }
 
 func BenchmarkGetMessageContent(b *testing.B) {
-	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		b.Error("Unexpected API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer server.Close()
+
+	dataServer := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 		w.Write([]byte{0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10})
 	}))
-	defer server.Close()
-	client, err := mockClient(server)
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		b.Fatal(err)
 	}

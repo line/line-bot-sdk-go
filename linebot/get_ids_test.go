@@ -120,7 +120,16 @@ func TestGetGroupMemberIDs(t *testing.T) {
 		w.Write(tc.Response)
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected Data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -151,7 +160,16 @@ func TestGetGroupMemberIDsWithContext(t *testing.T) {
 		w.Write([]byte("{}"))
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected Data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -167,7 +185,16 @@ func BenchmarkGetGroupMemberIDs(b *testing.B) {
 		w.Write([]byte(`{"memberIds": ["U0047556f2e40dba2456887320ba7c76d", "U0047556f2e40dba2456887320ba7c76e"], "next": "xxxxx"}`))
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		b.Error("Unexpected Data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		b.Fatal(err)
 	}
@@ -270,7 +297,16 @@ func TestGetRoomMemberIDs(t *testing.T) {
 		w.Write(tc.Response)
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected Data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -301,7 +337,16 @@ func TestGetRoomMemberIDsWithContext(t *testing.T) {
 		w.Write([]byte("{}"))
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected Data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -317,7 +362,16 @@ func BenchmarkGetRoomMemberIDs(b *testing.B) {
 		w.Write([]byte(`{"memberIds": ["U0047556f2e40dba2456887320ba7c76d", "U0047556f2e40dba2456887320ba7c76e"], "next": "xxxxx"}`))
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		b.Error("Unexpected Data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		b.Fatal(err)
 	}
@@ -386,7 +440,16 @@ func TestGetGroupMemberIDsScanner(t *testing.T) {
 		}
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected Data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -466,7 +529,16 @@ func TestGetRoomMemberIDsScanner(t *testing.T) {
 		}
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected Data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		t.Fatal(err)
 	}

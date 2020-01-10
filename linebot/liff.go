@@ -70,7 +70,7 @@ func (call *GetLIFFAllCall) WithContext(ctx context.Context) *GetLIFFAllCall {
 
 // Do method
 func (call *GetLIFFAllCall) Do() (*LIFFAppsResponse, error) {
-	res, err := call.c.get(call.ctx, APIEndpointGetAllLIFFApps, nil)
+	res, err := call.c.get(call.ctx, call.c.endpointBase, APIEndpointGetAllLIFFApps, nil)
 	if err != nil {
 		return nil, err
 	}

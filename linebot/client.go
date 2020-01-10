@@ -26,7 +26,8 @@ import (
 
 // APIEndpoint constants
 const (
-	APIEndpointBase = "https://api.line.me"
+	APIEndpointBase     = "https://api.line.me"
+	APIEndpointBaseData = "https://api-data.line.me"
 
 	APIEndpointPushMessage                = "/v2/bot/message/push"
 	APIEndpointBroadcastMessage           = "/v2/bot/message/broadcast"
@@ -73,10 +74,11 @@ const (
 
 // Client type
 type Client struct {
-	channelSecret string
-	channelToken  string
-	endpointBase  *url.URL     // default APIEndpointBase
-	httpClient    *http.Client // default http.DefaultClient
+	channelSecret    string
+	channelToken     string
+	endpointBase     *url.URL     // default APIEndpointBase
+	endpointBaseData *url.URL     // default APIEndpointBaseData
+	httpClient       *http.Client // default http.DefaultClient
 }
 
 // ClientOption type
@@ -108,6 +110,13 @@ func New(channelSecret, channelToken string, options ...ClientOption) (*Client, 
 		}
 		c.endpointBase = u
 	}
+	if c.endpointBaseData == nil {
+		u, err := url.ParseRequestURI(APIEndpointBaseData)
+		if err != nil {
+			return nil, err
+		}
+		c.endpointBaseData = u
+	}
 	return c, nil
 }
 
@@ -131,8 +140,20 @@ func WithEndpointBase(endpointBase string) ClientOption {
 	}
 }
 
-func (client *Client) url(endpoint string) string {
-	u := *client.endpointBase
+// WithEndpointBaseData function
+func WithEndpointBaseData(endpointBaseData string) ClientOption {
+	return func(client *Client) error {
+		u, err := url.ParseRequestURI(endpointBaseData)
+		if err != nil {
+			return err
+		}
+		client.endpointBaseData = u
+		return nil
+	}
+}
+
+func (client *Client) url(base *url.URL, endpoint string) string {
+	u := *base
 	u.Path = path.Join(u.Path, endpoint)
 	return u.String()
 }
@@ -147,8 +168,8 @@ func (client *Client) do(ctx context.Context, req *http.Request) (*http.Response
 
 }
 
-func (client *Client) get(ctx context.Context, endpoint string, query url.Values) (*http.Response, error) {
-	req, err := http.NewRequest(http.MethodGet, client.url(endpoint), nil)
+func (client *Client) get(ctx context.Context, base *url.URL, endpoint string, query url.Values) (*http.Response, error) {
+	req, err := http.NewRequest(http.MethodGet, client.url(base, endpoint), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -159,7 +180,7 @@ func (client *Client) get(ctx context.Context, endpoint string, query url.Values
 }
 
 func (client *Client) post(ctx context.Context, endpoint string, body io.Reader) (*http.Response, error) {
-	req, err := http.NewRequest(http.MethodPost, client.url(endpoint), body)
+	req, err := http.NewRequest(http.MethodPost, client.url(client.endpointBase, endpoint), body)
 	if err != nil {
 		return nil, err
 	}
@@ -168,7 +189,7 @@ func (client *Client) post(ctx context.Context, endpoint string, body io.Reader)
 }
 
 func (client *Client) postform(ctx context.Context, endpoint string, body io.Reader) (*http.Response, error) {
-	req, err := http.NewRequest("POST", client.url(endpoint), body)
+	req, err := http.NewRequest("POST", client.url(client.endpointBase, endpoint), body)
 	if err != nil {
 		return nil, err
 	}
@@ -177,7 +198,7 @@ func (client *Client) postform(ctx context.Context, endpoint string, body io.Rea
 }
 
 func (client *Client) put(ctx context.Context, endpoint string, body io.Reader) (*http.Response, error) {
-	req, err := http.NewRequest(http.MethodPut, client.url(endpoint), body)
+	req, err := http.NewRequest(http.MethodPut, client.url(client.endpointBase, endpoint), body)
 	if err != nil {
 		return nil, err
 	}
@@ -186,7 +207,7 @@ func (client *Client) put(ctx context.Context, endpoint string, body io.Reader) 
 }
 
 func (client *Client) delete(ctx context.Context, endpoint string) (*http.Response, error) {
-	req, err := http.NewRequest(http.MethodDelete, client.url(endpoint), nil)
+	req, err := http.NewRequest(http.MethodDelete, client.url(client.endpointBase, endpoint), nil)
 	if err != nil {
 		return nil, err
 	}
