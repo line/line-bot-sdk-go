@@ -1,5 +1,19 @@
 # Changelog
 
+## [v7.0.0](https://github.com/line/line-bot-sdk-go/tree/v7.0.0) (2020-01-10)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v6.4.0...v7.0.0)
+
+**Merged pull requests:**
+
+- A stay event was added to beacon event [\#187](https://github.com/line/line-bot-sdk-go/pull/187) ([clsung](https://github.com/clsung))
+- add field `stickerResourceType` to sicker message [\#184](https://github.com/line/line-bot-sdk-go/pull/184) ([clsung](https://github.com/clsung))
+- Fixed declaration of FlexContainerType [\#182](https://github.com/line/line-bot-sdk-go/pull/182) ([Nazozen](https://github.com/Nazozen))
+- Switch api.line.me and api-data.line.me depending on API methods [\#181](https://github.com/line/line-bot-sdk-go/pull/181) ([oklahomer](https://github.com/oklahomer))
+- add bubble size property [\#178](https://github.com/line/line-bot-sdk-go/pull/178) ([johanavril](https://github.com/johanavril))
+- add field `label` to imagemap actions [\#176](https://github.com/line/line-bot-sdk-go/pull/176) ([TonPC64](https://github.com/TonPC64))
+- Support  07/08 Insight API. [\#172](https://github.com/line/line-bot-sdk-go/pull/172) ([kkdai](https://github.com/kkdai))
+
 ## [v6.4.0](https://github.com/line/line-bot-sdk-go/tree/v6.4.0) (2019-10-29)
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v6.3.0...v6.4.0)
@@ -155,7 +169,7 @@
 
 ## [v1.2.1](https://github.com/line/line-bot-sdk-go/tree/v1.2.1) (2018-07-12)
 
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.2.0...v1.2.1)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.2.0...v1.2.1)
 
 **Implemented enhancements:**
 
@@ -168,7 +182,7 @@
 
 ## [v1.2.0](https://github.com/line/line-bot-sdk-go/tree/v1.2.0) (2018-06-29)
 
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.1.2...v1.2.0)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.2.0...v1.2.0)
 
 **Merged pull requests:**
 
@@ -185,7 +199,7 @@
 
 ## [v1.1.1](https://github.com/line/line-bot-sdk-go/tree/v1.1.1) (2018-06-19)
 
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.1.0...v1.1.1)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.1.0...v1.1.1)
 
 **Merged pull requests:**
 
@@ -193,7 +207,7 @@
 
 ## [v1.1.0](https://github.com/line/line-bot-sdk-go/tree/v1.1.0) (2018-05-07)
 
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.0.0...v1.1.0)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.1.0...v1.1.0)
 
 **Merged pull requests:**
 
@@ -239,7 +253,7 @@
 
 ## [v1.0.0](https://github.com/line/line-bot-sdk-go/tree/v1.0.0) (2016-09-29)
 
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.0.0...v1.0.0)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/f3e3a38aee47ca24ded221ce4be6d9363e3d32e1...v1.0.0)
 
 **Merged pull requests:**
 
