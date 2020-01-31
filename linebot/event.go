@@ -38,6 +38,15 @@ const (
 	EventTypeThings       EventType = "things"
 )
 
+// EventMode type
+type EventMode string
+
+// EventMode constants
+const (
+	EventModeActive  EventMode = "active"
+	EventModeStandby EventMode = "standby"
+)
+
 // EventSourceType type
 type EventSourceType string
 
@@ -169,6 +178,7 @@ const (
 type Event struct {
 	ReplyToken  string
 	Type        EventType
+	Mode        EventMode
 	Timestamp   time.Time
 	Source      *EventSource
 	Message     Message
@@ -184,6 +194,7 @@ type Event struct {
 type rawEvent struct {
 	ReplyToken  string               `json:"replyToken,omitempty"`
 	Type        EventType            `json:"type"`
+	Mode        EventMode            `json:"mode"`
 	Timestamp   int64                `json:"timestamp"`
 	Source      *EventSource         `json:"source"`
 	Message     *rawEventMessage     `json:"message,omitempty"`
@@ -258,6 +269,7 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 	raw := rawEvent{
 		ReplyToken: e.ReplyToken,
 		Type:       e.Type,
+		Mode:       e.Mode,
 		Timestamp:  e.Timestamp.Unix()*millisecPerSec + int64(e.Timestamp.Nanosecond())/int64(time.Millisecond),
 		Source:     e.Source,
 		Postback:   e.Postback,
@@ -373,6 +385,7 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 
 	e.ReplyToken = rawEvent.ReplyToken
 	e.Type = rawEvent.Type
+	e.Mode = rawEvent.Mode
 	e.Timestamp = time.Unix(rawEvent.Timestamp/millisecPerSec, (rawEvent.Timestamp%millisecPerSec)*nanosecPerMillisec).UTC()
 	e.Source = rawEvent.Source
 
