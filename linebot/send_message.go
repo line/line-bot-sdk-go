@@ -256,10 +256,15 @@ type NarrowcastCall struct {
 	c   *Client
 	ctx context.Context
 
-	messages    []SendingMessage
-	recipient   Filter
-	demographic Filter
-	limit       *NarrowcastMessageLimit
+	messages  []SendingMessage
+	recipient Filter
+	filter    *NarrowcastFilter
+	limit     *NarrowcastMessageLimit
+}
+
+// NarrowcastFilter type
+type NarrowcastFilter struct {
+	Demographic Filter `json:"demographic"`
 }
 
 // NarrowcastMessageLimit type
@@ -281,7 +286,7 @@ func (call *NarrowcastCall) WithRecipient(recipient Filter) *NarrowcastCall {
 
 // WithDemographic method will send to specific recipients
 func (call *NarrowcastCall) WithDemographic(demographic Filter) *NarrowcastCall {
-	call.demographic = demographic
+	call.filter = &NarrowcastFilter{Demographic: demographic}
 	return call
 }
 
@@ -294,15 +299,15 @@ func (call *NarrowcastCall) WithLimitMax(max int) *NarrowcastCall {
 func (call *NarrowcastCall) encodeJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
 	return enc.Encode(&struct {
-		Messages    []SendingMessage        `json:"messages"`
-		Recipient   Filter                  `json:"recipient,omitempty"`
-		Demographic Filter                  `json:"demographic,omitempty"`
-		Limit       *NarrowcastMessageLimit `json:"limit,omitempty"`
+		Messages  []SendingMessage        `json:"messages"`
+		Recipient Filter                  `json:"recipient,omitempty"`
+		Filter    *NarrowcastFilter       `json:"filter,omitempty"`
+		Limit     *NarrowcastMessageLimit `json:"limit,omitempty"`
 	}{
-		Messages:    call.messages,
-		Recipient:   call.recipient,
-		Demographic: call.demographic,
-		Limit:       call.limit,
+		Messages:  call.messages,
+		Recipient: call.recipient,
+		Filter:    call.filter,
+		Limit:     call.limit,
 	})
 }
 

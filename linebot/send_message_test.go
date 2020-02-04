@@ -1576,7 +1576,7 @@ func TestNarrowcastMessages(t *testing.T) {
 			Response:     []byte(`{}`),
 			ResponseCode: 202,
 			Want: want{
-				RequestBody: []byte(`{"messages":[{"type":"text","text":"Hello, world"}],"demographic":{"type":"appType","oneOf":["android"]}}` + "\n"),
+				RequestBody: []byte(`{"messages":[{"type":"text","text":"Hello, world"}],"filter":{"demographic":{"type":"appType","oneOf":["android"]}}}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
@@ -1589,7 +1589,7 @@ func TestNarrowcastMessages(t *testing.T) {
 			Response:     []byte(`{}`),
 			ResponseCode: 202,
 			Want: want{
-				RequestBody: []byte(`{"messages":[{"type":"text","text":"Hello, world"}],"demographic":{"type":"operator","and":[{"type":"gender","oneOf":["male"]},{"type":"age","gte":"age_30"}]},"limit":{"max":10}}` + "\n"),
+				RequestBody: []byte(`{"messages":[{"type":"text","text":"Hello, world"}],"filter":{"demographic":{"type":"operator","and":[{"type":"gender","oneOf":["male"]},{"type":"age","gte":"age_30"}]}},"limit":{"max":10}}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
