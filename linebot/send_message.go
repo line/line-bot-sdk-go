@@ -242,3 +242,80 @@ func (call *BroadcastMessageCall) Do() (*BasicResponse, error) {
 	defer closeResponse(res)
 	return decodeToBasicResponse(res)
 }
+
+// Narrowcast method
+func (client *Client) Narrowcast(messages ...SendingMessage) *NarrowcastCall {
+	return &NarrowcastCall{
+		c:        client,
+		messages: messages,
+	}
+}
+
+// NarrowcastCall type
+type NarrowcastCall struct {
+	c   *Client
+	ctx context.Context
+
+	messages    []SendingMessage
+	recipient   Filter
+	demographic Filter
+	limit       *NarrowcastMessageLimit
+}
+
+// NarrowcastMessageLimit type
+type NarrowcastMessageLimit struct {
+	Max int `json:"max"`
+}
+
+// WithContext method
+func (call *NarrowcastCall) WithContext(ctx context.Context) *NarrowcastCall {
+	call.ctx = ctx
+	return call
+}
+
+// WithRecipient method will send to specific recipients
+func (call *NarrowcastCall) WithRecipient(recipient Filter) *NarrowcastCall {
+	call.recipient = recipient
+	return call
+}
+
+// WithDemographic method will send to specific recipients
+func (call *NarrowcastCall) WithDemographic(demographic Filter) *NarrowcastCall {
+	call.demographic = demographic
+	return call
+}
+
+// WithLimitMax method will send to specific recipients
+func (call *NarrowcastCall) WithLimitMax(max int) *NarrowcastCall {
+	call.limit = &NarrowcastMessageLimit{Max: max}
+	return call
+}
+
+func (call *NarrowcastCall) encodeJSON(w io.Writer) error {
+	enc := json.NewEncoder(w)
+	return enc.Encode(&struct {
+		Messages    []SendingMessage        `json:"messages"`
+		Recipient   Filter                  `json:"recipient,omitempty"`
+		Demographic Filter                  `json:"demographic,omitempty"`
+		Limit       *NarrowcastMessageLimit `json:"limit,omitempty"`
+	}{
+		Messages:    call.messages,
+		Recipient:   call.recipient,
+		Demographic: call.demographic,
+		Limit:       call.limit,
+	})
+}
+
+// Do method
+func (call *NarrowcastCall) Do() (*BasicResponse, error) {
+	var buf bytes.Buffer
+	if err := call.encodeJSON(&buf); err != nil {
+		return nil, err
+	}
+	res, err := call.c.post(call.ctx, APIEndpointNarrowcast, &buf)
+	if err != nil {
+		return nil, err
+	}
+	defer closeResponse(res)
+	return decodeToBasicResponse(res)
+}
