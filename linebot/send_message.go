@@ -284,13 +284,13 @@ func (call *NarrowcastCall) WithRecipient(recipient Filter) *NarrowcastCall {
 	return call
 }
 
-// WithDemographic method will send to specific recipients
+// WithDemographic method will send to specific recipients filter by demographic
 func (call *NarrowcastCall) WithDemographic(demographic Filter) *NarrowcastCall {
 	call.filter = &NarrowcastFilter{Demographic: demographic}
 	return call
 }
 
-// WithLimitMax method will send to specific recipients
+// WithLimitMax method will set maximum number of recipients
 func (call *NarrowcastCall) WithLimitMax(max int) *NarrowcastCall {
 	call.limit = &NarrowcastMessageLimit{Max: max}
 	return call
