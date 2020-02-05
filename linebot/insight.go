@@ -149,15 +149,15 @@ type GetUserInteractionStatsCall struct {
 	c   *Client
 	ctx context.Context
 
-	requestId   string
+	requestID   string
 	insightType InsightType
 }
 
-// etUserInteractionStats method
-func (client *Client) GetUserInteractionStats(requestId string) *GetUserInteractionStatsCall {
+// GetUserInteractionStats method
+func (client *Client) GetUserInteractionStats(requestID string) *GetUserInteractionStatsCall {
 	return &GetUserInteractionStatsCall{
 		c:           client,
-		requestId:   requestId,
+		requestID:   requestID,
 		insightType: InsightTypeUserInteractionStats,
 	}
 }
@@ -172,8 +172,8 @@ func (call *GetUserInteractionStatsCall) WithContext(ctx context.Context) *GetUs
 func (call *GetUserInteractionStatsCall) Do() (*MessagesUserInteractionStatsResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointInsight, call.insightType)
 	q := url.Values{}
-	if call.requestId != "" {
-		q.Add("requestId", call.requestId)
+	if call.requestID != "" {
+		q.Add("requestId", call.requestID)
 	}
 	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, q)
 	if err != nil {

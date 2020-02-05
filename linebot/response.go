@@ -148,7 +148,7 @@ type MessagesUserInteractionStatsResponse struct {
 
 // OverviewDetail type
 type OverviewDetail struct {
-	RequestId                   string `json:"requestId"`
+	RequestID                   string `json:"requestId"`
 	Timestamp                   int64  `json:"timestamp"`
 	Delivered                   int64  `json:"delivered"`
 	UniqueImpression            int64  `json:"uniqueImpression"`

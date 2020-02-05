@@ -578,14 +578,14 @@ func TestGetUserInteractionStats(t *testing.T) {
 	}
 	var testCases = []struct {
 		Label        string
-		RequestId    string
+		RequestID    string
 		ResponseCode int
 		Response     []byte
 		Want         want
 	}{
 		{
 			Label:        "Success",
-			RequestId:    "f70dd685-499a-4231-a441-f24b8d4fba21",
+			RequestID:    "f70dd685-499a-4231-a441-f24b8d4fba21",
 			ResponseCode: 200,
 			Response: []byte(`{
 				"overview": {
@@ -635,7 +635,7 @@ func TestGetUserInteractionStats(t *testing.T) {
 				RequestBody: []byte(""),
 				Response: &MessagesUserInteractionStatsResponse{
 					Overview: OverviewDetail{
-						RequestId:                   "f70dd685-499a-4231-a441-f24b8d4fba21",
+						RequestID:                   "f70dd685-499a-4231-a441-f24b8d4fba21",
 						Timestamp:                   1568214000,
 						Delivered:                   32,
 						UniqueImpression:            4,
@@ -729,7 +729,7 @@ func TestGetUserInteractionStats(t *testing.T) {
 	for i, tc := range testCases {
 		currentTestIdx = i
 		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
-			res, err := client.GetUserInteractionStats(tc.RequestId).Do()
+			res, err := client.GetUserInteractionStats(tc.RequestID).Do()
 			if tc.Want.Error != nil {
 				if !reflect.DeepEqual(err, tc.Want.Error) {
 					t.Errorf("Error %v; want %v", err, tc.Want.Error)
