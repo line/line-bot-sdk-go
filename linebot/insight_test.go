@@ -568,3 +568,180 @@ func BenchmarkGetFriendDemographics(b *testing.B) {
 		client.GetFriendDemographics().Do()
 	}
 }
+
+func TestGetUserInteractionStats(t *testing.T) {
+	type want struct {
+		URLPath     string
+		RequestBody []byte
+		Response    *MessagesUserInteractionStatsResponse
+		Error       error
+	}
+	var testCases = []struct {
+		Label        string
+		RequestId    string
+		ResponseCode int
+		Response     []byte
+		Want         want
+	}{
+		{
+			Label:        "Success",
+			RequestId:    "f70dd685-499a-4231-a441-f24b8d4fba21",
+			ResponseCode: 200,
+			Response: []byte(`{
+				"overview": {
+					"requestId": "f70dd685-499a-4231-a441-f24b8d4fba21",
+					"timestamp": 1568214000,
+					"delivered": 32,
+					"uniqueImpression": 4,
+					"uniqueClick": null,
+					"uniqueMediaPlayed": 2,
+					"uniqueMediaPlayed100Percent": -1
+				},
+				"messages": [
+					{
+						"seq": 1,
+						"impression": 18,
+						"mediaPlayed": 11,
+						"mediaPlayed25Percent": -1,
+						"mediaPlayed50Percent": -1,
+						"mediaPlayed75Percent": -1,
+						"mediaPlayed100Percent": -1,
+						"uniqueMediaPlayed": 2,
+						"uniqueMediaPlayed25Percent": -1,
+						"uniqueMediaPlayed50Percent": -1,
+						"uniqueMediaPlayed75Percent": -1,
+						"uniqueMediaPlayed100Percent": -1
+					}
+				],
+				"clicks": [
+					{
+						"seq": 1,
+						"url": "https://www.yahoo.co.jp/",
+						"click": -1,
+						"uniqueClick": -1,
+						"uniqueClickOfRequest": -1
+					},
+					{
+						"seq": 1,
+						"url": "https://www.google.com/?hl=ja",
+						"click": -1,
+						"uniqueClick": -1,
+						"uniqueClickOfRequest": -1
+					}
+				]
+			}`),
+			Want: want{
+				URLPath:     fmt.Sprintf(APIEndpointInsight, InsightTypeUserInteractionStats),
+				RequestBody: []byte(""),
+				Response: &MessagesUserInteractionStatsResponse{
+					Overview: OverviewDetail{
+						RequestId:                   "f70dd685-499a-4231-a441-f24b8d4fba21",
+						Timestamp:                   1568214000,
+						Delivered:                   32,
+						UniqueImpression:            4,
+						UniqueClick:                 0,
+						UniqueMediaPlayed:           2,
+						UniqueMediaPlayed100Percent: -1,
+					},
+					Messages: []MessageDetail{
+						MessageDetail{
+							Seq:                         1,
+							Impression:                  18,
+							MediaPlayed:                 11,
+							MediaPlayed25Percent:        -1,
+							MediaPlayed50Percent:        -1,
+							MediaPlayed75Percent:        -1,
+							MediaPlayed100Percent:       -1,
+							UniqueMediaPlayed:           2,
+							UniqueMediaPlayed25Percent:  -1,
+							UniqueMediaPlayed50Percent:  -1,
+							UniqueMediaPlayed75Percent:  -1,
+							UniqueMediaPlayed100Percent: -1,
+						},
+					},
+					Clicks: []ClickDetail{
+						ClickDetail{
+							Seq:                  1,
+							URL:                  "https://www.yahoo.co.jp/",
+							Click:                -1,
+							UniqueClick:          -1,
+							UniqueClickOfRequest: -1,
+						},
+						ClickDetail{
+							Seq:                  1,
+							URL:                  "https://www.google.com/?hl=ja",
+							Click:                -1,
+							UniqueClick:          -1,
+							UniqueClickOfRequest: -1,
+						},
+					},
+				},
+			},
+		},
+		{
+			Label:        "Internal server error",
+			ResponseCode: 500,
+			Response:     []byte("500 Internal server error"),
+			Want: want{
+				URLPath:     fmt.Sprintf(APIEndpointInsight, InsightTypeUserInteractionStats),
+				RequestBody: []byte(""),
+				Error: &APIError{
+					Code: 500,
+				},
+			},
+		},
+	}
+
+	var currentTestIdx int
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		tc := testCases[currentTestIdx]
+		if r.Method != http.MethodGet {
+			t.Errorf("Method %s; want %s", r.Method, http.MethodGet)
+		}
+		if r.URL.Path != tc.Want.URLPath {
+			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
+		}
+		body, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
+			t.Errorf("RequestBody %s; want %s", body, tc.Want.RequestBody)
+		}
+		w.WriteHeader(tc.ResponseCode)
+		w.Write(tc.Response)
+	}))
+	defer server.Close()
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected Data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for i, tc := range testCases {
+		currentTestIdx = i
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
+			res, err := client.GetUserInteractionStats(tc.RequestId).Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
+			}
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %v; want %v", res, tc.Want.Response)
+			}
+		})
+	}
+}
