@@ -38,7 +38,6 @@ func NewAudienceObject(groupID int) *AudienceObject {
 // Selector implements Selector interface
 func (*AudienceObject) Selector() {}
 
-// The following types denote demographic attributes
 // GenderType type
 type GenderType string
 
