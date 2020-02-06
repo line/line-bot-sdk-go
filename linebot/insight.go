@@ -168,7 +168,7 @@ func (call *GetUserInteractionStatsCall) WithContext(ctx context.Context) *GetUs
 	return call
 }
 
-// Do method
+// Do method, returns MessagesUserInteractionStatsResponse
 func (call *GetUserInteractionStatsCall) Do() (*MessagesUserInteractionStatsResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointInsight, call.insightType)
 	q := url.Values{}
