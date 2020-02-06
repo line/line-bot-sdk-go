@@ -1542,8 +1542,8 @@ func TestNarrowcastMessages(t *testing.T) {
 	var testCases = []struct {
 		Label        string
 		Messages     []SendingMessage
-		Recipient    Filter
-		Demographic  Filter
+		Recipient    Selector
+		Demographic  Selector
 		Max          int
 		Response     []byte
 		ResponseCode int
@@ -1553,9 +1553,9 @@ func TestNarrowcastMessages(t *testing.T) {
 			Label:    "A text message for Narrowcast Message with Audience",
 			Messages: []SendingMessage{NewTextMessage("Hello, world")},
 			Recipient: OpAnd(
-				NewAudienceFilter(5614991017776),
+				NewAudienceObject(5614991017776),
 				OpNot(
-					NewAudienceFilter(4389303728991),
+					NewAudienceObject(4389303728991),
 				),
 			),
 			Demographic:  nil,

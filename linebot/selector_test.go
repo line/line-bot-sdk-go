@@ -21,16 +21,16 @@ import (
 	"testing"
 )
 
-func TestFilter(t *testing.T) {
+func TestSelector(t *testing.T) {
 	var testCases = []struct {
 		Op   *Operator
 		Want []byte
 	}{
 		{
 			Op: OpAnd(
-				NewAudienceFilter(5614991017776),
+				NewAudienceObject(5614991017776),
 				OpNot(
-					NewAudienceFilter(4389303728991),
+					NewAudienceObject(4389303728991),
 				),
 			),
 			Want: []byte(`{"type":"operator","and":[{"type":"audience","audienceGroupId":5614991017776},{"type":"operator","not":{"type":"audience","audienceGroupId":4389303728991}}]}`),

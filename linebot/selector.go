@@ -16,28 +16,29 @@ package linebot
 
 import "encoding/json"
 
-// Filter interface
-type Filter interface {
-	Filter()
+// Selector interface
+type Selector interface {
+	Selector()
 }
 
-// AudienceFilter type
-type AudienceFilter struct {
+// AudienceObject type is created to be used with specific recipient objects
+type AudienceObject struct {
 	Type    string `json:"type"`
 	GroupID int    `json:"audienceGroupId"`
 }
 
-// NewAudienceFilter function
-func NewAudienceFilter(groupID int) *AudienceFilter {
-	return &AudienceFilter{
+// NewAudienceObject function
+func NewAudienceObject(groupID int) *AudienceObject {
+	return &AudienceObject{
 		Type:    "audience",
 		GroupID: groupID,
 	}
 }
 
-// Filter implements Filter interface
-func (*AudienceFilter) Filter() {}
+// Selector implements Selector interface
+func (*AudienceObject) Selector() {}
 
+// The following types denote demographic attributes
 // GenderType type
 type GenderType string
 
@@ -61,8 +62,8 @@ func NewGenderFilter(genders ...GenderType) *GenderFilter {
 	}
 }
 
-// Filter implements Filter interface
-func (*GenderFilter) Filter() {}
+// Selector implements Selector interface
+func (*GenderFilter) Selector() {}
 
 // AgeType type
 type AgeType string
@@ -96,8 +97,8 @@ func NewAgeFilter(gte, lt AgeType) *AgeFilter {
 	}
 }
 
-// Filter implements Filter interface
-func (*AgeFilter) Filter() {}
+// Selector implements Selector interface
+func (*AgeFilter) Selector() {}
 
 // AppType type
 type AppType string
@@ -122,8 +123,8 @@ func NewAppTypeFilter(appTypes ...AppType) *AppTypeFilter {
 	}
 }
 
-// Filter implements Filter interface
-func (*AppTypeFilter) Filter() {}
+// Selector implements Selector interface
+func (*AppTypeFilter) Selector() {}
 
 // AreaType type
 type AreaType string
@@ -235,8 +236,8 @@ func NewAreaFilter(areaTypes ...AreaType) *AreaFilter {
 	}
 }
 
-// Filter implements Filter interface
-func (*AreaFilter) Filter() {}
+// Selector implements Selector interface
+func (*AreaFilter) Selector() {}
 
 // PeriodType type
 type PeriodType string
@@ -267,8 +268,8 @@ func NewSubscriptionPeriodFilter(gte, lt PeriodType) *SubscriptionPeriodFilter {
 	}
 }
 
-// Filter implements Filter interface
-func (*SubscriptionPeriodFilter) Filter() {}
+// Selector implements Selector interface
+func (*SubscriptionPeriodFilter) Selector() {}
 
 // OperatorType type
 type OperatorType string
@@ -282,27 +283,27 @@ const (
 
 // Operator struct
 type Operator struct {
-	ConditionAnd []Filter `json:"and,omitempty"`
-	ConditionOr  []Filter `json:"or,omitempty"`
-	ConditionNot Filter   `json:"not,omitempty"`
+	ConditionAnd []Selector `json:"and,omitempty"`
+	ConditionOr  []Selector `json:"or,omitempty"`
+	ConditionNot Selector   `json:"not,omitempty"`
 }
 
 // OpAnd method
-func OpAnd(conditions ...Filter) *Operator {
+func OpAnd(conditions ...Selector) *Operator {
 	return &Operator{
 		ConditionAnd: conditions,
 	}
 }
 
 // OpOr method
-func OpOr(conditions ...Filter) *Operator {
+func OpOr(conditions ...Selector) *Operator {
 	return &Operator{
 		ConditionOr: conditions,
 	}
 }
 
 // OpNot method
-func OpNot(condition Filter) *Operator {
+func OpNot(condition Selector) *Operator {
 	return &Operator{
 		ConditionNot: condition,
 	}
@@ -311,10 +312,10 @@ func OpNot(condition Filter) *Operator {
 // MarshalJSON method of Operator
 func (o *Operator) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type         string   `json:"type"`
-		ConditionAnd []Filter `json:"and,omitempty"`
-		ConditionOr  []Filter `json:"or,omitempty"`
-		ConditionNot Filter   `json:"not,omitempty"`
+		Type         string     `json:"type"`
+		ConditionAnd []Selector `json:"and,omitempty"`
+		ConditionOr  []Selector `json:"or,omitempty"`
+		ConditionNot Selector   `json:"not,omitempty"`
 	}{
 		Type:         "operator",
 		ConditionAnd: o.ConditionAnd,
@@ -323,5 +324,5 @@ func (o *Operator) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// Filter implements Filter interface
-func (*Operator) Filter() {}
+// Selector implements Selector interface
+func (*Operator) Selector() {}
