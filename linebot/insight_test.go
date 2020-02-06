@@ -745,3 +745,29 @@ func TestGetUserInteractionStats(t *testing.T) {
 		})
 	}
 }
+
+func TestGetUserInteractionStatsContext(t *testing.T) {
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		time.Sleep(10 * time.Millisecond)
+		w.Write([]byte("{}"))
+	}))
+	defer server.Close()
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected Data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
+	if err != nil {
+		t.Fatal(err)
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
+	defer cancel()
+	_, err = client.GetUserInteractionStats("f70dd685-499a-4231-a441-f24b8d4fba21").WithContext(ctx).Do()
+	expectCtxDeadlineExceed(ctx, err, t)
+}
