@@ -25,9 +25,10 @@ type InsightType string
 
 // InsightType constants
 const (
-	InsightTypeMessageDelivery InsightType = "message/delivery"
-	InsightTypeFollowers       InsightType = "followers"
-	InsightTypeDemographic     InsightType = "demographic"
+	InsightTypeMessageDelivery      InsightType = "message/delivery"
+	InsightTypeUserInteractionStats InsightType = "message/event"
+	InsightTypeFollowers            InsightType = "followers"
+	InsightTypeDemographic          InsightType = "demographic"
 )
 
 // GetNumberMessagesDeliveryCall type
@@ -141,4 +142,43 @@ func (call *GetFriendDemographicsCall) Do() (*MessagesFriendDemographicsResponse
 	}
 	defer closeResponse(res)
 	return decodeToMessagesFriendDemographicsResponse(res)
+}
+
+// GetUserInteractionStatsCall type
+type GetUserInteractionStatsCall struct {
+	c   *Client
+	ctx context.Context
+
+	requestID   string
+	insightType InsightType
+}
+
+// GetUserInteractionStats method
+func (client *Client) GetUserInteractionStats(requestID string) *GetUserInteractionStatsCall {
+	return &GetUserInteractionStatsCall{
+		c:           client,
+		requestID:   requestID,
+		insightType: InsightTypeUserInteractionStats,
+	}
+}
+
+// WithContext method
+func (call *GetUserInteractionStatsCall) WithContext(ctx context.Context) *GetUserInteractionStatsCall {
+	call.ctx = ctx
+	return call
+}
+
+// Do method, returns MessagesUserInteractionStatsResponse
+func (call *GetUserInteractionStatsCall) Do() (*MessagesUserInteractionStatsResponse, error) {
+	endpoint := fmt.Sprintf(APIEndpointInsight, call.insightType)
+	q := url.Values{}
+	if call.requestID != "" {
+		q.Add("requestId", call.requestID)
+	}
+	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, q)
+	if err != nil {
+		return nil, err
+	}
+	defer closeResponse(res)
+	return decodeToMessagesUserInteractionStatsResponse(res)
 }

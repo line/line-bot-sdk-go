@@ -87,6 +87,7 @@ type MessagesNumberDeliveryResponse struct {
 	APIBroadcast    int64  `json:"apiBroadcast"`
 	APIPush         int64  `json:"apiPush"`
 	APIMulticast    int64  `json:"apiMulticast"`
+	APINarrowcast   int64  `json:"apiNarrowcast"`
 	APIReply        int64  `json:"apiReply"`
 }
 
@@ -103,7 +104,7 @@ type MessagesFriendDemographicsResponse struct {
 	Available           bool                       `json:"available"`
 	Genders             []GenderDetail             `json:"genders"`
 	Ages                []AgeDetail                `json:"ages"`
-	Areas               []AreasDetail          `json:"areas"`
+	Areas               []AreasDetail              `json:"areas"`
 	AppTypes            []AppTypeDetail            `json:"appTypes"`
 	SubscriptionPeriods []SubscriptionPeriodDetail `json:"subscriptionPeriods"`
 }
@@ -136,6 +137,49 @@ type AppTypeDetail struct {
 type SubscriptionPeriodDetail struct {
 	SubscriptionPeriod string  `json:"subscriptionPeriod"`
 	Percentage         float64 `json:"percentage"`
+}
+
+// MessagesUserInteractionStatsResponse type
+type MessagesUserInteractionStatsResponse struct {
+	Overview OverviewDetail  `json:"overview"`
+	Messages []MessageDetail `json:"messages"`
+	Clicks   []ClickDetail   `json:"clicks"`
+}
+
+// OverviewDetail type
+type OverviewDetail struct {
+	RequestID                   string `json:"requestId"`
+	Timestamp                   int64  `json:"timestamp"`
+	Delivered                   int64  `json:"delivered"`
+	UniqueImpression            int64  `json:"uniqueImpression"`
+	UniqueClick                 int64  `json:"uniqueClick"`
+	UniqueMediaPlayed           int64  `json:"uniqueMediaPlayed"`
+	UniqueMediaPlayed100Percent int64  `json:"uniqueMediaPlayed100Percent"`
+}
+
+// MessageDetail type
+type MessageDetail struct {
+	Seq                         int64 `json:"seq"`
+	Impression                  int64 `json:"impression"`
+	MediaPlayed                 int64 `json:"mediaPlayed"`
+	MediaPlayed25Percent        int64 `json:"mediaPlayed25Percent"`
+	MediaPlayed50Percent        int64 `json:"mediaPlayed50Percent"`
+	MediaPlayed75Percent        int64 `json:"mediaPlayed75Percent"`
+	MediaPlayed100Percent       int64 `json:"mediaPlayed100Percent"`
+	UniqueMediaPlayed           int64 `json:"uniqueMediaPlayed"`
+	UniqueMediaPlayed25Percent  int64 `json:"uniqueMediaPlayed25Percent"`
+	UniqueMediaPlayed50Percent  int64 `json:"uniqueMediaPlayed50Percent"`
+	UniqueMediaPlayed75Percent  int64 `json:"uniqueMediaPlayed75Percent"`
+	UniqueMediaPlayed100Percent int64 `json:"uniqueMediaPlayed100Percent"`
+}
+
+// ClickDetail type
+type ClickDetail struct {
+	Seq                  int64  `json:"seq"`
+	URL                  string `json:"url"`
+	Click                int64  `json:"click"`
+	UniqueClick          int64  `json:"uniqueClick"`
+	UniqueClickOfRequest int64  `json:"uniqueClickOfRequest"`
 }
 
 // RichMenuIDResponse type
@@ -393,6 +437,18 @@ func decodeToMessagesFriendDemographicsResponse(res *http.Response) (*MessagesFr
 	}
 	decoder := json.NewDecoder(res.Body)
 	result := MessagesFriendDemographicsResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
+
+func decodeToMessagesUserInteractionStatsResponse(res *http.Response) (*MessagesUserInteractionStatsResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := MessagesUserInteractionStatsResponse{}
 	if err := decoder.Decode(&result); err != nil {
 		return nil, err
 	}
