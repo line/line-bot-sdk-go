@@ -24,6 +24,7 @@ import (
 
 // BasicResponse type
 type BasicResponse struct {
+	RequestID string
 }
 
 type errorResponseDetail struct {
@@ -203,7 +204,9 @@ func decodeToBasicResponse(res *http.Response) (*BasicResponse, error) {
 		return nil, err
 	}
 	decoder := json.NewDecoder(res.Body)
-	result := BasicResponse{}
+	result := BasicResponse{
+		RequestID: res.Header.Get("X-Line-Request-Id"),
+	}
 	if err := decoder.Decode(&result); err != nil {
 		if err == io.EOF {
 			return &result, nil

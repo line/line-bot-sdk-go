@@ -1545,6 +1545,7 @@ func TestNarrowcastMessages(t *testing.T) {
 		Recipient    Selector
 		Demographic  Selector
 		Max          int
+		RequestID    string
 		Response     []byte
 		ResponseCode int
 		Want         want
@@ -1560,11 +1561,12 @@ func TestNarrowcastMessages(t *testing.T) {
 			),
 			Demographic:  nil,
 			Max:          0,
+			RequestID:    "12222",
 			Response:     []byte(`{}`),
 			ResponseCode: 202,
 			Want: want{
 				RequestBody: []byte(`{"messages":[{"type":"text","text":"Hello, world"}],"recipient":{"type":"operator","and":[{"type":"audience","audienceGroupId":5614991017776},{"type":"operator","not":{"type":"audience","audienceGroupId":4389303728991}}]}}` + "\n"),
-				Response:    &BasicResponse{},
+				Response:    &BasicResponse{RequestID: "12222"},
 			},
 		},
 		{
@@ -1573,11 +1575,12 @@ func TestNarrowcastMessages(t *testing.T) {
 			Recipient:    nil,
 			Demographic:  NewAppTypeFilter(AppTypeAndroid),
 			Max:          0,
+			RequestID:    "22222",
 			Response:     []byte(`{}`),
 			ResponseCode: 202,
 			Want: want{
 				RequestBody: []byte(`{"messages":[{"type":"text","text":"Hello, world"}],"filter":{"demographic":{"type":"appType","oneOf":["android"]}}}` + "\n"),
-				Response:    &BasicResponse{},
+				Response:    &BasicResponse{RequestID: "22222"},
 			},
 		},
 		{
@@ -1586,11 +1589,12 @@ func TestNarrowcastMessages(t *testing.T) {
 			Recipient:    nil,
 			Demographic:  OpAnd(NewGenderFilter(GenderMale), NewAgeFilter(Age30, AgeEmpty)),
 			Max:          10,
+			RequestID:    "32222",
 			Response:     []byte(`{}`),
 			ResponseCode: 202,
 			Want: want{
 				RequestBody: []byte(`{"messages":[{"type":"text","text":"Hello, world"}],"filter":{"demographic":{"type":"operator","and":[{"type":"gender","oneOf":["male"]},{"type":"age","gte":"age_30"}]}},"limit":{"max":10}}` + "\n"),
-				Response:    &BasicResponse{},
+				Response:    &BasicResponse{RequestID: "32222"},
 			},
 		},
 	}
@@ -1609,6 +1613,7 @@ func TestNarrowcastMessages(t *testing.T) {
 		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
 			t.Errorf("RequestBody \n%s; want \n%s", body, tc.Want.RequestBody)
 		}
+		w.Header().Set("X-Line-Request-Id", tc.RequestID)
 		w.WriteHeader(tc.ResponseCode)
 		w.Write(tc.Response)
 	}))
