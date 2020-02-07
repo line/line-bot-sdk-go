@@ -1,5 +1,14 @@
 # Changelog
 
+## [v7.1.0](https://github.com/line/line-bot-sdk-go/tree/v7.1.0) (2020-02-07)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.0.0...v7.1.0)
+
+**Merged pull requests:**
+
+- Add API to get user interaction statistics [\#192](https://github.com/line/line-bot-sdk-go/pull/192) ([clsung](https://github.com/clsung))
+- Add `mode` property to API webhook event [\#189](https://github.com/line/line-bot-sdk-go/pull/189) ([clsung](https://github.com/clsung))
+
 ## [v7.0.0](https://github.com/line/line-bot-sdk-go/tree/v7.0.0) (2020-01-10)
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v6.4.0...v7.0.0)
@@ -123,7 +132,6 @@
 - Fix not to ignore Hash.write error [\#110](https://github.com/line/line-bot-sdk-go/pull/110) ([shuheiktgw](https://github.com/shuheiktgw))
 - Update CONTRIBUTING.md [\#107](https://github.com/line/line-bot-sdk-go/pull/107) ([syleeeee](https://github.com/syleeeee))
 - Lint [\#105](https://github.com/line/line-bot-sdk-go/pull/105) ([suzuki-shunsuke](https://github.com/suzuki-shunsuke))
-- Update supported versions [\#104](https://github.com/line/line-bot-sdk-go/pull/104) ([sugyan](https://github.com/sugyan))
 
 ## [v4.0.0](https://github.com/line/line-bot-sdk-go/tree/v4.0.0) (2018-08-30)
 
@@ -135,6 +143,7 @@
 
 **Merged pull requests:**
 
+- Update supported versions [\#104](https://github.com/line/line-bot-sdk-go/pull/104) ([sugyan](https://github.com/sugyan))
 -  Fix the version of linebot/version.go and  add a shell script to prevent to forget update of linebot/version.go . [\#103](https://github.com/line/line-bot-sdk-go/pull/103) ([suzuki-shunsuke](https://github.com/suzuki-shunsuke))
 - Remove useless indents for sample code [\#100](https://github.com/line/line-bot-sdk-go/pull/100) ([mingrammer](https://github.com/mingrammer))
 
