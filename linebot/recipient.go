@@ -14,9 +14,10 @@
 
 package linebot
 
+import "encoding/json"
+
 // Recipient interface
 type Recipient interface {
-	Selector
 	Recipient()
 }
 
@@ -34,8 +35,51 @@ func NewAudienceObject(groupID int) *AudienceObject {
 	}
 }
 
-// Selector implements Selector interface
-func (*AudienceObject) Selector() {}
-
 // Recipient implements Recipient interface
 func (*AudienceObject) Recipient() {}
+
+// RecipientOperator struct
+type RecipientOperator struct {
+	ConditionAnd []Recipient `json:"and,omitempty"`
+	ConditionOr  []Recipient `json:"or,omitempty"`
+	ConditionNot Recipient   `json:"not,omitempty"`
+}
+
+// RecipientOperatorAnd method
+func RecipientOperatorAnd(conditions ...Recipient) *RecipientOperator {
+	return &RecipientOperator{
+		ConditionAnd: conditions,
+	}
+}
+
+// RecipientOperatorOr method
+func RecipientOperatorOr(conditions ...Recipient) *RecipientOperator {
+	return &RecipientOperator{
+		ConditionOr: conditions,
+	}
+}
+
+// RecipientOperatorNot method
+func RecipientOperatorNot(condition Recipient) *RecipientOperator {
+	return &RecipientOperator{
+		ConditionNot: condition,
+	}
+}
+
+// MarshalJSON method of Operator
+func (o *RecipientOperator) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		Type         string      `json:"type"`
+		ConditionAnd []Recipient `json:"and,omitempty"`
+		ConditionOr  []Recipient `json:"or,omitempty"`
+		ConditionNot Recipient   `json:"not,omitempty"`
+	}{
+		Type:         "operator",
+		ConditionAnd: o.ConditionAnd,
+		ConditionOr:  o.ConditionOr,
+		ConditionNot: o.ConditionNot,
+	})
+}
+
+// Recipient implements Recipient interface
+func (*RecipientOperator) Recipient() {}

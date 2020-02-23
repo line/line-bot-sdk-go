@@ -104,7 +104,7 @@ type MessagesFriendDemographicsResponse struct {
 	Available           bool                       `json:"available"`
 	Genders             []GenderDetail             `json:"genders"`
 	Ages                []AgeDetail                `json:"ages"`
-	Areas               []AreasDetail          `json:"areas"`
+	Areas               []AreasDetail              `json:"areas"`
 	AppTypes            []AppTypeDetail            `json:"appTypes"`
 	SubscriptionPeriods []SubscriptionPeriodDetail `json:"subscriptionPeriods"`
 }

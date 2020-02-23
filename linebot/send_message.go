@@ -257,14 +257,14 @@ type NarrowcastCall struct {
 	ctx context.Context
 
 	messages  []SendingMessage
-	recipient Selector
+	recipient Recipient
 	filter    *Filter
 	limit     *NarrowcastMessageLimit
 }
 
 // Filter type
 type Filter struct {
-	Demographic Selector `json:"demographic"`
+	Demographic DemographicFilter `json:"demographic"`
 }
 
 // NarrowcastMessageLimit type
@@ -279,13 +279,13 @@ func (call *NarrowcastCall) WithContext(ctx context.Context) *NarrowcastCall {
 }
 
 // WithRecipient method will send to specific recipient objects
-func (call *NarrowcastCall) WithRecipient(recipient Selector) *NarrowcastCall {
+func (call *NarrowcastCall) WithRecipient(recipient Recipient) *NarrowcastCall {
 	call.recipient = recipient
 	return call
 }
 
 // WithDemographic method will send to specific recipients filter by demographic
-func (call *NarrowcastCall) WithDemographic(demographic Selector) *NarrowcastCall {
+func (call *NarrowcastCall) WithDemographic(demographic DemographicFilter) *NarrowcastCall {
 	call.filter = &Filter{Demographic: demographic}
 	return call
 }
@@ -300,7 +300,7 @@ func (call *NarrowcastCall) encodeJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
 	return enc.Encode(&struct {
 		Messages  []SendingMessage        `json:"messages"`
-		Recipient Selector                `json:"recipient,omitempty"`
+		Recipient Recipient               `json:"recipient,omitempty"`
 		Filter    *Filter                 `json:"filter,omitempty"`
 		Limit     *NarrowcastMessageLimit `json:"limit,omitempty"`
 	}{

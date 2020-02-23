@@ -14,6 +14,8 @@
 
 package linebot
 
+import "encoding/json"
+
 // DemographicFilter interface
 type DemographicFilter interface {
 	DemographicFilter()
@@ -41,9 +43,6 @@ func NewGenderFilter(genders ...GenderType) *GenderFilter {
 		Genders: genders,
 	}
 }
-
-// Selector implements Selector interface
-func (*GenderFilter) Selector() {}
 
 // DemographicFilter implements DemographicFilter interface
 func (*GenderFilter) DemographicFilter() {}
@@ -80,9 +79,6 @@ func NewAgeFilter(gte, lt AgeType) *AgeFilter {
 	}
 }
 
-// Selector implements Selector interface
-func (*AgeFilter) Selector() {}
-
 // DemographicFilter implements DemographicFilter interface
 func (*AgeFilter) DemographicFilter() {}
 
@@ -108,9 +104,6 @@ func NewAppTypeFilter(appTypes ...AppType) *AppTypeFilter {
 		AppTypes: appTypes,
 	}
 }
-
-// Selector implements Selector interface
-func (*AppTypeFilter) Selector() {}
 
 // DemographicFilter implements DemographicFilter interface
 func (*AppTypeFilter) DemographicFilter() {}
@@ -225,9 +218,6 @@ func NewAreaFilter(areaTypes ...AreaType) *AreaFilter {
 	}
 }
 
-// Selector implements Selector interface
-func (*AreaFilter) Selector() {}
-
 // DemographicFilter implements DemographicFilter interface
 func (*AreaFilter) DemographicFilter() {}
 
@@ -260,8 +250,51 @@ func NewSubscriptionPeriodFilter(gte, lt PeriodType) *SubscriptionPeriodFilter {
 	}
 }
 
-// Selector implements Selector interface
-func (*SubscriptionPeriodFilter) Selector() {}
-
 // DemographicFilter implements DemographicFilter interface
 func (*SubscriptionPeriodFilter) DemographicFilter() {}
+
+// DemographicFilterOperator struct
+type DemographicFilterOperator struct {
+	ConditionAnd []DemographicFilter `json:"and,omitempty"`
+	ConditionOr  []DemographicFilter `json:"or,omitempty"`
+	ConditionNot DemographicFilter   `json:"not,omitempty"`
+}
+
+// DemographicFilterOperatorAnd method
+func DemographicFilterOperatorAnd(conditions ...DemographicFilter) *DemographicFilterOperator {
+	return &DemographicFilterOperator{
+		ConditionAnd: conditions,
+	}
+}
+
+// DemographicFilterOperatorOr method
+func DemographicFilterOperatorOr(conditions ...DemographicFilter) *DemographicFilterOperator {
+	return &DemographicFilterOperator{
+		ConditionOr: conditions,
+	}
+}
+
+// DemographicFilterOperatorNot method
+func DemographicFilterOperatorNot(condition DemographicFilter) *DemographicFilterOperator {
+	return &DemographicFilterOperator{
+		ConditionNot: condition,
+	}
+}
+
+// MarshalJSON method of DemographicFilterOperator
+func (o *DemographicFilterOperator) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		Type         string              `json:"type"`
+		ConditionAnd []DemographicFilter `json:"and,omitempty"`
+		ConditionOr  []DemographicFilter `json:"or,omitempty"`
+		ConditionNot DemographicFilter   `json:"not,omitempty"`
+	}{
+		Type:         "operator",
+		ConditionAnd: o.ConditionAnd,
+		ConditionOr:  o.ConditionOr,
+		ConditionNot: o.ConditionNot,
+	})
+}
+
+// DemographicFilter implements DemographicFilter interface
+func (*DemographicFilterOperator) DemographicFilter() {}
