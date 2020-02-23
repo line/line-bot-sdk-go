@@ -1597,6 +1597,37 @@ func TestNarrowcastMessages(t *testing.T) {
 				Response:    &BasicResponse{RequestID: "32222"},
 			},
 		},
+		{
+			Label:    "An example message for sending narrowcast message based on official documentation",
+			Messages: []SendingMessage{NewTextMessage("test message")},
+			Recipient: RecipientOperatorAnd(
+				NewAudienceObject(5614991017776),
+				RecipientOperatorNot(
+					NewAudienceObject(4389303728991),
+				),
+			),
+			Demographic: DemographicFilterOperatorOr(
+				DemographicFilterOperatorAnd(
+					NewGenderFilter(GenderMale, GenderFemale),
+					NewAgeFilter(Age20, Age25),
+					NewAppTypeFilter(AppTypeAndroid, AppTypeIOS),
+					NewAreaFilter(AreaJPAichi, AreaJPAkita),
+					NewSubscriptionPeriodFilter(PeriodDay7, PeriodDay30),
+				),
+				DemographicFilterOperatorAnd(
+					NewAgeFilter(Age35, Age40),
+					DemographicFilterOperatorNot(NewGenderFilter(GenderMale)),
+				),
+			),
+			Max:          100,
+			RequestID:    "32222",
+			Response:     []byte(`{}`),
+			ResponseCode: 202,
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"text","text":"test message"}],"recipient":{"type":"operator","and":[{"type":"audience","audienceGroupId":5614991017776},{"type":"operator","not":{"type":"audience","audienceGroupId":4389303728991}}]},"filter":{"demographic":{"type":"operator","or":[{"type":"operator","and":[{"type":"gender","oneOf":["male","female"]},{"type":"age","gte":"age_20","lt":"age_25"},{"type":"appType","oneOf":["android","ios"]},{"type":"area","oneOf":["jp_23","jp_05"]},{"type":"subscriptionPeriod","gte":"day_7","lt":"day_30"}]},{"type":"operator","and":[{"type":"age","gte":"age_35","lt":"age_40"},{"type":"operator","not":{"type":"gender","oneOf":["male"]}}]}]}},"limit":{"max":100}}` + "\n"),
+				Response:    &BasicResponse{RequestID: "32222"},
+			},
+		},
 	}
 
 	var currentTestIdx int
