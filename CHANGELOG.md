@@ -1,5 +1,13 @@
 # Changelog
 
+## [v7.2.0](https://github.com/line/line-bot-sdk-go/tree/v7.2.0) (2020-02-25)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.1.0...v7.2.0)
+
+**Merged pull requests:**
+
+- Support narrowcast message API [\#191](https://github.com/line/line-bot-sdk-go/pull/191) ([clsung](https://github.com/clsung))
+
 ## [v7.1.0](https://github.com/line/line-bot-sdk-go/tree/v7.1.0) (2020-02-07)
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.0.0...v7.1.0)
@@ -132,6 +140,7 @@
 - Fix not to ignore Hash.write error [\#110](https://github.com/line/line-bot-sdk-go/pull/110) ([shuheiktgw](https://github.com/shuheiktgw))
 - Update CONTRIBUTING.md [\#107](https://github.com/line/line-bot-sdk-go/pull/107) ([syleeeee](https://github.com/syleeeee))
 - Lint [\#105](https://github.com/line/line-bot-sdk-go/pull/105) ([suzuki-shunsuke](https://github.com/suzuki-shunsuke))
+- Update supported versions [\#104](https://github.com/line/line-bot-sdk-go/pull/104) ([sugyan](https://github.com/sugyan))
 
 ## [v4.0.0](https://github.com/line/line-bot-sdk-go/tree/v4.0.0) (2018-08-30)
 
@@ -143,7 +152,6 @@
 
 **Merged pull requests:**
 
-- Update supported versions [\#104](https://github.com/line/line-bot-sdk-go/pull/104) ([sugyan](https://github.com/sugyan))
 -  Fix the version of linebot/version.go and  add a shell script to prevent to forget update of linebot/version.go . [\#103](https://github.com/line/line-bot-sdk-go/pull/103) ([suzuki-shunsuke](https://github.com/suzuki-shunsuke))
 - Remove useless indents for sample code [\#100](https://github.com/line/line-bot-sdk-go/pull/100) ([mingrammer](https://github.com/mingrammer))
 
@@ -166,7 +174,7 @@
 
 ## [v1.3.0](https://github.com/line/line-bot-sdk-go/tree/v1.3.0) (2018-07-17)
 
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.2.1...v1.3.0)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.2.1...v1.3.0)
 
 **Implemented enhancements:**
 
@@ -178,7 +186,7 @@
 
 ## [v1.2.1](https://github.com/line/line-bot-sdk-go/tree/v1.2.1) (2018-07-12)
 
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.2.0...v1.2.1)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.2.1...v1.2.1)
 
 **Implemented enhancements:**
 
@@ -200,7 +208,7 @@
 
 ## [v1.1.2](https://github.com/line/line-bot-sdk-go/tree/v1.1.2) (2018-06-19)
 
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.1.2...v1.1.2)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.1.1...v1.1.2)
 
 **Merged pull requests:**
 
@@ -208,7 +216,7 @@
 
 ## [v1.1.1](https://github.com/line/line-bot-sdk-go/tree/v1.1.1) (2018-06-19)
 
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.1.0...v1.1.1)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.1.1...v1.1.1)
 
 **Merged pull requests:**
 
@@ -262,7 +270,7 @@
 
 ## [v1.0.0](https://github.com/line/line-bot-sdk-go/tree/v1.0.0) (2016-09-29)
 
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/f3e3a38aee47ca24ded221ce4be6d9363e3d32e1...v1.0.0)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.0.0...v1.0.0)
 
 **Merged pull requests:**
 
