@@ -1415,6 +1415,7 @@ func TestBroadcastMessagesWithContext(t *testing.T) {
 	_, err = client.BroadcastMessage(NewTextMessage("Hello, world")).WithContext(ctx).Do()
 	expectCtxDeadlineExceed(ctx, err, t)
 }
+
 func TestMessagesWithNotificationDisabled(t *testing.T) {
 	type testMethod interface {
 		Do() (*BasicResponse, error)
@@ -1514,6 +1515,167 @@ func TestMessagesWithNotificationDisabled(t *testing.T) {
 			case *MulticastCall:
 				res, err = client.Multicast(toUserIDs, tc.Messages...).WithNotificationDisabled().Do()
 			}
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
+			}
+			if tc.Want.Response != nil {
+				if !reflect.DeepEqual(res, tc.Want.Response) {
+					t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
+				}
+			}
+		})
+	}
+}
+
+func TestNarrowcastMessages(t *testing.T) {
+	type want struct {
+		RequestBody []byte
+		Response    *BasicResponse
+		Error       error
+	}
+	var testCases = []struct {
+		Label        string
+		Messages     []SendingMessage
+		Recipient    Recipient
+		Demographic  DemographicFilter
+		Max          int
+		RequestID    string
+		Response     []byte
+		ResponseCode int
+		Want         want
+	}{
+		{
+			Label:    "A text message for Narrowcast Message with Audience",
+			Messages: []SendingMessage{NewTextMessage("Hello, world")},
+			Recipient: RecipientOperatorAnd(
+				NewAudienceObject(5614991017776),
+				RecipientOperatorNot(
+					NewAudienceObject(4389303728991),
+				),
+			),
+			Demographic:  nil,
+			Max:          0,
+			RequestID:    "12222",
+			Response:     []byte(`{}`),
+			ResponseCode: 202,
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"text","text":"Hello, world"}],"recipient":{"type":"operator","and":[{"type":"audience","audienceGroupId":5614991017776},{"type":"operator","not":{"type":"audience","audienceGroupId":4389303728991}}]}}` + "\n"),
+				Response:    &BasicResponse{RequestID: "12222"},
+			},
+		},
+		{
+			Label:        "A text message for Narrowcast Message for android",
+			Messages:     []SendingMessage{NewTextMessage("Hello, world")},
+			Recipient:    nil,
+			Demographic:  NewAppTypeFilter(AppTypeAndroid),
+			Max:          0,
+			RequestID:    "22222",
+			Response:     []byte(`{}`),
+			ResponseCode: 202,
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"text","text":"Hello, world"}],"filter":{"demographic":{"type":"appType","oneOf":["android"]}}}` + "\n"),
+				Response:    &BasicResponse{RequestID: "22222"},
+			},
+		},
+		{
+			Label:        "A text message for Narrowcast Message for male and age >= 30 and limit max to 10",
+			Messages:     []SendingMessage{NewTextMessage("Hello, world")},
+			Recipient:    nil,
+			Demographic:  DemographicFilterOperatorAnd(NewGenderFilter(GenderMale), NewAgeFilter(Age30, AgeEmpty)),
+			Max:          10,
+			RequestID:    "32222",
+			Response:     []byte(`{}`),
+			ResponseCode: 202,
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"text","text":"Hello, world"}],"filter":{"demographic":{"type":"operator","and":[{"type":"gender","oneOf":["male"]},{"type":"age","gte":"age_30"}]}},"limit":{"max":10}}` + "\n"),
+				Response:    &BasicResponse{RequestID: "32222"},
+			},
+		},
+		{
+			Label:    "An example message for sending narrowcast message based on official documentation",
+			Messages: []SendingMessage{NewTextMessage("test message")},
+			Recipient: RecipientOperatorAnd(
+				NewAudienceObject(5614991017776),
+				RecipientOperatorNot(
+					NewAudienceObject(4389303728991),
+				),
+			),
+			Demographic: DemographicFilterOperatorOr(
+				DemographicFilterOperatorAnd(
+					NewGenderFilter(GenderMale, GenderFemale),
+					NewAgeFilter(Age20, Age25),
+					NewAppTypeFilter(AppTypeAndroid, AppTypeIOS),
+					NewAreaFilter(AreaJPAichi, AreaJPAkita),
+					NewSubscriptionPeriodFilter(PeriodDay7, PeriodDay30),
+				),
+				DemographicFilterOperatorAnd(
+					NewAgeFilter(Age35, Age40),
+					DemographicFilterOperatorNot(NewGenderFilter(GenderMale)),
+				),
+			),
+			Max:          100,
+			RequestID:    "32222",
+			Response:     []byte(`{}`),
+			ResponseCode: 202,
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"text","text":"test message"}],"recipient":{"type":"operator","and":[{"type":"audience","audienceGroupId":5614991017776},{"type":"operator","not":{"type":"audience","audienceGroupId":4389303728991}}]},"filter":{"demographic":{"type":"operator","or":[{"type":"operator","and":[{"type":"gender","oneOf":["male","female"]},{"type":"age","gte":"age_20","lt":"age_25"},{"type":"appType","oneOf":["android","ios"]},{"type":"area","oneOf":["jp_23","jp_05"]},{"type":"subscriptionPeriod","gte":"day_7","lt":"day_30"}]},{"type":"operator","and":[{"type":"age","gte":"age_35","lt":"age_40"},{"type":"operator","not":{"type":"gender","oneOf":["male"]}}]}]}},"limit":{"max":100}}` + "\n"),
+				Response:    &BasicResponse{RequestID: "32222"},
+			},
+		},
+	}
+
+	var currentTestIdx int
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		if r.Method != http.MethodPost {
+			t.Errorf("Method %s; want %s", r.Method, http.MethodPost)
+		}
+		body, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+		tc := testCases[currentTestIdx]
+		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
+			t.Errorf("RequestBody \n%s; want \n%s", body, tc.Want.RequestBody)
+		}
+		w.Header().Set("X-Line-Request-Id", tc.RequestID)
+		w.WriteHeader(tc.ResponseCode)
+		w.Write(tc.Response)
+	}))
+	defer server.Close()
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for i, tc := range testCases {
+		currentTestIdx = i
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
+			narrowCast := client.Narrowcast(tc.Messages...)
+			if tc.Recipient != nil {
+				narrowCast = narrowCast.WithRecipient(tc.Recipient)
+			}
+			if tc.Demographic != nil {
+				narrowCast = narrowCast.WithDemographic(tc.Demographic)
+			}
+			if tc.Max > 0 {
+				narrowCast = narrowCast.WithLimitMax(tc.Max)
+			}
+			res, err := narrowCast.Do()
 			if tc.Want.Error != nil {
 				if !reflect.DeepEqual(err, tc.Want.Error) {
 					t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
