@@ -90,6 +90,18 @@ func TestGetProgressMessages(t *testing.T) {
 				},
 			},
 		},
+		{
+			RequestID:    "f70dd685-499a-4",
+			TestType:     ProgressTypeNarrowcast,
+			ResponseCode: 404,
+			Response:     []byte(`invalid request ID`),
+			Want: want{
+				URLPath: fmt.Sprintf(APIEndpointGetMessageProgress, ProgressTypeNarrowcast),
+				Error: &APIError{
+					Code: 404,
+				},
+			},
+		},
 	}
 
 	var currentTestIdx int
