@@ -100,6 +100,16 @@ type MessagesNumberFollowersResponse struct {
 	Blocks          int64  `json:"blocks"`
 }
 
+// MessagesProgressResponse type
+type MessagesProgressResponse struct {
+	Phase             string `json:"phase"`
+	SuccessCount      int64  `json:"successCount"`
+	FailureCount      int64  `json:"failureCount"`
+	TargetCount       int64  `json:"targetCount"`
+	FailedDescription string `json:"failedDescription"`
+	ErrorCode         int    `json:"errorCode"`
+}
+
 // MessagesFriendDemographicsResponse type
 type MessagesFriendDemographicsResponse struct {
 	Available           bool                       `json:"available"`
@@ -452,6 +462,18 @@ func decodeToMessagesUserInteractionStatsResponse(res *http.Response) (*Messages
 	}
 	decoder := json.NewDecoder(res.Body)
 	result := MessagesUserInteractionStatsResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
+
+func decodeToMessagesProgressResponse(res *http.Response) (*MessagesProgressResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := MessagesProgressResponse{}
 	if err := decoder.Decode(&result); err != nil {
 		return nil, err
 	}

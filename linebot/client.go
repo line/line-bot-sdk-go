@@ -67,6 +67,7 @@ const (
 	APIEndpointLinkToken = "/v2/bot/user/%s/linkToken"
 
 	APIEndpointGetMessageDelivery = "/v2/bot/message/delivery/%s"
+	APIEndpointGetMessageProgress = "/v2/bot/message/progress/%s"
 	APIEndpointInsight            = "/v2/bot/insight/%s"
 
 	APIEndpointIssueAccessToken  = "/v2/oauth/accessToken"
