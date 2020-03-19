@@ -1310,6 +1310,23 @@ func TestBroadcastMessages(t *testing.T) {
 			},
 		},
 		{
+			// Multiple messages with sender
+			Messages: []SendingMessage{
+				NewTextMessage("Hello, I am Cony!!").WithSender(
+					NewSender("Cony", "https://line.me/conyprof"),
+				),
+				NewStickerMessage("1", "1").WithSender(
+					NewSender("Cony", "https://line.me/conyprof"),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"text","text":"Hello, I am Cony!!","sender":{"name":"Cony","iconUrl":"https://line.me/conyprof"}},{"type":"sticker","packageId":"1","stickerId":"1","sender":{"name":"Cony","iconUrl":"https://line.me/conyprof"}}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
 			// Bad request
 			Messages:     []SendingMessage{NewTextMessage(""), NewTextMessage("")},
 			ResponseCode: 400,
