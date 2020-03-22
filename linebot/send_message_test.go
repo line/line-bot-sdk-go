@@ -1309,6 +1309,93 @@ func TestBroadcastMessages(t *testing.T) {
 				Response:    &BasicResponse{},
 			},
 		},
+		// Single message with sender
+		{
+			Messages: []SendingMessage{
+				NewAudioMessage("https://example.com/original.m4a", 1000).WithSender(
+					NewSender("Cony", "https://line.me/conyprof"),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"audio","originalContentUrl":"https://example.com/original.m4a","duration":1000,"sender":{"name":"Cony","iconUrl":"https://line.me/conyprof"}}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		// Single location message with sender
+		{
+			Messages: []SendingMessage{
+				NewLocationMessage("title", "address", 35.65910807942215, 139.70372892916203).WithSender(
+					NewSender("Cony", "https://line.me/conyprof"),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"location","title":"title","address":"address","latitude":35.65910807942215,"longitude":139.70372892916203,"sender":{"name":"Cony","iconUrl":"https://line.me/conyprof"}}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A imagemap message with sender
+			Messages: []SendingMessage{
+				NewImagemapMessage(
+					"https://example.com/bot/images/rm001",
+					"this is an imagemap",
+					ImagemapBaseSize{1040, 1040},
+					NewURIImagemapAction("example", "https://example.com/", ImagemapArea{520, 0, 520, 1040}),
+					NewMessageImagemapAction("hello", "hello", ImagemapArea{520, 0, 520, 1040}),
+				).WithSender(
+					NewSender("Cony", "https://line.me/conyprof"),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","label":"example","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","label":"hello","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}],"sender":{"name":"Cony","iconUrl":"https://line.me/conyprof"}}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			Messages: []SendingMessage{
+				NewTextMessage("Hello, I am Cony!!").WithSender(
+					NewSender("Cony", "https://line.me/conyprof"),
+				),
+				NewStickerMessage("1", "1").WithSender(
+					NewSender("Cony", "https://line.me/conyprof"),
+				),
+				NewVideoMessage("https://example.com/original.mp4", "https://example.com/preview.jpg").WithSender(
+					NewSender("Cony", "https://line.me/conyprof"),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"text","text":"Hello, I am Cony!!","sender":{"name":"Cony","iconUrl":"https://line.me/conyprof"}},{"type":"sticker","packageId":"1","stickerId":"1","sender":{"name":"Cony","iconUrl":"https://line.me/conyprof"}},{"type":"video","originalContentUrl":"https://example.com/original.mp4","previewImageUrl":"https://example.com/preview.jpg","sender":{"name":"Cony","iconUrl":"https://line.me/conyprof"}}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// Multiple messages with sender
+			Messages: []SendingMessage{
+				NewTextMessage("Hello, I am Cony!!").WithSender(
+					NewSender("Cony", "https://line.me/conyprof"),
+				),
+				NewStickerMessage("1", "1").WithSender(
+					NewSender("Cony", "https://line.me/conyprof"),
+				),
+				NewVideoMessage("https://example.com/original.mp4", "https://example.com/preview.jpg").WithSender(
+					NewSender("Cony", "https://line.me/conyprof"),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"text","text":"Hello, I am Cony!!","sender":{"name":"Cony","iconUrl":"https://line.me/conyprof"}},{"type":"sticker","packageId":"1","stickerId":"1","sender":{"name":"Cony","iconUrl":"https://line.me/conyprof"}},{"type":"video","originalContentUrl":"https://example.com/original.mp4","previewImageUrl":"https://example.com/preview.jpg","sender":{"name":"Cony","iconUrl":"https://line.me/conyprof"}}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
 		{
 			// Bad request
 			Messages:     []SendingMessage{NewTextMessage(""), NewTextMessage("")},
