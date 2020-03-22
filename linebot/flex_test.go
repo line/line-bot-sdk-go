@@ -480,6 +480,54 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 				},
 			},
 		},
+		{
+			JSON: []byte(`{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "horizontal",
+    "contents": [
+      {
+        "type": "text",
+        "text": "hello",
+        "flex": 0
+      },
+      {
+        "type": "filler",
+        "flex": 4
+      },
+      {
+        "type": "text",
+        "text": "world",
+        "flex": 2
+      }
+    ]
+  }
+}`),
+			Want: &BubbleContainer{
+				Type: FlexContainerTypeBubble,
+				Body: &BoxComponent{
+					Type:   FlexComponentTypeBox,
+					Layout: FlexBoxLayoutTypeHorizontal,
+					Contents: []FlexComponent{
+						&TextComponent{
+							Type: FlexComponentTypeText,
+							Text: "hello",
+							Flex: IntPtr(0),
+						},
+						&FillerComponent{
+							Type: FlexComponentTypeFiller,
+							Flex: IntPtr(4),
+						},
+						&TextComponent{
+							Type: FlexComponentTypeText,
+							Text: "world",
+							Flex: IntPtr(2),
+						},
+					},
+				},
+			},
+		},
 	}
 	for i, tc := range testCases {
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
@@ -492,6 +540,40 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestMarshalJSON(t *testing.T) {
+    testCases := []struct {
+        component FillerComponent
+        want []byte
+    }{
+        {
+            FillerComponent{
+                Type: FlexComponentTypeFiller,
+                Flex: nil,
+            },
+            []byte(`{"type":"filler"}`),
+        },
+        {
+            FillerComponent{
+                Type: FlexComponentTypeFiller,
+                Flex: IntPtr(4),
+            },
+            []byte(`{"type":"filler","flex":4}`),
+        },
+    }
+
+    for i, tc := range testCases {
+        t.Run(strconv.Itoa(i), func(t *testing.T) {
+            got, err := tc.component.MarshalJSON()
+            if err != nil {
+                t.Fatal(err)
+            }
+            if !reflect.DeepEqual(got, tc.want) {
+                t.Errorf("got %s, want %s", string(got), string(tc.want))
+            }
+        })
+    }
 }
 
 func BenchmarkUnmarshalFlexMessageJSON(b *testing.B) {
