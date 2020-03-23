@@ -1,5 +1,15 @@
 # Changelog
 
+## [v7.3.0](https://github.com/line/line-bot-sdk-go/tree/v7.3.0) (2020-03-23)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.2.0...v7.3.0)
+
+**Merged pull requests:**
+
+- Add sender property to Message objects. [\#196](https://github.com/line/line-bot-sdk-go/pull/196) ([clsung](https://github.com/clsung))
+- Support "Get narrowcast message status API" [\#193](https://github.com/line/line-bot-sdk-go/pull/193) ([clsung](https://github.com/clsung))
+- add flex property on filler component [\#183](https://github.com/line/line-bot-sdk-go/pull/183) ([johanavril](https://github.com/johanavril))
+
 ## [v7.2.0](https://github.com/line/line-bot-sdk-go/tree/v7.2.0) (2020-02-25)
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.1.0...v7.2.0)
@@ -41,7 +51,7 @@
 
 **Merged pull requests:**
 
-- Add current Go versions to Travis [\#175](https://github.com/line/line-bot-sdk-go/pull/175) ([salapao2136](https://github.com/salapao2136))
+- Add current Go versions to Travis [\#175](https://github.com/line/line-bot-sdk-go/pull/175) ([Thanakorn-ki](https://github.com/Thanakorn-ki))
 - support LINE Things scenario execution event [\#173](https://github.com/line/line-bot-sdk-go/pull/173) ([nasa9084](https://github.com/nasa9084))
 - Fix \#156 no 6 Support get number of sent broadcast messages. [\#169](https://github.com/line/line-bot-sdk-go/pull/169) ([kkdai](https://github.com/kkdai))
 - Fix testing \#151 [\#168](https://github.com/line/line-bot-sdk-go/pull/168) ([k2wanko](https://github.com/k2wanko))
@@ -58,6 +68,7 @@
 - NO-ISSUE Code refactoring [\#150](https://github.com/line/line-bot-sdk-go/pull/150) ([linxGnu](https://github.com/linxGnu))
 - Add support for message quota consumption. [\#149](https://github.com/line/line-bot-sdk-go/pull/149) ([kkdai](https://github.com/kkdai))
 - Update README file as per template [\#148](https://github.com/line/line-bot-sdk-go/pull/148) ([tkgauri](https://github.com/tkgauri))
+- Update the official API document URL. [\#60](https://github.com/line/line-bot-sdk-go/pull/60) ([PuHsiu](https://github.com/PuHsiu))
 
 ## [v6.3.0](https://github.com/line/line-bot-sdk-go/tree/v6.3.0) (2019-04-23)
 
@@ -238,7 +249,6 @@
 - Add `Richmenu API` [\#65](https://github.com/line/line-bot-sdk-go/pull/65) ([clsung](https://github.com/clsung))
 - Update issue template [\#64](https://github.com/line/line-bot-sdk-go/pull/64) ([kenneth-lau](https://github.com/kenneth-lau))
 - Fix typo in comment [\#62](https://github.com/line/line-bot-sdk-go/pull/62) ([zaneli](https://github.com/zaneli))
-- Update the official API document URL. [\#60](https://github.com/line/line-bot-sdk-go/pull/60) ([PuHsiu](https://github.com/PuHsiu))
 - Add group/room member IDs API [\#57](https://github.com/line/line-bot-sdk-go/pull/57) ([k2wanko](https://github.com/k2wanko))
 - Update kitchensink example  [\#56](https://github.com/line/line-bot-sdk-go/pull/56) ([sugyan](https://github.com/sugyan))
 - Add group/room member profile API [\#54](https://github.com/line/line-bot-sdk-go/pull/54) ([mokejp](https://github.com/mokejp))
