@@ -169,6 +169,7 @@ const (
 	StickerResourceTypeAnimation      StickerResourceType = "ANIMATION"
 	StickerResourceTypeSound          StickerResourceType = "SOUND"
 	StickerResourceTypeAnimationSound StickerResourceType = "ANIMATION_SOUND"
+	StickerResourceTypePerStickerText StickerResourceType = "PER_STICKER_TEXT"
 	StickerResourceTypePopup          StickerResourceType = "POPUP"
 	StickerResourceTypePopupSound     StickerResourceType = "POPUP_SOUND"
 	StickerResourceTypeNameText       StickerResourceType = "NAME_TEXT"
