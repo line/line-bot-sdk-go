@@ -20,6 +20,7 @@ import (
 	"strings"
 )
 
+// OAuth2ClientAssertionType is urn:ietf:params:oauth:client-assertion-type:jwt-bearer
 const OAuth2ClientAssertionType = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer"
 
 // IssueAccessTokenV2 method
