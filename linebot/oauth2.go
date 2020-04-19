@@ -138,5 +138,5 @@ func (call *RevokeAccessTokenV2Call) Do() (*BasicResponse, error) {
 		return nil, err
 	}
 	defer closeResponse(res)
-	return decodeToRevokeAccessTokenResponse(res)
+	return decodeToBasicResponse(res)
 }
