@@ -87,8 +87,8 @@ func (m *TextMessage) WithSender(sender *Sender) SendingMessage {
 }
 
 // AddEmoji method of TextMessage
-func (m *TextMessage) AddEmoji(emojis *Emoji) SendingMessage {
-	m.emojis = append(m.emojis, emojis)
+func (m *TextMessage) AddEmoji(emoji *Emoji) SendingMessage {
+	m.emojis = append(m.emojis, emoji)
 	return m
 }
 
