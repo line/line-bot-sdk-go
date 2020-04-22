@@ -14,28 +14,11 @@
 
 package linebot
 
-import (
-	"encoding/json"
-)
-
 // Emoji type
 type Emoji struct {
-	Index     int
-	ProductID string
-	EmojiID   string
-}
-
-// MarshalJSON method of Emoji
-func (s *Emoji) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
-		Index     int    `json:"index,omitempty"`
-		ProductID string `json:"productId,omitempty"`
-		EmojiID   string `json:"emojiId,omitempty"`
-	}{
-		Index:     s.Index,
-		ProductID: s.ProductID,
-		EmojiID:   s.EmojiID,
-	})
+	Index     int    `json:"index,omitempty"`
+	ProductID string `json:"productId,omitempty"`
+	EmojiID   string `json:"emojiId,omitempty"`
 }
 
 // NewEmoji function
