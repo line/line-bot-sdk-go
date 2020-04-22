@@ -44,7 +44,7 @@ func TestGetProfile(t *testing.T) {
 			Label:        "Success",
 			UserID:       "U0047556f2e40dba2456887320ba7c76d",
 			ResponseCode: 200,
-			Response:     []byte(`{"userId":"U0047556f2e40dba2456887320ba7c76d","displayName":"BOT API","pictureUrl":"https://obs.line-apps.com/abcdefghijklmn","statusMessage":"Hello, LINE!"}`),
+			Response:     []byte(`{"userId":"U0047556f2e40dba2456887320ba7c76d","displayName":"BOT API","pictureUrl":"https://obs.line-apps.com/abcdefghijklmn","statusMessage":"Hello, LINE!","language":"en"}`),
 			Want: want{
 				URLPath:     fmt.Sprintf(APIEndpointGetProfile, "U0047556f2e40dba2456887320ba7c76d"),
 				RequestBody: []byte(""),
@@ -53,6 +53,7 @@ func TestGetProfile(t *testing.T) {
 					DisplayName:   "BOT API",
 					PictureURL:    "https://obs.line-apps.com/abcdefghijklmn",
 					StatusMessage: "Hello, LINE!",
+					Language:      "en",
 				},
 			},
 		},

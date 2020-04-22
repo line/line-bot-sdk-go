@@ -44,6 +44,7 @@ type UserProfileResponse struct {
 	DisplayName   string `json:"displayName"`
 	PictureURL    string `json:"pictureUrl"`
 	StatusMessage string `json:"statusMessage"`
+	Language      string `json:"language"`
 }
 
 // MemberIDsResponse type
