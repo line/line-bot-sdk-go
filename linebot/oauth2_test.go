@@ -170,7 +170,7 @@ func TestGetAccessTokensV2(t *testing.T) {
 			Response:        []byte(`{"access_tokens":["fgIkeLcl3.....","eyJhbGciO.....","oeLklsSi7....."]}`),
 			Want: want{
 				RequestParams: url.Values{
-					"client_assertion_type": []string{OAuth2ClientAssertionType},
+					"client_assertion_type": []string{clientAssertionTypeJWT},
 					"client_assertion":      []string{"testclientassertion"},
 				},
 				Response: &AccessTokensResponse{

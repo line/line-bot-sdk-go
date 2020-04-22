@@ -20,8 +20,7 @@ import (
 	"strings"
 )
 
-// OAuth2ClientAssertionType is urn:ietf:params:oauth:client-assertion-type:jwt-bearer
-const OAuth2ClientAssertionType = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer"
+const clientAssertionTypeJWT = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer"
 
 // IssueAccessTokenV2 method
 func (client *Client) IssueAccessTokenV2(clientAssertion string) *IssueAccessTokenV2Call {
@@ -49,7 +48,7 @@ func (call *IssueAccessTokenV2Call) WithContext(ctx context.Context) *IssueAcces
 func (call *IssueAccessTokenV2Call) Do() (*AccessTokenResponse, error) {
 	vs := url.Values{}
 	vs.Set("grant_type", "client_credentials")
-	vs.Set("client_assertion_type", OAuth2ClientAssertionType)
+	vs.Set("client_assertion_type", clientAssertionTypeJWT)
 	vs.Set("client_assertion", call.clientAssertion)
 	body := strings.NewReader(vs.Encode())
 
@@ -86,7 +85,7 @@ func (call *GetAccessTokensV2Call) WithContext(ctx context.Context) *GetAccessTo
 // Do method
 func (call *GetAccessTokensV2Call) Do() (*AccessTokensResponse, error) {
 	vs := url.Values{}
-	vs.Set("client_assertion_type", OAuth2ClientAssertionType)
+	vs.Set("client_assertion_type", clientAssertionTypeJWT)
 	vs.Set("client_assertion", call.clientAssertion)
 
 	res, err := call.c.get(call.ctx, call.c.endpointBase, APIEndpointGetAccessTokensV2, vs)
