@@ -45,6 +45,7 @@ type SendingMessage interface {
 	Message
 	WithQuickReplies(*QuickReplyItems) SendingMessage
 	WithSender(*Sender) SendingMessage
+	AddEmoji(emoji *Emoji) SendingMessage
 }
 
 // TextMessage type
@@ -54,6 +55,7 @@ type TextMessage struct {
 
 	quickReplyitems *QuickReplyItems
 	sender          *Sender
+	emojis          []*Emoji
 }
 
 // MarshalJSON method of TextMessage
@@ -63,11 +65,13 @@ func (m *TextMessage) MarshalJSON() ([]byte, error) {
 		Text       string           `json:"text"`
 		QuickReply *QuickReplyItems `json:"quickReply,omitempty"`
 		Sender     *Sender          `json:"sender,omitempty"`
+		Emojis     []*Emoji         `json:"emojis,omitempty"`
 	}{
 		Type:       MessageTypeText,
 		Text:       m.Text,
 		QuickReply: m.quickReplyitems,
 		Sender:     m.sender,
+		Emojis:     m.emojis,
 	})
 }
 
@@ -80,6 +84,12 @@ func (m *TextMessage) WithQuickReplies(items *QuickReplyItems) SendingMessage {
 // WithSender method of TextMessage
 func (m *TextMessage) WithSender(sender *Sender) SendingMessage {
 	m.sender = sender
+	return m
+}
+
+// AddEmoji method of TextMessage
+func (m *TextMessage) AddEmoji(emoji *Emoji) SendingMessage {
+	m.emojis = append(m.emojis, emoji)
 	return m
 }
 
@@ -122,6 +132,11 @@ func (m *ImageMessage) WithSender(sender *Sender) SendingMessage {
 	return m
 }
 
+// AddEmoji method of ImageMessage
+func (m *ImageMessage) AddEmoji(emoji *Emoji) SendingMessage {
+	return m
+}
+
 // VideoMessage type
 type VideoMessage struct {
 	ID                 string
@@ -161,6 +176,11 @@ func (m *VideoMessage) WithSender(sender *Sender) SendingMessage {
 	return m
 }
 
+// AddEmoji method of VideoMessage
+func (m *VideoMessage) AddEmoji(emoji *Emoji) SendingMessage {
+	return m
+}
+
 // AudioMessage type
 type AudioMessage struct {
 	ID                 string
@@ -197,6 +217,11 @@ func (m *AudioMessage) WithQuickReplies(items *QuickReplyItems) SendingMessage {
 // WithSender method of AudioMessage
 func (m *AudioMessage) WithSender(sender *Sender) SendingMessage {
 	m.sender = sender
+	return m
+}
+
+// AddEmoji method of AudioMessage
+func (m *AudioMessage) AddEmoji(emoji *Emoji) SendingMessage {
 	return m
 }
 
@@ -252,6 +277,11 @@ func (m *LocationMessage) WithSender(sender *Sender) SendingMessage {
 	return m
 }
 
+// AddEmoji method of LocationMessage
+func (m *LocationMessage) AddEmoji(emoji *Emoji) SendingMessage {
+	return m
+}
+
 // StickerMessage type
 type StickerMessage struct {
 	ID                  string
@@ -294,6 +324,11 @@ func (m *StickerMessage) WithSender(sender *Sender) SendingMessage {
 	return m
 }
 
+// AddEmoji method of StickerMessage
+func (m *StickerMessage) AddEmoji(emoji *Emoji) SendingMessage {
+	return m
+}
+
 // TemplateMessage type
 type TemplateMessage struct {
 	AltText  string
@@ -329,6 +364,11 @@ func (m *TemplateMessage) WithQuickReplies(items *QuickReplyItems) SendingMessag
 // WithSender method of TemplateMessage
 func (m *TemplateMessage) WithSender(sender *Sender) SendingMessage {
 	m.sender = sender
+	return m
+}
+
+// AddEmoji method of TemplateMessage
+func (m *TemplateMessage) AddEmoji(emoji *Emoji) SendingMessage {
 	return m
 }
 
@@ -385,6 +425,11 @@ func (m *ImagemapMessage) WithSender(sender *Sender) SendingMessage {
 	return m
 }
 
+// AddEmoji method of ImagemapMessage
+func (m *ImagemapMessage) AddEmoji(emoji *Emoji) SendingMessage {
+	return m
+}
+
 // FlexMessage type
 type FlexMessage struct {
 	AltText  string
@@ -420,6 +465,11 @@ func (m *FlexMessage) WithQuickReplies(items *QuickReplyItems) SendingMessage {
 // WithSender method of FlexMessage
 func (m *FlexMessage) WithSender(sender *Sender) SendingMessage {
 	m.sender = sender
+	return m
+}
+
+// AddEmoji method of FlexMessage
+func (m *FlexMessage) AddEmoji(emoji *Emoji) SendingMessage {
 	return m
 }
 

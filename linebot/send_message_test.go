@@ -1397,6 +1397,20 @@ func TestBroadcastMessages(t *testing.T) {
 			},
 		},
 		{
+			// A text message with emojis
+			Messages: []SendingMessage{
+				NewTextMessage("Look at this: $ It's a LINE emoji!").AddEmoji(
+					NewEmoji(14, "5ac1bfd5040ab15980c9b435", "001"),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"text","text":"Look at this: $ It's a LINE emoji!","emojis":[{"index":14,"productId":"5ac1bfd5040ab15980c9b435","emojiId":"001"}]}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
 			// Bad request
 			Messages:     []SendingMessage{NewTextMessage(""), NewTextMessage("")},
 			ResponseCode: 400,
