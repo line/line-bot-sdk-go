@@ -1,5 +1,17 @@
 # Changelog
 
+## [v7.4.0](https://github.com/line/line-bot-sdk-go/tree/v7.4.0) (2020-05-11)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.3.0...v7.4.0)
+
+**Merged pull requests:**
+
+- Add Latest Field of `TextComponent` \#205 [\#206](https://github.com/line/line-bot-sdk-go/pull/206) ([54mch4n](https://github.com/54mch4n))
+- Support "Channel access token v2.1" [\#203](https://github.com/line/line-bot-sdk-go/pull/203) ([clsung](https://github.com/clsung))
+- Use LINE emoji in messages  [\#202](https://github.com/line/line-bot-sdk-go/pull/202) ([kkdai](https://github.com/kkdai))
+- Fix \#200 Implement for Get user's language. [\#201](https://github.com/line/line-bot-sdk-go/pull/201) ([kkdai](https://github.com/kkdai))
+- New sticker resource type "PER\_STICKER\_TEXT" [\#197](https://github.com/line/line-bot-sdk-go/pull/197) ([clsung](https://github.com/clsung))
+
 ## [v7.3.0](https://github.com/line/line-bot-sdk-go/tree/v7.3.0) (2020-03-23)
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.2.0...v7.3.0)
@@ -68,7 +80,6 @@
 - NO-ISSUE Code refactoring [\#150](https://github.com/line/line-bot-sdk-go/pull/150) ([linxGnu](https://github.com/linxGnu))
 - Add support for message quota consumption. [\#149](https://github.com/line/line-bot-sdk-go/pull/149) ([kkdai](https://github.com/kkdai))
 - Update README file as per template [\#148](https://github.com/line/line-bot-sdk-go/pull/148) ([tkgauri](https://github.com/tkgauri))
-- Update the official API document URL. [\#60](https://github.com/line/line-bot-sdk-go/pull/60) ([PuHsiu](https://github.com/PuHsiu))
 
 ## [v6.3.0](https://github.com/line/line-bot-sdk-go/tree/v6.3.0) (2019-04-23)
 
@@ -168,7 +179,7 @@
 
 ## [v3.0.0](https://github.com/line/line-bot-sdk-go/tree/v3.0.0) (2018-08-02)
 
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v2.0.0...v3.0.0)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/2.0.0...v3.0.0)
 
 **Merged pull requests:**
 
@@ -177,7 +188,7 @@
 
 ## [v2.0.0](https://github.com/line/line-bot-sdk-go/tree/v2.0.0) (2018-07-24)
 
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/2.0.0...v2.0.0)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.3.0...v2.0.0)
 
 **Merged pull requests:**
 
@@ -185,7 +196,7 @@
 
 ## [v1.3.0](https://github.com/line/line-bot-sdk-go/tree/v1.3.0) (2018-07-17)
 
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.2.1...v1.3.0)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.3.0...v1.3.0)
 
 **Implemented enhancements:**
 
@@ -210,7 +221,7 @@
 
 ## [v1.2.0](https://github.com/line/line-bot-sdk-go/tree/v1.2.0) (2018-06-29)
 
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.2.0...v1.2.0)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.1.2...v1.2.0)
 
 **Merged pull requests:**
 
@@ -219,7 +230,7 @@
 
 ## [v1.1.2](https://github.com/line/line-bot-sdk-go/tree/v1.1.2) (2018-06-19)
 
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.1.1...v1.1.2)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.1.2...v1.1.2)
 
 **Merged pull requests:**
 
@@ -249,6 +260,7 @@
 - Add `Richmenu API` [\#65](https://github.com/line/line-bot-sdk-go/pull/65) ([clsung](https://github.com/clsung))
 - Update issue template [\#64](https://github.com/line/line-bot-sdk-go/pull/64) ([kenneth-lau](https://github.com/kenneth-lau))
 - Fix typo in comment [\#62](https://github.com/line/line-bot-sdk-go/pull/62) ([zaneli](https://github.com/zaneli))
+- Update the official API document URL. [\#60](https://github.com/line/line-bot-sdk-go/pull/60) ([PuHsiu](https://github.com/PuHsiu))
 - Add group/room member IDs API [\#57](https://github.com/line/line-bot-sdk-go/pull/57) ([k2wanko](https://github.com/k2wanko))
 - Update kitchensink example  [\#56](https://github.com/line/line-bot-sdk-go/pull/56) ([sugyan](https://github.com/sugyan))
 - Add group/room member profile API [\#54](https://github.com/line/line-bot-sdk-go/pull/54) ([mokejp](https://github.com/mokejp))
@@ -280,7 +292,7 @@
 
 ## [v1.0.0](https://github.com/line/line-bot-sdk-go/tree/v1.0.0) (2016-09-29)
 
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.0.0...v1.0.0)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/f3e3a38aee47ca24ded221ce4be6d9363e3d32e1...v1.0.0)
 
 **Merged pull requests:**
 
