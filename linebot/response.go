@@ -36,6 +36,9 @@ type errorResponseDetail struct {
 type ErrorResponse struct {
 	Message string                `json:"message"`
 	Details []errorResponseDetail `json:"details"`
+	// OAuth Errors
+	Error            string `json:"error"`
+	ErrorDescription string `json:"error_description"`
 }
 
 // UserProfileResponse type
@@ -235,6 +238,11 @@ type AccessTokenResponse struct {
 	AccessToken string `json:"access_token"`
 	ExpiresIn   int64  `json:"expires_in"`
 	TokenType   string `json:"token_type"`
+}
+
+// AccessTokensResponse type
+type AccessTokensResponse struct {
+	AccessTokens []string `json:"access_tokens"`
 }
 
 func checkResponse(res *http.Response) error {
@@ -487,6 +495,18 @@ func decodeToAccessTokenResponse(res *http.Response) (*AccessTokenResponse, erro
 	}
 	decoder := json.NewDecoder(res.Body)
 	result := AccessTokenResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
+
+func decodeToAccessTokensResponse(res *http.Response) (*AccessTokensResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := AccessTokensResponse{}
 	if err := decoder.Decode(&result); err != nil {
 		return nil, err
 	}
