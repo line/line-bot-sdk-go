@@ -453,6 +453,29 @@ var webhookTestRequestBody = `{
                 "type": "text",
                 "text": "Stand by me"
             }
+        },
+        {
+            "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+            "type": "message",
+            "mode": "active",
+            "timestamp": 1462629479859,
+            "source": {
+                "type": "user",
+                "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
+            },
+            "message": {
+                "id": "325708",
+                "type": "text",
+                "text": "Hello, world! (love)",
+                "emojis": [
+                    {
+                        "index": 14,
+                        "length": 6,
+                        "productId": "5ac1bfd5040ab15980c9b435",
+                        "emojiId": "001"
+                    }
+                ]
+            }
         }
     ]
 }
@@ -867,6 +890,23 @@ var webhookTestWantEvents = []*Event{
 		Message: &TextMessage{
 			ID:   "325708",
 			Text: "Stand by me",
+		},
+	},
+	{
+		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+		Type:       EventTypeMessage,
+		Mode:       EventModeActive,
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
+		Source: &EventSource{
+			Type:   EventSourceTypeUser,
+			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
+		},
+		Message: &TextMessage{
+			ID:   "325708",
+			Text: "Hello, world! (love)",
+			Emojis: []*Emoji{
+				&Emoji{Index: 14, Length: 6, ProductID: "5ac1bfd5040ab15980c9b435", EmojiID: "001"},
+			},
 		},
 	},
 }

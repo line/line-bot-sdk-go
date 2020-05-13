@@ -50,12 +50,12 @@ type SendingMessage interface {
 
 // TextMessage type
 type TextMessage struct {
-	ID   string
-	Text string
+	ID     string
+	Text   string
+	Emojis []*Emoji
 
 	quickReplyitems *QuickReplyItems
 	sender          *Sender
-	emojis          []*Emoji
 }
 
 // MarshalJSON method of TextMessage
@@ -71,7 +71,7 @@ func (m *TextMessage) MarshalJSON() ([]byte, error) {
 		Text:       m.Text,
 		QuickReply: m.quickReplyitems,
 		Sender:     m.sender,
-		Emojis:     m.emojis,
+		Emojis:     m.Emojis,
 	})
 }
 
@@ -89,7 +89,7 @@ func (m *TextMessage) WithSender(sender *Sender) SendingMessage {
 
 // AddEmoji method of TextMessage
 func (m *TextMessage) AddEmoji(emoji *Emoji) SendingMessage {
-	m.emojis = append(m.emojis, emoji)
+	m.Emojis = append(m.Emojis, emoji)
 	return m
 }
 
