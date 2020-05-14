@@ -1407,7 +1407,7 @@ func TestBroadcastMessages(t *testing.T) {
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
-				RequestBody: []byte(`{"messages":[{"type":"text","text":"Look at this: $ It's a LINE emoji!","emojis":[{"index":0,"productId":"5ac1bfd5040ab15980c9b435","emojiId":"086"},{"index":14,"productId":"5ac1bfd5040ab15980c9b435","emojiId":"001"}]}]}` + "\n"),
+				RequestBody: []byte(`{"messages":[{"type":"text","text":"$ Look at this: $ It's a LINE emoji!","emojis":[{"index":0,"productId":"5ac1bfd5040ab15980c9b435","emojiId":"086"},{"index":14,"productId":"5ac1bfd5040ab15980c9b435","emojiId":"001"}]}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
