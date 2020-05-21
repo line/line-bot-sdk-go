@@ -199,6 +199,20 @@ const (
 	FlexComponentAlignTypeCenter FlexComponentAlignType = "center"
 )
 
+// FlexComponentCornerRadiusType type
+type FlexComponentCornerRadiusType string
+
+// FlexComponentCornerRadius constants
+const (
+	FlexComponentCornerRadiusTypeNone FlexComponentCornerRadiusType = "none"
+	FlexComponentCornerRadiusTypeXs   FlexComponentCornerRadiusType = "xs"
+	FlexComponentCornerRadiusTypeSm   FlexComponentCornerRadiusType = "sm"
+	FlexComponentCornerRadiusTypeMd   FlexComponentCornerRadiusType = "md"
+	FlexComponentCornerRadiusTypeLg   FlexComponentCornerRadiusType = "lg"
+	FlexComponentCornerRadiusTypeXl   FlexComponentCornerRadiusType = "xl"
+	FlexComponentCornerRadiusTypeXxl  FlexComponentCornerRadiusType = "xxl"
+)
+
 // FlexIconSizeType type
 type FlexIconSizeType string
 
@@ -359,30 +373,45 @@ type FlexComponent interface {
 
 // BoxComponent type
 type BoxComponent struct {
-	Type     FlexComponentType
-	Layout   FlexBoxLayoutType
-	Contents []FlexComponent
-	Flex     *int
-	Spacing  FlexComponentSpacingType
-	Margin   FlexComponentMarginType
+	Type            FlexComponentType
+	Layout          FlexBoxLayoutType
+	Contents        []FlexComponent
+	Flex            *int
+	Spacing         FlexComponentSpacingType
+	Margin          FlexComponentMarginType
+	Width           string
+	Height          string
+	CornerRadius    FlexComponentCornerRadiusType
+	BackgroundColor string
+	BorderColor     string
 }
 
 // MarshalJSON method of BoxComponent
 func (c *BoxComponent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type     FlexComponentType        `json:"type"`
-		Layout   FlexBoxLayoutType        `json:"layout"`
-		Contents []FlexComponent          `json:"contents"`
-		Flex     *int                     `json:"flex,omitempty"`
-		Spacing  FlexComponentSpacingType `json:"spacing,omitempty"`
-		Margin   FlexComponentMarginType  `json:"margin,omitempty"`
+		Type            FlexComponentType             `json:"type"`
+		Layout          FlexBoxLayoutType             `json:"layout"`
+		Contents        []FlexComponent               `json:"contents"`
+		Flex            *int                          `json:"flex,omitempty"`
+		Spacing         FlexComponentSpacingType      `json:"spacing,omitempty"`
+		Margin          FlexComponentMarginType       `json:"margin,omitempty"`
+		Width           string                        `json:"width,omitempty"`
+		Height          string                        `json:"height,omitempty"`
+		CornerRadius    FlexComponentCornerRadiusType `json:"cornerRadius,omitempty"`
+		BackgroundColor string                        `json:"backgroundColor,omitempty"`
+		BorderColor     string                        `json:"borderColor,omitempty"`
 	}{
-		Type:     FlexComponentTypeBox,
-		Layout:   c.Layout,
-		Contents: c.Contents,
-		Flex:     c.Flex,
-		Spacing:  c.Spacing,
-		Margin:   c.Margin,
+		Type:            FlexComponentTypeBox,
+		Layout:          c.Layout,
+		Contents:        c.Contents,
+		Flex:            c.Flex,
+		Spacing:         c.Spacing,
+		Margin:          c.Margin,
+		Width:           c.Width,
+		Height:          c.Height,
+		CornerRadius:    c.CornerRadius,
+		BackgroundColor: c.BackgroundColor,
+		BorderColor:     c.BorderColor,
 	})
 }
 
