@@ -225,6 +225,7 @@ type rawEventMessage struct {
 	PackageID           string              `json:"packageId,omitempty"`
 	StickerID           string              `json:"stickerId,omitempty"`
 	StickerResourceType StickerResourceType `json:"stickerResourceType,omitempty"`
+	Emojis              []*Emoji            `json:"emojis,omitempty"`
 }
 
 type rawBeaconEvent struct {
@@ -329,9 +330,10 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 	switch m := e.Message.(type) {
 	case *TextMessage:
 		raw.Message = &rawEventMessage{
-			Type: MessageTypeText,
-			ID:   m.ID,
-			Text: m.Text,
+			Type:   MessageTypeText,
+			ID:     m.ID,
+			Text:   m.Text,
+			Emojis: m.Emojis,
 		}
 	case *ImageMessage:
 		raw.Message = &rawEventMessage{
@@ -395,8 +397,9 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 		switch rawEvent.Message.Type {
 		case MessageTypeText:
 			e.Message = &TextMessage{
-				ID:   rawEvent.Message.ID,
-				Text: rawEvent.Message.Text,
+				ID:     rawEvent.Message.ID,
+				Text:   rawEvent.Message.Text,
+				Emojis: rawEvent.Message.Emojis,
 			}
 		case MessageTypeImage:
 			e.Message = &ImageMessage{
