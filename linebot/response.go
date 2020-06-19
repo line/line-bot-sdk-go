@@ -50,10 +50,22 @@ type UserProfileResponse struct {
 	Language      string `json:"language"`
 }
 
+// GroupSummaryResponse type
+type GroupSummaryResponse struct {
+	GroupID    string `json:"groupId"`
+	GroupName  string `json:"groupName"`
+	PictureURL string `json:"pictureUrl"`
+}
+
 // MemberIDsResponse type
 type MemberIDsResponse struct {
 	MemberIDs []string `json:"memberIds"`
 	Next      string   `json:"next"`
+}
+
+// MemberCountResponse type
+type MemberCountResponse struct {
+	Count int `json:"count"`
 }
 
 // MessageContentResponse type
@@ -291,12 +303,36 @@ func decodeToUserProfileResponse(res *http.Response) (*UserProfileResponse, erro
 	return &result, nil
 }
 
+func decodeToGroupSummaryResponse(res *http.Response) (*GroupSummaryResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := &GroupSummaryResponse{}
+	if err := decoder.Decode(result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
 func decodeToMemberIDsResponse(res *http.Response) (*MemberIDsResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
 	}
 	decoder := json.NewDecoder(res.Body)
 	result := &MemberIDsResponse{}
+	if err := decoder.Decode(result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func decodeToMemberCountResponse(res *http.Response) (*MemberCountResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := &MemberCountResponse{}
 	if err := decoder.Decode(result); err != nil {
 		return nil, err
 	}
