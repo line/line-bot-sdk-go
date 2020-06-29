@@ -165,7 +165,9 @@ func (call *GetAccessTokenKeyIdsV2Call) Do() (*AccessTokensKeyIdResponse, error)
 	vs.Set("client_assertion_type", clientAssertionTypeJWT)
 	vs.Set("client_assertion", call.clientAssertion)
 
-	res, err := call.c.get(call.ctx, call.c.endpointBase, APIEndpointAccessTokensKeyIdV2, vs)
+	body := strings.NewReader(vs.Encode())
+
+	res, err := call.c.get(call.ctx, APIEndpointAccessTokensKeyIdV2, body)
 	if err != nil {
 		return nil, err
 	}
