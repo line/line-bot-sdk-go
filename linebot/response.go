@@ -250,11 +250,17 @@ type AccessTokenResponse struct {
 	AccessToken string `json:"access_token"`
 	ExpiresIn   int64  `json:"expires_in"`
 	TokenType   string `json:"token_type"`
+	KeyId       string `json:"key_id"`
 }
 
 // AccessTokensResponse type
 type AccessTokensResponse struct {
 	AccessTokens []string `json:"access_tokens"`
+}
+
+// AccessTokensKeyIdResponse type
+type AccessTokensKeyIdResponse struct {
+	KeyIds []string `json:"key_ids"`
 }
 
 func checkResponse(res *http.Response) error {
@@ -543,6 +549,18 @@ func decodeToAccessTokensResponse(res *http.Response) (*AccessTokensResponse, er
 	}
 	decoder := json.NewDecoder(res.Body)
 	result := AccessTokensResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
+
+func decodeToAccessTokensKeyIdResponse(res *http.Response) (*AccessTokensKeyIdResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := AccessTokensKeyIdResponse{}
 	if err := decoder.Decode(&result); err != nil {
 		return nil, err
 	}
