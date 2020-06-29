@@ -76,9 +76,11 @@ const (
 	APIEndpointIssueAccessToken  = "/v2/oauth/accessToken"
 	APIEndpointRevokeAccessToken = "/v2/oauth/revoke"
 
-	APIEndpointIssueAccessTokenV2  = "/oauth2/v2.1/token"
+	APIEndpointIssueAccessTokenV2 = "/oauth2/v2.1/token"
+	// deprecation
 	APIEndpointGetAccessTokensV2   = "/oauth2/v2.1/tokens"
 	APIEndpointRevokeAccessTokenV2 = "/oauth2/v2.1/revoke"
+	APIEndpointAccessTokensKeyIdV2 = "/oauth2/v2.1/tokens/kid"
 )
 
 // Client type
