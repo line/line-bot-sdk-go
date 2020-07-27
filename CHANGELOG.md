@@ -1,5 +1,19 @@
 # Changelog
 
+## [v7.5.0](https://github.com/line/line-bot-sdk-go/tree/v7.5.0) (2020-07-13)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.4.0...v7.5.0)
+
+**Merged pull requests:**
+
+- Update BoxComponent Properties [\#210](https://github.com/line/line-bot-sdk-go/pull/210) ([zesani](https://github.com/zesani))
+
+- Fix test error by remove "omit empty" on index. \#209 [\#200](https://github.com/line/line-bot-sdk-go/pull/209) ([kkdai](https://github.com/kkdai))
+
+- Messaging API - May 2020 update: webhook has emoji now. \#207 [\#208](https://github.com/line/line-bot-sdk-go/pull/208) ([clsung](https://github.com/clsung))
+
+- Messaging API - June 2020 update. \#212 [\#213](https://github.com/line/line-bot-sdk-go/pull/213) ([clsung](https://github.com/clsung))
+
 ## [v7.4.0](https://github.com/line/line-bot-sdk-go/tree/v7.4.0) (2020-05-11)
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.3.0...v7.4.0)
