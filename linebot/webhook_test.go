@@ -476,6 +476,19 @@ var webhookTestRequestBody = `{
                     }
                 ]
             }
+        },
+        {
+            "type": "unsend",
+            "mode": "active",
+            "timestamp": 1462629479859,
+            "source": {
+                "type": "group",
+                "groupId": "Ca56f94637c...",
+                "userId": "U4af4980629..."
+            },
+            "unsend": {
+                "messageId": "325708"
+            }
         }
     ]
 }
@@ -907,6 +920,19 @@ var webhookTestWantEvents = []*Event{
 			Emojis: []*Emoji{
 				&Emoji{Index: 14, Length: 6, ProductID: "5ac1bfd5040ab15980c9b435", EmojiID: "001"},
 			},
+		},
+	},
+	{
+		Type:      EventTypeUnsend,
+		Mode:      EventModeActive,
+		Timestamp: time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
+		Source: &EventSource{
+			Type:    EventSourceTypeGroup,
+			GroupID: "Ca56f94637c...",
+			UserID:  "U4af4980629...",
+		},
+		Unsend: &Unsend{
+			MessageID: "325708",
 		},
 	},
 }

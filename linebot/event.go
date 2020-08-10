@@ -36,6 +36,7 @@ const (
 	EventTypeBeacon       EventType = "beacon"
 	EventTypeAccountLink  EventType = "accountLink"
 	EventTypeThings       EventType = "things"
+	EventTypeUnsend       EventType = "unsend"
 )
 
 // EventMode type
@@ -160,6 +161,11 @@ type Things struct {
 	Result   *ThingsResult
 }
 
+// Unsend type
+type Unsend struct {
+	MessageID string `json:"messageId"`
+}
+
 // StickerResourceType type
 type StickerResourceType string
 
@@ -190,6 +196,7 @@ type Event struct {
 	AccountLink *AccountLink
 	Things      *Things
 	Members     []*EventSource
+	Unsend      *Unsend
 }
 
 type rawEvent struct {
@@ -205,6 +212,7 @@ type rawEvent struct {
 	Joined      *rawMemberEvent      `json:"joined,omitempty"`
 	Left        *rawMemberEvent      `json:"left,omitempty"`
 	Things      *rawThingsEvent      `json:"things,omitempty"`
+	Unsend      *Unsend              `json:"unsend,omitempty"`
 }
 
 type rawMemberEvent struct {
@@ -275,6 +283,7 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 		Timestamp:  e.Timestamp.Unix()*millisecPerSec + int64(e.Timestamp.Nanosecond())/int64(time.Millisecond),
 		Source:     e.Source,
 		Postback:   e.Postback,
+		Unsend:     e.Unsend,
 	}
 	if e.Beacon != nil {
 		raw.Beacon = &rawBeaconEvent{
@@ -482,6 +491,8 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 				}
 			}
 		}
+	case EventTypeUnsend:
+		e.Unsend = rawEvent.Unsend
 	}
 	return
 }
