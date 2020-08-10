@@ -489,6 +489,19 @@ var webhookTestRequestBody = `{
             "unsend": {
                 "messageId": "325708"
             }
+        },
+        {
+            "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+            "type": "videoPlayComplete",
+            "timestamp": 1462629479859,
+            "mode": "active",
+            "source": {
+                "type": "user",
+                "userId": "U4af4980629..."
+            },
+            "videoPlayComplete": {
+                "trackingId": "track_id"
+            }
         }
     ]
 }
@@ -933,6 +946,19 @@ var webhookTestWantEvents = []*Event{
 		},
 		Unsend: &Unsend{
 			MessageID: "325708",
+		},
+	},
+	{
+		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+		Type:       EventTypeVideoPlayComplete,
+		Mode:       EventModeActive,
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
+		Source: &EventSource{
+			Type:   EventSourceTypeUser,
+			UserID: "U4af4980629...",
+		},
+		VideoPlayComplete: &VideoPlayComplete{
+			TrackingID: "track_id",
 		},
 	},
 }
