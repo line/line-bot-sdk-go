@@ -140,3 +140,35 @@ func (call *RevokeAccessTokenV2Call) Do() (*BasicResponse, error) {
 	defer closeResponse(res)
 	return decodeToBasicResponse(res)
 }
+
+func (client *Client) GetAccessTokenKeyIdsV2(clientAssertion string) *GetAccessTokenKeyIdsV2Call {
+	return &GetAccessTokenKeyIdsV2Call{
+		c:               client,
+		clientAssertion: clientAssertion,
+	}
+}
+
+type GetAccessTokenKeyIdsV2Call struct {
+	c   *Client
+	ctx context.Context
+
+	clientAssertion string
+}
+
+func (call *GetAccessTokenKeyIdsV2Call) WithContext(ctx context.Context) *GetAccessTokenKeyIdsV2Call {
+	call.ctx = ctx
+	return call
+}
+
+func (call *GetAccessTokenKeyIdsV2Call) Do() (*AccessTokensKeyIdResponse, error) {
+	vs := url.Values{}
+	vs.Set("client_assertion_type", clientAssertionTypeJWT)
+	vs.Set("client_assertion", call.clientAssertion)
+
+	res, err := call.c.get(call.ctx, call.c.endpointBase, APIEndpointAccessTokensKeyIdV2, vs)
+	if err != nil {
+		return nil, err
+	}
+	defer closeResponse(res)
+	return decodeToAccessTokensKeyIdResponse(res)
+}
