@@ -77,7 +77,7 @@ const (
 	APIEndpointRevokeAccessToken = "/v2/oauth/revoke"
 
 	APIEndpointIssueAccessTokenV2  = "/oauth2/v2.1/token"
-	APIEndpointGetAccessTokensV2   = "/oauth2/v2.1/tokens"
+	APIEndpointGetAccessTokensV2   = "/oauth2/v2.1/tokens/kid"
 	APIEndpointRevokeAccessTokenV2 = "/oauth2/v2.1/revoke"
 )
 

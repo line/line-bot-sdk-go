@@ -39,13 +39,14 @@ func TestIssueAccessTokenV2(t *testing.T) {
 		{
 			ClientAssertion: "testclientassertion",
 			ResponseCode:    200,
-			Response:        []byte(`{"access_token":"eyJhbGciOiJIUz.....","token_type":"Bearer","expires_in": 2592000}`),
+			Response:        []byte(`{"access_token":"eyJhbGciOiJIUz.....","token_type":"Bearer","expires_in": 2592000,"key_id":"sDTOzw5wIfxxxxPEzcmeQA"}`),
 			Want: want{
 				RequestBody: []byte("client_assertion=testclientassertion&client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3Aclient-assertion-type%3Ajwt-bearer&grant_type=client_credentials"),
 				Response: &AccessTokenResponse{
 					AccessToken: "eyJhbGciOiJIUz.....",
 					ExpiresIn:   2592000,
 					TokenType:   "Bearer",
+					KeyID:       "sDTOzw5wIfxxxxPEzcmeQA",
 				},
 			},
 		},
@@ -167,14 +168,14 @@ func TestGetAccessTokensV2(t *testing.T) {
 		{
 			ClientAssertion: "testclientassertion",
 			ResponseCode:    200,
-			Response:        []byte(`{"access_tokens":["fgIkeLcl3.....","eyJhbGciO.....","oeLklsSi7....."]}`),
+			Response:        []byte(`{"kids":["U_gdnFYKTWRxxxxDVZexGg", "sDTOzw5wIfWxxxxzcmeQA", "73hDyp3PxGfxxxxD6U5qYA"]}`),
 			Want: want{
 				RequestParams: url.Values{
 					"client_assertion_type": []string{clientAssertionTypeJWT},
 					"client_assertion":      []string{"testclientassertion"},
 				},
 				Response: &AccessTokensResponse{
-					AccessTokens: []string{"fgIkeLcl3.....", "eyJhbGciO.....", "oeLklsSi7....."},
+					KeyIDs: []string{"U_gdnFYKTWRxxxxDVZexGg", "sDTOzw5wIfWxxxxzcmeQA", "73hDyp3PxGfxxxxD6U5qYA"},
 				},
 			},
 		},

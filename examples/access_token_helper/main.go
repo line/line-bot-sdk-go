@@ -24,7 +24,7 @@ import (
 
 func main() {
 	var (
-		mode            = flag.String("mode", "get", "mode of access token v2 helper [issue|list|revoke]")
+		mode            = flag.String("mode", "list", "mode of access token v2 helper [issue|list|revoke]")
 		channelID       = flag.String("channel_id", os.Getenv("CHANNEL_ID"), "Channel ID on channel console")
 		accessToken     = flag.String("access_token", os.Getenv("ACCESS_TOKEN"), "channel access token")
 		clientAssertion = flag.String("client_assertion", os.Getenv("CLIENT_ASSERTION"), "A JSON Web Token the client needs to create and sign with the private key")
