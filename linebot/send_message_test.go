@@ -1780,7 +1780,7 @@ func TestNarrowcastMessages(t *testing.T) {
 				narrowCast = narrowCast.WithLimitMax(tc.Max)
 			}
 			if tc.UpToRemainingQuota {
-				narrowCast = narrowCast.WithLimitUpToRemainingQuota(tc.UpToRemainingQuota)
+				narrowCast = narrowCast.WithLimitMaxUpToRemainingQuota(tc.Max, tc.UpToRemainingQuota)
 			}
 			res, err := narrowCast.Do()
 			if tc.Want.Error != nil {
