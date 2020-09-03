@@ -269,7 +269,8 @@ type Filter struct {
 
 // NarrowcastMessageLimit type
 type NarrowcastMessageLimit struct {
-	Max int `json:"max"`
+	Max                int  `json:"max"`
+	UpToRemainingQuota bool `json:"upToRemainingQuota,omitempty"`
 }
 
 // WithContext method
@@ -292,7 +293,21 @@ func (call *NarrowcastCall) WithDemographic(demographic DemographicFilter) *Narr
 
 // WithLimitMax method will set maximum number of recipients
 func (call *NarrowcastCall) WithLimitMax(max int) *NarrowcastCall {
-	call.limit = &NarrowcastMessageLimit{Max: max}
+	if call.limit == nil {
+		call.limit = &NarrowcastMessageLimit{Max: max}
+	} else {
+		call.limit.Max = max
+	}
+	return call
+}
+
+// WithLimitUpToRemainingQuota method will set maximum number of recipients but not over remaining quota.
+func (call *NarrowcastCall) WithLimitUpToRemainingQuota(upToRemainingQuota bool) *NarrowcastCall {
+	if call.limit == nil {
+		call.limit = &NarrowcastMessageLimit{UpToRemainingQuota: upToRemainingQuota}
+	} else {
+		call.limit.UpToRemainingQuota = upToRemainingQuota
+	}
 	return call
 }
 

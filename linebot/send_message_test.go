@@ -1642,15 +1642,16 @@ func TestNarrowcastMessages(t *testing.T) {
 		Error       error
 	}
 	var testCases = []struct {
-		Label        string
-		Messages     []SendingMessage
-		Recipient    Recipient
-		Demographic  DemographicFilter
-		Max          int
-		RequestID    string
-		Response     []byte
-		ResponseCode int
-		Want         want
+		Label              string
+		Messages           []SendingMessage
+		Recipient          Recipient
+		Demographic        DemographicFilter
+		Max                int
+		UpToRemainingQuota bool
+		RequestID          string
+		Response           []byte
+		ResponseCode       int
+		Want               want
 	}{
 		{
 			Label:    "A text message for Narrowcast Message with Audience",
@@ -1686,16 +1687,17 @@ func TestNarrowcastMessages(t *testing.T) {
 			},
 		},
 		{
-			Label:        "A text message for Narrowcast Message for male and age >= 30 and limit max to 10",
-			Messages:     []SendingMessage{NewTextMessage("Hello, world")},
-			Recipient:    nil,
-			Demographic:  DemographicFilterOperatorAnd(NewGenderFilter(GenderMale), NewAgeFilter(Age30, AgeEmpty)),
-			Max:          10,
-			RequestID:    "32222",
-			Response:     []byte(`{}`),
-			ResponseCode: 202,
+			Label:              "A text message for Narrowcast Message for male and age >= 30 and limit max to 10",
+			Messages:           []SendingMessage{NewTextMessage("Hello, world")},
+			Recipient:          nil,
+			Demographic:        DemographicFilterOperatorAnd(NewGenderFilter(GenderMale), NewAgeFilter(Age30, AgeEmpty)),
+			Max:                10,
+			UpToRemainingQuota: true,
+			RequestID:          "32222",
+			Response:           []byte(`{}`),
+			ResponseCode:       202,
 			Want: want{
-				RequestBody: []byte(`{"messages":[{"type":"text","text":"Hello, world"}],"filter":{"demographic":{"type":"operator","and":[{"type":"gender","oneOf":["male"]},{"type":"age","gte":"age_30"}]}},"limit":{"max":10}}` + "\n"),
+				RequestBody: []byte(`{"messages":[{"type":"text","text":"Hello, world"}],"filter":{"demographic":{"type":"operator","and":[{"type":"gender","oneOf":["male"]},{"type":"age","gte":"age_30"}]}},"limit":{"max":10,"upToRemainingQuota":true}}` + "\n"),
 				Response:    &BasicResponse{RequestID: "32222"},
 			},
 		},
@@ -1776,6 +1778,9 @@ func TestNarrowcastMessages(t *testing.T) {
 			}
 			if tc.Max > 0 {
 				narrowCast = narrowCast.WithLimitMax(tc.Max)
+			}
+			if tc.UpToRemainingQuota {
+				narrowCast = narrowCast.WithLimitUpToRemainingQuota(tc.UpToRemainingQuota)
 			}
 			res, err := narrowCast.Do()
 			if tc.Want.Error != nil {
