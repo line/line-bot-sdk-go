@@ -173,7 +173,6 @@ func (client *Client) do(ctx context.Context, req *http.Request) (*http.Response
 	req.Header.Set("User-Agent", "LINE-BotSDK-Go/"+version)
 	if len(client.retryKeyID) > 0 {
 		req.Header.Set("X-Line-Retry-Key", client.retryKeyID)
-
 	}
 	if ctx != nil {
 		req = req.WithContext(ctx)
