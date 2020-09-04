@@ -88,6 +88,7 @@ type Client struct {
 	endpointBase     *url.URL     // default APIEndpointBase
 	endpointBaseData *url.URL     // default APIEndpointBaseData
 	httpClient       *http.Client // default http.DefaultClient
+	retryKeyID       string       // X-Line-Retry-Key allows you to safely retry API requests without duplicating messages
 }
 
 // ClientOption type
@@ -170,6 +171,10 @@ func (client *Client) url(base *url.URL, endpoint string) string {
 func (client *Client) do(ctx context.Context, req *http.Request) (*http.Response, error) {
 	req.Header.Set("Authorization", "Bearer "+client.channelToken)
 	req.Header.Set("User-Agent", "LINE-BotSDK-Go/"+version)
+	if len(client.retryKeyID) > 0 {
+		req.Header.Set("X-Line-Retry-Key", client.retryKeyID)
+
+	}
 	if ctx != nil {
 		req = req.WithContext(ctx)
 	}
@@ -221,6 +226,10 @@ func (client *Client) delete(ctx context.Context, endpoint string) (*http.Respon
 		return nil, err
 	}
 	return client.do(ctx, req)
+}
+
+func (client *Client) setRetryKey(retryKey string) {
+	client.retryKeyID = retryKey
 }
 
 func closeResponse(res *http.Response) error {

@@ -53,6 +53,12 @@ func (call *PushMessageCall) WithNotificationDisabled() *PushMessageCall {
 	return call
 }
 
+// WithRetryKey method will set retry key string (UUID) on PushMessage.
+func (call *PushMessageCall) WithRetryKey(retryKey string) *PushMessageCall {
+	call.c.setRetryKey(retryKey)
+	return call
+}
+
 func (call *PushMessageCall) encodeJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
 	return enc.Encode(&struct {
@@ -171,6 +177,12 @@ func (call *MulticastCall) WithNotificationDisabled() *MulticastCall {
 	return call
 }
 
+// WithRetryKey method will set retry key string (UUID) on Multicast.
+func (call *MulticastCall) WithRetryKey(retryKey string) *MulticastCall {
+	call.c.setRetryKey(retryKey)
+	return call
+}
+
 func (call *MulticastCall) encodeJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
 	return enc.Encode(&struct {
@@ -217,6 +229,12 @@ type BroadcastMessageCall struct {
 // WithContext method
 func (call *BroadcastMessageCall) WithContext(ctx context.Context) *BroadcastMessageCall {
 	call.ctx = ctx
+	return call
+}
+
+// WithRetryKey method will set retry key string (UUID) on BroadcastMessage.
+func (call *BroadcastMessageCall) WithRetryKey(retryKey string) *BroadcastMessageCall {
+	call.c.setRetryKey(retryKey)
 	return call
 }
 
@@ -293,6 +311,12 @@ func (call *NarrowcastCall) WithDemographic(demographic DemographicFilter) *Narr
 // WithLimitMax method will set maximum number of recipients
 func (call *NarrowcastCall) WithLimitMax(max int) *NarrowcastCall {
 	call.limit = &NarrowcastMessageLimit{Max: max}
+	return call
+}
+
+// WithRetryKey method will set retry key string (UUID) on narrowcast.
+func (call *NarrowcastCall) WithRetryKey(retryKey string) *NarrowcastCall {
+	call.c.setRetryKey(retryKey)
 	return call
 }
 
