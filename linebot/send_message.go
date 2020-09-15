@@ -315,12 +315,6 @@ func (call *NarrowcastCall) WithLimitMax(max int) *NarrowcastCall {
 	return call
 }
 
-// WithRetryKey method will set retry key string (UUID) on narrowcast.
-func (call *NarrowcastCall) WithRetryKey(retryKey string) *NarrowcastCall {
-	call.c.setRetryKey(retryKey)
-	return call
-}
-
 // WithLimitMaxUpToRemainingQuota method will set maximum number of recipients but not over remaining quota.
 func (call *NarrowcastCall) WithLimitMaxUpToRemainingQuota(max int, upToRemainingQuota bool) *NarrowcastCall {
 	call.limit = &NarrowcastMessageLimit{Max: max, UpToRemainingQuota: upToRemainingQuota}
