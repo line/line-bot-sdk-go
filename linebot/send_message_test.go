@@ -1826,6 +1826,138 @@ func BenchmarkPushMessages(b *testing.B) {
 	}
 }
 
+func TestMessagesWithRetryKey(t *testing.T) {
+	type testMethod interface {
+		Do() (*BasicResponse, error)
+	}
+	var toUserIDs = []string{
+		"U0cc15697597f61dd8b01cea8b027050e",
+		"U38ecbecfade326557b6971140741a4a6",
+	}
+	var msgUUIDs string = "123e4567-e89b-12d3-a456-426655440002"
+
+	type want struct {
+		RequestBody []byte
+		Response    *BasicResponse
+		Error       error
+	}
+	var testCases = []struct {
+		Label        string
+		TestMethod   testMethod
+		Messages     []SendingMessage
+		Response     []byte
+		ResponseCode int
+		Want         want
+	}{
+		{
+			Label:        "A text message for Push Message",
+			TestMethod:   new(PushMessageCall),
+			Messages:     []SendingMessage{NewTextMessage("Hello, world")},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"text","text":"Hello, world"}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			Label:        "A text message for Multicast",
+			TestMethod:   new(MulticastCall),
+			Messages:     []SendingMessage{NewTextMessage("Hello, world")},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":["U0cc15697597f61dd8b01cea8b027050e","U38ecbecfade326557b6971140741a4a6"],"messages":[{"type":"text","text":"Hello, world"}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			Label:        "A text message for Narrowcast",
+			TestMethod:   new(NarrowcastCall),
+			Messages:     []SendingMessage{NewTextMessage("Hello, world")},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"text","text":"Hello, world"}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			Label:        "A text message for Broadcast",
+			TestMethod:   new(BroadcastMessageCall),
+			Messages:     []SendingMessage{NewTextMessage("Hello, world")},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"text","text":"Hello, world"}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+	}
+
+	var currentTestIdx int
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		if r.Method != http.MethodPost {
+			t.Errorf("Method %s; want %s", r.Method, http.MethodPost)
+		}
+		body, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+		tc := testCases[currentTestIdx]
+		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
+			t.Errorf("RequestBody %s; want %s", body, tc.Want.RequestBody)
+		}
+		w.WriteHeader(tc.ResponseCode)
+		w.Write(tc.Response)
+	}))
+	defer server.Close()
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var res *BasicResponse
+	for i, tc := range testCases {
+		currentTestIdx = i
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
+			switch tc.TestMethod.(type) {
+			case *PushMessageCall:
+				res, err = client.PushMessage(toUserIDs[0], tc.Messages...).WithRetryKey(msgUUIDs).Do()
+			case *MulticastCall:
+				res, err = client.Multicast(toUserIDs, tc.Messages...).WithRetryKey(msgUUIDs).Do()
+			case *NarrowcastCall:
+				res, err = client.Narrowcast(tc.Messages...).WithRetryKey(msgUUIDs).Do()
+			case *BroadcastMessageCall:
+				res, err = client.BroadcastMessage(tc.Messages...).WithRetryKey(msgUUIDs).Do()
+			}
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
+			}
+			if tc.Want.Response != nil {
+				if !reflect.DeepEqual(res, tc.Want.Response) {
+					t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
+				}
+			}
+		})
+	}
+}
+
 func BenchmarkReplyMessages(b *testing.B) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
