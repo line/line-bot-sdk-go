@@ -1,5 +1,19 @@
 # Changelog
 
+## [v7.6.0](https://github.com/line/line-bot-sdk-go/tree/v7.6.0) (2020-09-16)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.5.0...v7.6.0)
+
+**Merged pull requests:**
+
+- Messaging API - May 2020 update [\#207](https://github.com/line/line-bot-sdk-go/pull/228) ([kkdai](https://github.com/kkdai))
+
+- Messaging API - September 2020 update. \#226 [\#227](https://github.com/line/line-bot-sdk-go/pull/227) ([kkdai](https://github.com/kkdai))
+
+- Update to Channel access token v2.1 apis. \#214 [\#225](https://github.com/line/line-bot-sdk-go/pull/208) ([raahii](https://github.com/raahii))
+
+- Messaging API - August 2020 update. \#222 [\#223](https://github.com/line/line-bot-sdk-go/pull/223) ([clsung](https://github.com/clsung))
+
 ## [v7.5.0](https://github.com/line/line-bot-sdk-go/tree/v7.5.0) (2020-07-13)
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.4.0...v7.5.0)
