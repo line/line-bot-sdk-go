@@ -98,7 +98,7 @@ type BotInfoResponse struct {
 	UserID         string         `json:"userId"`
 	BasicID        string         `json:"basicId"`
 	PremiumID      string         `json:"premiumId"`
-	PictureUrl     string         `json:"pictureUrl"`
+	PictureURL     string         `json:"pictureUrl"`
 	ChatMode       ChatMode       `json:"chatMode"`
 	MarkAsReadMode MarkAsReadMode `json:"markAsReadMode"`
 }
