@@ -72,6 +72,7 @@ const (
 	APIEndpointGetMessageDelivery = "/v2/bot/message/delivery/%s"
 	APIEndpointGetMessageProgress = "/v2/bot/message/progress/%s"
 	APIEndpointInsight            = "/v2/bot/insight/%s"
+	APIEndpointGetBotInfo         = "/v2/bot/info"
 
 	APIEndpointIssueAccessToken  = "/v2/oauth/accessToken"
 	APIEndpointRevokeAccessToken = "/v2/oauth/revoke"

@@ -93,6 +93,16 @@ type MessageConsumptionResponse struct {
 	TotalUsage int64
 }
 
+// BotInfoResponse type
+type BotInfoResponse struct {
+	UserID         string         `json:"userId"`
+	BasicID        string         `json:"basicId"`
+	PremiumID      string         `json:"premiumId"`
+	PictureUrl     string         `json:"pictureUrl"`
+	ChatMode       ChatMode       `json:"chatMode"`
+	MarkAsReadMode MarkAsReadMode `json:"markAsReadMode"`
+}
+
 // MessagesNumberDeliveryResponse type
 type MessagesNumberDeliveryResponse struct {
 	Status          string `json:"status"`
@@ -374,6 +384,18 @@ func decodeToMessageConsumptionResponse(res *http.Response) (*MessageConsumption
 	}
 	decoder := json.NewDecoder(res.Body)
 	result := &MessageConsumptionResponse{}
+	if err := decoder.Decode(result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func decodeToBotInfoResponse(res *http.Response) (*BotInfoResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := &BotInfoResponse{}
 	if err := decoder.Decode(result); err != nil {
 		return nil, err
 	}
