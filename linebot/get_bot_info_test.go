@@ -41,7 +41,7 @@ func TestGetBotInfo(t *testing.T) {
 		{
 			Label:        "Success",
 			ResponseCode: 200,
-			Response:     []byte(`{"userId":"u206d25c2ea6bd87c17655609a1c37cb8","basicId":"@012abcde","premiumId":"PremiumId","pictureUrl":"https://example.com/abcdefghijklmn","chatMode":"chat","markAsReadMode":"manual"}`),
+			Response:     []byte(`{"userId":"u206d25c2ea6bd87c17655609a1c37cb8","basicId":"@012abcde","premiumId":"PremiumId","displayName":"BotTest","pictureUrl":"https://example.com/abcdefghijklmn","chatMode":"chat","markAsReadMode":"manual"}`),
 			Want: want{
 				URLPath:     APIEndpointGetBotInfo,
 				RequestBody: []byte(""),
@@ -49,6 +49,7 @@ func TestGetBotInfo(t *testing.T) {
 					UserID:         "u206d25c2ea6bd87c17655609a1c37cb8",
 					BasicID:        "@012abcde",
 					PremiumID:      "PremiumId",
+					DisplayName:    "BotTest",
 					PictureURL:     "https://example.com/abcdefghijklmn",
 					ChatMode:       ChatModeChat,
 					MarkAsReadMode: MarkAsReadModeManual,
@@ -58,7 +59,7 @@ func TestGetBotInfo(t *testing.T) {
 		{
 			Label:        "No premiumID Success",
 			ResponseCode: 200,
-			Response:     []byte(`{"userId":"u206d25c2ea6bd87c17655609a1c37cb8","basicId":"@012abcde","pictureUrl":"https://example.com/abcdefghijklmn","chatMode":"bot","markAsReadMode":"auto"}`),
+			Response:     []byte(`{"userId":"u206d25c2ea6bd87c17655609a1c37cb8","basicId":"@012abcde","displayName":"BotTest","pictureUrl":"https://example.com/abcdefghijklmn","chatMode":"bot","markAsReadMode":"auto"}`),
 			Want: want{
 				URLPath:     APIEndpointGetBotInfo,
 				RequestBody: []byte(""),
@@ -66,6 +67,7 @@ func TestGetBotInfo(t *testing.T) {
 					UserID:         "u206d25c2ea6bd87c17655609a1c37cb8",
 					BasicID:        "@012abcde",
 					PremiumID:      "",
+					DisplayName:    "BotTest",
 					PictureURL:     "https://example.com/abcdefghijklmn",
 					ChatMode:       ChatModeBot,
 					MarkAsReadMode: MarkAsReadModeAuto,
