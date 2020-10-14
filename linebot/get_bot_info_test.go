@@ -186,7 +186,7 @@ func TestGetBotInfoWithContext(t *testing.T) {
 func BenchmarkGetBotInfo(b *testing.B) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
-		w.Write([]byte(`{"userId":"U","basicId":"@B","premiumId":"P","pictureUrl":"https://","chatMode":"chat","markAsReadMode":"manual"}`))
+		w.Write([]byte(`{"userId":"U","basicId":"@B","premiumId":"P","displayName":"BotTest","pictureUrl":"https://","chatMode":"chat","markAsReadMode":"manual"}`))
 	}))
 	defer server.Close()
 
