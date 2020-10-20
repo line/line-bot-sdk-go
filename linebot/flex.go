@@ -597,7 +597,7 @@ func (c *SpanComponent) MarshalJSON() ([]byte, error) {
 		Style      FlexTextStyleType      `json:"style,omitempty"`
 		Decoration FlexTextDecorationType `json:"decoration,omitempty"`
 	}{
-		Type:       FlexComponentTypeText,
+		Type:       FlexComponentTypeSpan,
 		Text:       c.Text,
 		Size:       c.Size,
 		Weight:     c.Weight,
@@ -629,7 +629,7 @@ type TextComponent struct {
 func (c *TextComponent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type       FlexComponentType        `json:"type"`
-		Text       string                   `json:"text"`
+		Text       string                   `json:"text,omitempty"`
 		Contents   []*SpanComponent         `json:"contents,omitempty"`
 		Flex       *int                     `json:"flex,omitempty"`
 		Margin     FlexComponentMarginType  `json:"margin,omitempty"`

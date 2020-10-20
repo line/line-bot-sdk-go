@@ -602,7 +602,7 @@ func TestMarshalJSON(t *testing.T) {
 				Style:      FlexTextStyleTypeNormal,
 				Decoration: FlexTextDecorationTypeNone,
 			},
-			[]byte(`{"type":"text","text":"span","size":"md","weight":"regular","color":"#0000ff","style":"normal","decoration":"none"}`),
+			[]byte(`{"type":"span","text":"span","size":"md","weight":"regular","color":"#0000ff","style":"normal","decoration":"none"}`),
 		},
 	}
 
