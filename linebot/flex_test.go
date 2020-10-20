@@ -15,6 +15,7 @@
 package linebot
 
 import (
+	"encoding/json"
 	"reflect"
 	"strconv"
 	"testing"
@@ -500,6 +501,21 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
         "type": "text",
         "text": "world",
         "flex": 2
+	  },
+	  {
+        "type": "text",
+        "contents": [
+		  {
+			"type": "span",
+			"text": "hi"
+		  },
+		  {
+			"type": "span",
+			"text": "span",
+			"size": "xl",
+			"color": "#29cf5b"
+		  }
+		]
       }
     ]
   }
@@ -524,6 +540,21 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 							Text: "world",
 							Flex: IntPtr(2),
 						},
+						&TextComponent{
+							Type: FlexComponentTypeText,
+							Contents: []*SpanComponent{
+								{
+									Type: FlexComponentTypeSpan,
+									Text: "hi",
+								},
+								{
+									Type:  FlexComponentTypeSpan,
+									Text:  "span",
+									Size:  FlexTextSizeTypeXl,
+									Color: "#29cf5b",
+								},
+							},
+						},
 					},
 				},
 			},
@@ -543,37 +574,49 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 }
 
 func TestMarshalJSON(t *testing.T) {
-    testCases := []struct {
-        component FillerComponent
-        want []byte
-    }{
-        {
-            FillerComponent{
-                Type: FlexComponentTypeFiller,
-                Flex: nil,
-            },
-            []byte(`{"type":"filler"}`),
-        },
-        {
-            FillerComponent{
-                Type: FlexComponentTypeFiller,
-                Flex: IntPtr(4),
-            },
-            []byte(`{"type":"filler","flex":4}`),
-        },
-    }
+	testCases := []struct {
+		component FlexComponent
+		want      []byte
+	}{
+		{
+			&FillerComponent{
+				Type: FlexComponentTypeFiller,
+				Flex: nil,
+			},
+			[]byte(`{"type":"filler"}`),
+		},
+		{
+			&FillerComponent{
+				Type: FlexComponentTypeFiller,
+				Flex: IntPtr(4),
+			},
+			[]byte(`{"type":"filler","flex":4}`),
+		},
+		{
+			&SpanComponent{
+				Type:       FlexComponentTypeSpan,
+				Text:       "span",
+				Size:       FlexTextSizeTypeMd,
+				Weight:     FlexTextWeightTypeRegular,
+				Color:      "#0000ff",
+				Style:      FlexTextStyleTypeNormal,
+				Decoration: FlexTextDecorationTypeNone,
+			},
+			[]byte(`{"type":"text","text":"span","size":"md","weight":"regular","color":"#0000ff","style":"normal","decoration":"none"}`),
+		},
+	}
 
-    for i, tc := range testCases {
-        t.Run(strconv.Itoa(i), func(t *testing.T) {
-            got, err := tc.component.MarshalJSON()
-            if err != nil {
-                t.Fatal(err)
-            }
-            if !reflect.DeepEqual(got, tc.want) {
-                t.Errorf("got %s, want %s", string(got), string(tc.want))
-            }
-        })
-    }
+	for i, tc := range testCases {
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			got, err := json.Marshal(tc.component)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if !reflect.DeepEqual(got, tc.want) {
+				t.Errorf("got %s, want %s", string(got), string(tc.want))
+			}
+		})
+	}
 }
 
 func BenchmarkUnmarshalFlexMessageJSON(b *testing.B) {
@@ -672,6 +715,27 @@ func BenchmarkUnmarshalFlexMessageJSON(b *testing.B) {
 							"gravity": "bottom",
 							"size": "xs",
 							"flex": 1
+						},
+						{
+							"type": "text",
+							"contents": [
+								{
+									"type": "span",
+									"text": "LINE",
+									"size": "xxl",
+									"weight": "bold",
+									"style": "italic",
+									"color": "#4f8f00"
+								},
+								{
+									"type": "span",
+									"text": "MUSIC",
+									"size": "xxl",
+									"weight": "bold",
+									"style": "italic",
+									"color": "#4f8f00"
+								}
+							]
 						}
 					]
 				}

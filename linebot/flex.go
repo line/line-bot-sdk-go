@@ -42,6 +42,7 @@ const (
 	FlexComponentTypeImage     FlexComponentType = "image"
 	FlexComponentTypeSeparator FlexComponentType = "separator"
 	FlexComponentTypeSpacer    FlexComponentType = "spacer"
+	FlexComponentTypeSpan      FlexComponentType = "span"
 	FlexComponentTypeText      FlexComponentType = "text"
 )
 
@@ -574,10 +575,43 @@ func (c *SpacerComponent) MarshalJSON() ([]byte, error) {
 	})
 }
 
+// SpanComponent type
+type SpanComponent struct {
+	Type       FlexComponentType
+	Text       string
+	Size       FlexTextSizeType
+	Weight     FlexTextWeightType
+	Color      string
+	Style      FlexTextStyleType
+	Decoration FlexTextDecorationType
+}
+
+// MarshalJSON method of SpanComponent
+func (c *SpanComponent) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		Type       FlexComponentType      `json:"type"`
+		Text       string                 `json:"text,omitempty"`
+		Size       FlexTextSizeType       `json:"size,omitempty"`
+		Weight     FlexTextWeightType     `json:"weight,omitempty"`
+		Color      string                 `json:"color,omitempty"`
+		Style      FlexTextStyleType      `json:"style,omitempty"`
+		Decoration FlexTextDecorationType `json:"decoration,omitempty"`
+	}{
+		Type:       FlexComponentTypeText,
+		Text:       c.Text,
+		Size:       c.Size,
+		Weight:     c.Weight,
+		Color:      c.Color,
+		Style:      c.Style,
+		Decoration: c.Decoration,
+	})
+}
+
 // TextComponent type
 type TextComponent struct {
 	Type       FlexComponentType
 	Text       string
+	Contents   []*SpanComponent
 	Flex       *int
 	Margin     FlexComponentMarginType
 	Size       FlexTextSizeType
@@ -596,6 +630,7 @@ func (c *TextComponent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type       FlexComponentType        `json:"type"`
 		Text       string                   `json:"text"`
+		Contents   []*SpanComponent         `json:"contents,omitempty"`
 		Flex       *int                     `json:"flex,omitempty"`
 		Margin     FlexComponentMarginType  `json:"margin,omitempty"`
 		Size       FlexTextSizeType         `json:"size,omitempty"`
@@ -610,6 +645,7 @@ func (c *TextComponent) MarshalJSON() ([]byte, error) {
 	}{
 		Type:       FlexComponentTypeText,
 		Text:       c.Text,
+		Contents:   c.Contents,
 		Flex:       c.Flex,
 		Margin:     c.Margin,
 		Size:       c.Size,
@@ -644,6 +680,9 @@ func (*SeparatorComponent) FlexComponent() {}
 
 // FlexComponent implements FlexComponent interface
 func (*SpacerComponent) FlexComponent() {}
+
+// FlexComponent implements FlexComponent interface
+func (*SpanComponent) FlexComponent() {}
 
 // FlexComponent implements FlexComponent interface
 func (*TextComponent) FlexComponent() {}
