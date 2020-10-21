@@ -325,14 +325,14 @@ func TestPushMessages(t *testing.T) {
 					"https://example.com/bot/images/rm001",
 					"this is an imagemap",
 					ImagemapBaseSize{1040, 1040},
-					NewURIImagemapAction("https://example.com/", ImagemapArea{520, 0, 520, 1040}),
-					NewMessageImagemapAction("hello", ImagemapArea{520, 0, 520, 1040}),
+					NewURIImagemapAction("example", "https://example.com/", ImagemapArea{520, 0, 520, 1040}),
+					NewMessageImagemapAction("hello", "hello", ImagemapArea{520, 0, 520, 1040}),
 				),
 			},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
-				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}]}]}` + "\n"),
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","label":"example","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","label":"hello","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}]}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
@@ -343,8 +343,8 @@ func TestPushMessages(t *testing.T) {
 					"https://example.com/bot/images/rm001",
 					"this is an imagemap with video",
 					ImagemapBaseSize{1040, 1040},
-					NewURIImagemapAction("https://example.com/", ImagemapArea{520, 0, 520, 1040}),
-					NewMessageImagemapAction("hello", ImagemapArea{520, 0, 520, 1040}),
+					NewURIImagemapAction("example", "https://example.com/", ImagemapArea{520, 0, 520, 1040}),
+					NewMessageImagemapAction("hello", "hello", ImagemapArea{520, 0, 520, 1040}),
 				).WithVideo(&ImagemapVideo{
 					OriginalContentURL: "https://example.com/original.mp4",
 					PreviewImageURL:    "https://example.com/preview.jpg",
@@ -354,7 +354,7 @@ func TestPushMessages(t *testing.T) {
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
-				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap with video","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}],"video":{"originalContentUrl":"https://example.com/original.mp4","previewImageUrl":"https://example.com/preview.jpg","area":{"x":10,"y":10,"width":100,"height":200}}}]}` + "\n"),
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap with video","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","label":"example","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","label":"hello","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}],"video":{"originalContentUrl":"https://example.com/original.mp4","previewImageUrl":"https://example.com/preview.jpg","area":{"x":10,"y":10,"width":100,"height":200}}}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
@@ -365,8 +365,8 @@ func TestPushMessages(t *testing.T) {
 					"https://example.com/bot/images/rm001",
 					"this is an imagemap with video and external link",
 					ImagemapBaseSize{1040, 1040},
-					NewURIImagemapAction("https://example.com/", ImagemapArea{520, 0, 520, 1040}),
-					NewMessageImagemapAction("hello", ImagemapArea{520, 0, 520, 1040}),
+					NewURIImagemapAction("example", "https://example.com/", ImagemapArea{520, 0, 520, 1040}),
+					NewMessageImagemapAction("hello", "hello", ImagemapArea{520, 0, 520, 1040}),
 				).WithVideo(&ImagemapVideo{
 					OriginalContentURL: "https://example.com/original.mp4",
 					PreviewImageURL:    "https://example.com/preview.jpg",
@@ -380,7 +380,7 @@ func TestPushMessages(t *testing.T) {
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
-				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap with video and external link","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}],"video":{"originalContentUrl":"https://example.com/original.mp4","previewImageUrl":"https://example.com/preview.jpg","area":{"x":10,"y":10,"width":100,"height":200},"externalLink":{"linkUri":"https://example.com/","label":"external link"}}}]}` + "\n"),
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap with video and external link","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","label":"example","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","label":"hello","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}],"video":{"originalContentUrl":"https://example.com/original.mp4","previewImageUrl":"https://example.com/preview.jpg","area":{"x":10,"y":10,"width":100,"height":200},"externalLink":{"linkUri":"https://example.com/","label":"external link"}}}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
@@ -497,7 +497,16 @@ func TestPushMessages(t *testing.T) {
 		w.Write(tc.Response)
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -530,7 +539,16 @@ func TestPushMessagesWithContext(t *testing.T) {
 		w.Write([]byte("{}"))
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -642,7 +660,16 @@ func TestReplyMessages(t *testing.T) {
 		w.Write(tc.Response)
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -675,7 +702,16 @@ func TestReplyMessagesWithContext(t *testing.T) {
 		w.Write([]byte("{}"))
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -790,7 +826,16 @@ func TestMulticastMessages(t *testing.T) {
 		w.Write(tc.Response)
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -823,7 +868,16 @@ func TestMulticastMessagesWithContext(t *testing.T) {
 		w.Write([]byte("{}"))
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -1131,14 +1185,14 @@ func TestBroadcastMessages(t *testing.T) {
 					"https://example.com/bot/images/rm001",
 					"this is an imagemap",
 					ImagemapBaseSize{1040, 1040},
-					NewURIImagemapAction("https://example.com/", ImagemapArea{520, 0, 520, 1040}),
-					NewMessageImagemapAction("hello", ImagemapArea{520, 0, 520, 1040}),
+					NewURIImagemapAction("example", "https://example.com/", ImagemapArea{520, 0, 520, 1040}),
+					NewMessageImagemapAction("hello", "hello", ImagemapArea{520, 0, 520, 1040}),
 				),
 			},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
-				RequestBody: []byte(`{"messages":[{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}]}]}` + "\n"),
+				RequestBody: []byte(`{"messages":[{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","label":"example","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","label":"hello","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}]}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
@@ -1149,8 +1203,8 @@ func TestBroadcastMessages(t *testing.T) {
 					"https://example.com/bot/images/rm001",
 					"this is an imagemap with video",
 					ImagemapBaseSize{1040, 1040},
-					NewURIImagemapAction("https://example.com/", ImagemapArea{520, 0, 520, 1040}),
-					NewMessageImagemapAction("hello", ImagemapArea{520, 0, 520, 1040}),
+					NewURIImagemapAction("example", "https://example.com/", ImagemapArea{520, 0, 520, 1040}),
+					NewMessageImagemapAction("hello", "hello", ImagemapArea{520, 0, 520, 1040}),
 				).WithVideo(&ImagemapVideo{
 					OriginalContentURL: "https://example.com/original.mp4",
 					PreviewImageURL:    "https://example.com/preview.jpg",
@@ -1160,7 +1214,7 @@ func TestBroadcastMessages(t *testing.T) {
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
-				RequestBody: []byte(`{"messages":[{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap with video","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}],"video":{"originalContentUrl":"https://example.com/original.mp4","previewImageUrl":"https://example.com/preview.jpg","area":{"x":10,"y":10,"width":100,"height":200}}}]}` + "\n"),
+				RequestBody: []byte(`{"messages":[{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap with video","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","label":"example","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","label":"hello","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}],"video":{"originalContentUrl":"https://example.com/original.mp4","previewImageUrl":"https://example.com/preview.jpg","area":{"x":10,"y":10,"width":100,"height":200}}}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
@@ -1171,8 +1225,8 @@ func TestBroadcastMessages(t *testing.T) {
 					"https://example.com/bot/images/rm001",
 					"this is an imagemap with video and external link",
 					ImagemapBaseSize{1040, 1040},
-					NewURIImagemapAction("https://example.com/", ImagemapArea{520, 0, 520, 1040}),
-					NewMessageImagemapAction("hello", ImagemapArea{520, 0, 520, 1040}),
+					NewURIImagemapAction("example", "https://example.com/", ImagemapArea{520, 0, 520, 1040}),
+					NewMessageImagemapAction("hello", "hello", ImagemapArea{520, 0, 520, 1040}),
 				).WithVideo(&ImagemapVideo{
 					OriginalContentURL: "https://example.com/original.mp4",
 					PreviewImageURL:    "https://example.com/preview.jpg",
@@ -1186,7 +1240,7 @@ func TestBroadcastMessages(t *testing.T) {
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
-				RequestBody: []byte(`{"messages":[{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap with video and external link","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}],"video":{"originalContentUrl":"https://example.com/original.mp4","previewImageUrl":"https://example.com/preview.jpg","area":{"x":10,"y":10,"width":100,"height":200},"externalLink":{"linkUri":"https://example.com/","label":"external link"}}}]}` + "\n"),
+				RequestBody: []byte(`{"messages":[{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap with video and external link","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","label":"example","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","label":"hello","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}],"video":{"originalContentUrl":"https://example.com/original.mp4","previewImageUrl":"https://example.com/preview.jpg","area":{"x":10,"y":10,"width":100,"height":200},"externalLink":{"linkUri":"https://example.com/","label":"external link"}}}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
@@ -1255,6 +1309,108 @@ func TestBroadcastMessages(t *testing.T) {
 				Response:    &BasicResponse{},
 			},
 		},
+		// Single message with sender
+		{
+			Messages: []SendingMessage{
+				NewAudioMessage("https://example.com/original.m4a", 1000).WithSender(
+					NewSender("Cony", "https://line.me/conyprof"),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"audio","originalContentUrl":"https://example.com/original.m4a","duration":1000,"sender":{"name":"Cony","iconUrl":"https://line.me/conyprof"}}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		// Single location message with sender
+		{
+			Messages: []SendingMessage{
+				NewLocationMessage("title", "address", 35.65910807942215, 139.70372892916203).WithSender(
+					NewSender("Cony", "https://line.me/conyprof"),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"location","title":"title","address":"address","latitude":35.65910807942215,"longitude":139.70372892916203,"sender":{"name":"Cony","iconUrl":"https://line.me/conyprof"}}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A imagemap message with sender
+			Messages: []SendingMessage{
+				NewImagemapMessage(
+					"https://example.com/bot/images/rm001",
+					"this is an imagemap",
+					ImagemapBaseSize{1040, 1040},
+					NewURIImagemapAction("example", "https://example.com/", ImagemapArea{520, 0, 520, 1040}),
+					NewMessageImagemapAction("hello", "hello", ImagemapArea{520, 0, 520, 1040}),
+				).WithSender(
+					NewSender("Cony", "https://line.me/conyprof"),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"imagemap","baseUrl":"https://example.com/bot/images/rm001","altText":"this is an imagemap","baseSize":{"width":1040,"height":1040},"actions":[{"type":"uri","label":"example","linkUri":"https://example.com/","area":{"x":520,"y":0,"width":520,"height":1040}},{"type":"message","label":"hello","text":"hello","area":{"x":520,"y":0,"width":520,"height":1040}}],"sender":{"name":"Cony","iconUrl":"https://line.me/conyprof"}}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			Messages: []SendingMessage{
+				NewTextMessage("Hello, I am Cony!!").WithSender(
+					NewSender("Cony", "https://line.me/conyprof"),
+				),
+				NewStickerMessage("1", "1").WithSender(
+					NewSender("Cony", "https://line.me/conyprof"),
+				),
+				NewVideoMessage("https://example.com/original.mp4", "https://example.com/preview.jpg").WithSender(
+					NewSender("Cony", "https://line.me/conyprof"),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"text","text":"Hello, I am Cony!!","sender":{"name":"Cony","iconUrl":"https://line.me/conyprof"}},{"type":"sticker","packageId":"1","stickerId":"1","sender":{"name":"Cony","iconUrl":"https://line.me/conyprof"}},{"type":"video","originalContentUrl":"https://example.com/original.mp4","previewImageUrl":"https://example.com/preview.jpg","sender":{"name":"Cony","iconUrl":"https://line.me/conyprof"}}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// Multiple messages with sender
+			Messages: []SendingMessage{
+				NewTextMessage("Hello, I am Cony!!").WithSender(
+					NewSender("Cony", "https://line.me/conyprof"),
+				),
+				NewStickerMessage("1", "1").WithSender(
+					NewSender("Cony", "https://line.me/conyprof"),
+				),
+				NewVideoMessage("https://example.com/original.mp4", "https://example.com/preview.jpg").WithSender(
+					NewSender("Cony", "https://line.me/conyprof"),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"text","text":"Hello, I am Cony!!","sender":{"name":"Cony","iconUrl":"https://line.me/conyprof"}},{"type":"sticker","packageId":"1","stickerId":"1","sender":{"name":"Cony","iconUrl":"https://line.me/conyprof"}},{"type":"video","originalContentUrl":"https://example.com/original.mp4","previewImageUrl":"https://example.com/preview.jpg","sender":{"name":"Cony","iconUrl":"https://line.me/conyprof"}}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			// A text message with emojis
+			Messages: []SendingMessage{
+				NewTextMessage("$ Look at this: $ It's a LINE emoji!").AddEmoji(
+					NewEmoji(0, "5ac1bfd5040ab15980c9b435", "086")).AddEmoji(
+					NewEmoji(14, "5ac1bfd5040ab15980c9b435", "001"),
+				),
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"text","text":"$ Look at this: $ It's a LINE emoji!","emojis":[{"index":0,"productId":"5ac1bfd5040ab15980c9b435","emojiId":"086"},{"index":14,"productId":"5ac1bfd5040ab15980c9b435","emojiId":"001"}]}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
 		{
 			// Bad request
 			Messages:     []SendingMessage{NewTextMessage(""), NewTextMessage("")},
@@ -1303,7 +1459,16 @@ func TestBroadcastMessages(t *testing.T) {
 		w.Write(tc.Response)
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -1334,7 +1499,16 @@ func TestBroadcastMessagesWithContext(t *testing.T) {
 		w.Write([]byte("{}"))
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -1343,6 +1517,7 @@ func TestBroadcastMessagesWithContext(t *testing.T) {
 	_, err = client.BroadcastMessage(NewTextMessage("Hello, world")).WithContext(ctx).Do()
 	expectCtxDeadlineExceed(ctx, err, t)
 }
+
 func TestMessagesWithNotificationDisabled(t *testing.T) {
 	type testMethod interface {
 		Do() (*BasicResponse, error)
@@ -1417,7 +1592,16 @@ func TestMessagesWithNotificationDisabled(t *testing.T) {
 		w.Write(tc.Response)
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -1451,13 +1635,188 @@ func TestMessagesWithNotificationDisabled(t *testing.T) {
 	}
 }
 
+func TestNarrowcastMessages(t *testing.T) {
+	type want struct {
+		RequestBody []byte
+		Response    *BasicResponse
+		Error       error
+	}
+	var testCases = []struct {
+		Label              string
+		Messages           []SendingMessage
+		Recipient          Recipient
+		Demographic        DemographicFilter
+		Max                int
+		UpToRemainingQuota bool
+		RequestID          string
+		Response           []byte
+		ResponseCode       int
+		Want               want
+	}{
+		{
+			Label:    "A text message for Narrowcast Message with Audience",
+			Messages: []SendingMessage{NewTextMessage("Hello, world")},
+			Recipient: RecipientOperatorAnd(
+				NewAudienceObject(5614991017776),
+				RecipientOperatorNot(
+					NewAudienceObject(4389303728991),
+				),
+			),
+			Demographic:  nil,
+			Max:          0,
+			RequestID:    "12222",
+			Response:     []byte(`{}`),
+			ResponseCode: 202,
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"text","text":"Hello, world"}],"recipient":{"type":"operator","and":[{"type":"audience","audienceGroupId":5614991017776},{"type":"operator","not":{"type":"audience","audienceGroupId":4389303728991}}]}}` + "\n"),
+				Response:    &BasicResponse{RequestID: "12222"},
+			},
+		},
+		{
+			Label:        "A text message for Narrowcast Message for android",
+			Messages:     []SendingMessage{NewTextMessage("Hello, world")},
+			Recipient:    nil,
+			Demographic:  NewAppTypeFilter(AppTypeAndroid),
+			Max:          0,
+			RequestID:    "22222",
+			Response:     []byte(`{}`),
+			ResponseCode: 202,
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"text","text":"Hello, world"}],"filter":{"demographic":{"type":"appType","oneOf":["android"]}}}` + "\n"),
+				Response:    &BasicResponse{RequestID: "22222"},
+			},
+		},
+		{
+			Label:              "A text message for Narrowcast Message for male and age >= 30 and limit max to 10",
+			Messages:           []SendingMessage{NewTextMessage("Hello, world")},
+			Recipient:          nil,
+			Demographic:        DemographicFilterOperatorAnd(NewGenderFilter(GenderMale), NewAgeFilter(Age30, AgeEmpty)),
+			Max:                10,
+			UpToRemainingQuota: true,
+			RequestID:          "32222",
+			Response:           []byte(`{}`),
+			ResponseCode:       202,
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"text","text":"Hello, world"}],"filter":{"demographic":{"type":"operator","and":[{"type":"gender","oneOf":["male"]},{"type":"age","gte":"age_30"}]}},"limit":{"max":10,"upToRemainingQuota":true}}` + "\n"),
+				Response:    &BasicResponse{RequestID: "32222"},
+			},
+		},
+		{
+			Label:    "An example message for sending narrowcast message based on official documentation",
+			Messages: []SendingMessage{NewTextMessage("test message")},
+			Recipient: RecipientOperatorAnd(
+				NewAudienceObject(5614991017776),
+				RecipientOperatorNot(
+					NewAudienceObject(4389303728991),
+				),
+			),
+			Demographic: DemographicFilterOperatorOr(
+				DemographicFilterOperatorAnd(
+					NewGenderFilter(GenderMale, GenderFemale),
+					NewAgeFilter(Age20, Age25),
+					NewAppTypeFilter(AppTypeAndroid, AppTypeIOS),
+					NewAreaFilter(AreaJPAichi, AreaJPAkita),
+					NewSubscriptionPeriodFilter(PeriodDay7, PeriodDay30),
+				),
+				DemographicFilterOperatorAnd(
+					NewAgeFilter(Age35, Age40),
+					DemographicFilterOperatorNot(NewGenderFilter(GenderMale)),
+				),
+			),
+			Max:          100,
+			RequestID:    "32222",
+			Response:     []byte(`{}`),
+			ResponseCode: 202,
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"text","text":"test message"}],"recipient":{"type":"operator","and":[{"type":"audience","audienceGroupId":5614991017776},{"type":"operator","not":{"type":"audience","audienceGroupId":4389303728991}}]},"filter":{"demographic":{"type":"operator","or":[{"type":"operator","and":[{"type":"gender","oneOf":["male","female"]},{"type":"age","gte":"age_20","lt":"age_25"},{"type":"appType","oneOf":["android","ios"]},{"type":"area","oneOf":["jp_23","jp_05"]},{"type":"subscriptionPeriod","gte":"day_7","lt":"day_30"}]},{"type":"operator","and":[{"type":"age","gte":"age_35","lt":"age_40"},{"type":"operator","not":{"type":"gender","oneOf":["male"]}}]}]}},"limit":{"max":100}}` + "\n"),
+				Response:    &BasicResponse{RequestID: "32222"},
+			},
+		},
+	}
+
+	var currentTestIdx int
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		if r.Method != http.MethodPost {
+			t.Errorf("Method %s; want %s", r.Method, http.MethodPost)
+		}
+		body, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+		tc := testCases[currentTestIdx]
+		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
+			t.Errorf("RequestBody \n%s; want \n%s", body, tc.Want.RequestBody)
+		}
+		w.Header().Set("X-Line-Request-Id", tc.RequestID)
+		w.WriteHeader(tc.ResponseCode)
+		w.Write(tc.Response)
+	}))
+	defer server.Close()
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for i, tc := range testCases {
+		currentTestIdx = i
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
+			narrowCast := client.Narrowcast(tc.Messages...)
+			if tc.Recipient != nil {
+				narrowCast = narrowCast.WithRecipient(tc.Recipient)
+			}
+			if tc.Demographic != nil {
+				narrowCast = narrowCast.WithDemographic(tc.Demographic)
+			}
+			if tc.Max > 0 {
+				narrowCast = narrowCast.WithLimitMax(tc.Max)
+			}
+			if tc.UpToRemainingQuota {
+				narrowCast = narrowCast.WithLimitMaxUpToRemainingQuota(tc.Max, tc.UpToRemainingQuota)
+			}
+			res, err := narrowCast.Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
+			}
+			if tc.Want.Response != nil {
+				if !reflect.DeepEqual(res, tc.Want.Response) {
+					t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
+				}
+			}
+		})
+	}
+}
+
 func BenchmarkPushMessages(b *testing.B) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 		w.Write([]byte("{}"))
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		b.Error("Unexpected data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		b.Fatal(err)
 	}
@@ -1467,13 +1826,154 @@ func BenchmarkPushMessages(b *testing.B) {
 	}
 }
 
+func TestMessagesWithRetryKey(t *testing.T) {
+	type testMethod interface {
+		Do() (*BasicResponse, error)
+	}
+	var toUserIDs = []string{
+		"U0cc15697597f61dd8b01cea8b027050e",
+		"U38ecbecfade326557b6971140741a4a6",
+	}
+	var msgUUIDs string = "123e4567-e89b-12d3-a456-426655440002"
+
+	type want struct {
+		RequestBody []byte
+		Response    *BasicResponse
+		Error       error
+	}
+	var testCases = []struct {
+		Label        string
+		TestMethod   testMethod
+		Messages     []SendingMessage
+		Response     []byte
+		ResponseCode int
+		Want         want
+	}{
+		{
+			Label:        "A text message for Push Message",
+			TestMethod:   new(PushMessageCall),
+			Messages:     []SendingMessage{NewTextMessage("Hello, world")},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":"U0cc15697597f61dd8b01cea8b027050e","messages":[{"type":"text","text":"Hello, world"}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			Label:        "A text message for Multicast",
+			TestMethod:   new(MulticastCall),
+			Messages:     []SendingMessage{NewTextMessage("Hello, world")},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"to":["U0cc15697597f61dd8b01cea8b027050e","U38ecbecfade326557b6971140741a4a6"],"messages":[{"type":"text","text":"Hello, world"}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			Label:        "A text message for Narrowcast",
+			TestMethod:   new(NarrowcastCall),
+			Messages:     []SendingMessage{NewTextMessage("Hello, world")},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"text","text":"Hello, world"}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+		{
+			Label:        "A text message for Broadcast",
+			TestMethod:   new(BroadcastMessageCall),
+			Messages:     []SendingMessage{NewTextMessage("Hello, world")},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"text","text":"Hello, world"}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+	}
+
+	var currentTestIdx int
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		if r.Method != http.MethodPost {
+			t.Errorf("Method %s; want %s", r.Method, http.MethodPost)
+		}
+		body, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+		tc := testCases[currentTestIdx]
+		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
+			t.Errorf("RequestBody %s; want %s", body, tc.Want.RequestBody)
+		}
+		w.WriteHeader(tc.ResponseCode)
+		w.Write(tc.Response)
+	}))
+	defer server.Close()
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var res *BasicResponse
+	for i, tc := range testCases {
+		currentTestIdx = i
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
+			switch tc.TestMethod.(type) {
+			case *PushMessageCall:
+				res, err = client.PushMessage(toUserIDs[0], tc.Messages...).WithRetryKey(msgUUIDs).Do()
+			case *MulticastCall:
+				res, err = client.Multicast(toUserIDs, tc.Messages...).WithRetryKey(msgUUIDs).Do()
+			case *NarrowcastCall:
+				res, err = client.Narrowcast(tc.Messages...).WithRetryKey(msgUUIDs).Do()
+			case *BroadcastMessageCall:
+				res, err = client.BroadcastMessage(tc.Messages...).WithRetryKey(msgUUIDs).Do()
+			}
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %d %v; want %v", i, err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
+			}
+			if tc.Want.Response != nil {
+				if !reflect.DeepEqual(res, tc.Want.Response) {
+					t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
+				}
+			}
+		})
+	}
+}
+
 func BenchmarkReplyMessages(b *testing.B) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 		w.Write([]byte("{}"))
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		b.Error("Unexpected data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		b.Fatal(err)
 	}
@@ -1489,7 +1989,16 @@ func BenchmarkMulticast(b *testing.B) {
 		w.Write([]byte("{}"))
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		b.Error("Unexpected data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		b.Fatal(err)
 	}
@@ -1505,7 +2014,16 @@ func BenchmarkBroadcastMessage(b *testing.B) {
 		w.Write([]byte("{}"))
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		b.Error("Unexpected data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		b.Fatal(err)
 	}

@@ -15,6 +15,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -47,6 +48,12 @@ func main() {
 				switch message := event.Message.(type) {
 				case *linebot.TextMessage:
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
+						log.Print(err)
+					}
+				case *linebot.StickerMessage:
+					replyMessage := fmt.Sprintf(
+						"sticker id is %s, stickerResourceType is %s", message.StickerID, message.StickerResourceType)
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(replyMessage)).Do(); err != nil {
 						log.Print(err)
 					}
 				}

@@ -26,12 +26,14 @@ import (
 
 // APIEndpoint constants
 const (
-	APIEndpointBase = "https://api.line.me"
+	APIEndpointBase     = "https://api.line.me"
+	APIEndpointBaseData = "https://api-data.line.me"
 
 	APIEndpointPushMessage                = "/v2/bot/message/push"
 	APIEndpointBroadcastMessage           = "/v2/bot/message/broadcast"
 	APIEndpointReplyMessage               = "/v2/bot/message/reply"
 	APIEndpointMulticast                  = "/v2/bot/message/multicast"
+	APIEndpointNarrowcast                 = "/v2/bot/message/narrowcast"
 	APIEndpointGetMessageContent          = "/v2/bot/message/%s/content"
 	APIEndpointGetMessageQuota            = "/v2/bot/message/quota"
 	APIEndpointGetMessageConsumption      = "/v2/bot/message/quota/consumption"
@@ -43,6 +45,9 @@ const (
 	APIEndpointGetRoomMemberProfile       = "/v2/bot/room/%s/member/%s"
 	APIEndpointGetGroupMemberIDs          = "/v2/bot/group/%s/members/ids"
 	APIEndpointGetRoomMemberIDs           = "/v2/bot/room/%s/members/ids"
+	APIEndpointGetGroupMemberCount        = "/v2/bot/group/%s/members/count"
+	APIEndpointGetRoomMemberCount         = "/v2/bot/room/%s/members/count"
+	APIEndpointGetGroupSummary            = "/v2/bot/group/%s/summary"
 	APIEndpointCreateRichMenu             = "/v2/bot/richmenu"
 	APIEndpointGetRichMenu                = "/v2/bot/richmenu/%s"
 	APIEndpointListRichMenu               = "/v2/bot/richmenu/list"
@@ -65,17 +70,26 @@ const (
 	APIEndpointLinkToken = "/v2/bot/user/%s/linkToken"
 
 	APIEndpointGetMessageDelivery = "/v2/bot/message/delivery/%s"
+	APIEndpointGetMessageProgress = "/v2/bot/message/progress/%s"
+	APIEndpointInsight            = "/v2/bot/insight/%s"
+	APIEndpointGetBotInfo         = "/v2/bot/info"
 
 	APIEndpointIssueAccessToken  = "/v2/oauth/accessToken"
 	APIEndpointRevokeAccessToken = "/v2/oauth/revoke"
+
+	APIEndpointIssueAccessTokenV2  = "/oauth2/v2.1/token"
+	APIEndpointGetAccessTokensV2   = "/oauth2/v2.1/tokens/kid"
+	APIEndpointRevokeAccessTokenV2 = "/oauth2/v2.1/revoke"
 )
 
 // Client type
 type Client struct {
-	channelSecret string
-	channelToken  string
-	endpointBase  *url.URL     // default APIEndpointBase
-	httpClient    *http.Client // default http.DefaultClient
+	channelSecret    string
+	channelToken     string
+	endpointBase     *url.URL     // default APIEndpointBase
+	endpointBaseData *url.URL     // default APIEndpointBaseData
+	httpClient       *http.Client // default http.DefaultClient
+	retryKeyID       string       // X-Line-Retry-Key allows you to safely retry API requests without duplicating messages
 }
 
 // ClientOption type
@@ -107,6 +121,13 @@ func New(channelSecret, channelToken string, options ...ClientOption) (*Client, 
 		}
 		c.endpointBase = u
 	}
+	if c.endpointBaseData == nil {
+		u, err := url.ParseRequestURI(APIEndpointBaseData)
+		if err != nil {
+			return nil, err
+		}
+		c.endpointBaseData = u
+	}
 	return c, nil
 }
 
@@ -130,8 +151,20 @@ func WithEndpointBase(endpointBase string) ClientOption {
 	}
 }
 
-func (client *Client) url(endpoint string) string {
-	u := *client.endpointBase
+// WithEndpointBaseData function
+func WithEndpointBaseData(endpointBaseData string) ClientOption {
+	return func(client *Client) error {
+		u, err := url.ParseRequestURI(endpointBaseData)
+		if err != nil {
+			return err
+		}
+		client.endpointBaseData = u
+		return nil
+	}
+}
+
+func (client *Client) url(base *url.URL, endpoint string) string {
+	u := *base
 	u.Path = path.Join(u.Path, endpoint)
 	return u.String()
 }
@@ -139,6 +172,9 @@ func (client *Client) url(endpoint string) string {
 func (client *Client) do(ctx context.Context, req *http.Request) (*http.Response, error) {
 	req.Header.Set("Authorization", "Bearer "+client.channelToken)
 	req.Header.Set("User-Agent", "LINE-BotSDK-Go/"+version)
+	if len(client.retryKeyID) > 0 {
+		req.Header.Set("X-Line-Retry-Key", client.retryKeyID)
+	}
 	if ctx != nil {
 		req = req.WithContext(ctx)
 	}
@@ -146,8 +182,8 @@ func (client *Client) do(ctx context.Context, req *http.Request) (*http.Response
 
 }
 
-func (client *Client) get(ctx context.Context, endpoint string, query url.Values) (*http.Response, error) {
-	req, err := http.NewRequest(http.MethodGet, client.url(endpoint), nil)
+func (client *Client) get(ctx context.Context, base *url.URL, endpoint string, query url.Values) (*http.Response, error) {
+	req, err := http.NewRequest(http.MethodGet, client.url(base, endpoint), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -158,7 +194,7 @@ func (client *Client) get(ctx context.Context, endpoint string, query url.Values
 }
 
 func (client *Client) post(ctx context.Context, endpoint string, body io.Reader) (*http.Response, error) {
-	req, err := http.NewRequest(http.MethodPost, client.url(endpoint), body)
+	req, err := http.NewRequest(http.MethodPost, client.url(client.endpointBase, endpoint), body)
 	if err != nil {
 		return nil, err
 	}
@@ -167,7 +203,7 @@ func (client *Client) post(ctx context.Context, endpoint string, body io.Reader)
 }
 
 func (client *Client) postform(ctx context.Context, endpoint string, body io.Reader) (*http.Response, error) {
-	req, err := http.NewRequest("POST", client.url(endpoint), body)
+	req, err := http.NewRequest("POST", client.url(client.endpointBase, endpoint), body)
 	if err != nil {
 		return nil, err
 	}
@@ -176,7 +212,7 @@ func (client *Client) postform(ctx context.Context, endpoint string, body io.Rea
 }
 
 func (client *Client) put(ctx context.Context, endpoint string, body io.Reader) (*http.Response, error) {
-	req, err := http.NewRequest(http.MethodPut, client.url(endpoint), body)
+	req, err := http.NewRequest(http.MethodPut, client.url(client.endpointBase, endpoint), body)
 	if err != nil {
 		return nil, err
 	}
@@ -185,11 +221,15 @@ func (client *Client) put(ctx context.Context, endpoint string, body io.Reader) 
 }
 
 func (client *Client) delete(ctx context.Context, endpoint string) (*http.Response, error) {
-	req, err := http.NewRequest(http.MethodDelete, client.url(endpoint), nil)
+	req, err := http.NewRequest(http.MethodDelete, client.url(client.endpointBase, endpoint), nil)
 	if err != nil {
 		return nil, err
 	}
 	return client.do(ctx, req)
+}
+
+func (client *Client) setRetryKey(retryKey string) {
+	client.retryKeyID = retryKey
 }
 
 func closeResponse(res *http.Response) error {

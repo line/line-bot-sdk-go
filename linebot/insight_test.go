@@ -1,4 +1,4 @@
-// Copyright 2016 LINE Corporation
+// Copyright 2019 LINE Corporation
 //
 // LINE Corporation licenses this file to you under the Apache License,
 // version 2.0 (the "License"); you may not use this file except in compliance
@@ -26,44 +26,49 @@ import (
 	"time"
 )
 
-func TestGetProfile(t *testing.T) {
+// TestInsights tests GetNumberMessagesDelivery, GetNumberFollowers
+// and GetFriendDemographics func
+
+func TestGetNumberMessagesDelivery(t *testing.T) {
 	type want struct {
 		URLPath     string
 		RequestBody []byte
-		Response    *UserProfileResponse
+		Response    *MessagesNumberDeliveryResponse
 		Error       error
 	}
 	var testCases = []struct {
 		Label        string
-		UserID       string
+		Date         string
 		ResponseCode int
 		Response     []byte
 		Want         want
 	}{
 		{
 			Label:        "Success",
-			UserID:       "U0047556f2e40dba2456887320ba7c76d",
+			Date:         "20190418",
 			ResponseCode: 200,
-			Response:     []byte(`{"userId":"U0047556f2e40dba2456887320ba7c76d","displayName":"BOT API","pictureUrl":"https://obs.line-apps.com/abcdefghijklmn","statusMessage":"Hello, LINE!","language":"en"}`),
+			Response: []byte(`{
+				"status": "ready",
+				"broadcast": 5385,
+				"targeting": 522
+			}`),
 			Want: want{
-				URLPath:     fmt.Sprintf(APIEndpointGetProfile, "U0047556f2e40dba2456887320ba7c76d"),
+				URLPath:     fmt.Sprintf(APIEndpointInsight, InsightTypeMessageDelivery),
 				RequestBody: []byte(""),
-				Response: &UserProfileResponse{
-					UserID:        "U0047556f2e40dba2456887320ba7c76d",
-					DisplayName:   "BOT API",
-					PictureURL:    "https://obs.line-apps.com/abcdefghijklmn",
-					StatusMessage: "Hello, LINE!",
-					Language:      "en",
+				Response: &MessagesNumberDeliveryResponse{
+					Status:    "ready",
+					Broadcast: 5385,
+					Targeting: 522,
 				},
 			},
 		},
 		{
 			Label:        "Internal server error",
-			UserID:       "U0047556f2e40dba2456887320ba7c76d",
+			Date:         "20190418",
 			ResponseCode: 500,
 			Response:     []byte("500 Internal server error"),
 			Want: want{
-				URLPath:     fmt.Sprintf(APIEndpointGetProfile, "U0047556f2e40dba2456887320ba7c76d"),
+				URLPath:     fmt.Sprintf(APIEndpointInsight, InsightTypeMessageDelivery),
 				RequestBody: []byte(""),
 				Error: &APIError{
 					Code: 500,
@@ -109,7 +114,7 @@ func TestGetProfile(t *testing.T) {
 	for i, tc := range testCases {
 		currentTestIdx = i
 		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
-			res, err := client.GetProfile(tc.UserID).Do()
+			res, err := client.GetNumberMessagesDelivery(tc.Date).Do()
 			if tc.Want.Error != nil {
 				if !reflect.DeepEqual(err, tc.Want.Error) {
 					t.Errorf("Error %v; want %v", err, tc.Want.Error)
@@ -126,7 +131,7 @@ func TestGetProfile(t *testing.T) {
 	}
 }
 
-func TestGetProfileWithContext(t *testing.T) {
+func TestGetNumberMessagesDeliveryContext(t *testing.T) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 		time.Sleep(10 * time.Millisecond)
@@ -148,14 +153,18 @@ func TestGetProfileWithContext(t *testing.T) {
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
 	defer cancel()
-	_, err = client.GetProfile("U0047556f2e40dba2456887320ba7c76d").WithContext(ctx).Do()
+	_, err = client.GetNumberMessagesDelivery("20190418").WithContext(ctx).Do()
 	expectCtxDeadlineExceed(ctx, err, t)
 }
 
-func BenchmarkGetProfile(b *testing.B) {
+func BenchmarkGetNumberMessagesDelivery(b *testing.B) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
-		w.Write([]byte(`{"userId":"U","displayName":"A","pictureUrl":"https://","statusMessage":"B"}`))
+		w.Write([]byte(`{
+			"status": "ready",
+			"broadcast": 5385,
+			"targeting": 522
+		}`))
 	}))
 	defer server.Close()
 
@@ -173,50 +182,52 @@ func BenchmarkGetProfile(b *testing.B) {
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		client.GetProfile("U0047556f2e40dba2456887320ba7c76d").Do()
+		client.GetNumberMessagesDelivery("20190418").Do()
 	}
 }
 
-func TestGetGroupMemberProfile(t *testing.T) {
+func TestGetNumberFollowers(t *testing.T) {
 	type want struct {
 		URLPath     string
 		RequestBody []byte
-		Response    *UserProfileResponse
+		Response    *MessagesNumberFollowersResponse
 		Error       error
 	}
 	var testCases = []struct {
 		Label        string
-		GroupID      string
-		UserID       string
+		Date         string
 		ResponseCode int
 		Response     []byte
 		Want         want
 	}{
 		{
 			Label:        "Success",
-			GroupID:      "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-			UserID:       "U0047556f2e40dba2456887320ba7c76d",
+			Date:         "20190418",
 			ResponseCode: 200,
-			Response:     []byte(`{"userId":"U0047556f2e40dba2456887320ba7c76d","displayName":"BOT API","pictureUrl":"https://obs.line-apps.com/abcdefghijklmn","statusMessage":"Hello, LINE!"}`),
+			Response: []byte(`{
+				"status": "ready",
+				"followers": 7620,
+				"targetedReaches": 5848,
+				"blocks": 237
+			}`),
 			Want: want{
-				URLPath:     fmt.Sprintf(APIEndpointGetGroupMemberProfile, "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "U0047556f2e40dba2456887320ba7c76d"),
+				URLPath:     fmt.Sprintf(APIEndpointInsight, InsightTypeFollowers),
 				RequestBody: []byte(""),
-				Response: &UserProfileResponse{
-					UserID:        "U0047556f2e40dba2456887320ba7c76d",
-					DisplayName:   "BOT API",
-					PictureURL:    "https://obs.line-apps.com/abcdefghijklmn",
-					StatusMessage: "Hello, LINE!",
+				Response: &MessagesNumberFollowersResponse{
+					Status:          "ready",
+					Followers:       7620,
+					TargetedReaches: 5848,
+					Blocks:          237,
 				},
 			},
 		},
 		{
 			Label:        "Internal server error",
-			GroupID:      "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-			UserID:       "U0047556f2e40dba2456887320ba7c76d",
+			Date:         "20190418",
 			ResponseCode: 500,
 			Response:     []byte("500 Internal server error"),
 			Want: want{
-				URLPath:     fmt.Sprintf(APIEndpointGetGroupMemberProfile, "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "U0047556f2e40dba2456887320ba7c76d"),
+				URLPath:     fmt.Sprintf(APIEndpointInsight, InsightTypeFollowers),
 				RequestBody: []byte(""),
 				Error: &APIError{
 					Code: 500,
@@ -262,7 +273,7 @@ func TestGetGroupMemberProfile(t *testing.T) {
 	for i, tc := range testCases {
 		currentTestIdx = i
 		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
-			res, err := client.GetGroupMemberProfile(tc.GroupID, tc.UserID).Do()
+			res, err := client.GetNumberFollowers(tc.Date).Do()
 			if tc.Want.Error != nil {
 				if !reflect.DeepEqual(err, tc.Want.Error) {
 					t.Errorf("Error %v; want %v", err, tc.Want.Error)
@@ -279,7 +290,7 @@ func TestGetGroupMemberProfile(t *testing.T) {
 	}
 }
 
-func TestGetGroupMemberProfileWithContext(t *testing.T) {
+func TestGetNumberFollowersContext(t *testing.T) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 		time.Sleep(10 * time.Millisecond)
@@ -301,14 +312,19 @@ func TestGetGroupMemberProfileWithContext(t *testing.T) {
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
 	defer cancel()
-	_, err = client.GetGroupMemberProfile("cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "U0047556f2e40dba2456887320ba7c76d").WithContext(ctx).Do()
+	_, err = client.GetNumberFollowers("20190418").WithContext(ctx).Do()
 	expectCtxDeadlineExceed(ctx, err, t)
 }
 
-func BenchmarkGetGroupMemberProfile(b *testing.B) {
+func BenchmarkGetNumberFollowers(b *testing.B) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
-		w.Write([]byte(`{"userId":"U","displayName":"A","pictureUrl":"https://","statusMessage":"B"}`))
+		w.Write([]byte(`{
+			"status": "ready",
+			"followers": 7620,
+			"targetedReaches": 5848,
+			"blocks": 237
+		}`))
 	}))
 	defer server.Close()
 
@@ -326,50 +342,88 @@ func BenchmarkGetGroupMemberProfile(b *testing.B) {
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		client.GetGroupMemberProfile("cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "U0047556f2e40dba2456887320ba7c76d").Do()
+		client.GetNumberFollowers("20190418").Do()
 	}
 }
 
-func TestGetRoomMemberProfile(t *testing.T) {
+func TestGetFriendDemographics(t *testing.T) {
 	type want struct {
 		URLPath     string
 		RequestBody []byte
-		Response    *UserProfileResponse
+		Response    *MessagesFriendDemographicsResponse
 		Error       error
 	}
 	var testCases = []struct {
 		Label        string
-		RoomID       string
-		UserID       string
 		ResponseCode int
 		Response     []byte
 		Want         want
 	}{
 		{
 			Label:        "Success",
-			RoomID:       "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-			UserID:       "U0047556f2e40dba2456887320ba7c76d",
 			ResponseCode: 200,
-			Response:     []byte(`{"userId":"U0047556f2e40dba2456887320ba7c76d","displayName":"BOT API","pictureUrl":"https://obs.line-apps.com/abcdefghijklmn","statusMessage":"Hello, LINE!"}`),
+			Response: []byte(`{
+				"available": true,
+				"genders": [
+					{
+						"gender": "unknown",
+						"percentage": 37.6
+					}
+				],
+				"ages": [
+					{
+						"age": "unknown",
+						"percentage": 37.6
+					}
+				],
+				"areas": [
+					{
+						"area": "unknown",
+						"percentage": 42.9
+					}
+				],
+				"appTypes": [
+					{
+						"appType": "ios",
+						"percentage": 62.4
+					}
+				],
+				"subscriptionPeriods": [
+					{
+						"subscriptionPeriod": "over365days",
+						"percentage": 96.4
+					}
+				]
+			}`),
 			Want: want{
-				URLPath:     fmt.Sprintf(APIEndpointGetRoomMemberProfile, "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "U0047556f2e40dba2456887320ba7c76d"),
+				URLPath:     fmt.Sprintf(APIEndpointInsight, InsightTypeDemographic),
 				RequestBody: []byte(""),
-				Response: &UserProfileResponse{
-					UserID:        "U0047556f2e40dba2456887320ba7c76d",
-					DisplayName:   "BOT API",
-					PictureURL:    "https://obs.line-apps.com/abcdefghijklmn",
-					StatusMessage: "Hello, LINE!",
+				Response: &MessagesFriendDemographicsResponse{
+					Available: true,
+					Genders: []GenderDetail{
+						GenderDetail{Gender: "unknown", Percentage: 37.6},
+					},
+					Ages: []AgeDetail{
+						AgeDetail{Age: "unknown", Percentage: 37.6},
+					},
+					Areas: []AreasDetail{
+						AreasDetail{Area: "unknown", Percentage: 42.9},
+					},
+					AppTypes: []AppTypeDetail{
+						AppTypeDetail{AppType: "ios", Percentage: 62.4},
+					},
+					SubscriptionPeriods: []SubscriptionPeriodDetail{
+						SubscriptionPeriodDetail{SubscriptionPeriod: "over365days", Percentage: 96.4},
+					},
 				},
 			},
 		},
 		{
 			Label:        "Internal server error",
-			RoomID:       "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-			UserID:       "U0047556f2e40dba2456887320ba7c76d",
 			ResponseCode: 500,
 			Response:     []byte("500 Internal server error"),
 			Want: want{
-				URLPath:     fmt.Sprintf(APIEndpointGetRoomMemberProfile, "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "U0047556f2e40dba2456887320ba7c76d"),
+				URLPath:     fmt.Sprintf(APIEndpointInsight, InsightTypeDemographic),
 				RequestBody: []byte(""),
 				Error: &APIError{
 					Code: 500,
@@ -415,7 +469,7 @@ func TestGetRoomMemberProfile(t *testing.T) {
 	for i, tc := range testCases {
 		currentTestIdx = i
 		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
-			res, err := client.GetRoomMemberProfile(tc.RoomID, tc.UserID).Do()
+			res, err := client.GetFriendDemographics().Do()
 			if tc.Want.Error != nil {
 				if !reflect.DeepEqual(err, tc.Want.Error) {
 					t.Errorf("Error %v; want %v", err, tc.Want.Error)
@@ -432,7 +486,7 @@ func TestGetRoomMemberProfile(t *testing.T) {
 	}
 }
 
-func TestGetRoomMemberProfileWithContext(t *testing.T) {
+func TestGetFriendDemographicsContext(t *testing.T) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 		time.Sleep(10 * time.Millisecond)
@@ -454,14 +508,46 @@ func TestGetRoomMemberProfileWithContext(t *testing.T) {
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
 	defer cancel()
-	_, err = client.GetRoomMemberProfile("cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "U0047556f2e40dba2456887320ba7c76d").WithContext(ctx).Do()
+	_, err = client.GetFriendDemographics().WithContext(ctx).Do()
 	expectCtxDeadlineExceed(ctx, err, t)
 }
 
-func BenchmarkGetRoomMemberProfile(b *testing.B) {
+func BenchmarkGetFriendDemographics(b *testing.B) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
-		w.Write([]byte(`{"userId":"U","displayName":"A","pictureUrl":"https://","statusMessage":"B"}`))
+		w.Write([]byte(`{
+			"available": true,
+			"genders": [
+				{
+					"gender": "unknown",
+					"percentage": 37.6
+				}
+			],
+			"ages": [
+				{
+					"age": "unknown",
+					"percentage": 37.6
+				}
+			],
+			"areas": [
+				{
+					"area": "unknown",
+					"percentage": 42.9
+				}
+			],
+			"appTypes": [
+				{
+					"appType": "ios",
+					"percentage": 62.4
+				}
+			],
+			"subscriptionPeriods": [
+				{
+					"subscriptionPeriod": "over365days",
+					"percentage": 96.4
+				}
+			]
+		}`))
 	}))
 	defer server.Close()
 
@@ -479,6 +565,209 @@ func BenchmarkGetRoomMemberProfile(b *testing.B) {
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		client.GetRoomMemberProfile("cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "U0047556f2e40dba2456887320ba7c76d").Do()
+		client.GetFriendDemographics().Do()
 	}
+}
+
+func TestGetUserInteractionStats(t *testing.T) {
+	type want struct {
+		URLPath     string
+		RequestBody []byte
+		Response    *MessagesUserInteractionStatsResponse
+		Error       error
+	}
+	var testCases = []struct {
+		Label        string
+		RequestID    string
+		ResponseCode int
+		Response     []byte
+		Want         want
+	}{
+		{
+			Label:        "Success",
+			RequestID:    "f70dd685-499a-4231-a441-f24b8d4fba21",
+			ResponseCode: 200,
+			Response: []byte(`{
+				"overview": {
+					"requestId": "f70dd685-499a-4231-a441-f24b8d4fba21",
+					"timestamp": 1568214000,
+					"delivered": 32,
+					"uniqueImpression": 4,
+					"uniqueClick": null,
+					"uniqueMediaPlayed": 2,
+					"uniqueMediaPlayed100Percent": -1
+				},
+				"messages": [
+					{
+						"seq": 1,
+						"impression": 18,
+						"mediaPlayed": 11,
+						"mediaPlayed25Percent": -1,
+						"mediaPlayed50Percent": -1,
+						"mediaPlayed75Percent": -1,
+						"mediaPlayed100Percent": -1,
+						"uniqueMediaPlayed": 2,
+						"uniqueMediaPlayed25Percent": -1,
+						"uniqueMediaPlayed50Percent": -1,
+						"uniqueMediaPlayed75Percent": -1,
+						"uniqueMediaPlayed100Percent": -1
+					}
+				],
+				"clicks": [
+					{
+						"seq": 1,
+						"url": "https://www.yahoo.co.jp/",
+						"click": -1,
+						"uniqueClick": -1,
+						"uniqueClickOfRequest": -1
+					},
+					{
+						"seq": 1,
+						"url": "https://www.google.com/?hl=ja",
+						"click": -1,
+						"uniqueClick": -1,
+						"uniqueClickOfRequest": -1
+					}
+				]
+			}`),
+			Want: want{
+				URLPath:     fmt.Sprintf(APIEndpointInsight, InsightTypeUserInteractionStats),
+				RequestBody: []byte(""),
+				Response: &MessagesUserInteractionStatsResponse{
+					Overview: OverviewDetail{
+						RequestID:                   "f70dd685-499a-4231-a441-f24b8d4fba21",
+						Timestamp:                   1568214000,
+						Delivered:                   32,
+						UniqueImpression:            4,
+						UniqueClick:                 0,
+						UniqueMediaPlayed:           2,
+						UniqueMediaPlayed100Percent: -1,
+					},
+					Messages: []MessageDetail{
+						MessageDetail{
+							Seq:                         1,
+							Impression:                  18,
+							MediaPlayed:                 11,
+							MediaPlayed25Percent:        -1,
+							MediaPlayed50Percent:        -1,
+							MediaPlayed75Percent:        -1,
+							MediaPlayed100Percent:       -1,
+							UniqueMediaPlayed:           2,
+							UniqueMediaPlayed25Percent:  -1,
+							UniqueMediaPlayed50Percent:  -1,
+							UniqueMediaPlayed75Percent:  -1,
+							UniqueMediaPlayed100Percent: -1,
+						},
+					},
+					Clicks: []ClickDetail{
+						ClickDetail{
+							Seq:                  1,
+							URL:                  "https://www.yahoo.co.jp/",
+							Click:                -1,
+							UniqueClick:          -1,
+							UniqueClickOfRequest: -1,
+						},
+						ClickDetail{
+							Seq:                  1,
+							URL:                  "https://www.google.com/?hl=ja",
+							Click:                -1,
+							UniqueClick:          -1,
+							UniqueClickOfRequest: -1,
+						},
+					},
+				},
+			},
+		},
+		{
+			Label:        "Internal server error",
+			ResponseCode: 500,
+			Response:     []byte("500 Internal server error"),
+			Want: want{
+				URLPath:     fmt.Sprintf(APIEndpointInsight, InsightTypeUserInteractionStats),
+				RequestBody: []byte(""),
+				Error: &APIError{
+					Code: 500,
+				},
+			},
+		},
+	}
+
+	var currentTestIdx int
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		tc := testCases[currentTestIdx]
+		if r.Method != http.MethodGet {
+			t.Errorf("Method %s; want %s", r.Method, http.MethodGet)
+		}
+		if r.URL.Path != tc.Want.URLPath {
+			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
+		}
+		body, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
+			t.Errorf("RequestBody %s; want %s", body, tc.Want.RequestBody)
+		}
+		w.WriteHeader(tc.ResponseCode)
+		w.Write(tc.Response)
+	}))
+	defer server.Close()
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected Data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for i, tc := range testCases {
+		currentTestIdx = i
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
+			res, err := client.GetUserInteractionStats(tc.RequestID).Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
+			}
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %v; want %v", res, tc.Want.Response)
+			}
+		})
+	}
+}
+
+func TestGetUserInteractionStatsContext(t *testing.T) {
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		time.Sleep(10 * time.Millisecond)
+		w.Write([]byte("{}"))
+	}))
+	defer server.Close()
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected Data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
+	if err != nil {
+		t.Fatal(err)
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
+	defer cancel()
+	_, err = client.GetUserInteractionStats("f70dd685-499a-4231-a441-f24b8d4fba21").WithContext(ctx).Do()
+	expectCtxDeadlineExceed(ctx, err, t)
 }

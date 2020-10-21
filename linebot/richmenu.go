@@ -130,7 +130,7 @@ func (call *GetRichMenuCall) WithContext(ctx context.Context) *GetRichMenuCall {
 // Do method
 func (call *GetRichMenuCall) Do() (*RichMenuResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointGetRichMenu, call.richMenuID)
-	res, err := call.c.get(call.ctx, endpoint, nil)
+	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -163,7 +163,7 @@ func (call *GetUserRichMenuCall) WithContext(ctx context.Context) *GetUserRichMe
 // Do method
 func (call *GetUserRichMenuCall) Do() (*RichMenuResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointGetUserRichMenu, call.userID)
-	res, err := call.c.get(call.ctx, endpoint, nil)
+	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -408,7 +408,7 @@ func (call *GetDefaultRichMenuCall) WithContext(ctx context.Context) *GetDefault
 
 // Do method
 func (call *GetDefaultRichMenuCall) Do() (*RichMenuIDResponse, error) {
-	res, err := call.c.get(call.ctx, APIEndpointDefaultRichMenu, nil)
+	res, err := call.c.get(call.ctx, call.c.endpointBase, APIEndpointDefaultRichMenu, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -437,7 +437,7 @@ func (call *GetRichMenuListCall) WithContext(ctx context.Context) *GetRichMenuLi
 
 // Do method
 func (call *GetRichMenuListCall) Do() ([]*RichMenuResponse, error) {
-	res, err := call.c.get(call.ctx, APIEndpointListRichMenu, nil)
+	res, err := call.c.get(call.ctx, call.c.endpointBase, APIEndpointListRichMenu, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -470,7 +470,7 @@ func (call *DownloadRichMenuImageCall) WithContext(ctx context.Context) *Downloa
 // Do method
 func (call *DownloadRichMenuImageCall) Do() (*MessageContentResponse, error) {
 	endpoint := fmt.Sprintf(APIEndpointDownloadRichMenuImage, call.richMenuID)
-	res, err := call.c.get(call.ctx, endpoint, nil)
+	res, err := call.c.get(call.ctx, call.c.endpointBaseData, endpoint, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -520,7 +520,7 @@ func (call *UploadRichMenuImageCall) Do() (*BasicResponse, error) {
 	}
 	body.Seek(0, 0)
 	endpoint := fmt.Sprintf(APIEndpointUploadRichMenuImage, call.richMenuID)
-	req, err := http.NewRequest("POST", call.c.url(endpoint), body)
+	req, err := http.NewRequest("POST", call.c.url(call.c.endpointBaseData, endpoint), body)
 	if err != nil {
 		return nil, err
 	}

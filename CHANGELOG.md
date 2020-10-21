@@ -1,6 +1,116 @@
-# Change Log
+# Changelog
+
+## [v7.6.0](https://github.com/line/line-bot-sdk-go/tree/v7.6.0) (2020-09-16)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.5.0...v7.6.0)
+
+**Merged pull requests:**
+
+- Messaging API - May 2020 update [\#207](https://github.com/line/line-bot-sdk-go/pull/228) ([kkdai](https://github.com/kkdai))
+
+- Messaging API - September 2020 update. \#226 [\#227](https://github.com/line/line-bot-sdk-go/pull/227) ([kkdai](https://github.com/kkdai))
+
+- Update to Channel access token v2.1 apis. \#214 [\#225](https://github.com/line/line-bot-sdk-go/pull/208) ([raahii](https://github.com/raahii))
+
+- Messaging API - August 2020 update. \#222 [\#223](https://github.com/line/line-bot-sdk-go/pull/223) ([clsung](https://github.com/clsung))
+
+## [v7.5.0](https://github.com/line/line-bot-sdk-go/tree/v7.5.0) (2020-07-13)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.4.0...v7.5.0)
+
+**Merged pull requests:**
+
+- Update BoxComponent Properties [\#210](https://github.com/line/line-bot-sdk-go/pull/210) ([zesani](https://github.com/zesani))
+
+- Fix test error by remove "omit empty" on index. \#209 [\#200](https://github.com/line/line-bot-sdk-go/pull/209) ([kkdai](https://github.com/kkdai))
+
+- Messaging API - May 2020 update: webhook has emoji now. \#207 [\#208](https://github.com/line/line-bot-sdk-go/pull/208) ([clsung](https://github.com/clsung))
+
+- Messaging API - June 2020 update. \#212 [\#213](https://github.com/line/line-bot-sdk-go/pull/213) ([clsung](https://github.com/clsung))
+
+## [v7.4.0](https://github.com/line/line-bot-sdk-go/tree/v7.4.0) (2020-05-11)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.3.0...v7.4.0)
+
+**Merged pull requests:**
+
+- Add Latest Field of `TextComponent` \#205 [\#206](https://github.com/line/line-bot-sdk-go/pull/206) ([54mch4n](https://github.com/54mch4n))
+- Support "Channel access token v2.1" [\#203](https://github.com/line/line-bot-sdk-go/pull/203) ([clsung](https://github.com/clsung))
+- Use LINE emoji in messages  [\#202](https://github.com/line/line-bot-sdk-go/pull/202) ([kkdai](https://github.com/kkdai))
+- Fix \#200 Implement for Get user's language. [\#201](https://github.com/line/line-bot-sdk-go/pull/201) ([kkdai](https://github.com/kkdai))
+- New sticker resource type "PER\_STICKER\_TEXT" [\#197](https://github.com/line/line-bot-sdk-go/pull/197) ([clsung](https://github.com/clsung))
+
+## [v7.3.0](https://github.com/line/line-bot-sdk-go/tree/v7.3.0) (2020-03-23)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.2.0...v7.3.0)
+
+**Merged pull requests:**
+
+- Add sender property to Message objects. [\#196](https://github.com/line/line-bot-sdk-go/pull/196) ([clsung](https://github.com/clsung))
+- Support "Get narrowcast message status API" [\#193](https://github.com/line/line-bot-sdk-go/pull/193) ([clsung](https://github.com/clsung))
+- add flex property on filler component [\#183](https://github.com/line/line-bot-sdk-go/pull/183) ([johanavril](https://github.com/johanavril))
+
+## [v7.2.0](https://github.com/line/line-bot-sdk-go/tree/v7.2.0) (2020-02-25)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.1.0...v7.2.0)
+
+**Merged pull requests:**
+
+- Support narrowcast message API [\#191](https://github.com/line/line-bot-sdk-go/pull/191) ([clsung](https://github.com/clsung))
+
+## [v7.1.0](https://github.com/line/line-bot-sdk-go/tree/v7.1.0) (2020-02-07)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.0.0...v7.1.0)
+
+**Merged pull requests:**
+
+- Add API to get user interaction statistics [\#192](https://github.com/line/line-bot-sdk-go/pull/192) ([clsung](https://github.com/clsung))
+- Add `mode` property to API webhook event [\#189](https://github.com/line/line-bot-sdk-go/pull/189) ([clsung](https://github.com/clsung))
+
+## [v7.0.0](https://github.com/line/line-bot-sdk-go/tree/v7.0.0) (2020-01-10)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v6.4.0...v7.0.0)
+
+**Merged pull requests:**
+
+- A stay event was added to beacon event [\#187](https://github.com/line/line-bot-sdk-go/pull/187) ([clsung](https://github.com/clsung))
+- add field `stickerResourceType` to sicker message [\#184](https://github.com/line/line-bot-sdk-go/pull/184) ([clsung](https://github.com/clsung))
+- Fixed declaration of FlexContainerType [\#182](https://github.com/line/line-bot-sdk-go/pull/182) ([Nazozen](https://github.com/Nazozen))
+- Switch api.line.me and api-data.line.me depending on API methods [\#181](https://github.com/line/line-bot-sdk-go/pull/181) ([oklahomer](https://github.com/oklahomer))
+- add bubble size property [\#178](https://github.com/line/line-bot-sdk-go/pull/178) ([johanavril](https://github.com/johanavril))
+- add field `label` to imagemap actions [\#176](https://github.com/line/line-bot-sdk-go/pull/176) ([TonPC64](https://github.com/TonPC64))
+- Support  07/08 Insight API. [\#172](https://github.com/line/line-bot-sdk-go/pull/172) ([kkdai](https://github.com/kkdai))
+
+## [v6.4.0](https://github.com/line/line-bot-sdk-go/tree/v6.4.0) (2019-10-29)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v6.3.0...v6.4.0)
+
+**Implemented enhancements:**
+
+- Add `Issue channel access token` API [\#63](https://github.com/line/line-bot-sdk-go/pull/63) ([drillbits](https://github.com/drillbits))
+
+**Merged pull requests:**
+
+- Add current Go versions to Travis [\#175](https://github.com/line/line-bot-sdk-go/pull/175) ([Thanakorn-ki](https://github.com/Thanakorn-ki))
+- support LINE Things scenario execution event [\#173](https://github.com/line/line-bot-sdk-go/pull/173) ([nasa9084](https://github.com/nasa9084))
+- Fix \#156 no 6 Support get number of sent broadcast messages. [\#169](https://github.com/line/line-bot-sdk-go/pull/169) ([kkdai](https://github.com/kkdai))
+- Fix testing \#151 [\#168](https://github.com/line/line-bot-sdk-go/pull/168) ([k2wanko](https://github.com/k2wanko))
+- Update bug\_report.md [\#167](https://github.com/line/line-bot-sdk-go/pull/167) ([nasa9084](https://github.com/nasa9084))
+- fix/typo [\#166](https://github.com/line/line-bot-sdk-go/pull/166) ([nasa9084](https://github.com/nasa9084))
+- Update bug\_report.md [\#165](https://github.com/line/line-bot-sdk-go/pull/165) ([nasa9084](https://github.com/nasa9084))
+- fix test using expectCtxDeadlineExceed\(\) [\#164](https://github.com/line/line-bot-sdk-go/pull/164) ([nasa9084](https://github.com/nasa9084))
+- update issues template to apply multiple issues template [\#162](https://github.com/line/line-bot-sdk-go/pull/162) ([nasa9084](https://github.com/nasa9084))
+- Fix a dead link to CONTRIBUTING.md in README [\#161](https://github.com/line/line-bot-sdk-go/pull/161) ([suzuki-shunsuke](https://github.com/suzuki-shunsuke))
+- Refactor/test [\#159](https://github.com/line/line-bot-sdk-go/pull/159) ([nasa9084](https://github.com/nasa9084))
+- Add WithNotificationDisabled\(\) to push/reply/multicast message API [\#157](https://github.com/line/line-bot-sdk-go/pull/157) ([clsung](https://github.com/clsung))
+- Alternative to implement \#152, quota consumption. [\#153](https://github.com/line/line-bot-sdk-go/pull/153) ([clsung](https://github.com/clsung))
+- Support "Send broadcast api" [\#151](https://github.com/line/line-bot-sdk-go/pull/151) ([kkdai](https://github.com/kkdai))
+- NO-ISSUE Code refactoring [\#150](https://github.com/line/line-bot-sdk-go/pull/150) ([linxGnu](https://github.com/linxGnu))
+- Add support for message quota consumption. [\#149](https://github.com/line/line-bot-sdk-go/pull/149) ([kkdai](https://github.com/kkdai))
+- Update README file as per template [\#148](https://github.com/line/line-bot-sdk-go/pull/148) ([tkgauri](https://github.com/tkgauri))
 
 ## [v6.3.0](https://github.com/line/line-bot-sdk-go/tree/v6.3.0) (2019-04-23)
+
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v6.2.0...v6.3.0)
 
 **Merged pull requests:**
@@ -10,6 +120,7 @@
 - Use CodeCov [\#142](https://github.com/line/line-bot-sdk-go/pull/142) ([suzuki-shunsuke](https://github.com/suzuki-shunsuke))
 
 ## [v6.2.0](https://github.com/line/line-bot-sdk-go/tree/v6.2.0) (2019-04-04)
+
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v6.1.0...v6.2.0)
 
 **Merged pull requests:**
@@ -19,6 +130,7 @@
 - Tweak event.go [\#136](https://github.com/line/line-bot-sdk-go/pull/136) ([sugyan](https://github.com/sugyan))
 
 ## [v6.1.0](https://github.com/line/line-bot-sdk-go/tree/v6.1.0) (2019-03-26)
+
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v6.0.0...v6.1.0)
 
 **Merged pull requests:**
@@ -27,6 +139,7 @@
 - Fix: support marshalling message type "file" [\#137](https://github.com/line/line-bot-sdk-go/pull/137) ([notsu](https://github.com/notsu))
 
 ## [v6.0.0](https://github.com/line/line-bot-sdk-go/tree/v6.0.0) (2019-03-14)
+
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v5.0.0...v6.0.0)
 
 **Merged pull requests:**
@@ -36,6 +149,7 @@
 - Update tests [\#130](https://github.com/line/line-bot-sdk-go/pull/130) ([sugyan](https://github.com/sugyan))
 
 ## [v5.0.0](https://github.com/line/line-bot-sdk-go/tree/v5.0.0) (2019-02-20)
+
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v4.3.0...v5.0.0)
 
 **Merged pull requests:**
@@ -46,6 +160,7 @@
 - update README.md [\#122](https://github.com/line/line-bot-sdk-go/pull/122) ([kweisamx](https://github.com/kweisamx))
 
 ## [v4.3.0](https://github.com/line/line-bot-sdk-go/tree/v4.3.0) (2019-01-10)
+
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v4.2.0...v4.3.0)
 
 **Merged pull requests:**
@@ -53,6 +168,7 @@
 - Add default rich menu API. [\#118](https://github.com/line/line-bot-sdk-go/pull/118) ([clsung](https://github.com/clsung))
 
 ## [v4.2.0](https://github.com/line/line-bot-sdk-go/tree/v4.2.0) (2018-11-30)
+
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v4.1.0...v4.2.0)
 
 **Merged pull requests:**
@@ -61,6 +177,7 @@
 - Add member join/leave event [\#116](https://github.com/line/line-bot-sdk-go/pull/116) ([clsung](https://github.com/clsung))
 
 ## [v4.1.0](https://github.com/line/line-bot-sdk-go/tree/v4.1.0) (2018-11-28)
+
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v4.0.0...v4.1.0)
 
 **Merged pull requests:**
@@ -76,16 +193,21 @@
 - Update supported versions [\#104](https://github.com/line/line-bot-sdk-go/pull/104) ([sugyan](https://github.com/sugyan))
 
 ## [v4.0.0](https://github.com/line/line-bot-sdk-go/tree/v4.0.0) (2018-08-30)
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v3.0.0...v4.0.0)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/3.0.0...v4.0.0)
+
+**Implemented enhancements:**
+
+- Implement quick reply [\#99](https://github.com/line/line-bot-sdk-go/pull/99) ([sugyan](https://github.com/sugyan))
 
 **Merged pull requests:**
 
 -  Fix the version of linebot/version.go and  add a shell script to prevent to forget update of linebot/version.go . [\#103](https://github.com/line/line-bot-sdk-go/pull/103) ([suzuki-shunsuke](https://github.com/suzuki-shunsuke))
 - Remove useless indents for sample code [\#100](https://github.com/line/line-bot-sdk-go/pull/100) ([mingrammer](https://github.com/mingrammer))
-- Implement quick reply [\#99](https://github.com/line/line-bot-sdk-go/pull/99) ([sugyan](https://github.com/sugyan))
 
 ## [v3.0.0](https://github.com/line/line-bot-sdk-go/tree/v3.0.0) (2018-08-02)
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v2.0.0...v3.0.0)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/2.0.0...v3.0.0)
 
 **Merged pull requests:**
 
@@ -93,6 +215,7 @@
 - Add changelog [\#96](https://github.com/line/line-bot-sdk-go/pull/96) ([sugyan](https://github.com/sugyan))
 
 ## [v2.0.0](https://github.com/line/line-bot-sdk-go/tree/v2.0.0) (2018-07-24)
+
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.3.0...v2.0.0)
 
 **Merged pull requests:**
@@ -100,23 +223,32 @@
 - Update around LIFF API [\#95](https://github.com/line/line-bot-sdk-go/pull/95) ([sugyan](https://github.com/sugyan))
 
 ## [v1.3.0](https://github.com/line/line-bot-sdk-go/tree/v1.3.0) (2018-07-17)
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.2.1...v1.3.0)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.3.0...v1.3.0)
+
+**Implemented enhancements:**
+
+- Support issue link token api [\#94](https://github.com/line/line-bot-sdk-go/pull/94) ([suzuki-shunsuke](https://github.com/suzuki-shunsuke))
 
 **Merged pull requests:**
 
-- Support issue link token api [\#94](https://github.com/line/line-bot-sdk-go/pull/94) ([suzuki-shunsuke](https://github.com/suzuki-shunsuke))
 - Add status badges and a link to LICENSE.txt in README [\#92](https://github.com/line/line-bot-sdk-go/pull/92) ([suzuki-shunsuke](https://github.com/suzuki-shunsuke))
 
 ## [v1.2.1](https://github.com/line/line-bot-sdk-go/tree/v1.2.1) (2018-07-12)
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.2.0...v1.2.1)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.2.1...v1.2.1)
+
+**Implemented enhancements:**
+
+- Add AccountLink event [\#91](https://github.com/line/line-bot-sdk-go/pull/91) ([suzuki-shunsuke](https://github.com/suzuki-shunsuke))
 
 **Merged pull requests:**
 
-- Add AccountLink event [\#91](https://github.com/line/line-bot-sdk-go/pull/91) ([suzuki-shunsuke](https://github.com/suzuki-shunsuke))
 - \#issue-liff add liff api [\#90](https://github.com/line/line-bot-sdk-go/pull/90) ([justdomepaul](https://github.com/justdomepaul))
 - Add lint [\#88](https://github.com/line/line-bot-sdk-go/pull/88) ([k2wanko](https://github.com/k2wanko))
 
 ## [v1.2.0](https://github.com/line/line-bot-sdk-go/tree/v1.2.0) (2018-06-29)
+
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.1.2...v1.2.0)
 
 **Merged pull requests:**
@@ -125,21 +257,24 @@
 - Add types and functions for Flex messages [\#86](https://github.com/line/line-bot-sdk-go/pull/86) ([sugyan](https://github.com/sugyan))
 
 ## [v1.1.2](https://github.com/line/line-bot-sdk-go/tree/v1.1.2) (2018-06-19)
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.1.1...v1.1.2)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.1.2...v1.1.2)
 
 **Merged pull requests:**
 
 - use var MessageTypeFlex for set type flexMessage [\#80](https://github.com/line/line-bot-sdk-go/pull/80) ([TonPC64](https://github.com/TonPC64))
 
 ## [v1.1.1](https://github.com/line/line-bot-sdk-go/tree/v1.1.1) (2018-06-19)
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.1.0...v1.1.1)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.1.1...v1.1.1)
 
 **Merged pull requests:**
 
 - Add FlexMessage Type [\#78](https://github.com/line/line-bot-sdk-go/pull/78) ([TonPC64](https://github.com/TonPC64))
 
 ## [v1.1.0](https://github.com/line/line-bot-sdk-go/tree/v1.1.0) (2018-05-07)
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v1.0.0...v1.1.0)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/1.1.0...v1.1.0)
 
 **Merged pull requests:**
 
@@ -184,6 +319,9 @@
 - change return values of `ParseRequest` to `\[\]\*Event` [\#8](https://github.com/line/line-bot-sdk-go/pull/8) ([sugyan](https://github.com/sugyan))
 
 ## [v1.0.0](https://github.com/line/line-bot-sdk-go/tree/v1.0.0) (2016-09-29)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/f3e3a38aee47ca24ded221ce4be6d9363e3d32e1...v1.0.0)
+
 **Merged pull requests:**
 
 - V2 [\#6](https://github.com/line/line-bot-sdk-go/pull/6) ([sugyan](https://github.com/sugyan))
@@ -191,4 +329,4 @@
 
 
 
-\* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
+\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)*

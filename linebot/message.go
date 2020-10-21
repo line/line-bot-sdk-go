@@ -44,14 +44,18 @@ type Message interface {
 type SendingMessage interface {
 	Message
 	WithQuickReplies(*QuickReplyItems) SendingMessage
+	WithSender(*Sender) SendingMessage
+	AddEmoji(emoji *Emoji) SendingMessage
 }
 
 // TextMessage type
 type TextMessage struct {
-	ID   string
-	Text string
+	ID     string
+	Text   string
+	Emojis []*Emoji
 
 	quickReplyitems *QuickReplyItems
+	sender          *Sender
 }
 
 // MarshalJSON method of TextMessage
@@ -60,16 +64,32 @@ func (m *TextMessage) MarshalJSON() ([]byte, error) {
 		Type       MessageType      `json:"type"`
 		Text       string           `json:"text"`
 		QuickReply *QuickReplyItems `json:"quickReply,omitempty"`
+		Sender     *Sender          `json:"sender,omitempty"`
+		Emojis     []*Emoji         `json:"emojis,omitempty"`
 	}{
 		Type:       MessageTypeText,
 		Text:       m.Text,
 		QuickReply: m.quickReplyitems,
+		Sender:     m.sender,
+		Emojis:     m.Emojis,
 	})
 }
 
 // WithQuickReplies method of TextMessage
 func (m *TextMessage) WithQuickReplies(items *QuickReplyItems) SendingMessage {
 	m.quickReplyitems = items
+	return m
+}
+
+// WithSender method of TextMessage
+func (m *TextMessage) WithSender(sender *Sender) SendingMessage {
+	m.sender = sender
+	return m
+}
+
+// AddEmoji method of TextMessage
+func (m *TextMessage) AddEmoji(emoji *Emoji) SendingMessage {
+	m.Emojis = append(m.Emojis, emoji)
 	return m
 }
 
@@ -80,6 +100,7 @@ type ImageMessage struct {
 	PreviewImageURL    string
 
 	quickReplyitems *QuickReplyItems
+	sender          *Sender
 }
 
 // MarshalJSON method of ImageMessage
@@ -89,17 +110,30 @@ func (m *ImageMessage) MarshalJSON() ([]byte, error) {
 		OriginalContentURL string           `json:"originalContentUrl"`
 		PreviewImageURL    string           `json:"previewImageUrl"`
 		QuickReply         *QuickReplyItems `json:"quickReply,omitempty"`
+		Sender             *Sender          `json:"sender,omitempty"`
 	}{
 		Type:               MessageTypeImage,
 		OriginalContentURL: m.OriginalContentURL,
 		PreviewImageURL:    m.PreviewImageURL,
 		QuickReply:         m.quickReplyitems,
+		Sender:             m.sender,
 	})
 }
 
 // WithQuickReplies method of ImageMessage
 func (m *ImageMessage) WithQuickReplies(items *QuickReplyItems) SendingMessage {
 	m.quickReplyitems = items
+	return m
+}
+
+// WithSender method of ImageMessage
+func (m *ImageMessage) WithSender(sender *Sender) SendingMessage {
+	m.sender = sender
+	return m
+}
+
+// AddEmoji method of ImageMessage
+func (m *ImageMessage) AddEmoji(emoji *Emoji) SendingMessage {
 	return m
 }
 
@@ -110,6 +144,7 @@ type VideoMessage struct {
 	PreviewImageURL    string
 
 	quickReplyitems *QuickReplyItems
+	sender          *Sender
 }
 
 // MarshalJSON method of VideoMessage
@@ -119,17 +154,30 @@ func (m *VideoMessage) MarshalJSON() ([]byte, error) {
 		OriginalContentURL string           `json:"originalContentUrl"`
 		PreviewImageURL    string           `json:"previewImageUrl"`
 		QuickReply         *QuickReplyItems `json:"quickReply,omitempty"`
+		Sender             *Sender          `json:"sender,omitempty"`
 	}{
 		Type:               MessageTypeVideo,
 		OriginalContentURL: m.OriginalContentURL,
 		PreviewImageURL:    m.PreviewImageURL,
 		QuickReply:         m.quickReplyitems,
+		Sender:             m.sender,
 	})
 }
 
 // WithQuickReplies method of VideoMessage
 func (m *VideoMessage) WithQuickReplies(items *QuickReplyItems) SendingMessage {
 	m.quickReplyitems = items
+	return m
+}
+
+// WithSender method of VideoMessage
+func (m *VideoMessage) WithSender(sender *Sender) SendingMessage {
+	m.sender = sender
+	return m
+}
+
+// AddEmoji method of VideoMessage
+func (m *VideoMessage) AddEmoji(emoji *Emoji) SendingMessage {
 	return m
 }
 
@@ -140,6 +188,7 @@ type AudioMessage struct {
 	Duration           int
 
 	quickReplyitems *QuickReplyItems
+	sender          *Sender
 }
 
 // MarshalJSON method of AudioMessage
@@ -149,17 +198,30 @@ func (m *AudioMessage) MarshalJSON() ([]byte, error) {
 		OriginalContentURL string           `json:"originalContentUrl"`
 		Duration           int              `json:"duration"`
 		QuickReply         *QuickReplyItems `json:"quickReply,omitempty"`
+		Sender             *Sender          `json:"sender,omitempty"`
 	}{
 		Type:               MessageTypeAudio,
 		OriginalContentURL: m.OriginalContentURL,
 		Duration:           m.Duration,
 		QuickReply:         m.quickReplyitems,
+		Sender:             m.sender,
 	})
 }
 
 // WithQuickReplies method of AudioMessage
 func (m *AudioMessage) WithQuickReplies(items *QuickReplyItems) SendingMessage {
 	m.quickReplyitems = items
+	return m
+}
+
+// WithSender method of AudioMessage
+func (m *AudioMessage) WithSender(sender *Sender) SendingMessage {
+	m.sender = sender
+	return m
+}
+
+// AddEmoji method of AudioMessage
+func (m *AudioMessage) AddEmoji(emoji *Emoji) SendingMessage {
 	return m
 }
 
@@ -179,6 +241,7 @@ type LocationMessage struct {
 	Longitude float64
 
 	quickReplyitems *QuickReplyItems
+	sender          *Sender
 }
 
 // MarshalJSON method of LocationMessage
@@ -190,6 +253,7 @@ func (m *LocationMessage) MarshalJSON() ([]byte, error) {
 		Latitude   float64          `json:"latitude"`
 		Longitude  float64          `json:"longitude"`
 		QuickReply *QuickReplyItems `json:"quickReply,omitempty"`
+		Sender     *Sender          `json:"sender,omitempty"`
 	}{
 		Type:       MessageTypeLocation,
 		Title:      m.Title,
@@ -197,6 +261,7 @@ func (m *LocationMessage) MarshalJSON() ([]byte, error) {
 		Latitude:   m.Latitude,
 		Longitude:  m.Longitude,
 		QuickReply: m.quickReplyitems,
+		Sender:     m.sender,
 	})
 }
 
@@ -206,27 +271,44 @@ func (m *LocationMessage) WithQuickReplies(items *QuickReplyItems) SendingMessag
 	return m
 }
 
+// WithSender method of LocationMessage
+func (m *LocationMessage) WithSender(sender *Sender) SendingMessage {
+	m.sender = sender
+	return m
+}
+
+// AddEmoji method of LocationMessage
+func (m *LocationMessage) AddEmoji(emoji *Emoji) SendingMessage {
+	return m
+}
+
 // StickerMessage type
 type StickerMessage struct {
-	ID        string
-	PackageID string
-	StickerID string
+	ID                  string
+	PackageID           string
+	StickerID           string
+	StickerResourceType StickerResourceType
 
 	quickReplyitems *QuickReplyItems
+	sender          *Sender
 }
 
 // MarshalJSON method of StickerMessage
 func (m *StickerMessage) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type       MessageType      `json:"type"`
-		PackageID  string           `json:"packageId"`
-		StickerID  string           `json:"stickerId"`
-		QuickReply *QuickReplyItems `json:"quickReply,omitempty"`
+		Type                MessageType         `json:"type"`
+		PackageID           string              `json:"packageId"`
+		StickerID           string              `json:"stickerId"`
+		StickerResourceType StickerResourceType `json:"stickerResourceType,omitempty"`
+		QuickReply          *QuickReplyItems    `json:"quickReply,omitempty"`
+		Sender              *Sender             `json:"sender,omitempty"`
 	}{
-		Type:       MessageTypeSticker,
-		PackageID:  m.PackageID,
-		StickerID:  m.StickerID,
-		QuickReply: m.quickReplyitems,
+		Type:                MessageTypeSticker,
+		PackageID:           m.PackageID,
+		StickerID:           m.StickerID,
+		StickerResourceType: m.StickerResourceType,
+		QuickReply:          m.quickReplyitems,
+		Sender:              m.sender,
 	})
 }
 
@@ -236,12 +318,24 @@ func (m *StickerMessage) WithQuickReplies(items *QuickReplyItems) SendingMessage
 	return m
 }
 
+// WithSender method of StickerMessage
+func (m *StickerMessage) WithSender(sender *Sender) SendingMessage {
+	m.sender = sender
+	return m
+}
+
+// AddEmoji method of StickerMessage
+func (m *StickerMessage) AddEmoji(emoji *Emoji) SendingMessage {
+	return m
+}
+
 // TemplateMessage type
 type TemplateMessage struct {
 	AltText  string
 	Template Template
 
 	quickReplyitems *QuickReplyItems
+	sender          *Sender
 }
 
 // MarshalJSON method of TemplateMessage
@@ -251,17 +345,30 @@ func (m *TemplateMessage) MarshalJSON() ([]byte, error) {
 		AltText    string           `json:"altText"`
 		Template   Template         `json:"template"`
 		QuickReply *QuickReplyItems `json:"quickReply,omitempty"`
+		Sender     *Sender          `json:"sender,omitempty"`
 	}{
 		Type:       MessageTypeTemplate,
 		AltText:    m.AltText,
 		Template:   m.Template,
 		QuickReply: m.quickReplyitems,
+		Sender:     m.sender,
 	})
 }
 
 // WithQuickReplies method of TemplateMessage
 func (m *TemplateMessage) WithQuickReplies(items *QuickReplyItems) SendingMessage {
 	m.quickReplyitems = items
+	return m
+}
+
+// WithSender method of TemplateMessage
+func (m *TemplateMessage) WithSender(sender *Sender) SendingMessage {
+	m.sender = sender
+	return m
+}
+
+// AddEmoji method of TemplateMessage
+func (m *TemplateMessage) AddEmoji(emoji *Emoji) SendingMessage {
 	return m
 }
 
@@ -274,6 +381,7 @@ type ImagemapMessage struct {
 	Video    *ImagemapVideo
 
 	quickReplyitems *QuickReplyItems
+	sender          *Sender
 }
 
 // MarshalJSON method of ImagemapMessage
@@ -286,6 +394,7 @@ func (m *ImagemapMessage) MarshalJSON() ([]byte, error) {
 		Actions    []ImagemapAction `json:"actions"`
 		Video      *ImagemapVideo   `json:"video,omitempty"`
 		QuickReply *QuickReplyItems `json:"quickReply,omitempty"`
+		Sender     *Sender          `json:"sender,omitempty"`
 	}{
 		Type:       MessageTypeImagemap,
 		BaseURL:    m.BaseURL,
@@ -294,6 +403,7 @@ func (m *ImagemapMessage) MarshalJSON() ([]byte, error) {
 		Actions:    m.Actions,
 		Video:      m.Video,
 		QuickReply: m.quickReplyitems,
+		Sender:     m.sender,
 	})
 }
 
@@ -309,12 +419,24 @@ func (m *ImagemapMessage) WithQuickReplies(items *QuickReplyItems) SendingMessag
 	return m
 }
 
+// WithSender method of ImagemapMessage
+func (m *ImagemapMessage) WithSender(sender *Sender) SendingMessage {
+	m.sender = sender
+	return m
+}
+
+// AddEmoji method of ImagemapMessage
+func (m *ImagemapMessage) AddEmoji(emoji *Emoji) SendingMessage {
+	return m
+}
+
 // FlexMessage type
 type FlexMessage struct {
 	AltText  string
 	Contents FlexContainer
 
 	quickReplyitems *QuickReplyItems
+	sender          *Sender
 }
 
 // MarshalJSON method of FlexMessage
@@ -324,17 +446,30 @@ func (m *FlexMessage) MarshalJSON() ([]byte, error) {
 		AltText    string           `json:"altText"`
 		Contents   interface{}      `json:"contents"`
 		QuickReply *QuickReplyItems `json:"quickReply,omitempty"`
+		Sender     *Sender          `json:"sender,omitempty"`
 	}{
 		Type:       MessageTypeFlex,
 		AltText:    m.AltText,
 		Contents:   m.Contents,
 		QuickReply: m.quickReplyitems,
+		Sender:     m.sender,
 	})
 }
 
 // WithQuickReplies method of FlexMessage
 func (m *FlexMessage) WithQuickReplies(items *QuickReplyItems) SendingMessage {
 	m.quickReplyitems = items
+	return m
+}
+
+// WithSender method of FlexMessage
+func (m *FlexMessage) WithSender(sender *Sender) SendingMessage {
+	m.sender = sender
+	return m
+}
+
+// AddEmoji method of FlexMessage
+func (m *FlexMessage) AddEmoji(emoji *Emoji) SendingMessage {
 	return m
 }
 

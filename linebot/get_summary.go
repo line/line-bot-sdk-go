@@ -1,4 +1,4 @@
-// Copyright 2016 LINE Corporation
+// Copyright 2020 LINE Corporation
 //
 // LINE Corporation licenses this file to you under the Apache License,
 // version 2.0 (the "License"); you may not use this file except in compliance
@@ -19,35 +19,35 @@ import (
 	"fmt"
 )
 
-// GetMessageContent method
-func (client *Client) GetMessageContent(messageID string) *GetMessageContentCall {
-	return &GetMessageContentCall{
-		c:         client,
-		messageID: messageID,
+// GetGroupSummary method
+func (client *Client) GetGroupSummary(groupID string) *GetGroupSummaryCall {
+	return &GetGroupSummaryCall{
+		c:       client,
+		groupID: groupID,
 	}
 }
 
-// GetMessageContentCall type
-type GetMessageContentCall struct {
+// GetGroupSummaryCall type
+type GetGroupSummaryCall struct {
 	c   *Client
 	ctx context.Context
 
-	messageID string
+	groupID string
 }
 
 // WithContext method
-func (call *GetMessageContentCall) WithContext(ctx context.Context) *GetMessageContentCall {
+func (call *GetGroupSummaryCall) WithContext(ctx context.Context) *GetGroupSummaryCall {
 	call.ctx = ctx
 	return call
 }
 
 // Do method
-func (call *GetMessageContentCall) Do() (*MessageContentResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointGetMessageContent, call.messageID)
-	res, err := call.c.get(call.ctx, call.c.endpointBaseData, endpoint, nil)
+func (call *GetGroupSummaryCall) Do() (*GroupSummaryResponse, error) {
+	endpoint := fmt.Sprintf(APIEndpointGetGroupSummary, call.groupID)
+	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, nil)
 	if err != nil {
 		return nil, err
 	}
 	defer closeResponse(res)
-	return decodeToMessageContentResponse(res)
+	return decodeToGroupSummaryResponse(res)
 }

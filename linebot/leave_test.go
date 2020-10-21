@@ -90,7 +90,16 @@ func TestLeaveGroup(t *testing.T) {
 		w.Write(tc.Response)
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -123,7 +132,16 @@ func TestLeaveGroupWithContext(t *testing.T) {
 		w.Write([]byte("{}"))
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -197,7 +215,16 @@ func TestLeaveRoom(t *testing.T) {
 		w.Write(tc.Response)
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -230,7 +257,16 @@ func TestTestLeaveRoomWithContext(t *testing.T) {
 		w.Write([]byte("{}"))
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -246,7 +282,16 @@ func BenchmarkLeaveGroup(b *testing.B) {
 		w.Write([]byte("{}"))
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		b.Error("Unexpected data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		b.Fatal(err)
 	}
@@ -262,7 +307,16 @@ func BenchmarkLeaveRoom(b *testing.B) {
 		w.Write([]byte("{}"))
 	}))
 	defer server.Close()
-	client, err := mockClient(server)
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		b.Error("Unexpected data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
 	if err != nil {
 		b.Fatal(err)
 	}

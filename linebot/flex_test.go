@@ -15,6 +15,7 @@
 package linebot
 
 import (
+	"encoding/json"
 	"reflect"
 	"strconv"
 	"testing"
@@ -27,22 +28,22 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 	}{
 		{
 			JSON: []byte(`{
-    "type": "bubble",
-    "body": {
-      "type": "box",
-      "layout": "vertical",
-      "contents": [
-        {
-          "type": "text",
-          "text": "hello"
-        },
-        {
-          "type": "text",
-          "text": "world"
-        }
-      ]
-    }
-  }`),
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "hello"
+      },
+      {
+        "type": "text",
+        "text": "world"
+      }
+    ]
+  }
+}`),
 			Want: &BubbleContainer{
 				Type: FlexContainerTypeBubble,
 				Body: &BoxComponent{
@@ -120,6 +121,44 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 									Text: "Second bubble",
 								},
 							},
+						},
+					},
+				},
+			},
+		},
+		{
+			JSON: []byte(`{
+  "type": "bubble",
+  "size": "nano",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "hello"
+      },
+      {
+        "type": "text",
+        "text": "world"
+      }
+    ]
+  }
+}`),
+			Want: &BubbleContainer{
+				Type: FlexContainerTypeBubble,
+				Size: FlexBubbleSizeTypeNano,
+				Body: &BoxComponent{
+					Type:   FlexComponentTypeBox,
+					Layout: FlexBoxLayoutTypeVertical,
+					Contents: []FlexComponent{
+						&TextComponent{
+							Type: FlexComponentTypeText,
+							Text: "hello",
+						},
+						&TextComponent{
+							Type: FlexComponentTypeText,
+							Text: "world",
 						},
 					},
 				},
@@ -442,6 +481,84 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 				},
 			},
 		},
+		{
+			JSON: []byte(`{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "horizontal",
+    "contents": [
+      {
+        "type": "text",
+        "text": "hello",
+        "flex": 0
+      },
+      {
+        "type": "filler",
+        "flex": 4
+      },
+      {
+        "type": "text",
+        "text": "world",
+        "flex": 2
+	  },
+	  {
+        "type": "text",
+        "contents": [
+		  {
+			"type": "span",
+			"text": "hi"
+		  },
+		  {
+			"type": "span",
+			"text": "span",
+			"size": "xl",
+			"color": "#29cf5b"
+		  }
+		]
+      }
+    ]
+  }
+}`),
+			Want: &BubbleContainer{
+				Type: FlexContainerTypeBubble,
+				Body: &BoxComponent{
+					Type:   FlexComponentTypeBox,
+					Layout: FlexBoxLayoutTypeHorizontal,
+					Contents: []FlexComponent{
+						&TextComponent{
+							Type: FlexComponentTypeText,
+							Text: "hello",
+							Flex: IntPtr(0),
+						},
+						&FillerComponent{
+							Type: FlexComponentTypeFiller,
+							Flex: IntPtr(4),
+						},
+						&TextComponent{
+							Type: FlexComponentTypeText,
+							Text: "world",
+							Flex: IntPtr(2),
+						},
+						&TextComponent{
+							Type: FlexComponentTypeText,
+							Contents: []*SpanComponent{
+								{
+									Type: FlexComponentTypeSpan,
+									Text: "hi",
+								},
+								{
+									Type:  FlexComponentTypeSpan,
+									Text:  "span",
+									Size:  FlexTextSizeTypeXl,
+									Color: "#29cf5b",
+								},
+							},
+						},
+					},
+				},
+			},
+		},
 	}
 	for i, tc := range testCases {
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
@@ -451,6 +568,52 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 			}
 			if !reflect.DeepEqual(container, tc.Want) {
 				t.Errorf("Container %v, want %v", container, tc.Want)
+			}
+		})
+	}
+}
+
+func TestMarshalJSON(t *testing.T) {
+	testCases := []struct {
+		component FlexComponent
+		want      []byte
+	}{
+		{
+			&FillerComponent{
+				Type: FlexComponentTypeFiller,
+				Flex: nil,
+			},
+			[]byte(`{"type":"filler"}`),
+		},
+		{
+			&FillerComponent{
+				Type: FlexComponentTypeFiller,
+				Flex: IntPtr(4),
+			},
+			[]byte(`{"type":"filler","flex":4}`),
+		},
+		{
+			&SpanComponent{
+				Type:       FlexComponentTypeSpan,
+				Text:       "span",
+				Size:       FlexTextSizeTypeMd,
+				Weight:     FlexTextWeightTypeRegular,
+				Color:      "#0000ff",
+				Style:      FlexTextStyleTypeNormal,
+				Decoration: FlexTextDecorationTypeNone,
+			},
+			[]byte(`{"type":"span","text":"span","size":"md","weight":"regular","color":"#0000ff","style":"normal","decoration":"none"}`),
+		},
+	}
+
+	for i, tc := range testCases {
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			got, err := json.Marshal(tc.component)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if !reflect.DeepEqual(got, tc.want) {
+				t.Errorf("got %s, want %s", string(got), string(tc.want))
 			}
 		})
 	}
@@ -552,6 +715,27 @@ func BenchmarkUnmarshalFlexMessageJSON(b *testing.B) {
 							"gravity": "bottom",
 							"size": "xs",
 							"flex": 1
+						},
+						{
+							"type": "text",
+							"contents": [
+								{
+									"type": "span",
+									"text": "LINE",
+									"size": "xxl",
+									"weight": "bold",
+									"style": "italic",
+									"color": "#4f8f00"
+								},
+								{
+									"type": "span",
+									"text": "MUSIC",
+									"size": "xxl",
+									"weight": "bold",
+									"style": "italic",
+									"color": "#4f8f00"
+								}
+							]
 						}
 					]
 				}

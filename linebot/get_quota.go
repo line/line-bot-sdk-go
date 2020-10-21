@@ -49,7 +49,7 @@ func (call *GetMessageQuotaCall) WithContext(ctx context.Context) *GetMessageQuo
 
 // Do method
 func (call *GetMessageQuotaCall) Do() (*MessageQuotaResponse, error) {
-	res, err := call.c.get(call.ctx, call.endpoint, nil)
+	res, err := call.c.get(call.ctx, call.c.endpointBase, call.endpoint, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -78,7 +78,7 @@ func (call *GetMessageConsumptionCall) WithContext(ctx context.Context) *GetMess
 
 // Do method
 func (call *GetMessageConsumptionCall) Do() (*MessageConsumptionResponse, error) {
-	res, err := call.c.get(call.ctx, APIEndpointGetMessageConsumption, nil)
+	res, err := call.c.get(call.ctx, call.c.endpointBase, APIEndpointGetMessageConsumption, nil)
 	if err != nil {
 		return nil, err
 	}

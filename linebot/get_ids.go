@@ -51,7 +51,7 @@ func (call *GetGroupMemberIDsCall) Do() (*MemberIDsResponse, error) {
 	if call.continuationToken != "" {
 		q = url.Values{"start": []string{call.continuationToken}}
 	}
-	res, err := call.c.get(call.ctx, endpoint, q)
+	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, q)
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +90,7 @@ func (call *GetRoomMemberIDsCall) Do() (*MemberIDsResponse, error) {
 	if call.continuationToken != "" {
 		q = url.Values{"start": []string{call.continuationToken}}
 	}
-	res, err := call.c.get(call.ctx, endpoint, q)
+	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, q)
 	if err != nil {
 		return nil, err
 	}

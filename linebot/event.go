@@ -25,17 +25,28 @@ type EventType string
 
 // EventType constants
 const (
-	EventTypeMessage      EventType = "message"
-	EventTypeFollow       EventType = "follow"
-	EventTypeUnfollow     EventType = "unfollow"
-	EventTypeJoin         EventType = "join"
-	EventTypeLeave        EventType = "leave"
-	EventTypeMemberJoined EventType = "memberJoined"
-	EventTypeMemberLeft   EventType = "memberLeft"
-	EventTypePostback     EventType = "postback"
-	EventTypeBeacon       EventType = "beacon"
-	EventTypeAccountLink  EventType = "accountLink"
-	EventTypeThings       EventType = "things"
+	EventTypeMessage           EventType = "message"
+	EventTypeFollow            EventType = "follow"
+	EventTypeUnfollow          EventType = "unfollow"
+	EventTypeJoin              EventType = "join"
+	EventTypeLeave             EventType = "leave"
+	EventTypeMemberJoined      EventType = "memberJoined"
+	EventTypeMemberLeft        EventType = "memberLeft"
+	EventTypePostback          EventType = "postback"
+	EventTypeBeacon            EventType = "beacon"
+	EventTypeAccountLink       EventType = "accountLink"
+	EventTypeThings            EventType = "things"
+	EventTypeUnsend            EventType = "unsend"
+	EventTypeVideoPlayComplete EventType = "videoPlayComplete"
+)
+
+// EventMode type
+type EventMode string
+
+// EventMode constants
+const (
+	EventModeActive  EventMode = "active"
+	EventModeStandby EventMode = "standby"
 )
 
 // EventSourceType type
@@ -82,6 +93,7 @@ const (
 	BeaconEventTypeEnter  BeaconEventType = "enter"
 	BeaconEventTypeLeave  BeaconEventType = "leave"
 	BeaconEventTypeBanner BeaconEventType = "banner"
+	BeaconEventTypeStay   BeaconEventType = "stay"
 )
 
 // Beacon type
@@ -150,34 +162,65 @@ type Things struct {
 	Result   *ThingsResult
 }
 
+// Unsend type
+type Unsend struct {
+	MessageID string `json:"messageId"`
+}
+
+// VideoPlayComplete type
+type VideoPlayComplete struct {
+	TrackingID string `json:"trackingId"`
+}
+
+// StickerResourceType type
+type StickerResourceType string
+
+// StickerResourceType constants
+const (
+	StickerResourceTypeStatic         StickerResourceType = "STATIC"
+	StickerResourceTypeAnimation      StickerResourceType = "ANIMATION"
+	StickerResourceTypeSound          StickerResourceType = "SOUND"
+	StickerResourceTypeAnimationSound StickerResourceType = "ANIMATION_SOUND"
+	StickerResourceTypePerStickerText StickerResourceType = "PER_STICKER_TEXT"
+	StickerResourceTypePopup          StickerResourceType = "POPUP"
+	StickerResourceTypePopupSound     StickerResourceType = "POPUP_SOUND"
+	StickerResourceTypeNameText       StickerResourceType = "NAME_TEXT"
+)
+
 // Event type
 type Event struct {
-	ReplyToken  string
-	Type        EventType
-	Timestamp   time.Time
-	Source      *EventSource
-	Message     Message
-	Joined      *Members
-	Left        *Members
-	Postback    *Postback
-	Beacon      *Beacon
-	AccountLink *AccountLink
-	Things      *Things
-	Members     []*EventSource
+	ReplyToken        string
+	Type              EventType
+	Mode              EventMode
+	Timestamp         time.Time
+	Source            *EventSource
+	Message           Message
+	Joined            *Members
+	Left              *Members
+	Postback          *Postback
+	Beacon            *Beacon
+	AccountLink       *AccountLink
+	Things            *Things
+	Members           []*EventSource
+	Unsend            *Unsend
+	VideoPlayComplete *VideoPlayComplete
 }
 
 type rawEvent struct {
-	ReplyToken  string               `json:"replyToken,omitempty"`
-	Type        EventType            `json:"type"`
-	Timestamp   int64                `json:"timestamp"`
-	Source      *EventSource         `json:"source"`
-	Message     *rawEventMessage     `json:"message,omitempty"`
-	Postback    *Postback            `json:"postback,omitempty"`
-	Beacon      *rawBeaconEvent      `json:"beacon,omitempty"`
-	AccountLink *rawAccountLinkEvent `json:"link,omitempty"`
-	Joined      *rawMemberEvent      `json:"joined,omitempty"`
-	Left        *rawMemberEvent      `json:"left,omitempty"`
-	Things      *rawThingsEvent      `json:"things,omitempty"`
+	ReplyToken        string               `json:"replyToken,omitempty"`
+	Type              EventType            `json:"type"`
+	Mode              EventMode            `json:"mode"`
+	Timestamp         int64                `json:"timestamp"`
+	Source            *EventSource         `json:"source"`
+	Message           *rawEventMessage     `json:"message,omitempty"`
+	Postback          *Postback            `json:"postback,omitempty"`
+	Beacon            *rawBeaconEvent      `json:"beacon,omitempty"`
+	AccountLink       *rawAccountLinkEvent `json:"link,omitempty"`
+	Joined            *rawMemberEvent      `json:"joined,omitempty"`
+	Left              *rawMemberEvent      `json:"left,omitempty"`
+	Things            *rawThingsEvent      `json:"things,omitempty"`
+	Unsend            *Unsend              `json:"unsend,omitempty"`
+	VideoPlayComplete *VideoPlayComplete   `json:"videoPlayComplete,omitempty"`
 }
 
 type rawMemberEvent struct {
@@ -185,18 +228,20 @@ type rawMemberEvent struct {
 }
 
 type rawEventMessage struct {
-	ID        string      `json:"id"`
-	Type      MessageType `json:"type"`
-	Text      string      `json:"text,omitempty"`
-	Duration  int         `json:"duration,omitempty"`
-	Title     string      `json:"title,omitempty"`
-	Address   string      `json:"address,omitempty"`
-	FileName  string      `json:"fileName,omitempty"`
-	FileSize  int         `json:"fileSize,omitempty"`
-	Latitude  float64     `json:"latitude,omitempty"`
-	Longitude float64     `json:"longitude,omitempty"`
-	PackageID string      `json:"packageId,omitempty"`
-	StickerID string      `json:"stickerId,omitempty"`
+	ID                  string              `json:"id"`
+	Type                MessageType         `json:"type"`
+	Text                string              `json:"text,omitempty"`
+	Duration            int                 `json:"duration,omitempty"`
+	Title               string              `json:"title,omitempty"`
+	Address             string              `json:"address,omitempty"`
+	FileName            string              `json:"fileName,omitempty"`
+	FileSize            int                 `json:"fileSize,omitempty"`
+	Latitude            float64             `json:"latitude,omitempty"`
+	Longitude           float64             `json:"longitude,omitempty"`
+	PackageID           string              `json:"packageId,omitempty"`
+	StickerID           string              `json:"stickerId,omitempty"`
+	StickerResourceType StickerResourceType `json:"stickerResourceType,omitempty"`
+	Emojis              []*Emoji            `json:"emojis,omitempty"`
 }
 
 type rawBeaconEvent struct {
@@ -240,11 +285,14 @@ const (
 // MarshalJSON method of Event
 func (e *Event) MarshalJSON() ([]byte, error) {
 	raw := rawEvent{
-		ReplyToken: e.ReplyToken,
-		Type:       e.Type,
-		Timestamp:  e.Timestamp.Unix()*millisecPerSec + int64(e.Timestamp.Nanosecond())/int64(time.Millisecond),
-		Source:     e.Source,
-		Postback:   e.Postback,
+		ReplyToken:        e.ReplyToken,
+		Type:              e.Type,
+		Mode:              e.Mode,
+		Timestamp:         e.Timestamp.Unix()*millisecPerSec + int64(e.Timestamp.Nanosecond())/int64(time.Millisecond),
+		Source:            e.Source,
+		Postback:          e.Postback,
+		Unsend:            e.Unsend,
+		VideoPlayComplete: e.VideoPlayComplete,
 	}
 	if e.Beacon != nil {
 		raw.Beacon = &rawBeaconEvent{
@@ -300,9 +348,10 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 	switch m := e.Message.(type) {
 	case *TextMessage:
 		raw.Message = &rawEventMessage{
-			Type: MessageTypeText,
-			ID:   m.ID,
-			Text: m.Text,
+			Type:   MessageTypeText,
+			ID:     m.ID,
+			Text:   m.Text,
+			Emojis: m.Emojis,
 		}
 	case *ImageMessage:
 		raw.Message = &rawEventMessage{
@@ -338,10 +387,11 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 		}
 	case *StickerMessage:
 		raw.Message = &rawEventMessage{
-			Type:      MessageTypeSticker,
-			ID:        m.ID,
-			PackageID: m.PackageID,
-			StickerID: m.StickerID,
+			Type:                MessageTypeSticker,
+			ID:                  m.ID,
+			PackageID:           m.PackageID,
+			StickerID:           m.StickerID,
+			StickerResourceType: m.StickerResourceType,
 		}
 	}
 	return json.Marshal(&raw)
@@ -356,6 +406,7 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 
 	e.ReplyToken = rawEvent.ReplyToken
 	e.Type = rawEvent.Type
+	e.Mode = rawEvent.Mode
 	e.Timestamp = time.Unix(rawEvent.Timestamp/millisecPerSec, (rawEvent.Timestamp%millisecPerSec)*nanosecPerMillisec).UTC()
 	e.Source = rawEvent.Source
 
@@ -364,8 +415,9 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 		switch rawEvent.Message.Type {
 		case MessageTypeText:
 			e.Message = &TextMessage{
-				ID:   rawEvent.Message.ID,
-				Text: rawEvent.Message.Text,
+				ID:     rawEvent.Message.ID,
+				Text:   rawEvent.Message.Text,
+				Emojis: rawEvent.Message.Emojis,
 			}
 		case MessageTypeImage:
 			e.Message = &ImageMessage{
@@ -396,9 +448,10 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 			}
 		case MessageTypeSticker:
 			e.Message = &StickerMessage{
-				ID:        rawEvent.Message.ID,
-				PackageID: rawEvent.Message.PackageID,
-				StickerID: rawEvent.Message.StickerID,
+				ID:                  rawEvent.Message.ID,
+				PackageID:           rawEvent.Message.PackageID,
+				StickerID:           rawEvent.Message.StickerID,
+				StickerResourceType: rawEvent.Message.StickerResourceType,
 			}
 		}
 	case EventTypePostback:
@@ -447,6 +500,10 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 				}
 			}
 		}
+	case EventTypeUnsend:
+		e.Unsend = rawEvent.Unsend
+	case EventTypeVideoPlayComplete:
+		e.VideoPlayComplete = rawEvent.VideoPlayComplete
 	}
 	return
 }

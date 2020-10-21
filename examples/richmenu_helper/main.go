@@ -16,6 +16,7 @@ package main
 
 import (
 	"flag"
+	"io"
 	"log"
 	"os"
 
@@ -43,6 +44,21 @@ func main() {
 		if _, err = bot.UploadRichMenuImage(*rid, *filePath).Do(); err != nil {
 			log.Fatal(err)
 		}
+	case "download":
+		res, err := bot.DownloadRichMenuImage(*rid).Do()
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer res.Content.Close()
+		f, err := os.OpenFile(*filePath, os.O_CREATE|os.O_RDWR|os.O_TRUNC, 0644)
+		if err != nil {
+			log.Fatal(err)
+		}
+		_, err = io.Copy(f, res.Content)
+		if err != nil {
+			log.Fatal(err)
+		}
+		log.Printf("Image is written to %s", *filePath)
 	case "link":
 		if _, err = bot.LinkUserRichMenu(*uid, *rid).Do(); err != nil {
 			log.Fatal(err)
