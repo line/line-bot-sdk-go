@@ -74,6 +74,13 @@ func (client *Client) GetWebhookInfo() *GetWebhookInfo {
 	}
 }
 
+// GetWebhookInfo type
+type GetWebhookInfo struct {
+	c        *Client
+	ctx      context.Context
+	endpoint string
+}
+
 // WithContext method
 func (call *GetWebhookInfo) WithContext(ctx context.Context) *GetWebhookInfo {
 	call.ctx = ctx
@@ -90,8 +97,8 @@ func (call *GetWebhookInfo) Do() (*WebhookInfoResponse, error) {
 	return decodeToWebhookInfoResponse(res)
 }
 
-// GetWebhookInfo type
-type GetWebhookInfo struct {
+// TestWebhook type
+type TestWebhook struct {
 	c        *Client
 	ctx      context.Context
 	endpoint string
@@ -140,4 +147,28 @@ func (call *SetWebhookEndpointURLCall) Do() (*BasicResponse, error) {
 	}
 	defer closeResponse(res)
 	return decodeToBasicResponse(res)
+}
+
+// TestWebhook method
+func (client *Client) TestWebhook() *TestWebhook {
+	return &TestWebhook{
+		c:        client,
+		endpoint: APIEndpointTestWebhook,
+	}
+}
+
+// WithContext method
+func (call *TestWebhook) WithContext(ctx context.Context) *TestWebhook {
+	call.ctx = ctx
+	return call
+}
+
+// Do method
+func (call *TestWebhook) Do() (*TestWebhookResponse, error) {
+	res, err := call.c.get(call.ctx, call.c.endpointBase, call.endpoint, nil)
+	if err != nil {
+		return nil, err
+	}
+	defer closeResponse(res)
+	return decodeToTestWebhookResponsee(res)
 }
