@@ -1233,7 +1233,7 @@ func BenchmarkParseRequest(b *testing.B) {
 func BenchmarkGetWebhookInfo(b *testing.B) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
-		w.Write([]byte(`{"userId":"U","basicId":"@B","premiumId":"P","displayName":"BotTest","pictureUrl":"https://","chatMode":"chat","markAsReadMode":"manual"}`))
+		w.Write([]byte(`{"endpoint":"https://example.herokuapp.com/test","active":"true"}`))
 	}))
 	defer server.Close()
 
