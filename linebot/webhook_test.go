@@ -1589,3 +1589,28 @@ func BenchmarkSetWebhookEndpointURL(b *testing.B) {
 		client.SetWebhookEndpointURL("https://example.com/abcdefghijklmn").Do()
 	}
 }
+
+func BenchmarkTestWebhook(b *testing.B) {
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		w.Write([]byte("{}"))
+	}))
+	defer server.Close()
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		b.Error("Unexpected data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
+	if err != nil {
+		b.Fatal(err)
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		client.TestWebhook().Do()
+	}
+}
