@@ -80,6 +80,8 @@ const (
 	APIEndpointIssueAccessTokenV2  = "/oauth2/v2.1/token"
 	APIEndpointGetAccessTokensV2   = "/oauth2/v2.1/tokens/kid"
 	APIEndpointRevokeAccessTokenV2 = "/oauth2/v2.1/revoke"
+
+	APIEndpointGetWebhookInfo = "/v2/bot/channel/webhook/endpoint"
 )
 
 // Client type
