@@ -250,6 +250,12 @@ type LinkTokenResponse struct {
 	LinkToken string `json:"linkToken"`
 }
 
+// WebhookInfoResponse type
+type WebhookInfoResponse struct {
+	Endpoint string `json:"endpoint"`
+	Active   string `json:"active"`
+}
+
 // isSuccess checks if status code is 2xx: The action was successfully received,
 // understood, and accepted.
 func isSuccess(code int) bool {
@@ -471,6 +477,18 @@ func decodeToLinkTokenResponse(res *http.Response) (*LinkTokenResponse, error) {
 	}
 	decoder := json.NewDecoder(res.Body)
 	result := LinkTokenResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
+
+func decodeToWebhookInfoResponse(res *http.Response) (*WebhookInfoResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := WebhookInfoResponse{}
 	if err := decoder.Decode(&result); err != nil {
 		return nil, err
 	}

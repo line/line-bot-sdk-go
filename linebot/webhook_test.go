@@ -1095,6 +1095,166 @@ func BenchmarkParseRequest(b *testing.B) {
 	}
 }
 
+func TestGetWebhookInfo(t *testing.T) {
+	type want struct {
+		URLPath     string
+		RequestBody []byte
+		Response    *WebhookInfoResponse
+		Error       error
+	}
+	var testCases = []struct {
+		Label        string
+		ResponseCode int
+		Response     []byte
+		Want         want
+	}{
+		{
+			Label:        "Success",
+			ResponseCode: 200,
+			Response:     []byte(`{"endpoint":"https://example.herokuapp.com/test","active":"true"}`),
+			Want: want{
+				URLPath:     APIEndpointGetWebhookInfo,
+				RequestBody: []byte(""),
+				Response: &WebhookInfoResponse{
+					Endpoint: "https://example.herokuapp.com/test",
+					Active:   "true",
+				},
+			},
+		},
+		{
+			Label:        "Internal server error",
+			ResponseCode: 500,
+			Response:     []byte("500 Internal server error"),
+			Want: want{
+				URLPath:     APIEndpointGetWebhookInfo,
+				RequestBody: []byte(""),
+				Error: &APIError{
+					Code: 500,
+				},
+			},
+		},
+		{
+			Label:        "Invalid channelAccessToken error",
+			ResponseCode: 401,
+			Response:     []byte(`{"message":"Authentication failed due to the following reason: invalid token. Confirm that the access token in the authorization header is valid."}`),
+			Want: want{
+				URLPath:     APIEndpointGetWebhookInfo,
+				RequestBody: []byte(""),
+				Error: &APIError{
+					Code: 401,
+					Response: &ErrorResponse{
+						Message: "Authentication failed due to the following reason: invalid token. Confirm that the access token in the authorization header is valid.",
+					},
+				},
+			},
+		},
+	}
+
+	var currentTestIdx int
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		tc := testCases[currentTestIdx]
+		if r.Method != http.MethodGet {
+			t.Errorf("Method %s; want %s", r.Method, http.MethodGet)
+		}
+		if r.URL.Path != tc.Want.URLPath {
+			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
+		}
+		body, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
+			t.Errorf("RequestBody %s; want %s", body, tc.Want.RequestBody)
+		}
+		w.WriteHeader(tc.ResponseCode)
+		w.Write(tc.Response)
+	}))
+	defer server.Close()
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected Data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for i, tc := range testCases {
+		currentTestIdx = i
+		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
+			res, err := client.GetWebhookInfo().Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
+			}
+			if !reflect.DeepEqual(res, tc.Want.Response) {
+				t.Errorf("Response %v; want %v", res, tc.Want.Response)
+			}
+		})
+	}
+}
+
+func TestGetWebhookInfoWithContext(t *testing.T) {
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		time.Sleep(10 * time.Millisecond)
+		w.Write([]byte("{}"))
+	}))
+	defer server.Close()
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected Data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
+	if err != nil {
+		t.Fatal(err)
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Millisecond)
+	defer cancel()
+	_, err = client.GetWebhookInfo().WithContext(ctx).Do()
+	expectCtxDeadlineExceed(ctx, err, t)
+}
+
+func BenchmarkGetWebhookInfo(b *testing.B) {
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		w.Write([]byte(`{"endpoint":"https://example.herokuapp.com/test","active":"true"}`))
+	}))
+	defer server.Close()
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		b.Error("Unexpected Data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
+	if err != nil {
+		b.Fatal(err)
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		client.GetWebhookInfo().Do()
+	}
+}
+
 func TestSetWebhookEndpointURL(t *testing.T) {
 	type want struct {
 		URLPath     string

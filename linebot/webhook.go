@@ -66,6 +66,37 @@ func validateSignature(channelSecret, signature string, body []byte) bool {
 	return hmac.Equal(decoded, hash.Sum(nil))
 }
 
+// GetWebhookInfo method
+func (client *Client) GetWebhookInfo() *GetWebhookInfo {
+	return &GetWebhookInfo{
+		c:        client,
+		endpoint: APIEndpointGetWebhookInfo,
+	}
+}
+
+// WithContext method
+func (call *GetWebhookInfo) WithContext(ctx context.Context) *GetWebhookInfo {
+	call.ctx = ctx
+	return call
+}
+
+// Do method
+func (call *GetWebhookInfo) Do() (*WebhookInfoResponse, error) {
+	res, err := call.c.get(call.ctx, call.c.endpointBase, call.endpoint, nil)
+	if err != nil {
+		return nil, err
+	}
+	defer closeResponse(res)
+	return decodeToWebhookInfoResponse(res)
+}
+
+// GetWebhookInfo type
+type GetWebhookInfo struct {
+	c        *Client
+	ctx      context.Context
+	endpoint string
+}
+
 // SetWebhookEndpointURLCall type
 type SetWebhookEndpointURLCall struct {
 	c   *Client
