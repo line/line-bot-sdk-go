@@ -15,11 +15,13 @@
 package linebot
 
 import (
+	"bytes"
 	"context"
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/base64"
 	"encoding/json"
+	"io"
 	"io/ioutil"
 	"net/http"
 )
@@ -93,4 +95,49 @@ type GetWebhookInfo struct {
 	c        *Client
 	ctx      context.Context
 	endpoint string
+}
+
+// SetWebhookEndpointURLCall type
+type SetWebhookEndpointURLCall struct {
+	c   *Client
+	ctx context.Context
+
+	endpoint string
+}
+
+// SetWebhookEndpointURL method
+func (client *Client) SetWebhookEndpointURL(webhookEndpoint string) *SetWebhookEndpointURLCall {
+	return &SetWebhookEndpointURLCall{
+		c:        client,
+		endpoint: webhookEndpoint,
+	}
+}
+
+// WithContext method
+func (call *SetWebhookEndpointURLCall) WithContext(ctx context.Context) *SetWebhookEndpointURLCall {
+	call.ctx = ctx
+	return call
+}
+
+func (call *SetWebhookEndpointURLCall) encodeJSON(w io.Writer) error {
+	enc := json.NewEncoder(w)
+	return enc.Encode(&struct {
+		Endpoint string `json:"endpoint"`
+	}{
+		Endpoint: call.endpoint,
+	})
+}
+
+// Do method
+func (call *SetWebhookEndpointURLCall) Do() (*BasicResponse, error) {
+	var buf bytes.Buffer
+	if err := call.encodeJSON(&buf); err != nil {
+		return nil, err
+	}
+	res, err := call.c.put(call.ctx, APIEndpointSetWebhookEndpoint, &buf)
+	if err != nil {
+		return nil, err
+	}
+	defer closeResponse(res)
+	return decodeToBasicResponse(res)
 }
