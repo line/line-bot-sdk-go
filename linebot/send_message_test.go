@@ -1673,6 +1673,25 @@ func TestNarrowcastMessages(t *testing.T) {
 			},
 		},
 		{
+			Label:    "A text message for Narrowcast Message with Redelivery",
+			Messages: []SendingMessage{NewTextMessage("Hello, world")},
+			Recipient: RecipientOperatorAnd(
+				NewRedeliveryObject("f70dd685-499a-4231-a441-f24b8d4fba21"),
+				RecipientOperatorNot(
+					NewRedeliveryObject("x88dd9k2-gdd4-7fs0-a441-va668d4fb0x9"),
+				),
+			),
+			Demographic:  nil,
+			Max:          0,
+			RequestID:    "12222",
+			Response:     []byte(`{}`),
+			ResponseCode: 202,
+			Want: want{
+				RequestBody: []byte(`{"messages":[{"type":"text","text":"Hello, world"}],"recipient":{"type":"operator","and":[{"type":"redelivery","requestId":"f70dd685-499a-4231-a441-f24b8d4fba21"},{"type":"operator","not":{"type":"redelivery","requestId":"x88dd9k2-gdd4-7fs0-a441-va668d4fb0x9"}}]}}` + "\n"),
+				Response:    &BasicResponse{RequestID: "12222"},
+			},
+		},
+		{
 			Label:        "A text message for Narrowcast Message for android",
 			Messages:     []SendingMessage{NewTextMessage("Hello, world")},
 			Recipient:    nil,
