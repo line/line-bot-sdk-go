@@ -38,6 +38,23 @@ func NewAudienceObject(groupID int) *AudienceObject {
 // Recipient implements Recipient interface
 func (*AudienceObject) Recipient() {}
 
+// RedeliveryObject type is created to be used with specific recipient objects
+type RedeliveryObject struct {
+	Type      string `json:"type"`
+	RequestID string `json:"requestId"`
+}
+
+// NewRedeliveryObject function
+func NewRedeliveryObject(requestID string) *RedeliveryObject {
+	return &RedeliveryObject{
+		Type:      "redelivery",
+		RequestID: requestID,
+	}
+}
+
+// Recipient implements Recipient interface
+func (*RedeliveryObject) Recipient() {}
+
 // RecipientOperator struct
 type RecipientOperator struct {
 	ConditionAnd []Recipient `json:"and,omitempty"`
