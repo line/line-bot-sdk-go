@@ -83,6 +83,7 @@ const (
 
 	APIEndpointGetWebhookInfo     = "/v2/bot/channel/webhook/endpoint"
 	APIEndpointSetWebhookEndpoint = "/v2/bot/channel/webhook/endpoint"
+	APIEndpointTestWebhook        = "/v2/bot/channel/webhook/test"
 )
 
 // Client type

@@ -20,6 +20,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"time"
 )
 
 // BasicResponse type
@@ -273,6 +274,15 @@ type AccessTokenResponse struct {
 // AccessTokensResponse type
 type AccessTokensResponse struct {
 	KeyIDs []string `json:"kids"`
+}
+
+// TestWebhookResponse type
+type TestWebhookResponse struct {
+	Success    bool      `json:"success"`
+	Timestamp  time.Time `json:"timestamp"`
+	StatusCode int       `json:"statusCode"`
+	Reason     string    `json:"reason"`
+	Detail     string    `json:"detail"`
 }
 
 func checkResponse(res *http.Response) error {
@@ -585,6 +595,18 @@ func decodeToAccessTokensResponse(res *http.Response) (*AccessTokensResponse, er
 	}
 	decoder := json.NewDecoder(res.Body)
 	result := AccessTokensResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
+
+func decodeToTestWebhookResponsee(res *http.Response) (*TestWebhookResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := TestWebhookResponse{}
 	if err := decoder.Decode(&result); err != nil {
 		return nil, err
 	}
