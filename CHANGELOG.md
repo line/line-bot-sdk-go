@@ -1,5 +1,24 @@
 # Changelog
 
+## [v7.7.0](https://github.com/line/line-bot-sdk-go/tree/v7.7.0) (2020-11-27)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.5.0...v7.6.0)
+
+**Merged pull requests:**
+
+- Support Redelivery object for narrowcast messages [\#242](https://github.com/line/line-bot-sdk-go/pull/242) ([hinoguma](https://github.com/hinoguma))
+
+- Messaging API - October 2020 update - Add API for set webhook endpointURL \#233 [\#241](https://github.com/line/line-bot-sdk-go/pull/241) ([hinoguma](https://github.com/hinoguma))
+
+
+- Messaging API - October 2020 update - Add API TestWebhook \#233 [\#239](https://github.com/line/line-bot-sdk-go/pull/239) ([kkdai](https://github.com/kkdai))
+
+- Messaging API - October 2020 update - Add API for webhook-info\#233 [\#238](https://github.com/line/line-bot-sdk-go/pull/238) ([Thanakorn-ki](https://github.com/Thanakorn-ki))
+
+- Support message api span component in flex message \#236 [\#234](https://github.com/line/line-bot-sdk-go/pull/236) ([wei840222](https://github.com/wei840222))
+
+- Messaging API - October 2020 update - Add API for get-bot-info \#233 [\#232](https://github.com/line/line-bot-sdk-go/pull/232) ([hinoguma](https://github.com/hinoguma))
+
 ## [v7.6.0](https://github.com/line/line-bot-sdk-go/tree/v7.6.0) (2020-09-16)
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.5.0...v7.6.0)
