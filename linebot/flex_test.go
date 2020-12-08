@@ -89,7 +89,11 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
             "type": "text",
             "text": "Second bubble"
           }
-        ]
+        ],
+        "action": {
+          "type": "message",
+          "text": "Second bubble"
+        }
       }
     }
   ]
@@ -121,6 +125,7 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 									Text: "Second bubble",
 								},
 							},
+							Action: &MessageAction{Text: "Second bubble"},
 						},
 					},
 				},
@@ -244,7 +249,8 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
                 "text": "Place",
                 "color": "#aaaaaa",
                 "size": "sm",
-                "flex": 1
+                "flex": 1,
+                "maxLines": 0
               },
               {
                 "type": "text",
@@ -252,7 +258,8 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
                 "wrap": true,
                 "color": "#666666",
                 "size": "sm",
-                "flex": 5
+                "flex": 5,
+                "maxLines": 1
               }
             ]
           },
@@ -394,19 +401,21 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 									Layout: FlexBoxLayoutTypeBaseline,
 									Contents: []FlexComponent{
 										&TextComponent{
-											Type:  FlexComponentTypeText,
-											Text:  "Place",
-											Flex:  IntPtr(1),
-											Size:  FlexTextSizeTypeSm,
-											Color: "#aaaaaa",
+											Type:     FlexComponentTypeText,
+											Text:     "Place",
+											Flex:     IntPtr(1),
+											Size:     FlexTextSizeTypeSm,
+											Color:    "#aaaaaa",
+											MaxLines: IntPtr(0),
 										},
 										&TextComponent{
-											Type:  FlexComponentTypeText,
-											Text:  "Miraina Tower, 4-1-6 Shinjuku, Tokyo",
-											Flex:  IntPtr(5),
-											Size:  FlexTextSizeTypeSm,
-											Wrap:  true,
-											Color: "#666666",
+											Type:     FlexComponentTypeText,
+											Text:     "Miraina Tower, 4-1-6 Shinjuku, Tokyo",
+											Flex:     IntPtr(5),
+											Size:     FlexTextSizeTypeSm,
+											Wrap:     true,
+											Color:    "#666666",
+											MaxLines: IntPtr(1),
 										},
 									},
 									Spacing: FlexComponentSpacingTypeSm,

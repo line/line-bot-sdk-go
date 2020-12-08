@@ -385,6 +385,7 @@ type BoxComponent struct {
 	CornerRadius    FlexComponentCornerRadiusType
 	BackgroundColor string
 	BorderColor     string
+	Action          TemplateAction
 }
 
 // MarshalJSON method of BoxComponent
@@ -401,6 +402,7 @@ func (c *BoxComponent) MarshalJSON() ([]byte, error) {
 		CornerRadius    FlexComponentCornerRadiusType `json:"cornerRadius,omitempty"`
 		BackgroundColor string                        `json:"backgroundColor,omitempty"`
 		BorderColor     string                        `json:"borderColor,omitempty"`
+		Action          TemplateAction                `json:"action,omitempty"`
 	}{
 		Type:            FlexComponentTypeBox,
 		Layout:          c.Layout,
@@ -413,6 +415,7 @@ func (c *BoxComponent) MarshalJSON() ([]byte, error) {
 		CornerRadius:    c.CornerRadius,
 		BackgroundColor: c.BackgroundColor,
 		BorderColor:     c.BorderColor,
+		Action:          c.Action,
 	})
 }
 
@@ -623,6 +626,7 @@ type TextComponent struct {
 	Action     TemplateAction
 	Style      FlexTextStyleType
 	Decoration FlexTextDecorationType
+	MaxLines   *int
 }
 
 // MarshalJSON method of TextComponent
@@ -642,6 +646,7 @@ func (c *TextComponent) MarshalJSON() ([]byte, error) {
 		Action     TemplateAction           `json:"action,omitempty"`
 		Style      FlexTextStyleType        `json:"style,omitempty"`
 		Decoration FlexTextDecorationType   `json:"decoration,omitempty"`
+		MaxLines   *int                     `json:"maxLines,omitempty"`
 	}{
 		Type:       FlexComponentTypeText,
 		Text:       c.Text,
@@ -657,6 +662,7 @@ func (c *TextComponent) MarshalJSON() ([]byte, error) {
 		Action:     c.Action,
 		Style:      c.Style,
 		Decoration: c.Decoration,
+		MaxLines:   c.MaxLines,
 	})
 }
 

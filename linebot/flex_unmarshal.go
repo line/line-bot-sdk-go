@@ -133,6 +133,7 @@ func (c *BoxComponent) UnmarshalJSON(data []byte) error {
 	type alias BoxComponent
 	raw := struct {
 		Contents []rawFlexComponent `json:"contents"`
+		Action   rawAction          `json:"action"`
 		*alias
 	}{
 		alias: (*alias)(c),
@@ -145,6 +146,7 @@ func (c *BoxComponent) UnmarshalJSON(data []byte) error {
 		components[i] = content.Component
 	}
 	c.Contents = components
+	c.Action = raw.Action.Action
 	return nil
 }
 
