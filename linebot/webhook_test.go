@@ -160,7 +160,8 @@ var webhookTestRequestBody = `{
                 "type": "sticker",
                 "packageId": "20",
                 "stickerId": "3",
-                "stickerResourceType": "PER_STICKER_TEXT"
+                "stickerResourceType": "PER_STICKER_TEXT",
+				"keywords": ["cony","sally","Staring","hi","whatsup","line","howdy","HEY","Peeking","wave","peek","Hello","yo","greetings"]
             }
         },
         {
@@ -630,6 +631,7 @@ var webhookTestWantEvents = []*Event{
 			PackageID:           "20",
 			StickerID:           "3",
 			StickerResourceType: StickerResourceTypePerStickerText,
+			Keywords:            []string{"cony", "sally", "Staring", "hi", "whatsup", "line", "howdy", "HEY", "Peeking", "wave", "peek", "Hello", "yo", "greetings"},
 		},
 	},
 	{
