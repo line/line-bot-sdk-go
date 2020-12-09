@@ -241,6 +241,7 @@ type rawEventMessage struct {
 	PackageID           string              `json:"packageId,omitempty"`
 	StickerID           string              `json:"stickerId,omitempty"`
 	StickerResourceType StickerResourceType `json:"stickerResourceType,omitempty"`
+	Keywords            []string            `json:"keywords,omitempty"`
 	Emojis              []*Emoji            `json:"emojis,omitempty"`
 }
 
@@ -392,6 +393,7 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 			PackageID:           m.PackageID,
 			StickerID:           m.StickerID,
 			StickerResourceType: m.StickerResourceType,
+			Keywords:            m.Keywords,
 		}
 	}
 	return json.Marshal(&raw)
@@ -452,6 +454,7 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 				PackageID:           rawEvent.Message.PackageID,
 				StickerID:           rawEvent.Message.StickerID,
 				StickerResourceType: rawEvent.Message.StickerResourceType,
+				Keywords:            rawEvent.Message.Keywords,
 			}
 		}
 	case EventTypePostback:
