@@ -62,6 +62,7 @@ type ButtonsTemplate struct {
 	Title                string
 	Text                 string
 	Actions              []TemplateAction
+	DefaultAction        TemplateAction
 }
 
 // MarshalJSON method of ButtonsTemplate
@@ -75,6 +76,7 @@ func (t *ButtonsTemplate) MarshalJSON() ([]byte, error) {
 		Title                string               `json:"title,omitempty"`
 		Text                 string               `json:"text"`
 		Actions              []TemplateAction     `json:"actions"`
+		DefaultAction        TemplateAction       `json:"defaultAction,omitempty"`
 	}{
 		Type:                 TemplateTypeButtons,
 		ThumbnailImageURL:    t.ThumbnailImageURL,
@@ -84,6 +86,7 @@ func (t *ButtonsTemplate) MarshalJSON() ([]byte, error) {
 		Title:                t.Title,
 		Text:                 t.Text,
 		Actions:              t.Actions,
+		DefaultAction:        t.DefaultAction,
 	})
 }
 
@@ -92,6 +95,12 @@ func (t *ButtonsTemplate) WithImageOptions(imageAspectRatio ImageAspectRatioType
 	t.ImageAspectRatio = imageAspectRatio
 	t.ImageSize = imageSize
 	t.ImageBackgroundColor = imageBackgroundColor
+	return t
+}
+
+// WithDefaultAction method, ButtonsTemplate can set defaultAction
+func (t *ButtonsTemplate) WithDefaultAction(defaultAction TemplateAction) *ButtonsTemplate {
+	t.DefaultAction = defaultAction
 	return t
 }
 
@@ -128,6 +137,7 @@ type CarouselColumn struct {
 	Title                string           `json:"title,omitempty"`
 	Text                 string           `json:"text"`
 	Actions              []TemplateAction `json:"actions"`
+	DefaultAction        TemplateAction   `json:"defaultAction,omitempty"`
 }
 
 // MarshalJSON method of CarouselTemplate
@@ -155,6 +165,12 @@ func (t *CarouselTemplate) WithImageOptions(imageAspectRatio ImageAspectRatioTyp
 // WithImageOptions method, CarouselColumn can set imageBackgroundColor
 func (t *CarouselColumn) WithImageOptions(imageBackgroundColor string) *CarouselColumn {
 	t.ImageBackgroundColor = imageBackgroundColor
+	return t
+}
+
+// WithDefaultAction method, CarouselColumn can set defaultAction
+func (t *CarouselColumn) WithDefaultAction(defaultAction TemplateAction) *CarouselColumn {
+	t.DefaultAction = defaultAction
 	return t
 }
 

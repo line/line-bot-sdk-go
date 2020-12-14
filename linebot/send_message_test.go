@@ -1048,7 +1048,7 @@ func TestBroadcastMessages(t *testing.T) {
 			},
 		},
 		{
-			// A buttons template message without title, with image options
+			// A buttons template message without title, with image options and default action
 			Messages: []SendingMessage{
 				NewTemplateMessage(
 					"this is a buttons template",
@@ -1059,13 +1059,19 @@ func TestBroadcastMessages(t *testing.T) {
 						NewPostbackAction("Buy", "action=buy&itemid=123", "", "displayText"),
 						NewPostbackAction("Buy", "action=buy&itemid=123", "text", ""),
 						NewURIAction("View detail", "https://example.com/page/123"),
-					).WithImageOptions("rectangle", "cover", "#FFFFFF"),
+					).WithImageOptions(
+						"rectangle",
+						"cover",
+						"#FFFFFF",
+					).WithDefaultAction(
+						NewURIAction("View detail", "https://example.com/page/123"),
+					),
 				),
 			},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
-				RequestBody: []byte(`{"messages":[{"type":"template","altText":"this is a buttons template","template":{"type":"buttons","thumbnailImageUrl":"https://example.com/bot/images/image.jpg","imageAspectRatio":"rectangle","imageSize":"cover","imageBackgroundColor":"#FFFFFF","text":"Please select","actions":[{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","displayText":"displayText"},{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","text":"text"},{"type":"uri","label":"View detail","uri":"https://example.com/page/123"}]}}]}` + "\n"),
+				RequestBody: []byte(`{"messages":[{"type":"template","altText":"this is a buttons template","template":{"type":"buttons","thumbnailImageUrl":"https://example.com/bot/images/image.jpg","imageAspectRatio":"rectangle","imageSize":"cover","imageBackgroundColor":"#FFFFFF","text":"Please select","actions":[{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","displayText":"displayText"},{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=123","text":"text"},{"type":"uri","label":"View detail","uri":"https://example.com/page/123"}],"defaultAction":{"type":"uri","label":"View detail","uri":"https://example.com/page/123"}}}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
@@ -1135,7 +1141,7 @@ func TestBroadcastMessages(t *testing.T) {
 			},
 		},
 		{
-			// A carousel template message, with new image options
+			// A carousel template message, with new image options and default action
 			Messages: []SendingMessage{
 				NewTemplateMessage(
 					"this is a carousel template with imageAspectRatio, imageSize and imageBackgroundColor",
@@ -1147,14 +1153,18 @@ func TestBroadcastMessages(t *testing.T) {
 							NewPostbackAction("Buy", "action=buy&itemid=111", "", ""),
 							NewPostbackAction("Add to cart", "action=add&itemid=111", "", ""),
 							NewURIAction("View detail", "https://example.com/page/111"),
-						).WithImageOptions("#FFFFFF"),
+						).WithImageOptions(
+							"#FFFFFF",
+						).WithDefaultAction(
+							NewURIAction("View detail", "http://example.com/page/123"),
+						),
 					).WithImageOptions("rectangle", "cover"),
 				),
 			},
 			ResponseCode: 200,
 			Response:     []byte(`{}`),
 			Want: want{
-				RequestBody: []byte(`{"messages":[{"type":"template","altText":"this is a carousel template with imageAspectRatio, imageSize and imageBackgroundColor","template":{"type":"carousel","columns":[{"thumbnailImageUrl":"https://example.com/bot/images/item1.jpg","imageBackgroundColor":"#FFFFFF","title":"this is menu","text":"description","actions":[{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=111"},{"type":"postback","label":"Add to cart","data":"action=add\u0026itemid=111"},{"type":"uri","label":"View detail","uri":"https://example.com/page/111"}]}],"imageAspectRatio":"rectangle","imageSize":"cover"}}]}` + "\n"),
+				RequestBody: []byte(`{"messages":[{"type":"template","altText":"this is a carousel template with imageAspectRatio, imageSize and imageBackgroundColor","template":{"type":"carousel","columns":[{"thumbnailImageUrl":"https://example.com/bot/images/item1.jpg","imageBackgroundColor":"#FFFFFF","title":"this is menu","text":"description","actions":[{"type":"postback","label":"Buy","data":"action=buy\u0026itemid=111"},{"type":"postback","label":"Add to cart","data":"action=add\u0026itemid=111"},{"type":"uri","label":"View detail","uri":"https://example.com/page/111"}],"defaultAction":{"type":"uri","label":"View detail","uri":"http://example.com/page/123"}}],"imageAspectRatio":"rectangle","imageSize":"cover"}}]}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
