@@ -56,6 +56,8 @@ type TextMessage struct {
 
 	quickReplyitems *QuickReplyItems
 	sender          *Sender
+
+	Mention *Mention
 }
 
 // MarshalJSON method of TextMessage
