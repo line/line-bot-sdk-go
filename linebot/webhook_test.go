@@ -587,7 +587,7 @@ var webhookTestWantEvents = []*Event{
 					{
 						Index:  0,
 						Length: 16,
-						UserId: "U0047556f2e40dba2456887320ba7c76d",
+						UserID: "U0047556f2e40dba2456887320ba7c76d",
 					},
 					{
 						Index:  24,
