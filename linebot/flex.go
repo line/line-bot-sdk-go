@@ -180,6 +180,20 @@ const (
 	FlexComponentMarginTypeXxl  FlexComponentMarginType = "xxl"
 )
 
+// FlexComponentPaddingType type
+type FlexComponentPaddingType string
+
+// FlexComponentPaddingType constants
+const (
+	FlexComponentPaddingTypeNone FlexComponentPaddingType = "none"
+	FlexComponentPaddingTypeXs   FlexComponentPaddingType = "xs"
+	FlexComponentPaddingTypeSm   FlexComponentPaddingType = "sm"
+	FlexComponentPaddingTypeMd   FlexComponentPaddingType = "md"
+	FlexComponentPaddingTypeLg   FlexComponentPaddingType = "lg"
+	FlexComponentPaddingTypeXl   FlexComponentPaddingType = "xl"
+	FlexComponentPaddingTypeXxl  FlexComponentPaddingType = "xxl"
+)
+
 // FlexComponentGravityType type
 type FlexComponentGravityType string
 
@@ -386,6 +400,11 @@ type BoxComponent struct {
 	BackgroundColor string
 	BorderColor     string
 	Action          TemplateAction
+	PaddingAll      FlexComponentPaddingType
+	PaddingTop      FlexComponentPaddingType
+	PaddingBottom   FlexComponentPaddingType
+	PaddingStart    FlexComponentPaddingType
+	PaddingEnd      FlexComponentPaddingType
 }
 
 // MarshalJSON method of BoxComponent
@@ -403,6 +422,11 @@ func (c *BoxComponent) MarshalJSON() ([]byte, error) {
 		BackgroundColor string                        `json:"backgroundColor,omitempty"`
 		BorderColor     string                        `json:"borderColor,omitempty"`
 		Action          TemplateAction                `json:"action,omitempty"`
+		PaddingAll      FlexComponentPaddingType      `json:"paddingAll,omitempty"`
+		PaddingTop      FlexComponentPaddingType      `json:"paddingTop,omitempty"`
+		PaddingBottom   FlexComponentPaddingType      `json:"paddingBottom,omitempty"`
+		PaddingStart    FlexComponentPaddingType      `json:"paddingStart,omitempty"`
+		PaddingEnd      FlexComponentPaddingType      `json:"paddingEnd,omitempty"`
 	}{
 		Type:            FlexComponentTypeBox,
 		Layout:          c.Layout,
@@ -416,6 +440,11 @@ func (c *BoxComponent) MarshalJSON() ([]byte, error) {
 		BackgroundColor: c.BackgroundColor,
 		BorderColor:     c.BorderColor,
 		Action:          c.Action,
+		PaddingAll:      c.PaddingAll,
+		PaddingTop:      c.PaddingTop,
+		PaddingBottom:   c.PaddingBottom,
+		PaddingStart:    c.PaddingStart,
+		PaddingEnd:      c.PaddingEnd,
 	})
 }
 
