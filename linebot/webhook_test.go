@@ -70,6 +70,35 @@ var webhookTestRequestBody = `{
             "mode": "active",
             "timestamp": 1462629479859,
             "source": {
+                "type": "group",
+                "groupId": "u206d25c2ea6bd87c17655609a1c37cb8",
+                "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
+            },
+            "message": {
+                "id": "325708",
+                "type": "text",
+                "text": "@openProfileUser Hello. @notOpenProfileUser Hello.",
+                "mention": {
+                    "mentionees": [
+                        {
+                            "index": 0,
+                            "length": 16,
+                            "userId": "U0047556f2e40dba2456887320ba7c76d"
+                        },
+                        {
+                            "index": 24,
+                            "length": 16
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+            "type": "message",
+            "mode": "active",
+            "timestamp": 1462629479859,
+            "source": {
                 "type": "user",
                 "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
             },
@@ -538,6 +567,34 @@ var webhookTestWantEvents = []*Event{
 		Message: &TextMessage{
 			ID:   "325708",
 			Text: "Hello, world",
+		},
+	},
+	{
+		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+		Type:       EventTypeMessage,
+		Mode:       EventModeActive,
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
+		Source: &EventSource{
+			Type:    EventSourceTypeGroup,
+			UserID:  "u206d25c2ea6bd87c17655609a1c37cb8",
+			GroupID: "u206d25c2ea6bd87c17655609a1c37cb8",
+		},
+		Message: &TextMessage{
+			ID:   "325708",
+			Text: "@openProfileUser Hello. @notOpenProfileUser Hello.",
+			Mention: &Mention{
+				Mentionees: []*Mentionee{
+					{
+						Index:  0,
+						Length: 16,
+						UserID: "U0047556f2e40dba2456887320ba7c76d",
+					},
+					{
+						Index:  24,
+						Length: 16,
+					},
+				},
+			},
 		},
 	},
 	{
