@@ -45,7 +45,7 @@ func TestGetProgressMessages(t *testing.T) {
 			RequestID:    "f70dd685-499a-1",
 			TestType:     ProgressTypeNarrowcast,
 			ResponseCode: 200,
-			Response:     []byte(`{"phase":"waiting"}`),
+			Response:     []byte(`{"phase":"waiting","acceptedTime":"2020-12-03T10:15:30.121Z"}`),
 			Want: want{
 				URLPath: fmt.Sprintf(APIEndpointGetMessageProgress, ProgressTypeNarrowcast),
 				Response: &MessagesProgressResponse{
@@ -55,6 +55,8 @@ func TestGetProgressMessages(t *testing.T) {
 					TargetCount:       0,
 					FailedDescription: "",
 					ErrorCode:         0,
+					AcceptedTime:      "2020-12-03T10:15:30.121Z",
+					CompletedTime:     "",
 				},
 			},
 		},
@@ -62,7 +64,7 @@ func TestGetProgressMessages(t *testing.T) {
 			RequestID:    "f70dd685-499a-2",
 			TestType:     ProgressTypeNarrowcast,
 			ResponseCode: 200,
-			Response:     []byte(`{"phase":"succeeded","successCount":10,"failureCount":0,"targetCount":10}`),
+			Response:     []byte(`{"phase":"succeeded","successCount":10,"failureCount":0,"targetCount":10,"acceptedTime":"2020-12-03T10:15:30.121Z","completedTime":"2020-12-03T10:15:30.121Z"}`),
 			Want: want{
 				URLPath: fmt.Sprintf(APIEndpointGetMessageProgress, ProgressTypeNarrowcast),
 				Response: &MessagesProgressResponse{
@@ -72,6 +74,8 @@ func TestGetProgressMessages(t *testing.T) {
 					TargetCount:       10,
 					FailedDescription: "",
 					ErrorCode:         0,
+					AcceptedTime:      "2020-12-03T10:15:30.121Z",
+					CompletedTime:     "2020-12-03T10:15:30.121Z",
 				},
 			},
 		},
@@ -79,7 +83,7 @@ func TestGetProgressMessages(t *testing.T) {
 			RequestID:    "f70dd685-499a-3",
 			TestType:     ProgressTypeNarrowcast,
 			ResponseCode: 200,
-			Response:     []byte(`{"phase":"failed","failedDescription":"internal error","errorCode":1}`),
+			Response:     []byte(`{"phase":"failed","failedDescription":"internal error","errorCode":1,"acceptedTime":"2020-12-03T10:15:30.121Z","completedTime":"2020-12-03T10:15:30.121Z"}`),
 			Want: want{
 				URLPath: fmt.Sprintf(APIEndpointGetMessageProgress, ProgressTypeNarrowcast),
 				Response: &MessagesProgressResponse{
@@ -89,6 +93,8 @@ func TestGetProgressMessages(t *testing.T) {
 					TargetCount:       0,
 					FailedDescription: "internal error",
 					ErrorCode:         1,
+					AcceptedTime:      "2020-12-03T10:15:30.121Z",
+					CompletedTime:     "2020-12-03T10:15:30.121Z",
 				},
 			},
 		},
