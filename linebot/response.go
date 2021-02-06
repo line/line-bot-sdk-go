@@ -137,7 +137,7 @@ type MessagesProgressResponse struct {
 	FailedDescription string `json:"failedDescription"`
 	ErrorCode         int    `json:"errorCode"`
 	AcceptedTime      string `json:"acceptedTime"`
-	CompletedTime     string `json:"completedTime"`
+	CompletedTime     string `json:"completedTime,omitempty"`
 }
 
 // MessagesFriendDemographicsResponse type
