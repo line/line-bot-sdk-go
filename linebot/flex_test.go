@@ -41,9 +41,7 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
         "type": "text",
         "text": "world"
       }
-    ],
-    "justifyContent": "center",
-    "alignItems": "center"
+    ]
   }
 }`),
 			Want: &BubbleContainer{
@@ -61,8 +59,6 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 							Text: "world",
 						},
 					},
-					JustifyContent: FlexComponentJustifyContentTypeCenter,
-					AlignItems: FlexComponentAlignItemsTypeCenter,
 				},
 			},
 		},
@@ -185,7 +181,8 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
     "action": {
       "type": "uri",
       "uri": "https://linecorp.com/"
-    }
+    },
+    "animated": true
   },
   "body": {
     "type": "box",
@@ -345,6 +342,7 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 					AspectRatio: FlexImageAspectRatioType20to13,
 					AspectMode:  FlexImageAspectModeTypeCover,
 					Action:      &URIAction{URI: "https://linecorp.com/"},
+					Animated:    true,
 				},
 				Body: &BoxComponent{
 					Type:   FlexComponentTypeBox,
@@ -569,6 +567,70 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 							},
 						},
 					},
+				},
+			},
+		},
+		{
+			JSON: []byte(`{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "image",
+        "url": "https://example.com/flex/images/image.jpg",
+        "animated": true
+      },
+      {
+        "type": "separator"
+      },
+      {
+        "type": "text",
+        "text": "Text in the box"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [],
+        "width": "30px",
+        "height": "30px"
+      }
+    ],
+    "height": "400px",
+    "justifyContent": "space-evenly",
+    "alignItems": "center"
+  }
+}`),
+			Want: &BubbleContainer{
+				Type: FlexContainerTypeBubble,
+				Body: &BoxComponent{
+					Type:   FlexComponentTypeBox,
+					Layout: FlexBoxLayoutTypeVertical,
+					Contents: []FlexComponent{
+						&ImageComponent{
+							Type:     FlexComponentTypeImage,
+							URL:      "https://example.com/flex/images/image.jpg",
+							Animated: true,
+						},
+						&SeparatorComponent{
+							Type: FlexComponentTypeSeparator,
+						},
+						&TextComponent{
+							Type: FlexComponentTypeText,
+							Text: "Text in the box",
+						},
+						&BoxComponent{
+							Type:     FlexComponentTypeBox,
+							Layout:   FlexBoxLayoutTypeVertical,
+							Contents: []FlexComponent{},
+							Width:    "30px",
+							Height:   "30px",
+						},
+					},
+					Height:         "400px",
+					JustifyContent: FlexComponentJustifyContentTypeSpaceEvenly,
+					AlignItems:     FlexComponentAlignItemsTypeCenter,
 				},
 			},
 		},

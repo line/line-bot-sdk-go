@@ -539,6 +539,7 @@ type ImageComponent struct {
 	AspectMode      FlexImageAspectModeType
 	BackgroundColor string
 	Action          TemplateAction
+	Animated        bool
 }
 
 // MarshalJSON method of ImageComponent
@@ -555,6 +556,7 @@ func (c *ImageComponent) MarshalJSON() ([]byte, error) {
 		AspectMode      FlexImageAspectModeType  `json:"aspectMode,omitempty"`
 		BackgroundColor string                   `json:"backgroundColor,omitempty"`
 		Action          TemplateAction           `json:"action,omitempty"`
+		Animated        bool                     `json:"animated,omitempty"`
 	}{
 		Type:            FlexComponentTypeImage,
 		URL:             c.URL,
@@ -567,6 +569,7 @@ func (c *ImageComponent) MarshalJSON() ([]byte, error) {
 		AspectMode:      c.AspectMode,
 		BackgroundColor: c.BackgroundColor,
 		Action:          c.Action,
+		Animated:        c.Animated,
 	})
 }
 
