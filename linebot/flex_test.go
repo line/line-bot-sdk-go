@@ -41,7 +41,9 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
         "type": "text",
         "text": "world"
       }
-    ]
+    ],
+    "justifyContent": "center",
+    "alignItems": "center"
   }
 }`),
 			Want: &BubbleContainer{
@@ -59,6 +61,8 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 							Text: "world",
 						},
 					},
+					JustifyContent: FlexComponentJustifyContentTypeCenter,
+					AlignItems: FlexComponentAlignItemsTypeCenter,
 				},
 			},
 		},
