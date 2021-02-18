@@ -289,7 +289,7 @@ const (
 	FlexTextDecorationTypeLineThrough FlexTextDecorationType = "line-through"
 )
 
-// FlexComponentJustifyContent type
+// FlexComponentJustifyContentType type
 type FlexComponentJustifyContentType string
 
 // FlexComponentJustifyContentType constants
