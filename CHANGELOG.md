@@ -1,8 +1,25 @@
 # Changelog
 
+## [v7.8.0](https://github.com/line/line-bot-sdk-go/tree/v7.8.0) (2020-11-27)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.7.0...v7.8.0)
+
+**Merged pull requests:**
+
+- Add action props of box component and maxLines props of text component [\#174](https://github.com/line/line-bot-sdk-go/pull/231) ([hinoguma](https://github.com/hinoguma))
+
+- add default action to button template and carousel template  [\#211](https://github.com/line/line-bot-sdk-go/pull/243) ([hinoguma](https://github.com/hinoguma))
+
+- Messaging API - December 2020 update : Add keywords property to Sticker event  [\#245](https://github.com/line/line-bot-sdk-go/pull/246) ([
+Cheng-Lung Sung](https://github.com/clsung))
+
+- Messaging API - January 2021 update : Add mention props for text message [\#247](https://github.com/line/line-bot-sdk-go/pull/248) ([hinoguma](https://github.com/hinoguma))
+
+- Messaging API - January 2021 update : add acceptedTime and completedTime to MessagesProgressResponse [\#247](https://github.com/line/line-bot-sdk-go/pull/250) ([hinoguma](https://github.com/hinoguma))
+
 ## [v7.7.0](https://github.com/line/line-bot-sdk-go/tree/v7.7.0) (2020-11-27)
 
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.5.0...v7.6.0)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.6.0...v7.7.0)
 
 **Merged pull requests:**
 
