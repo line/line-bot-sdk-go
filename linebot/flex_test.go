@@ -316,7 +316,8 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
           "altUri": {
             "desktop": "https://line.me/ja/download"
           }
-        }
+        },
+        "adjustMode": "shrink-to-fit"
       },
       {
         "type": "spacer",
@@ -474,6 +475,7 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 							},
 							Height: FlexButtonHeightTypeSm,
 							Style:  FlexButtonStyleTypeLink,
+							AdjustMode: FlexComponentAdjustModeTypeShrinkToFit,
 						},
 						&SpacerComponent{
 							Type: FlexComponentTypeSpacer,
@@ -587,7 +589,8 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
       },
       {
         "type": "text",
-        "text": "Text in the box"
+        "text": "Text in the box",
+        "adjustMode": "shrink-to-fit"
       },
       {
         "type": "box",
@@ -617,8 +620,9 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 							Type: FlexComponentTypeSeparator,
 						},
 						&TextComponent{
-							Type: FlexComponentTypeText,
-							Text: "Text in the box",
+							Type:       FlexComponentTypeText,
+							Text:       "Text in the box",
+							AdjustMode: FlexComponentAdjustModeTypeShrinkToFit,
 						},
 						&BoxComponent{
 							Type:     FlexComponentTypeBox,
