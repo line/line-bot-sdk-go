@@ -33,7 +33,7 @@ func TestGetGroupMemberCount(t *testing.T) {
 		Response    *MemberCountResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		GroupID      string
 		ResponseCode int
@@ -155,7 +155,7 @@ func TestGetRoomMemberCount(t *testing.T) {
 		Response    *MemberCountResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		RoomID       string
 		ResponseCode int

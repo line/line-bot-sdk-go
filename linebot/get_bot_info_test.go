@@ -32,7 +32,7 @@ func TestGetBotInfo(t *testing.T) {
 		Response    *BotInfoResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		ResponseCode int
 		Response     []byte

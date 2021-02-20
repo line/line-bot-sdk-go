@@ -22,7 +22,7 @@ import (
 )
 
 func TestUnmarshalFlexMessageJSON(t *testing.T) {
-	var testCases = []struct {
+	testCases := []struct {
 		JSON []byte
 		Want FlexContainer
 	}{
@@ -629,7 +629,7 @@ func TestMarshalJSON(t *testing.T) {
 }
 
 func BenchmarkUnmarshalFlexMessageJSON(b *testing.B) {
-	var json = []byte(`{
+	json := []byte(`{
 		"type": "bubble",
 		"header": {
 			"type": "box",

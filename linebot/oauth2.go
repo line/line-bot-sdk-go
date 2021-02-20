@@ -90,7 +90,6 @@ func (call *GetAccessTokensV2Call) Do() (*AccessTokensResponse, error) {
 
 	res, err := call.c.get(call.ctx, call.c.endpointBase, APIEndpointGetAccessTokensV2, vs)
 	//	body := strings.NewReader(vs.Encode())
-
 	//	res, err := call.c.postform(call.ctx, APIEndpointGetAccessTokensV2, body)
 	if err != nil {
 		return nil, err

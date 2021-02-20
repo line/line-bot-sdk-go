@@ -30,7 +30,7 @@ func TestGetLIFF(t *testing.T) {
 		Response    *LIFFAppsResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		ResponseCode int
 		Response     []byte
 		Want         want
@@ -115,7 +115,7 @@ func TestAddLIFF(t *testing.T) {
 		Response    *LIFFIDResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		View         View
 		ResponseCode int
 		Response     []byte
@@ -188,7 +188,7 @@ func TestUpdateLIFF(t *testing.T) {
 		Response    *BasicResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		LIFFID       string
 		View         View
 		ResponseCode int
@@ -263,7 +263,7 @@ func TestDeleteLIFF(t *testing.T) {
 		Response    *BasicResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		LIFFID       string
 		ResponseCode int
 		Response     []byte

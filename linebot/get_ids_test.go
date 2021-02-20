@@ -35,7 +35,7 @@ func TestGetGroupMemberIDs(t *testing.T) {
 		Response          *MemberIDsResponse
 		Error             error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label             string
 		GroupID           string
 		ContinuationToken string
@@ -212,7 +212,7 @@ func TestGetRoomMemberIDs(t *testing.T) {
 		Response          *MemberIDsResponse
 		Error             error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label             string
 		RoomID            string
 		ContinuationToken string

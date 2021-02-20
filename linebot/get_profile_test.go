@@ -33,7 +33,7 @@ func TestGetProfile(t *testing.T) {
 		Response    *UserProfileResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		UserID       string
 		ResponseCode int
@@ -184,7 +184,7 @@ func TestGetGroupMemberProfile(t *testing.T) {
 		Response    *UserProfileResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		GroupID      string
 		UserID       string
@@ -337,7 +337,7 @@ func TestGetRoomMemberProfile(t *testing.T) {
 		Response    *UserProfileResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		RoomID       string
 		UserID       string

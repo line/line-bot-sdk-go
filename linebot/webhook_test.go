@@ -933,7 +933,7 @@ var webhookTestWantEvents = []*Event{
 				ResultCode:             ThingsResultCodeSuccess,
 				BLENotificationPayload: []byte(`AQ==`),
 				ActionResults: []*ThingsActionResult{
-					&ThingsActionResult{
+					{
 						Type: ThingsActionResultTypeBinary,
 						Data: []byte(`/w==`),
 					},
@@ -992,7 +992,7 @@ var webhookTestWantEvents = []*Event{
 			ID:   "325708",
 			Text: "Hello, world! (love)",
 			Emojis: []*Emoji{
-				&Emoji{Index: 14, Length: 6, ProductID: "5ac1bfd5040ab15980c9b435", EmojiID: "001"},
+				{Index: 14, Length: 6, ProductID: "5ac1bfd5040ab15980c9b435", EmojiID: "001"},
 			},
 		},
 	},
@@ -1161,7 +1161,7 @@ func TestGetWebhookInfo(t *testing.T) {
 		Response    *WebhookInfoResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		ResponseCode int
 		Response     []byte
@@ -1321,7 +1321,7 @@ func TestTestWebhook(t *testing.T) {
 		Response    *TestWebhookResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		ResponseCode int
 		Response     []byte
@@ -1465,7 +1465,7 @@ func TestSetWebhookEndpointURL(t *testing.T) {
 		Response    *BasicResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		Endpoint     string
 		ResponseCode int
