@@ -300,7 +300,7 @@ type BubbleContainer struct {
 	Size      FlexBubbleSizeType
 	Direction FlexBubbleDirectionType
 	Header    *BoxComponent
-	Hero      *ImageComponent
+	Hero      FlexComponent
 	Body      *BoxComponent
 	Footer    *BoxComponent
 	Styles    *BubbleStyle
@@ -313,7 +313,7 @@ func (c *BubbleContainer) MarshalJSON() ([]byte, error) {
 		Size      FlexBubbleSizeType      `json:"size,omitempty"`
 		Direction FlexBubbleDirectionType `json:"direction,omitempty"`
 		Header    *BoxComponent           `json:"header,omitempty"`
-		Hero      *ImageComponent         `json:"hero,omitempty"`
+		Hero      FlexComponent           `json:"hero,omitempty"`
 		Body      *BoxComponent           `json:"body,omitempty"`
 		Footer    *BoxComponent           `json:"footer,omitempty"`
 		Styles    *BubbleStyle            `json:"styles,omitempty"`
@@ -327,6 +327,32 @@ func (c *BubbleContainer) MarshalJSON() ([]byte, error) {
 		Footer:    c.Footer,
 		Styles:    c.Styles,
 	})
+}
+
+// UnmarshalJSON method of BubbleContainer
+func (c *BubbleContainer) UnmarshalJSON(b []byte) error {
+	type alias BubbleContainer
+	a := struct {
+		Hero json.RawMessage `json:"hero,omitempty"`
+		*alias
+	}{
+		alias: (*alias)(c),
+	}
+	if err := json.Unmarshal(b, &a); err != nil {
+		return err
+	}
+
+	if a.Hero == nil {
+		return nil
+	}
+
+	var raw rawFlexComponent
+	if err := json.Unmarshal(a.Hero, &raw); err != nil {
+		return err
+	}
+	c.Hero = raw.Component
+
+	return nil
 }
 
 // CarouselContainer type
