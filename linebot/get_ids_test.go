@@ -409,11 +409,11 @@ func TestGetGroupMemberIDsScanner(t *testing.T) {
 
 	testCases := []struct {
 		FirstResponse   *MemberIDsResponse
-		SecoundResponse *MemberIDsResponse
+		SecondResponse *MemberIDsResponse
 	}{
 		{
 			FirstResponse:   res1,
-			SecoundResponse: res2,
+			SecondResponse: res2,
 		},
 		{
 			FirstResponse: under100Res,
@@ -430,7 +430,7 @@ func TestGetGroupMemberIDsScanner(t *testing.T) {
 		q := r.URL.Query()
 		w.WriteHeader(200)
 		if q.Get("start") == res1.Next {
-			if err := json.NewEncoder(w).Encode(tc.SecoundResponse); err != nil {
+			if err := json.NewEncoder(w).Encode(tc.SecondResponse); err != nil {
 				t.Fatal(err)
 			}
 			return
@@ -498,11 +498,11 @@ func TestGetRoomMemberIDsScanner(t *testing.T) {
 
 	testCases := []struct {
 		FirstResponse   *MemberIDsResponse
-		SecoundResponse *MemberIDsResponse
+		SecondResponse *MemberIDsResponse
 	}{
 		{
 			FirstResponse:   res1,
-			SecoundResponse: res2,
+			SecondResponse: res2,
 		},
 		{
 			FirstResponse: under100Res,
@@ -519,7 +519,7 @@ func TestGetRoomMemberIDsScanner(t *testing.T) {
 		q := r.URL.Query()
 		w.WriteHeader(200)
 		if q.Get("start") == res1.Next {
-			if err := json.NewEncoder(w).Encode(tc.SecoundResponse); err != nil {
+			if err := json.NewEncoder(w).Encode(tc.SecondResponse); err != nil {
 				t.Fatal(err)
 			}
 			return
