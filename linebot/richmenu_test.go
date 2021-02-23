@@ -34,7 +34,7 @@ func TestGetRichMenu(t *testing.T) {
 		Response    *RichMenuResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		UserID       string
 		RichMenuID   string
@@ -152,7 +152,7 @@ func TestCreateRichMenu(t *testing.T) {
 		Response    *RichMenuIDResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Request      RichMenu
 		Response     []byte
 		ResponseCode int
@@ -244,7 +244,7 @@ func TestLinkRichMenu(t *testing.T) {
 		Response    *BasicResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		RichMenuID   string
 		UserID       string
 		ResponseCode int
@@ -341,7 +341,7 @@ func TestDefaultRichMenu(t *testing.T) {
 		Response    interface{}
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		TestMethod   testMethod
 		RichMenuID   string
 		ResponseCode int
@@ -452,7 +452,7 @@ func TestListRichMenu(t *testing.T) {
 		Response    []*RichMenuResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		ResponseCode int
 		Response     []byte
 		Want         want
@@ -569,7 +569,7 @@ func TestBulkRichMenu(t *testing.T) {
 		Response    *BasicResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		UserIDs      []string
 		RichMenuID   string
 		ResponseCode int
@@ -669,7 +669,7 @@ func TestUploadRichMenuImage(t *testing.T) {
 		Response    *BasicResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		RichMenuID   string
 		ImagePath    string
 		ResponseCode int
@@ -764,7 +764,7 @@ func TestDownloadRichMenuImage(t *testing.T) {
 		Response *MessageContentResponse
 		Error    error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		RichMenuID     string
 		ImagePath      string
 		Response       []byte

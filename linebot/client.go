@@ -183,7 +183,6 @@ func (client *Client) do(ctx context.Context, req *http.Request) (*http.Response
 		req = req.WithContext(ctx)
 	}
 	return client.httpClient.Do(req)
-
 }
 
 func (client *Client) get(ctx context.Context, base *url.URL, endpoint string, query url.Values) (*http.Response, error) {

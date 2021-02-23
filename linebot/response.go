@@ -438,7 +438,7 @@ func decodeToRichMenuListResponse(res *http.Response) ([]*RichMenuResponse, erro
 		return nil, err
 	}
 	decoder := json.NewDecoder(res.Body)
-	var result = struct {
+	result := struct {
 		RichMenus []*RichMenuResponse `json:"richmenus"`
 	}{}
 	if err := decoder.Decode(&result); err != nil {

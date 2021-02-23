@@ -33,7 +33,7 @@ func TestGetNumberMessages(t *testing.T) {
 		Response    *MessagesNumberResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		TestType     DeliveryType
 		Date         string
 		ResponseCode int

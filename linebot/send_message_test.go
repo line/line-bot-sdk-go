@@ -26,13 +26,13 @@ import (
 )
 
 func TestPushMessages(t *testing.T) {
-	var toUserID = "U0cc15697597f61dd8b01cea8b027050e"
+	toUserID := "U0cc15697597f61dd8b01cea8b027050e"
 	type want struct {
 		RequestBody []byte
 		Response    *BasicResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		Messages     []SendingMessage
 		Response     []byte
@@ -559,13 +559,13 @@ func TestPushMessagesWithContext(t *testing.T) {
 }
 
 func TestReplyMessages(t *testing.T) {
-	var replyToken = "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA"
+	replyToken := "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA"
 	type want struct {
 		RequestBody []byte
 		Response    *BasicResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		Messages     []SendingMessage
 		Response     []byte
@@ -722,7 +722,7 @@ func TestReplyMessagesWithContext(t *testing.T) {
 }
 
 func TestMulticastMessages(t *testing.T) {
-	var toUserIDs = []string{
+	toUserIDs := []string{
 		"U0cc15697597f61dd8b01cea8b027050e",
 		"U38ecbecfade326557b6971140741a4a6",
 	}
@@ -731,7 +731,7 @@ func TestMulticastMessages(t *testing.T) {
 		Response    *BasicResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		Messages     []SendingMessage
 		Response     []byte
@@ -893,7 +893,7 @@ func TestBroadcastMessages(t *testing.T) {
 		Response    *BasicResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Messages     []SendingMessage
 		Response     []byte
 		ResponseCode int
@@ -1532,7 +1532,7 @@ func TestMessagesWithNotificationDisabled(t *testing.T) {
 	type testMethod interface {
 		Do() (*BasicResponse, error)
 	}
-	var toUserIDs = []string{
+	toUserIDs := []string{
 		"U0cc15697597f61dd8b01cea8b027050e",
 		"U38ecbecfade326557b6971140741a4a6",
 	}
@@ -1541,7 +1541,7 @@ func TestMessagesWithNotificationDisabled(t *testing.T) {
 		Response    *BasicResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		TestMethod   testMethod
 		Messages     []SendingMessage
@@ -1651,7 +1651,7 @@ func TestNarrowcastMessages(t *testing.T) {
 		Response    *BasicResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label              string
 		Messages           []SendingMessage
 		Recipient          Recipient
@@ -1859,7 +1859,7 @@ func TestMessagesWithRetryKey(t *testing.T) {
 	type testMethod interface {
 		Do() (*BasicResponse, error)
 	}
-	var toUserIDs = []string{
+	toUserIDs := []string{
 		"U0cc15697597f61dd8b01cea8b027050e",
 		"U38ecbecfade326557b6971140741a4a6",
 	}
@@ -1870,7 +1870,7 @@ func TestMessagesWithRetryKey(t *testing.T) {
 		Response    *BasicResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		TestMethod   testMethod
 		Messages     []SendingMessage

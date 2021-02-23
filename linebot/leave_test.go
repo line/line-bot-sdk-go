@@ -33,7 +33,7 @@ func TestLeaveGroup(t *testing.T) {
 		Response    *BasicResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		GroupID      string
 		ResponseCode int
@@ -158,7 +158,7 @@ func TestLeaveRoom(t *testing.T) {
 		Response    *BasicResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		RoomID       string
 		ResponseCode int

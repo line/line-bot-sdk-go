@@ -31,7 +31,7 @@ func TestIssueLinkToken(t *testing.T) {
 		Response    *LinkTokenResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		UserID       string
 		Response     []byte

@@ -22,7 +22,7 @@ import (
 )
 
 func TestUnmarshalFlexMessageJSON(t *testing.T) {
-	var testCases = []struct {
+	testCases := []struct {
 		JSON []byte
 		Want FlexContainer
 	}{
@@ -567,6 +567,44 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 									Color: "#29cf5b",
 								},
 							},
+						},
+					},
+				},
+			},
+		},
+		{
+			JSON: []byte(`{
+  "type": "bubble",
+  "size": "nano",
+  "hero": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "hello"
+      },
+      {
+        "type": "text",
+        "text": "world"
+      }
+    ]
+  }
+}`),
+			Want: &BubbleContainer{
+				Type: FlexContainerTypeBubble,
+				Size: FlexBubbleSizeTypeNano,
+				Hero: &BoxComponent{
+					Type:   FlexComponentTypeBox,
+					Layout: FlexBoxLayoutTypeVertical,
+					Contents: []FlexComponent{
+						&TextComponent{
+							Type: FlexComponentTypeText,
+							Text: "hello",
+						},
+						&TextComponent{
+							Type: FlexComponentTypeText,
+							Text: "world",
 						},
 					},
 				},

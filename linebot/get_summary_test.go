@@ -33,7 +33,7 @@ func TestGetGroupSummary(t *testing.T) {
 		Response    *GroupSummaryResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		GroupID      string
 		ResponseCode int

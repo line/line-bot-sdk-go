@@ -36,7 +36,7 @@ func TestGetNumberMessagesDelivery(t *testing.T) {
 		Response    *MessagesNumberDeliveryResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		Date         string
 		ResponseCode int
@@ -193,7 +193,7 @@ func TestGetNumberFollowers(t *testing.T) {
 		Response    *MessagesNumberFollowersResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		Date         string
 		ResponseCode int
@@ -353,7 +353,7 @@ func TestGetFriendDemographics(t *testing.T) {
 		Response    *MessagesFriendDemographicsResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		ResponseCode int
 		Response     []byte
@@ -401,19 +401,19 @@ func TestGetFriendDemographics(t *testing.T) {
 				Response: &MessagesFriendDemographicsResponse{
 					Available: true,
 					Genders: []GenderDetail{
-						GenderDetail{Gender: "unknown", Percentage: 37.6},
+						{Gender: "unknown", Percentage: 37.6},
 					},
 					Ages: []AgeDetail{
-						AgeDetail{Age: "unknown", Percentage: 37.6},
+						{Age: "unknown", Percentage: 37.6},
 					},
 					Areas: []AreasDetail{
-						AreasDetail{Area: "unknown", Percentage: 42.9},
+						{Area: "unknown", Percentage: 42.9},
 					},
 					AppTypes: []AppTypeDetail{
-						AppTypeDetail{AppType: "ios", Percentage: 62.4},
+						{AppType: "ios", Percentage: 62.4},
 					},
 					SubscriptionPeriods: []SubscriptionPeriodDetail{
-						SubscriptionPeriodDetail{SubscriptionPeriod: "over365days", Percentage: 96.4},
+						{SubscriptionPeriod: "over365days", Percentage: 96.4},
 					},
 				},
 			},
@@ -576,7 +576,7 @@ func TestGetUserInteractionStats(t *testing.T) {
 		Response    *MessagesUserInteractionStatsResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		RequestID    string
 		ResponseCode int
@@ -644,7 +644,7 @@ func TestGetUserInteractionStats(t *testing.T) {
 						UniqueMediaPlayed100Percent: -1,
 					},
 					Messages: []MessageDetail{
-						MessageDetail{
+						{
 							Seq:                         1,
 							Impression:                  18,
 							MediaPlayed:                 11,
@@ -660,14 +660,14 @@ func TestGetUserInteractionStats(t *testing.T) {
 						},
 					},
 					Clicks: []ClickDetail{
-						ClickDetail{
+						{
 							Seq:                  1,
 							URL:                  "https://www.yahoo.co.jp/",
 							Click:                -1,
 							UniqueClick:          -1,
 							UniqueClickOfRequest: -1,
 						},
-						ClickDetail{
+						{
 							Seq:                  1,
 							URL:                  "https://www.google.com/?hl=ja",
 							Click:                -1,

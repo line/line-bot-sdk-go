@@ -139,6 +139,7 @@ func (call *GetRoomMemberIDsCall) NewScanner() *IDsScanner {
 		ctx:    ctx,
 	}
 }
+
 func (call *GetRoomMemberIDsCall) setContinuationToken(token string) {
 	call.continuationToken = token
 }
