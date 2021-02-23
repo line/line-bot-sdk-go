@@ -32,7 +32,7 @@ func TestGetMessageQuota(t *testing.T) {
 		Response    *MessageQuotaResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		ResponseCode int
 		Response     []byte
@@ -152,7 +152,7 @@ func TestGetMessageQuotaConsumption(t *testing.T) {
 		Response    *MessageQuotaResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		ResponseCode int
 		Response     []byte
@@ -270,7 +270,7 @@ func TestGetMessageConsumption(t *testing.T) {
 		Response    *MessageConsumptionResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label        string
 		ResponseCode int
 		Response     []byte

@@ -29,7 +29,7 @@ func TestIssueAccessToken(t *testing.T) {
 		Response    *AccessTokenResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		ClientID     string
 		ClientSecret string
 		Response     []byte
@@ -157,7 +157,7 @@ func TestRevokeAccessToken(t *testing.T) {
 		Response    *BasicResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		AccessToken  string
 		Response     []byte
 		ResponseCode int

@@ -34,7 +34,7 @@ func TestGetMessageContent(t *testing.T) {
 		ResponseContent []byte
 		Error           error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		Label          string
 		MessageID      string
 		ResponseCode   int

@@ -34,7 +34,7 @@ func TestGetProgressMessages(t *testing.T) {
 		Response    *MessagesProgressResponse
 		Error       error
 	}
-	var testCases = []struct {
+	testCases := []struct {
 		TestType     ProgressType
 		RequestID    string
 		ResponseCode int

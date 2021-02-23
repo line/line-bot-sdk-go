@@ -29,7 +29,7 @@ func main() {
 		accessToken     = flag.String("access_token", os.Getenv("ACCESS_TOKEN"), "channel access token")
 		clientAssertion = flag.String("client_assertion", os.Getenv("CLIENT_ASSERTION"), "A JSON Web Token the client needs to create and sign with the private key")
 	)
-	var checkErr = func(err error) {
+	checkErr := func(err error) {
 		if err != nil {
 			log.Fatal(err)
 		}
