@@ -181,7 +181,8 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
     "action": {
       "type": "uri",
       "uri": "https://linecorp.com/"
-    }
+    },
+    "animated": true
   },
   "body": {
     "type": "box",
@@ -315,7 +316,8 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
           "altUri": {
             "desktop": "https://line.me/ja/download"
           }
-        }
+        },
+        "adjustMode": "shrink-to-fit"
       },
       {
         "type": "spacer",
@@ -341,6 +343,7 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 					AspectRatio: FlexImageAspectRatioType20to13,
 					AspectMode:  FlexImageAspectModeTypeCover,
 					Action:      &URIAction{URI: "https://linecorp.com/"},
+					Animated:    true,
 				},
 				Body: &BoxComponent{
 					Type:   FlexComponentTypeBox,
@@ -472,6 +475,7 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 							},
 							Height: FlexButtonHeightTypeSm,
 							Style:  FlexButtonStyleTypeLink,
+							AdjustMode: FlexComponentAdjustModeTypeShrinkToFit,
 						},
 						&SpacerComponent{
 							Type: FlexComponentTypeSpacer,
@@ -606,6 +610,72 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 				},
 			},
 		},
+		{
+			JSON: []byte(`{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "image",
+        "url": "https://example.com/flex/images/image.jpg",
+        "animated": true
+      },
+      {
+        "type": "separator"
+      },
+      {
+        "type": "text",
+        "text": "Text in the box",
+        "adjustMode": "shrink-to-fit"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [],
+        "width": "30px",
+        "height": "30px"
+      }
+    ],
+    "height": "400px",
+    "justifyContent": "space-evenly",
+    "alignItems": "center"
+  }
+}`),
+			Want: &BubbleContainer{
+				Type: FlexContainerTypeBubble,
+				Body: &BoxComponent{
+					Type:   FlexComponentTypeBox,
+					Layout: FlexBoxLayoutTypeVertical,
+					Contents: []FlexComponent{
+						&ImageComponent{
+							Type:     FlexComponentTypeImage,
+							URL:      "https://example.com/flex/images/image.jpg",
+							Animated: true,
+						},
+						&SeparatorComponent{
+							Type: FlexComponentTypeSeparator,
+						},
+						&TextComponent{
+							Type:       FlexComponentTypeText,
+							Text:       "Text in the box",
+							AdjustMode: FlexComponentAdjustModeTypeShrinkToFit,
+						},
+						&BoxComponent{
+							Type:     FlexComponentTypeBox,
+							Layout:   FlexBoxLayoutTypeVertical,
+							Contents: []FlexComponent{},
+							Width:    "30px",
+							Height:   "30px",
+						},
+					},
+					Height:         "400px",
+					JustifyContent: FlexComponentJustifyContentTypeSpaceEvenly,
+					AlignItems:     FlexComponentAlignItemsTypeCenter,
+				},
+			},
+		},
 	}
 	for i, tc := range testCases {
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
@@ -667,7 +737,7 @@ func TestMarshalJSON(t *testing.T) {
 }
 
 func BenchmarkUnmarshalFlexMessageJSON(b *testing.B) {
-	json := []byte(`{
+	var json = []byte(`{
 		"type": "bubble",
 		"header": {
 			"type": "box",
