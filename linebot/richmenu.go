@@ -51,14 +51,16 @@ type RichMenuBounds struct {
 
 // RichMenuAction with type
 type RichMenuAction struct {
-	Type    RichMenuActionType `json:"type"`
-	URI     string             `json:"uri,omitempty"`
-	Text    string             `json:"text,omitempty"`
-	Data    string             `json:"data,omitempty"`
-	Mode    string             `json:"mode,omitempty"`
-	Initial string             `json:"initial,omitempty"`
-	Max     string             `json:"max,omitempty"`
-	Min     string             `json:"min,omitempty"`
+	Type        RichMenuActionType `json:"type"`
+	URI         string             `json:"uri,omitempty"`
+	Text        string             `json:"text,omitempty"`
+	DisplayText string             `json:"displayText,omitemtpy"`
+	Label       string             `json:"label,omitemtpy"`
+	Data        string             `json:"data,omitempty"`
+	Mode        string             `json:"mode,omitempty"`
+	Initial     string             `json:"initial,omitempty"`
+	Max         string             `json:"max,omitempty"`
+	Min         string             `json:"min,omitempty"`
 }
 
 // AreaDetail type for areas array
@@ -96,7 +98,9 @@ type RichMenu struct {
           },
           "action": {
             "type": "postback"
-            "data": "action=buy&itemid=123"
+			"data": "action=buy&itemid=123",
+			"label":"Buy",
+			"displayText":"Buy"
           }
         }
       ]
