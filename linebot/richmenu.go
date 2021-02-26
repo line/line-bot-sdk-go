@@ -97,10 +97,10 @@ type RichMenu struct {
             "height": 1686
           },
           "action": {
-            "type": "postback"
-			"data": "action=buy&itemid=123",
-			"label":"Buy",
-			"displayText":"Buy"
+            "type": "postback",
+            "data": "action=buy&itemid=123",
+            "label":"Buy",
+            "displayText":"Buy"
           }
         }
       ]
