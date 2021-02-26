@@ -167,14 +167,14 @@ func TestCreateRichMenu(t *testing.T) {
 				Areas: []AreaDetail{
 					{
 						Bounds: RichMenuBounds{X: 0, Y: 0, Width: 2500, Height: 1686},
-						Action: RichMenuAction{Type: RichMenuActionTypePostback, Data: "action=buy&itemid=123"},
+						Action: RichMenuAction{Type: RichMenuActionTypePostback, Data: "action=buy&itemid=123", DisplayText: "Buy", Label: "Buy"},
 					},
 				},
 			},
 			ResponseCode: 200,
 			Response:     []byte(`{"richMenuId":"abcefg"}`),
 			Want: want{
-				RequestBody: []byte(`{"size":{"width":2500,"height":1686},"selected":false,"name":"Menu1","chatBarText":"ChatText","areas":[{"bounds":{"x":0,"y":0,"width":2500,"height":1686},"action":{"type":"postback","data":"action=buy\u0026itemid=123"}}]}` + "\n"),
+				RequestBody: []byte(`{"size":{"width":2500,"height":1686},"selected":false,"name":"Menu1","chatBarText":"ChatText","areas":[{"bounds":{"x":0,"y":0,"width":2500,"height":1686},"action":{"type":"postback","displayText":"Buy","label":"Buy","data":"action=buy\u0026itemid=123"}}]}` + "\n"),
 				Response:    &RichMenuIDResponse{RichMenuID: "abcefg"},
 			},
 		},
