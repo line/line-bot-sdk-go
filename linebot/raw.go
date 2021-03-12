@@ -18,149 +18,52 @@ import (
 	"context"
 	"io"
 	"net/http"
-	"net/url"
 )
 
-// GetRaw method
-func (client *Client) GetRaw(endpoint string, query url.Values) *GetRawCall {
-	return &GetRawCall{
+// NewRawCall method
+func (client *Client) NewRawCall(method string, endpoint string) (*RawCall, error) {
+	req, err := http.NewRequest(method, client.url(client.endpointBase, endpoint), nil)
+	if err != nil {
+		return nil, err
+	}
+	return &RawCall{
 		c: client,
-		endpoint: endpoint,
-		query: query,
+		req: req,
+	}, nil
+}
+
+// NewRawCallWithBody method
+func (client *Client) NewRawCallWithBody(method string, endpoint string, body io.Reader) (*RawCall, error) {
+	req, err := http.NewRequest(method, client.url(client.endpointBase, endpoint), body)
+	if err != nil {
+		return nil, err
 	}
-}
-
-// GetRawCall type
-type GetRawCall struct {
-	c   *Client
-	ctx context.Context
-
-	endpoint string
-	query url.Values
-}
-
-// WithContext method
-func (call *GetRawCall) WithContext(ctx context.Context) *GetRawCall {
-	call.ctx = ctx
-	return call
-}
-
-// Do method. Callee must close response object.
-func (call *GetRawCall) Do() (*http.Response, error) {
-	return call.c.get(call.ctx, call.c.endpointBase, call.endpoint, call.query)
-}
-
-// PostRaw method
-func (client *Client) PostRaw(endpoint string, body io.Reader) *PostRawCall {
-	return &PostRawCall{
+	return &RawCall{
 		c: client,
-		endpoint: endpoint,
-		body: body,
-	}
+		req: req,
+	}, nil
 }
 
-// PostRawCall type
-type PostRawCall struct {
+// RawCall type
+type RawCall struct {
 	c   *Client
 	ctx context.Context
 
-	endpoint string
-	body io.Reader
+	req         *http.Request
+}
+
+// AddHeader method
+func (call *RawCall) AddHeader(key string, value string) {
+	call.req.Header.Add(key, value)
 }
 
 // WithContext method
-func (call *PostRawCall) WithContext(ctx context.Context) *PostRawCall {
+func (call *RawCall) WithContext(ctx context.Context) *RawCall {
 	call.ctx = ctx
 	return call
 }
 
 // Do method. Callee must close response object.
-func (call *PostRawCall) Do() (*http.Response, error) {
-	return call.c.post(call.ctx, call.endpoint, call.body)
-}
-
-// PostFormRaw method
-func (client *Client) PostFormRaw(endpoint string, body io.Reader) *PostFormRawCall {
-	return &PostFormRawCall{
-		c: client,
-
-		endpoint: endpoint,
-		body: body,
-	}
-}
-
-// PostFormRawCall type
-type PostFormRawCall struct {
-	c   *Client
-	ctx context.Context
-
-	endpoint string
-	body io.Reader
-}
-
-// WithContext method
-func (call *PostFormRawCall) WithContext(ctx context.Context) *PostFormRawCall {
-	call.ctx = ctx
-	return call
-}
-
-// Do method. Callee must close response object.
-func (call *PostFormRawCall) Do() (*http.Response, error) {
-	return call.c.postform(call.ctx, call.endpoint, call.body)
-}
-
-// PutRaw method
-func (client *Client) PutRaw(endpoint string, body io.Reader) *PutRawCall {
-	return &PutRawCall{
-		c:        client,
-		endpoint: endpoint,
-		body: body,
-	}
-}
-
-// PutRawCall type
-type PutRawCall struct {
-	c   *Client
-	ctx context.Context
-
-	endpoint string
-	body     io.Reader
-}
-
-// WithContext method
-func (call *PutRawCall) WithContext(ctx context.Context) *PutRawCall {
-	call.ctx = ctx
-	return call
-}
-
-// Do method. Callee must close response object.
-func (call *PutRawCall) Do() (*http.Response, error) {
-	return call.c.put(call.ctx, call.endpoint, call.body)
-}
-
-// DeleteRaw method
-func (client *Client) DeleteRaw(endpoint string) *DeleteRawCall {
-	return &DeleteRawCall{
-		c:        client,
-		endpoint: endpoint,
-	}
-}
-
-// DeleteRawCall type
-type DeleteRawCall struct {
-	c   *Client
-	ctx context.Context
-
-	endpoint string
-}
-
-// WithContext method
-func (call *DeleteRawCall) WithContext(ctx context.Context) *DeleteRawCall {
-	call.ctx = ctx
-	return call
-}
-
-// Do method. Callee must close response object.
-func (call *DeleteRawCall) Do() (*http.Response, error) {
-	return call.c.delete(call.ctx, call.endpoint)
+func (call *RawCall) Do() (*http.Response, error) {
+	return call.c.request(call.ctx, call.req)
 }

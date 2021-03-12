@@ -43,14 +43,18 @@ type testcase struct {
 	Call         func(client *Client) (*http.Response, error)
 }
 
-func TestPostFormRaw(t *testing.T) {
+func TestRaw(t *testing.T) {
 	testcases := []testcase{
 		newTestCase(
 			http.MethodGet,
 			"",
 			[]byte(""),
 			func(client *Client) (*http.Response, error) {
-				return client.GetRaw("/abcdefg", nil).Do()
+				call, err := client.NewRawCall(http.MethodGet, "/abcdefg")
+				if err != nil {
+					panic(err)
+				}
+				return call.Do()
 			},
 		),
 		newTestCase(
@@ -58,7 +62,12 @@ func TestPostFormRaw(t *testing.T) {
 			"application/json; charset=UTF-8",
 			[]byte(`RRRREQUEST_BODY`),
 			func(client *Client) (*http.Response, error) {
-				return client.PostRaw("/abcdefg", bytes.NewReader([]byte(`RRRREQUEST_BODY`))).Do()
+				call, err := client.NewRawCallWithBody(http.MethodPost, "/abcdefg", bytes.NewReader([]byte(`RRRREQUEST_BODY`)))
+				if err != nil {
+					panic(err)
+				}
+				call.AddHeader("content-type", "application/json; charset=UTF-8")
+				return call.Do()
 			},
 		),
 		newTestCase(
@@ -66,7 +75,12 @@ func TestPostFormRaw(t *testing.T) {
 			"application/x-www-form-urlencoded",
 			[]byte(`RRRREQUEST_BODY`),
 			func(client *Client) (*http.Response, error) {
-				return client.PostFormRaw("/abcdefg", bytes.NewReader([]byte(`RRRREQUEST_BODY`))).Do()
+				call, err := client.NewRawCallWithBody(http.MethodPost, "/abcdefg", bytes.NewReader([]byte(`RRRREQUEST_BODY`)))
+				if err != nil {
+					panic(err)
+				}
+				call.AddHeader("content-type", "application/x-www-form-urlencoded")
+				return call.Do()
 			},
 		),
 		newTestCase(
@@ -74,7 +88,12 @@ func TestPostFormRaw(t *testing.T) {
 			"application/json; charset=UTF-8",
 			[]byte(`RRRREQUEST_BODY`),
 			func(client *Client) (*http.Response, error) {
-				return client.PutRaw("/abcdefg", bytes.NewReader([]byte(`RRRREQUEST_BODY`))).Do()
+				call, err := client.NewRawCallWithBody(http.MethodPut, "/abcdefg", bytes.NewReader([]byte(`RRRREQUEST_BODY`)))
+				if err != nil {
+					panic(err)
+				}
+				call.AddHeader("content-type", "application/json; charset=UTF-8")
+				return call.Do()
 			},
 		),
 		newTestCase(
@@ -82,13 +101,17 @@ func TestPostFormRaw(t *testing.T) {
 			"",
 			[]byte(``),
 			func(client *Client) (*http.Response, error) {
-				return client.DeleteRaw("/abcdefg").Do()
+				call, err := client.NewRawCall(http.MethodDelete, "/abcdefg")
+				if err != nil {
+					panic(err)
+				}
+				return call.Do()
 			},
 		),
 	}
 
 	for i, tc := range testcases {
-		t.Run(strconv.Itoa(i) + "_" + tc.RequestWant.Method, func(t *testing.T) {
+		t.Run(strconv.Itoa(i)+"_"+tc.RequestWant.Method, func(t *testing.T) {
 			runTestCase(t, tc)
 		})
 	}
@@ -121,9 +144,8 @@ func runTestCase(t *testing.T, tc testcase) {
 		if r.Method != tc.RequestWant.Method {
 			t.Errorf("Method %s; want %s", r.Method, tc.RequestWant.Method)
 		}
-		endpoint := APIEndpointGetAllLIFFApps
 		if r.URL.Path != tc.RequestWant.Path {
-			t.Errorf("URLPath %s; want %s", r.URL.Path, endpoint)
+			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.RequestWant.Path)
 		}
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {

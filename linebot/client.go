@@ -185,6 +185,10 @@ func (client *Client) do(ctx context.Context, req *http.Request) (*http.Response
 	return client.httpClient.Do(req)
 }
 
+func (client *Client) request(ctx context.Context, req *http.Request) (*http.Response, error) {
+	return client.do(ctx, req)
+}
+
 func (client *Client) get(ctx context.Context, base *url.URL, endpoint string, query url.Values) (*http.Response, error) {
 	req, err := http.NewRequest(http.MethodGet, client.url(base, endpoint), nil)
 	if err != nil {
