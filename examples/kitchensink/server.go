@@ -591,6 +591,9 @@ func (app *KitchenSink) handleText(message *linebot.TextMessage, replyToken stri
 					linebot.NewQuickReplyButton(
 						"",
 						linebot.NewLocationAction("Send location")),
+					linebot.NewQuickReplyButton(
+						"",
+						linebot.NewURIAction("LINE Developer", "https://developers.line.biz/")),
 				)),
 		).Do(); err != nil {
 			return err
