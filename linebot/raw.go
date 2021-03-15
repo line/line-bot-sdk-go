@@ -65,5 +65,5 @@ func (call *RawCall) WithContext(ctx context.Context) *RawCall {
 
 // Do method. Callee must close response object.
 func (call *RawCall) Do() (*http.Response, error) {
-	return call.c.request(call.ctx, call.req)
+	return call.c.do(call.ctx, call.req)
 }
