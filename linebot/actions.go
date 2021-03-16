@@ -227,6 +227,9 @@ func (*CameraRollAction) QuickReplyAction() {}
 // QuickReplyAction implements QuickReplyAction interface
 func (*LocationAction) QuickReplyAction() {}
 
+// QuickReplyAction implements URI's QuickReplyAction interface
+func (*URIAction) QuickReplyAction() {}
+
 // NewURIAction function
 func NewURIAction(label, uri string) *URIAction {
 	return &URIAction{
