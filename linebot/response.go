@@ -51,6 +51,12 @@ type UserProfileResponse struct {
 	Language      string `json:"language"`
 }
 
+// UserIDsResponse type
+type UserIDsResponse struct {
+	UserIDs []string `json:"userIds"`
+	Next    string   `json:"next"`
+}
+
 // GroupSummaryResponse type
 type GroupSummaryResponse struct {
 	GroupID    string `json:"groupId"`
@@ -331,6 +337,18 @@ func decodeToUserProfileResponse(res *http.Response) (*UserProfileResponse, erro
 		return nil, err
 	}
 	return &result, nil
+}
+
+func decodeToUserIDsResponse(res *http.Response) (*UserIDsResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := &UserIDsResponse{}
+	if err := decoder.Decode(result); err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func decodeToGroupSummaryResponse(res *http.Response) (*GroupSummaryResponse, error) {
