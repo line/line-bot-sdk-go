@@ -320,6 +320,14 @@ const (
 	FlexComponentAdjustModeTypeShrinkToFit FlexComponentAdjustModeType = "shrink-to-fit"
 )
 
+// FlexBoxBackgroundType type
+type FlexBoxBackgroundType string
+
+// FlexBoxBackgroundType constants
+const (
+	FlexBoxBackgroundTypeLinearGradient FlexBoxBackgroundType = "linearGradient"
+)
+
 // FlexContainer interface
 type FlexContainer interface {
 	FlexContainer()
@@ -445,6 +453,7 @@ type BoxComponent struct {
 	Action          TemplateAction
 	JustifyContent  FlexComponentJustifyContentType
 	AlignItems      FlexComponentAlignItemsType
+	Background      *BoxBackground
 }
 
 // MarshalJSON method of BoxComponent
@@ -464,6 +473,7 @@ func (c *BoxComponent) MarshalJSON() ([]byte, error) {
 		Action          TemplateAction                  `json:"action,omitempty"`
 		JustifyContent  FlexComponentJustifyContentType `json:"justifyContent,omitempty"`
 		AlignItems      FlexComponentAlignItemsType     `json:"alignItems,omitempty"`
+		Background      *BoxBackground                  `json:"background,omitempty"`
 	}{
 		Type:            FlexComponentTypeBox,
 		Layout:          c.Layout,
@@ -479,7 +489,18 @@ func (c *BoxComponent) MarshalJSON() ([]byte, error) {
 		Action:          c.Action,
 		JustifyContent:  c.JustifyContent,
 		AlignItems:      c.AlignItems,
+		Background:      c.Background,
 	})
+}
+
+// BoxBackground type
+type BoxBackground struct {
+	Type           FlexBoxBackgroundType `json:"type,omitempty"`
+	Angle          string                `json:"angle,omitempty"`
+	StartColor     string                `json:"startColor,omitempty"`
+	EndColor       string                `json:"endColor,omitempty"`
+	CenterColor    string                `json:"centerColor,omitempty"`
+	CenterPosition string                `json:"centerPosition,omitempty"`
 }
 
 // ButtonComponent type
