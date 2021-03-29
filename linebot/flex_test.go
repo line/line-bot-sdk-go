@@ -473,8 +473,8 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 									Desktop: "https://line.me/ja/download",
 								},
 							},
-							Height: FlexButtonHeightTypeSm,
-							Style:  FlexButtonStyleTypeLink,
+							Height:     FlexButtonHeightTypeSm,
+							Style:      FlexButtonStyleTypeLink,
 							AdjustMode: FlexComponentAdjustModeTypeShrinkToFit,
 						},
 						&SpacerComponent{
@@ -635,7 +635,15 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
         "layout": "vertical",
         "contents": [],
         "width": "30px",
-        "height": "30px"
+        "height": "30px",
+        "background": {
+          "type": "linearGradient",
+          "angle": "0deg",
+          "startColor": "#ff0000",
+          "centerColor": "#0000ff",
+          "endColor": "#00ff00",
+          "centerPosition": "10%"
+        }
       }
     ],
     "height": "400px",
@@ -668,6 +676,14 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 							Contents: []FlexComponent{},
 							Width:    "30px",
 							Height:   "30px",
+							Background: &BoxBackground{
+								Type:           FlexBoxBackgroundTypeLinearGradient,
+								Angle:          "0deg",
+								StartColor:     "#ff0000",
+								EndColor:       "#00ff00",
+								CenterColor:    "#0000ff",
+								CenterPosition: "10%",
+							},
 						},
 					},
 					Height:         "400px",
