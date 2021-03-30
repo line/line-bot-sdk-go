@@ -1,5 +1,38 @@
 # Changelog
 
+## [v7.9.0](https://github.com/line/line-bot-sdk-go/tree/v7.9.0) (2021-03-31)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.7.0...v7.9.0)
+
+**Merged pull requests:**
+
+- Flex Message Update 2 - 1 [\#234](https://github.com/line/line-bot-sdk-go/pull/253) ([hinoguma](https://github.com/hinoguma))
+
+- Flex Message Update 2 - 1 [\#234](https://github.com/line/line-bot-sdk-go/pull/253) ([hinoguma](https://github.com/hinoguma))
+
+- chore: reformat the source code [\#254](https://github.com/line/line-bot-sdk-go/pull/254)([appleboy](https://github.com/appleboy))
+
+- support multiple type to hero [\#256](https://github.com/line/line-bot-sdk-go/pull/256)([ryota-sakamoto](https://github.com/ryota-sakamoto))
+
+- Partner API: Add get-follower-ids-api  [\#255](https://github.com/line/line-bot-sdk-go/pull/257)([hinoguma](https://github.com/hinoguma))
+
+- support postback type fields in richmenu action.  [\#259](https://github.com/line/line-bot-sdk-go/pull/259)([EthanChouTW](https://github.com/EthanChouTW))
+
+- Add generic request method.  [\#258](https://github.com/line/line-bot-sdk-go/pull/260)([tokuhirom](https://github.com/tokuhirom))
+
+- Drop golang 1.10 support. [\#263](https://github.com/line/line-bot-sdk-go/pull/263)([tokuhirom](https://github.com/tokuhirom))
+
+- Enable go mod. [\#264](https://github.com/line/line-bot-sdk-go/pull/264)([tokuhirom](https://github.com/tokuhirom))
+
+- Drop appengine example in the repo. [\#266](https://github.com/line/line-bot-sdk-go/pull/266)([tokuhirom](https://github.com/tokuhirom))
+
+- Messaging API 2021 March: Add URI action support to quick reply. [\#267](https://github.com/line/line-bot-sdk-go/pull/267)([clsung](https://github.com/clsung))
+
+
+- Drop travis-ci. [\#268](https://github.com/line/line-bot-sdk-go/pull/268)([tokuhirom](https://github.com/tokuhirom))
+
+- Support Flex Message Update 2: add background props to BoxComponent. (3) [\#234](https://github.com/line/line-bot-sdk-go/pull/269)([hinoguma](https://github.com/hinoguma))
+
 ## [v7.8.0](https://github.com/line/line-bot-sdk-go/tree/v7.8.0) (2020-11-27)
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.7.0...v7.8.0)
