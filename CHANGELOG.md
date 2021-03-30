@@ -8,8 +8,6 @@
 
 - Flex Message Update 2 - 1 [\#234](https://github.com/line/line-bot-sdk-go/pull/253) ([hinoguma](https://github.com/hinoguma))
 
-- Flex Message Update 2 - 1 [\#234](https://github.com/line/line-bot-sdk-go/pull/253) ([hinoguma](https://github.com/hinoguma))
-
 - chore: reformat the source code [\#254](https://github.com/line/line-bot-sdk-go/pull/254)([appleboy](https://github.com/appleboy))
 
 - support multiple type to hero [\#256](https://github.com/line/line-bot-sdk-go/pull/256)([ryota-sakamoto](https://github.com/ryota-sakamoto))
@@ -31,7 +29,7 @@
 
 - Drop travis-ci. [\#268](https://github.com/line/line-bot-sdk-go/pull/268)([tokuhirom](https://github.com/tokuhirom))
 
-- Support Flex Message Update 2: add background props to BoxComponent. (3) [\#234](https://github.com/line/line-bot-sdk-go/pull/269)([hinoguma](https://github.com/hinoguma))
+- Support Flex Message Update 2-3: add background props to BoxComponent. [\#234](https://github.com/line/line-bot-sdk-go/pull/269)([hinoguma](https://github.com/hinoguma))
 
 ## [v7.8.0](https://github.com/line/line-bot-sdk-go/tree/v7.8.0) (2020-11-27)
 
