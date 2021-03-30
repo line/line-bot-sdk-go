@@ -31,7 +31,7 @@
 
 - Support Flex Message Update 2-3: add background props to BoxComponent. [\#234](https://github.com/line/line-bot-sdk-go/pull/269)([hinoguma](https://github.com/hinoguma))
 
-## [v7.8.0](https://github.com/line/line-bot-sdk-go/tree/v7.8.0) (2020-11-27)
+## [v7.8.0](https://github.com/line/line-bot-sdk-go/tree/v7.8.0) (2021-02-17)
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.7.0...v7.8.0)
 
