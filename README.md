@@ -18,19 +18,19 @@ See the official API documentation for more information.
 
 ## Requirements
 
-This library requires Go 1.10 or later.
+This library requires Go 1.11 or later.
 
 ## Installation ##
 
 ```sh
-$ go get github.com/line/line-bot-sdk-go/linebot
+$ go get -u github.com/line/line-bot-sdk-go/v7/linebot
 ```
 
 ## Configuration ##
 
 ```go
 import (
-	"github.com/line/line-bot-sdk-go/linebot"
+	"github.com/line/line-bot-sdk-go/v7/linebot"
 )
 
 func main() {
