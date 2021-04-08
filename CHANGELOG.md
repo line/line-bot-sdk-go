@@ -1,8 +1,16 @@
 # Changelog
 
+## [v7.9.1](https://github.com/line/line-bot-sdk-go/tree/v7.9.1) (2021-04-08)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.9.0...v7.9.1)
+
+**Merged pull requests:**
+
+- upgrade major version to v7 for meets the specification of go module [\#273](https://github.com/line/line-bot-sdk-go/pull/273) ([stewart](https://github.com/wys1203))
+
 ## [v7.9.0](https://github.com/line/line-bot-sdk-go/tree/v7.9.0) (2021-03-31)
 
-[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.7.0...v7.9.0)
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.8.0...v7.9.0)
 
 **Merged pull requests:**
 
