@@ -1170,13 +1170,13 @@ func TestGetWebhookInfo(t *testing.T) {
 		{
 			Label:        "Success",
 			ResponseCode: 200,
-			Response:     []byte(`{"endpoint":"https://example.herokuapp.com/test","active":"true"}`),
+			Response:     []byte(`{"endpoint":"https://example.herokuapp.com/test","active":true}`),
 			Want: want{
 				URLPath:     APIEndpointGetWebhookInfo,
 				RequestBody: []byte(""),
 				Response: &WebhookInfoResponse{
 					Endpoint: "https://example.herokuapp.com/test",
-					Active:   "true",
+					Active:   true,
 				},
 			},
 		},
@@ -1292,7 +1292,7 @@ func TestGetWebhookInfoWithContext(t *testing.T) {
 func BenchmarkGetWebhookInfo(b *testing.B) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
-		w.Write([]byte(`{"endpoint":"https://example.herokuapp.com/test","active":"true"}`))
+		w.Write([]byte(`{"endpoint":"https://example.herokuapp.com/test","active":true}`))
 	}))
 	defer server.Close()
 
