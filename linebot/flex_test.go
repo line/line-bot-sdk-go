@@ -695,7 +695,7 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
-			container, err := UnmarshalFlexMessageJSON([]byte(tc.JSON))
+			container, err := UnmarshalFlexMessageJSON(tc.JSON)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -753,7 +753,7 @@ func TestMarshalJSON(t *testing.T) {
 }
 
 func BenchmarkUnmarshalFlexMessageJSON(b *testing.B) {
-	var json = []byte(`{
+	var jsonData = []byte(`{
 		"type": "bubble",
 		"header": {
 			"type": "box",
@@ -891,7 +891,7 @@ func BenchmarkUnmarshalFlexMessageJSON(b *testing.B) {
 	}`)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		_, err := UnmarshalFlexMessageJSON(json)
+		_, err := UnmarshalFlexMessageJSON(jsonData)
 		if err != nil {
 			b.Fatal(err)
 		}

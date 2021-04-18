@@ -135,7 +135,7 @@ func (m *ImageMessage) WithSender(sender *Sender) SendingMessage {
 }
 
 // AddEmoji method of ImageMessage
-func (m *ImageMessage) AddEmoji(emoji *Emoji) SendingMessage {
+func (m *ImageMessage) AddEmoji(*Emoji) SendingMessage {
 	return m
 }
 
@@ -179,7 +179,7 @@ func (m *VideoMessage) WithSender(sender *Sender) SendingMessage {
 }
 
 // AddEmoji method of VideoMessage
-func (m *VideoMessage) AddEmoji(emoji *Emoji) SendingMessage {
+func (m *VideoMessage) AddEmoji(*Emoji) SendingMessage {
 	return m
 }
 
@@ -223,7 +223,7 @@ func (m *AudioMessage) WithSender(sender *Sender) SendingMessage {
 }
 
 // AddEmoji method of AudioMessage
-func (m *AudioMessage) AddEmoji(emoji *Emoji) SendingMessage {
+func (m *AudioMessage) AddEmoji(*Emoji) SendingMessage {
 	return m
 }
 
@@ -280,7 +280,7 @@ func (m *LocationMessage) WithSender(sender *Sender) SendingMessage {
 }
 
 // AddEmoji method of LocationMessage
-func (m *LocationMessage) AddEmoji(emoji *Emoji) SendingMessage {
+func (m *LocationMessage) AddEmoji(*Emoji) SendingMessage {
 	return m
 }
 
@@ -330,7 +330,7 @@ func (m *StickerMessage) WithSender(sender *Sender) SendingMessage {
 }
 
 // AddEmoji method of StickerMessage
-func (m *StickerMessage) AddEmoji(emoji *Emoji) SendingMessage {
+func (m *StickerMessage) AddEmoji(*Emoji) SendingMessage {
 	return m
 }
 
@@ -373,7 +373,7 @@ func (m *TemplateMessage) WithSender(sender *Sender) SendingMessage {
 }
 
 // AddEmoji method of TemplateMessage
-func (m *TemplateMessage) AddEmoji(emoji *Emoji) SendingMessage {
+func (m *TemplateMessage) AddEmoji(*Emoji) SendingMessage {
 	return m
 }
 
@@ -431,7 +431,7 @@ func (m *ImagemapMessage) WithSender(sender *Sender) SendingMessage {
 }
 
 // AddEmoji method of ImagemapMessage
-func (m *ImagemapMessage) AddEmoji(emoji *Emoji) SendingMessage {
+func (m *ImagemapMessage) AddEmoji(*Emoji) SendingMessage {
 	return m
 }
 
@@ -474,7 +474,7 @@ func (m *FlexMessage) WithSender(sender *Sender) SendingMessage {
 }
 
 // AddEmoji method of FlexMessage
-func (m *FlexMessage) AddEmoji(emoji *Emoji) SendingMessage {
+func (m *FlexMessage) AddEmoji(*Emoji) SendingMessage {
 	return m
 }
 
