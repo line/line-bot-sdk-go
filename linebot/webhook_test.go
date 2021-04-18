@@ -1073,7 +1073,7 @@ func TestParseRequest(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		req.Header.Set("X-Line-Signature", "invalidsignatue")
+		req.Header.Set("X-Line-Signature", "invalidSignature")
 		res, err := httpClient.Do(req)
 		if err != nil {
 			t.Fatal(err)

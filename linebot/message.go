@@ -54,7 +54,7 @@ type TextMessage struct {
 	Text   string
 	Emojis []*Emoji
 
-	quickReplyitems *QuickReplyItems
+	quickReplyItems *QuickReplyItems
 	sender          *Sender
 
 	Mention *Mention
@@ -71,7 +71,7 @@ func (m *TextMessage) MarshalJSON() ([]byte, error) {
 	}{
 		Type:       MessageTypeText,
 		Text:       m.Text,
-		QuickReply: m.quickReplyitems,
+		QuickReply: m.quickReplyItems,
 		Sender:     m.sender,
 		Emojis:     m.Emojis,
 	})
@@ -79,7 +79,7 @@ func (m *TextMessage) MarshalJSON() ([]byte, error) {
 
 // WithQuickReplies method of TextMessage
 func (m *TextMessage) WithQuickReplies(items *QuickReplyItems) SendingMessage {
-	m.quickReplyitems = items
+	m.quickReplyItems = items
 	return m
 }
 
@@ -101,7 +101,7 @@ type ImageMessage struct {
 	OriginalContentURL string
 	PreviewImageURL    string
 
-	quickReplyitems *QuickReplyItems
+	quickReplyItems *QuickReplyItems
 	sender          *Sender
 }
 
@@ -117,14 +117,14 @@ func (m *ImageMessage) MarshalJSON() ([]byte, error) {
 		Type:               MessageTypeImage,
 		OriginalContentURL: m.OriginalContentURL,
 		PreviewImageURL:    m.PreviewImageURL,
-		QuickReply:         m.quickReplyitems,
+		QuickReply:         m.quickReplyItems,
 		Sender:             m.sender,
 	})
 }
 
 // WithQuickReplies method of ImageMessage
 func (m *ImageMessage) WithQuickReplies(items *QuickReplyItems) SendingMessage {
-	m.quickReplyitems = items
+	m.quickReplyItems = items
 	return m
 }
 
@@ -145,7 +145,7 @@ type VideoMessage struct {
 	OriginalContentURL string
 	PreviewImageURL    string
 
-	quickReplyitems *QuickReplyItems
+	quickReplyItems *QuickReplyItems
 	sender          *Sender
 }
 
@@ -161,14 +161,14 @@ func (m *VideoMessage) MarshalJSON() ([]byte, error) {
 		Type:               MessageTypeVideo,
 		OriginalContentURL: m.OriginalContentURL,
 		PreviewImageURL:    m.PreviewImageURL,
-		QuickReply:         m.quickReplyitems,
+		QuickReply:         m.quickReplyItems,
 		Sender:             m.sender,
 	})
 }
 
 // WithQuickReplies method of VideoMessage
 func (m *VideoMessage) WithQuickReplies(items *QuickReplyItems) SendingMessage {
-	m.quickReplyitems = items
+	m.quickReplyItems = items
 	return m
 }
 
@@ -189,7 +189,7 @@ type AudioMessage struct {
 	OriginalContentURL string
 	Duration           int
 
-	quickReplyitems *QuickReplyItems
+	quickReplyItems *QuickReplyItems
 	sender          *Sender
 }
 
@@ -205,14 +205,14 @@ func (m *AudioMessage) MarshalJSON() ([]byte, error) {
 		Type:               MessageTypeAudio,
 		OriginalContentURL: m.OriginalContentURL,
 		Duration:           m.Duration,
-		QuickReply:         m.quickReplyitems,
+		QuickReply:         m.quickReplyItems,
 		Sender:             m.sender,
 	})
 }
 
 // WithQuickReplies method of AudioMessage
 func (m *AudioMessage) WithQuickReplies(items *QuickReplyItems) SendingMessage {
-	m.quickReplyitems = items
+	m.quickReplyItems = items
 	return m
 }
 
@@ -242,7 +242,7 @@ type LocationMessage struct {
 	Latitude  float64
 	Longitude float64
 
-	quickReplyitems *QuickReplyItems
+	quickReplyItems *QuickReplyItems
 	sender          *Sender
 }
 
@@ -262,14 +262,14 @@ func (m *LocationMessage) MarshalJSON() ([]byte, error) {
 		Address:    m.Address,
 		Latitude:   m.Latitude,
 		Longitude:  m.Longitude,
-		QuickReply: m.quickReplyitems,
+		QuickReply: m.quickReplyItems,
 		Sender:     m.sender,
 	})
 }
 
 // WithQuickReplies method of LocationMessage
 func (m *LocationMessage) WithQuickReplies(items *QuickReplyItems) SendingMessage {
-	m.quickReplyitems = items
+	m.quickReplyItems = items
 	return m
 }
 
@@ -292,7 +292,7 @@ type StickerMessage struct {
 	StickerResourceType StickerResourceType
 	Keywords            []string
 
-	quickReplyitems *QuickReplyItems
+	quickReplyItems *QuickReplyItems
 	sender          *Sender
 }
 
@@ -312,14 +312,14 @@ func (m *StickerMessage) MarshalJSON() ([]byte, error) {
 		StickerID:           m.StickerID,
 		StickerResourceType: m.StickerResourceType,
 		Keywords:            m.Keywords,
-		QuickReply:          m.quickReplyitems,
+		QuickReply:          m.quickReplyItems,
 		Sender:              m.sender,
 	})
 }
 
 // WithQuickReplies method of StickerMessage
 func (m *StickerMessage) WithQuickReplies(items *QuickReplyItems) SendingMessage {
-	m.quickReplyitems = items
+	m.quickReplyItems = items
 	return m
 }
 
@@ -339,7 +339,7 @@ type TemplateMessage struct {
 	AltText  string
 	Template Template
 
-	quickReplyitems *QuickReplyItems
+	quickReplyItems *QuickReplyItems
 	sender          *Sender
 }
 
@@ -355,14 +355,14 @@ func (m *TemplateMessage) MarshalJSON() ([]byte, error) {
 		Type:       MessageTypeTemplate,
 		AltText:    m.AltText,
 		Template:   m.Template,
-		QuickReply: m.quickReplyitems,
+		QuickReply: m.quickReplyItems,
 		Sender:     m.sender,
 	})
 }
 
 // WithQuickReplies method of TemplateMessage
 func (m *TemplateMessage) WithQuickReplies(items *QuickReplyItems) SendingMessage {
-	m.quickReplyitems = items
+	m.quickReplyItems = items
 	return m
 }
 
@@ -385,7 +385,7 @@ type ImagemapMessage struct {
 	Actions  []ImagemapAction
 	Video    *ImagemapVideo
 
-	quickReplyitems *QuickReplyItems
+	quickReplyItems *QuickReplyItems
 	sender          *Sender
 }
 
@@ -407,7 +407,7 @@ func (m *ImagemapMessage) MarshalJSON() ([]byte, error) {
 		BaseSize:   m.BaseSize,
 		Actions:    m.Actions,
 		Video:      m.Video,
-		QuickReply: m.quickReplyitems,
+		QuickReply: m.quickReplyItems,
 		Sender:     m.sender,
 	})
 }
@@ -420,7 +420,7 @@ func (m *ImagemapMessage) WithVideo(video *ImagemapVideo) *ImagemapMessage {
 
 // WithQuickReplies method of ImagemapMessage
 func (m *ImagemapMessage) WithQuickReplies(items *QuickReplyItems) SendingMessage {
-	m.quickReplyitems = items
+	m.quickReplyItems = items
 	return m
 }
 
@@ -440,7 +440,7 @@ type FlexMessage struct {
 	AltText  string
 	Contents FlexContainer
 
-	quickReplyitems *QuickReplyItems
+	quickReplyItems *QuickReplyItems
 	sender          *Sender
 }
 
@@ -456,14 +456,14 @@ func (m *FlexMessage) MarshalJSON() ([]byte, error) {
 		Type:       MessageTypeFlex,
 		AltText:    m.AltText,
 		Contents:   m.Contents,
-		QuickReply: m.quickReplyitems,
+		QuickReply: m.quickReplyItems,
 		Sender:     m.sender,
 	})
 }
 
 // WithQuickReplies method of FlexMessage
 func (m *FlexMessage) WithQuickReplies(items *QuickReplyItems) SendingMessage {
-	m.quickReplyitems = items
+	m.quickReplyItems = items
 	return m
 }
 

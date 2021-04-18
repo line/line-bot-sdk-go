@@ -52,7 +52,7 @@ func (call *IssueAccessTokenCall) Do() (*AccessTokenResponse, error) {
 	vs.Set("client_secret", call.channelSecret)
 	body := strings.NewReader(vs.Encode())
 
-	res, err := call.c.postform(call.ctx, APIEndpointIssueAccessToken, body)
+	res, err := call.c.postForm(call.ctx, APIEndpointIssueAccessToken, body)
 	if err != nil {
 		return nil, err
 	}
@@ -88,7 +88,7 @@ func (call *RevokeAccessTokenCall) Do() (*BasicResponse, error) {
 	vs.Set("access_token", call.accessToken)
 	body := strings.NewReader(vs.Encode())
 
-	res, err := call.c.postform(call.ctx, APIEndpointRevokeAccessToken, body)
+	res, err := call.c.postForm(call.ctx, APIEndpointRevokeAccessToken, body)
 	if err != nil {
 		return nil, err
 	}

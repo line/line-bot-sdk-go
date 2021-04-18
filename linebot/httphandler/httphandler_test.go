@@ -121,7 +121,7 @@ func TestWebhookHandler(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		req.Header.Set("X-LINE-Signature", "invalidsignatue")
+		req.Header.Set("X-LINE-Signature", "invalidSignature")
 		res, err := httpClient.Do(req)
 		if err != nil {
 			t.Fatal(err)

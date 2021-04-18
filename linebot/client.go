@@ -206,7 +206,7 @@ func (client *Client) post(ctx context.Context, endpoint string, body io.Reader)
 	return client.do(ctx, req)
 }
 
-func (client *Client) postform(ctx context.Context, endpoint string, body io.Reader) (*http.Response, error) {
+func (client *Client) postForm(ctx context.Context, endpoint string, body io.Reader) (*http.Response, error) {
 	req, err := http.NewRequest("POST", client.url(client.endpointBase, endpoint), body)
 	if err != nil {
 		return nil, err
