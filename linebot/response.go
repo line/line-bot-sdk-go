@@ -262,7 +262,7 @@ type LinkTokenResponse struct {
 // WebhookInfoResponse type
 type WebhookInfoResponse struct {
 	Endpoint string `json:"endpoint"`
-	Active   string `json:"active"`
+	Active   bool   `json:"active"`
 }
 
 // isSuccess checks if status code is 2xx: The action was successfully received,
