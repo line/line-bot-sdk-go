@@ -54,8 +54,8 @@ type RichMenuAction struct {
 	Type        RichMenuActionType `json:"type"`
 	URI         string             `json:"uri,omitempty"`
 	Text        string             `json:"text,omitempty"`
-	DisplayText string             `json:"displayText,omitemtpy"`
-	Label       string             `json:"label,omitemtpy"`
+	DisplayText string             `json:"displayText,omitempty"`
+	Label       string             `json:"label,omitempty"`
 	Data        string             `json:"data,omitempty"`
 	Mode        string             `json:"mode,omitempty"`
 	Initial     string             `json:"initial,omitempty"`
