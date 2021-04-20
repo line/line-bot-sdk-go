@@ -727,11 +727,11 @@ func (app *KitchenSink) handleHeavyContent(messageID string, callback func(*os.F
 	}
 	defer content.Content.Close()
 	log.Printf("Got file: %s", content.ContentType)
-	originalConent, err := app.saveContent(content.Content)
+	originalContent, err := app.saveContent(content.Content)
 	if err != nil {
 		return err
 	}
-	return callback(originalConent)
+	return callback(originalContent)
 }
 
 func (app *KitchenSink) saveContent(content io.ReadCloser) (*os.File, error) {

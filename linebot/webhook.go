@@ -170,5 +170,5 @@ func (call *TestWebhook) Do() (*TestWebhookResponse, error) {
 		return nil, err
 	}
 	defer closeResponse(res)
-	return decodeToTestWebhookResponsee(res)
+	return decodeToTestWebhookResponse(res)
 }

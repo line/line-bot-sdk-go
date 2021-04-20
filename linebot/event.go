@@ -133,7 +133,7 @@ type ThingsResult struct {
 // ThingsResultCode type
 type ThingsResultCode string
 
-// ThingsResultCode constsnts
+// ThingsResultCode constants
 const (
 	ThingsResultCodeSuccess      ThingsResultCode = "success"
 	ThingsResultCodeGattError    ThingsResultCode = "gatt_error"
@@ -149,7 +149,7 @@ type ThingsActionResult struct {
 // ThingsActionResultType type
 type ThingsActionResultType string
 
-// ThingsActionResultType contants
+// ThingsActionResultType constants
 const (
 	ThingsActionResultTypeBinary ThingsActionResultType = "binary"
 	ThingsActionResultTypeVoid   ThingsActionResultType = "void"
@@ -280,8 +280,8 @@ type rawThingsEvent struct {
 }
 
 const (
-	millisecPerSec     = int64(time.Second / time.Millisecond)
-	nanosecPerMillisec = int64(time.Millisecond / time.Nanosecond)
+	milliSecPerSec     = int64(time.Second / time.Millisecond)
+	nanoSecPerMilliSec = int64(time.Millisecond / time.Nanosecond)
 )
 
 // MarshalJSON method of Event
@@ -290,7 +290,7 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 		ReplyToken:        e.ReplyToken,
 		Type:              e.Type,
 		Mode:              e.Mode,
-		Timestamp:         e.Timestamp.Unix()*millisecPerSec + int64(e.Timestamp.Nanosecond())/int64(time.Millisecond),
+		Timestamp:         e.Timestamp.Unix()*milliSecPerSec + int64(e.Timestamp.Nanosecond())/int64(time.Millisecond),
 		Source:            e.Source,
 		Postback:          e.Postback,
 		Unsend:            e.Unsend,
@@ -411,7 +411,7 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 	e.ReplyToken = rawEvent.ReplyToken
 	e.Type = rawEvent.Type
 	e.Mode = rawEvent.Mode
-	e.Timestamp = time.Unix(rawEvent.Timestamp/millisecPerSec, (rawEvent.Timestamp%millisecPerSec)*nanosecPerMillisec).UTC()
+	e.Timestamp = time.Unix(rawEvent.Timestamp/milliSecPerSec, (rawEvent.Timestamp%milliSecPerSec)*nanoSecPerMilliSec).UTC()
 	e.Source = rawEvent.Source
 
 	switch rawEvent.Type {

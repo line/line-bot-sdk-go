@@ -621,7 +621,7 @@ func decodeToAccessTokensResponse(res *http.Response) (*AccessTokensResponse, er
 	return &result, nil
 }
 
-func decodeToTestWebhookResponsee(res *http.Response) (*TestWebhookResponse, error) {
+func decodeToTestWebhookResponse(res *http.Response) (*TestWebhookResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
 	}

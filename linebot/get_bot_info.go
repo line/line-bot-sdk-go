@@ -24,7 +24,7 @@ type ChatMode string
 // ChatMode constants
 const (
 	ChatModeChat ChatMode = "chat"
-	ChatModeBot           = "bot"
+	ChatModeBot  ChatMode = "bot"
 )
 
 // MarkAsReadMode type
@@ -33,7 +33,7 @@ type MarkAsReadMode string
 // MarkAsReadMode constants
 const (
 	MarkAsReadModeManual MarkAsReadMode = "manual"
-	MarkAsReadModeAuto                  = "auto"
+	MarkAsReadModeAuto   MarkAsReadMode = "auto"
 )
 
 // GetBotInfo method

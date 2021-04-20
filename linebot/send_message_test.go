@@ -1865,7 +1865,7 @@ func TestMessagesWithRetryKey(t *testing.T) {
 		"U0cc15697597f61dd8b01cea8b027050e",
 		"U38ecbecfade326557b6971140741a4a6",
 	}
-	var msgUUIDs string = "123e4567-e89b-12d3-a456-426655440002"
+	var msgUUIDs = "123e4567-e89b-12d3-a456-426655440002"
 
 	type want struct {
 		RequestBody []byte

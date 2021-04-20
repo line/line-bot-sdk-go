@@ -180,10 +180,10 @@ func runTestCase(t *testing.T, tc testcase) {
 		t.Fatal(err)
 	}
 	res, err := tc.Call(client)
-	defer res.Body.Close()
 	if err != nil {
 		t.Error(err)
 	}
+	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
