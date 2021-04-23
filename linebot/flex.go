@@ -572,39 +572,54 @@ type BoxBackground struct {
 
 // ButtonComponent type
 type ButtonComponent struct {
-	Type       FlexComponentType
-	Action     TemplateAction
-	Flex       *int
-	Margin     FlexComponentMarginType
-	Height     FlexButtonHeightType
-	Style      FlexButtonStyleType
-	Color      string
-	Gravity    FlexComponentGravityType
-	AdjustMode FlexComponentAdjustModeType
+	Type         FlexComponentType
+	Action       TemplateAction
+	Position     FlexComponentPositionType
+	Flex         *int
+	Margin       FlexComponentMarginType
+	Height       FlexButtonHeightType
+	Style        FlexButtonStyleType
+	Color        string
+	Gravity      FlexComponentGravityType
+	AdjustMode   FlexComponentAdjustModeType
+	OffsetTop    FlexComponentOffsetType
+	OffsetBottom FlexComponentOffsetType
+	OffsetStart  FlexComponentOffsetType
+	OffsetEnd    FlexComponentOffsetType
 }
 
 // MarshalJSON method of ButtonComponent
 func (c *ButtonComponent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type       FlexComponentType           `json:"type"`
-		Action     TemplateAction              `json:"action"`
-		Flex       *int                        `json:"flex,omitempty"`
-		Margin     FlexComponentMarginType     `json:"margin,omitempty"`
-		Height     FlexButtonHeightType        `json:"height,omitempty"`
-		Style      FlexButtonStyleType         `json:"style,omitempty"`
-		Color      string                      `json:"color,omitempty"`
-		Gravity    FlexComponentGravityType    `json:"gravity,omitempty"`
-		AdjustMode FlexComponentAdjustModeType `json:"adjustMode,omitempty"`
+		Type         FlexComponentType           `json:"type"`
+		Action       TemplateAction              `json:"action"`
+		Position     FlexComponentPositionType   `json:"position,omitempty"`
+		Flex         *int                        `json:"flex,omitempty"`
+		Margin       FlexComponentMarginType     `json:"margin,omitempty"`
+		Height       FlexButtonHeightType        `json:"height,omitempty"`
+		Style        FlexButtonStyleType         `json:"style,omitempty"`
+		Color        string                      `json:"color,omitempty"`
+		Gravity      FlexComponentGravityType    `json:"gravity,omitempty"`
+		AdjustMode   FlexComponentAdjustModeType `json:"adjustMode,omitempty"`
+		OffsetTop    FlexComponentOffsetType     `json:"offsetTop,omitempty"`
+		OffsetBottom FlexComponentOffsetType     `json:"offsetBottom,omitempty"`
+		OffsetStart  FlexComponentOffsetType     `json:"offsetStart,omitempty"`
+		OffsetEnd    FlexComponentOffsetType     `json:"offsetEnd,omitempty"`
 	}{
-		Type:       FlexComponentTypeButton,
-		Action:     c.Action,
-		Flex:       c.Flex,
-		Margin:     c.Margin,
-		Height:     c.Height,
-		Style:      c.Style,
-		Color:      c.Color,
-		Gravity:    c.Gravity,
-		AdjustMode: c.AdjustMode,
+		Type:         FlexComponentTypeButton,
+		Action:       c.Action,
+		Position:     c.Position,
+		Flex:         c.Flex,
+		Margin:       c.Margin,
+		Height:       c.Height,
+		Style:        c.Style,
+		Color:        c.Color,
+		Gravity:      c.Gravity,
+		AdjustMode:   c.AdjustMode,
+		OffsetTop:    c.OffsetTop,
+		OffsetBottom: c.OffsetBottom,
+		OffsetStart:  c.OffsetStart,
+		OffsetEnd:    c.OffsetEnd,
 	})
 }
 
