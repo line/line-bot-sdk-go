@@ -799,60 +799,75 @@ func (c *SpanComponent) MarshalJSON() ([]byte, error) {
 
 // TextComponent type
 type TextComponent struct {
-	Type       FlexComponentType
-	Text       string
-	Contents   []*SpanComponent
-	Flex       *int
-	Margin     FlexComponentMarginType
-	Size       FlexTextSizeType
-	Align      FlexComponentAlignType
-	Gravity    FlexComponentGravityType
-	Wrap       bool
-	Weight     FlexTextWeightType
-	Color      string
-	Action     TemplateAction
-	Style      FlexTextStyleType
-	Decoration FlexTextDecorationType
-	MaxLines   *int
-	AdjustMode FlexComponentAdjustModeType
+	Type         FlexComponentType
+	Text         string
+	Position     FlexComponentPositionType
+	Contents     []*SpanComponent
+	Flex         *int
+	Margin       FlexComponentMarginType
+	Size         FlexTextSizeType
+	Align        FlexComponentAlignType
+	Gravity      FlexComponentGravityType
+	Wrap         bool
+	Weight       FlexTextWeightType
+	Color        string
+	Action       TemplateAction
+	Style        FlexTextStyleType
+	Decoration   FlexTextDecorationType
+	MaxLines     *int
+	AdjustMode   FlexComponentAdjustModeType
+	OffsetTop    FlexComponentOffsetType
+	OffsetBottom FlexComponentOffsetType
+	OffsetStart  FlexComponentOffsetType
+	OffsetEnd    FlexComponentOffsetType
 }
 
 // MarshalJSON method of TextComponent
 func (c *TextComponent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type       FlexComponentType           `json:"type"`
-		Text       string                      `json:"text,omitempty"`
-		Contents   []*SpanComponent            `json:"contents,omitempty"`
-		Flex       *int                        `json:"flex,omitempty"`
-		Margin     FlexComponentMarginType     `json:"margin,omitempty"`
-		Size       FlexTextSizeType            `json:"size,omitempty"`
-		Align      FlexComponentAlignType      `json:"align,omitempty"`
-		Gravity    FlexComponentGravityType    `json:"gravity,omitempty"`
-		Wrap       bool                        `json:"wrap,omitempty"`
-		Weight     FlexTextWeightType          `json:"weight,omitempty"`
-		Color      string                      `json:"color,omitempty"`
-		Action     TemplateAction              `json:"action,omitempty"`
-		Style      FlexTextStyleType           `json:"style,omitempty"`
-		Decoration FlexTextDecorationType      `json:"decoration,omitempty"`
-		MaxLines   *int                        `json:"maxLines,omitempty"`
-		AdjustMode FlexComponentAdjustModeType `json:"adjustMode,omitempty"`
+		Type         FlexComponentType           `json:"type"`
+		Text         string                      `json:"text,omitempty"`
+		Position     FlexComponentPositionType   `json:"position,omitempty"`
+		Contents     []*SpanComponent            `json:"contents,omitempty"`
+		Flex         *int                        `json:"flex,omitempty"`
+		Margin       FlexComponentMarginType     `json:"margin,omitempty"`
+		Size         FlexTextSizeType            `json:"size,omitempty"`
+		Align        FlexComponentAlignType      `json:"align,omitempty"`
+		Gravity      FlexComponentGravityType    `json:"gravity,omitempty"`
+		Wrap         bool                        `json:"wrap,omitempty"`
+		Weight       FlexTextWeightType          `json:"weight,omitempty"`
+		Color        string                      `json:"color,omitempty"`
+		Action       TemplateAction              `json:"action,omitempty"`
+		Style        FlexTextStyleType           `json:"style,omitempty"`
+		Decoration   FlexTextDecorationType      `json:"decoration,omitempty"`
+		MaxLines     *int                        `json:"maxLines,omitempty"`
+		AdjustMode   FlexComponentAdjustModeType `json:"adjustMode,omitempty"`
+		OffsetTop    FlexComponentOffsetType     `json:"offsetTop,omitempty"`
+		OffsetBottom FlexComponentOffsetType     `json:"offsetBottom,omitempty"`
+		OffsetStart  FlexComponentOffsetType     `json:"offsetStart,omitempty"`
+		OffsetEnd    FlexComponentOffsetType     `json:"offsetEnd,omitempty"`
 	}{
-		Type:       FlexComponentTypeText,
-		Text:       c.Text,
-		Contents:   c.Contents,
-		Flex:       c.Flex,
-		Margin:     c.Margin,
-		Size:       c.Size,
-		Align:      c.Align,
-		Gravity:    c.Gravity,
-		Wrap:       c.Wrap,
-		Weight:     c.Weight,
-		Color:      c.Color,
-		Action:     c.Action,
-		Style:      c.Style,
-		Decoration: c.Decoration,
-		MaxLines:   c.MaxLines,
-		AdjustMode: c.AdjustMode,
+		Type:         FlexComponentTypeText,
+		Text:         c.Text,
+		Position:     c.Position,
+		Contents:     c.Contents,
+		Flex:         c.Flex,
+		Margin:       c.Margin,
+		Size:         c.Size,
+		Align:        c.Align,
+		Gravity:      c.Gravity,
+		Wrap:         c.Wrap,
+		Weight:       c.Weight,
+		Color:        c.Color,
+		Action:       c.Action,
+		Style:        c.Style,
+		Decoration:   c.Decoration,
+		MaxLines:     c.MaxLines,
+		AdjustMode:   c.AdjustMode,
+		OffsetTop:    c.OffsetTop,
+		OffsetBottom: c.OffsetBottom,
+		OffsetStart:  c.OffsetStart,
+		OffsetEnd:    c.OffsetEnd,
 	})
 }
 
