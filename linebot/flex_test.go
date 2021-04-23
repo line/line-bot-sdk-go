@@ -308,7 +308,12 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
           "type": "uri",
           "label": "CALL",
           "uri": "https://linecorp.com"
-        }
+        },
+		"position": "absolute",
+		"offsetTop": "xs",
+		"offsetBottom": "sm",
+		"offsetStart": "md",
+		"offsetEnd": "lg"
       },
       {
         "type": "button",
@@ -471,8 +476,13 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 								Label: "CALL",
 								URI:   "https://linecorp.com",
 							},
-							Height: FlexButtonHeightTypeSm,
-							Style:  FlexButtonStyleTypeLink,
+							Position:     FlexComponentPositionTypeAbsolute,
+							Height:       FlexButtonHeightTypeSm,
+							Style:        FlexButtonStyleTypeLink,
+							OffsetTop:    FlexComponentOffsetTypeXs,
+							OffsetBottom: FlexComponentOffsetTypeSm,
+							OffsetStart:  FlexComponentOffsetTypeMd,
+							OffsetEnd:    FlexComponentOffsetTypeLg,
 						},
 						&ButtonComponent{
 							Type: FlexComponentTypeButton,
