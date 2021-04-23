@@ -175,6 +175,7 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
   "hero": {
     "type": "image",
     "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
+	"position": "absolute",
     "size": "full",
     "aspectRatio": "20:13",
     "aspectMode": "cover",
@@ -182,7 +183,11 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
       "type": "uri",
       "uri": "https://linecorp.com/"
     },
-    "animated": true
+    "animated": true,
+	"offsetTop": "xs",
+	"offsetBottom": "sm",
+	"offsetStart": "md",
+	"offsetEnd": "lg"
   },
   "body": {
     "type": "box",
@@ -337,13 +342,18 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 			Want: &BubbleContainer{
 				Type: FlexContainerTypeBubble,
 				Hero: &ImageComponent{
-					Type:        FlexComponentTypeImage,
-					URL:         "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
-					Size:        FlexImageSizeTypeFull,
-					AspectRatio: FlexImageAspectRatioType20to13,
-					AspectMode:  FlexImageAspectModeTypeCover,
-					Action:      &URIAction{URI: "https://linecorp.com/"},
-					Animated:    true,
+					Type:         FlexComponentTypeImage,
+					URL:          "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
+					Position:     FlexComponentPositionTypeAbsolute,
+					Size:         FlexImageSizeTypeFull,
+					AspectRatio:  FlexImageAspectRatioType20to13,
+					AspectMode:   FlexImageAspectModeTypeCover,
+					Action:       &URIAction{URI: "https://linecorp.com/"},
+					Animated:     true,
+					OffsetTop:    FlexComponentOffsetTypeXs,
+					OffsetBottom: FlexComponentOffsetTypeSm,
+					OffsetStart:  FlexComponentOffsetTypeMd,
+					OffsetEnd:    FlexComponentOffsetTypeLg,
 				},
 				Body: &BoxComponent{
 					Type:   FlexComponentTypeBox,
