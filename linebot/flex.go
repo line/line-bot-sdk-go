@@ -152,6 +152,15 @@ const (
 	FlexBoxLayoutTypeBaseline   FlexBoxLayoutType = "baseline"
 )
 
+// FlexComponentPositionType type
+type FlexComponentPositionType string
+
+// FlexComponentPositionType constants
+const (
+	FlexComponentPositionTypeRelative FlexComponentPositionType = "relative"
+	FlexComponentPositionTypeAbsolute FlexComponentPositionType = "absolute"
+)
+
 // FlexComponentSpacingType type
 type FlexComponentSpacingType string
 
@@ -178,6 +187,34 @@ const (
 	FlexComponentMarginTypeLg   FlexComponentMarginType = "lg"
 	FlexComponentMarginTypeXl   FlexComponentMarginType = "xl"
 	FlexComponentMarginTypeXxl  FlexComponentMarginType = "xxl"
+)
+
+// FlexComponentOffsetType type
+type FlexComponentOffsetType string
+
+// FlexComponentOffsetType constants
+const (
+	FlexComponentOffsetTypeNone FlexComponentOffsetType = "none"
+	FlexComponentOffsetTypeXs   FlexComponentOffsetType = "xs"
+	FlexComponentOffsetTypeSm   FlexComponentOffsetType = "sm"
+	FlexComponentOffsetTypeMd   FlexComponentOffsetType = "md"
+	FlexComponentOffsetTypeLg   FlexComponentOffsetType = "lg"
+	FlexComponentOffsetTypeXl   FlexComponentOffsetType = "xl"
+	FlexComponentOffsetTypeXxl  FlexComponentOffsetType = "xxl"
+)
+
+// FlexComponentPaddingType type
+type FlexComponentPaddingType string
+
+// FlexComponentPaddingType constants
+const (
+	FlexComponentPaddingTypeNone FlexComponentPaddingType = "none"
+	FlexComponentPaddingTypeXs   FlexComponentPaddingType = "xs"
+	FlexComponentPaddingTypeSm   FlexComponentPaddingType = "sm"
+	FlexComponentPaddingTypeMd   FlexComponentPaddingType = "md"
+	FlexComponentPaddingTypeLg   FlexComponentPaddingType = "lg"
+	FlexComponentPaddingTypeXl   FlexComponentPaddingType = "xl"
+	FlexComponentPaddingTypeXxl  FlexComponentPaddingType = "xxl"
 )
 
 // FlexComponentGravityType type
