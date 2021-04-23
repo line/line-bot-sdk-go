@@ -670,6 +670,7 @@ func (c *IconComponent) MarshalJSON() ([]byte, error) {
 type ImageComponent struct {
 	Type            FlexComponentType
 	URL             string
+	Position        FlexComponentPositionType
 	Flex            *int
 	Margin          FlexComponentMarginType
 	Align           FlexComponentAlignType
@@ -680,26 +681,36 @@ type ImageComponent struct {
 	BackgroundColor string
 	Action          TemplateAction
 	Animated        bool
+	OffsetTop       FlexComponentOffsetType
+	OffsetBottom    FlexComponentOffsetType
+	OffsetStart     FlexComponentOffsetType
+	OffsetEnd       FlexComponentOffsetType
 }
 
 // MarshalJSON method of ImageComponent
 func (c *ImageComponent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type            FlexComponentType        `json:"type"`
-		URL             string                   `json:"url"`
-		Flex            *int                     `json:"flex,omitempty"`
-		Margin          FlexComponentMarginType  `json:"margin,omitempty"`
-		Align           FlexComponentAlignType   `json:"align,omitempty"`
-		Gravity         FlexComponentGravityType `json:"gravity,omitempty"`
-		Size            FlexImageSizeType        `json:"size,omitempty"`
-		AspectRatio     FlexImageAspectRatioType `json:"aspectRatio,omitempty"`
-		AspectMode      FlexImageAspectModeType  `json:"aspectMode,omitempty"`
-		BackgroundColor string                   `json:"backgroundColor,omitempty"`
-		Action          TemplateAction           `json:"action,omitempty"`
-		Animated        bool                     `json:"animated,omitempty"`
+		Type            FlexComponentType         `json:"type"`
+		URL             string                    `json:"url"`
+		Position        FlexComponentPositionType `json:"position,omitempty"`
+		Flex            *int                      `json:"flex,omitempty"`
+		Margin          FlexComponentMarginType   `json:"margin,omitempty"`
+		Align           FlexComponentAlignType    `json:"align,omitempty"`
+		Gravity         FlexComponentGravityType  `json:"gravity,omitempty"`
+		Size            FlexImageSizeType         `json:"size,omitempty"`
+		AspectRatio     FlexImageAspectRatioType  `json:"aspectRatio,omitempty"`
+		AspectMode      FlexImageAspectModeType   `json:"aspectMode,omitempty"`
+		BackgroundColor string                    `json:"backgroundColor,omitempty"`
+		Action          TemplateAction            `json:"action,omitempty"`
+		Animated        bool                      `json:"animated,omitempty"`
+		OffsetTop       FlexComponentOffsetType   `json:"offsetTop,omitempty"`
+		OffsetBottom    FlexComponentOffsetType   `json:"offsetBottom,omitempty"`
+		OffsetStart     FlexComponentOffsetType   `json:"offsetStart,omitempty"`
+		OffsetEnd       FlexComponentOffsetType   `json:"offsetEnd,omitempty"`
 	}{
 		Type:            FlexComponentTypeImage,
 		URL:             c.URL,
+		Position:        c.Position,
 		Flex:            c.Flex,
 		Margin:          c.Margin,
 		Align:           c.Align,
@@ -710,6 +721,10 @@ func (c *ImageComponent) MarshalJSON() ([]byte, error) {
 		BackgroundColor: c.BackgroundColor,
 		Action:          c.Action,
 		Animated:        c.Animated,
+		OffsetTop:       c.OffsetTop,
+		OffsetBottom:    c.OffsetBottom,
+		OffsetStart:     c.OffsetStart,
+		OffsetEnd:       c.OffsetEnd,
 	})
 }
 
