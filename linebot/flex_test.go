@@ -284,10 +284,15 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
               {
                 "type": "text",
                 "text": "10:00 - 23:00",
+				"position": "absolute",
                 "wrap": true,
                 "color": "#666666",
                 "size": "sm",
-                "flex": 5
+                "flex": 5,
+				"offsetTop": "xs",
+				"offsetBottom": "sm",
+				"offsetStart": "md",
+				"offsetEnd": "lg"
               }
             ]
           }
@@ -455,12 +460,17 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 											Color: "#aaaaaa",
 										},
 										&TextComponent{
-											Type:  FlexComponentTypeText,
-											Text:  "10:00 - 23:00",
-											Flex:  IntPtr(5),
-											Size:  FlexTextSizeTypeSm,
-											Wrap:  true,
-											Color: "#666666",
+											Type:         FlexComponentTypeText,
+											Text:         "10:00 - 23:00",
+											Position:     FlexComponentPositionTypeAbsolute,
+											Flex:         IntPtr(5),
+											Size:         FlexTextSizeTypeSm,
+											Wrap:         true,
+											Color:        "#666666",
+											OffsetTop:    FlexComponentOffsetTypeXs,
+											OffsetBottom: FlexComponentOffsetTypeSm,
+											OffsetStart:  FlexComponentOffsetTypeMd,
+											OffsetEnd:    FlexComponentOffsetTypeLg,
 										},
 									},
 									Spacing: FlexComponentSpacingTypeSm,
