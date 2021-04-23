@@ -298,6 +298,7 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
   "footer": {
     "type": "box",
     "layout": "vertical",
+	"position": "absolute",
     "spacing": "sm",
     "contents": [
       {
@@ -341,7 +342,11 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
         "size": "xs"
       }
     ],
-    "flex": 0
+    "flex": 0,
+	"offsetTop": "xs",
+	"offsetBottom": "sm",
+	"offsetStart": "md",
+	"offsetEnd": "lg"
   }
 }`),
 			Want: &BubbleContainer{
@@ -467,8 +472,9 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 					},
 				},
 				Footer: &BoxComponent{
-					Type:   FlexComponentTypeBox,
-					Layout: FlexBoxLayoutTypeVertical,
+					Type:     FlexComponentTypeBox,
+					Layout:   FlexBoxLayoutTypeVertical,
+					Position: FlexComponentPositionTypeAbsolute,
 					Contents: []FlexComponent{
 						&ButtonComponent{
 							Type: FlexComponentTypeButton,
@@ -509,8 +515,12 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 							Size: FlexSpacerSizeTypeXs,
 						},
 					},
-					Spacing: FlexComponentSpacingTypeSm,
-					Flex:    IntPtr(0),
+					Spacing:      FlexComponentSpacingTypeSm,
+					Flex:         IntPtr(0),
+					OffsetTop:    FlexComponentOffsetTypeXs,
+					OffsetBottom: FlexComponentOffsetTypeSm,
+					OffsetStart:  FlexComponentOffsetTypeMd,
+					OffsetEnd:    FlexComponentOffsetTypeLg,
 				},
 			},
 		},
