@@ -478,6 +478,7 @@ type FlexComponent interface {
 type BoxComponent struct {
 	Type            FlexComponentType
 	Layout          FlexBoxLayoutType
+	Position        FlexComponentPositionType
 	Contents        []FlexComponent
 	Flex            *int
 	Spacing         FlexComponentSpacingType
@@ -491,6 +492,15 @@ type BoxComponent struct {
 	JustifyContent  FlexComponentJustifyContentType
 	AlignItems      FlexComponentAlignItemsType
 	Background      *BoxBackground
+	OffsetTop       FlexComponentOffsetType
+	OffsetBottom    FlexComponentOffsetType
+	OffsetStart     FlexComponentOffsetType
+	OffsetEnd       FlexComponentOffsetType
+	PaddingAll      FlexComponentPaddingType
+	PaddingTop      FlexComponentPaddingType
+	PaddingBottom   FlexComponentPaddingType
+	PaddingStart    FlexComponentPaddingType
+	PaddingEnd      FlexComponentPaddingType
 }
 
 // MarshalJSON method of BoxComponent
@@ -498,6 +508,7 @@ func (c *BoxComponent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type            FlexComponentType               `json:"type"`
 		Layout          FlexBoxLayoutType               `json:"layout"`
+		Position        FlexComponentPositionType       `json:"position,omitempty"`
 		Contents        []FlexComponent                 `json:"contents"`
 		Flex            *int                            `json:"flex,omitempty"`
 		Spacing         FlexComponentSpacingType        `json:"spacing,omitempty"`
@@ -511,9 +522,19 @@ func (c *BoxComponent) MarshalJSON() ([]byte, error) {
 		JustifyContent  FlexComponentJustifyContentType `json:"justifyContent,omitempty"`
 		AlignItems      FlexComponentAlignItemsType     `json:"alignItems,omitempty"`
 		Background      *BoxBackground                  `json:"background,omitempty"`
+		OffsetTop       FlexComponentOffsetType         `json:"offsetTop,omitempty"`
+		OffsetBottom    FlexComponentOffsetType         `json:"offsetBottom,omitempty"`
+		OffsetStart     FlexComponentOffsetType         `json:"offsetStart,omitempty"`
+		OffsetEnd       FlexComponentOffsetType         `json:"offsetEnd,omitempty"`
+		PaddingAll      FlexComponentPaddingType        `json:"paddingAll,omitempty"`
+		PaddingTop      FlexComponentPaddingType        `json:"paddingTop,omitempty"`
+		PaddingBottom   FlexComponentPaddingType        `json:"paddingBottom,omitempty"`
+		PaddingStart    FlexComponentPaddingType        `json:"paddingStart,omitempty"`
+		PaddingEnd      FlexComponentPaddingType        `json:"paddingEnd,omitempty"`
 	}{
 		Type:            FlexComponentTypeBox,
 		Layout:          c.Layout,
+		Position:        c.Position,
 		Contents:        c.Contents,
 		Flex:            c.Flex,
 		Spacing:         c.Spacing,
@@ -527,6 +548,15 @@ func (c *BoxComponent) MarshalJSON() ([]byte, error) {
 		JustifyContent:  c.JustifyContent,
 		AlignItems:      c.AlignItems,
 		Background:      c.Background,
+		OffsetTop:       c.OffsetTop,
+		OffsetBottom:    c.OffsetBottom,
+		OffsetStart:     c.OffsetStart,
+		OffsetEnd:       c.OffsetEnd,
+		PaddingAll:      c.PaddingAll,
+		PaddingTop:      c.PaddingTop,
+		PaddingBottom:   c.PaddingBottom,
+		PaddingStart:    c.PaddingStart,
+		PaddingEnd:      c.PaddingEnd,
 	})
 }
 
