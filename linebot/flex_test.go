@@ -28,21 +28,21 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 	}{
 		{
 			JSON: []byte(`{
-  "type": "bubble",
-  "body": {
-    "type": "box",
-    "layout": "vertical",
-    "contents": [
-      {
-        "type": "text",
-        "text": "hello"
-      },
-      {
-        "type": "text",
-        "text": "world"
-      }
-    ]
-  }
+	"type": "bubble",
+	"body": {
+		"type": "box",
+		"layout": "vertical",
+		"contents": [
+			{
+				"type": "text",
+				"text": "hello"
+			},
+			{
+				"type": "text",
+				"text": "world"
+			}
+		]
+	}
 }`),
 			Want: &BubbleContainer{
 				Type: FlexContainerTypeBubble,
@@ -64,39 +64,39 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 		},
 		{
 			JSON: []byte(`{
-  "type": "carousel",
-  "contents": [
-    {
-      "type": "bubble",
-      "body": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-          {
-            "type": "text",
-            "text": "First bubble"
-          }
-        ]
-      }
-    },
-    {
-      "type": "bubble",
-      "body": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-          {
-            "type": "text",
-            "text": "Second bubble"
-          }
-        ],
-        "action": {
-          "type": "message",
-          "text": "Second bubble"
-        }
-      }
-    }
-  ]
+	"type": "carousel",
+	"contents": [
+		{
+			"type": "bubble",
+			"body": {
+				"type": "box",
+				"layout": "vertical",
+				"contents": [
+					{
+						"type": "text",
+						"text": "First bubble"
+					}
+				]
+			}
+		},
+		{
+			"type": "bubble",
+			"body": {
+				"type": "box",
+				"layout": "vertical",
+				"contents": [
+					{
+						"type": "text",
+						"text": "Second bubble"
+					}
+				],
+				"action": {
+					"type": "message",
+					"text": "Second bubble"
+				}
+			}
+		}
+	]
 }`),
 			Want: &CarouselContainer{
 				Type: FlexContainerTypeCarousel,
@@ -133,22 +133,22 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 		},
 		{
 			JSON: []byte(`{
-  "type": "bubble",
-  "size": "nano",
-  "body": {
-    "type": "box",
-    "layout": "vertical",
-    "contents": [
-      {
-        "type": "text",
-        "text": "hello"
-      },
-      {
-        "type": "text",
-        "text": "world"
-      }
-    ]
-  }
+	"type": "bubble",
+	"size": "nano",
+	"body": {
+		"type": "box",
+		"layout": "vertical",
+		"contents": [
+			{
+				"type": "text",
+				"text": "hello"
+			},
+			{
+				"type": "text",
+				"text": "world"
+			}
+		]
+	}
 }`),
 			Want: &BubbleContainer{
 				Type: FlexContainerTypeBubble,
@@ -171,179 +171,204 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 		},
 		{
 			JSON: []byte(`{
-  "type": "bubble",
-  "hero": {
-    "type": "image",
-    "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
-    "size": "full",
-    "aspectRatio": "20:13",
-    "aspectMode": "cover",
-    "action": {
-      "type": "uri",
-      "uri": "https://linecorp.com/"
-    },
-    "animated": true
-  },
-  "body": {
-    "type": "box",
-    "layout": "vertical",
-    "contents": [
-      {
-        "type": "text",
-        "text": "Brown Cafe",
-        "weight": "bold",
-        "size": "xl"
-      },
-      {
-        "type": "box",
-        "layout": "baseline",
-        "margin": "md",
-        "contents": [
-          {
-            "type": "icon",
-            "size": "sm",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
-          },
-          {
-            "type": "icon",
-            "size": "sm",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
-          },
-          {
-            "type": "icon",
-            "size": "sm",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
-          },
-          {
-            "type": "icon",
-            "size": "sm",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
-          },
-          {
-            "type": "icon",
-            "size": "sm",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png"
-          },
-          {
-            "type": "text",
-            "text": "4.0",
-            "size": "sm",
-            "color": "#999999",
-            "margin": "md",
-            "flex": 0
-          }
-        ]
-      },
-      {
-        "type": "box",
-        "layout": "vertical",
-        "margin": "lg",
-        "spacing": "sm",
-        "contents": [
-          {
-            "type": "box",
-            "layout": "baseline",
-            "spacing": "sm",
-            "contents": [
-              {
-                "type": "text",
-                "text": "Place",
-                "color": "#aaaaaa",
-                "size": "sm",
-                "flex": 1,
-                "maxLines": 0
-              },
-              {
-                "type": "text",
-                "text": "Miraina Tower, 4-1-6 Shinjuku, Tokyo",
-                "wrap": true,
-                "color": "#666666",
-                "size": "sm",
-                "flex": 5,
-                "maxLines": 1
-              }
-            ]
-          },
-          {
-            "type": "box",
-            "layout": "baseline",
-            "spacing": "sm",
-            "contents": [
-              {
-                "type": "text",
-                "text": "Time",
-                "color": "#aaaaaa",
-                "size": "sm",
-                "flex": 1
-              },
-              {
-                "type": "text",
-                "text": "10:00 - 23:00",
-                "wrap": true,
-                "color": "#666666",
-                "size": "sm",
-                "flex": 5
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  "footer": {
-    "type": "box",
-    "layout": "vertical",
-    "spacing": "sm",
-    "contents": [
-      {
-        "type": "button",
-        "style": "link",
-        "height": "sm",
-        "action": {
-          "type": "uri",
-          "label": "CALL",
-          "uri": "https://linecorp.com"
-        }
-      },
-      {
-        "type": "button",
-        "style": "link",
-        "height": "sm",
-        "action": {
-          "type": "uri",
-          "label": "WEBSITE",
-          "uri": "https://linecorp.com",
-          "altUri": {
-            "desktop": "https://line.me/ja/download"
-          }
-        },
-        "adjustMode": "shrink-to-fit"
-      },
-      {
-        "type": "spacer",
-        "size": "sm"
-      },
-      {
-        "type": "spacer"
-      },
-      {
-        "type": "spacer",
-        "size": "xs"
-      }
-    ],
-    "flex": 0
-  }
+	"type": "bubble",
+	"hero": {
+		"type": "image",
+		"url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
+		"position": "absolute",
+		"size": "full",
+		"aspectRatio": "20:13",
+		"aspectMode": "cover",
+		"action": {
+			"type": "uri",
+			"uri": "https://linecorp.com/"
+		},
+		"animated": true,
+		"offsetTop": "xs",
+		"offsetBottom": "sm",
+		"offsetStart": "md",
+		"offsetEnd": "lg"
+	},
+	"body": {
+		"type": "box",
+		"layout": "vertical",
+		"contents": [
+			{
+				"type": "text",
+				"text": "Brown Cafe",
+				"weight": "bold",
+				"size": "xl"
+			},
+			{
+				"type": "box",
+				"layout": "baseline",
+				"margin": "md",
+				"contents": [
+					{
+						"type": "icon",
+						"size": "sm",
+						"url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+					},
+					{
+						"type": "icon",
+						"size": "sm",
+						"url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+					},
+					{
+						"type": "icon",
+						"size": "sm",
+						"url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+					},
+					{
+						"type": "icon",
+						"size": "sm",
+						"url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+					},
+					{
+						"type": "icon",
+						"size": "sm",
+						"url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png"
+					},
+					{
+						"type": "text",
+						"text": "4.0",
+						"size": "sm",
+						"color": "#999999",
+						"margin": "md",
+						"flex": 0
+					}
+				]
+			},
+			{
+				"type": "box",
+				"layout": "vertical",
+				"margin": "lg",
+				"spacing": "sm",
+				"contents": [
+					{
+						"type": "box",
+						"layout": "baseline",
+						"spacing": "sm",
+						"contents": [
+							{
+								"type": "text",
+								"text": "Place",
+								"color": "#aaaaaa",
+								"size": "sm",
+								"flex": 1,
+								"maxLines": 0
+							},
+							{
+								"type": "text",
+								"text": "Miraina Tower, 4-1-6 Shinjuku, Tokyo",
+								"wrap": true,
+								"color": "#666666",
+								"size": "sm",
+								"flex": 5,
+								"maxLines": 1
+							}
+						]
+					},
+					{
+						"type": "box",
+						"layout": "baseline",
+						"spacing": "sm",
+						"contents": [
+							{
+								"type": "text",
+								"text": "Time",
+								"color": "#aaaaaa",
+								"size": "sm",
+								"flex": 1
+							},
+							{
+								"type": "text",
+								"text": "10:00 - 23:00",
+								"position": "absolute",
+								"wrap": true,
+								"color": "#666666",
+								"size": "sm",
+								"flex": 5,
+								"offsetTop": "xs",
+								"offsetBottom": "sm",
+								"offsetStart": "md",
+								"offsetEnd": "lg"
+							}
+						]
+					}
+				]
+			}
+		]
+	},
+	"footer": {
+		"type": "box",
+		"layout": "vertical",
+		"position": "absolute",
+		"spacing": "sm",
+		"contents": [
+			{
+				"type": "button",
+				"style": "link",
+				"height": "sm",
+				"action": {
+					"type": "uri",
+					"label": "CALL",
+					"uri": "https://linecorp.com"
+				},
+				"position": "absolute",
+				"offsetTop": "xs",
+				"offsetBottom": "sm",
+				"offsetStart": "md",
+				"offsetEnd": "lg"
+			},
+			{
+				"type": "button",
+				"style": "link",
+				"height": "sm",
+				"action": {
+					"type": "uri",
+					"label": "WEBSITE",
+					"uri": "https://linecorp.com",
+					"altUri": {
+						"desktop": "https://line.me/ja/download"
+					}
+				},
+				"adjustMode": "shrink-to-fit"
+			},
+			{
+				"type": "spacer",
+				"size": "sm"
+			},
+			{
+				"type": "spacer"
+			},
+			{
+				"type": "spacer",
+				"size": "xs"
+			}
+		],
+		"flex": 0,
+		"offsetTop": "xs",
+		"offsetBottom": "sm",
+		"offsetStart": "md",
+		"offsetEnd": "lg"
+	}
 }`),
 			Want: &BubbleContainer{
 				Type: FlexContainerTypeBubble,
 				Hero: &ImageComponent{
-					Type:        FlexComponentTypeImage,
-					URL:         "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
-					Size:        FlexImageSizeTypeFull,
-					AspectRatio: FlexImageAspectRatioType20to13,
-					AspectMode:  FlexImageAspectModeTypeCover,
-					Action:      &URIAction{URI: "https://linecorp.com/"},
-					Animated:    true,
+					Type:         FlexComponentTypeImage,
+					URL:          "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
+					Position:     FlexComponentPositionTypeAbsolute,
+					Size:         FlexImageSizeTypeFull,
+					AspectRatio:  FlexImageAspectRatioType20to13,
+					AspectMode:   FlexImageAspectModeTypeCover,
+					Action:       &URIAction{URI: "https://linecorp.com/"},
+					Animated:     true,
+					OffsetTop:    FlexComponentOffsetTypeXs,
+					OffsetBottom: FlexComponentOffsetTypeSm,
+					OffsetStart:  FlexComponentOffsetTypeMd,
+					OffsetEnd:    FlexComponentOffsetTypeLg,
 				},
 				Body: &BoxComponent{
 					Type:   FlexComponentTypeBox,
@@ -435,12 +460,17 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 											Color: "#aaaaaa",
 										},
 										&TextComponent{
-											Type:  FlexComponentTypeText,
-											Text:  "10:00 - 23:00",
-											Flex:  IntPtr(5),
-											Size:  FlexTextSizeTypeSm,
-											Wrap:  true,
-											Color: "#666666",
+											Type:         FlexComponentTypeText,
+											Text:         "10:00 - 23:00",
+											Position:     FlexComponentPositionTypeAbsolute,
+											Flex:         IntPtr(5),
+											Size:         FlexTextSizeTypeSm,
+											Wrap:         true,
+											Color:        "#666666",
+											OffsetTop:    FlexComponentOffsetTypeXs,
+											OffsetBottom: FlexComponentOffsetTypeSm,
+											OffsetStart:  FlexComponentOffsetTypeMd,
+											OffsetEnd:    FlexComponentOffsetTypeLg,
 										},
 									},
 									Spacing: FlexComponentSpacingTypeSm,
@@ -452,8 +482,9 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 					},
 				},
 				Footer: &BoxComponent{
-					Type:   FlexComponentTypeBox,
-					Layout: FlexBoxLayoutTypeVertical,
+					Type:     FlexComponentTypeBox,
+					Layout:   FlexBoxLayoutTypeVertical,
+					Position: FlexComponentPositionTypeAbsolute,
 					Contents: []FlexComponent{
 						&ButtonComponent{
 							Type: FlexComponentTypeButton,
@@ -461,8 +492,13 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 								Label: "CALL",
 								URI:   "https://linecorp.com",
 							},
-							Height: FlexButtonHeightTypeSm,
-							Style:  FlexButtonStyleTypeLink,
+							Position:     FlexComponentPositionTypeAbsolute,
+							Height:       FlexButtonHeightTypeSm,
+							Style:        FlexButtonStyleTypeLink,
+							OffsetTop:    FlexComponentOffsetTypeXs,
+							OffsetBottom: FlexComponentOffsetTypeSm,
+							OffsetStart:  FlexComponentOffsetTypeMd,
+							OffsetEnd:    FlexComponentOffsetTypeLg,
 						},
 						&ButtonComponent{
 							Type: FlexComponentTypeButton,
@@ -489,49 +525,53 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 							Size: FlexSpacerSizeTypeXs,
 						},
 					},
-					Spacing: FlexComponentSpacingTypeSm,
-					Flex:    IntPtr(0),
+					Spacing:      FlexComponentSpacingTypeSm,
+					Flex:         IntPtr(0),
+					OffsetTop:    FlexComponentOffsetTypeXs,
+					OffsetBottom: FlexComponentOffsetTypeSm,
+					OffsetStart:  FlexComponentOffsetTypeMd,
+					OffsetEnd:    FlexComponentOffsetTypeLg,
 				},
 			},
 		},
 		{
 			JSON: []byte(`{
-  "type": "bubble",
-  "body": {
-    "type": "box",
-    "layout": "horizontal",
-    "contents": [
-      {
-        "type": "text",
-        "text": "hello",
-        "flex": 0
-      },
-      {
-        "type": "filler",
-        "flex": 4
-      },
-      {
-        "type": "text",
-        "text": "world",
-        "flex": 2
-	  },
-	  {
-        "type": "text",
-        "contents": [
-		  {
-			"type": "span",
-			"text": "hi"
-		  },
-		  {
-			"type": "span",
-			"text": "span",
-			"size": "xl",
-			"color": "#29cf5b"
-		  }
+	"type": "bubble",
+	"body": {
+		"type": "box",
+		"layout": "horizontal",
+		"contents": [
+			{
+				"type": "text",
+				"text": "hello",
+				"flex": 0
+			},
+			{
+				"type": "filler",
+				"flex": 4
+			},
+			{
+				"type": "text",
+				"text": "world",
+				"flex": 2
+			},
+			{
+				"type": "text",
+				"contents": [
+					{
+						"type": "span",
+						"text": "hi"
+					},
+					{
+						"type": "span",
+						"text": "span",
+						"size": "xl",
+						"color": "#29cf5b"
+					}
+				]
+			}
 		]
-      }
-    ]
-  }
+	}
 }`),
 			Want: &BubbleContainer{
 				Type: FlexContainerTypeBubble,
@@ -574,22 +614,22 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 		},
 		{
 			JSON: []byte(`{
-  "type": "bubble",
-  "size": "nano",
-  "hero": {
-    "type": "box",
-    "layout": "vertical",
-    "contents": [
-      {
-        "type": "text",
-        "text": "hello"
-      },
-      {
-        "type": "text",
-        "text": "world"
-      }
-    ]
-  }
+	"type": "bubble",
+	"size": "nano",
+	"hero": {
+		"type": "box",
+		"layout": "vertical",
+		"contents": [
+			{
+				"type": "text",
+				"text": "hello"
+			},
+			{
+				"type": "text",
+				"text": "world"
+			}
+		]
+	}
 }`),
 			Want: &BubbleContainer{
 				Type: FlexContainerTypeBubble,
@@ -612,44 +652,44 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 		},
 		{
 			JSON: []byte(`{
-  "type": "bubble",
-  "body": {
-    "type": "box",
-    "layout": "vertical",
-    "contents": [
-      {
-        "type": "image",
-        "url": "https://example.com/flex/images/image.jpg",
-        "animated": true
-      },
-      {
-        "type": "separator"
-      },
-      {
-        "type": "text",
-        "text": "Text in the box",
-        "adjustMode": "shrink-to-fit"
-      },
-      {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [],
-        "width": "30px",
-        "height": "30px",
-        "background": {
-          "type": "linearGradient",
-          "angle": "0deg",
-          "startColor": "#ff0000",
-          "centerColor": "#0000ff",
-          "endColor": "#00ff00",
-          "centerPosition": "10%"
-        }
-      }
-    ],
-    "height": "400px",
-    "justifyContent": "space-evenly",
-    "alignItems": "center"
-  }
+	"type": "bubble",
+	"body": {
+		"type": "box",
+		"layout": "vertical",
+		"contents": [
+			{
+				"type": "image",
+				"url": "https://example.com/flex/images/image.jpg",
+				"animated": true
+			},
+			{
+				"type": "separator"
+			},
+			{
+				"type": "text",
+				"text": "Text in the box",
+				"adjustMode": "shrink-to-fit"
+			},
+			{
+				"type": "box",
+				"layout": "vertical",
+				"contents": [],
+				"width": "30px",
+				"height": "30px",
+				"background": {
+					"type": "linearGradient",
+					"angle": "0deg",
+					"startColor": "#ff0000",
+					"centerColor": "#0000ff",
+					"endColor": "#00ff00",
+					"centerPosition": "10%"
+				}
+			}
+		],
+		"height": "400px",
+		"justifyContent": "space-evenly",
+		"alignItems": "center"
+	}
 }`),
 			Want: &BubbleContainer{
 				Type: FlexContainerTypeBubble,
