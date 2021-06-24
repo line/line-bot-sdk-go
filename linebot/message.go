@@ -38,6 +38,7 @@ const (
 // Message interface
 type Message interface {
 	Message()
+	Type() MessageType
 }
 
 // SendingMessage interface
@@ -56,6 +57,7 @@ type TextMessage struct {
 
 	quickReplyItems *QuickReplyItems
 	sender          *Sender
+	messageType     MessageType
 
 	Mention *Mention
 }
@@ -69,7 +71,7 @@ func (m *TextMessage) MarshalJSON() ([]byte, error) {
 		Sender     *Sender          `json:"sender,omitempty"`
 		Emojis     []*Emoji         `json:"emojis,omitempty"`
 	}{
-		Type:       MessageTypeText,
+		Type:       m.messageType,
 		Text:       m.Text,
 		QuickReply: m.quickReplyItems,
 		Sender:     m.sender,
@@ -103,6 +105,7 @@ type ImageMessage struct {
 
 	quickReplyItems *QuickReplyItems
 	sender          *Sender
+	messageType     MessageType
 }
 
 // MarshalJSON method of ImageMessage
@@ -114,7 +117,7 @@ func (m *ImageMessage) MarshalJSON() ([]byte, error) {
 		QuickReply         *QuickReplyItems `json:"quickReply,omitempty"`
 		Sender             *Sender          `json:"sender,omitempty"`
 	}{
-		Type:               MessageTypeImage,
+		Type:               m.messageType,
 		OriginalContentURL: m.OriginalContentURL,
 		PreviewImageURL:    m.PreviewImageURL,
 		QuickReply:         m.quickReplyItems,
@@ -147,6 +150,7 @@ type VideoMessage struct {
 
 	quickReplyItems *QuickReplyItems
 	sender          *Sender
+	messageType     MessageType
 }
 
 // MarshalJSON method of VideoMessage
@@ -158,7 +162,7 @@ func (m *VideoMessage) MarshalJSON() ([]byte, error) {
 		QuickReply         *QuickReplyItems `json:"quickReply,omitempty"`
 		Sender             *Sender          `json:"sender,omitempty"`
 	}{
-		Type:               MessageTypeVideo,
+		Type:               m.messageType,
 		OriginalContentURL: m.OriginalContentURL,
 		PreviewImageURL:    m.PreviewImageURL,
 		QuickReply:         m.quickReplyItems,
@@ -191,6 +195,7 @@ type AudioMessage struct {
 
 	quickReplyItems *QuickReplyItems
 	sender          *Sender
+	messageType     MessageType
 }
 
 // MarshalJSON method of AudioMessage
@@ -202,7 +207,7 @@ func (m *AudioMessage) MarshalJSON() ([]byte, error) {
 		QuickReply         *QuickReplyItems `json:"quickReply,omitempty"`
 		Sender             *Sender          `json:"sender,omitempty"`
 	}{
-		Type:               MessageTypeAudio,
+		Type:               m.messageType,
 		OriginalContentURL: m.OriginalContentURL,
 		Duration:           m.Duration,
 		QuickReply:         m.quickReplyItems,
@@ -229,9 +234,10 @@ func (m *AudioMessage) AddEmoji(*Emoji) SendingMessage {
 
 // FileMessage type
 type FileMessage struct {
-	ID       string
-	FileName string
-	FileSize int
+	ID          string
+	FileName    string
+	FileSize    int
+	messageType MessageType
 }
 
 // LocationMessage type
@@ -244,6 +250,7 @@ type LocationMessage struct {
 
 	quickReplyItems *QuickReplyItems
 	sender          *Sender
+	messageType     MessageType
 }
 
 // MarshalJSON method of LocationMessage
@@ -257,7 +264,7 @@ func (m *LocationMessage) MarshalJSON() ([]byte, error) {
 		QuickReply *QuickReplyItems `json:"quickReply,omitempty"`
 		Sender     *Sender          `json:"sender,omitempty"`
 	}{
-		Type:       MessageTypeLocation,
+		Type:       m.messageType,
 		Title:      m.Title,
 		Address:    m.Address,
 		Latitude:   m.Latitude,
@@ -294,6 +301,7 @@ type StickerMessage struct {
 
 	quickReplyItems *QuickReplyItems
 	sender          *Sender
+	messageType     MessageType
 }
 
 // MarshalJSON method of StickerMessage
@@ -307,7 +315,7 @@ func (m *StickerMessage) MarshalJSON() ([]byte, error) {
 		QuickReply          *QuickReplyItems    `json:"quickReply,omitempty"`
 		Sender              *Sender             `json:"sender,omitempty"`
 	}{
-		Type:                MessageTypeSticker,
+		Type:                m.messageType,
 		PackageID:           m.PackageID,
 		StickerID:           m.StickerID,
 		StickerResourceType: m.StickerResourceType,
@@ -341,6 +349,7 @@ type TemplateMessage struct {
 
 	quickReplyItems *QuickReplyItems
 	sender          *Sender
+	messageType     MessageType
 }
 
 // MarshalJSON method of TemplateMessage
@@ -352,7 +361,7 @@ func (m *TemplateMessage) MarshalJSON() ([]byte, error) {
 		QuickReply *QuickReplyItems `json:"quickReply,omitempty"`
 		Sender     *Sender          `json:"sender,omitempty"`
 	}{
-		Type:       MessageTypeTemplate,
+		Type:       m.messageType,
 		AltText:    m.AltText,
 		Template:   m.Template,
 		QuickReply: m.quickReplyItems,
@@ -387,6 +396,7 @@ type ImagemapMessage struct {
 
 	quickReplyItems *QuickReplyItems
 	sender          *Sender
+	messageType     MessageType
 }
 
 // MarshalJSON method of ImagemapMessage
@@ -401,7 +411,7 @@ func (m *ImagemapMessage) MarshalJSON() ([]byte, error) {
 		QuickReply *QuickReplyItems `json:"quickReply,omitempty"`
 		Sender     *Sender          `json:"sender,omitempty"`
 	}{
-		Type:       MessageTypeImagemap,
+		Type:       m.messageType,
 		BaseURL:    m.BaseURL,
 		AltText:    m.AltText,
 		BaseSize:   m.BaseSize,
@@ -442,6 +452,7 @@ type FlexMessage struct {
 
 	quickReplyItems *QuickReplyItems
 	sender          *Sender
+	messageType     MessageType
 }
 
 // MarshalJSON method of FlexMessage
@@ -453,7 +464,7 @@ func (m *FlexMessage) MarshalJSON() ([]byte, error) {
 		QuickReply *QuickReplyItems `json:"quickReply,omitempty"`
 		Sender     *Sender          `json:"sender,omitempty"`
 	}{
-		Type:       MessageTypeFlex,
+		Type:       m.messageType,
 		AltText:    m.AltText,
 		Contents:   m.Contents,
 		QuickReply: m.quickReplyItems,
@@ -508,10 +519,41 @@ func (*ImagemapMessage) Message() {}
 // Message implements Message interface
 func (*FlexMessage) Message() {}
 
+// Type implements Message interface
+func (m *FileMessage) Type() MessageType { return m.messageType }
+
+// Type implements Message interface
+func (m *TextMessage) Type() MessageType { return m.messageType }
+
+// Type implements Message interface
+func (m *ImageMessage) Type() MessageType { return m.messageType }
+
+// Type implements Message interface
+func (m *VideoMessage) Type() MessageType { return m.messageType }
+
+// Type implements Message interface
+func (m *AudioMessage) Type() MessageType { return m.messageType }
+
+// Type implements Message interface
+func (m *LocationMessage) Type() MessageType { return m.messageType }
+
+// Type implements Message interface
+func (m *StickerMessage) Type() MessageType { return m.messageType }
+
+// Type implements Message interface
+func (m *TemplateMessage) Type() MessageType { return m.messageType }
+
+// Type implements Message interface
+func (m *ImagemapMessage) Type() MessageType { return m.messageType }
+
+// Type implements Message interface
+func (m *FlexMessage) Type() MessageType { return m.messageType }
+
 // NewTextMessage function
 func NewTextMessage(content string) *TextMessage {
 	return &TextMessage{
-		Text: content,
+		Text:        content,
+		messageType: MessageTypeText,
 	}
 }
 
@@ -520,6 +562,7 @@ func NewImageMessage(originalContentURL, previewImageURL string) *ImageMessage {
 	return &ImageMessage{
 		OriginalContentURL: originalContentURL,
 		PreviewImageURL:    previewImageURL,
+		messageType:        MessageTypeImage,
 	}
 }
 
@@ -528,6 +571,7 @@ func NewVideoMessage(originalContentURL, previewImageURL string) *VideoMessage {
 	return &VideoMessage{
 		OriginalContentURL: originalContentURL,
 		PreviewImageURL:    previewImageURL,
+		messageType:        MessageTypeVideo,
 	}
 }
 
@@ -536,49 +580,55 @@ func NewAudioMessage(originalContentURL string, duration int) *AudioMessage {
 	return &AudioMessage{
 		OriginalContentURL: originalContentURL,
 		Duration:           duration,
+		messageType:        MessageTypeAudio,
 	}
 }
 
 // NewLocationMessage function
 func NewLocationMessage(title, address string, latitude, longitude float64) *LocationMessage {
 	return &LocationMessage{
-		Title:     title,
-		Address:   address,
-		Latitude:  latitude,
-		Longitude: longitude,
+		Title:       title,
+		Address:     address,
+		Latitude:    latitude,
+		Longitude:   longitude,
+		messageType: MessageTypeLocation,
 	}
 }
 
 // NewStickerMessage function
 func NewStickerMessage(packageID, stickerID string) *StickerMessage {
 	return &StickerMessage{
-		PackageID: packageID,
-		StickerID: stickerID,
+		PackageID:   packageID,
+		StickerID:   stickerID,
+		messageType: MessageTypeSticker,
 	}
 }
 
 // NewTemplateMessage function
 func NewTemplateMessage(altText string, template Template) *TemplateMessage {
 	return &TemplateMessage{
-		AltText:  altText,
-		Template: template,
+		AltText:     altText,
+		Template:    template,
+		messageType: MessageTypeTemplate,
 	}
 }
 
 // NewImagemapMessage function
 func NewImagemapMessage(baseURL, altText string, baseSize ImagemapBaseSize, actions ...ImagemapAction) *ImagemapMessage {
 	return &ImagemapMessage{
-		BaseURL:  baseURL,
-		AltText:  altText,
-		BaseSize: baseSize,
-		Actions:  actions,
+		BaseURL:     baseURL,
+		AltText:     altText,
+		BaseSize:    baseSize,
+		Actions:     actions,
+		messageType: MessageTypeImagemap,
 	}
 }
 
 // NewFlexMessage function
 func NewFlexMessage(altText string, contents FlexContainer) *FlexMessage {
 	return &FlexMessage{
-		AltText:  altText,
-		Contents: contents,
+		AltText:     altText,
+		Contents:    contents,
+		messageType: MessageTypeFlex,
 	}
 }
