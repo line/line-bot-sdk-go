@@ -63,6 +63,12 @@ const (
 	APIEndpointBulkLinkRichMenu           = "/v2/bot/richmenu/bulk/link"
 	APIEndpointBulkUnlinkRichMenu         = "/v2/bot/richmenu/bulk/unlink"
 
+	APIEndpointCreateRichMenuAlias = "/v2/bot/richmenu/alias"
+	APIEndpointGetRichMenuAlias    = "/v2/bot/richmenu/alias/%s"
+	APIEndpointUpdateRichMenuAlias = "/v2/bot/richmenu/alias/%s"
+	APIEndpointDeleteRichMenuAlias = "/v2/bot/richmenu/alias/%s"
+	APIEndpointListRichMenuAlias   = "/v2/bot/richmenu/alias/list"
+
 	APIEndpointGetAllLIFFApps = "/liff/v1/apps"
 	APIEndpointAddLIFFApp     = "/liff/v1/apps"
 	APIEndpointUpdateLIFFApp  = "/liff/v1/apps/%s/view"
