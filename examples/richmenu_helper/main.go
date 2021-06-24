@@ -25,7 +25,8 @@ import (
 
 func main() {
 	var (
-		mode     = flag.String("mode", "list", "mode of richmenu helper [list|create|link|unlink|bulklink|bulkunlink|get|delete|upload|download]")
+		mode     = flag.String("mode", "list", "mode of richmenu helper [list|create|link|unlink|bulklink|bulkunlink|get|delete|upload|download|alias_create|alias_get|alias_update|alias_delete|alias_list]")
+		aid      = flag.String("aid", "", "alias id")
 		uid      = flag.String("uid", "", "user id")
 		rid      = flag.String("rid", "", "richmenu id")
 		filePath = flag.String("image.path", "", "path to image, used in upload/download mode")
@@ -59,6 +60,32 @@ func main() {
 			log.Fatal(err)
 		}
 		log.Printf("Image is written to %s", *filePath)
+	case "alias_create":
+		if _, err = bot.CreateRichMenuAlias(*aid, *rid).Do(); err != nil {
+			log.Fatal(err)
+		}
+	case "alias_get":
+		if res, err := bot.GetRichMenuAlias(*aid).Do(); err != nil {
+			log.Fatal(err)
+		} else {
+			log.Printf("%v\n", res)
+		}
+	case "alias_update":
+		if _, err = bot.UpdateRichMenuAlias(*aid, *rid).Do(); err != nil {
+			log.Fatal(err)
+		}
+	case "alias_delete":
+		if _, err = bot.DeleteRichMenuAlias(*aid).Do(); err != nil {
+			log.Fatal(err)
+		}
+	case "alias_list":
+		res, err := bot.GetRichMenuAliasList().Do()
+		if err != nil {
+			log.Fatal(err)
+		}
+		for _, alias := range res {
+			log.Printf("%v\n", alias)
+		}
 	case "link":
 		if _, err = bot.LinkUserRichMenu(*uid, *rid).Do(); err != nil {
 			log.Fatal(err)
