@@ -244,6 +244,12 @@ type RichMenuResponse struct {
 	Areas       []AreaDetail `json:"areas"`
 }
 
+// RichMenuAliasResponse type
+type RichMenuAliasResponse struct {
+	RichMenuAliasID string `json:"richMenuAliasId"`
+	RichMenuID      string `json:"richMenuId"`
+}
+
 // LIFFAppsResponse type
 type LIFFAppsResponse struct {
 	Apps []LIFFApp `json:"apps"`
@@ -475,6 +481,32 @@ func decodeToRichMenuIDResponse(res *http.Response) (*RichMenuIDResponse, error)
 		return nil, err
 	}
 	return &result, nil
+}
+
+func decodeToRichMenuAliasResponse(res *http.Response) (*RichMenuAliasResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := RichMenuAliasResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
+
+func decodeToRichMenuAliasListResponse(res *http.Response) ([]*RichMenuAliasResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := struct {
+		Aliases []*RichMenuAliasResponse `json:"aliases"`
+	}{}
+	if err := decoder.Decode(&result); err != nil {
+		return nil, err
+	}
+	return result.Aliases, nil
 }
 
 func decodeToLIFFResponse(res *http.Response) (*LIFFAppsResponse, error) {
