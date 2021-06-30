@@ -1,5 +1,17 @@
 # Changelog
 
+## [v7.10.0](https://github.com/line/line-bot-sdk-go/tree/v7.10.0) (2021-06-30)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.9.1...v7.10.0)
+
+**Merged pull requests:**
+
+- Messaging API 2021 June: Add rich menu alias function call. [\#267](https://github.com/line/line-bot-sdk-go/pull/267)([clsung](https://github.com/clsung))
+
+- Fix wrong constant type & other fixes. [\#278](https://github.com/line/line-bot-sdk-go/pull/278)([54m](https://github.com/54m))
+
+- use boolean for Active in WebhookInfoResponse. [\#276](https://github.com/line/line-bot-sdk-go/pull/277)([Hiro Ogawa](https://github.com/hiro-ogawa))
+
 ## [v7.9.1](https://github.com/line/line-bot-sdk-go/tree/v7.9.1) (2021-04-08)
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.9.0...v7.9.1)
