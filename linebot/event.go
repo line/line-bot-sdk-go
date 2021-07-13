@@ -69,9 +69,11 @@ type EventSource struct {
 
 // Params type
 type Params struct {
-	Date     string `json:"date,omitempty"`
-	Time     string `json:"time,omitempty"`
-	Datetime string `json:"datetime,omitempty"`
+	Date               string `json:"date,omitempty"`
+	Time               string `json:"time,omitempty"`
+	Datetime           string `json:"datetime,omitempty"`
+	NewRichMenuAliasID string `json:"newRichMenuAliasId,omitempty"`
+	Status             string `json:"status,omitempty"`
 }
 
 // Members type
