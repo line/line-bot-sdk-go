@@ -294,6 +294,23 @@ var webhookTestRequestBody = `{
         },
         {
             "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+            "type": "postback",
+            "mode": "active",
+            "timestamp": 1462629479859,
+            "source": {
+                "type": "user",
+                "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
+            },
+            "postback": {
+                "data": "action=richmenu-changed-to-a",
+								"params": {
+									"newRichMenuAliasId": "richmenu-alias-a",
+									"status": "SUCCESS"
+								}
+            }
+        },
+        {
+            "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
             "type": "beacon",
             "mode": "active",
             "timestamp": 1462629479859,
@@ -787,6 +804,23 @@ var webhookTestWantEvents = []*Event{
 			Data: "action=sel",
 			Params: &Params{
 				Datetime: "2017-09-03T15:38",
+			},
+		},
+	},
+	{
+		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+		Type:       EventTypePostback,
+		Mode:       EventModeActive,
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
+		Source: &EventSource{
+			Type:   EventSourceTypeUser,
+			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
+		},
+		Postback: &Postback{
+			Data: "action=richmenu-changed-to-a",
+			Params: &Params{
+				NewRichMenuAliasID: "richmenu-alias-a",
+				Status:             "SUCCESS",
 			},
 		},
 	},
