@@ -132,14 +132,30 @@ func main() {
 			ChatBarText: "ChatText",
 			Areas: []linebot.AreaDetail{
 				{
-					Bounds: linebot.RichMenuBounds{X: 0, Y: 0, Width: 1250, Height: 843},
+					Bounds: linebot.RichMenuBounds{X: 0, Y: 0, Width: 1250, Height: 212},
+					Action: linebot.RichMenuAction{
+						Type:            linebot.RichMenuActionTypeRichMenuSwitch,
+						RichMenuAliasID: "richmenu-alias-a",
+						Data:            "action=richmenu-changed-to-a",
+					},
+				},
+				{
+					Bounds: linebot.RichMenuBounds{X: 1250, Y: 0, Width: 1250, Height: 212},
+					Action: linebot.RichMenuAction{
+						Type:            linebot.RichMenuActionTypeRichMenuSwitch,
+						RichMenuAliasID: "richmenu-alias-b",
+						Data:            "action=richmenu-changed-to-b",
+					},
+				},
+				{
+					Bounds: linebot.RichMenuBounds{X: 0, Y: 212, Width: 1250, Height: 737},
 					Action: linebot.RichMenuAction{
 						Type: linebot.RichMenuActionTypePostback,
 						Data: "action=buy&itemid=123",
 					},
 				},
 				{
-					Bounds: linebot.RichMenuBounds{X: 1250, Y: 0, Width: 1250, Height: 843},
+					Bounds: linebot.RichMenuBounds{X: 1250, Y: 212, Width: 1250, Height: 737},
 					Action: linebot.RichMenuAction{
 						Type: linebot.RichMenuActionTypeURI,
 						URI:  "https://developers.line.me/",
@@ -147,14 +163,14 @@ func main() {
 					},
 				},
 				{
-					Bounds: linebot.RichMenuBounds{X: 0, Y: 843, Width: 1250, Height: 843},
+					Bounds: linebot.RichMenuBounds{X: 0, Y: 949, Width: 1250, Height: 737},
 					Action: linebot.RichMenuAction{
 						Type: linebot.RichMenuActionTypeMessage,
 						Text: "hello world!",
 					},
 				},
 				{
-					Bounds: linebot.RichMenuBounds{X: 1250, Y: 843, Width: 1250, Height: 843},
+					Bounds: linebot.RichMenuBounds{X: 1250, Y: 949, Width: 1250, Height: 737},
 					Action: linebot.RichMenuAction{
 						Type: linebot.RichMenuActionTypeDatetimePicker,
 						Data: "datetime picker!",
