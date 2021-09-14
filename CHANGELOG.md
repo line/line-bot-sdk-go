@@ -1,5 +1,15 @@
 # Changelog
 
+## [v7.10.1](https://github.com/line/line-bot-sdk-go/tree/v7.10.1) (2021-09-14)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.10.0...v7.10.1)
+
+**Merged pull requests:**
+
+- Update README.md's build badge to GitHub Actions. [\#287](https://github.com/line/line-bot-sdk-go/pull/287)([Zhiyuan Lin](https://github.com/zhiyuan-lin))
+
+- Fix #285 Support rich menu switch action  [\#285](https://github.com/line/line-bot-sdk-go/pull/286)([goka](https://github.com/gotokatsuya))
+
 ## [v7.10.0](https://github.com/line/line-bot-sdk-go/tree/v7.10.0) (2021-06-30)
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.9.1...v7.10.0)
