@@ -108,6 +108,25 @@ var webhookTestRequestBody = `{
             }
         },
         {
+            "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTAA",
+            "type": "message",
+            "mode": "active",
+            "timestamp": 1462629479859,
+            "source": {
+                "type": "user",
+                "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
+            },
+            "message": {
+                "type": "image",
+                "id": "354718705033693861",
+                "imageSet": {
+                    "id": "E005D41A7288F41B65593ED38FF6E9834B046AB36A37921A56BC236F13A91855",
+                    "index": 2,
+                    "total": 2
+                }
+            }
+        },
+        {
             "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
             "type": "message",
             "mode": "active",
@@ -625,6 +644,24 @@ var webhookTestWantEvents = []*Event{
 		},
 		Message: &ImageMessage{
 			ID: "325708",
+		},
+	},
+	{
+		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTAA",
+		Type:       EventTypeMessage,
+		Mode:       EventModeActive,
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
+		Source: &EventSource{
+			Type:   EventSourceTypeUser,
+			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
+		},
+		Message: &ImageMessage{
+			ID: "354718705033693861",
+			ImageSet: &ImageSet{
+				ID:    "E005D41A7288F41B65593ED38FF6E9834B046AB36A37921A56BC236F13A91855",
+				Index: 2,
+				Total: 2,
+			},
 		},
 	},
 	{
