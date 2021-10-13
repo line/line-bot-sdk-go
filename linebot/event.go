@@ -242,6 +242,7 @@ type rawEventMessage struct {
 	Longitude           float64             `json:"longitude,omitempty"`
 	PackageID           string              `json:"packageId,omitempty"`
 	StickerID           string              `json:"stickerId,omitempty"`
+	ImageSet            *ImageSet           `json:"imageSet,omitempty"`
 	StickerResourceType StickerResourceType `json:"stickerResourceType,omitempty"`
 	Keywords            []string            `json:"keywords,omitempty"`
 	Emojis              []*Emoji            `json:"emojis,omitempty"`
@@ -360,8 +361,9 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 		}
 	case *ImageMessage:
 		raw.Message = &rawEventMessage{
-			Type: MessageTypeImage,
-			ID:   m.ID,
+			Type:     MessageTypeImage,
+			ID:       m.ID,
+			ImageSet: m.ImageSet,
 		}
 	case *VideoMessage:
 		raw.Message = &rawEventMessage{
@@ -428,7 +430,8 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 			}
 		case MessageTypeImage:
 			e.Message = &ImageMessage{
-				ID: rawEvent.Message.ID,
+				ID:       rawEvent.Message.ID,
+				ImageSet: rawEvent.Message.ImageSet,
 			}
 		case MessageTypeVideo:
 			e.Message = &VideoMessage{

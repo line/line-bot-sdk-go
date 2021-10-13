@@ -102,6 +102,7 @@ type ImageMessage struct {
 	ID                 string
 	OriginalContentURL string
 	PreviewImageURL    string
+	ImageSet           *ImageSet
 
 	quickReplyItems *QuickReplyItems
 	sender          *Sender
@@ -114,12 +115,14 @@ func (m *ImageMessage) MarshalJSON() ([]byte, error) {
 		Type               MessageType      `json:"type"`
 		OriginalContentURL string           `json:"originalContentUrl"`
 		PreviewImageURL    string           `json:"previewImageUrl"`
+		ImageSet           *ImageSet        `json:"imageSet,omitempty"`
 		QuickReply         *QuickReplyItems `json:"quickReply,omitempty"`
 		Sender             *Sender          `json:"sender,omitempty"`
 	}{
 		Type:               m.messageType,
 		OriginalContentURL: m.OriginalContentURL,
 		PreviewImageURL:    m.PreviewImageURL,
+		ImageSet:           m.ImageSet,
 		QuickReply:         m.quickReplyItems,
 		Sender:             m.sender,
 	})
