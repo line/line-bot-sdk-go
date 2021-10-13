@@ -102,6 +102,7 @@ type ImageMessage struct {
 	ID                 string
 	OriginalContentURL string
 	PreviewImageURL    string
+	ContentProvider    *ContentProvider
 	ImageSet           *ImageSet
 
 	quickReplyItems *QuickReplyItems
@@ -115,6 +116,7 @@ func (m *ImageMessage) MarshalJSON() ([]byte, error) {
 		Type               MessageType      `json:"type"`
 		OriginalContentURL string           `json:"originalContentUrl"`
 		PreviewImageURL    string           `json:"previewImageUrl"`
+		ContentProvider    *ContentProvider `json:"contentProvider,omitempty"`
 		ImageSet           *ImageSet        `json:"imageSet,omitempty"`
 		QuickReply         *QuickReplyItems `json:"quickReply,omitempty"`
 		Sender             *Sender          `json:"sender,omitempty"`
@@ -122,6 +124,7 @@ func (m *ImageMessage) MarshalJSON() ([]byte, error) {
 		Type:               m.messageType,
 		OriginalContentURL: m.OriginalContentURL,
 		PreviewImageURL:    m.PreviewImageURL,
+		ContentProvider:    m.ContentProvider,
 		ImageSet:           m.ImageSet,
 		QuickReply:         m.quickReplyItems,
 		Sender:             m.sender,
@@ -150,6 +153,8 @@ type VideoMessage struct {
 	ID                 string
 	OriginalContentURL string
 	PreviewImageURL    string
+	Duration           int
+	ContentProvider    *ContentProvider
 
 	quickReplyItems *QuickReplyItems
 	sender          *Sender
@@ -162,12 +167,14 @@ func (m *VideoMessage) MarshalJSON() ([]byte, error) {
 		Type               MessageType      `json:"type"`
 		OriginalContentURL string           `json:"originalContentUrl"`
 		PreviewImageURL    string           `json:"previewImageUrl"`
+		Duration           int              `json:"duration,omitempty"`
 		QuickReply         *QuickReplyItems `json:"quickReply,omitempty"`
 		Sender             *Sender          `json:"sender,omitempty"`
 	}{
 		Type:               m.messageType,
 		OriginalContentURL: m.OriginalContentURL,
 		PreviewImageURL:    m.PreviewImageURL,
+		Duration:           m.Duration,
 		QuickReply:         m.quickReplyItems,
 		Sender:             m.sender,
 	})
@@ -195,6 +202,7 @@ type AudioMessage struct {
 	ID                 string
 	OriginalContentURL string
 	Duration           int
+	ContentProvider    *ContentProvider
 
 	quickReplyItems *QuickReplyItems
 	sender          *Sender
