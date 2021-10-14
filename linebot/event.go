@@ -242,6 +242,7 @@ type rawEventMessage struct {
 	Longitude           float64             `json:"longitude,omitempty"`
 	PackageID           string              `json:"packageId,omitempty"`
 	StickerID           string              `json:"stickerId,omitempty"`
+	ContentProvider     *ContentProvider    `json:"contentProvider,omitempty"`
 	ImageSet            *ImageSet           `json:"imageSet,omitempty"`
 	StickerResourceType StickerResourceType `json:"stickerResourceType,omitempty"`
 	Keywords            []string            `json:"keywords,omitempty"`
@@ -361,20 +362,24 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 		}
 	case *ImageMessage:
 		raw.Message = &rawEventMessage{
-			Type:     MessageTypeImage,
-			ID:       m.ID,
-			ImageSet: m.ImageSet,
+			Type:            MessageTypeImage,
+			ID:              m.ID,
+			ContentProvider: m.ContentProvider,
+			ImageSet:        m.ImageSet,
 		}
 	case *VideoMessage:
 		raw.Message = &rawEventMessage{
-			Type: MessageTypeVideo,
-			ID:   m.ID,
+			Type:            MessageTypeVideo,
+			ID:              m.ID,
+			Duration:        m.Duration,
+			ContentProvider: m.ContentProvider,
 		}
 	case *AudioMessage:
 		raw.Message = &rawEventMessage{
-			Type:     MessageTypeAudio,
-			ID:       m.ID,
-			Duration: m.Duration,
+			Type:            MessageTypeAudio,
+			ID:              m.ID,
+			Duration:        m.Duration,
+			ContentProvider: m.ContentProvider,
 		}
 	case *FileMessage:
 		raw.Message = &rawEventMessage{
@@ -430,17 +435,21 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 			}
 		case MessageTypeImage:
 			e.Message = &ImageMessage{
-				ID:       rawEvent.Message.ID,
-				ImageSet: rawEvent.Message.ImageSet,
+				ID:              rawEvent.Message.ID,
+				ContentProvider: rawEvent.Message.ContentProvider,
+				ImageSet:        rawEvent.Message.ImageSet,
 			}
 		case MessageTypeVideo:
 			e.Message = &VideoMessage{
-				ID: rawEvent.Message.ID,
+				ID:              rawEvent.Message.ID,
+				Duration:        rawEvent.Message.Duration,
+				ContentProvider: rawEvent.Message.ContentProvider,
 			}
 		case MessageTypeAudio:
 			e.Message = &AudioMessage{
-				ID:       rawEvent.Message.ID,
-				Duration: rawEvent.Message.Duration,
+				ID:              rawEvent.Message.ID,
+				Duration:        rawEvent.Message.Duration,
+				ContentProvider: rawEvent.Message.ContentProvider,
 			}
 		case MessageTypeFile:
 			e.Message = &FileMessage{

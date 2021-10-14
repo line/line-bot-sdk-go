@@ -119,10 +119,51 @@ var webhookTestRequestBody = `{
             "message": {
                 "type": "image",
                 "id": "354718705033693861",
+                "contentProvider": {
+                    "type": "line"
+                },
                 "imageSet": {
                     "id": "E005D41A7288F41B65593ED38FF6E9834B046AB36A37921A56BC236F13A91855",
                     "index": 2,
                     "total": 2
+                }
+            }
+        },
+        {
+            "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+            "type": "message",
+            "mode": "active",
+            "timestamp": 1462629479859,
+            "source": {
+                "type": "user",
+                "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
+            },
+            "message": {
+                "type": "video",
+                "id": "325708",
+                "duration": 60000,
+                "contentProvider": {
+                    "type": "external",
+                    "originalContentUrl": "https://example.com/original.mp4",
+                    "previewImageUrl": "https://example.com/preview.jpg"
+                }
+            }
+        },
+        {
+            "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+            "type": "message",
+            "mode": "active",
+            "timestamp": 1462629479859,
+            "source": {
+                "type": "user",
+                "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
+            },
+            "message": {
+                "type": "audio",
+                "id": "325708",
+                "duration": 60000,
+                "contentProvider": {
+                    "type": "line"
                 }
             }
         },
@@ -657,11 +698,50 @@ var webhookTestWantEvents = []*Event{
 		},
 		Message: &ImageMessage{
 			ID: "354718705033693861",
+			ContentProvider: &ContentProvider{
+				Type: ContentProviderTypeLINE,
+			},
 			ImageSet: &ImageSet{
 				ID:    "E005D41A7288F41B65593ED38FF6E9834B046AB36A37921A56BC236F13A91855",
 				Index: 2,
 				Total: 2,
 			},
+		},
+	},
+	{
+		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+		Type:       EventTypeMessage,
+		Mode:       EventModeActive,
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
+		Source: &EventSource{
+			Type:   EventSourceTypeUser,
+			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
+		},
+		Message: &VideoMessage{
+			ID: "325708",
+			ContentProvider: &ContentProvider{
+				Type:               ContentProviderTypeExternal,
+				OriginalContentURL: "https://example.com/original.mp4",
+				PreviewImageURL:    "https://example.com/preview.jpg",
+			},
+			Duration: 60000,
+		},
+	},
+	{
+		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+		Type:       EventTypeMessage,
+		Mode:       EventModeActive,
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
+		Source: &EventSource{
+			Type:   EventSourceTypeUser,
+			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
+		},
+		Message: &AudioMessage{
+			ID: "325708",
+			ContentProvider: &ContentProvider{
+				Type: ContentProviderTypeLINE,
+			},
+			Duration: 60000,
 		},
 	},
 	{
