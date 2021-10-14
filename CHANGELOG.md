@@ -1,5 +1,16 @@
 # Changelog
 
+## [v7.11.0](https://github.com/line/line-bot-sdk-go/tree/v7.11.0) (2021-10-14)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.10.1...v7.11.0)
+
+**Merged pull requests:**
+
+- Support imageSet fields in webhook event. [\#288](https://github.com/line/line-bot-sdk-go/pull/291)([clsung](https://github.com/clsung))
+
+- Add contentProvider properties for image, audio, video. [\#109] [\#144](https://github.com/line/line-bot-sdk-go/pull/292)([clsung](https://github.com/clsung))
+
+
 ## [v7.10.1](https://github.com/line/line-bot-sdk-go/tree/v7.10.1) (2021-09-14)
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.10.0...v7.10.1)
