@@ -488,6 +488,7 @@ type BoxComponent struct {
 	CornerRadius    FlexComponentCornerRadiusType
 	BackgroundColor string
 	BorderColor     string
+	BorderWidth     string
 	Action          TemplateAction
 	JustifyContent  FlexComponentJustifyContentType
 	AlignItems      FlexComponentAlignItemsType
@@ -518,6 +519,7 @@ func (c *BoxComponent) MarshalJSON() ([]byte, error) {
 		CornerRadius    FlexComponentCornerRadiusType   `json:"cornerRadius,omitempty"`
 		BackgroundColor string                          `json:"backgroundColor,omitempty"`
 		BorderColor     string                          `json:"borderColor,omitempty"`
+		BorderWidth     string                          `json:"borderWidth,omitempty"`
 		Action          TemplateAction                  `json:"action,omitempty"`
 		JustifyContent  FlexComponentJustifyContentType `json:"justifyContent,omitempty"`
 		AlignItems      FlexComponentAlignItemsType     `json:"alignItems,omitempty"`
@@ -544,6 +546,7 @@ func (c *BoxComponent) MarshalJSON() ([]byte, error) {
 		CornerRadius:    c.CornerRadius,
 		BackgroundColor: c.BackgroundColor,
 		BorderColor:     c.BorderColor,
+		BorderWidth:     c.BorderWidth,
 		Action:          c.Action,
 		JustifyContent:  c.JustifyContent,
 		AlignItems:      c.AlignItems,
