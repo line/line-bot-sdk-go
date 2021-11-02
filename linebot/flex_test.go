@@ -32,6 +32,40 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 	"body": {
 		"type": "box",
 		"layout": "vertical",
+		"borderColor": "#000000",
+		"borderWidth": "2px",
+		"cornerRadius": "20px",
+		"contents": [
+			{
+				"type": "text",
+				"text": "hello"
+			}
+		]
+	}
+}`),
+			Want: &BubbleContainer{
+				Type: FlexContainerTypeBubble,
+				Body: &BoxComponent{
+					Type:         FlexComponentTypeBox,
+					Layout:       FlexBoxLayoutTypeVertical,
+					BorderColor:  "#000000",
+					BorderWidth:  "2px",
+					CornerRadius: "20px",
+					Contents: []FlexComponent{
+						&TextComponent{
+							Type: FlexComponentTypeText,
+							Text: "hello",
+						},
+					},
+				},
+			},
+		},
+		{
+			JSON: []byte(`{
+	"type": "bubble",
+	"body": {
+		"type": "box",
+		"layout": "vertical",
 		"contents": [
 			{
 				"type": "text",
