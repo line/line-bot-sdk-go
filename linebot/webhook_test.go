@@ -1251,7 +1251,7 @@ func TestParseRequest(t *testing.T) {
 			t.Fatal(err)
 		}
 		if res == nil {
-			t.Error("response is nil")
+			t.Fatal("response is nil")
 		}
 		if res.StatusCode != http.StatusOK {
 			t.Errorf("status: %d", res.StatusCode)
