@@ -249,7 +249,7 @@ var webhookTestRequestBody = `{
                 "type": "sticker",
                 "packageId": "20",
                 "stickerId": "3",
-                "stickerResourceType": "PER_STICKER_TEXT",
+                "stickerResourceType": "MESSAGE",
 				"keywords": ["cony","sally","Staring","hi","whatsup","line","howdy","HEY","Peeking","wave","peek","Hello","yo","greetings"]
             }
         },

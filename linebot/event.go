@@ -183,10 +183,10 @@ const (
 	StickerResourceTypeAnimation      StickerResourceType = "ANIMATION"
 	StickerResourceTypeSound          StickerResourceType = "SOUND"
 	StickerResourceTypeAnimationSound StickerResourceType = "ANIMATION_SOUND"
-	StickerResourceTypePerStickerText StickerResourceType = "PER_STICKER_TEXT"
+	StickerResourceTypePerStickerText StickerResourceType = "MESSAGE"
 	StickerResourceTypePopup          StickerResourceType = "POPUP"
 	StickerResourceTypePopupSound     StickerResourceType = "POPUP_SOUND"
-	StickerResourceTypeNameText       StickerResourceType = "NAME_TEXT"
+	StickerResourceTypeNameText       StickerResourceType = "CUSTOM"
 )
 
 // Event type
