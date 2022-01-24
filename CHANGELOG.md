@@ -1,5 +1,19 @@
 # Changelog
 
+## [v7.12.0](https://github.com/line/line-bot-sdk-go/tree/v7.12.0) (2022-01-25)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.11.0...v7.12.0)
+
+**Merged pull requests:**
+
+- Add border width for box component [\#294](https://github.com/line/line-bot-sdk-go/pull/294)([peam](https://github.com/peamcc))
+
+- Use t.Fatal instead of t.Error on checking nil response. [\#296] [\#296](https://github.com/line/line-bot-sdk-go/pull/296)([Thanabodee Charoenpiriyakij](https://github.com/wingyplus))
+
+- Update CI to support up to Go v1.17. [\#297] [\#297](https://github.com/line/line-bot-sdk-go/pull/297)([Thanabodee Charoenpiriyakij](https://github.com/wingyplus))
+
+- Messaging API Update - November 2021 - Support text enter sticker msg. [\#295] [\#298](https://github.com/line/line-bot-sdk-go/pull/298)([Evan Lin](https://github.com/kkdai))
+
 ## [v7.11.0](https://github.com/line/line-bot-sdk-go/tree/v7.11.0) (2021-10-14)
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.10.1...v7.11.0)
