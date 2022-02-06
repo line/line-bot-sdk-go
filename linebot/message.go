@@ -309,6 +309,7 @@ type StickerMessage struct {
 	StickerID           string
 	StickerResourceType StickerResourceType
 	Keywords            []string
+	Text                string
 
 	quickReplyItems *QuickReplyItems
 	sender          *Sender
@@ -325,6 +326,7 @@ func (m *StickerMessage) MarshalJSON() ([]byte, error) {
 		Keywords            []string            `json:"keywords,omitempty"`
 		QuickReply          *QuickReplyItems    `json:"quickReply,omitempty"`
 		Sender              *Sender             `json:"sender,omitempty"`
+		Text                string              `json:"text,omitempty"`
 	}{
 		Type:                m.messageType,
 		PackageID:           m.PackageID,
@@ -333,6 +335,7 @@ func (m *StickerMessage) MarshalJSON() ([]byte, error) {
 		Keywords:            m.Keywords,
 		QuickReply:          m.quickReplyItems,
 		Sender:              m.sender,
+		Text:                m.Text,
 	})
 }
 
