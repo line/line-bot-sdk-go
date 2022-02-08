@@ -1,5 +1,13 @@
 # Changelog
 
+## [v7.12.1](https://github.com/line/line-bot-sdk-go/tree/v7.12.1) (2022-02-08)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.12.0...v7.12.1)
+
+**Merged pull requests:**
+
+- Fixed #298 sticker text issue, add text parameter. [\#300](https://github.com/line/line-bot-sdk-go/pull/300)([Evan Lin](https://github.com/kkdai))
+
 ## [v7.12.0](https://github.com/line/line-bot-sdk-go/tree/v7.12.0) (2022-01-25)
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.11.0...v7.12.0)
