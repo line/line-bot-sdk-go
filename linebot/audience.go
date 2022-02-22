@@ -11,10 +11,12 @@ import (
 	"strings"
 )
 
+// IUploadAudienceGroupOption type
 type IUploadAudienceGroupOption interface {
 	Apply(call *UploadAudienceGroupCall)
 }
 
+// WithUploadAudienceGroupCallIsIfaAudience func
 func WithUploadAudienceGroupCallIsIfaAudience(isIfaAudience bool) IUploadAudienceGroupOption {
 	return &withUploadAudienceGroupCallIsIfaAudience{
 		isIfaAudience: isIfaAudience,
@@ -29,6 +31,7 @@ func (w *withUploadAudienceGroupCallIsIfaAudience) Apply(call *UploadAudienceGro
 	call.IsIfaAudience = w.isIfaAudience
 }
 
+// WithUploadAudienceGroupCallUploadDescription func
 func WithUploadAudienceGroupCallUploadDescription(uploadDescription string) IUploadAudienceGroupOption {
 	return &withUploadAudienceGroupCallUploadDescription{
 		uploadDescription: uploadDescription,
@@ -43,6 +46,7 @@ func (w *withUploadAudienceGroupCallUploadDescription) Apply(call *UploadAudienc
 	call.UploadDescription = w.uploadDescription
 }
 
+// WithUploadAudienceGroupCallAudiences func
 func WithUploadAudienceGroupCallAudiences(audiences ...string) IUploadAudienceGroupOption {
 	return &withUploadAudienceGroupCallAudiences{
 		audiences: audiences,
@@ -75,6 +79,7 @@ type audience struct {
 	ID string `json:"id,omitempty"`
 }
 
+// UploadAudienceGroupCall type
 type UploadAudienceGroupCall struct {
 	c                 *Client
 	ctx               context.Context
@@ -109,10 +114,12 @@ func (call *UploadAudienceGroupCall) Do() (*UploadAudienceGroupResponse, error) 
 	return decodeToAudienceGroupResponse(res)
 }
 
+// IUploadAudienceGroupByFileOption type
 type IUploadAudienceGroupByFileOption interface {
 	Apply(call *UploadAudienceGroupByFileCall)
 }
 
+// WithUploadAudienceGroupByFileCallIsIfaAudience func
 func WithUploadAudienceGroupByFileCallIsIfaAudience(isIfaAudience bool) IUploadAudienceGroupByFileOption {
 	return &withUploadAudienceGroupByFileCallIsIfaAudience{
 		isIfaAudience: isIfaAudience,
@@ -127,6 +134,7 @@ func (w *withUploadAudienceGroupByFileCallIsIfaAudience) Apply(call *UploadAudie
 	call.IsIfaAudience = w.isIfaAudience
 }
 
+// WithUploadAudienceGroupByFileCallUploadDescription func
 func WithUploadAudienceGroupByFileCallUploadDescription(uploadDescription string) IUploadAudienceGroupByFileOption {
 	return &withUploadAudienceGroupByFileCallUploadDescription{
 		uploadDescription: uploadDescription,
@@ -154,6 +162,7 @@ func (client *Client) UploadAudienceGroupByFile(description string, audiences []
 	return call
 }
 
+// UploadAudienceGroupByFileCall type
 type UploadAudienceGroupByFileCall struct {
 	c                 *Client
 	ctx               context.Context
@@ -196,10 +205,12 @@ func (call *UploadAudienceGroupByFileCall) Do() (*UploadAudienceGroupResponse, e
 	return decodeToAudienceGroupResponse(res)
 }
 
+// IAddAudiencesOption type
 type IAddAudiencesOption interface {
 	Apply(call *AddAudiencesCall)
 }
 
+// WithAddAudiencesCallUploadDescription type
 func WithAddAudiencesCallUploadDescription(uploadDescription string) IAddAudiencesOption {
 	return &withAddAudiencesCallUploadDescription{
 		uploadDescription: uploadDescription,
@@ -229,6 +240,7 @@ func (client *Client) AddAudiences(audienceGroupId int, audiences []string, opti
 	return call
 }
 
+// AddAudiencesCall type
 type AddAudiencesCall struct {
 	c                 *Client
 	ctx               context.Context
@@ -262,10 +274,12 @@ func (call *AddAudiencesCall) Do() (*BasicResponse, error) {
 	return decodeToBasicResponse(res)
 }
 
+// IAddAudiencesByFileOption type
 type IAddAudiencesByFileOption interface {
 	Apply(call *AddAudiencesByFileCall)
 }
 
+// WithAddAudiencesByFileCallUploadDescription func
 func WithAddAudiencesByFileCallUploadDescription(uploadDescription string) IAddAudiencesByFileOption {
 	return &withAddAudiencesByFileCallUploadDescription{
 		uploadDescription: uploadDescription,
@@ -293,6 +307,7 @@ func (client *Client) AddAudiencesByFile(audienceGroupId int, audiences []string
 	return call
 }
 
+// AddAudiencesByFileCall type
 type AddAudiencesByFileCall struct {
 	c                 *Client
 	ctx               context.Context
@@ -331,10 +346,12 @@ func (call *AddAudiencesByFileCall) Do() (*BasicResponse, error) {
 	return decodeToBasicResponse(res)
 }
 
+// IClickAudienceGroupOption type
 type IClickAudienceGroupOption interface {
 	Apply(call *ClickAudienceGroupCall)
 }
 
+// WithClickAudienceGroupCallClickURL func
 func WithClickAudienceGroupCallClickURL(clickURL string) IClickAudienceGroupOption {
 	return &withClickAudienceGroupCallClickURL{
 		clickURL: clickURL,
@@ -362,6 +379,7 @@ func (client *Client) ClickAudienceGroup(description, requestID string, options 
 	return call
 }
 
+// ClickAudienceGroupCall type
 type ClickAudienceGroupCall struct {
 	c           *Client
 	ctx         context.Context
@@ -405,6 +423,7 @@ func (client *Client) IMPAudienceGroup(description, requestID string) *IMPAudien
 	return call
 }
 
+// IMPAudienceGroupCall type
 type IMPAudienceGroupCall struct {
 	c           *Client
 	ctx         context.Context
@@ -447,6 +466,7 @@ func (client *Client) UpdateAudienceGroupDescription(audienceGroupId int, descri
 	return call
 }
 
+// UpdateAudienceGroupDescriptionCall type
 type UpdateAudienceGroupDescriptionCall struct {
 	c               *Client
 	ctx             context.Context
@@ -488,6 +508,7 @@ func (client *Client) ActivateAudienceGroup(audienceGroupId int) *ActivateAudien
 	return call
 }
 
+// ActivateAudienceGroupCall type
 type ActivateAudienceGroupCall struct {
 	c               *Client
 	ctx             context.Context
@@ -519,6 +540,7 @@ func (client *Client) GetAudienceGroup(audienceGroupId int) *GetAudienceGroupCal
 	return call
 }
 
+// GetAudienceGroupCall type
 type GetAudienceGroupCall struct {
 	c               *Client
 	ctx             context.Context
@@ -541,10 +563,12 @@ func (call *GetAudienceGroupCall) Do() (*GetAudienceGroupResponse, error) {
 	return decodeToGetAudienceGroupResponse(res)
 }
 
+// IListAudienceGroupOption type
 type IListAudienceGroupOption interface {
 	Apply(call *ListAudienceGroupCall)
 }
 
+// WithListAudienceGroupCallDescription func
 func WithListAudienceGroupCallDescription(description string) IListAudienceGroupOption {
 	return &withListAudienceGroupCallDescription{
 		description: description,
@@ -559,6 +583,7 @@ func (w *withListAudienceGroupCallDescription) Apply(call *ListAudienceGroupCall
 	call.Description = w.description
 }
 
+// WithListAudienceGroupCallStatus func
 func WithListAudienceGroupCallStatus(status string) IListAudienceGroupOption {
 	return &withListAudienceGroupCallStatus{
 		status: status,
@@ -573,6 +598,7 @@ func (w *withListAudienceGroupCallStatus) Apply(call *ListAudienceGroupCall) {
 	call.Status = w.status
 }
 
+// WithListAudienceGroupCallSize func
 func WithListAudienceGroupCallSize(size int) IListAudienceGroupOption {
 	return &withListAudienceGroupCallSize{
 		size: size,
@@ -587,6 +613,7 @@ func (w *withListAudienceGroupCallSize) Apply(call *ListAudienceGroupCall) {
 	call.Size = w.size
 }
 
+// WithListAudienceGroupCallIncludesExternalPublicGroups func
 func WithListAudienceGroupCallIncludesExternalPublicGroups(includesExternalPublicGroups bool) IListAudienceGroupOption {
 	return &withListAudienceGroupCallIncludesExternalPublicGroups{
 		includesExternalPublicGroups: includesExternalPublicGroups,
@@ -601,6 +628,7 @@ func (w *withListAudienceGroupCallIncludesExternalPublicGroups) Apply(call *List
 	call.IncludesExternalPublicGroups = w.includesExternalPublicGroups
 }
 
+// WithListAudienceGroupCallCreateRoute func
 func WithListAudienceGroupCallCreateRoute(createRoute string) IListAudienceGroupOption {
 	return &withListAudienceGroupCallCreateRoute{
 		createRoute: createRoute,
@@ -628,6 +656,7 @@ func (client *Client) ListAudienceGroup(page int, options ...IListAudienceGroupO
 	return call
 }
 
+// ListAudienceGroupCall type
 type ListAudienceGroupCall struct {
 	c                            *Client
 	ctx                          context.Context
@@ -679,6 +708,7 @@ func (client *Client) ChangeAudienceGroupAuthorityLevel(authorityLevel string) *
 	return call
 }
 
+// ChangeAudienceGroupAuthorityLevelCall type
 type ChangeAudienceGroupAuthorityLevelCall struct {
 	c              *Client
 	ctx            context.Context

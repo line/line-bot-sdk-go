@@ -271,6 +271,7 @@ type WebhookInfoResponse struct {
 	Active   bool   `json:"active"`
 }
 
+// UploadAudienceGroupResponse type
 type UploadAudienceGroupResponse struct {
 	RequestID         string `json:"-"`
 	AcceptedRequestID string `json:"-"`
@@ -284,6 +285,7 @@ type UploadAudienceGroupResponse struct {
 	IsIfaAudience     bool   `json:"isIfaAudience,omitempty"`
 }
 
+// ClickAudienceGroupResponse type
 type ClickAudienceGroupResponse struct {
 	XRequestID        string `json:"-"` // from header X-Line-Request-Id
 	AcceptedRequestID string `json:"-"`
@@ -299,6 +301,7 @@ type ClickAudienceGroupResponse struct {
 	ClickURL          string `json:"clickUrl,omitempty"`
 }
 
+// IMPAudienceGroupResponse type
 type IMPAudienceGroupResponse struct {
 	XRequestID        string `json:"-"`
 	AcceptedRequestID string `json:"-"`
@@ -313,6 +316,7 @@ type IMPAudienceGroupResponse struct {
 	RequestID         string `json:"requestId,omitempty"`
 }
 
+// AudienceGroup type
 type AudienceGroup struct {
 	AudienceGroupID      int    `json:"audienceGroupId,omitempty"`
 	CreateRoute          string `json:"createRoute,omitempty"`
@@ -331,6 +335,7 @@ type AudienceGroup struct {
 	ExpireTimestamp      int64  `json:"expireTimestamp,omitempty"`
 }
 
+// Job type
 type Job struct {
 	AudienceGroupJobID int    `json:"audienceGroupJobId,omitempty"`
 	AudienceGroupID    int    `json:"audienceGroupId,omitempty"`
@@ -343,10 +348,12 @@ type Job struct {
 	JobStatus          string `json:"jobStatus,omitempty"`
 }
 
+// AdAccount type
 type AdAccount struct {
 	Name string `json:"name,omitempty"`
 }
 
+// GetAudienceGroupResponse type
 type GetAudienceGroupResponse struct {
 	RequestID         string        `json:"-"`
 	AcceptedRequestID string        `json:"-"`
@@ -355,6 +362,7 @@ type GetAudienceGroupResponse struct {
 	AdAccount         *AdAccount    `json:"adaccount,omitempty"`
 }
 
+// ListAudienceGroupResponse type
 type ListAudienceGroupResponse struct {
 	RequestID                        string          `json:"-"`
 	AcceptedRequestID                string          `json:"-"`
