@@ -374,6 +374,13 @@ type ListAudienceGroupResponse struct {
 	Size                             int             `json:"size,omitempty"`
 }
 
+// GetAudienceGroupAuthorityLevelResponse type
+type GetAudienceGroupAuthorityLevelResponse struct {
+	RequestID         string `json:"-"`
+	AcceptedRequestID string `json:"-"`
+	AuthorityLevel    string `json:"authorityLevel,omitempty"`
+}
+
 // isSuccess checks if status code is 2xx: The action was successfully received,
 // understood, and accepted.
 func isSuccess(code int) bool {
@@ -846,6 +853,24 @@ func decodeToListAudienceGroupResponse(res *http.Response) (*ListAudienceGroupRe
 	}
 	decoder := json.NewDecoder(res.Body)
 	result := ListAudienceGroupResponse{
+		RequestID:         res.Header.Get("X-Line-Request-Id"),
+		AcceptedRequestID: res.Header.Get("X-Line-Accepted-Request-Id"),
+	}
+	if err := decoder.Decode(&result); err != nil {
+		if err == io.EOF {
+			return &result, nil
+		}
+		return nil, err
+	}
+	return &result, nil
+}
+
+func decodeToGetAudienceGroupAuthorityLevelResponse(res *http.Response) (*GetAudienceGroupAuthorityLevelResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := GetAudienceGroupAuthorityLevelResponse{
 		RequestID:         res.Header.Get("X-Line-Request-Id"),
 		AcceptedRequestID: res.Header.Get("X-Line-Accepted-Request-Id"),
 	}

@@ -739,3 +739,32 @@ func (call *ChangeAudienceGroupAuthorityLevelCall) Do() (*BasicResponse, error) 
 	defer closeResponse(res)
 	return decodeToBasicResponse(res)
 }
+
+// GetAudienceGroupAuthorityLevel method
+func (client *Client) GetAudienceGroupAuthorityLevel() *GetAudienceGroupAuthorityLevelCall {
+	return &GetAudienceGroupAuthorityLevelCall{
+		c: client,
+	}
+}
+
+// GetAudienceGroupAuthorityLevelCall type
+type GetAudienceGroupAuthorityLevelCall struct {
+	c   *Client
+	ctx context.Context
+}
+
+// WithContext method
+func (call *GetAudienceGroupAuthorityLevelCall) WithContext(ctx context.Context) *GetAudienceGroupAuthorityLevelCall {
+	call.ctx = ctx
+	return call
+}
+
+// Do method
+func (call *GetAudienceGroupAuthorityLevelCall) Do() (*GetAudienceGroupAuthorityLevelResponse, error) {
+	res, err := call.c.get(call.ctx, call.c.endpointBase, APIAudienceGroupAuthorityLevel, nil)
+	if err != nil {
+		return nil, err
+	}
+	defer closeResponse(res)
+	return decodeToGetAudienceGroupAuthorityLevelResponse(res)
+}
