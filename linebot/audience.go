@@ -226,10 +226,10 @@ func (w *withAddAudiencesCallUploadDescription) Apply(call *AddAudiencesCall) {
 }
 
 // AddAudiences method
-func (client *Client) AddAudiences(audienceGroupId int, audiences []string, options ...IAddAudiencesOption) *AddAudiencesCall {
+func (client *Client) AddAudiences(audienceGroupID int, audiences []string, options ...IAddAudiencesOption) *AddAudiencesCall {
 	call := &AddAudiencesCall{
 		c:               client,
-		AudienceGroupID: audienceGroupId,
+		AudienceGroupID: audienceGroupID,
 	}
 	for _, item := range audiences {
 		call.Audiences = append(call.Audiences, audience{ID: item})
@@ -295,10 +295,10 @@ func (w *withAddAudiencesByFileCallUploadDescription) Apply(call *AddAudiencesBy
 }
 
 // AddAudiencesByFile method
-func (client *Client) AddAudiencesByFile(audienceGroupId int, audiences []string, options ...IAddAudiencesByFileOption) *AddAudiencesByFileCall {
+func (client *Client) AddAudiencesByFile(audienceGroupID int, audiences []string, options ...IAddAudiencesByFileOption) *AddAudiencesByFileCall {
 	call := &AddAudiencesByFileCall{
 		c:               client,
-		AudienceGroupID: audienceGroupId,
+		AudienceGroupID: audienceGroupID,
 		Audiences:       audiences,
 	}
 	for _, item := range options {
@@ -457,10 +457,10 @@ func (call *IMPAudienceGroupCall) Do() (*IMPAudienceGroupResponse, error) {
 }
 
 // UpdateAudienceGroupDescription method
-func (client *Client) UpdateAudienceGroupDescription(audienceGroupId int, description string) *UpdateAudienceGroupDescriptionCall {
+func (client *Client) UpdateAudienceGroupDescription(audienceGroupID int, description string) *UpdateAudienceGroupDescriptionCall {
 	call := &UpdateAudienceGroupDescriptionCall{
 		c:               client,
-		AudienceGroupID: audienceGroupId,
+		AudienceGroupID: audienceGroupID,
 		Description:     description,
 	}
 	return call
@@ -500,10 +500,10 @@ func (call *UpdateAudienceGroupDescriptionCall) Do() (*BasicResponse, error) {
 }
 
 // ActivateAudienceGroup method
-func (client *Client) ActivateAudienceGroup(audienceGroupId int) *ActivateAudienceGroupCall {
+func (client *Client) ActivateAudienceGroup(audienceGroupID int) *ActivateAudienceGroupCall {
 	call := &ActivateAudienceGroupCall{
 		c:               client,
-		AudienceGroupID: audienceGroupId,
+		AudienceGroupID: audienceGroupID,
 	}
 	return call
 }
@@ -532,10 +532,10 @@ func (call *ActivateAudienceGroupCall) Do() (*BasicResponse, error) {
 }
 
 // GetAudienceGroup method
-func (client *Client) GetAudienceGroup(audienceGroupId int) *GetAudienceGroupCall {
+func (client *Client) GetAudienceGroup(audienceGroupID int) *GetAudienceGroupCall {
 	call := &GetAudienceGroupCall{
 		c:               client,
-		AudienceGroupID: audienceGroupId,
+		AudienceGroupID: audienceGroupID,
 	}
 	return call
 }

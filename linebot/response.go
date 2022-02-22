@@ -275,7 +275,7 @@ type WebhookInfoResponse struct {
 type UploadAudienceGroupResponse struct {
 	RequestID         string `json:"-"`
 	AcceptedRequestID string `json:"-"`
-	AudienceGroupId   int    `json:"audienceGroupId,omitempty"`
+	AudienceGroupID   int    `json:"audienceGroupId,omitempty"`
 	CreateRoute       string `json:"createRoute,omitempty"`
 	Type              string `json:"type,omitempty"`
 	Description       string `json:"description,omitempty"`
@@ -289,7 +289,7 @@ type UploadAudienceGroupResponse struct {
 type ClickAudienceGroupResponse struct {
 	XRequestID        string `json:"-"` // from header X-Line-Request-Id
 	AcceptedRequestID string `json:"-"`
-	AudienceGroupId   int    `json:"audienceGroupId,omitempty"`
+	AudienceGroupID   int    `json:"audienceGroupId,omitempty"`
 	CreateRoute       string `json:"createRoute,omitempty"`
 	Type              string `json:"type,omitempty"`
 	Description       string `json:"description,omitempty"`
@@ -305,7 +305,7 @@ type ClickAudienceGroupResponse struct {
 type IMPAudienceGroupResponse struct {
 	XRequestID        string `json:"-"`
 	AcceptedRequestID string `json:"-"`
-	AudienceGroupId   int    `json:"audienceGroupId,omitempty"`
+	AudienceGroupID   int    `json:"audienceGroupId,omitempty"`
 	CreateRoute       string `json:"createRoute,omitempty"`
 	Type              string `json:"type,omitempty"`
 	Description       string `json:"description,omitempty"`
