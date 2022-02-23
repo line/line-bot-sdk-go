@@ -11,6 +11,32 @@ import (
 	"strings"
 )
 
+type AudienceStatusType string
+
+func (a AudienceStatusType) String() string {
+	return string(a)
+}
+
+const (
+	INPROGRESS AudienceStatusType = "IN_PROGRESS"
+	READY      AudienceStatusType = "READY"
+	FAILED     AudienceStatusType = "FAILED"
+	EXPIRED    AudienceStatusType = "EXPIRED"
+	INACTIVE   AudienceStatusType = "INACTIVE"
+	ACTIVATING AudienceStatusType = "ACTIVATING"
+)
+
+type AudienceAuthorityLevelType string
+
+func (a AudienceAuthorityLevelType) String() string {
+	return string(a)
+}
+
+const (
+	PUBLIC  AudienceAuthorityLevelType = "PUBLIC"
+	PRIVATE AudienceAuthorityLevelType = "PRIVATE"
+)
+
 // IUploadAudienceGroupOption type
 type IUploadAudienceGroupOption interface {
 	Apply(call *UploadAudienceGroupCall)
@@ -83,10 +109,10 @@ type audience struct {
 type UploadAudienceGroupCall struct {
 	c                 *Client
 	ctx               context.Context
-	Description       string     `json:"description,omitempty" validate:"required,max=120"`
-	IsIfaAudience     bool       `json:"isIfaAudience,omitempty"`
-	UploadDescription string     `json:"uploadDescription,omitempty"`
-	Audiences         []audience `json:"audiences,omitempty" validate:"max=10000"`
+	Description       string `validate:"required,max=120"`
+	IsIfaAudience     bool
+	UploadDescription string
+	Audiences         []audience `validate:"max=10000"`
 }
 
 // WithContext method
@@ -97,7 +123,17 @@ func (call *UploadAudienceGroupCall) WithContext(ctx context.Context) *UploadAud
 
 func (call *UploadAudienceGroupCall) encodeJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
-	return enc.Encode(call)
+	return enc.Encode(struct {
+		Description       string     `json:"description,omitempty"`
+		IsIfaAudience     bool       `json:"isIfaAudience,omitempty"`
+		UploadDescription string     `json:"uploadDescription,omitempty"`
+		Audiences         []audience `json:"audiences,omitempty"`
+	}{
+		Description:       call.Description,
+		IsIfaAudience:     call.IsIfaAudience,
+		UploadDescription: call.UploadDescription,
+		Audiences:         call.Audiences,
+	})
 }
 
 // Do method
@@ -244,9 +280,9 @@ func (client *Client) AddAudiences(audienceGroupID int, audiences []string, opti
 type AddAudiencesCall struct {
 	c                 *Client
 	ctx               context.Context
-	AudienceGroupID   int        `json:"audienceGroupId,omitempty" validate:"required"`
-	UploadDescription string     `json:"uploadDescription,omitempty"`
-	Audiences         []audience `json:"audiences,omitempty" validate:"required,max=10000"`
+	AudienceGroupID   int `validate:"required"`
+	UploadDescription string
+	Audiences         []audience `validate:"required,max=10000"`
 }
 
 // WithContext method
@@ -257,7 +293,15 @@ func (call *AddAudiencesCall) WithContext(ctx context.Context) *AddAudiencesCall
 
 func (call *AddAudiencesCall) encodeJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
-	return enc.Encode(call)
+	return enc.Encode(struct {
+		AudienceGroupID   int        `json:"audienceGroupId,omitempty"`
+		UploadDescription string     `json:"uploadDescription,omitempty"`
+		Audiences         []audience `json:"audiences,omitempty"`
+	}{
+		AudienceGroupID:   call.AudienceGroupID,
+		UploadDescription: call.UploadDescription,
+		Audiences:         call.Audiences,
+	})
 }
 
 // Do method
@@ -266,7 +310,7 @@ func (call *AddAudiencesCall) Do() (*BasicResponse, error) {
 	if err := call.encodeJSON(&buf); err != nil {
 		return nil, err
 	}
-	res, err := call.c.post(call.ctx, APIAudienceGroupUpload, &buf)
+	res, err := call.c.put(call.ctx, APIAudienceGroupUpload, &buf)
 	if err != nil {
 		return nil, err
 	}
@@ -383,9 +427,9 @@ func (client *Client) ClickAudienceGroup(description, requestID string, options 
 type ClickAudienceGroupCall struct {
 	c           *Client
 	ctx         context.Context
-	Description string `json:"description,omitempty" validate:"required,max=120"`
-	RequestID   string `json:"requestId,omitempty" validate:"required"`
-	ClickURL    string `json:"clickUrl,omitempty" validate:"max=2000"`
+	Description string `validate:"required,max=120"`
+	RequestID   string `validate:"required"`
+	ClickURL    string `validate:"max=2000"`
 }
 
 // WithContext method
@@ -396,7 +440,15 @@ func (call *ClickAudienceGroupCall) WithContext(ctx context.Context) *ClickAudie
 
 func (call *ClickAudienceGroupCall) encodeJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
-	return enc.Encode(call)
+	return enc.Encode(struct {
+		Description string `json:"description,omitempty"`
+		RequestID   string `json:"requestId,omitempty"`
+		ClickURL    string `json:"clickUrl,omitempty"`
+	}{
+		Description: call.Description,
+		RequestID:   call.RequestID,
+		ClickURL:    call.ClickURL,
+	})
 }
 
 // Do method
@@ -427,8 +479,8 @@ func (client *Client) IMPAudienceGroup(description, requestID string) *IMPAudien
 type IMPAudienceGroupCall struct {
 	c           *Client
 	ctx         context.Context
-	Description string `json:"description,omitempty" validate:"required,max=120"`
-	RequestID   string `json:"requestId,omitempty" validate:"required"`
+	Description string `validate:"required,max=120"`
+	RequestID   string `validate:"required"`
 }
 
 // WithContext method
@@ -439,7 +491,13 @@ func (call *IMPAudienceGroupCall) WithContext(ctx context.Context) *IMPAudienceG
 
 func (call *IMPAudienceGroupCall) encodeJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
-	return enc.Encode(call)
+	return enc.Encode(struct {
+		Description string `json:"description,omitempty"`
+		RequestID   string `json:"requestId,omitempty"`
+	}{
+		Description: call.Description,
+		RequestID:   call.RequestID,
+	})
 }
 
 // Do method
@@ -471,7 +529,7 @@ type UpdateAudienceGroupDescriptionCall struct {
 	c               *Client
 	ctx             context.Context
 	AudienceGroupID int    `json:"-" validate:"required"`
-	Description     string `json:"description,omitempty" validate:"required,max=120"`
+	Description     string `validate:"required,max=120"`
 }
 
 // WithContext method
@@ -482,7 +540,11 @@ func (call *UpdateAudienceGroupDescriptionCall) WithContext(ctx context.Context)
 
 func (call *UpdateAudienceGroupDescriptionCall) encodeJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
-	return enc.Encode(call)
+	return enc.Encode(struct {
+		Description string `json:"description,omitempty"`
+	}{
+		Description: call.Description,
+	})
 }
 
 // Do method
@@ -524,6 +586,38 @@ func (call *ActivateAudienceGroupCall) WithContext(ctx context.Context) *Activat
 // Do method
 func (call *ActivateAudienceGroupCall) Do() (*BasicResponse, error) {
 	res, err := call.c.put(call.ctx, fmt.Sprintf(APIAudienceGroupActivate, call.AudienceGroupID), nil)
+	if err != nil {
+		return nil, err
+	}
+	defer closeResponse(res)
+	return decodeToBasicResponse(res)
+}
+
+// DeleteAudienceGroup method
+func (client *Client) DeleteAudienceGroup(audienceGroupID int) *DeleteAudienceGroupCall {
+	call := &DeleteAudienceGroupCall{
+		c:               client,
+		AudienceGroupID: audienceGroupID,
+	}
+	return call
+}
+
+// DeleteAudienceGroupCall type
+type DeleteAudienceGroupCall struct {
+	c               *Client
+	ctx             context.Context
+	AudienceGroupID int `json:"-" validate:"required"`
+}
+
+// WithContext method
+func (call *DeleteAudienceGroupCall) WithContext(ctx context.Context) *DeleteAudienceGroupCall {
+	call.ctx = ctx
+	return call
+}
+
+// Do method
+func (call *DeleteAudienceGroupCall) Do() (*BasicResponse, error) {
+	res, err := call.c.delete(call.ctx, fmt.Sprintf(APIAudienceGroup, call.AudienceGroupID))
 	if err != nil {
 		return nil, err
 	}
@@ -584,14 +678,14 @@ func (w *withListAudienceGroupCallDescription) Apply(call *ListAudienceGroupCall
 }
 
 // WithListAudienceGroupCallStatus func
-func WithListAudienceGroupCallStatus(status string) IListAudienceGroupOption {
+func WithListAudienceGroupCallStatus(status AudienceStatusType) IListAudienceGroupOption {
 	return &withListAudienceGroupCallStatus{
 		status: status,
 	}
 }
 
 type withListAudienceGroupCallStatus struct {
-	status string
+	status AudienceStatusType
 }
 
 func (w *withListAudienceGroupCallStatus) Apply(call *ListAudienceGroupCall) {
@@ -660,12 +754,12 @@ func (client *Client) ListAudienceGroup(page int, options ...IListAudienceGroupO
 type ListAudienceGroupCall struct {
 	c                            *Client
 	ctx                          context.Context
-	Page                         int    `json:"-" validate:"required,min=1"`
-	Description                  string `json:"-"`
-	Status                       string `json:"-"`
-	Size                         int    `json:"-" validate:"min=1,max=40"`
-	IncludesExternalPublicGroups bool   `json:"-"`
-	CreateRoute                  string `json:"-"`
+	Page                         int                `json:"-" validate:"required,min=1"`
+	Description                  string             `json:"-"`
+	Status                       AudienceStatusType `json:"-"`
+	Size                         int                `json:"-" validate:"min=1,max=40"`
+	IncludesExternalPublicGroups bool               `json:"-"`
+	CreateRoute                  string             `json:"-"`
 }
 
 // WithContext method
@@ -683,7 +777,7 @@ func (call *ListAudienceGroupCall) Do() (*ListAudienceGroupResponse, error) {
 		u.Set("description", call.Description)
 	}
 	if call.Status != "" {
-		u.Set("status", call.Status)
+		u.Set("status", call.Status.String())
 	}
 	if !call.IncludesExternalPublicGroups {
 		u.Set("includesExternalPublicGroups", strconv.FormatBool(call.IncludesExternalPublicGroups))
@@ -697,47 +791,6 @@ func (call *ListAudienceGroupCall) Do() (*ListAudienceGroupResponse, error) {
 	}
 	defer closeResponse(res)
 	return decodeToListAudienceGroupResponse(res)
-}
-
-// ChangeAudienceGroupAuthorityLevel method
-func (client *Client) ChangeAudienceGroupAuthorityLevel(authorityLevel string) *ChangeAudienceGroupAuthorityLevelCall {
-	call := &ChangeAudienceGroupAuthorityLevelCall{
-		c:              client,
-		AuthorityLevel: authorityLevel,
-	}
-	return call
-}
-
-// ChangeAudienceGroupAuthorityLevelCall type
-type ChangeAudienceGroupAuthorityLevelCall struct {
-	c              *Client
-	ctx            context.Context
-	AuthorityLevel string `json:"authorityLevel,omitempty" validate:"required"`
-}
-
-// WithContext method
-func (call *ChangeAudienceGroupAuthorityLevelCall) WithContext(ctx context.Context) *ChangeAudienceGroupAuthorityLevelCall {
-	call.ctx = ctx
-	return call
-}
-
-func (call *ChangeAudienceGroupAuthorityLevelCall) encodeJSON(w io.Writer) error {
-	enc := json.NewEncoder(w)
-	return enc.Encode(call)
-}
-
-// Do method
-func (call *ChangeAudienceGroupAuthorityLevelCall) Do() (*BasicResponse, error) {
-	var buf bytes.Buffer
-	if err := call.encodeJSON(&buf); err != nil {
-		return nil, err
-	}
-	res, err := call.c.put(call.ctx, APIAudienceGroupAuthorityLevel, &buf)
-	if err != nil {
-		return nil, err
-	}
-	defer closeResponse(res)
-	return decodeToBasicResponse(res)
 }
 
 // GetAudienceGroupAuthorityLevel method
@@ -767,4 +820,49 @@ func (call *GetAudienceGroupAuthorityLevelCall) Do() (*GetAudienceGroupAuthority
 	}
 	defer closeResponse(res)
 	return decodeToGetAudienceGroupAuthorityLevelResponse(res)
+}
+
+// ChangeAudienceGroupAuthorityLevel method
+func (client *Client) ChangeAudienceGroupAuthorityLevel(authorityLevel AudienceAuthorityLevelType) *ChangeAudienceGroupAuthorityLevelCall {
+	call := &ChangeAudienceGroupAuthorityLevelCall{
+		c:              client,
+		AuthorityLevel: authorityLevel,
+	}
+	return call
+}
+
+// ChangeAudienceGroupAuthorityLevelCall type
+type ChangeAudienceGroupAuthorityLevelCall struct {
+	c              *Client
+	ctx            context.Context
+	AuthorityLevel AudienceAuthorityLevelType `validate:"required"`
+}
+
+// WithContext method
+func (call *ChangeAudienceGroupAuthorityLevelCall) WithContext(ctx context.Context) *ChangeAudienceGroupAuthorityLevelCall {
+	call.ctx = ctx
+	return call
+}
+
+func (call *ChangeAudienceGroupAuthorityLevelCall) encodeJSON(w io.Writer) error {
+	enc := json.NewEncoder(w)
+	return enc.Encode(struct {
+		AuthorityLevel AudienceAuthorityLevelType `json:"authorityLevel,omitempty"`
+	}{
+		AuthorityLevel: call.AuthorityLevel,
+	})
+}
+
+// Do method
+func (call *ChangeAudienceGroupAuthorityLevelCall) Do() (*BasicResponse, error) {
+	var buf bytes.Buffer
+	if err := call.encodeJSON(&buf); err != nil {
+		return nil, err
+	}
+	res, err := call.c.put(call.ctx, APIAudienceGroupAuthorityLevel, &buf)
+	if err != nil {
+		return nil, err
+	}
+	defer closeResponse(res)
+	return decodeToBasicResponse(res)
 }

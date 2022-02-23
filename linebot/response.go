@@ -376,9 +376,9 @@ type ListAudienceGroupResponse struct {
 
 // GetAudienceGroupAuthorityLevelResponse type
 type GetAudienceGroupAuthorityLevelResponse struct {
-	RequestID         string `json:"-"`
-	AcceptedRequestID string `json:"-"`
-	AuthorityLevel    string `json:"authorityLevel,omitempty"`
+	RequestID         string                     `json:"-"`
+	AcceptedRequestID string                     `json:"-"`
+	AuthorityLevel    AudienceAuthorityLevelType `json:"authorityLevel,omitempty"`
 }
 
 // isSuccess checks if status code is 2xx: The action was successfully received,
