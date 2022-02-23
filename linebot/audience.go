@@ -11,29 +11,41 @@ import (
 	"strings"
 )
 
+// AudienceStatusType type
 type AudienceStatusType string
 
+// String method
 func (a AudienceStatusType) String() string {
 	return string(a)
 }
 
 const (
+	// INPROGRESS const
 	INPROGRESS AudienceStatusType = "IN_PROGRESS"
-	READY      AudienceStatusType = "READY"
-	FAILED     AudienceStatusType = "FAILED"
-	EXPIRED    AudienceStatusType = "EXPIRED"
-	INACTIVE   AudienceStatusType = "INACTIVE"
+	// READY const
+	READY AudienceStatusType = "READY"
+	// FAILED const
+	FAILED AudienceStatusType = "FAILED"
+	// EXPIRED const
+	EXPIRED AudienceStatusType = "EXPIRED"
+	// INACTIVE const
+	INACTIVE AudienceStatusType = "INACTIVE"
+	// ACTIVATING const
 	ACTIVATING AudienceStatusType = "ACTIVATING"
 )
 
+// AudienceAuthorityLevelType type
 type AudienceAuthorityLevelType string
 
+// String method
 func (a AudienceAuthorityLevelType) String() string {
 	return string(a)
 }
 
 const (
-	PUBLIC  AudienceAuthorityLevelType = "PUBLIC"
+	// PUBLIC const
+	PUBLIC AudienceAuthorityLevelType = "PUBLIC"
+	// PRIVATE const
 	PRIVATE AudienceAuthorityLevelType = "PRIVATE"
 )
 
