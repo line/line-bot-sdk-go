@@ -271,6 +271,116 @@ type WebhookInfoResponse struct {
 	Active   bool   `json:"active"`
 }
 
+// UploadAudienceGroupResponse type
+type UploadAudienceGroupResponse struct {
+	RequestID         string `json:"-"`
+	AcceptedRequestID string `json:"-"`
+	AudienceGroupID   int    `json:"audienceGroupId,omitempty"`
+	CreateRoute       string `json:"createRoute,omitempty"`
+	Type              string `json:"type,omitempty"`
+	Description       string `json:"description,omitempty"`
+	Created           int64  `json:"created,omitempty"`
+	Permission        string `json:"permission,omitempty"`
+	ExpireTimestamp   int64  `json:"expireTimestamp,omitempty"`
+	IsIfaAudience     bool   `json:"isIfaAudience,omitempty"`
+}
+
+// ClickAudienceGroupResponse type
+type ClickAudienceGroupResponse struct {
+	XRequestID        string `json:"-"` // from header X-Line-Request-Id
+	AcceptedRequestID string `json:"-"`
+	AudienceGroupID   int    `json:"audienceGroupId,omitempty"`
+	CreateRoute       string `json:"createRoute,omitempty"`
+	Type              string `json:"type,omitempty"`
+	Description       string `json:"description,omitempty"`
+	Created           int64  `json:"created,omitempty"`
+	Permission        string `json:"permission,omitempty"`
+	ExpireTimestamp   int64  `json:"expireTimestamp,omitempty"`
+	IsIfaAudience     bool   `json:"isIfaAudience,omitempty"`
+	RequestID         string `json:"requestId,omitempty"`
+	ClickURL          string `json:"clickUrl,omitempty"`
+}
+
+// IMPAudienceGroupResponse type
+type IMPAudienceGroupResponse struct {
+	XRequestID        string `json:"-"`
+	AcceptedRequestID string `json:"-"`
+	AudienceGroupID   int    `json:"audienceGroupId,omitempty"`
+	CreateRoute       string `json:"createRoute,omitempty"`
+	Type              string `json:"type,omitempty"`
+	Description       string `json:"description,omitempty"`
+	Created           int64  `json:"created,omitempty"`
+	Permission        string `json:"permission,omitempty"`
+	ExpireTimestamp   int64  `json:"expireTimestamp,omitempty"`
+	IsIfaAudience     bool   `json:"isIfaAudience,omitempty"`
+	RequestID         string `json:"requestId,omitempty"`
+}
+
+// AudienceGroup type
+type AudienceGroup struct {
+	AudienceGroupID      int    `json:"audienceGroupId,omitempty"`
+	CreateRoute          string `json:"createRoute,omitempty"`
+	Type                 string `json:"type,omitempty"`
+	Description          string `json:"description,omitempty"`
+	Status               string `json:"status,omitempty"`
+	AudienceCount        int    `json:"audienceCount,omitempty"`
+	Created              int64  `json:"created,omitempty"`
+	Permission           string `json:"permission,omitempty"`
+	IsIfaAudience        bool   `json:"isIfaAudience,omitempty"`
+	RequestID            string `json:"requestId,omitempty"`
+	ClickURL             string `json:"clickUrl,omitempty"`
+	FailedType           string `json:"failedType,omitempty"`
+	Activated            int64  `json:"activated,omitempty"`
+	InactivatedTimestamp int64  `json:"inactivatedTimestamp,omitempty"`
+	ExpireTimestamp      int64  `json:"expireTimestamp,omitempty"`
+}
+
+// Job type
+type Job struct {
+	AudienceGroupJobID int    `json:"audienceGroupJobId,omitempty"`
+	AudienceGroupID    int    `json:"audienceGroupId,omitempty"`
+	Description        string `json:"description,omitempty"`
+	Type               string `json:"type,omitempty"`
+	Status             string `json:"status,omitempty"`
+	FailedType         string `json:"failedType,omitempty"`
+	AudienceCount      int64  `json:"audienceCount,omitempty"`
+	Created            int64  `json:"created,omitempty"`
+	JobStatus          string `json:"jobStatus,omitempty"`
+}
+
+// AdAccount type
+type AdAccount struct {
+	Name string `json:"name,omitempty"`
+}
+
+// GetAudienceGroupResponse type
+type GetAudienceGroupResponse struct {
+	RequestID         string        `json:"-"`
+	AcceptedRequestID string        `json:"-"`
+	AudienceGroup     AudienceGroup `json:"audienceGroup,omitempty"`
+	Jobs              []Job         `json:"jobs,omitempty"`
+	AdAccount         *AdAccount    `json:"adaccount,omitempty"`
+}
+
+// ListAudienceGroupResponse type
+type ListAudienceGroupResponse struct {
+	RequestID                        string          `json:"-"`
+	AcceptedRequestID                string          `json:"-"`
+	AudienceGroups                   []AudienceGroup `json:"audienceGroups,omitempty"`
+	HasNextPage                      bool            `json:"hasNextPage,omitempty"`
+	TotalCount                       int             `json:"totalCount,omitempty"`
+	ReadWriteAudienceGroupTotalCount int             `json:"readWriteAudienceGroupTotalCount,omitempty"`
+	Page                             int             `json:"page,omitempty"`
+	Size                             int             `json:"size,omitempty"`
+}
+
+// GetAudienceGroupAuthorityLevelResponse type
+type GetAudienceGroupAuthorityLevelResponse struct {
+	RequestID         string                     `json:"-"`
+	AcceptedRequestID string                     `json:"-"`
+	AuthorityLevel    AudienceAuthorityLevelType `json:"authorityLevel,omitempty"`
+}
+
 // isSuccess checks if status code is 2xx: The action was successfully received,
 // understood, and accepted.
 func isSuccess(code int) bool {
@@ -660,6 +770,114 @@ func decodeToTestWebhookResponse(res *http.Response) (*TestWebhookResponse, erro
 	decoder := json.NewDecoder(res.Body)
 	result := TestWebhookResponse{}
 	if err := decoder.Decode(&result); err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
+
+func decodeToAudienceGroupResponse(res *http.Response) (*UploadAudienceGroupResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := UploadAudienceGroupResponse{
+		RequestID:         res.Header.Get("X-Line-Request-Id"),
+		AcceptedRequestID: res.Header.Get("X-Line-Accepted-Request-Id"),
+	}
+	if err := decoder.Decode(&result); err != nil {
+		if err == io.EOF {
+			return &result, nil
+		}
+		return nil, err
+	}
+	return &result, nil
+}
+
+func decodeToClickAudienceGroupResponse(res *http.Response) (*ClickAudienceGroupResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := ClickAudienceGroupResponse{
+		XRequestID:        res.Header.Get("X-Line-Request-Id"),
+		AcceptedRequestID: res.Header.Get("X-Line-Accepted-Request-Id"),
+	}
+	if err := decoder.Decode(&result); err != nil {
+		if err == io.EOF {
+			return &result, nil
+		}
+		return nil, err
+	}
+	return &result, nil
+}
+
+func decodeToIMPAudienceGroupResponse(res *http.Response) (*IMPAudienceGroupResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := IMPAudienceGroupResponse{
+		XRequestID:        res.Header.Get("X-Line-Request-Id"),
+		AcceptedRequestID: res.Header.Get("X-Line-Accepted-Request-Id"),
+	}
+	if err := decoder.Decode(&result); err != nil {
+		if err == io.EOF {
+			return &result, nil
+		}
+		return nil, err
+	}
+	return &result, nil
+}
+
+func decodeToGetAudienceGroupResponse(res *http.Response) (*GetAudienceGroupResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := GetAudienceGroupResponse{
+		RequestID:         res.Header.Get("X-Line-Request-Id"),
+		AcceptedRequestID: res.Header.Get("X-Line-Accepted-Request-Id"),
+	}
+	if err := decoder.Decode(&result); err != nil {
+		if err == io.EOF {
+			return &result, nil
+		}
+		return nil, err
+	}
+	return &result, nil
+}
+
+func decodeToListAudienceGroupResponse(res *http.Response) (*ListAudienceGroupResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := ListAudienceGroupResponse{
+		RequestID:         res.Header.Get("X-Line-Request-Id"),
+		AcceptedRequestID: res.Header.Get("X-Line-Accepted-Request-Id"),
+	}
+	if err := decoder.Decode(&result); err != nil {
+		if err == io.EOF {
+			return &result, nil
+		}
+		return nil, err
+	}
+	return &result, nil
+}
+
+func decodeToGetAudienceGroupAuthorityLevelResponse(res *http.Response) (*GetAudienceGroupAuthorityLevelResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := GetAudienceGroupAuthorityLevelResponse{
+		RequestID:         res.Header.Get("X-Line-Request-Id"),
+		AcceptedRequestID: res.Header.Get("X-Line-Accepted-Request-Id"),
+	}
+	if err := decoder.Decode(&result); err != nil {
+		if err == io.EOF {
+			return &result, nil
+		}
 		return nil, err
 	}
 	return &result, nil
