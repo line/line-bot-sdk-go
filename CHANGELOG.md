@@ -1,5 +1,13 @@
 # Changelog
 
+## [v7.13.0](https://github.com/line/line-bot-sdk-go/tree/v7.13.0) (2022-02-24)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.12.1...v7.13.0)
+
+**Merged pull requests:**
+
+- Support Audience Managing API . [\#194] [\#222](https://github.com/line/line-bot-sdk-go/pull/302)([Maxfocker](https://github.com/justdomepaul))
+
 ## [v7.12.1](https://github.com/line/line-bot-sdk-go/tree/v7.12.1) (2022-02-08)
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.12.0...v7.12.1)
