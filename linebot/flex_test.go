@@ -766,6 +766,52 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 				},
 			},
 		},
+		{
+			JSON: []byte(`{
+	"type": "bubble",
+	"hero": {
+		"type": "video",
+		"url": "https://example.com/video.mp4",
+		"previewUrl": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
+		"altContent": {
+		  "type": "image",
+		  "size": "full",
+		  "aspectRatio": "20:13",
+		  "aspectMode": "cover",
+		  "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png"
+		},
+		"action": {
+		  "type": "uri",
+		  "label": "Click!",
+		  "uri": "https://line.me/"
+		},
+		"aspectRatio": "16:9"
+	}
+}`),
+			Want: &BubbleContainer{
+				Type: FlexContainerTypeBubble,
+				Hero: &VideoComponent{
+					Type:       FlexComponentTypeVideo,
+					URL:        "https://example.com/video.mp4",
+					PreviewURL: "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
+					AltContent: &ImageComponent{
+						Type:        FlexComponentTypeImage,
+						Size:        FlexImageSizeTypeFull,
+						AspectRatio: FlexImageAspectRatioType20to13,
+						AspectMode:  FlexImageAspectModeTypeCover,
+						URL:         "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
+					},
+					Action: &URIAction{
+						Label: "WEBSITE",
+						URI:   "https://linecorp.com",
+						AltURI: &URIActionAltURI{
+							Desktop: "https://line.me/ja/download",
+						},
+					},
+					AspectRatio: FlexImageAspectRatioType16to9,
+				},
+			},
+		},
 	}
 	for i, tc := range testCases {
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
