@@ -766,6 +766,49 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 				},
 			},
 		},
+		{
+			JSON: []byte(`{
+	"type": "bubble",
+	"hero": {
+    	"type": "video",
+    	"url": "https://example.com/video.mp4",
+    	"previewUrl": "https://example.com/video_preview.png",
+    	"altContent": {
+      		"type": "image",
+      		"size": "full",
+      		"aspectRatio": "20:13",
+      		"aspectMode": "cover",
+      		"url": "https://example.com/image.png"
+    	},
+    	"action": {
+      		"type": "uri",
+      		"label": "More information",
+      		"uri": "http://linecorp.com/"
+    	},
+    	"aspectRatio": "20:13"
+  	}
+}`),
+			Want: &BubbleContainer{
+				Type: FlexContainerTypeBubble,
+				Hero: &VideoComponent{
+					Type:       FlexComponentTypeVideo,
+					URL:        "https://example.com/video.mp4",
+					PreviewURL: "https://example.com/video_preview.png",
+					AltContent: &ImageComponent{
+						Type:        FlexComponentTypeImage,
+						URL:         "https://example.com/image.png",
+						Size:        FlexImageSizeTypeFull,
+						AspectRatio: FlexImageAspectRatioType20to13,
+						AspectMode:  FlexImageAspectModeTypeCover,
+					},
+					Action: &URIAction{
+						Label: "More information",
+						URI:   "http://linecorp.com/",
+					},
+					AspectRatio: FlexVideoAspectRatioType20to13,
+				},
+			},
+		},
 	}
 	for i, tc := range testCases {
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
