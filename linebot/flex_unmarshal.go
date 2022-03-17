@@ -85,6 +85,8 @@ func (c *rawFlexComponent) UnmarshalJSON(data []byte) error {
 		component = &SpacerComponent{}
 	case FlexComponentTypeText:
 		component = &TextComponent{}
+	case FlexComponentTypeVideo:
+		component = &VideoComponent{}
 	default:
 		return errors.New("invalid flex component type")
 	}
@@ -195,5 +197,21 @@ func (c *TextComponent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.Action = raw.Action.Action
+	return nil
+}
+
+// UnmarshalJSON method for VideoComponent
+func (c *VideoComponent) UnmarshalJSON(data []byte) error {
+	type alias VideoComponent
+	raw := struct {
+		AltContent rawFlexComponent `json:"altContent"`
+		*alias
+	}{
+		alias: (*alias)(c),
+	}
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	c.AltContent = raw.AltContent.Component
 	return nil
 }
