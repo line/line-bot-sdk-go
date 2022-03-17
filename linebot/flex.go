@@ -835,6 +835,7 @@ type TextComponent struct {
 	Align        FlexComponentAlignType
 	Gravity      FlexComponentGravityType
 	Wrap         bool
+	LineSpacing  string
 	Weight       FlexTextWeightType
 	Color        string
 	Action       TemplateAction
@@ -861,6 +862,7 @@ func (c *TextComponent) MarshalJSON() ([]byte, error) {
 		Align        FlexComponentAlignType      `json:"align,omitempty"`
 		Gravity      FlexComponentGravityType    `json:"gravity,omitempty"`
 		Wrap         bool                        `json:"wrap,omitempty"`
+		LineSpacing  string                      `json:"lineSpacing,omitempty"`
 		Weight       FlexTextWeightType          `json:"weight,omitempty"`
 		Color        string                      `json:"color,omitempty"`
 		Action       TemplateAction              `json:"action,omitempty"`
@@ -883,6 +885,7 @@ func (c *TextComponent) MarshalJSON() ([]byte, error) {
 		Align:        c.Align,
 		Gravity:      c.Gravity,
 		Wrap:         c.Wrap,
+		LineSpacing:  c.LineSpacing,
 		Weight:       c.Weight,
 		Color:        c.Color,
 		Action:       c.Action,

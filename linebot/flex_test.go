@@ -38,7 +38,8 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 		"contents": [
 			{
 				"type": "text",
-				"text": "hello"
+				"text": "hello",
+				"lineSpacing": "20px"
 			}
 		]
 	}
@@ -53,8 +54,9 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 					CornerRadius: "20px",
 					Contents: []FlexComponent{
 						&TextComponent{
-							Type: FlexComponentTypeText,
-							Text: "hello",
+							Type:        FlexComponentTypeText,
+							Text:        "hello",
+							LineSpacing: "20px",
 						},
 					},
 				},
