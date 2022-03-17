@@ -38,7 +38,8 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 		"contents": [
 			{
 				"type": "text",
-				"text": "hello"
+				"text": "hello",
+				"lineSpacing": "20px"
 			}
 		]
 	}
@@ -53,8 +54,9 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 					CornerRadius: "20px",
 					Contents: []FlexComponent{
 						&TextComponent{
-							Type: FlexComponentTypeText,
-							Text: "hello",
+							Type:        FlexComponentTypeText,
+							Text:        "hello",
+							LineSpacing: "20px",
 						},
 					},
 				},
@@ -709,7 +711,9 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 				"layout": "vertical",
 				"contents": [],
 				"width": "30px",
+				"maxWidth": "30px",
 				"height": "30px",
+				"maxHeight": "30px",
 				"background": {
 					"type": "linearGradient",
 					"angle": "0deg",
@@ -745,11 +749,13 @@ func TestUnmarshalFlexMessageJSON(t *testing.T) {
 							AdjustMode: FlexComponentAdjustModeTypeShrinkToFit,
 						},
 						&BoxComponent{
-							Type:     FlexComponentTypeBox,
-							Layout:   FlexBoxLayoutTypeVertical,
-							Contents: []FlexComponent{},
-							Width:    "30px",
-							Height:   "30px",
+							Type:      FlexComponentTypeBox,
+							Layout:    FlexBoxLayoutTypeVertical,
+							Contents:  []FlexComponent{},
+							Width:     "30px",
+							MaxWidth:  "30px",
+							Height:    "30px",
+							MaxHeight: "30px",
 							Background: &BoxBackground{
 								Type:           FlexBoxBackgroundTypeLinearGradient,
 								Angle:          "0deg",

@@ -501,7 +501,9 @@ type BoxComponent struct {
 	Spacing         FlexComponentSpacingType
 	Margin          FlexComponentMarginType
 	Width           string
+	MaxWidth        string
 	Height          string
+	MaxHeight       string
 	CornerRadius    FlexComponentCornerRadiusType
 	BackgroundColor string
 	BorderColor     string
@@ -532,7 +534,9 @@ func (c *BoxComponent) MarshalJSON() ([]byte, error) {
 		Spacing         FlexComponentSpacingType        `json:"spacing,omitempty"`
 		Margin          FlexComponentMarginType         `json:"margin,omitempty"`
 		Width           string                          `json:"width,omitempty"`
+		MaxWidth        string                          `json:"maxWidth,omitempty"`
 		Height          string                          `json:"height,omitempty"`
+		MaxHeight       string                          `json:"maxHeight,omitempty"`
 		CornerRadius    FlexComponentCornerRadiusType   `json:"cornerRadius,omitempty"`
 		BackgroundColor string                          `json:"backgroundColor,omitempty"`
 		BorderColor     string                          `json:"borderColor,omitempty"`
@@ -559,7 +563,9 @@ func (c *BoxComponent) MarshalJSON() ([]byte, error) {
 		Spacing:         c.Spacing,
 		Margin:          c.Margin,
 		Width:           c.Width,
+		MaxWidth:        c.MaxWidth,
 		Height:          c.Height,
+		MaxHeight:       c.MaxHeight,
 		CornerRadius:    c.CornerRadius,
 		BackgroundColor: c.BackgroundColor,
 		BorderColor:     c.BorderColor,
@@ -829,6 +835,7 @@ type TextComponent struct {
 	Align        FlexComponentAlignType
 	Gravity      FlexComponentGravityType
 	Wrap         bool
+	LineSpacing  string
 	Weight       FlexTextWeightType
 	Color        string
 	Action       TemplateAction
@@ -855,6 +862,7 @@ func (c *TextComponent) MarshalJSON() ([]byte, error) {
 		Align        FlexComponentAlignType      `json:"align,omitempty"`
 		Gravity      FlexComponentGravityType    `json:"gravity,omitempty"`
 		Wrap         bool                        `json:"wrap,omitempty"`
+		LineSpacing  string                      `json:"lineSpacing,omitempty"`
 		Weight       FlexTextWeightType          `json:"weight,omitempty"`
 		Color        string                      `json:"color,omitempty"`
 		Action       TemplateAction              `json:"action,omitempty"`
@@ -877,6 +885,7 @@ func (c *TextComponent) MarshalJSON() ([]byte, error) {
 		Align:        c.Align,
 		Gravity:      c.Gravity,
 		Wrap:         c.Wrap,
+		LineSpacing:  c.LineSpacing,
 		Weight:       c.Weight,
 		Color:        c.Color,
 		Action:       c.Action,
