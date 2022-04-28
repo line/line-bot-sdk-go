@@ -211,7 +211,7 @@ type Event struct {
 	Members           []*EventSource
 	Unsend            *Unsend
 	VideoPlayComplete *VideoPlayComplete
-	WebhookEventId    string
+	WebhookEventID    string
 	DeliveryContext   DeliveryContext
 }
 
@@ -230,7 +230,7 @@ type rawEvent struct {
 	Things            *rawThingsEvent      `json:"things,omitempty"`
 	Unsend            *Unsend              `json:"unsend,omitempty"`
 	VideoPlayComplete *VideoPlayComplete   `json:"videoPlayComplete,omitempty"`
-	WebhookEventId    string               `json:"webhookEventId"`
+	WebhookEventID    string               `json:"webhookEventId"`
 	DeliveryContext   DeliveryContext      `json:"deliveryContext"`
 }
 
@@ -308,7 +308,7 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 		Postback:          e.Postback,
 		Unsend:            e.Unsend,
 		VideoPlayComplete: e.VideoPlayComplete,
-		WebhookEventId:    e.WebhookEventId,
+		WebhookEventID:    e.WebhookEventID,
 		DeliveryContext:   e.DeliveryContext,
 	}
 	if e.Beacon != nil {
@@ -434,7 +434,7 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 	e.Mode = rawEvent.Mode
 	e.Timestamp = time.Unix(rawEvent.Timestamp/milliSecPerSec, (rawEvent.Timestamp%milliSecPerSec)*nanoSecPerMilliSec).UTC()
 	e.Source = rawEvent.Source
-	e.WebhookEventId = rawEvent.WebhookEventId
+	e.WebhookEventID = rawEvent.WebhookEventID
 	e.DeliveryContext = rawEvent.DeliveryContext
 
 	switch rawEvent.Type {
