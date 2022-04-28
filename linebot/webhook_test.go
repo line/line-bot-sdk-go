@@ -42,21 +42,9 @@ var webhookTestRequestBody = `{
                 "type": "user",
                 "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
             },
-            "message": {
-                "id": "325708",
-                "type": "text",
-                "text": "Hello, world"
-            }
-        },
-        {
-            "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
-            "type": "message",
-            "mode": "active",
-            "timestamp": 1462629479859,
-            "source": {
-                "type": "group",
-                "groupId": "u206d25c2ea6bd87c17655609a1c37cb8",
-                "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
+			"webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
             },
             "message": {
                 "id": "325708",
@@ -73,6 +61,30 @@ var webhookTestRequestBody = `{
                 "type": "group",
                 "groupId": "u206d25c2ea6bd87c17655609a1c37cb8",
                 "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
+            },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": true
+            },
+            "message": {
+                "id": "325708",
+                "type": "text",
+                "text": "Hello, world"
+            }
+        },
+        {
+            "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+            "type": "message",
+            "mode": "active",
+            "timestamp": 1462629479859,
+            "source": {
+                "type": "group",
+                "groupId": "u206d25c2ea6bd87c17655609a1c37cb8",
+                "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
+            },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
             },
             "message": {
                 "id": "325708",
@@ -102,6 +114,10 @@ var webhookTestRequestBody = `{
                 "type": "user",
                 "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
             },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
+            },
             "message": {
                 "id": "325708",
                 "type": "image"
@@ -115,6 +131,10 @@ var webhookTestRequestBody = `{
             "source": {
                 "type": "user",
                 "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
+            },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
             },
             "message": {
                 "type": "image",
@@ -138,6 +158,10 @@ var webhookTestRequestBody = `{
                 "type": "user",
                 "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
             },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
+            },
             "message": {
                 "type": "video",
                 "id": "325708",
@@ -158,6 +182,10 @@ var webhookTestRequestBody = `{
                 "type": "user",
                 "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
             },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
+            },
             "message": {
                 "type": "audio",
                 "id": "325708",
@@ -176,6 +204,10 @@ var webhookTestRequestBody = `{
                 "type": "user",
                 "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
             },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
+            },
             "message": {
                 "id": "325708",
                 "type": "file",
@@ -191,6 +223,10 @@ var webhookTestRequestBody = `{
             "source": {
                 "type": "user",
                 "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
+            },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
             },
             "message": {
                 "id": "325708",
@@ -210,6 +246,10 @@ var webhookTestRequestBody = `{
                 "type": "user",
                 "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
             },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
+            },
             "message": {
                 "id": "325708",
                 "type": "sticker",
@@ -226,6 +266,10 @@ var webhookTestRequestBody = `{
             "source": {
                 "type": "user",
                 "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
+            },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
             },
             "message": {
                 "id": "325708",
@@ -244,6 +288,10 @@ var webhookTestRequestBody = `{
                 "type": "user",
                 "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
             },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
+            },
             "message": {
                 "id": "3257088",
                 "type": "sticker",
@@ -261,6 +309,10 @@ var webhookTestRequestBody = `{
             "source": {
                 "type": "user",
                 "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
+            },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
             }
         },
         {
@@ -270,6 +322,10 @@ var webhookTestRequestBody = `{
             "source": {
                 "type": "user",
                 "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
+            },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
             }
         },
         {
@@ -280,6 +336,10 @@ var webhookTestRequestBody = `{
             "source": {
                 "type": "group",
                 "groupId": "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+            },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
             }
         },
         {
@@ -289,6 +349,10 @@ var webhookTestRequestBody = `{
             "source": {
                 "type": "group",
                 "groupId": "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+            },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
             }
         },
         {
@@ -299,6 +363,10 @@ var webhookTestRequestBody = `{
             "source": {
                 "type": "user",
                 "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
+            },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
             },
             "postback": {
                 "data": "action=buyItem&itemId=123123&color=red"
@@ -312,6 +380,10 @@ var webhookTestRequestBody = `{
             "source": {
                 "type": "user",
                 "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
+            },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
             },
             "postback": {
                 "data": "action=sel&only=date",
@@ -329,6 +401,10 @@ var webhookTestRequestBody = `{
                 "type": "user",
                 "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
             },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
+            },
             "postback": {
                 "data": "action=sel&only=time",
 				"params": {
@@ -345,6 +421,10 @@ var webhookTestRequestBody = `{
                 "type": "user",
                 "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
             },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
+            },
             "postback": {
                 "data": "action=sel",
 				"params": {
@@ -360,6 +440,10 @@ var webhookTestRequestBody = `{
             "source": {
                 "type": "user",
                 "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
+            },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
             },
             "postback": {
                 "data": "action=richmenu-changed-to-a",
@@ -378,6 +462,10 @@ var webhookTestRequestBody = `{
                 "type": "user",
                 "userId": "U012345678901234567890123456789ab"
             },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
+            },
             "beacon": {
                 "hwid":"374591320",
                 "type":"enter"
@@ -391,6 +479,10 @@ var webhookTestRequestBody = `{
             "source": {
                 "type": "user",
                 "userId": "U012345678901234567890123456789ab"
+            },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
             },
             "beacon": {
                 "hwid":"374591320",
@@ -407,6 +499,10 @@ var webhookTestRequestBody = `{
                 "type": "user",
                 "userId": "U012345678901234567890123456789ab"
             },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
+            },
             "beacon": {
                 "hwid":"374591320",
                 "type":"stay",
@@ -420,6 +516,10 @@ var webhookTestRequestBody = `{
           "source": {
             "userId": "U012345678901234567890123456789ab",
             "type": "user"
+          },
+          "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+          "deliveryContext": {
+            "isRedelivery": false
           },
           "timestamp": 1462629479859,
           "link": {
@@ -435,6 +535,10 @@ var webhookTestRequestBody = `{
           "source": {
             "type": "group",
             "groupId": "C4af498062901234567890123456789ab"
+          },
+          "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+          "deliveryContext": {
+            "isRedelivery": false
           },
           "joined": {
             "members": [
@@ -457,6 +561,10 @@ var webhookTestRequestBody = `{
             "type": "group",
             "groupId": "C4af498062901234567890123456789ab"
           },
+          "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+          "deliveryContext": {
+            "isRedelivery": false
+          },
           "left": {
             "members": [
               {
@@ -478,6 +586,10 @@ var webhookTestRequestBody = `{
             "type": "user",
             "userId": "U91eeaf62d901234567890123456789ab"
           },
+          "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+          "deliveryContext": {
+            "isRedelivery": false
+          },
           "things": {
             "deviceId": "t2c449c9d1...",
             "type": "link"
@@ -491,6 +603,10 @@ var webhookTestRequestBody = `{
             "type": "user",
             "userId": "U91eeaf62d901234567890123456789ab"
           },
+          "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+          "deliveryContext": {
+            "isRedelivery": false
+          },
           "things": {
             "deviceId": "t2c449c9d1...",
             "type": "unlink"
@@ -503,6 +619,10 @@ var webhookTestRequestBody = `{
           "source": {
             "type": "user",
             "userId": "U91eeaf62d901234567890123456789ab"
+          },
+          "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+          "deliveryContext": {
+            "isRedelivery": false
           },
           "things": {
             "deviceId": "t016b8dc6...",
@@ -531,6 +651,10 @@ var webhookTestRequestBody = `{
             "userId":"U91eeaf62d901234567890123456789ab",
             "type":"user"
           },
+          "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+          "deliveryContext": {
+            "isRedelivery": false
+          },
           "timestamp":1563511218376,
           "things":{
             "deviceId":"t016b8d...",
@@ -557,6 +681,10 @@ var webhookTestRequestBody = `{
                 "type": "user",
                 "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
             },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
+            },
             "message": {
                 "id": "325708",
                 "type": "text",
@@ -571,6 +699,10 @@ var webhookTestRequestBody = `{
             "source": {
                 "type": "user",
                 "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
+            },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
             },
             "message": {
                 "id": "325708",
@@ -595,6 +727,10 @@ var webhookTestRequestBody = `{
                 "groupId": "Ca56f94637c...",
                 "userId": "U4af4980629..."
             },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
+            },
             "unsend": {
                 "messageId": "325708"
             }
@@ -607,6 +743,10 @@ var webhookTestRequestBody = `{
             "source": {
                 "type": "user",
                 "userId": "U4af4980629..."
+            },
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "deliveryContext": {
+                "isRedelivery": false
             },
             "videoPlayComplete": {
                 "trackingId": "track_id"
@@ -626,20 +766,9 @@ var webhookTestWantEvents = []*Event{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
 		},
-		Message: &TextMessage{
-			ID:   "325708",
-			Text: "Hello, world",
-		},
-	},
-	{
-		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
-		Type:       EventTypeMessage,
-		Mode:       EventModeActive,
-		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
-		Source: &EventSource{
-			Type:    EventSourceTypeGroup,
-			UserID:  "u206d25c2ea6bd87c17655609a1c37cb8",
-			GroupID: "u206d25c2ea6bd87c17655609a1c37cb8",
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
 		},
 		Message: &TextMessage{
 			ID:   "325708",
@@ -655,6 +784,29 @@ var webhookTestWantEvents = []*Event{
 			Type:    EventSourceTypeGroup,
 			UserID:  "u206d25c2ea6bd87c17655609a1c37cb8",
 			GroupID: "u206d25c2ea6bd87c17655609a1c37cb8",
+		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: true,
+		},
+		Message: &TextMessage{
+			ID:   "325708",
+			Text: "Hello, world",
+		},
+	},
+	{
+		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+		Type:       EventTypeMessage,
+		Mode:       EventModeActive,
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
+		Source: &EventSource{
+			Type:    EventSourceTypeGroup,
+			UserID:  "u206d25c2ea6bd87c17655609a1c37cb8",
+			GroupID: "u206d25c2ea6bd87c17655609a1c37cb8",
+		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
 		},
 		Message: &TextMessage{
 			ID:   "325708",
@@ -683,6 +835,10 @@ var webhookTestWantEvents = []*Event{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
 		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
+		},
 		Message: &ImageMessage{
 			ID: "325708",
 		},
@@ -695,6 +851,10 @@ var webhookTestWantEvents = []*Event{
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
+		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
 		},
 		Message: &ImageMessage{
 			ID: "354718705033693861",
@@ -717,6 +877,10 @@ var webhookTestWantEvents = []*Event{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
 		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
+		},
 		Message: &VideoMessage{
 			ID: "325708",
 			ContentProvider: &ContentProvider{
@@ -736,6 +900,10 @@ var webhookTestWantEvents = []*Event{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
 		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
+		},
 		Message: &AudioMessage{
 			ID: "325708",
 			ContentProvider: &ContentProvider{
@@ -753,6 +921,10 @@ var webhookTestWantEvents = []*Event{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
 		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
+		},
 		Message: &FileMessage{
 			ID:       "325708",
 			FileName: "file.txt",
@@ -767,6 +939,10 @@ var webhookTestWantEvents = []*Event{
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
+		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
 		},
 		Message: &LocationMessage{
 			ID:        "325708",
@@ -785,6 +961,10 @@ var webhookTestWantEvents = []*Event{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
 		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
+		},
 		Message: &StickerMessage{
 			ID:                  "325708",
 			PackageID:           "1",
@@ -801,6 +981,10 @@ var webhookTestWantEvents = []*Event{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
 		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
+		},
 		Message: &StickerMessage{
 			ID:                  "325708",
 			PackageID:           "1",
@@ -816,6 +1000,10 @@ var webhookTestWantEvents = []*Event{
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
+		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
 		},
 		Message: &StickerMessage{
 			ID:                  "3257088",
@@ -834,6 +1022,10 @@ var webhookTestWantEvents = []*Event{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
 		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
+		},
 	},
 	{
 		Type:      EventTypeUnfollow,
@@ -842,6 +1034,10 @@ var webhookTestWantEvents = []*Event{
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
+		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
 		},
 	},
 	{
@@ -853,6 +1049,10 @@ var webhookTestWantEvents = []*Event{
 			Type:    EventSourceTypeGroup,
 			GroupID: "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
+		},
 	},
 	{
 		Type:      EventTypeLeave,
@@ -861,6 +1061,10 @@ var webhookTestWantEvents = []*Event{
 		Source: &EventSource{
 			Type:    EventSourceTypeGroup,
 			GroupID: "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
 		},
 	},
 	{
@@ -871,6 +1075,10 @@ var webhookTestWantEvents = []*Event{
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
+		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
 		},
 		Postback: &Postback{
 			Data: "action=buyItem&itemId=123123&color=red",
@@ -884,6 +1092,10 @@ var webhookTestWantEvents = []*Event{
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
+		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
 		},
 		Postback: &Postback{
 			Data: "action=sel&only=date",
@@ -901,6 +1113,10 @@ var webhookTestWantEvents = []*Event{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
 		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
+		},
 		Postback: &Postback{
 			Data: "action=sel&only=time",
 			Params: &Params{
@@ -917,6 +1133,10 @@ var webhookTestWantEvents = []*Event{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
 		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
+		},
 		Postback: &Postback{
 			Data: "action=sel",
 			Params: &Params{
@@ -932,6 +1152,10 @@ var webhookTestWantEvents = []*Event{
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
+		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
 		},
 		Postback: &Postback{
 			Data: "action=richmenu-changed-to-a",
@@ -950,6 +1174,10 @@ var webhookTestWantEvents = []*Event{
 			Type:   EventSourceTypeUser,
 			UserID: "U012345678901234567890123456789ab",
 		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
+		},
 		Beacon: &Beacon{
 			Hwid:          "374591320",
 			Type:          BeaconEventTypeEnter,
@@ -965,6 +1193,10 @@ var webhookTestWantEvents = []*Event{
 			Type:   EventSourceTypeUser,
 			UserID: "U012345678901234567890123456789ab",
 		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
+		},
 		Beacon: &Beacon{
 			Hwid:          "374591320",
 			Type:          BeaconEventTypeEnter,
@@ -979,6 +1211,10 @@ var webhookTestWantEvents = []*Event{
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "U012345678901234567890123456789ab",
+		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
 		},
 		Beacon: &Beacon{
 			Hwid:          "374591320",
@@ -995,6 +1231,10 @@ var webhookTestWantEvents = []*Event{
 			Type:   EventSourceTypeUser,
 			UserID: "U012345678901234567890123456789ab",
 		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
+		},
 		AccountLink: &AccountLink{
 			Result: AccountLinkResultOK,
 			Nonce:  "xxxxxxxxxxxxxxx",
@@ -1008,6 +1248,10 @@ var webhookTestWantEvents = []*Event{
 		Source: &EventSource{
 			Type:    EventSourceTypeGroup,
 			GroupID: "C4af498062901234567890123456789ab",
+		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
 		},
 		Members: []*EventSource{
 			{
@@ -1028,6 +1272,10 @@ var webhookTestWantEvents = []*Event{
 			Type:    EventSourceTypeGroup,
 			GroupID: "C4af498062901234567890123456789ab",
 		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
+		},
 		Members: []*EventSource{
 			{
 				Type:   EventSourceTypeUser,
@@ -1047,6 +1295,10 @@ var webhookTestWantEvents = []*Event{
 			Type:   EventSourceTypeUser,
 			UserID: "U91eeaf62d901234567890123456789ab",
 		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
+		},
 		Things: &Things{
 			DeviceID: `t2c449c9d1...`,
 			Type:     `link`,
@@ -1060,6 +1312,10 @@ var webhookTestWantEvents = []*Event{
 			Type:   EventSourceTypeUser,
 			UserID: "U91eeaf62d901234567890123456789ab",
 		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
+		},
 		Things: &Things{
 			DeviceID: `t2c449c9d1...`,
 			Type:     `unlink`,
@@ -1072,6 +1328,10 @@ var webhookTestWantEvents = []*Event{
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "U91eeaf62d901234567890123456789ab",
+		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
 		},
 		Things: &Things{
 			DeviceID: "t016b8dc6...",
@@ -1101,6 +1361,10 @@ var webhookTestWantEvents = []*Event{
 			Type:   EventSourceTypeUser,
 			UserID: "U91eeaf62d901234567890123456789ab",
 		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
+		},
 		Things: &Things{
 			DeviceID: "t016b8d...",
 			Type:     "scenarioResult",
@@ -1125,6 +1389,10 @@ var webhookTestWantEvents = []*Event{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
 		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
+		},
 		Message: &TextMessage{
 			ID:   "325708",
 			Text: "Stand by me",
@@ -1138,6 +1406,10 @@ var webhookTestWantEvents = []*Event{
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "u206d25c2ea6bd87c17655609a1c37cb8",
+		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
 		},
 		Message: &TextMessage{
 			ID:   "325708",
@@ -1156,6 +1428,10 @@ var webhookTestWantEvents = []*Event{
 			GroupID: "Ca56f94637c...",
 			UserID:  "U4af4980629...",
 		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
+		},
 		Unsend: &Unsend{
 			MessageID: "325708",
 		},
@@ -1168,6 +1444,10 @@ var webhookTestWantEvents = []*Event{
 		Source: &EventSource{
 			Type:   EventSourceTypeUser,
 			UserID: "U4af4980629...",
+		},
+		WebhookEventId: "01FZ74ASS536FW97EX38NKCZQK",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
 		},
 		VideoPlayComplete: &VideoPlayComplete{
 			TrackingID: "track_id",
