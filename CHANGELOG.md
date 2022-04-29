@@ -1,5 +1,13 @@
 # Changelog
 
+## [v7.15.0](https://github.com/line/line-bot-sdk-go/tree/v7.15.0) (2022-04-29)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.14.0...v7.15.0)
+
+**Merged pull requests:**
+
+- add webhook redelivery. [\#311](https://github.com/line/line-bot-sdk-go/pull/311)([hinoguma](https://github.com/hinoguma))
+
 ## [v7.14.0](https://github.com/line/line-bot-sdk-go/tree/v7.14.0) (2022-03-18)
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.13.0...v7.14.0)
