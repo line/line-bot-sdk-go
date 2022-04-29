@@ -408,11 +408,11 @@ func TestGetGroupMemberIDsScanner(t *testing.T) {
 	}
 
 	testCases := []struct {
-		FirstResponse   *MemberIDsResponse
+		FirstResponse  *MemberIDsResponse
 		SecondResponse *MemberIDsResponse
 	}{
 		{
-			FirstResponse:   res1,
+			FirstResponse:  res1,
 			SecondResponse: res2,
 		},
 		{
@@ -497,11 +497,11 @@ func TestGetRoomMemberIDsScanner(t *testing.T) {
 	}
 
 	testCases := []struct {
-		FirstResponse   *MemberIDsResponse
+		FirstResponse  *MemberIDsResponse
 		SecondResponse *MemberIDsResponse
 	}{
 		{
-			FirstResponse:   res1,
+			FirstResponse:  res1,
 			SecondResponse: res2,
 		},
 		{

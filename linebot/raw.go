@@ -27,7 +27,7 @@ func (client *Client) NewRawCall(method string, endpoint string) (*RawCall, erro
 		return nil, err
 	}
 	return &RawCall{
-		c: client,
+		c:   client,
 		req: req,
 	}, nil
 }
@@ -39,7 +39,7 @@ func (client *Client) NewRawCallWithBody(method string, endpoint string, body io
 		return nil, err
 	}
 	return &RawCall{
-		c: client,
+		c:   client,
 		req: req,
 	}, nil
 }
@@ -49,7 +49,7 @@ type RawCall struct {
 	c   *Client
 	ctx context.Context
 
-	req         *http.Request
+	req *http.Request
 }
 
 // AddHeader method
