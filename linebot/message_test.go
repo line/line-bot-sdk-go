@@ -71,7 +71,7 @@ func TestMessageTypes(t *testing.T) {
 					"https://example.com/bot/images/image.jpg",
 					"",
 					"Please select",
-					NewPostbackAction("Buy", "action=buy&itemid=123", "", "displayText"),
+					NewPostbackAction("Buy", "action=buy&itemid=123", "", "displayText", "", ""),
 				),
 			),
 			Want: want{
