@@ -35,10 +35,10 @@ type InputOption string
 
 // InputOption constants
 const (
-	InputOptionCloseRichMenu	InputOption = "closeRichMenu"
-	InputOptionOpenRichMenu		InputOption = "openRichMenu"
-	InputOptionOpenKeyboard		InputOption = "openKeyboard"
-	InputOptionOpenVoice		InputOption = "openVoice"
+	InputOptionCloseRichMenu InputOption = "closeRichMenu"
+	InputOptionOpenRichMenu  InputOption = "openRichMenu"
+	InputOptionOpenKeyboard  InputOption = "openKeyboard"
+	InputOptionOpenVoice     InputOption = "openVoice"
 )
 
 // Action interface
