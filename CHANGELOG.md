@@ -1,5 +1,13 @@
 # Changelog
 
+## [v7.16.0](https://github.com/line/line-bot-sdk-go/tree/v7.16.0) (2022-05-18)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.15.0...v7.16.0)
+
+**Merged pull requests:**
+
+- Add two parameters to PostbackAction. [\#314](https://github.com/line/line-bot-sdk-go/pull/314)([ななといつ](https://github.com/nanato12))
+
 ## [v7.15.0](https://github.com/line/line-bot-sdk-go/tree/v7.15.0) (2022-04-29)
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.14.0...v7.15.0)
