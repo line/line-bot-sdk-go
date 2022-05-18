@@ -30,6 +30,17 @@ const (
 	ActionTypeLocation       ActionType = "location"
 )
 
+// InputOption type
+type InputOption string
+
+// InputOption constants
+const (
+	InputOptionCloseRichMenu InputOption = "closeRichMenu"
+	InputOptionOpenRichMenu  InputOption = "openRichMenu"
+	InputOptionOpenKeyboard  InputOption = "openKeyboard"
+	InputOptionOpenVoice     InputOption = "openVoice"
+)
+
 // Action interface
 type Action interface {
 	json.Marshaler
@@ -99,22 +110,28 @@ type PostbackAction struct {
 	Data        string
 	Text        string
 	DisplayText string
+	InputOption InputOption
+	FillInText  string
 }
 
 // MarshalJSON method of PostbackAction
 func (a *PostbackAction) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		Type        ActionType `json:"type"`
-		Label       string     `json:"label,omitempty"`
-		Data        string     `json:"data"`
-		Text        string     `json:"text,omitempty"`
-		DisplayText string     `json:"displayText,omitempty"`
+		Label       string      `json:"label,omitempty"`
+		Data        string      `json:"data"`
+		Text        string      `json:"text,omitempty"`
+		DisplayText string      `json:"displayText,omitempty"`
+		InputOption InputOption `json:"inputOption,omitempty"`
+		FillInText  string      `json:"fillInText,omitempty"`
 	}{
 		Type:        ActionTypePostback,
 		Label:       a.Label,
 		Data:        a.Data,
 		Text:        a.Text,
 		DisplayText: a.DisplayText,
+		InputOption: a.InputOption,
+		FillInText:  a.FillInText,
 	})
 }
 
@@ -247,12 +264,14 @@ func NewMessageAction(label, text string) *MessageAction {
 }
 
 // NewPostbackAction function
-func NewPostbackAction(label, data, text, displayText string) *PostbackAction {
+func NewPostbackAction(label, data, text, displayText string, inputOption InputOption, fillInText string) *PostbackAction {
 	return &PostbackAction{
 		Label:       label,
 		Data:        data,
 		Text:        text,
 		DisplayText: displayText,
+		InputOption: inputOption,
+		FillInText:  fillInText,
 	}
 }
 
