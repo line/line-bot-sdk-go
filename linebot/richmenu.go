@@ -825,3 +825,56 @@ func (call *GetRichMenuAliasListCall) Do() ([]*RichMenuAliasResponse, error) {
 	defer closeResponse(res)
 	return decodeToRichMenuAliasListResponse(res)
 }
+
+// ValidateRichMenuObject method
+func (client *Client) ValidateRichMenuObject(richMenu RichMenu) *ValidateRichMenuObjectCall {
+	return &ValidateRichMenuObjectCall{
+		c:        client,
+		richMenu: richMenu,
+	}
+}
+
+// ValidateRichMenuObjectCall type
+type ValidateRichMenuObjectCall struct {
+	c   *Client
+	ctx context.Context
+
+	richMenu RichMenu
+}
+
+// WithContext method
+func (call *ValidateRichMenuObjectCall) WithContext(ctx context.Context) *ValidateRichMenuObjectCall {
+	call.ctx = ctx
+	return call
+}
+
+func (call *ValidateRichMenuObjectCall) encodeJSON(w io.Writer) error {
+	enc := json.NewEncoder(w)
+	return enc.Encode(&struct {
+		Size        RichMenuSize `json:"size"`
+		Selected    bool         `json:"selected"`
+		Name        string       `json:"name"`
+		ChatBarText string       `json:"chatBarText"`
+		Areas       []AreaDetail `json:"areas"`
+	}{
+		Size:        call.richMenu.Size,
+		Selected:    call.richMenu.Selected,
+		Name:        call.richMenu.Name,
+		ChatBarText: call.richMenu.ChatBarText,
+		Areas:       call.richMenu.Areas,
+	})
+}
+
+// Do method
+func (call *ValidateRichMenuObjectCall) Do() (*BasicResponse, error) {
+	var buf bytes.Buffer
+	if err := call.encodeJSON(&buf); err != nil {
+		return nil, err
+	}
+	res, err := call.c.post(call.ctx, APIEndpointValidateRichMenuObject, &buf)
+	if err != nil {
+		return nil, err
+	}
+	defer closeResponse(res)
+	return decodeToBasicResponse(res)
+}

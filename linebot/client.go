@@ -67,6 +67,7 @@ const (
 	APIEndpointUploadRichMenuImage        = "/v2/bot/richmenu/%s/content" // Download: GET / Upload: POST
 	APIEndpointBulkLinkRichMenu           = "/v2/bot/richmenu/bulk/link"
 	APIEndpointBulkUnlinkRichMenu         = "/v2/bot/richmenu/bulk/unlink"
+	APIEndpointValidateRichMenuObject     = "/v2/bot/richmenu/validate"
 
 	APIEndpointCreateRichMenuAlias = "/v2/bot/richmenu/alias"
 	APIEndpointGetRichMenuAlias    = "/v2/bot/richmenu/alias/%s"
