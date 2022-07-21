@@ -1101,3 +1101,93 @@ func TestListRichMenuAlias(t *testing.T) {
 		})
 	}
 }
+
+func TestValidateRichMenuObject(t *testing.T) {
+	type want struct {
+		RequestBody []byte
+		Response    *BasicResponse
+		Error       error
+	}
+	testCases := []struct {
+		Request      RichMenu
+		Response     []byte
+		ResponseCode int
+		Want         want
+	}{
+		{
+			Request: RichMenu{
+				Size:        RichMenuSize{Width: 2500, Height: 1686},
+				Selected:    false,
+				Name:        "Menu1",
+				ChatBarText: "ChatText",
+				Areas: []AreaDetail{
+					{
+						Bounds: RichMenuBounds{X: 0, Y: 0, Width: 2500, Height: 1686},
+						Action: RichMenuAction{Type: RichMenuActionTypePostback, Data: "action=buy&itemid=123", DisplayText: "Buy", Label: "Buy"},
+					},
+				},
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{}`),
+			Want: want{
+				RequestBody: []byte(`{"size":{"width":2500,"height":1686},"selected":false,"name":"Menu1","chatBarText":"ChatText","areas":[{"bounds":{"x":0,"y":0,"width":2500,"height":1686},"action":{"type":"postback","displayText":"Buy","label":"Buy","data":"action=buy\u0026itemid=123"}}]}` + "\n"),
+				Response:    &BasicResponse{},
+			},
+		},
+	}
+
+	var currentTestIdx int
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		tc := testCases[currentTestIdx]
+		if r.Method != http.MethodPost {
+			t.Errorf("Method %s; want %s", r.Method, http.MethodPost)
+		}
+		if r.URL.Path != APIEndpointValidateRichMenuObject {
+			t.Errorf("URLPath %s; want %s", r.URL.Path, APIEndpointValidateRichMenuObject)
+		}
+		body, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
+			t.Errorf("RequestBody\n %s; want\n %s", body, tc.Want.RequestBody)
+		}
+		w.WriteHeader(tc.ResponseCode)
+		w.Write(tc.Response)
+	}))
+	defer server.Close()
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		t.Error("Unexpected data API call")
+		w.WriteHeader(404)
+		w.Write([]byte(`{"message":"Not found"}`))
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for i, tc := range testCases {
+		currentTestIdx = i
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			res, err := client.ValidateRichMenuObject(tc.Request).Do()
+			if tc.Want.Error != nil {
+				if !reflect.DeepEqual(err, tc.Want.Error) {
+					t.Errorf("Error %v; want %v", err, tc.Want.Error)
+				}
+			} else {
+				if err != nil {
+					t.Error(err)
+				}
+			}
+			if tc.Want.Response != nil {
+				if !reflect.DeepEqual(res, tc.Want.Response) {
+					t.Errorf("Response %v; want %v", res, tc.Want.Response)
+				}
+			}
+		})
+	}
+}
