@@ -1,5 +1,21 @@
 # Changelog
 
+## [v7.17.0](https://github.com/line/line-bot-sdk-go/tree/v7.17.0) (2022-09-06)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.16.0...v7.17.0)
+
+**Merged pull requests:**
+
+- chore(deps): update actions/setup-go action to v3. [\#324](https://github.com/line/line-bot-sdk-go/pull/324)([Renovate](https://github.com/apps/renovate))
+
+- chore(deps): update actions/checkout action to v3. [\#322](https://github.com/line/line-bot-sdk-go/pull/322)([Renovate](https://github.com/apps/renovate))
+
+- chore(deps): update module go to 1.19. [\#321](https://github.com/line/line-bot-sdk-go/pull/321)([Renovate](https://github.com/apps/renovate))
+
+- Add configure for Renovate. [\#320](https://github.com/line/line-bot-sdk-go/pull/320)([Renovate](https://github.com/apps/renovate))
+
+- Add support for the endpoint for validating rich menu object. [\#319](https://github.com/line/line-bot-sdk-go/pull/319)([asamuzak](https://github.com/asamuzak09))
+
 ## [v7.16.0](https://github.com/line/line-bot-sdk-go/tree/v7.16.0) (2022-05-18)
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.15.0...v7.16.0)
