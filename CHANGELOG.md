@@ -1,5 +1,13 @@
 # Changelog
 
+## [v7.18.0](https://github.com/line/line-bot-sdk-go/tree/v7.18.0) (2022-11-10)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.17.0...v7.18.0)
+
+**Merged pull requests:**
+
+- Add validating message objects APIs.  [\#327](https://github.com/line/line-bot-sdk-go/pull/327)([Yang-33](https://github.com/Yang-33))
+
 ## [v7.17.0](https://github.com/line/line-bot-sdk-go/tree/v7.17.0) (2022-09-06)
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.16.0...v7.17.0)
