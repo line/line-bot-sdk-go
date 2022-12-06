@@ -38,7 +38,7 @@ func ParseRequest(channelSecret string, r *http.Request) ([]*Event, error) {
 	if err != nil {
 		return nil, err
 	}
-	if !validateSignature(channelSecret, r.Header.Get("X-Line-Signature"), body) {
+	if !validateSignature(channelSecret, r.Header.Get("x-line-signature"), body) {
 		return nil, ErrInvalidSignature
 	}
 
