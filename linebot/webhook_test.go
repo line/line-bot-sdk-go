@@ -22,6 +22,7 @@ import (
 	"crypto/tls"
 	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -29,6 +30,8 @@ import (
 	"strconv"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 var webhookTestRequestBody = `{
@@ -42,7 +45,7 @@ var webhookTestRequestBody = `{
                 "type": "user",
                 "userId": "u206d25c2ea6bd87c17655609a1c37cb8"
             },
-			"webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
+            "webhookEventId": "01FZ74ASS536FW97EX38NKCZQK",
             "deliveryContext": {
                 "isRedelivery": false
             },
@@ -771,8 +774,9 @@ var webhookTestWantEvents = []*Event{
 			IsRedelivery: false,
 		},
 		Message: &TextMessage{
-			ID:   "325708",
-			Text: "Hello, world",
+			ID:          "325708",
+			Text:        "Hello, world",
+			messageType: MessageTypeText,
 		},
 	},
 	{
@@ -790,8 +794,9 @@ var webhookTestWantEvents = []*Event{
 			IsRedelivery: true,
 		},
 		Message: &TextMessage{
-			ID:   "325708",
-			Text: "Hello, world",
+			ID:          "325708",
+			Text:        "Hello, world",
+			messageType: MessageTypeText,
 		},
 	},
 	{
@@ -824,6 +829,7 @@ var webhookTestWantEvents = []*Event{
 					},
 				},
 			},
+			messageType: MessageTypeText,
 		},
 	},
 	{
@@ -840,7 +846,8 @@ var webhookTestWantEvents = []*Event{
 			IsRedelivery: false,
 		},
 		Message: &ImageMessage{
-			ID: "325708",
+			ID:          "325708",
+			messageType: MessageTypeImage,
 		},
 	},
 	{
@@ -866,6 +873,7 @@ var webhookTestWantEvents = []*Event{
 				Index: 2,
 				Total: 2,
 			},
+			messageType: MessageTypeImage,
 		},
 	},
 	{
@@ -888,7 +896,8 @@ var webhookTestWantEvents = []*Event{
 				OriginalContentURL: "https://example.com/original.mp4",
 				PreviewImageURL:    "https://example.com/preview.jpg",
 			},
-			Duration: 60000,
+			Duration:    60000,
+			messageType: MessageTypeVideo,
 		},
 	},
 	{
@@ -909,7 +918,8 @@ var webhookTestWantEvents = []*Event{
 			ContentProvider: &ContentProvider{
 				Type: ContentProviderTypeLINE,
 			},
-			Duration: 60000,
+			Duration:    60000,
+			messageType: MessageTypeAudio,
 		},
 	},
 	{
@@ -926,9 +936,10 @@ var webhookTestWantEvents = []*Event{
 			IsRedelivery: false,
 		},
 		Message: &FileMessage{
-			ID:       "325708",
-			FileName: "file.txt",
-			FileSize: 2138,
+			ID:          "325708",
+			FileName:    "file.txt",
+			FileSize:    2138,
+			messageType: MessageTypeFile,
 		},
 	},
 	{
@@ -945,11 +956,12 @@ var webhookTestWantEvents = []*Event{
 			IsRedelivery: false,
 		},
 		Message: &LocationMessage{
-			ID:        "325708",
-			Title:     "hello",
-			Address:   "〒150-0002 東京都渋谷区渋谷２丁目２１−１",
-			Latitude:  35.65910807942215,
-			Longitude: 139.70372892916203,
+			ID:          "325708",
+			Title:       "hello",
+			Address:     "〒150-0002 東京都渋谷区渋谷２丁目２１−１",
+			Latitude:    35.65910807942215,
+			Longitude:   139.70372892916203,
+			messageType: MessageTypeLocation,
 		},
 	},
 	{
@@ -970,6 +982,7 @@ var webhookTestWantEvents = []*Event{
 			PackageID:           "1",
 			StickerID:           "1",
 			StickerResourceType: StickerResourceTypeStatic,
+			messageType:         MessageTypeSticker,
 		},
 	},
 	{
@@ -990,6 +1003,7 @@ var webhookTestWantEvents = []*Event{
 			PackageID:           "1",
 			StickerID:           "3",
 			StickerResourceType: StickerResourceTypeAnimationSound,
+			messageType:         MessageTypeSticker,
 		},
 	},
 	{
@@ -1011,6 +1025,7 @@ var webhookTestWantEvents = []*Event{
 			StickerID:           "3",
 			StickerResourceType: StickerResourceTypePerStickerText,
 			Keywords:            []string{"cony", "sally", "Staring", "hi", "whatsup", "line", "howdy", "HEY", "Peeking", "wave", "peek", "Hello", "yo", "greetings"},
+			messageType:         MessageTypeSticker,
 		},
 	},
 	{
@@ -1394,8 +1409,9 @@ var webhookTestWantEvents = []*Event{
 			IsRedelivery: false,
 		},
 		Message: &TextMessage{
-			ID:   "325708",
-			Text: "Stand by me",
+			ID:          "325708",
+			Text:        "Stand by me",
+			messageType: MessageTypeText,
 		},
 	},
 	{
@@ -1417,6 +1433,7 @@ var webhookTestWantEvents = []*Event{
 			Emojis: []*Emoji{
 				{Index: 14, Length: 6, ProductID: "5ac1bfd5040ab15980c9b435", EmojiID: "001"},
 			},
+			messageType: MessageTypeText,
 		},
 	},
 	{
@@ -1477,7 +1494,7 @@ func TestParseRequest(t *testing.T) {
 		for i, got := range gotEvents {
 			want := webhookTestWantEvents[i]
 			if !reflect.DeepEqual(got, want) {
-				t.Errorf("Event %d %v; want %v", i, got, want)
+				t.Errorf("Event %d %+v; want %+v", i, got, want)
 				gota := got
 				if !reflect.DeepEqual(
 					gota.Things.Result.BLENotificationPayload,
@@ -2102,5 +2119,20 @@ func BenchmarkTestWebhook(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		client.TestWebhook().Do()
+	}
+}
+
+func TestParseRequestEvents(t *testing.T) {
+	request := &struct {
+		Events []*Event `json:"events"`
+	}{}
+	err := json.Unmarshal([]byte(webhookTestRequestBody), request)
+	assert.Nil(t, err)
+
+	for _, event := range request.Events {
+		switch event.Type {
+		case EventTypeMessage:
+			assert.NotEmptyf(t, event.Message.Type(), fmt.Sprintf("message type: %s", event.Message.Type()))
+		}
 	}
 }
