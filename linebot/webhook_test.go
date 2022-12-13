@@ -22,7 +22,6 @@ import (
 	"crypto/tls"
 	"encoding/base64"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -30,8 +29,6 @@ import (
 	"strconv"
 	"testing"
 	"time"
-
-	"github.com/stretchr/testify/assert"
 )
 
 var webhookTestRequestBody = `{
@@ -2127,12 +2124,16 @@ func TestParseRequestEvents(t *testing.T) {
 		Events []*Event `json:"events"`
 	}{}
 	err := json.Unmarshal([]byte(webhookTestRequestBody), request)
-	assert.Nil(t, err)
+	if err != nil {
+		t.Error(t, err)
+	}
 
 	for _, event := range request.Events {
 		switch event.Type {
 		case EventTypeMessage:
-			assert.NotEmptyf(t, event.Message.Type(), fmt.Sprintf("message type: %s", event.Message.Type()))
+			if event.Message.Type() == "" {
+				t.Error("message type is empty")
+			}
 		}
 	}
 }
