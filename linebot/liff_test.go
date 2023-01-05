@@ -60,6 +60,37 @@ func TestGetLIFF(t *testing.T) {
 				},
 			},
 		},
+		{
+			ResponseCode: 200,
+			Response:     []byte(`{"apps":[{"liffId":"{liffId}","view":{"type":"full","url":"https://example.com/myservice"},"description":"Happy New York","permanentLinkPattern":"concat"},{"liffId":"{liffId}","view":{"type":"tall","url":"https://example.com/myservice2"},"features":{"ble":true,"qrCode":true},"permanentLinkPattern":"concat","scope":["profile","chat_message.write"],"botPrompt":"none"}]}`),
+			Want: want{
+				RequestBody: []byte(``),
+				Response: &LIFFAppsResponse{
+					Apps: []LIFFApp{
+						{
+							LIFFID: "{liffId}",
+							View: View{
+								Type: LIFFViewTypeFull,
+								URL:  "https://example.com/myservice",
+							},
+							Description:          "Happy New York",
+							PermanentLinkPattern: "concat",
+						},
+						{
+							LIFFID: "{liffId}",
+							View: View{
+								Type: LIFFViewTypeTall,
+								URL:  "https://example.com/myservice2",
+							},
+							Features:             &LIFFAppFeatures{BLE: true, QRCode: true},
+							PermanentLinkPattern: "concat",
+							Scope:                []LIFFViewScopeType{LIFFViewScopeTypeProfile, LIFFViewScopeTypeChatMessageWrite},
+							BotPrompt:            "none",
+						},
+					},
+				},
+			},
+		},
 	}
 	var currentTestIdx int
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -97,6 +128,7 @@ func TestGetLIFF(t *testing.T) {
 		t.Fatal(err)
 	}
 	for i, tc := range testCases {
+		currentTestIdx = i
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			res, err := client.GetLIFF().Do()
 			if err != nil {
@@ -116,21 +148,42 @@ func TestAddLIFF(t *testing.T) {
 		Error       error
 	}
 	testCases := []struct {
-		View         View
+		LIFFApp      LIFFApp
 		ResponseCode int
 		Response     []byte
 		Want         want
 	}{
 		{
-			View: View{
-				Type: LIFFViewTypeFull,
-				URL:  "https://example.com/myservice",
+			LIFFApp: LIFFApp{
+				View: View{
+					Type: LIFFViewTypeFull,
+					URL:  "https://example.com/myservice",
+				},
 			},
 			ResponseCode: 200,
 			Response:     []byte(`{"liffId":"testliffId"}`),
 			Want: want{
 				RequestBody: []byte(`{"view":{"type":"full","url":"https://example.com/myservice"}}` + "\n"),
 				Response:    &LIFFIDResponse{LIFFID: "testliffId"},
+			},
+		},
+		{
+			LIFFApp: LIFFApp{
+				View: View{
+					Type: LIFFViewTypeFull,
+					URL:  "https://example.com/myservice2",
+				},
+				Scope:                []LIFFViewScopeType{LIFFViewScopeTypeProfile, LIFFViewScopeTypeChatMessageWrite},
+				PermanentLinkPattern: "concat",
+				Description:          "Service Example",
+				Features:             &LIFFAppFeatures{BLE: true, QRCode: true},
+				BotPrompt:            "none",
+			},
+			ResponseCode: 200,
+			Response:     []byte(`{"liffId":"testliffId3"}`),
+			Want: want{
+				RequestBody: []byte(`{"view":{"type":"full","url":"https://example.com/myservice2"},"description":"Service Example","features":{"ble":true,"qrCode":true},"permanentLinkPattern":"concat","scope":["profile","chat_message.write"],"botPrompt":"none"}` + "\n"),
+				Response:    &LIFFIDResponse{LIFFID: "testliffId3"},
 			},
 		},
 	}
@@ -150,7 +203,7 @@ func TestAddLIFF(t *testing.T) {
 			t.Fatal(err)
 		}
 		if !reflect.DeepEqual(body, tc.Want.RequestBody) {
-			t.Errorf("RequestBody\n %s; want\n %s", body, tc.Want.RequestBody)
+			t.Errorf("%d, RequestBody\n %s; want\n %s", currentTestIdx, body, tc.Want.RequestBody)
 		}
 		w.WriteHeader(tc.ResponseCode)
 		w.Write(tc.Response)
@@ -170,8 +223,9 @@ func TestAddLIFF(t *testing.T) {
 		t.Fatal(err)
 	}
 	for i, tc := range testCases {
+		currentTestIdx = i
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
-			res, err := client.AddLIFF(tc.View).Do()
+			res, err := client.AddLIFF(tc.LIFFApp).Do()
 			if err != nil {
 				t.Error(err)
 			}
@@ -190,21 +244,23 @@ func TestUpdateLIFF(t *testing.T) {
 	}
 	testCases := []struct {
 		LIFFID       string
-		View         View
+		LIFFApp      LIFFApp
 		ResponseCode int
 		Response     []byte
 		Want         want
 	}{
 		{
 			LIFFID: "testliffId",
-			View: View{
-				Type: LIFFViewTypeFull,
-				URL:  "https://example.com/myservice",
+			LIFFApp: LIFFApp{
+				View: View{
+					Type: LIFFViewTypeFull,
+					URL:  "https://example.com/myservice",
+				},
 			},
 			ResponseCode: 200,
 			Response:     []byte(``),
 			Want: want{
-				RequestBody: []byte(`{"type":"full","url":"https://example.com/myservice"}` + "\n"),
+				RequestBody: []byte(`{"view":{"type":"full","url":"https://example.com/myservice"}}` + "\n"),
 				Response:    &BasicResponse{},
 			},
 		},
@@ -246,7 +302,7 @@ func TestUpdateLIFF(t *testing.T) {
 	}
 	for i, tc := range testCases {
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
-			res, err := client.UpdateLIFF(tc.LIFFID, tc.View).Do()
+			res, err := client.UpdateLIFF(tc.LIFFID, tc.LIFFApp).Do()
 			if err != nil {
 				t.Error(err)
 			}
