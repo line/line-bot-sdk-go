@@ -400,6 +400,13 @@ type AccessTokensResponse struct {
 	KeyIDs []string `json:"kids"`
 }
 
+// VerifiedAccessTokenResponse type
+type VerifiedAccessTokenResponse struct {
+	ClientID  string `json:"client_id"`
+	ExpiresIn int64  `json:"expires_in"`
+	Scope     string `json:"scope"`
+}
+
 // TestWebhookResponse type
 type TestWebhookResponse struct {
 	Success    bool      `json:"success"`
@@ -757,6 +764,18 @@ func decodeToAccessTokensResponse(res *http.Response) (*AccessTokensResponse, er
 	}
 	decoder := json.NewDecoder(res.Body)
 	result := AccessTokensResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
+
+func decodeToVerifiedAccessTokenResponse(res *http.Response) (*VerifiedAccessTokenResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := VerifiedAccessTokenResponse{}
 	if err := decoder.Decode(&result); err != nil {
 		return nil, err
 	}
