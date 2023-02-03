@@ -1,5 +1,19 @@
 # Changelog
 
+## [v7.19.0](https://github.com/line/line-bot-sdk-go/tree/v7.19.0) (2023-02-02)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.18.0...v7.19.0)
+
+**Merged pull requests:**
+
+- feat(method): verify access token method . [\#338](https://github.com/line/line-bot-sdk-go/pull/338)([blackhun11](https://github.com/blackhun11))
+
+- Add liffApp properties. [\#336](https://github.com/line/line-bot-sdk-go/pull/336)([clsung](https://github.com/clsung))
+
+- Make the X-Line-Signature header case-insensitive when handling in server side. [\#331](https://github.com/line/line-bot-sdk-go/pull/331)([cappyzawa](https://github.com/cappyzawa))
+
+- go mod tidy. [\#330](https://github.com/line/line-bot-sdk-go/pull/330)([cappyzawa](https://github.com/cappyzawa))
+
 ## [v7.18.0](https://github.com/line/line-bot-sdk-go/tree/v7.18.0) (2022-11-10)
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.17.0...v7.18.0)
