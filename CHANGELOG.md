@@ -1,5 +1,15 @@
 # Changelog
 
+## [v7.20.0](https://github.com/line/line-bot-sdk-go/tree/v7.20.0) (2023-03-22)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.19.0...v7.20.0)
+
+**Merged pull requests:**
+
+- Update actions/setup-go action to v4. [\#342](https://github.com/line/line-bot-sdk-go/pull/342)
+
+- Includes @All in the mention property of the webhooks. [\#343](https://github.com/line/line-bot-sdk-go/pull/343)([Cheng-Lung Sung](https://github.com/clsung))
+
 ## [v7.19.0](https://github.com/line/line-bot-sdk-go/tree/v7.19.0) (2023-02-02)
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.18.0...v7.19.0)
