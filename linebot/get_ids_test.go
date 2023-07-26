@@ -18,7 +18,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -109,7 +109,7 @@ func TestGetGroupMemberIDs(t *testing.T) {
 		if start, want := q.Get("start"), tc.Want.ContinuationToken; start != want {
 			t.Errorf("ContinuationToken: %s; want %s", start, want)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -286,7 +286,7 @@ func TestGetRoomMemberIDs(t *testing.T) {
 		if start, want := q.Get("start"), tc.Want.ContinuationToken; start != want {
 			t.Errorf("ContinuationToken: %s; want %s", start, want)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}

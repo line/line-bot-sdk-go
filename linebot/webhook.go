@@ -22,7 +22,6 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"io"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -34,7 +33,7 @@ func (client *Client) ParseRequest(r *http.Request) ([]*Event, error) {
 // ParseRequest func
 func ParseRequest(channelSecret string, r *http.Request) ([]*Event, error) {
 	defer r.Body.Close()
-	body, err := ioutil.ReadAll(r.Body)
+	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		return nil, err
 	}

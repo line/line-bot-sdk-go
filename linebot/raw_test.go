@@ -16,7 +16,7 @@ package linebot
 
 import (
 	"bytes"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -147,7 +147,7 @@ func runTestCase(t *testing.T, tc testcase) {
 		if r.URL.Path != tc.RequestWant.Path {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.RequestWant.Path)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -185,7 +185,7 @@ func runTestCase(t *testing.T, tc testcase) {
 	}
 	defer res.Body.Close()
 
-	body, err := ioutil.ReadAll(res.Body)
+	body, err := io.ReadAll(res.Body)
 	if err != nil {
 		t.Fatal(err)
 	}

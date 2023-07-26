@@ -17,7 +17,6 @@ package main
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -735,7 +734,7 @@ func (app *KitchenSink) handleHeavyContent(messageID string, callback func(*os.F
 }
 
 func (app *KitchenSink) saveContent(content io.ReadCloser) (*os.File, error) {
-	file, err := ioutil.TempFile(app.downloadDir, "")
+	file, err := os.CreateTemp(app.downloadDir, "")
 	if err != nil {
 		return nil, err
 	}

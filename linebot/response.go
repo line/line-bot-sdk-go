@@ -18,7 +18,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"time"
 )
@@ -519,7 +518,7 @@ func decodeToMessageContentResponse(res *http.Response) (*MessageContentResponse
 		return nil, err
 	}
 	result := MessageContentResponse{
-		Content:       ioutil.NopCloser(&buf),
+		Content:       io.NopCloser(&buf),
 		ContentType:   res.Header.Get("Content-Type"),
 		ContentLength: res.ContentLength,
 	}

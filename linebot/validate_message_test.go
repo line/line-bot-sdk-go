@@ -15,7 +15,7 @@
 package linebot
 
 import (
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -496,7 +496,7 @@ func TestValidatePushMessages(t *testing.T) {
 		if r.URL.Path != APIEndpointValidatePushMessage {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, APIEndpointValidatePushMessage)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -631,7 +631,7 @@ func TestValidateReplyMessages(t *testing.T) {
 		if r.URL.Path != APIEndpointValidateReplyMessage {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, APIEndpointValidateReplyMessage)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -767,7 +767,7 @@ func TestValidateMulticastMessages(t *testing.T) {
 		if r.URL.Path != APIEndpointValidateMulticastMessage {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, APIEndpointValidateMulticastMessage)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1385,7 +1385,7 @@ func TestValidateBroadcastMessages(t *testing.T) {
 		if r.URL.Path != APIEndpointValidateBroadcastMessage {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, APIEndpointValidateBroadcastMessage)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1465,7 +1465,7 @@ func TestValidateNarrowcastMessages(t *testing.T) {
 		if r.URL.Path != APIEndpointValidateNarrowcastMessage {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, APIEndpointValidateNarrowcastMessage)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}

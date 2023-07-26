@@ -16,7 +16,7 @@ package linebot
 
 import (
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -61,7 +61,7 @@ func TestIssueAccessTokenV2(t *testing.T) {
 		if r.URL.Path != APIEndpointIssueAccessTokenV2 {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, APIEndpointIssueAccessTokenV2)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -314,7 +314,7 @@ func TestRevokeAccessTokenV2(t *testing.T) {
 		if r.URL.Path != APIEndpointRevokeAccessTokenV2 {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, APIEndpointIssueAccessTokenV2)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}

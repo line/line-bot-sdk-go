@@ -16,7 +16,7 @@ package linebot
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -72,7 +72,7 @@ func TestIssueLinkToken(t *testing.T) {
 		if r.URL.Path != endpoint {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, endpoint)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}

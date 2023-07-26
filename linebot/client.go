@@ -20,7 +20,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"mime/multipart"
 	"net/http"
 	"net/textproto"
@@ -292,7 +291,7 @@ func (client *Client) setRetryKey(retryKey string) {
 
 func closeResponse(res *http.Response) error {
 	defer res.Body.Close()
-	_, err := io.Copy(ioutil.Discard, res.Body)
+	_, err := io.Copy(io.Discard, res.Body)
 	return err
 }
 
