@@ -13,13 +13,10 @@ jobs:
     strategy:
       matrix:
         go:
-        - 1.11
-        - 1.12
-        - 1.13
-        - 1.14
-        - 1.15
-        - 1.16
-        - 1.17
+        - '1.19'
+        - '1.19.11'
+        - '1.20'
+        - '1.20.6'
     steps:
     - uses: actions/checkout@v3
 
@@ -28,17 +25,11 @@ jobs:
       with:
         go-version: ${{ matrix.go }}
 
-    - name: install golint
-      run: go get golang.org/x/lint/golint
-
     - name: run codecov.sh
       run: bash script/codecov.sh
 
     - name: go vet
       run: go vet $(go list ./... | grep -v /examples/)
-
-    - name: run golint
-      run: golint --set_exit_status ./...
 
     - name: Publish to codecov.io
       run: bash <(curl -s https://codecov.io/bash)
