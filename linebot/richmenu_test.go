@@ -17,9 +17,10 @@ package linebot
 import (
 	"bytes"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"path/filepath"
 	"reflect"
 	"strconv"
@@ -97,7 +98,7 @@ func TestGetRichMenu(t *testing.T) {
 		if r.URL.Path != tc.Want.URLPath {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
 		}
-		_, err := ioutil.ReadAll(r.Body)
+		_, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -190,7 +191,7 @@ func TestCreateRichMenu(t *testing.T) {
 		if r.URL.Path != APIEndpointCreateRichMenu {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, APIEndpointCreateRichMenu)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -273,7 +274,7 @@ func TestLinkRichMenu(t *testing.T) {
 		if r.URL.Path != tc.Want.URLPath {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
 		}
-		_, err := ioutil.ReadAll(r.Body)
+		_, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -393,7 +394,7 @@ func TestDefaultRichMenu(t *testing.T) {
 		if r.URL.Path != tc.Want.URLPath {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
 		}
-		_, err := ioutil.ReadAll(r.Body)
+		_, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -518,7 +519,7 @@ func TestListRichMenu(t *testing.T) {
 		if r.URL.Path != tc.Want.URLPath {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
 		}
-		_, err := ioutil.ReadAll(r.Body)
+		_, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -610,7 +611,7 @@ func TestBulkRichMenu(t *testing.T) {
 		if r.URL.Path != tc.Want.URLPath {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -706,11 +707,11 @@ func TestUploadRichMenuImage(t *testing.T) {
 		if r.URL.Path != tc.Want.URLPath {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
-		imgBody, err := ioutil.ReadFile(tc.ImagePath)
+		imgBody, err := os.ReadFile(tc.ImagePath)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -754,7 +755,7 @@ func TestUploadRichMenuImage(t *testing.T) {
 
 func TestDownloadRichMenuImage(t *testing.T) {
 	filePath := filepath.Join("..", "testdata", "img", "richmenu.png")
-	file, err := ioutil.ReadFile(filePath)
+	file, err := os.ReadFile(filePath)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -785,7 +786,7 @@ func TestDownloadRichMenuImage(t *testing.T) {
 				Response: &MessageContentResponse{
 					ContentType:   "image/png",
 					ContentLength: int64(len(file)),
-					Content:       ioutil.NopCloser(bytes.NewReader(file)),
+					Content:       io.NopCloser(bytes.NewReader(file)),
 				},
 			},
 		},
@@ -841,7 +842,7 @@ func TestDownloadRichMenuImage(t *testing.T) {
 			if tc.Want.Response != nil {
 				body := res.Content
 				defer body.Close()
-				resImage, err := ioutil.ReadAll(body)
+				resImage, err := io.ReadAll(body)
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -953,7 +954,7 @@ func TestCRUDRichMenuAlias(t *testing.T) {
 		if r.URL.Path != tc.Want.URLPath {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
 		}
-		_, err := ioutil.ReadAll(r.Body)
+		_, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1059,7 +1060,7 @@ func TestListRichMenuAlias(t *testing.T) {
 		if r.URL.Path != tc.Want.URLPath {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
 		}
-		_, err := ioutil.ReadAll(r.Body)
+		_, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1146,7 +1147,7 @@ func TestValidateRichMenuObject(t *testing.T) {
 		if r.URL.Path != APIEndpointValidateRichMenuObject {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, APIEndpointValidateRichMenuObject)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
