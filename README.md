@@ -44,7 +44,7 @@ func main() {
 
 ```go
 client := &http.Client{}
-bot, err := linebot.New("<channel secret>", "<channel accsss token>", linebot.WithHTTPClient(client))
+bot, err := linebot.New("<channel secret>", "<channel access token>", linebot.WithHTTPClient(client))
 ...
 ```
 
