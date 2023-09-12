@@ -164,7 +164,7 @@ func (call *TestWebhook) WithContext(ctx context.Context) *TestWebhook {
 
 // Do method
 func (call *TestWebhook) Do() (*TestWebhookResponse, error) {
-	res, err := call.c.get(call.ctx, call.c.endpointBase, call.endpoint, nil)
+	res, err := call.c.post(call.ctx, call.endpoint, nil)
 	if err != nil {
 		return nil, err
 	}

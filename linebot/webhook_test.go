@@ -1865,6 +1865,28 @@ func TestTestWebhook(t *testing.T) {
 			},
 		},
 		{
+			Label:        "Failed with timeout",
+			ResponseCode: 200,
+			Response: []byte(`{
+				"success": false,
+				"timestamp": "2023-09-12T14:00:10.015Z",
+				"statusCode": 0,
+				"reason": "REQUEST_TIMEOUT",
+				"detail": "Request timeout: https://example.com/"
+			}`),
+			Want: want{
+				URLPath:     APIEndpointTestWebhook,
+				RequestBody: []byte(""),
+				Response: &TestWebhookResponse{
+					Success:    false,
+					Timestamp:  time.Date(2023, time.September, 12, 14, 00, 10, int(15*time.Millisecond), time.UTC),
+					StatusCode: 0,
+					Reason:     "REQUEST_TIMEOUT",
+					Detail:     "Request timeout: https://example.com/",
+				},
+			},
+		},
+		{
 			Label:        "Internal server error",
 			ResponseCode: 500,
 			Response:     []byte("500 Internal server error"),
@@ -1897,8 +1919,8 @@ func TestTestWebhook(t *testing.T) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 		tc := testCases[currentTestIdx]
-		if r.Method != http.MethodGet {
-			t.Errorf("Method %s; want %s", r.Method, http.MethodGet)
+		if r.Method != http.MethodPost {
+			t.Errorf("Method %s; want %s", r.Method, http.MethodPost)
 		}
 		if r.URL.Path != tc.Want.URLPath {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
