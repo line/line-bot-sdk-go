@@ -1,5 +1,21 @@
 # Changelog
 
+
+## [v7.21.0](https://github.com/line/line-bot-sdk-go/tree/v7.21.0) (2023-09-22)
+
+[Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.20.0...v7.21.0)
+
+**Merged pull requests:**
+
+- Add unmarshal json for template by @yoshinobc in https://github.com/line/line-bot-sdk-go/pull/346
+- update gihub action go matrix from 1.19 to 1.20.6 by @kkdai in https://github.com/line/line-bot-sdk-go/pull/351
+- chore: remove refs to deprecated io/ioutil by @testwill in https://github.com/line/line-bot-sdk-go/pull/350
+- Fixed a small typo README.md by @IvanReyesO7 in https://github.com/line/line-bot-sdk-go/pull/353
+- chore(deps): update actions/checkout action to v4 by @renovate in https://github.com/line/line-bot-sdk-go/pull/354
+- fix: Use POST method for Test Webhook endpoiont by @unnoy in https://github.com/line/line-bot-sdk-go/pull/356
+- Add InputOption for RichMenuAction by @s-aska in https://github.com/line/line-bot-sdk-go/pull/358
+
+
 ## [v7.20.0](https://github.com/line/line-bot-sdk-go/tree/v7.20.0) (2023-03-22)
 
 [Full Changelog](https://github.com/line/line-bot-sdk-go/compare/v7.19.0...v7.20.0)
