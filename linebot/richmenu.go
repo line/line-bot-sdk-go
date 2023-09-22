@@ -63,6 +63,8 @@ type RichMenuAction struct {
 	Max             string             `json:"max,omitempty"`
 	Min             string             `json:"min,omitempty"`
 	RichMenuAliasID string             `json:"richMenuAliasId,omitempty"`
+	InputOption     InputOption        `json:"inputOption,omitempty"`
+	FillInText      string             `json:"fillInText,omitempty"`
 }
 
 // AreaDetail type for areas array
