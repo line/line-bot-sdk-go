@@ -34,7 +34,7 @@ type GetFollowerIDsCall struct {
 	ctx context.Context
 
 	continuationToken string
-	limit             string
+	limit             uint16
 }
 
 // WithContext method
@@ -52,13 +52,7 @@ func (call *GetFollowerIDsCall) WithLimit(limit uint16) *GetFollowerIDsCall {
 
 // Do method
 func (call *GetFollowerIDsCall) Do() (*UserIDsResponse, error) {
-	q := make(url.Values)
-	if call.continuationToken != "" {
-		q.Set("start", call.continuationToken)
-	}
-	if call.limit != "" {
-		q.Set("limit", call.limit)
-	}
+	q := call.bindToQuery()
 	res, err := call.c.get(call.ctx, call.c.endpointBase, APIEndpointGetFollowerIDs, q)
 	if err != nil {
 		return nil, err
@@ -93,7 +87,18 @@ func (call *GetFollowerIDsCall) bindLimit(limit uint16) {
 	if limit == 0 {
 		limit = 300
 	}
-	call.limit = strconv.FormatUint(uint64(limit), 10)
+	call.limit = limit
+}
+
+func (call *GetFollowerIDsCall) bindToQuery() url.Values {
+	q := make(url.Values)
+	if call.continuationToken != "" {
+		q.Set("start", call.continuationToken)
+	}
+	if call.limit != 0 {
+		q.Set("limit", strconv.FormatUint(uint64(call.limit), 10))
+	}
+	return q
 }
 
 func (call *GetFollowerIDsCall) setContinuationToken(token string) {
