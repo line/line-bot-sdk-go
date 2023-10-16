@@ -1,0 +1,10 @@
+api_liff.go
+model_add_liff_app_request.go
+model_add_liff_app_response.go
+model_get_all_liff_apps_response.go
+model_liff_app.go
+model_liff_bot_prompt.go
+model_liff_features.go
+model_liff_scope.go
+model_liff_view.go
+model_update_liff_app_request.go

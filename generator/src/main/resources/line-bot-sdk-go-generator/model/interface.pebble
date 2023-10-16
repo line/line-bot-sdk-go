@@ -1,0 +1,91 @@
+{# @pebvariable name="model" type="org.openapitools.codegen.CodegenModel" -#}
+
+import (
+	"encoding/json"
+	"errors"
+)
+
+{# e.g. MessageInterface #}
+type {{ model.classname }}Interface interface {
+    Get{{ model.discriminator.propertyName }}() string
+}
+
+func (e {{ model.classname }}) Get{{ model.discriminator.propertyName }}() string {
+	return e.{{ model.discriminator.propertyName }}
+}
+
+type Unknown{{ model.classname }} struct {
+    {{ model.classname }}Interface
+    {{ model.discriminator.propertyName }} string
+    Raw map[string]json.RawMessage
+}
+
+func (e Unknown{{ model.classname }}) Get{{ model.discriminator.propertyName }}() string {
+    return e.{{ model.discriminator.propertyName }}
+}
+
+func setDiscriminatorProperty{{ model.classname }}(r {{ model.classname }}Interface) {{ model.classname }}Interface {
+    switch v := r.(type) {
+{% for mm in model.discriminator.mappedModels -%}
+    case *{{ mm.modelName }}:
+        if v.{{ model.discriminator.propertyName }} == "" {
+            v.{{ model.discriminator.propertyName }} = "{{ mm.mappingName }}"
+        }
+        return v
+    case {{ mm.modelName }}:
+        if v.{{ model.discriminator.propertyName }} == "" {
+            v.{{ model.discriminator.propertyName }} = "{{ mm.mappingName }}"
+        }
+        return v
+{% endfor %}
+    default:
+        return v
+    }
+}
+
+// {{ model.classname }}
+{% if model.description -%}
+// {{ model.description }}
+{% endif %}
+{% if model.externalDocumentation != null -%}
+// {{ model.externalDocumentation.url }}
+{% endif %}
+type {{ model.classname }} struct {
+{% for var in model.vars -%}
+    {% if var.description -%}
+    // {{ var.description }}
+    {% endif %}
+    {{ var.name | capitalize }} {{ var.dataType }}  `json:"{{var.baseName}}{% if isOmitEmpty(var) %},omitempty{% endif %}"`
+{% endfor -%}
+}
+
+func Unmarshal{{ model.classname }}(data []byte) ({{ model.classname }}Interface, error) {
+	var raw map[string]json.RawMessage
+	err := json.Unmarshal(data, &raw)
+	if err != nil {
+		return nil, fmt.Errorf("Unmarshal{{ model.classname }}: %w", err)
+	}
+
+	var discriminator string
+	err = json.Unmarshal(raw["{{ model.discriminator.propertyBaseName }}"], &discriminator)
+	if err != nil {
+		return nil, fmt.Errorf("Unmarshal{{ model.classname }}: Cannot read {{ model.discriminator.propertyBaseName }}: %w", err)
+	}
+
+	switch discriminator {
+{% for mm in model.discriminator.mappedModels -%}
+	case "{{ mm.mappingName }}":
+		var {{ mm.mappingName }} {{ mm.modelName }}
+		if err := json.Unmarshal(data, &{{ mm.mappingName }}); err != nil {
+			return nil, fmt.Errorf("Unmarshal{{ model.classname }}: Cannot read {{ mm.mappingName }}: %w", err)
+		}
+		return {{ mm.mappingName }}, nil
+{% endfor %}
+	default:
+        log.Println("{{ model.classname }} fallback: ", discriminator)
+	    var unknown Unknown{{ model.classname }}
+	    unknown.{{ model.discriminator.propertyName }} = discriminator
+	    unknown.Raw = raw
+	    return unknown, nil
+	}
+}

@@ -19,8 +19,9 @@ import (
 	"io"
 	"log"
 	"os"
+	"strings"
 
-	"github.com/line/line-bot-sdk-go/v7/linebot"
+	"github.com/line/line-bot-sdk-go/v7/linebot/messaging_api"
 )
 
 func main() {
@@ -28,162 +29,202 @@ func main() {
 		mode     = flag.String("mode", "list", "mode of richmenu helper [list|create|link|unlink|bulklink|bulkunlink|get|delete|upload|download|alias_create|alias_get|alias_update|alias_delete|alias_list]")
 		aid      = flag.String("aid", "", "alias id")
 		uid      = flag.String("uid", "", "user id")
-		rid      = flag.String("rid", "", "richmenu id")
+		richMenuId      = flag.String("richMenuId", "", "richmenu id")
 		filePath = flag.String("image.path", "", "path to image, used in upload/download mode")
 	)
 	flag.Parse()
-	bot, err := linebot.New(
-		os.Getenv("CHANNEL_SECRET"),
-		os.Getenv("CHANNEL_TOKEN"),
-	)
+
+	client, err := messaging_api.NewMessagingApiAPI(os.Getenv("LINE_CHANNEL_TOKEN"))
+	if err != nil {
+		log.Fatal(err)
+	}
+	blob_client, err := messaging_api.NewMessagingApiBlobAPI(os.Getenv("LINE_CHANNEL_TOKEN"))
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	switch *mode {
-	case "upload":
-		if _, err = bot.UploadRichMenuImage(*rid, *filePath).Do(); err != nil {
-			log.Fatal(err)
+	case "upload": // TODO
+		if *richMenuId == "" {
+			log.Fatal("richMenuId is required")
 		}
-	case "download":
-		res, err := bot.DownloadRichMenuImage(*rid).Do()
+
+		file, err := os.Open(*filePath)
 		if err != nil {
 			log.Fatal(err)
 		}
-		defer res.Content.Close()
+		defer file.Close()
+
+		var contentType string
+		if strings.HasSuffix(*filePath, ".jpeg") || strings.HasSuffix(*filePath, ".jpg") {
+			contentType = "image/jpeg"
+		} else if strings.HasSuffix(*filePath, "png") {
+			contentType = "image/png"
+		} else {
+			log.Fatal("image file must be jpeg or png... but got ", *filePath)
+		}
+
+		if _, err = blob_client.SetRichMenuImage(*richMenuId, contentType, file); err != nil {
+			log.Fatal(err)
+		}
+	case "download":
+		if *richMenuId == "" {
+			log.Fatal("richMenuId is required")
+		}
+		if *filePath == "" {
+			log.Fatal("filePath is required")
+		}
+
+		res, err := blob_client.GetRichMenuImage(*richMenuId)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer res.Body.Close()
 		f, err := os.OpenFile(*filePath, os.O_CREATE|os.O_RDWR|os.O_TRUNC, 0644)
 		if err != nil {
 			log.Fatal(err)
 		}
-		_, err = io.Copy(f, res.Content)
+		_, err = io.Copy(f, res.Body)
 		if err != nil {
 			log.Fatal(err)
 		}
 		log.Printf("Image is written to %s", *filePath)
-	case "alias_create":
-		if _, err = bot.CreateRichMenuAlias(*aid, *rid).Do(); err != nil {
+	case "alias_create": // TODO
+		if _, err = client.CreateRichMenuAlias(
+			&messaging_api.CreateRichMenuAliasRequest{
+				RichMenuAliasId: *aid,
+				RichMenuId: 	*richMenuId,
+			},
+		); err != nil {
 			log.Fatal(err)
 		}
-	case "alias_get":
-		if res, err := bot.GetRichMenuAlias(*aid).Do(); err != nil {
+	case "alias_get": // TODO
+		if res, err := client.GetRichMenuAlias(*aid); err != nil {
 			log.Fatal(err)
 		} else {
 			log.Printf("%v\n", res)
 		}
-	case "alias_update":
-		if _, err = bot.UpdateRichMenuAlias(*aid, *rid).Do(); err != nil {
+	case "alias_update": // TODO
+		if _, err = client.UpdateRichMenuAlias(*aid, &messaging_api.UpdateRichMenuAliasRequest{
+			RichMenuId: *richMenuId,
+		}); err != nil {
 			log.Fatal(err)
 		}
-	case "alias_delete":
-		if _, err = bot.DeleteRichMenuAlias(*aid).Do(); err != nil {
+	case "alias_delete": // TODO
+		if _, err = client.DeleteRichMenuAlias(*aid); err != nil {
 			log.Fatal(err)
 		}
-	case "alias_list":
-		res, err := bot.GetRichMenuAliasList().Do()
+	case "alias_list": // TODO
+		res, err := client.GetRichMenuAliasList()
 		if err != nil {
 			log.Fatal(err)
 		}
-		for _, alias := range res {
+		for _, alias := range res.Aliases {
 			log.Printf("%v\n", alias)
 		}
-	case "link":
-		if _, err = bot.LinkUserRichMenu(*uid, *rid).Do(); err != nil {
+	case "link": // TODO
+		if _, err = client.LinkRichMenuIdToUser(*uid, *richMenuId); err != nil {
 			log.Fatal(err)
 		}
-	case "unlink":
-		if _, err = bot.UnlinkUserRichMenu(*uid).Do(); err != nil {
+	case "unlink": // TODO
+		if _, err = client.UnlinkRichMenuIdFromUser(*uid); err != nil {
 			log.Fatal(err)
 		}
-	case "bulklink":
-		if _, err = bot.BulkLinkRichMenu(*rid, *uid).Do(); err != nil {
+	case "bulklink": // TODO
+		if _, err = client.LinkRichMenuIdToUsers(
+			&messaging_api.RichMenuBulkLinkRequest{
+				RichMenuId: *richMenuId,
+				UserIds: []string{*uid},
+		}); err != nil {
 			log.Fatal(err)
 		}
-	case "bulkunlink":
-		if _, err = bot.BulkUnlinkRichMenu(*uid).Do(); err != nil {
+	case "bulkunlink":  // TODO
+		if _, err = client.UnlinkRichMenuIdFromUsers(
+			&messaging_api.RichMenuBulkUnlinkRequest{
+				UserIds: []string{*uid},
+			},
+		); err != nil {
 			log.Fatal(err)
 		}
 	case "list":
-		res, err := bot.GetRichMenuList().Do()
+		res, err := client.GetRichMenuList()
 		if err != nil {
 			log.Fatal(err)
 		}
-		for _, richmenu := range res {
+		for _, richmenu := range res.Richmenus {
 			log.Printf("%v\n", richmenu)
 		}
 	case "get_default":
-		res, err := bot.GetDefaultRichMenu().Do()
+		if *richMenuId == "" {
+			log.Fatal("richMenuId is required")
+		}
+		res, err := client.GetDefaultRichMenuId()
 		if err != nil {
 			log.Fatal(err)
 		}
 		log.Printf("%v\n", res)
 	case "set_default":
-		if _, err = bot.SetDefaultRichMenu(*rid).Do(); err != nil {
+		if _, err = client.SetDefaultRichMenu(*richMenuId); err != nil {
 			log.Fatal(err)
 		}
-	case "cancel_default":
-		if _, err = bot.CancelDefaultRichMenu().Do(); err != nil {
+	case "cancel_default": // TODO
+		if _, err = client.CancelDefaultRichMenu(); err != nil {
 			log.Fatal(err)
 		}
 	case "create":
-		richMenu := linebot.RichMenu{
-			Size:        linebot.RichMenuSize{Width: 2500, Height: 1686},
+		richMenu := &messaging_api.RichMenuRequest{
+			Size:        &messaging_api.RichMenuSize{Width: 2500, Height: 1686},
 			Selected:    false,
 			Name:        "Menu1",
 			ChatBarText: "ChatText",
-			Areas: []linebot.AreaDetail{
+			Areas: []messaging_api.RichMenuArea{
 				{
-					Bounds: linebot.RichMenuBounds{X: 0, Y: 0, Width: 1250, Height: 212},
-					Action: linebot.RichMenuAction{
-						Type:            linebot.RichMenuActionTypeRichMenuSwitch,
-						RichMenuAliasID: "richmenu-alias-a",
+					Bounds: &messaging_api.RichMenuBounds{X: 0, Y: 0, Width: 1250, Height: 212},
+					Action: &messaging_api.RichMenuSwitchAction{
+						RichMenuAliasId: "richmenu-alias-a",
 						Data:            "action=richmenu-changed-to-a",
 					},
 				},
 				{
-					Bounds: linebot.RichMenuBounds{X: 1250, Y: 0, Width: 1250, Height: 212},
-					Action: linebot.RichMenuAction{
-						Type:            linebot.RichMenuActionTypeRichMenuSwitch,
-						RichMenuAliasID: "richmenu-alias-b",
+					Bounds: &messaging_api.RichMenuBounds{X: 1250, Y: 0, Width: 1250, Height: 212},
+					Action: &messaging_api.RichMenuSwitchAction{
+						RichMenuAliasId: "richmenu-alias-b",
 						Data:            "action=richmenu-changed-to-b",
 					},
 				},
 				{
-					Bounds: linebot.RichMenuBounds{X: 0, Y: 212, Width: 1250, Height: 737},
-					Action: linebot.RichMenuAction{
-						Type: linebot.RichMenuActionTypePostback,
+					Bounds: &messaging_api.RichMenuBounds{X: 0, Y: 212, Width: 1250, Height: 737},
+					Action: &messaging_api.PostbackAction{
 						Data: "action=buy&itemid=123",
 					},
 				},
 				{
-					Bounds: linebot.RichMenuBounds{X: 1250, Y: 212, Width: 1250, Height: 737},
-					Action: linebot.RichMenuAction{
-						Type: linebot.RichMenuActionTypeURI,
-						URI:  "https://developers.line.me/",
-						Text: "click me",
+					Bounds: &messaging_api.RichMenuBounds{X: 1250, Y: 212, Width: 1250, Height: 737},
+					Action: &messaging_api.UriAction{
+						Uri:  "https://developers.line.me/",
+						Label: "click me",
 					},
 				},
 				{
-					Bounds: linebot.RichMenuBounds{X: 0, Y: 949, Width: 1250, Height: 737},
-					Action: linebot.RichMenuAction{
-						Type: linebot.RichMenuActionTypeMessage,
+					Bounds: &messaging_api.RichMenuBounds{X: 0, Y: 949, Width: 1250, Height: 737},
+					Action: &messaging_api.MessageAction{
 						Text: "hello world!",
 					},
 				},
 				{
-					Bounds: linebot.RichMenuBounds{X: 1250, Y: 949, Width: 1250, Height: 737},
-					Action: linebot.RichMenuAction{
-						Type: linebot.RichMenuActionTypeDatetimePicker,
+					Bounds: &messaging_api.RichMenuBounds{X: 1250, Y: 949, Width: 1250, Height: 737},
+					Action: &messaging_api.DatetimePickerAction{
 						Data: "datetime picker!",
 						Mode: "datetime",
 					},
 				},
 			},
 		}
-		res, err := bot.CreateRichMenu(richMenu).Do()
+		res, err := client.CreateRichMenu(richMenu)
 		if err != nil {
 			log.Fatal(err)
 		}
-		log.Println(res.RichMenuID)
+		log.Println(res.RichMenuId)
 	default:
 		log.Fatal("implement me")
 	}

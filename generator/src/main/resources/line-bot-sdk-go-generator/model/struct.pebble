@@ -1,0 +1,153 @@
+{# @pebvariable name="model" type="org.openapitools.codegen.CodegenModel" -#}
+{# @pebvariable name="generatorClass" type="java.lang.String" -#}
+import (
+    "encoding/json"
+    "fmt"
+)
+
+// {{ model.classname }}
+// {{ model.description | escape }}{% if model.description == "" or model.description == null %}{{model.classname}}{% endif %}{% if model.isDeprecated %}
+// @deprecated{% endif %}
+{% if model.externalDocumentation != null -%}
+// {{  model.externalDocumentation.url() }}{% endif %}
+type {{model.classname}} struct {
+{% if model.parentModel != null %}
+    {{ model.parentModel.name }}
+{% endif %}
+{% for var in model.allVars -%}
+    {% if not(model.parentModel != null and model.parentModel.discriminator.propertyName==var.name) %}
+
+    /**
+        {% if var.description -%}
+     * {{ var.description | escape }}{% if var.required %} (Required){% endif %}
+        {% endif -%}
+        {% if not var.description -%}
+     * Get {{ var.name | escape }}
+        {% endif -%}
+        {% if var.minimum -%}
+     * minimum: {{var.minimum}}
+        {% endif -%}
+        {% if var.maximum -%}
+     * maximum: {{var.maximum}}
+        {% endif -%}
+        {% if var.deprecated -%}
+     * @deprecated
+    {% endif -%}
+    {% if var.externalDocs -%}
+     * {{var.externalDocs.description}}
+     * @see <a href="{{var.externalDocs.url}}">{{ var.externalDocs.summary | escape }} Documentation</a>
+    {% endif -%}
+     */
+    {{ var.name }} {{ var.vendorExtensions.get("x-type") }} `json:"{{var.baseName}}{% if isOmitEmpty(var) %},omitempty{% endif %}"`
+    {% endif %}
+{% endfor %}
+}
+
+func New{{ model.classname }}(
+{% for var in model.allVars -%}
+     {% if not (model.parentModel != null and model.parentModel.discriminator.propertyName==var.name) -%}
+         {% if var.required %}
+     {{ var.name }} {{ var.vendorExtensions.get("x-type") }},
+         {% endif %}
+     {% endif %}
+{% endfor %}
+) *{{ model.classname }} {
+	e := &{{ model.classname }}{}
+{% for var in model.allVars -%}
+    {% if model.parentModel != null and model.parentModel.discriminator.propertyName==var.name %}
+    e.{{ var.name }} = {% for mm in model.parentModel.discriminator.mappedModels -%}{% if mm.modelName==model.classname %}"{{ mm.mappingName }}"{% endif %}{% endfor %}
+    {% else %}
+         {% if var.required %}
+    e.{{ var.name }} = {{ var.name }}
+         {% endif %}
+    {% endif %}
+{% endfor %}
+    return e
+}
+
+{% if model.vendorExtensions["x-has-discriminator"] %}
+func (cr *{{model.classname}}) UnmarshalJSON(data []byte) error {
+	var raw map[string]json.RawMessage
+	err := json.Unmarshal(data, &raw)
+	if err != nil {
+		return err
+	}
+
+    {% for var in model.allVars %}
+        {% if var.vendorExtensions["x-is-discriminator"] %}
+	if raw{{ var.baseName }}, ok := raw["{{ var.baseName }}"]; ok && raw{{ var.baseName }} != nil {
+		{{ var.name }}, err := Unmarshal{{ var.baseType }}(raw{{ var.baseName }})
+		if err != nil {
+			return err
+		}
+		cr.{{ var.name | capitalize }} = {{ var.name }}
+	}
+        {% elseif var.vendorExtensions["x-is-discriminator-array"] %}
+	var raw{{ var.baseName }} []json.RawMessage
+	err = json.Unmarshal(raw["{{ var.baseName }}"], &raw{{ var.baseName }})
+	if err != nil {
+		return err
+	}
+
+	for _, data := range raw{{ var.baseName }} {
+		e, err := Unmarshal{{ var.complexType }}(data)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in Unmarshal{{ var.complexType }}: %w, body: %s", err, string(data))
+		}
+		cr.{{ var.name | capitalize }} = append(cr.{{ var.name | capitalize }}, e)
+	}
+        {% else %}
+	err = json.Unmarshal(raw["{{ var.baseName }}"], &cr.{{ var.name | capitalize }})
+	if err != nil {
+		return err
+	}
+        {% endif %}
+    {% endfor %}
+
+	return nil
+}
+{% endif %}
+
+{# Fill discriminator field #}
+{% if model.vendorExtensions["x-has-discriminator"] or model.vendorExtensions["x-has-child-model"] or model.parentModel != null %}
+// MarshalJSON customizes the JSON serialization of the {{ model.classname }} struct.
+func (r *{{model.classname}}) MarshalJSON() ([]byte, error) {
+    {% if model.vendorExtensions["x-has-discriminator"] or model.vendorExtensions["x-has-child-model"] %}
+        {% for var in model.allVars -%}
+            {% if var.vendorExtensions["x-is-discriminator"] %}
+    r.{{ var.name }} = setDiscriminatorProperty{{ var.complexType }}(r.{{ var.name }})
+            {% elseif var.vendorExtensions["x-is-discriminator-array"] %}
+    new{{ var.name }} := make({{ var.datatypeWithEnum }}Interface, len(r.{{ var.name }}))
+	for i, v := range r.{{ var.name }} {
+	    new{{ var.name }}[i] = setDiscriminatorProperty{{ var.complexType }}(v)
+	}
+            {% endif %}
+	    {% endfor %}
+    {% endif %}
+
+	type Alias {{model.classname}}
+	return json.Marshal(&struct {
+		*Alias
+    {% for var in model.allVars -%}
+        {% if var.vendorExtensions["x-is-discriminator-array"] or (model.parentModel != null and model.parentModel.discriminator.propertyName==var.name) %}
+    {{ var.name }} {{ var.vendorExtensions.get("x-type") }} `json:"{{var.baseName}}{% if isOmitEmpty(var) %},omitempty{% endif %}"`
+        {% endif %}
+    {% endfor %}
+	}{
+		Alias:    (*Alias)(r),
+    {% for var in model.allVars -%}
+        {% if model.parentModel != null and model.parentModel.discriminator.propertyName==var.name %}
+        {{ var.name }}: {% for mm in model.parentModel.discriminator.mappedModels -%}{% if mm.modelName==model.classname %}"{{ mm.mappingName }}"{% endif %}{% endfor %},
+        {% elseif var.vendorExtensions["x-is-discriminator-array"] %}
+        {{ var.name }}: new{{ var.name }},
+        {% endif %}
+	{% endfor %}
+	})
+}
+{% endif %}
+
+{% for var in model.vars -%}
+    {% if var.isEnum %}
+{% include "./innerEnum.pebble" with {"model":model, "var":var} %}
+    {% endif %}
+{% endfor %}

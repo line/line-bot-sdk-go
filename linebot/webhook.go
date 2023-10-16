@@ -37,7 +37,7 @@ func ParseRequest(channelSecret string, r *http.Request) ([]*Event, error) {
 	if err != nil {
 		return nil, err
 	}
-	if !validateSignature(channelSecret, r.Header.Get("x-line-signature"), body) {
+	if !ValidateSignature(channelSecret, r.Header.Get("x-line-signature"), body) {
 		return nil, ErrInvalidSignature
 	}
 
@@ -50,7 +50,7 @@ func ParseRequest(channelSecret string, r *http.Request) ([]*Event, error) {
 	return request.Events, nil
 }
 
-func validateSignature(channelSecret, signature string, body []byte) bool {
+func ValidateSignature(channelSecret, signature string, body []byte) bool {
 	decoded, err := base64.StdEncoding.DecodeString(signature)
 	if err != nil {
 		return false
