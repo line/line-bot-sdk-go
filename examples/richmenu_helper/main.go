@@ -26,11 +26,11 @@ import (
 
 func main() {
 	var (
-		mode     = flag.String("mode", "list", "mode of richmenu helper [list|create|link|unlink|bulklink|bulkunlink|get|delete|upload|download|alias_create|alias_get|alias_update|alias_delete|alias_list]")
-		aid      = flag.String("aid", "", "alias id")
-		uid      = flag.String("uid", "", "user id")
-		richMenuId      = flag.String("richMenuId", "", "richmenu id")
-		filePath = flag.String("image.path", "", "path to image, used in upload/download mode")
+		mode       = flag.String("mode", "list", "mode of richmenu helper [list|create|link|unlink|bulklink|bulkunlink|get|delete|upload|download|alias_create|alias_get|alias_update|alias_delete|alias_list]")
+		aid        = flag.String("aid", "", "alias id")
+		uid        = flag.String("uid", "", "user id")
+		richMenuId = flag.String("richMenuId", "", "richmenu id")
+		filePath   = flag.String("image.path", "", "path to image, used in upload/download mode")
 	)
 	flag.Parse()
 
@@ -44,7 +44,7 @@ func main() {
 	}
 
 	switch *mode {
-	case "upload": // TODO
+	case "upload":
 		if *richMenuId == "" {
 			log.Fatal("richMenuId is required")
 		}
@@ -89,32 +89,32 @@ func main() {
 			log.Fatal(err)
 		}
 		log.Printf("Image is written to %s", *filePath)
-	case "alias_create": // TODO
+	case "alias_create":
 		if _, err = client.CreateRichMenuAlias(
 			&messaging_api.CreateRichMenuAliasRequest{
 				RichMenuAliasId: *aid,
-				RichMenuId: 	*richMenuId,
+				RichMenuId:      *richMenuId,
 			},
 		); err != nil {
 			log.Fatal(err)
 		}
-	case "alias_get": // TODO
+	case "alias_get":
 		if res, err := client.GetRichMenuAlias(*aid); err != nil {
 			log.Fatal(err)
 		} else {
 			log.Printf("%v\n", res)
 		}
-	case "alias_update": // TODO
+	case "alias_update":
 		if _, err = client.UpdateRichMenuAlias(*aid, &messaging_api.UpdateRichMenuAliasRequest{
 			RichMenuId: *richMenuId,
 		}); err != nil {
 			log.Fatal(err)
 		}
-	case "alias_delete": // TODO
+	case "alias_delete":
 		if _, err = client.DeleteRichMenuAlias(*aid); err != nil {
 			log.Fatal(err)
 		}
-	case "alias_list": // TODO
+	case "alias_list":
 		res, err := client.GetRichMenuAliasList()
 		if err != nil {
 			log.Fatal(err)
@@ -122,23 +122,23 @@ func main() {
 		for _, alias := range res.Aliases {
 			log.Printf("%v\n", alias)
 		}
-	case "link": // TODO
+	case "link":
 		if _, err = client.LinkRichMenuIdToUser(*uid, *richMenuId); err != nil {
 			log.Fatal(err)
 		}
-	case "unlink": // TODO
+	case "unlink":
 		if _, err = client.UnlinkRichMenuIdFromUser(*uid); err != nil {
 			log.Fatal(err)
 		}
-	case "bulklink": // TODO
+	case "bulklink":
 		if _, err = client.LinkRichMenuIdToUsers(
 			&messaging_api.RichMenuBulkLinkRequest{
 				RichMenuId: *richMenuId,
-				UserIds: []string{*uid},
-		}); err != nil {
+				UserIds:    []string{*uid},
+			}); err != nil {
 			log.Fatal(err)
 		}
-	case "bulkunlink":  // TODO
+	case "bulkunlink":
 		if _, err = client.UnlinkRichMenuIdFromUsers(
 			&messaging_api.RichMenuBulkUnlinkRequest{
 				UserIds: []string{*uid},
@@ -201,7 +201,7 @@ func main() {
 				{
 					Bounds: &messaging_api.RichMenuBounds{X: 1250, Y: 212, Width: 1250, Height: 737},
 					Action: &messaging_api.UriAction{
-						Uri:  "https://developers.line.me/",
+						Uri:   "https://developers.line.me/",
 						Label: "click me",
 					},
 				},
