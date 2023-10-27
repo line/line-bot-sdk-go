@@ -115,6 +115,7 @@ const (
 )
 
 // Client type
+// Deprecated: use OpenAPI based instead.
 type Client struct {
 	channelSecret    string
 	channelToken     string

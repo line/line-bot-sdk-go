@@ -26,11 +26,13 @@ import (
 )
 
 // ParseRequest method
+// Deprecated: use webhook.ParseRequest instead.
 func (client *Client) ParseRequest(r *http.Request) ([]*Event, error) {
 	return ParseRequest(client.channelSecret, r)
 }
 
 // ParseRequest func
+// Deprecated: use webhook.ParseRequest instead.
 func ParseRequest(channelSecret string, r *http.Request) ([]*Event, error) {
 	defer r.Body.Close()
 	body, err := io.ReadAll(r.Body)
@@ -50,6 +52,7 @@ func ParseRequest(channelSecret string, r *http.Request) ([]*Event, error) {
 	return request.Events, nil
 }
 
+// Deprecated: use webhook.ValidateSignature instead.
 func ValidateSignature(channelSecret, signature string, body []byte) bool {
 	decoded, err := base64.StdEncoding.DecodeString(signature)
 	if err != nil {

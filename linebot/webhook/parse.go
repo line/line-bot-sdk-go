@@ -1,11 +1,17 @@
 package webhook
 
 import (
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"io"
 	"net/http"
+)
 
-	"github.com/line/line-bot-sdk-go/v7/linebot"
+var (
+	ErrInvalidSignature = errors.New("invalid signature")
 )
 
 // ParseRequest func
@@ -15,8 +21,8 @@ func ParseRequest(channelSecret string, r *http.Request) (*CallbackRequest, erro
 	if err != nil {
 		return nil, err
 	}
-	if !linebot.ValidateSignature(channelSecret, r.Header.Get("x-line-signature"), body) {
-		return nil, linebot.ErrInvalidSignature
+	if !ValidateSignature(channelSecret, r.Header.Get("x-line-signature"), body) {
+		return nil, ErrInvalidSignature
 	}
 
 	var cb CallbackRequest
@@ -24,4 +30,19 @@ func ParseRequest(channelSecret string, r *http.Request) (*CallbackRequest, erro
 		return nil, err
 	}
 	return &cb, nil
+}
+
+func ValidateSignature(channelSecret, signature string, body []byte) bool {
+	decoded, err := base64.StdEncoding.DecodeString(signature)
+	if err != nil {
+		return false
+	}
+	hash := hmac.New(sha256.New, []byte(channelSecret))
+
+	_, err = hash.Write(body)
+	if err != nil {
+		return false
+	}
+
+	return hmac.Equal(decoded, hash.Sum(nil))
 }

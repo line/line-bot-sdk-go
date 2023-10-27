@@ -94,7 +94,6 @@ def generate_webhook():
                     --global-property apiTest=false,modelDocs=false,apiDocs=false \\
                     --template-dir ./generator/src/main/resources \\
                     --enable-post-process-file \\
-                    --additional-properties parse.go=true \\
                     -e pebble \\
                     --model-package model \\
                     --api-package api \\

@@ -56,4 +56,3 @@ model_user_source.go
 model_video_message_content.go
 model_video_play_complete.go
 model_video_play_complete_event.go
-parse.go

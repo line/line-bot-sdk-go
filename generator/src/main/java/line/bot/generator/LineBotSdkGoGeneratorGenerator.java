@@ -55,11 +55,6 @@ public class LineBotSdkGoGeneratorGenerator extends AbstractGoCodegen {
     public void processOpts() {
         super.processOpts();
         supportingFiles.clear();
-
-        // for webhook
-        if (additionalProperties.get("parse.go") != null) {
-            supportingFiles.add(new SupportingFile("line-bot-sdk-go-generator/webhook/parse.pebble", "parse.go"));
-        }
     }
 
     @Override
