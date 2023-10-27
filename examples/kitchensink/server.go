@@ -40,9 +40,9 @@ func main() {
 	}
 
 	// serve /static/** files
-    _, filename, _, _ := runtime.Caller(0)
-    dir := filepath.Dir(filename)
-    staticDir := filepath.Join(dir, "static")
+	_, filename, _, _ := runtime.Caller(0)
+	dir := filepath.Dir(filename)
+	staticDir := filepath.Join(dir, "static")
 	log.Printf("Serving static content from %s\n", staticDir)
 	staticFileServer := http.FileServer(http.Dir(staticDir))
 	http.HandleFunc("/static/", http.StripPrefix("/static/", staticFileServer).ServeHTTP)
@@ -95,7 +95,7 @@ func NewKitchenSink(channelSecret, channelToken, appBaseURL string) (*KitchenSin
 	return &KitchenSink{
 		channelSecret: channelSecret,
 		bot:           bot,
-		blob:         blob,
+		blob:          blob,
 		appBaseURL:    appBaseURL,
 		downloadDir:   downloadDir,
 	}, nil
@@ -210,7 +210,7 @@ func (app *KitchenSink) handleText(message *webhook.TextMessageContent, replyTok
 		template := &messaging_api.ButtonsTemplate{
 			ThumbnailImageUrl: imageURL,
 			Title:             "My button sample",
-			Text: "Hello",
+			Text:              "Hello",
 			Actions: []messaging_api.ActionInterface{
 				&messaging_api.UriAction{
 					Label: "Go to line.me",
@@ -257,11 +257,11 @@ func (app *KitchenSink) handleText(message *webhook.TextMessageContent, replyTok
 							Actions: []messaging_api.ActionInterface{
 								&messaging_api.MessageAction{
 									Label: "Yes",
-									Text: "Yes!",
+									Text:  "Yes!",
 								},
 								&messaging_api.MessageAction{
 									Label: "No",
-									Text: "No!",
+									Text:  "No!",
 								},
 							},
 						},
@@ -322,9 +322,81 @@ func (app *KitchenSink) handleText(message *webhook.TextMessageContent, replyTok
 			return err
 		}
 	case "image carousel":
-		return handleImageCarousel(app, replyToken)
+		imageURL := app.appBaseURL + "/static/buttons/1040.jpg"
+		_, err := app.bot.ReplyMessage(
+			&messaging_api.ReplyMessageRequest{
+				ReplyToken: replyToken,
+				Messages: []messaging_api.MessageInterface{
+					&messaging_api.TemplateMessage{
+						AltText: "Image carousel alt text",
+						Template: &messaging_api.ImageCarouselTemplate{
+							Columns: []messaging_api.ImageCarouselColumn{
+								{
+									ImageUrl: imageURL,
+									Action: messaging_api.UriAction{
+										Label: "Go to LINE",
+										Uri:   "https://line.me",
+									},
+								},
+								{
+									ImageUrl: imageURL,
+									Action:   messaging_api.PostbackAction{Label: "Say hello1", Data: "hello こんにちは"},
+								},
+								{
+									ImageUrl: imageURL,
+									Action:   messaging_api.MessageAction{Label: "Say message", Text: "Rice=米"},
+								},
+								{
+									ImageUrl: imageURL,
+									Action: messaging_api.DatetimePickerAction{
+										Label: "datetime",
+										Data:  "DATETIME",
+										Mode:  messaging_api.DatetimePickerActionMODE_DATETIME,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		)
+		return err
 	case "datetime":
-		return handleDatetime(app, replyToken)
+		result, err := app.bot.ReplyMessage(
+			&messaging_api.ReplyMessageRequest{
+				ReplyToken: replyToken,
+				Messages: []messaging_api.MessageInterface{
+					&messaging_api.TemplateMessage{
+						AltText: "Datetime pickers alt text",
+						Template: &messaging_api.ButtonsTemplate{
+							Text: "Select date / time !",
+							Actions: []messaging_api.ActionInterface{
+								&messaging_api.DatetimePickerAction{
+									Label: "date",
+									Data:  "DATE",
+									Mode:  messaging_api.DatetimePickerActionMODE_DATE,
+								},
+								&messaging_api.DatetimePickerAction{
+									Label: "time",
+									Data:  "TIME",
+									Mode:  messaging_api.DatetimePickerActionMODE_TIME,
+								},
+								&messaging_api.DatetimePickerAction{
+									Label: "datetime",
+									Data:  "DATETIME",
+									Mode:  messaging_api.DatetimePickerActionMODE_DATETIME,
+								},
+							},
+						},
+					},
+				},
+			},
+		)
+		if err == nil {
+			log.Printf("Sent reply: %v", result)
+		}
+		log.Printf("Sent reply: %v %v", result, err)
+		return err
 	case "flex":
 		// {
 		//   "type": "bubble",
@@ -348,7 +420,7 @@ func (app *KitchenSink) handleText(message *webhook.TextMessageContent, replyTok
 				ReplyToken: replyToken,
 				Messages: []messaging_api.MessageInterface{
 					&messaging_api.FlexMessage{
-						AltText:  "Flex message alt text",
+						AltText: "Flex message alt text",
 						Contents: messaging_api.FlexBubble{
 							Body: &messaging_api.FlexBox{
 								Layout: messaging_api.FlexBoxLAYOUT_HORIZONTAL,
@@ -449,7 +521,7 @@ func (app *KitchenSink) handleText(message *webhook.TextMessageContent, replyTok
 		if _, err := app.bot.ReplyMessage(
 			&messaging_api.ReplyMessageRequest{
 				ReplyToken: replyToken,
-				Messages:   []messaging_api.MessageInterface{
+				Messages: []messaging_api.MessageInterface{
 					messaging_api.TextMessage{
 						Text: message.Text,
 					},
@@ -498,7 +570,7 @@ func handleQuickReply(app *KitchenSink, replyToken string) error {
 	if _, err := app.bot.ReplyMessage(
 		&messaging_api.ReplyMessageRequest{
 			ReplyToken: replyToken,
-			Messages: []messaging_api.MessageInterface{msg},
+			Messages:   []messaging_api.MessageInterface{msg},
 		},
 	); err != nil {
 		return err
@@ -804,23 +876,23 @@ func handleDatetime(app *KitchenSink, replyToken string) error {
 			ReplyToken: replyToken,
 			Messages: []messaging_api.MessageInterface{
 				&messaging_api.TemplateMessage{
-					AltText:  "Datetime pickers alt text",
+					AltText: "Datetime pickers alt text",
 					Template: &messaging_api.ButtonsTemplate{
 						Text: "Select date / time !",
 						Actions: []messaging_api.ActionInterface{
 							&messaging_api.DatetimePickerAction{
 								Label: "date",
-								Data: "DATE",
+								Data:  "DATE",
 								Mode:  messaging_api.DatetimePickerActionMODE_DATE,
 							},
 							&messaging_api.DatetimePickerAction{
 								Label: "time",
-								Data: "TIME",
+								Data:  "TIME",
 								Mode:  messaging_api.DatetimePickerActionMODE_TIME,
 							},
 							&messaging_api.DatetimePickerAction{
 								Label: "datetime",
-								Data: "DATETIME",
+								Data:  "DATETIME",
 								Mode:  messaging_api.DatetimePickerActionMODE_DATETIME,
 							},
 						},
@@ -833,48 +905,6 @@ func handleDatetime(app *KitchenSink, replyToken string) error {
 		log.Printf("Sent reply: %v", result)
 	}
 	log.Printf("Sent reply: %v %v", result, err)
-	return err
-}
-
-func handleImageCarousel(app *KitchenSink, replyToken string) error {
-	imageURL := app.appBaseURL + "/static/buttons/1040.jpg"
-	_, err := app.bot.ReplyMessage(
-		&messaging_api.ReplyMessageRequest{
-			ReplyToken: replyToken,
-			Messages: []messaging_api.MessageInterface{
-				&messaging_api.TemplateMessage{
-					AltText:  "Image carousel alt text",
-					Template: &messaging_api.ImageCarouselTemplate{
-						Columns: []messaging_api.ImageCarouselColumn{
-							{
-								ImageUrl: imageURL,
-								Action: messaging_api.UriAction{
-									Label: "Go to LINE",
-									Uri:   "https://line.me",
-								},
-							},
-							{
-								ImageUrl: imageURL,
-								Action:   messaging_api.PostbackAction{Label: "Say hello1", Data: "hello こんにちは"},
-							},
-							{
-								ImageUrl: imageURL,
-								Action:   messaging_api.MessageAction{Label: "Say message", Text: "Rice=米"},
-							},
-							{
-								ImageUrl: imageURL,
-								Action: messaging_api.DatetimePickerAction{
-									Label: "datetime",
-									Data: "DATETIME",
-									Mode:  messaging_api.DatetimePickerActionMODE_DATETIME,
-								},
-							},
-						},
-					},
-				},
-			},
-		},
-	)
 	return err
 }
 
@@ -966,7 +996,7 @@ func (app *KitchenSink) handleLocation(message *webhook.LocationMessageContent, 
 
 	_, err := app.bot.ReplyMessage(
 		&messaging_api.ReplyMessageRequest{
-			ReplyToken:			replyToken,
+			ReplyToken: replyToken,
 			Messages: []messaging_api.MessageInterface{
 				&messaging_api.LocationMessage{
 					Title:     message.Title,
