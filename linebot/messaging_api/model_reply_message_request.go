@@ -45,22 +45,6 @@ type ReplyMessageRequest struct {
 	NotificationDisabled bool `json:"notificationDisabled"`
 }
 
-func NewReplyMessageRequest(
-
-	ReplyToken string,
-
-	Messages []MessageInterface,
-
-) *ReplyMessageRequest {
-	e := &ReplyMessageRequest{}
-
-	e.ReplyToken = ReplyToken
-
-	e.Messages = Messages
-
-	return e
-}
-
 func (cr *ReplyMessageRequest) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

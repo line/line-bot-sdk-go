@@ -29,9 +29,3 @@ type TestWebhookEndpointRequest struct {
 	 */
 	Endpoint string `json:"endpoint,omitempty"`
 }
-
-func NewTestWebhookEndpointRequest() *TestWebhookEndpointRequest {
-	e := &TestWebhookEndpointRequest{}
-
-	return e
-}

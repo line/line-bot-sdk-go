@@ -29,15 +29,3 @@ type RoomMemberCountResponse struct {
 	 */
 	Count int32 `json:"count"`
 }
-
-func NewRoomMemberCountResponse(
-
-	Count int32,
-
-) *RoomMemberCountResponse {
-	e := &RoomMemberCountResponse{}
-
-	e.Count = Count
-
-	return e
-}

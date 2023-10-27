@@ -34,15 +34,3 @@ type ErrorResponse struct {
 	 */
 	Details []ErrorDetail `json:"details,omitempty"`
 }
-
-func NewErrorResponse(
-
-	Message string,
-
-) *ErrorResponse {
-	e := &ErrorResponse{}
-
-	e.Message = Message
-
-	return e
-}

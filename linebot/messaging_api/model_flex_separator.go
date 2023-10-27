@@ -40,14 +40,6 @@ type FlexSeparator struct {
 	Color string `json:"color,omitempty"`
 }
 
-func NewFlexSeparator() *FlexSeparator {
-	e := &FlexSeparator{}
-
-	e.Type = "separator"
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the FlexSeparator struct.
 func (r *FlexSeparator) MarshalJSON() ([]byte, error) {
 

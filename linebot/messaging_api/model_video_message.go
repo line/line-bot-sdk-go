@@ -55,24 +55,6 @@ type VideoMessage struct {
 	TrackingId string `json:"trackingId,omitempty"`
 }
 
-func NewVideoMessage(
-
-	OriginalContentUrl string,
-
-	PreviewImageUrl string,
-
-) *VideoMessage {
-	e := &VideoMessage{}
-
-	e.Type = "video"
-
-	e.OriginalContentUrl = OriginalContentUrl
-
-	e.PreviewImageUrl = PreviewImageUrl
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the VideoMessage struct.
 func (r *VideoMessage) MarshalJSON() ([]byte, error) {
 

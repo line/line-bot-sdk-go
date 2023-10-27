@@ -35,12 +35,6 @@ type AppTypeTile struct {
 	Percentage float64 `json:"percentage"`
 }
 
-func NewAppTypeTile() *AppTypeTile {
-	e := &AppTypeTile{}
-
-	return e
-}
-
 // AppTypeTileAPP_TYPE type
 /* users' OS */
 type AppTypeTileAPP_TYPE string

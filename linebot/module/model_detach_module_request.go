@@ -29,9 +29,3 @@ type DetachModuleRequest struct {
 	 */
 	BotId string `json:"botId,omitempty"`
 }
-
-func NewDetachModuleRequest() *DetachModuleRequest {
-	e := &DetachModuleRequest{}
-
-	return e
-}

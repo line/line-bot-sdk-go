@@ -55,28 +55,6 @@ type FlexVideo struct {
 	Action ActionInterface `json:"action,omitempty"`
 }
 
-func NewFlexVideo(
-
-	Url string,
-
-	PreviewUrl string,
-
-	AltContent FlexComponentInterface,
-
-) *FlexVideo {
-	e := &FlexVideo{}
-
-	e.Type = "video"
-
-	e.Url = Url
-
-	e.PreviewUrl = PreviewUrl
-
-	e.AltContent = AltContent
-
-	return e
-}
-
 func (cr *FlexVideo) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

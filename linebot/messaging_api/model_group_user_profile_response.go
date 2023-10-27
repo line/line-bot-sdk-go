@@ -39,19 +39,3 @@ type GroupUserProfileResponse struct {
 	 */
 	PictureUrl string `json:"pictureUrl,omitempty"`
 }
-
-func NewGroupUserProfileResponse(
-
-	DisplayName string,
-
-	UserId string,
-
-) *GroupUserProfileResponse {
-	e := &GroupUserProfileResponse{}
-
-	e.DisplayName = DisplayName
-
-	e.UserId = UserId
-
-	return e
-}

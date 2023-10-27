@@ -35,18 +35,6 @@ type Mention struct {
 	Mentionees []MentioneeInterface `json:"mentionees"`
 }
 
-func NewMention(
-
-	Mentionees []MentioneeInterface,
-
-) *Mention {
-	e := &Mention{}
-
-	e.Mentionees = Mentionees
-
-	return e
-}
-
 func (cr *Mention) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

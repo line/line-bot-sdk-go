@@ -65,40 +65,6 @@ type BeaconEvent struct {
 	Beacon *BeaconContent `json:"beacon"`
 }
 
-func NewBeaconEvent(
-
-	Timestamp int64,
-
-	Mode EventMode,
-
-	WebhookEventId string,
-
-	DeliveryContext *DeliveryContext,
-
-	ReplyToken string,
-
-	Beacon *BeaconContent,
-
-) *BeaconEvent {
-	e := &BeaconEvent{}
-
-	e.Type = "beacon"
-
-	e.Timestamp = Timestamp
-
-	e.Mode = Mode
-
-	e.WebhookEventId = WebhookEventId
-
-	e.DeliveryContext = DeliveryContext
-
-	e.ReplyToken = ReplyToken
-
-	e.Beacon = Beacon
-
-	return e
-}
-
 func (cr *BeaconEvent) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

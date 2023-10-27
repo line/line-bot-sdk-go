@@ -35,14 +35,6 @@ type GenderDemographicFilter struct {
 	OneOf []GenderDemographic `json:"oneOf,omitempty"`
 }
 
-func NewGenderDemographicFilter() *GenderDemographicFilter {
-	e := &GenderDemographicFilter{}
-
-	e.Type = "gender"
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the GenderDemographicFilter struct.
 func (r *GenderDemographicFilter) MarshalJSON() ([]byte, error) {
 

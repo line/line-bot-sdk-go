@@ -35,14 +35,6 @@ type AudienceRecipient struct {
 	AudienceGroupId int64 `json:"audienceGroupId"`
 }
 
-func NewAudienceRecipient() *AudienceRecipient {
-	e := &AudienceRecipient{}
-
-	e.Type = "audience"
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the AudienceRecipient struct.
 func (r *AudienceRecipient) MarshalJSON() ([]byte, error) {
 

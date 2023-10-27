@@ -44,9 +44,3 @@ type GetStatisticsPerUnitResponseOverview struct {
 	 */
 	UniqueMediaPlayed100Percent int64 `json:"uniqueMediaPlayed100Percent"`
 }
-
-func NewGetStatisticsPerUnitResponseOverview() *GetStatisticsPerUnitResponseOverview {
-	e := &GetStatisticsPerUnitResponseOverview{}
-
-	return e
-}

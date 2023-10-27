@@ -34,15 +34,3 @@ type MessageQuotaResponse struct {
 	 */
 	Value int64 `json:"value"`
 }
-
-func NewMessageQuotaResponse(
-
-	Type QuotaType,
-
-) *MessageQuotaResponse {
-	e := &MessageQuotaResponse{}
-
-	e.Type = Type
-
-	return e
-}

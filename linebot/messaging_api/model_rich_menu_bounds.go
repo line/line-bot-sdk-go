@@ -52,9 +52,3 @@ type RichMenuBounds struct {
 	 */
 	Height int64 `json:"height"`
 }
-
-func NewRichMenuBounds() *RichMenuBounds {
-	e := &RichMenuBounds{}
-
-	return e
-}

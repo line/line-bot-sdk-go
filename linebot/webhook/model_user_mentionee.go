@@ -45,24 +45,6 @@ type UserMentionee struct {
 	UserId string `json:"userId,omitempty"`
 }
 
-func NewUserMentionee(
-
-	Index int32,
-
-	Length int32,
-
-) *UserMentionee {
-	e := &UserMentionee{}
-
-	e.Type = "user"
-
-	e.Index = Index
-
-	e.Length = Length
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the UserMentionee struct.
 func (r *UserMentionee) MarshalJSON() ([]byte, error) {
 

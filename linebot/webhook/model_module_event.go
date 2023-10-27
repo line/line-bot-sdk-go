@@ -60,36 +60,6 @@ type ModuleEvent struct {
 	Module ModuleContentInterface `json:"module"`
 }
 
-func NewModuleEvent(
-
-	Timestamp int64,
-
-	Mode EventMode,
-
-	WebhookEventId string,
-
-	DeliveryContext *DeliveryContext,
-
-	Module ModuleContentInterface,
-
-) *ModuleEvent {
-	e := &ModuleEvent{}
-
-	e.Type = "module"
-
-	e.Timestamp = Timestamp
-
-	e.Mode = Mode
-
-	e.WebhookEventId = WebhookEventId
-
-	e.DeliveryContext = DeliveryContext
-
-	e.Module = Module
-
-	return e
-}
-
 func (cr *ModuleEvent) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

@@ -34,15 +34,3 @@ type GetModulesResponse struct {
 	 */
 	Next string `json:"next,omitempty"`
 }
-
-func NewGetModulesResponse(
-
-	Bots []ModuleBot,
-
-) *GetModulesResponse {
-	e := &GetModulesResponse{}
-
-	e.Bots = Bots
-
-	return e
-}

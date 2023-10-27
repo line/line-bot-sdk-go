@@ -40,14 +40,6 @@ type SubscriptionPeriodDemographicFilter struct {
 	Lt SubscriptionPeriodDemographic `json:"lt,omitempty"`
 }
 
-func NewSubscriptionPeriodDemographicFilter() *SubscriptionPeriodDemographicFilter {
-	e := &SubscriptionPeriodDemographicFilter{}
-
-	e.Type = "subscriptionPeriod"
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the SubscriptionPeriodDemographicFilter struct.
 func (r *SubscriptionPeriodDemographicFilter) MarshalJSON() ([]byte, error) {
 

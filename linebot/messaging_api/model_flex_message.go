@@ -50,24 +50,6 @@ type FlexMessage struct {
 	Contents FlexContainerInterface `json:"contents"`
 }
 
-func NewFlexMessage(
-
-	AltText string,
-
-	Contents FlexContainerInterface,
-
-) *FlexMessage {
-	e := &FlexMessage{}
-
-	e.Type = "flex"
-
-	e.AltText = AltText
-
-	e.Contents = Contents
-
-	return e
-}
-
 func (cr *FlexMessage) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

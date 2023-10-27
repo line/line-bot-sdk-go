@@ -70,36 +70,6 @@ type StickerMessageContent struct {
 	QuotedMessageId string `json:"quotedMessageId,omitempty"`
 }
 
-func NewStickerMessageContent(
-
-	Id string,
-
-	PackageId string,
-
-	StickerId string,
-
-	StickerResourceType StickerMessageContentSTICKER_RESOURCE_TYPE,
-
-	QuoteToken string,
-
-) *StickerMessageContent {
-	e := &StickerMessageContent{}
-
-	e.Type = "sticker"
-
-	e.Id = Id
-
-	e.PackageId = PackageId
-
-	e.StickerId = StickerId
-
-	e.StickerResourceType = StickerResourceType
-
-	e.QuoteToken = QuoteToken
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the StickerMessageContent struct.
 func (r *StickerMessageContent) MarshalJSON() ([]byte, error) {
 

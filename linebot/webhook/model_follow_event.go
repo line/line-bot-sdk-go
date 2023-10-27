@@ -60,36 +60,6 @@ type FollowEvent struct {
 	ReplyToken string `json:"replyToken"`
 }
 
-func NewFollowEvent(
-
-	Timestamp int64,
-
-	Mode EventMode,
-
-	WebhookEventId string,
-
-	DeliveryContext *DeliveryContext,
-
-	ReplyToken string,
-
-) *FollowEvent {
-	e := &FollowEvent{}
-
-	e.Type = "follow"
-
-	e.Timestamp = Timestamp
-
-	e.Mode = Mode
-
-	e.WebhookEventId = WebhookEventId
-
-	e.DeliveryContext = DeliveryContext
-
-	e.ReplyToken = ReplyToken
-
-	return e
-}
-
 func (cr *FollowEvent) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

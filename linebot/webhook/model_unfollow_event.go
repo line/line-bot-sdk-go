@@ -55,32 +55,6 @@ type UnfollowEvent struct {
 	DeliveryContext *DeliveryContext `json:"deliveryContext"`
 }
 
-func NewUnfollowEvent(
-
-	Timestamp int64,
-
-	Mode EventMode,
-
-	WebhookEventId string,
-
-	DeliveryContext *DeliveryContext,
-
-) *UnfollowEvent {
-	e := &UnfollowEvent{}
-
-	e.Type = "unfollow"
-
-	e.Timestamp = Timestamp
-
-	e.Mode = Mode
-
-	e.WebhookEventId = WebhookEventId
-
-	e.DeliveryContext = DeliveryContext
-
-	return e
-}
-
 func (cr *UnfollowEvent) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

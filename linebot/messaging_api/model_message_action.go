@@ -40,14 +40,6 @@ type MessageAction struct {
 	Text string `json:"text,omitempty"`
 }
 
-func NewMessageAction() *MessageAction {
-	e := &MessageAction{}
-
-	e.Type = "message"
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the MessageAction struct.
 func (r *MessageAction) MarshalJSON() ([]byte, error) {
 

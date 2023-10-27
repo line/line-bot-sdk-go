@@ -29,15 +29,3 @@ type VideoPlayComplete struct {
 	 */
 	TrackingId string `json:"trackingId"`
 }
-
-func NewVideoPlayComplete(
-
-	TrackingId string,
-
-) *VideoPlayComplete {
-	e := &VideoPlayComplete{}
-
-	e.TrackingId = TrackingId
-
-	return e
-}

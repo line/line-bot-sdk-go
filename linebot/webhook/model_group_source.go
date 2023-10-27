@@ -40,20 +40,6 @@ type GroupSource struct {
 	UserId string `json:"userId,omitempty"`
 }
 
-func NewGroupSource(
-
-	GroupId string,
-
-) *GroupSource {
-	e := &GroupSource{}
-
-	e.Type = "group"
-
-	e.GroupId = GroupId
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the GroupSource struct.
 func (r *GroupSource) MarshalJSON() ([]byte, error) {
 

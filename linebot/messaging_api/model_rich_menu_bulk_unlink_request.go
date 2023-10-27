@@ -29,15 +29,3 @@ type RichMenuBulkUnlinkRequest struct {
 	 */
 	UserIds []string `json:"userIds"`
 }
-
-func NewRichMenuBulkUnlinkRequest(
-
-	UserIds []string,
-
-) *RichMenuBulkUnlinkRequest {
-	e := &RichMenuBulkUnlinkRequest{}
-
-	e.UserIds = UserIds
-
-	return e
-}

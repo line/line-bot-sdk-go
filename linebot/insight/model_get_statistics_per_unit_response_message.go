@@ -89,15 +89,3 @@ type GetStatisticsPerUnitResponseMessage struct {
 	 */
 	UniqueMediaPlayed100Percent int64 `json:"uniqueMediaPlayed100Percent"`
 }
-
-func NewGetStatisticsPerUnitResponseMessage(
-
-	Seq int32,
-
-) *GetStatisticsPerUnitResponseMessage {
-	e := &GetStatisticsPerUnitResponseMessage{}
-
-	e.Seq = Seq
-
-	return e
-}

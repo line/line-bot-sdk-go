@@ -39,9 +39,3 @@ type ImageSet struct {
 	 */
 	Total int32 `json:"total"`
 }
-
-func NewImageSet() *ImageSet {
-	e := &ImageSet{}
-
-	return e
-}

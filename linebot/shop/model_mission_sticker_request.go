@@ -44,27 +44,3 @@ type MissionStickerRequest struct {
 	 */
 	SendPresentMessage bool `json:"sendPresentMessage"`
 }
-
-func NewMissionStickerRequest(
-
-	To string,
-
-	ProductId string,
-
-	ProductType string,
-
-	SendPresentMessage bool,
-
-) *MissionStickerRequest {
-	e := &MissionStickerRequest{}
-
-	e.To = To
-
-	e.ProductId = ProductId
-
-	e.ProductType = ProductType
-
-	e.SendPresentMessage = SendPresentMessage
-
-	return e
-}

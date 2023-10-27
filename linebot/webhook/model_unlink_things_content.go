@@ -35,20 +35,6 @@ type UnlinkThingsContent struct {
 	DeviceId string `json:"deviceId"`
 }
 
-func NewUnlinkThingsContent(
-
-	DeviceId string,
-
-) *UnlinkThingsContent {
-	e := &UnlinkThingsContent{}
-
-	e.Type = "unlink"
-
-	e.DeviceId = DeviceId
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the UnlinkThingsContent struct.
 func (r *UnlinkThingsContent) MarshalJSON() ([]byte, error) {
 

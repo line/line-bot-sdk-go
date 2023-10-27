@@ -29,15 +29,3 @@ type JoinedMembers struct {
 	 */
 	Members []UserSource `json:"members"`
 }
-
-func NewJoinedMembers(
-
-	Members []UserSource,
-
-) *JoinedMembers {
-	e := &JoinedMembers{}
-
-	e.Members = Members
-
-	return e
-}

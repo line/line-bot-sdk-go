@@ -100,20 +100,6 @@ type FlexButton struct {
 	Scaling bool `json:"scaling"`
 }
 
-func NewFlexButton(
-
-	Action ActionInterface,
-
-) *FlexButton {
-	e := &FlexButton{}
-
-	e.Type = "button"
-
-	e.Action = Action
-
-	return e
-}
-
 func (cr *FlexButton) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

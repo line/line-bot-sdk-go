@@ -44,27 +44,3 @@ type IssueChannelAccessTokenResponse struct {
 	 */
 	KeyId string `json:"key_id"`
 }
-
-func NewIssueChannelAccessTokenResponse(
-
-	AccessToken string,
-
-	ExpiresIn int32,
-
-	TokenType string,
-
-	KeyId string,
-
-) *IssueChannelAccessTokenResponse {
-	e := &IssueChannelAccessTokenResponse{}
-
-	e.AccessToken = AccessToken
-
-	e.ExpiresIn = ExpiresIn
-
-	e.TokenType = TokenType
-
-	e.KeyId = KeyId
-
-	return e
-}

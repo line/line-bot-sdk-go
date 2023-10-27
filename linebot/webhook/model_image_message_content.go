@@ -50,28 +50,6 @@ type ImageMessageContent struct {
 	QuoteToken string `json:"quoteToken"`
 }
 
-func NewImageMessageContent(
-
-	Id string,
-
-	ContentProvider *ContentProvider,
-
-	QuoteToken string,
-
-) *ImageMessageContent {
-	e := &ImageMessageContent{}
-
-	e.Type = "image"
-
-	e.Id = Id
-
-	e.ContentProvider = ContentProvider
-
-	e.QuoteToken = QuoteToken
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the ImageMessageContent struct.
 func (r *ImageMessageContent) MarshalJSON() ([]byte, error) {
 

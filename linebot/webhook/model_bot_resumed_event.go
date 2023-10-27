@@ -55,32 +55,6 @@ type BotResumedEvent struct {
 	DeliveryContext *DeliveryContext `json:"deliveryContext"`
 }
 
-func NewBotResumedEvent(
-
-	Timestamp int64,
-
-	Mode EventMode,
-
-	WebhookEventId string,
-
-	DeliveryContext *DeliveryContext,
-
-) *BotResumedEvent {
-	e := &BotResumedEvent{}
-
-	e.Type = "botResumed"
-
-	e.Timestamp = Timestamp
-
-	e.Mode = Mode
-
-	e.WebhookEventId = WebhookEventId
-
-	e.DeliveryContext = DeliveryContext
-
-	return e
-}
-
 func (cr *BotResumedEvent) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

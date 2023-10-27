@@ -29,15 +29,3 @@ type UpdateRichMenuAliasRequest struct {
 	 */
 	RichMenuId string `json:"richMenuId"`
 }
-
-func NewUpdateRichMenuAliasRequest(
-
-	RichMenuId string,
-
-) *UpdateRichMenuAliasRequest {
-	e := &UpdateRichMenuAliasRequest{}
-
-	e.RichMenuId = RichMenuId
-
-	return e
-}

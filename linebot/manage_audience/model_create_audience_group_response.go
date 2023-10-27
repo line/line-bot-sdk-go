@@ -65,12 +65,6 @@ type CreateAudienceGroupResponse struct {
 	IsIfaAudience bool `json:"isIfaAudience"`
 }
 
-func NewCreateAudienceGroupResponse() *CreateAudienceGroupResponse {
-	e := &CreateAudienceGroupResponse{}
-
-	return e
-}
-
 // CreateAudienceGroupResponseCREATE_ROUTE type
 /* How the audience was created.  `MESSAGING_API`: An audience created with Messaging API.  */
 type CreateAudienceGroupResponseCREATE_ROUTE string

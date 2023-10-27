@@ -50,22 +50,6 @@ type PushMessageRequest struct {
 	CustomAggregationUnits []string `json:"customAggregationUnits"`
 }
 
-func NewPushMessageRequest(
-
-	To string,
-
-	Messages []MessageInterface,
-
-) *PushMessageRequest {
-	e := &PushMessageRequest{}
-
-	e.To = To
-
-	e.Messages = Messages
-
-	return e
-}
-
 func (cr *PushMessageRequest) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

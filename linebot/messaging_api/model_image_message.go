@@ -50,24 +50,6 @@ type ImageMessage struct {
 	PreviewImageUrl string `json:"previewImageUrl"`
 }
 
-func NewImageMessage(
-
-	OriginalContentUrl string,
-
-	PreviewImageUrl string,
-
-) *ImageMessage {
-	e := &ImageMessage{}
-
-	e.Type = "image"
-
-	e.OriginalContentUrl = OriginalContentUrl
-
-	e.PreviewImageUrl = PreviewImageUrl
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the ImageMessage struct.
 func (r *ImageMessage) MarshalJSON() ([]byte, error) {
 

@@ -60,34 +60,6 @@ type BotInfoResponse struct {
 	MarkAsReadMode BotInfoResponseMARK_AS_READ_MODE `json:"markAsReadMode"`
 }
 
-func NewBotInfoResponse(
-
-	UserId string,
-
-	BasicId string,
-
-	DisplayName string,
-
-	ChatMode BotInfoResponseCHAT_MODE,
-
-	MarkAsReadMode BotInfoResponseMARK_AS_READ_MODE,
-
-) *BotInfoResponse {
-	e := &BotInfoResponse{}
-
-	e.UserId = UserId
-
-	e.BasicId = BasicId
-
-	e.DisplayName = DisplayName
-
-	e.ChatMode = ChatMode
-
-	e.MarkAsReadMode = MarkAsReadMode
-
-	return e
-}
-
 // BotInfoResponseCHAT_MODE type
 /* Chat settings set in the LINE Official Account Manager. One of:  `chat`: Chat is set to \"On\". `bot`: Chat is set to \"Off\".  */
 type BotInfoResponseCHAT_MODE string

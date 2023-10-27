@@ -55,14 +55,6 @@ type FlexBoxLinearGradient struct {
 	CenterPosition string `json:"centerPosition,omitempty"`
 }
 
-func NewFlexBoxLinearGradient() *FlexBoxLinearGradient {
-	e := &FlexBoxLinearGradient{}
-
-	e.Type = "linearGradient"
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the FlexBoxLinearGradient struct.
 func (r *FlexBoxLinearGradient) MarshalJSON() ([]byte, error) {
 

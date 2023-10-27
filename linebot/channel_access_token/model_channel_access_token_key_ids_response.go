@@ -29,15 +29,3 @@ type ChannelAccessTokenKeyIdsResponse struct {
 	 */
 	Kids []string `json:"kids"`
 }
-
-func NewChannelAccessTokenKeyIdsResponse(
-
-	Kids []string,
-
-) *ChannelAccessTokenKeyIdsResponse {
-	e := &ChannelAccessTokenKeyIdsResponse{}
-
-	e.Kids = Kids
-
-	return e
-}

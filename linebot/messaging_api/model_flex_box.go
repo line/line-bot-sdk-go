@@ -166,24 +166,6 @@ type FlexBox struct {
 	Background FlexBoxBackgroundInterface `json:"background,omitempty"`
 }
 
-func NewFlexBox(
-
-	Layout FlexBoxLAYOUT,
-
-	Contents []FlexComponentInterface,
-
-) *FlexBox {
-	e := &FlexBox{}
-
-	e.Type = "box"
-
-	e.Layout = Layout
-
-	e.Contents = Contents
-
-	return e
-}
-
 func (cr *FlexBox) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

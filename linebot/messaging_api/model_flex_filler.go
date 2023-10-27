@@ -35,14 +35,6 @@ type FlexFiller struct {
 	Flex int32 `json:"flex"`
 }
 
-func NewFlexFiller() *FlexFiller {
-	e := &FlexFiller{}
-
-	e.Type = "filler"
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the FlexFiller struct.
 func (r *FlexFiller) MarshalJSON() ([]byte, error) {
 

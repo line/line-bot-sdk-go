@@ -40,18 +40,6 @@ type RichMenuBatchRequest struct {
 	ResumeRequestKey string `json:"resumeRequestKey,omitempty"`
 }
 
-func NewRichMenuBatchRequest(
-
-	Operations []RichMenuBatchOperationInterface,
-
-) *RichMenuBatchRequest {
-	e := &RichMenuBatchRequest{}
-
-	e.Operations = Operations
-
-	return e
-}
-
 func (cr *RichMenuBatchRequest) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

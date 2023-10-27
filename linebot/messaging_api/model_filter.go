@@ -34,12 +34,6 @@ type Filter struct {
 	Demographic DemographicFilterInterface `json:"demographic,omitempty"`
 }
 
-func NewFilter() *Filter {
-	e := &Filter{}
-
-	return e
-}
-
 func (cr *Filter) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

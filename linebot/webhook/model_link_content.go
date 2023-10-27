@@ -35,22 +35,6 @@ type LinkContent struct {
 	Nonce string `json:"nonce"`
 }
 
-func NewLinkContent(
-
-	Result LinkContentRESULT,
-
-	Nonce string,
-
-) *LinkContent {
-	e := &LinkContent{}
-
-	e.Result = Result
-
-	e.Nonce = Nonce
-
-	return e
-}
-
 // LinkContentRESULT type
 /* One of the following values to indicate whether linking the account was successful or not */
 type LinkContentRESULT string

@@ -140,14 +140,6 @@ type FlexText struct {
 	Scaling bool `json:"scaling"`
 }
 
-func NewFlexText() *FlexText {
-	e := &FlexText{}
-
-	e.Type = "text"
-
-	return e
-}
-
 func (cr *FlexText) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

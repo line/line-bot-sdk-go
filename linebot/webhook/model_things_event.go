@@ -65,40 +65,6 @@ type ThingsEvent struct {
 	Things ThingsContentInterface `json:"things"`
 }
 
-func NewThingsEvent(
-
-	Timestamp int64,
-
-	Mode EventMode,
-
-	WebhookEventId string,
-
-	DeliveryContext *DeliveryContext,
-
-	ReplyToken string,
-
-	Things ThingsContentInterface,
-
-) *ThingsEvent {
-	e := &ThingsEvent{}
-
-	e.Type = "things"
-
-	e.Timestamp = Timestamp
-
-	e.Mode = Mode
-
-	e.WebhookEventId = WebhookEventId
-
-	e.DeliveryContext = DeliveryContext
-
-	e.ReplyToken = ReplyToken
-
-	e.Things = Things
-
-	return e
-}
-
 func (cr *ThingsEvent) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

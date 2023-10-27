@@ -40,24 +40,6 @@ type DetachedModuleContent struct {
 	Reason DetachedModuleContentREASON `json:"reason"`
 }
 
-func NewDetachedModuleContent(
-
-	BotId string,
-
-	Reason DetachedModuleContentREASON,
-
-) *DetachedModuleContent {
-	e := &DetachedModuleContent{}
-
-	e.Type = "detached"
-
-	e.BotId = BotId
-
-	e.Reason = Reason
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the DetachedModuleContent struct.
 func (r *DetachedModuleContent) MarshalJSON() ([]byte, error) {
 

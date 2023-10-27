@@ -35,20 +35,6 @@ type LinkThingsContent struct {
 	DeviceId string `json:"deviceId"`
 }
 
-func NewLinkThingsContent(
-
-	DeviceId string,
-
-) *LinkThingsContent {
-	e := &LinkThingsContent{}
-
-	e.Type = "link"
-
-	e.DeviceId = DeviceId
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the LinkThingsContent struct.
 func (r *LinkThingsContent) MarshalJSON() ([]byte, error) {
 

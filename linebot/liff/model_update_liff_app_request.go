@@ -54,9 +54,3 @@ type UpdateLiffAppRequest struct {
 	 */
 	BotPrompt LiffBotPrompt `json:"botPrompt,omitempty"`
 }
-
-func NewUpdateLiffAppRequest() *UpdateLiffAppRequest {
-	e := &UpdateLiffAppRequest{}
-
-	return e
-}

@@ -29,15 +29,3 @@ type UnsendDetail struct {
 	 */
 	MessageId string `json:"messageId"`
 }
-
-func NewUnsendDetail(
-
-	MessageId string,
-
-) *UnsendDetail {
-	e := &UnsendDetail{}
-
-	e.MessageId = MessageId
-
-	return e
-}

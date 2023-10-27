@@ -60,36 +60,6 @@ type MemberLeftEvent struct {
 	Left *LeftMembers `json:"left"`
 }
 
-func NewMemberLeftEvent(
-
-	Timestamp int64,
-
-	Mode EventMode,
-
-	WebhookEventId string,
-
-	DeliveryContext *DeliveryContext,
-
-	Left *LeftMembers,
-
-) *MemberLeftEvent {
-	e := &MemberLeftEvent{}
-
-	e.Type = "memberLeft"
-
-	e.Timestamp = Timestamp
-
-	e.Mode = Mode
-
-	e.WebhookEventId = WebhookEventId
-
-	e.DeliveryContext = DeliveryContext
-
-	e.Left = Left
-
-	return e
-}
-
 func (cr *MemberLeftEvent) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

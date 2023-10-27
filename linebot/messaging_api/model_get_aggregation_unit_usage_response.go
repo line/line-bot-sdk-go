@@ -29,15 +29,3 @@ type GetAggregationUnitUsageResponse struct {
 	 */
 	NumOfCustomAggregationUnits int64 `json:"numOfCustomAggregationUnits"`
 }
-
-func NewGetAggregationUnitUsageResponse(
-
-	NumOfCustomAggregationUnits int64,
-
-) *GetAggregationUnitUsageResponse {
-	e := &GetAggregationUnitUsageResponse{}
-
-	e.NumOfCustomAggregationUnits = NumOfCustomAggregationUnits
-
-	return e
-}

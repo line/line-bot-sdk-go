@@ -45,12 +45,6 @@ type GetNumberOfFollowersResponse struct {
 	Blocks int64 `json:"blocks"`
 }
 
-func NewGetNumberOfFollowersResponse() *GetNumberOfFollowersResponse {
-	e := &GetNumberOfFollowersResponse{}
-
-	return e
-}
-
 // GetNumberOfFollowersResponseSTATUS type
 /* Calculation status. */
 type GetNumberOfFollowersResponseSTATUS string

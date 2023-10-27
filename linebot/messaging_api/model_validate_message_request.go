@@ -35,18 +35,6 @@ type ValidateMessageRequest struct {
 	Messages []MessageInterface `json:"messages"`
 }
 
-func NewValidateMessageRequest(
-
-	Messages []MessageInterface,
-
-) *ValidateMessageRequest {
-	e := &ValidateMessageRequest{}
-
-	e.Messages = Messages
-
-	return e
-}
-
 func (cr *ValidateMessageRequest) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

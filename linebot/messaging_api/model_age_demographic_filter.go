@@ -40,14 +40,6 @@ type AgeDemographicFilter struct {
 	Lt AgeDemographic `json:"lt,omitempty"`
 }
 
-func NewAgeDemographicFilter() *AgeDemographicFilter {
-	e := &AgeDemographicFilter{}
-
-	e.Type = "age"
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the AgeDemographicFilter struct.
 func (r *AgeDemographicFilter) MarshalJSON() ([]byte, error) {
 

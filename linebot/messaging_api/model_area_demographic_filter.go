@@ -35,14 +35,6 @@ type AreaDemographicFilter struct {
 	OneOf []AreaDemographic `json:"oneOf,omitempty"`
 }
 
-func NewAreaDemographicFilter() *AreaDemographicFilter {
-	e := &AreaDemographicFilter{}
-
-	e.Type = "area"
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the AreaDemographicFilter struct.
 func (r *AreaDemographicFilter) MarshalJSON() ([]byte, error) {
 

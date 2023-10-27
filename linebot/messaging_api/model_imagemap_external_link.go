@@ -34,9 +34,3 @@ type ImagemapExternalLink struct {
 	 */
 	Label string `json:"label,omitempty"`
 }
-
-func NewImagemapExternalLink() *ImagemapExternalLink {
-	e := &ImagemapExternalLink{}
-
-	return e
-}

@@ -40,12 +40,6 @@ type CallbackRequest struct {
 	Events []EventInterface `json:"events,omitempty"`
 }
 
-func NewCallbackRequest() *CallbackRequest {
-	e := &CallbackRequest{}
-
-	return e
-}
-
 func (cr *CallbackRequest) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

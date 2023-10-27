@@ -40,24 +40,6 @@ type AllMentionee struct {
 	Length int32 `json:"length"`
 }
 
-func NewAllMentionee(
-
-	Index int32,
-
-	Length int32,
-
-) *AllMentionee {
-	e := &AllMentionee{}
-
-	e.Type = "all"
-
-	e.Index = Index
-
-	e.Length = Length
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the AllMentionee struct.
 func (r *AllMentionee) MarshalJSON() ([]byte, error) {
 

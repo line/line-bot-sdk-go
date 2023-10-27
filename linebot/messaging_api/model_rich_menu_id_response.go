@@ -29,15 +29,3 @@ type RichMenuIdResponse struct {
 	 */
 	RichMenuId string `json:"richMenuId"`
 }
-
-func NewRichMenuIdResponse(
-
-	RichMenuId string,
-
-) *RichMenuIdResponse {
-	e := &RichMenuIdResponse{}
-
-	e.RichMenuId = RichMenuId
-
-	return e
-}

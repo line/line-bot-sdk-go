@@ -50,22 +50,6 @@ type MulticastRequest struct {
 	CustomAggregationUnits []string `json:"customAggregationUnits"`
 }
 
-func NewMulticastRequest(
-
-	Messages []MessageInterface,
-
-	To []string,
-
-) *MulticastRequest {
-	e := &MulticastRequest{}
-
-	e.Messages = Messages
-
-	e.To = To
-
-	return e
-}
-
 func (cr *MulticastRequest) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

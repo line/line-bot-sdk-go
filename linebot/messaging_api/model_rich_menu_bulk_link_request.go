@@ -34,19 +34,3 @@ type RichMenuBulkLinkRequest struct {
 	 */
 	UserIds []string `json:"userIds"`
 }
-
-func NewRichMenuBulkLinkRequest(
-
-	RichMenuId string,
-
-	UserIds []string,
-
-) *RichMenuBulkLinkRequest {
-	e := &RichMenuBulkLinkRequest{}
-
-	e.RichMenuId = RichMenuId
-
-	e.UserIds = UserIds
-
-	return e
-}

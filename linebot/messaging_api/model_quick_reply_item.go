@@ -44,12 +44,6 @@ type QuickReplyItem struct {
 	Type string `json:"type,omitempty"`
 }
 
-func NewQuickReplyItem() *QuickReplyItem {
-	e := &QuickReplyItem{}
-
-	return e
-}
-
 func (cr *QuickReplyItem) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

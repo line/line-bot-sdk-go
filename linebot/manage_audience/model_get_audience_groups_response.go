@@ -54,9 +54,3 @@ type GetAudienceGroupsResponse struct {
 	 */
 	Size int64 `json:"size"`
 }
-
-func NewGetAudienceGroupsResponse() *GetAudienceGroupsResponse {
-	e := &GetAudienceGroupsResponse{}
-
-	return e
-}

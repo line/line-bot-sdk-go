@@ -39,15 +39,3 @@ type ErrorResponse struct {
 	 */
 	SentMessages []SentMessage `json:"sentMessages,omitempty"`
 }
-
-func NewErrorResponse(
-
-	Message string,
-
-) *ErrorResponse {
-	e := &ErrorResponse{}
-
-	e.Message = Message
-
-	return e
-}

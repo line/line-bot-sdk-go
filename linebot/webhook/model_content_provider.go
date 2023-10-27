@@ -40,18 +40,6 @@ type ContentProvider struct {
 	PreviewImageUrl string `json:"previewImageUrl,omitempty"`
 }
 
-func NewContentProvider(
-
-	Type ContentProviderTYPE,
-
-) *ContentProvider {
-	e := &ContentProvider{}
-
-	e.Type = Type
-
-	return e
-}
-
 // ContentProviderTYPE type
 /* Provider of the image file. */
 type ContentProviderTYPE string

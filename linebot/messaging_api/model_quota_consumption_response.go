@@ -29,15 +29,3 @@ type QuotaConsumptionResponse struct {
 	 */
 	TotalUsage int64 `json:"totalUsage"`
 }
-
-func NewQuotaConsumptionResponse(
-
-	TotalUsage int64,
-
-) *QuotaConsumptionResponse {
-	e := &QuotaConsumptionResponse{}
-
-	e.TotalUsage = TotalUsage
-
-	return e
-}

@@ -54,35 +54,3 @@ type RichMenuResponse struct {
 	 */
 	Areas []RichMenuArea `json:"areas"`
 }
-
-func NewRichMenuResponse(
-
-	RichMenuId string,
-
-	Size *RichMenuSize,
-
-	Selected bool,
-
-	Name string,
-
-	ChatBarText string,
-
-	Areas []RichMenuArea,
-
-) *RichMenuResponse {
-	e := &RichMenuResponse{}
-
-	e.RichMenuId = RichMenuId
-
-	e.Size = Size
-
-	e.Selected = Selected
-
-	e.Name = Name
-
-	e.ChatBarText = ChatBarText
-
-	e.Areas = Areas
-
-	return e
-}

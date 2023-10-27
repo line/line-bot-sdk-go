@@ -35,12 +35,6 @@ type AgeTile struct {
 	Percentage float64 `json:"percentage"`
 }
 
-func NewAgeTile() *AgeTile {
-	e := &AgeTile{}
-
-	return e
-}
-
 // AgeTileAGE type
 /* users' age */
 type AgeTileAGE string

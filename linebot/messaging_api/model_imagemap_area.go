@@ -44,27 +44,3 @@ type ImagemapArea struct {
 	 */
 	Height int32 `json:"height"`
 }
-
-func NewImagemapArea(
-
-	X int32,
-
-	Y int32,
-
-	Width int32,
-
-	Height int32,
-
-) *ImagemapArea {
-	e := &ImagemapArea{}
-
-	e.X = X
-
-	e.Y = Y
-
-	e.Width = Width
-
-	e.Height = Height
-
-	return e
-}

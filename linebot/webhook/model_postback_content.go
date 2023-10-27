@@ -34,15 +34,3 @@ type PostbackContent struct {
 	 */
 	Params map[string]string `json:"params"`
 }
-
-func NewPostbackContent(
-
-	Data string,
-
-) *PostbackContent {
-	e := &PostbackContent{}
-
-	e.Data = Data
-
-	return e
-}

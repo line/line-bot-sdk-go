@@ -34,19 +34,3 @@ type AttachModuleResponse struct {
 	 */
 	Scopes []string `json:"scopes"`
 }
-
-func NewAttachModuleResponse(
-
-	BotId string,
-
-	Scopes []string,
-
-) *AttachModuleResponse {
-	e := &AttachModuleResponse{}
-
-	e.BotId = BotId
-
-	e.Scopes = Scopes
-
-	return e
-}

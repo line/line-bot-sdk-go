@@ -59,9 +59,3 @@ type LiffApp struct {
 	 */
 	BotPrompt LiffBotPrompt `json:"botPrompt,omitempty"`
 }
-
-func NewLiffApp() *LiffApp {
-	e := &LiffApp{}
-
-	return e
-}

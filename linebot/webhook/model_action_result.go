@@ -35,18 +35,6 @@ type ActionResult struct {
 	Data string `json:"data,omitempty"`
 }
 
-func NewActionResult(
-
-	Type ActionResultTYPE,
-
-) *ActionResult {
-	e := &ActionResult{}
-
-	e.Type = Type
-
-	return e
-}
-
 // ActionResultTYPE type
 
 type ActionResultTYPE string

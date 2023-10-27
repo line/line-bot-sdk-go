@@ -65,32 +65,6 @@ type MessageEvent struct {
 	Message MessageContentInterface `json:"message,omitempty"`
 }
 
-func NewMessageEvent(
-
-	Timestamp int64,
-
-	Mode EventMode,
-
-	WebhookEventId string,
-
-	DeliveryContext *DeliveryContext,
-
-) *MessageEvent {
-	e := &MessageEvent{}
-
-	e.Type = "message"
-
-	e.Timestamp = Timestamp
-
-	e.Mode = Mode
-
-	e.WebhookEventId = WebhookEventId
-
-	e.DeliveryContext = DeliveryContext
-
-	return e
-}
-
 func (cr *MessageEvent) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

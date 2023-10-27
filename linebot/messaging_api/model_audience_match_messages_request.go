@@ -45,22 +45,6 @@ type AudienceMatchMessagesRequest struct {
 	NotificationDisabled bool `json:"notificationDisabled"`
 }
 
-func NewAudienceMatchMessagesRequest(
-
-	Messages []MessageInterface,
-
-	To []string,
-
-) *AudienceMatchMessagesRequest {
-	e := &AudienceMatchMessagesRequest{}
-
-	e.Messages = Messages
-
-	e.To = To
-
-	return e
-}
-
 func (cr *AudienceMatchMessagesRequest) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

@@ -29,9 +29,3 @@ type AltUri struct {
 	 */
 	Desktop string `json:"desktop,omitempty"`
 }
-
-func NewAltUri() *AltUri {
-	e := &AltUri{}
-
-	return e
-}

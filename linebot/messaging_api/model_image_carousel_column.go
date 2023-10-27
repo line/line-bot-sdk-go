@@ -39,22 +39,6 @@ type ImageCarouselColumn struct {
 	Action ActionInterface `json:"action"`
 }
 
-func NewImageCarouselColumn(
-
-	ImageUrl string,
-
-	Action ActionInterface,
-
-) *ImageCarouselColumn {
-	e := &ImageCarouselColumn{}
-
-	e.ImageUrl = ImageUrl
-
-	e.Action = Action
-
-	return e
-}
-
 func (cr *ImageCarouselColumn) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

@@ -29,15 +29,3 @@ type LeftMembers struct {
 	 */
 	Members []UserSource `json:"members"`
 }
-
-func NewLeftMembers(
-
-	Members []UserSource,
-
-) *LeftMembers {
-	e := &LeftMembers{}
-
-	e.Members = Members
-
-	return e
-}

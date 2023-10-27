@@ -44,27 +44,3 @@ type Emoji struct {
 	 */
 	EmojiId string `json:"emojiId"`
 }
-
-func NewEmoji(
-
-	Index int32,
-
-	Length int32,
-
-	ProductId string,
-
-	EmojiId string,
-
-) *Emoji {
-	e := &Emoji{}
-
-	e.Index = Index
-
-	e.Length = Length
-
-	e.ProductId = ProductId
-
-	e.EmojiId = EmojiId
-
-	return e
-}

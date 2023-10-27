@@ -40,24 +40,6 @@ type RichMenuBatchLinkOperation struct {
 	To string `json:"to"`
 }
 
-func NewRichMenuBatchLinkOperation(
-
-	From string,
-
-	To string,
-
-) *RichMenuBatchLinkOperation {
-	e := &RichMenuBatchLinkOperation{}
-
-	e.Type = "link"
-
-	e.From = From
-
-	e.To = To
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the RichMenuBatchLinkOperation struct.
 func (r *RichMenuBatchLinkOperation) MarshalJSON() ([]byte, error) {
 

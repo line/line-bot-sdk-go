@@ -188,9 +188,9 @@ func (app *KitchenSink) handleText(message *webhook.TextMessageContent, replyTok
 				return app.replyText(replyToken, err.Error())
 			}
 			if _, err := app.bot.ReplyMessage(
-				messaging_api.NewReplyMessageRequest(
-					replyToken,
-					[]messaging_api.MessageInterface{
+				&messaging_api.ReplyMessageRequest{
+					ReplyToken: replyToken,
+					Messages: []messaging_api.MessageInterface{
 						messaging_api.TextMessage{
 							Text: "Display name: " + profile.DisplayName,
 						},
@@ -198,7 +198,7 @@ func (app *KitchenSink) handleText(message *webhook.TextMessageContent, replyTok
 							Text: "Status message: " + profile.StatusMessage,
 						},
 					},
-				),
+				},
 			); err != nil {
 				return err
 			}
@@ -309,15 +309,15 @@ func (app *KitchenSink) handleText(message *webhook.TextMessageContent, replyTok
 			},
 		}
 		if _, err := app.bot.ReplyMessage(
-			messaging_api.NewReplyMessageRequest(
-				replyToken,
-				[]messaging_api.MessageInterface{
+			&messaging_api.ReplyMessageRequest{
+				ReplyToken: replyToken,
+				Messages: []messaging_api.MessageInterface{
 					&messaging_api.TemplateMessage{
 						AltText:  "Carousel alt text",
 						Template: template,
 					},
 				},
-			),
+			},
 		); err != nil {
 			return err
 		}
@@ -380,9 +380,9 @@ func (app *KitchenSink) handleText(message *webhook.TextMessageContent, replyTok
 		}
 	case "imagemap":
 		if _, err := app.bot.ReplyMessage(
-			messaging_api.NewReplyMessageRequest(
-				replyToken,
-				[]messaging_api.MessageInterface{
+			&messaging_api.ReplyMessageRequest{
+				ReplyToken: replyToken,
+				Messages: []messaging_api.MessageInterface{
 					messaging_api.ImagemapMessage{
 						BaseUrl:  app.appBaseURL + "/static/rich",
 						AltText:  "Imagemap alt text",
@@ -411,7 +411,7 @@ func (app *KitchenSink) handleText(message *webhook.TextMessageContent, replyTok
 						},
 					},
 				},
-			),
+			},
 		); err != nil {
 			return err
 		}
@@ -496,10 +496,10 @@ func handleQuickReply(app *KitchenSink, replyToken string) error {
 		},
 	}
 	if _, err := app.bot.ReplyMessage(
-		messaging_api.NewReplyMessageRequest(
-			replyToken,
-			[]messaging_api.MessageInterface{msg},
-		),
+		&messaging_api.ReplyMessageRequest{
+			ReplyToken: replyToken,
+			Messages: []messaging_api.MessageInterface{msg},
+		},
 	); err != nil {
 		return err
 	}
@@ -508,9 +508,9 @@ func handleQuickReply(app *KitchenSink, replyToken string) error {
 
 func handleImagemapVideo(app *KitchenSink, replyToken string) error {
 	if _, err := app.bot.ReplyMessage(
-		messaging_api.NewReplyMessageRequest(
-			replyToken,
-			[]messaging_api.MessageInterface{
+		&messaging_api.ReplyMessageRequest{
+			ReplyToken: replyToken,
+			Messages: []messaging_api.MessageInterface{
 				messaging_api.ImagemapMessage{
 					BaseUrl: app.appBaseURL + "/static/rich",
 					AltText: "Imagemap with video alt text",
@@ -547,7 +547,7 @@ func handleImagemapVideo(app *KitchenSink, replyToken string) error {
 					},
 				},
 			},
-		),
+		},
 	); err != nil {
 		return err
 	}
@@ -713,15 +713,15 @@ func handleFlexJson(app *KitchenSink, replyToken string) error {
 		return err
 	}
 	if _, err := app.bot.ReplyMessage(
-		messaging_api.NewReplyMessageRequest(
-			replyToken,
-			[]messaging_api.MessageInterface{
+		&messaging_api.ReplyMessageRequest{
+			ReplyToken: replyToken,
+			Messages: []messaging_api.MessageInterface{
 				&messaging_api.FlexMessage{
 					AltText:  "Flex message alt text",
 					Contents: contents,
 				},
 			},
-		),
+		},
 	); err != nil {
 		return err
 	}
@@ -785,13 +785,13 @@ func handleFlexCarousel(app *KitchenSink, replyToken string) error {
 		},
 	}
 	if _, err := app.bot.ReplyMessage(
-		messaging_api.NewReplyMessageRequest(
-			replyToken,
-			[]messaging_api.MessageInterface{&messaging_api.FlexMessage{
+		&messaging_api.ReplyMessageRequest{
+			ReplyToken: replyToken,
+			Messages: []messaging_api.MessageInterface{&messaging_api.FlexMessage{
 				Contents: contents,
 				AltText:  "Flex message alt text",
 			}},
-		),
+		},
 	); err != nil {
 		return err
 	}
@@ -839,9 +839,9 @@ func handleDatetime(app *KitchenSink, replyToken string) error {
 func handleImageCarousel(app *KitchenSink, replyToken string) error {
 	imageURL := app.appBaseURL + "/static/buttons/1040.jpg"
 	_, err := app.bot.ReplyMessage(
-		messaging_api.NewReplyMessageRequest(
-			replyToken,
-			[]messaging_api.MessageInterface{
+		&messaging_api.ReplyMessageRequest{
+			ReplyToken: replyToken,
+			Messages: []messaging_api.MessageInterface{
 				&messaging_api.TemplateMessage{
 					AltText:  "Image carousel alt text",
 					Template: &messaging_api.ImageCarouselTemplate{
@@ -873,7 +873,7 @@ func handleImageCarousel(app *KitchenSink, replyToken string) error {
 					},
 				},
 			},
-		),
+		},
 	)
 	return err
 }
@@ -891,15 +891,15 @@ func (app *KitchenSink) handleImage(message *webhook.ImageMessageContent, replyT
 		originalContentURL := app.appBaseURL + "/downloaded/" + filepath.Base(originalContent.Name())
 		previewImageURL := app.appBaseURL + "/downloaded/" + filepath.Base(previewImagePath)
 		if _, err := app.bot.ReplyMessage(
-			messaging_api.NewReplyMessageRequest(
-				replyToken,
-				[]messaging_api.MessageInterface{
+			&messaging_api.ReplyMessageRequest{
+				ReplyToken: replyToken,
+				Messages: []messaging_api.MessageInterface{
 					&messaging_api.ImageMessage{
 						OriginalContentUrl: originalContentURL,
 						PreviewImageUrl:    previewImageURL,
 					},
 				},
-			),
+			},
 		); err != nil {
 			return err
 		}
@@ -920,15 +920,15 @@ func (app *KitchenSink) handleVideo(message *webhook.VideoMessageContent, replyT
 		originalContentURL := app.appBaseURL + "/downloaded/" + filepath.Base(originalContent.Name())
 		previewImageURL := app.appBaseURL + "/downloaded/" + filepath.Base(previewImagePath)
 		if _, err := app.bot.ReplyMessage(
-			messaging_api.NewReplyMessageRequest(
-				replyToken,
-				[]messaging_api.MessageInterface{
+			&messaging_api.ReplyMessageRequest{
+				ReplyToken: replyToken,
+				Messages: []messaging_api.MessageInterface{
 					&messaging_api.VideoMessage{
 						OriginalContentUrl: originalContentURL,
 						PreviewImageUrl:    previewImageURL,
 					},
 				},
-			),
+			},
 		); err != nil {
 			return err
 		}
@@ -941,15 +941,15 @@ func (app *KitchenSink) handleAudio(message *webhook.AudioMessageContent, replyT
 		originalContentURL := app.appBaseURL + "/downloaded/" + filepath.Base(originalContent.Name())
 
 		if _, err := app.bot.ReplyMessage(
-			messaging_api.NewReplyMessageRequest(
-				replyToken,
-				[]messaging_api.MessageInterface{
+			&messaging_api.ReplyMessageRequest{
+				ReplyToken: replyToken,
+				Messages: []messaging_api.MessageInterface{
 					&messaging_api.AudioMessage{
 						OriginalContentUrl: originalContentURL,
 						Duration:           100,
 					},
 				},
-			),
+			},
 		); err != nil {
 			return err
 		}
@@ -982,15 +982,15 @@ func (app *KitchenSink) handleLocation(message *webhook.LocationMessageContent, 
 
 func (app *KitchenSink) handleSticker(message *webhook.StickerMessageContent, replyToken string) error {
 	if _, err := app.bot.ReplyMessage(
-		messaging_api.NewReplyMessageRequest(
-			replyToken,
-			[]messaging_api.MessageInterface{
+		&messaging_api.ReplyMessageRequest{
+			ReplyToken: replyToken,
+			Messages: []messaging_api.MessageInterface{
 				&messaging_api.StickerMessage{
 					PackageId: message.PackageId,
 					StickerId: message.StickerId,
 				},
 			},
-		),
+		},
 	); err != nil {
 		return err
 	}
@@ -999,14 +999,14 @@ func (app *KitchenSink) handleSticker(message *webhook.StickerMessageContent, re
 
 func (app *KitchenSink) replyText(replyToken, text string) error {
 	if _, err := app.bot.ReplyMessage(
-		messaging_api.NewReplyMessageRequest(
-			replyToken,
-			[]messaging_api.MessageInterface{
+		&messaging_api.ReplyMessageRequest{
+			ReplyToken: replyToken,
+			Messages: []messaging_api.MessageInterface{
 				&messaging_api.TextMessage{
 					Text: text,
 				},
 			},
-		),
+		},
 	); err != nil {
 		return err
 	}

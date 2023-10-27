@@ -55,18 +55,6 @@ type NarrowcastRequest struct {
 	NotificationDisabled bool `json:"notificationDisabled"`
 }
 
-func NewNarrowcastRequest(
-
-	Messages []MessageInterface,
-
-) *NarrowcastRequest {
-	e := &NarrowcastRequest{}
-
-	e.Messages = Messages
-
-	return e
-}
-
 func (cr *NarrowcastRequest) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

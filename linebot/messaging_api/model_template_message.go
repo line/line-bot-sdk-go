@@ -50,24 +50,6 @@ type TemplateMessage struct {
 	Template TemplateInterface `json:"template"`
 }
 
-func NewTemplateMessage(
-
-	AltText string,
-
-	Template TemplateInterface,
-
-) *TemplateMessage {
-	e := &TemplateMessage{}
-
-	e.Type = "template"
-
-	e.AltText = AltText
-
-	e.Template = Template
-
-	return e
-}
-
 func (cr *TemplateMessage) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

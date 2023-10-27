@@ -34,9 +34,3 @@ type ErrorResponse struct {
 	 */
 	ErrorDescription string `json:"error_description,omitempty"`
 }
-
-func NewErrorResponse() *ErrorResponse {
-	e := &ErrorResponse{}
-
-	return e
-}

@@ -65,36 +65,6 @@ type AccountLinkEvent struct {
 	Link *LinkContent `json:"link"`
 }
 
-func NewAccountLinkEvent(
-
-	Timestamp int64,
-
-	Mode EventMode,
-
-	WebhookEventId string,
-
-	DeliveryContext *DeliveryContext,
-
-	Link *LinkContent,
-
-) *AccountLinkEvent {
-	e := &AccountLinkEvent{}
-
-	e.Type = "accountLink"
-
-	e.Timestamp = Timestamp
-
-	e.Mode = Mode
-
-	e.WebhookEventId = WebhookEventId
-
-	e.DeliveryContext = DeliveryContext
-
-	e.Link = Link
-
-	return e
-}
-
 func (cr *AccountLinkEvent) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

@@ -55,32 +55,6 @@ type LeaveEvent struct {
 	DeliveryContext *DeliveryContext `json:"deliveryContext"`
 }
 
-func NewLeaveEvent(
-
-	Timestamp int64,
-
-	Mode EventMode,
-
-	WebhookEventId string,
-
-	DeliveryContext *DeliveryContext,
-
-) *LeaveEvent {
-	e := &LeaveEvent{}
-
-	e.Type = "leave"
-
-	e.Timestamp = Timestamp
-
-	e.Mode = Mode
-
-	e.WebhookEventId = WebhookEventId
-
-	e.DeliveryContext = DeliveryContext
-
-	return e
-}
-
 func (cr *LeaveEvent) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

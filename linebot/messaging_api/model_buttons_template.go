@@ -71,24 +71,6 @@ type ButtonsTemplate struct {
 	Actions []ActionInterface `json:"actions"`
 }
 
-func NewButtonsTemplate(
-
-	Text string,
-
-	Actions []ActionInterface,
-
-) *ButtonsTemplate {
-	e := &ButtonsTemplate{}
-
-	e.Type = "buttons"
-
-	e.Text = Text
-
-	e.Actions = Actions
-
-	return e
-}
-
 func (cr *ButtonsTemplate) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

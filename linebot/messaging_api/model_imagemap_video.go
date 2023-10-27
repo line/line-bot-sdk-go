@@ -44,9 +44,3 @@ type ImagemapVideo struct {
 	 */
 	ExternalLink *ImagemapExternalLink `json:"externalLink,omitempty"`
 }
-
-func NewImagemapVideo() *ImagemapVideo {
-	e := &ImagemapVideo{}
-
-	return e
-}

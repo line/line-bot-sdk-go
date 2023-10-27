@@ -45,22 +45,6 @@ type PnpMessagesRequest struct {
 	NotificationDisabled bool `json:"notificationDisabled"`
 }
 
-func NewPnpMessagesRequest(
-
-	Messages []MessageInterface,
-
-	To string,
-
-) *PnpMessagesRequest {
-	e := &PnpMessagesRequest{}
-
-	e.Messages = Messages
-
-	e.To = To
-
-	return e
-}
-
 func (cr *PnpMessagesRequest) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

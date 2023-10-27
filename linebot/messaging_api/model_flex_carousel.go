@@ -35,20 +35,6 @@ type FlexCarousel struct {
 	Contents []FlexBubble `json:"contents"`
 }
 
-func NewFlexCarousel(
-
-	Contents []FlexBubble,
-
-) *FlexCarousel {
-	e := &FlexCarousel{}
-
-	e.Type = "carousel"
-
-	e.Contents = Contents
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the FlexCarousel struct.
 func (r *FlexCarousel) MarshalJSON() ([]byte, error) {
 

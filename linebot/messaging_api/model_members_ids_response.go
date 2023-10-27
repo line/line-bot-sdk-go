@@ -34,15 +34,3 @@ type MembersIdsResponse struct {
 	 */
 	Next string `json:"next,omitempty"`
 }
-
-func NewMembersIdsResponse(
-
-	MemberIds []string,
-
-) *MembersIdsResponse {
-	e := &MembersIdsResponse{}
-
-	e.MemberIds = MemberIds
-
-	return e
-}

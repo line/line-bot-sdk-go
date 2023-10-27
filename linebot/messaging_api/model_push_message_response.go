@@ -29,15 +29,3 @@ type PushMessageResponse struct {
 	 */
 	SentMessages []SentMessage `json:"sentMessages"`
 }
-
-func NewPushMessageResponse(
-
-	SentMessages []SentMessage,
-
-) *PushMessageResponse {
-	e := &PushMessageResponse{}
-
-	e.SentMessages = SentMessages
-
-	return e
-}

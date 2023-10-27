@@ -35,9 +35,3 @@ type AcquireChatControlRequest struct {
 	 */
 	Ttl int32 `json:"ttl"`
 }
-
-func NewAcquireChatControlRequest() *AcquireChatControlRequest {
-	e := &AcquireChatControlRequest{}
-
-	return e
-}

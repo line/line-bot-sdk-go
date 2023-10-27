@@ -29,9 +29,3 @@ type UpdateAudienceGroupDescriptionRequest struct {
 	 */
 	Description string `json:"description,omitempty"`
 }
-
-func NewUpdateAudienceGroupDescriptionRequest() *UpdateAudienceGroupDescriptionRequest {
-	e := &UpdateAudienceGroupDescriptionRequest{}
-
-	return e
-}

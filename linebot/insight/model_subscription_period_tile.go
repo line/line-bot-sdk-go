@@ -35,12 +35,6 @@ type SubscriptionPeriodTile struct {
 	Percentage float64 `json:"percentage"`
 }
 
-func NewSubscriptionPeriodTile() *SubscriptionPeriodTile {
-	e := &SubscriptionPeriodTile{}
-
-	return e
-}
-
 // SubscriptionPeriodTileSUBSCRIPTION_PERIOD type
 /* Subscription period. Possible values: `within7days`, `within90days`, `unknown` etc. */
 type SubscriptionPeriodTileSUBSCRIPTION_PERIOD string

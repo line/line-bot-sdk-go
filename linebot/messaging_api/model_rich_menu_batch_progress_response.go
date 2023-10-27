@@ -43,19 +43,3 @@ type RichMenuBatchProgressResponse struct {
 	 */
 	CompletedTime time.Time `json:"completedTime,omitempty"`
 }
-
-func NewRichMenuBatchProgressResponse(
-
-	Phase RichMenuBatchProgressPhase,
-
-	AcceptedTime time.Time,
-
-) *RichMenuBatchProgressResponse {
-	e := &RichMenuBatchProgressResponse{}
-
-	e.Phase = Phase
-
-	e.AcceptedTime = AcceptedTime
-
-	return e
-}

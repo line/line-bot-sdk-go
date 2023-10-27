@@ -39,23 +39,3 @@ type GetStatisticsPerUnitResponse struct {
 	 */
 	Clicks []GetStatisticsPerUnitResponseClick `json:"clicks"`
 }
-
-func NewGetStatisticsPerUnitResponse(
-
-	Overview *GetStatisticsPerUnitResponseOverview,
-
-	Messages []GetStatisticsPerUnitResponseMessage,
-
-	Clicks []GetStatisticsPerUnitResponseClick,
-
-) *GetStatisticsPerUnitResponse {
-	e := &GetStatisticsPerUnitResponse{}
-
-	e.Overview = Overview
-
-	e.Messages = Messages
-
-	e.Clicks = Clicks
-
-	return e
-}

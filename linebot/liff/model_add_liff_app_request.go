@@ -54,15 +54,3 @@ type AddLiffAppRequest struct {
 	 */
 	BotPrompt LiffBotPrompt `json:"botPrompt,omitempty"`
 }
-
-func NewAddLiffAppRequest(
-
-	View *LiffView,
-
-) *AddLiffAppRequest {
-	e := &AddLiffAppRequest{}
-
-	e.View = View
-
-	return e
-}

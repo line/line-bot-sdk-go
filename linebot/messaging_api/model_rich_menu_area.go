@@ -39,12 +39,6 @@ type RichMenuArea struct {
 	Action ActionInterface `json:"action,omitempty"`
 }
 
-func NewRichMenuArea() *RichMenuArea {
-	e := &RichMenuArea{}
-
-	return e
-}
-
 func (cr *RichMenuArea) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

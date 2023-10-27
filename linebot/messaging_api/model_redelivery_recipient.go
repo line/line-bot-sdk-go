@@ -35,14 +35,6 @@ type RedeliveryRecipient struct {
 	RequestId string `json:"requestId,omitempty"`
 }
 
-func NewRedeliveryRecipient() *RedeliveryRecipient {
-	e := &RedeliveryRecipient{}
-
-	e.Type = "redelivery"
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the RedeliveryRecipient struct.
 func (r *RedeliveryRecipient) MarshalJSON() ([]byte, error) {
 

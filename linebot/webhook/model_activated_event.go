@@ -60,36 +60,6 @@ type ActivatedEvent struct {
 	ChatControl *ChatControl `json:"chatControl"`
 }
 
-func NewActivatedEvent(
-
-	Timestamp int64,
-
-	Mode EventMode,
-
-	WebhookEventId string,
-
-	DeliveryContext *DeliveryContext,
-
-	ChatControl *ChatControl,
-
-) *ActivatedEvent {
-	e := &ActivatedEvent{}
-
-	e.Type = "activated"
-
-	e.Timestamp = Timestamp
-
-	e.Mode = Mode
-
-	e.WebhookEventId = WebhookEventId
-
-	e.DeliveryContext = DeliveryContext
-
-	e.ChatControl = ChatControl
-
-	return e
-}
-
 func (cr *ActivatedEvent) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

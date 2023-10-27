@@ -55,20 +55,6 @@ type TextMessage struct {
 	QuoteToken string `json:"quoteToken,omitempty"`
 }
 
-func NewTextMessage(
-
-	Text string,
-
-) *TextMessage {
-	e := &TextMessage{}
-
-	e.Type = "text"
-
-	e.Text = Text
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the TextMessage struct.
 func (r *TextMessage) MarshalJSON() ([]byte, error) {
 

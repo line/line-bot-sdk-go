@@ -49,19 +49,3 @@ type UserProfileResponse struct {
 	 */
 	Language string `json:"language,omitempty"`
 }
-
-func NewUserProfileResponse(
-
-	DisplayName string,
-
-	UserId string,
-
-) *UserProfileResponse {
-	e := &UserProfileResponse{}
-
-	e.DisplayName = DisplayName
-
-	e.UserId = UserId
-
-	return e
-}

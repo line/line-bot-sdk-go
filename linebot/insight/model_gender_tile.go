@@ -35,12 +35,6 @@ type GenderTile struct {
 	Percentage float64 `json:"percentage"`
 }
 
-func NewGenderTile() *GenderTile {
-	e := &GenderTile{}
-
-	return e
-}
-
 // GenderTileGENDER type
 /* users' gender */
 type GenderTileGENDER string

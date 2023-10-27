@@ -49,9 +49,3 @@ type RichMenuRequest struct {
 	 */
 	Areas []RichMenuArea `json:"areas,omitempty"`
 }
-
-func NewRichMenuRequest() *RichMenuRequest {
-	e := &RichMenuRequest{}
-
-	return e
-}

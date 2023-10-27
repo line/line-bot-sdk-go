@@ -40,24 +40,6 @@ type ScenarioResultThingsContent struct {
 	Result *ScenarioResult `json:"result"`
 }
 
-func NewScenarioResultThingsContent(
-
-	DeviceId string,
-
-	Result *ScenarioResult,
-
-) *ScenarioResultThingsContent {
-	e := &ScenarioResultThingsContent{}
-
-	e.Type = "scenarioResult"
-
-	e.DeviceId = DeviceId
-
-	e.Result = Result
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the ScenarioResultThingsContent struct.
 func (r *ScenarioResultThingsContent) MarshalJSON() ([]byte, error) {
 

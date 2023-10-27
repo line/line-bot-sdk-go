@@ -65,40 +65,6 @@ type MemberJoinedEvent struct {
 	Joined *JoinedMembers `json:"joined"`
 }
 
-func NewMemberJoinedEvent(
-
-	Timestamp int64,
-
-	Mode EventMode,
-
-	WebhookEventId string,
-
-	DeliveryContext *DeliveryContext,
-
-	ReplyToken string,
-
-	Joined *JoinedMembers,
-
-) *MemberJoinedEvent {
-	e := &MemberJoinedEvent{}
-
-	e.Type = "memberJoined"
-
-	e.Timestamp = Timestamp
-
-	e.Mode = Mode
-
-	e.WebhookEventId = WebhookEventId
-
-	e.DeliveryContext = DeliveryContext
-
-	e.ReplyToken = ReplyToken
-
-	e.Joined = Joined
-
-	return e
-}
-
 func (cr *MemberJoinedEvent) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

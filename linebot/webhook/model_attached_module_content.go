@@ -40,24 +40,6 @@ type AttachedModuleContent struct {
 	Scopes []string `json:"scopes"`
 }
 
-func NewAttachedModuleContent(
-
-	BotId string,
-
-	Scopes []string,
-
-) *AttachedModuleContent {
-	e := &AttachedModuleContent{}
-
-	e.Type = "attached"
-
-	e.BotId = BotId
-
-	e.Scopes = Scopes
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the AttachedModuleContent struct.
 func (r *AttachedModuleContent) MarshalJSON() ([]byte, error) {
 

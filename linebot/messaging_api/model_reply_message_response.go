@@ -29,15 +29,3 @@ type ReplyMessageResponse struct {
 	 */
 	SentMessages []SentMessage `json:"sentMessages"`
 }
-
-func NewReplyMessageResponse(
-
-	SentMessages []SentMessage,
-
-) *ReplyMessageResponse {
-	e := &ReplyMessageResponse{}
-
-	e.SentMessages = SentMessages
-
-	return e
-}

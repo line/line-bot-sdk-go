@@ -34,15 +34,3 @@ type GetAggregationUnitNameListResponse struct {
 	 */
 	Next string `json:"next,omitempty"`
 }
-
-func NewGetAggregationUnitNameListResponse(
-
-	CustomAggregationUnits []string,
-
-) *GetAggregationUnitNameListResponse {
-	e := &GetAggregationUnitNameListResponse{}
-
-	e.CustomAggregationUnits = CustomAggregationUnits
-
-	return e
-}

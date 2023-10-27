@@ -60,14 +60,6 @@ type FlexSpan struct {
 	Decoration FlexSpanDECORATION `json:"decoration,omitempty"`
 }
 
-func NewFlexSpan() *FlexSpan {
-	e := &FlexSpan{}
-
-	e.Type = "span"
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the FlexSpan struct.
 func (r *FlexSpan) MarshalJSON() ([]byte, error) {
 

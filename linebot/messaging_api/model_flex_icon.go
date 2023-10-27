@@ -80,20 +80,6 @@ type FlexIcon struct {
 	Scaling bool `json:"scaling"`
 }
 
-func NewFlexIcon(
-
-	Url string,
-
-) *FlexIcon {
-	e := &FlexIcon{}
-
-	e.Type = "icon"
-
-	e.Url = Url
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the FlexIcon struct.
 func (r *FlexIcon) MarshalJSON() ([]byte, error) {
 

@@ -29,9 +29,3 @@ type GetAllLiffAppsResponse struct {
 	 */
 	Apps []LiffApp `json:"apps,omitempty"`
 }
-
-func NewGetAllLiffAppsResponse() *GetAllLiffAppsResponse {
-	e := &GetAllLiffAppsResponse{}
-
-	return e
-}

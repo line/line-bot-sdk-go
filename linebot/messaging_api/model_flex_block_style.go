@@ -39,9 +39,3 @@ type FlexBlockStyle struct {
 	 */
 	SeparatorColor string `json:"separatorColor,omitempty"`
 }
-
-func NewFlexBlockStyle() *FlexBlockStyle {
-	e := &FlexBlockStyle{}
-
-	return e
-}

@@ -29,15 +29,3 @@ type RichMenuListResponse struct {
 	 */
 	Richmenus []RichMenuResponse `json:"richmenus"`
 }
-
-func NewRichMenuListResponse(
-
-	Richmenus []RichMenuResponse,
-
-) *RichMenuListResponse {
-	e := &RichMenuListResponse{}
-
-	e.Richmenus = Richmenus
-
-	return e
-}

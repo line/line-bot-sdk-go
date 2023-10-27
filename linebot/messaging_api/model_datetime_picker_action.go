@@ -60,14 +60,6 @@ type DatetimePickerAction struct {
 	Min string `json:"min,omitempty"`
 }
 
-func NewDatetimePickerAction() *DatetimePickerAction {
-	e := &DatetimePickerAction{}
-
-	e.Type = "datetimepicker"
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the DatetimePickerAction struct.
 func (r *DatetimePickerAction) MarshalJSON() ([]byte, error) {
 

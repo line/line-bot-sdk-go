@@ -35,14 +35,6 @@ type CameraRollAction struct {
 	Label string `json:"label,omitempty"`
 }
 
-func NewCameraRollAction() *CameraRollAction {
-	e := &CameraRollAction{}
-
-	e.Type = "cameraRoll"
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the CameraRollAction struct.
 func (r *CameraRollAction) MarshalJSON() ([]byte, error) {
 

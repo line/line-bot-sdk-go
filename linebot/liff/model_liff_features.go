@@ -34,9 +34,3 @@ type LiffFeatures struct {
 	 */
 	QrCode bool `json:"qrCode"`
 }
-
-func NewLiffFeatures() *LiffFeatures {
-	e := &LiffFeatures{}
-
-	return e
-}

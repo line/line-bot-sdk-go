@@ -66,32 +66,6 @@ type ImagemapMessage struct {
 	Video *ImagemapVideo `json:"video,omitempty"`
 }
 
-func NewImagemapMessage(
-
-	BaseUrl string,
-
-	AltText string,
-
-	BaseSize *ImagemapBaseSize,
-
-	Actions []ImagemapActionInterface,
-
-) *ImagemapMessage {
-	e := &ImagemapMessage{}
-
-	e.Type = "imagemap"
-
-	e.BaseUrl = BaseUrl
-
-	e.AltText = AltText
-
-	e.BaseSize = BaseSize
-
-	e.Actions = Actions
-
-	return e
-}
-
 func (cr *ImagemapMessage) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

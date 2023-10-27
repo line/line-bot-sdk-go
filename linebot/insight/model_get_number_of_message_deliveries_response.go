@@ -80,12 +80,6 @@ type GetNumberOfMessageDeliveriesResponse struct {
 	ApiReply int64 `json:"apiReply"`
 }
 
-func NewGetNumberOfMessageDeliveriesResponse() *GetNumberOfMessageDeliveriesResponse {
-	e := &GetNumberOfMessageDeliveriesResponse{}
-
-	return e
-}
-
 // GetNumberOfMessageDeliveriesResponseSTATUS type
 /* Status of the counting process. */
 type GetNumberOfMessageDeliveriesResponseSTATUS string

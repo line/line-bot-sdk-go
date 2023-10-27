@@ -110,20 +110,6 @@ type FlexImage struct {
 	Animated bool `json:"animated"`
 }
 
-func NewFlexImage(
-
-	Url string,
-
-) *FlexImage {
-	e := &FlexImage{}
-
-	e.Type = "image"
-
-	e.Url = Url
-
-	return e
-}
-
 func (cr *FlexImage) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

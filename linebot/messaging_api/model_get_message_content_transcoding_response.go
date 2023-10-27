@@ -30,18 +30,6 @@ type GetMessageContentTranscodingResponse struct {
 	Status GetMessageContentTranscodingResponseSTATUS `json:"status"`
 }
 
-func NewGetMessageContentTranscodingResponse(
-
-	Status GetMessageContentTranscodingResponseSTATUS,
-
-) *GetMessageContentTranscodingResponse {
-	e := &GetMessageContentTranscodingResponse{}
-
-	e.Status = Status
-
-	return e
-}
-
 // GetMessageContentTranscodingResponseSTATUS type
 /* The preparation status. One of:  `processing`: Preparing to get content. `succeeded`: Ready to get the content. You can get the content sent by users. `failed`: Failed to prepare to get the content.  */
 type GetMessageContentTranscodingResponseSTATUS string

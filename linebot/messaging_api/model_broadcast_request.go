@@ -40,18 +40,6 @@ type BroadcastRequest struct {
 	NotificationDisabled bool `json:"notificationDisabled"`
 }
 
-func NewBroadcastRequest(
-
-	Messages []MessageInterface,
-
-) *BroadcastRequest {
-	e := &BroadcastRequest{}
-
-	e.Messages = Messages
-
-	return e
-}
-
 func (cr *BroadcastRequest) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

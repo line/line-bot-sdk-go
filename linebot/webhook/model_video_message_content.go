@@ -50,28 +50,6 @@ type VideoMessageContent struct {
 	QuoteToken string `json:"quoteToken"`
 }
 
-func NewVideoMessageContent(
-
-	Id string,
-
-	ContentProvider *ContentProvider,
-
-	QuoteToken string,
-
-) *VideoMessageContent {
-	e := &VideoMessageContent{}
-
-	e.Type = "video"
-
-	e.Id = Id
-
-	e.ContentProvider = ContentProvider
-
-	e.QuoteToken = QuoteToken
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the VideoMessageContent struct.
 func (r *VideoMessageContent) MarshalJSON() ([]byte, error) {
 

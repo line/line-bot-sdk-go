@@ -29,9 +29,3 @@ type GetAudienceGroupAuthorityLevelResponse struct {
 	 */
 	AuthorityLevel AudienceGroupAuthorityLevel `json:"authorityLevel,omitempty"`
 }
-
-func NewGetAudienceGroupAuthorityLevelResponse() *GetAudienceGroupAuthorityLevelResponse {
-	e := &GetAudienceGroupAuthorityLevelResponse{}
-
-	return e
-}

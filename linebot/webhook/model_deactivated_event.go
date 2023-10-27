@@ -55,32 +55,6 @@ type DeactivatedEvent struct {
 	DeliveryContext *DeliveryContext `json:"deliveryContext"`
 }
 
-func NewDeactivatedEvent(
-
-	Timestamp int64,
-
-	Mode EventMode,
-
-	WebhookEventId string,
-
-	DeliveryContext *DeliveryContext,
-
-) *DeactivatedEvent {
-	e := &DeactivatedEvent{}
-
-	e.Type = "deactivated"
-
-	e.Timestamp = Timestamp
-
-	e.Mode = Mode
-
-	e.WebhookEventId = WebhookEventId
-
-	e.DeliveryContext = DeliveryContext
-
-	return e
-}
-
 func (cr *DeactivatedEvent) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

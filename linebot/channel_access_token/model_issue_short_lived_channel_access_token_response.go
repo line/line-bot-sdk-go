@@ -39,23 +39,3 @@ type IssueShortLivedChannelAccessTokenResponse struct {
 	 */
 	TokenType string `json:"token_type"`
 }
-
-func NewIssueShortLivedChannelAccessTokenResponse(
-
-	AccessToken string,
-
-	ExpiresIn int32,
-
-	TokenType string,
-
-) *IssueShortLivedChannelAccessTokenResponse {
-	e := &IssueShortLivedChannelAccessTokenResponse{}
-
-	e.AccessToken = AccessToken
-
-	e.ExpiresIn = ExpiresIn
-
-	e.TokenType = TokenType
-
-	return e
-}

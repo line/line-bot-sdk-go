@@ -39,19 +39,3 @@ type VerifyChannelAccessTokenResponse struct {
 	 */
 	Scope string `json:"scope,omitempty"`
 }
-
-func NewVerifyChannelAccessTokenResponse(
-
-	ClientId string,
-
-	ExpiresIn int64,
-
-) *VerifyChannelAccessTokenResponse {
-	e := &VerifyChannelAccessTokenResponse{}
-
-	e.ClientId = ClientId
-
-	e.ExpiresIn = ExpiresIn
-
-	return e
-}

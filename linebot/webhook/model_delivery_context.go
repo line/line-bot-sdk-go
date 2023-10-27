@@ -29,15 +29,3 @@ type DeliveryContext struct {
 	 */
 	IsRedelivery bool `json:"isRedelivery"`
 }
-
-func NewDeliveryContext(
-
-	IsRedelivery bool,
-
-) *DeliveryContext {
-	e := &DeliveryContext{}
-
-	e.IsRedelivery = IsRedelivery
-
-	return e
-}

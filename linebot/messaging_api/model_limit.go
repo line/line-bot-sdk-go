@@ -35,9 +35,3 @@ type Limit struct {
 	 */
 	UpToRemainingQuota bool `json:"upToRemainingQuota"`
 }
-
-func NewLimit() *Limit {
-	e := &Limit{}
-
-	return e
-}

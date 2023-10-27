@@ -45,24 +45,6 @@ type MessageImagemapAction struct {
 	Label string `json:"label,omitempty"`
 }
 
-func NewMessageImagemapAction(
-
-	Area *ImagemapArea,
-
-	Text string,
-
-) *MessageImagemapAction {
-	e := &MessageImagemapAction{}
-
-	e.Type = "message"
-
-	e.Area = Area
-
-	e.Text = Text
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the MessageImagemapAction struct.
 func (r *MessageImagemapAction) MarshalJSON() ([]byte, error) {
 

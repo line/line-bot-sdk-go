@@ -46,14 +46,6 @@ type OperatorRecipient struct {
 	Not RecipientInterface `json:"not,omitempty"`
 }
 
-func NewOperatorRecipient() *OperatorRecipient {
-	e := &OperatorRecipient{}
-
-	e.Type = "operator"
-
-	return e
-}
-
 func (cr *OperatorRecipient) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

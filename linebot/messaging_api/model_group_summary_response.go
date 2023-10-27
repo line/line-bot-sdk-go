@@ -39,19 +39,3 @@ type GroupSummaryResponse struct {
 	 */
 	PictureUrl string `json:"pictureUrl,omitempty"`
 }
-
-func NewGroupSummaryResponse(
-
-	GroupId string,
-
-	GroupName string,
-
-) *GroupSummaryResponse {
-	e := &GroupSummaryResponse{}
-
-	e.GroupId = GroupId
-
-	e.GroupName = GroupName
-
-	return e
-}

@@ -65,32 +65,6 @@ type PostbackEvent struct {
 	Postback *PostbackContent `json:"postback,omitempty"`
 }
 
-func NewPostbackEvent(
-
-	Timestamp int64,
-
-	Mode EventMode,
-
-	WebhookEventId string,
-
-	DeliveryContext *DeliveryContext,
-
-) *PostbackEvent {
-	e := &PostbackEvent{}
-
-	e.Type = "postback"
-
-	e.Timestamp = Timestamp
-
-	e.Mode = Mode
-
-	e.WebhookEventId = WebhookEventId
-
-	e.DeliveryContext = DeliveryContext
-
-	return e
-}
-
 func (cr *PostbackEvent) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

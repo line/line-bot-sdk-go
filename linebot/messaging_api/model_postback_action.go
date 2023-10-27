@@ -60,14 +60,6 @@ type PostbackAction struct {
 	FillInText string `json:"fillInText,omitempty"`
 }
 
-func NewPostbackAction() *PostbackAction {
-	e := &PostbackAction{}
-
-	e.Type = "postback"
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the PostbackAction struct.
 func (r *PostbackAction) MarshalJSON() ([]byte, error) {
 

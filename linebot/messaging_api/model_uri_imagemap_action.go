@@ -45,24 +45,6 @@ type UriImagemapAction struct {
 	Label string `json:"label,omitempty"`
 }
 
-func NewUriImagemapAction(
-
-	Area *ImagemapArea,
-
-	LinkUri string,
-
-) *UriImagemapAction {
-	e := &UriImagemapAction{}
-
-	e.Type = "uri"
-
-	e.Area = Area
-
-	e.LinkUri = LinkUri
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the UriImagemapAction struct.
 func (r *UriImagemapAction) MarshalJSON() ([]byte, error) {
 

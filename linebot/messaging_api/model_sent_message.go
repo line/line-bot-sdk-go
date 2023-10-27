@@ -34,15 +34,3 @@ type SentMessage struct {
 	 */
 	QuoteToken string `json:"quoteToken,omitempty"`
 }
-
-func NewSentMessage(
-
-	Id string,
-
-) *SentMessage {
-	e := &SentMessage{}
-
-	e.Id = Id
-
-	return e
-}

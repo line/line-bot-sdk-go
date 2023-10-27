@@ -39,23 +39,3 @@ type IssueStatelessChannelAccessTokenResponse struct {
 	 */
 	TokenType string `json:"token_type"`
 }
-
-func NewIssueStatelessChannelAccessTokenResponse(
-
-	AccessToken string,
-
-	ExpiresIn int32,
-
-	TokenType string,
-
-) *IssueStatelessChannelAccessTokenResponse {
-	e := &IssueStatelessChannelAccessTokenResponse{}
-
-	e.AccessToken = AccessToken
-
-	e.ExpiresIn = ExpiresIn
-
-	e.TokenType = TokenType
-
-	return e
-}

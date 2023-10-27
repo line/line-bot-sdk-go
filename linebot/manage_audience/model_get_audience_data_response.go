@@ -34,9 +34,3 @@ type GetAudienceDataResponse struct {
 	 */
 	Jobs []AudienceGroupJob `json:"jobs,omitempty"`
 }
-
-func NewGetAudienceDataResponse() *GetAudienceDataResponse {
-	e := &GetAudienceDataResponse{}
-
-	return e
-}

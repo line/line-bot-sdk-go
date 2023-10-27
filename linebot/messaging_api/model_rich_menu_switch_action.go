@@ -45,14 +45,6 @@ type RichMenuSwitchAction struct {
 	RichMenuAliasId string `json:"richMenuAliasId,omitempty"`
 }
 
-func NewRichMenuSwitchAction() *RichMenuSwitchAction {
-	e := &RichMenuSwitchAction{}
-
-	e.Type = "richmenuswitch"
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the RichMenuSwitchAction struct.
 func (r *RichMenuSwitchAction) MarshalJSON() ([]byte, error) {
 

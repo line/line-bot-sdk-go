@@ -34,19 +34,3 @@ type GetWebhookEndpointResponse struct {
 	 */
 	Active bool `json:"active"`
 }
-
-func NewGetWebhookEndpointResponse(
-
-	Endpoint string,
-
-	Active bool,
-
-) *GetWebhookEndpointResponse {
-	e := &GetWebhookEndpointResponse{}
-
-	e.Endpoint = Endpoint
-
-	e.Active = Active
-
-	return e
-}

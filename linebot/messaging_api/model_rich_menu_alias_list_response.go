@@ -29,15 +29,3 @@ type RichMenuAliasListResponse struct {
 	 */
 	Aliases []RichMenuAliasResponse `json:"aliases"`
 }
-
-func NewRichMenuAliasListResponse(
-
-	Aliases []RichMenuAliasResponse,
-
-) *RichMenuAliasListResponse {
-	e := &RichMenuAliasListResponse{}
-
-	e.Aliases = Aliases
-
-	return e
-}

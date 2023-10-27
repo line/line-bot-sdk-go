@@ -49,19 +49,3 @@ type GetStatisticsPerUnitResponseClick struct {
 	 */
 	UniqueClickOfRequest int64 `json:"uniqueClickOfRequest"`
 }
-
-func NewGetStatisticsPerUnitResponseClick(
-
-	Seq int64,
-
-	Url string,
-
-) *GetStatisticsPerUnitResponseClick {
-	e := &GetStatisticsPerUnitResponseClick{}
-
-	e.Seq = Seq
-
-	e.Url = Url
-
-	return e
-}

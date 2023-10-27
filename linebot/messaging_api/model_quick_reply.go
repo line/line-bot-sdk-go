@@ -29,9 +29,3 @@ type QuickReply struct {
 	 */
 	Items []QuickReplyItem `json:"items,omitempty"`
 }
-
-func NewQuickReply() *QuickReply {
-	e := &QuickReply{}
-
-	return e
-}

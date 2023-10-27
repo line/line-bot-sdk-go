@@ -45,20 +45,6 @@ type CarouselTemplate struct {
 	ImageSize string `json:"imageSize,omitempty"`
 }
 
-func NewCarouselTemplate(
-
-	Columns []CarouselColumn,
-
-) *CarouselTemplate {
-	e := &CarouselTemplate{}
-
-	e.Type = "carousel"
-
-	e.Columns = Columns
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the CarouselTemplate struct.
 func (r *CarouselTemplate) MarshalJSON() ([]byte, error) {
 

@@ -29,15 +29,3 @@ type ChatReference struct {
 	 */
 	UserId string `json:"userId"`
 }
-
-func NewChatReference(
-
-	UserId string,
-
-) *ChatReference {
-	e := &ChatReference{}
-
-	e.UserId = UserId
-
-	return e
-}

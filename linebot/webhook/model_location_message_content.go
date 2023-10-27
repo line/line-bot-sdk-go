@@ -55,28 +55,6 @@ type LocationMessageContent struct {
 	Longitude float64 `json:"longitude"`
 }
 
-func NewLocationMessageContent(
-
-	Id string,
-
-	Latitude float64,
-
-	Longitude float64,
-
-) *LocationMessageContent {
-	e := &LocationMessageContent{}
-
-	e.Type = "location"
-
-	e.Id = Id
-
-	e.Latitude = Latitude
-
-	e.Longitude = Longitude
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the LocationMessageContent struct.
 func (r *LocationMessageContent) MarshalJSON() ([]byte, error) {
 

@@ -29,15 +29,3 @@ type IssueLinkTokenResponse struct {
 	 */
 	LinkToken string `json:"linkToken"`
 }
-
-func NewIssueLinkTokenResponse(
-
-	LinkToken string,
-
-) *IssueLinkTokenResponse {
-	e := &IssueLinkTokenResponse{}
-
-	e.LinkToken = LinkToken
-
-	return e
-}

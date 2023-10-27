@@ -45,24 +45,6 @@ type AudioMessageContent struct {
 	Duration int64 `json:"duration"`
 }
 
-func NewAudioMessageContent(
-
-	Id string,
-
-	ContentProvider *ContentProvider,
-
-) *AudioMessageContent {
-	e := &AudioMessageContent{}
-
-	e.Type = "audio"
-
-	e.Id = Id
-
-	e.ContentProvider = ContentProvider
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the AudioMessageContent struct.
 func (r *AudioMessageContent) MarshalJSON() ([]byte, error) {
 

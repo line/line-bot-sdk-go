@@ -44,9 +44,3 @@ type FlexBubbleStyles struct {
 	 */
 	Footer *FlexBlockStyle `json:"footer,omitempty"`
 }
-
-func NewFlexBubbleStyles() *FlexBubbleStyles {
-	e := &FlexBubbleStyles{}
-
-	return e
-}

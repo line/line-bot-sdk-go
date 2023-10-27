@@ -29,15 +29,3 @@ type SetWebhookEndpointRequest struct {
 	 */
 	Endpoint string `json:"endpoint"`
 }
-
-func NewSetWebhookEndpointRequest(
-
-	Endpoint string,
-
-) *SetWebhookEndpointRequest {
-	e := &SetWebhookEndpointRequest{}
-
-	e.Endpoint = Endpoint
-
-	return e
-}

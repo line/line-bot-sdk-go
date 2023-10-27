@@ -40,22 +40,6 @@ type LiffView struct {
 	ModuleMode bool `json:"moduleMode"`
 }
 
-func NewLiffView(
-
-	Type LiffViewTYPE,
-
-	Url string,
-
-) *LiffView {
-	e := &LiffView{}
-
-	e.Type = Type
-
-	e.Url = Url
-
-	return e
-}
-
 // LiffViewTYPE type
 /* Size of the LIFF app view. Specify one of these values: - compact - tall - full  */
 type LiffViewTYPE string

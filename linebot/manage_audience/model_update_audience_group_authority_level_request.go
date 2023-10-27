@@ -29,9 +29,3 @@ type UpdateAudienceGroupAuthorityLevelRequest struct {
 	 */
 	AuthorityLevel AudienceGroupAuthorityLevel `json:"authorityLevel,omitempty"`
 }
-
-func NewUpdateAudienceGroupAuthorityLevelRequest() *UpdateAudienceGroupAuthorityLevelRequest {
-	e := &UpdateAudienceGroupAuthorityLevelRequest{}
-
-	return e
-}

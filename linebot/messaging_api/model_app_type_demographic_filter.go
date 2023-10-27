@@ -35,14 +35,6 @@ type AppTypeDemographicFilter struct {
 	OneOf []AppTypeDemographic `json:"oneOf,omitempty"`
 }
 
-func NewAppTypeDemographicFilter() *AppTypeDemographicFilter {
-	e := &AppTypeDemographicFilter{}
-
-	e.Type = "appType"
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the AppTypeDemographicFilter struct.
 func (r *AppTypeDemographicFilter) MarshalJSON() ([]byte, error) {
 

@@ -39,9 +39,3 @@ type GetMessageEventResponse struct {
 	 */
 	Clicks []GetMessageEventResponseClick `json:"clicks,omitempty"`
 }
-
-func NewGetMessageEventResponse() *GetMessageEventResponse {
-	e := &GetMessageEventResponse{}
-
-	return e
-}

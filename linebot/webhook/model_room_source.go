@@ -40,20 +40,6 @@ type RoomSource struct {
 	RoomId string `json:"roomId"`
 }
 
-func NewRoomSource(
-
-	RoomId string,
-
-) *RoomSource {
-	e := &RoomSource{}
-
-	e.Type = "room"
-
-	e.RoomId = RoomId
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the RoomSource struct.
 func (r *RoomSource) MarshalJSON() ([]byte, error) {
 

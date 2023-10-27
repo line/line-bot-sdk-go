@@ -29,15 +29,3 @@ type GroupMemberCountResponse struct {
 	 */
 	Count int32 `json:"count"`
 }
-
-func NewGroupMemberCountResponse(
-
-	Count int32,
-
-) *GroupMemberCountResponse {
-	e := &GroupMemberCountResponse{}
-
-	e.Count = Count
-
-	return e
-}

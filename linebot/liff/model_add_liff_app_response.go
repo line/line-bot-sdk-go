@@ -29,15 +29,3 @@ type AddLiffAppResponse struct {
 	 */
 	LiffId string `json:"liffId"`
 }
-
-func NewAddLiffAppResponse(
-
-	LiffId string,
-
-) *AddLiffAppResponse {
-	e := &AddLiffAppResponse{}
-
-	e.LiffId = LiffId
-
-	return e
-}

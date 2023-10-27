@@ -60,32 +60,6 @@ type UnsendEvent struct {
 	Unsend *UnsendDetail `json:"unsend,omitempty"`
 }
 
-func NewUnsendEvent(
-
-	Timestamp int64,
-
-	Mode EventMode,
-
-	WebhookEventId string,
-
-	DeliveryContext *DeliveryContext,
-
-) *UnsendEvent {
-	e := &UnsendEvent{}
-
-	e.Type = "unsend"
-
-	e.Timestamp = Timestamp
-
-	e.Mode = Mode
-
-	e.WebhookEventId = WebhookEventId
-
-	e.DeliveryContext = DeliveryContext
-
-	return e
-}
-
 func (cr *UnsendEvent) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

@@ -29,9 +29,3 @@ type Audience struct {
 	 */
 	Id string `json:"id,omitempty"`
 }
-
-func NewAudience() *Audience {
-	e := &Audience{}
-
-	return e
-}

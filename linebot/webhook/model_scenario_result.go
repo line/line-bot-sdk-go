@@ -64,23 +64,3 @@ type ScenarioResult struct {
 	 */
 	ErrorReason string `json:"errorReason,omitempty"`
 }
-
-func NewScenarioResult(
-
-	StartTime int64,
-
-	EndTime int64,
-
-	ResultCode string,
-
-) *ScenarioResult {
-	e := &ScenarioResult{}
-
-	e.StartTime = StartTime
-
-	e.EndTime = EndTime
-
-	e.ResultCode = ResultCode
-
-	return e
-}

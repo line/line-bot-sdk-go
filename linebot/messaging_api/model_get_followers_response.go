@@ -34,15 +34,3 @@ type GetFollowersResponse struct {
 	 */
 	Next string `json:"next,omitempty"`
 }
-
-func NewGetFollowersResponse(
-
-	UserIds []string,
-
-) *GetFollowersResponse {
-	e := &GetFollowersResponse{}
-
-	e.UserIds = UserIds
-
-	return e
-}

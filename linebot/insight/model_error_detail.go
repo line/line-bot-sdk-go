@@ -34,9 +34,3 @@ type ErrorDetail struct {
 	 */
 	Property string `json:"property,omitempty"`
 }
-
-func NewErrorDetail() *ErrorDetail {
-	e := &ErrorDetail{}
-
-	return e
-}

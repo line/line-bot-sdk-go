@@ -29,15 +29,3 @@ type ErrorResponse struct {
 	 */
 	Message string `json:"message"`
 }
-
-func NewErrorResponse(
-
-	Message string,
-
-) *ErrorResponse {
-	e := &ErrorResponse{}
-
-	e.Message = Message
-
-	return e
-}

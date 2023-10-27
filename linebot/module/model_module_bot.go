@@ -49,23 +49,3 @@ type ModuleBot struct {
 	 */
 	PictureUrl string `json:"pictureUrl,omitempty"`
 }
-
-func NewModuleBot(
-
-	UserId string,
-
-	BasicId string,
-
-	DisplayName string,
-
-) *ModuleBot {
-	e := &ModuleBot{}
-
-	e.UserId = UserId
-
-	e.BasicId = BasicId
-
-	e.DisplayName = DisplayName
-
-	return e
-}

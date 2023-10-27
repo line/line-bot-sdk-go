@@ -54,9 +54,3 @@ type GetFriendsDemographicsResponse struct {
 	 */
 	SubscriptionPeriods []SubscriptionPeriodTile `json:"subscriptionPeriods,omitempty"`
 }
-
-func NewGetFriendsDemographicsResponse() *GetFriendsDemographicsResponse {
-	e := &GetFriendsDemographicsResponse{}
-
-	return e
-}

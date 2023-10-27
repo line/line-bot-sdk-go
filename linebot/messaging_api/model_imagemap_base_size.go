@@ -34,19 +34,3 @@ type ImagemapBaseSize struct {
 	 */
 	Width int32 `json:"width"`
 }
-
-func NewImagemapBaseSize(
-
-	Height int32,
-
-	Width int32,
-
-) *ImagemapBaseSize {
-	e := &ImagemapBaseSize{}
-
-	e.Height = Height
-
-	e.Width = Width
-
-	return e
-}

@@ -34,9 +34,3 @@ type AreaTile struct {
 	 */
 	Percentage float64 `json:"percentage"`
 }
-
-func NewAreaTile() *AreaTile {
-	e := &AreaTile{}
-
-	return e
-}

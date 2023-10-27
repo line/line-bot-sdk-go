@@ -35,14 +35,6 @@ type LocationAction struct {
 	Label string `json:"label,omitempty"`
 }
 
-func NewLocationAction() *LocationAction {
-	e := &LocationAction{}
-
-	e.Type = "location"
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the LocationAction struct.
 func (r *LocationAction) MarshalJSON() ([]byte, error) {
 

@@ -40,22 +40,6 @@ type BeaconContent struct {
 	Dm string `json:"dm,omitempty"`
 }
 
-func NewBeaconContent(
-
-	Hwid string,
-
-	Type BeaconContentTYPE,
-
-) *BeaconContent {
-	e := &BeaconContent{}
-
-	e.Hwid = Hwid
-
-	e.Type = Type
-
-	return e
-}
-
 // BeaconContentTYPE type
 /* Type of beacon event. */
 type BeaconContentTYPE string

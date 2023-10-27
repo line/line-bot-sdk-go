@@ -30,14 +30,6 @@ type RichMenuBatchUnlinkAllOperation struct {
 	RichMenuBatchOperation
 }
 
-func NewRichMenuBatchUnlinkAllOperation() *RichMenuBatchUnlinkAllOperation {
-	e := &RichMenuBatchUnlinkAllOperation{}
-
-	e.Type = "unlinkAll"
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the RichMenuBatchUnlinkAllOperation struct.
 func (r *RichMenuBatchUnlinkAllOperation) MarshalJSON() ([]byte, error) {
 

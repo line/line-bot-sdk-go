@@ -64,9 +64,3 @@ type AudienceGroupJob struct {
 	 */
 	Created int64 `json:"created"`
 }
-
-func NewAudienceGroupJob() *AudienceGroupJob {
-	e := &AudienceGroupJob{}
-
-	return e
-}

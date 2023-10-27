@@ -39,19 +39,3 @@ type RoomUserProfileResponse struct {
 	 */
 	PictureUrl string `json:"pictureUrl,omitempty"`
 }
-
-func NewRoomUserProfileResponse(
-
-	DisplayName string,
-
-	UserId string,
-
-) *RoomUserProfileResponse {
-	e := &RoomUserProfileResponse{}
-
-	e.DisplayName = DisplayName
-
-	e.UserId = UserId
-
-	return e
-}

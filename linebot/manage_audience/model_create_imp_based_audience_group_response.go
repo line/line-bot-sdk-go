@@ -49,9 +49,3 @@ type CreateImpBasedAudienceGroupResponse struct {
 	 */
 	RequestId string `json:"requestId,omitempty"`
 }
-
-func NewCreateImpBasedAudienceGroupResponse() *CreateImpBasedAudienceGroupResponse {
-	e := &CreateImpBasedAudienceGroupResponse{}
-
-	return e
-}

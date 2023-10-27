@@ -41,24 +41,6 @@ type ConfirmTemplate struct {
 	Actions []ActionInterface `json:"actions"`
 }
 
-func NewConfirmTemplate(
-
-	Text string,
-
-	Actions []ActionInterface,
-
-) *ConfirmTemplate {
-	e := &ConfirmTemplate{}
-
-	e.Type = "confirm"
-
-	e.Text = Text
-
-	e.Actions = Actions
-
-	return e
-}
-
 func (cr *ConfirmTemplate) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

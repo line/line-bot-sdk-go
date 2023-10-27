@@ -34,9 +34,3 @@ type Sender struct {
 	 */
 	IconUrl string `json:"iconUrl,omitempty"`
 }
-
-func NewSender() *Sender {
-	e := &Sender{}
-
-	return e
-}

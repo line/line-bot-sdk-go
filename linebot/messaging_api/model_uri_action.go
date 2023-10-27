@@ -45,14 +45,6 @@ type UriAction struct {
 	AltUri *AltUri `json:"altUri,omitempty"`
 }
 
-func NewUriAction() *UriAction {
-	e := &UriAction{}
-
-	e.Type = "uri"
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the UriAction struct.
 func (r *UriAction) MarshalJSON() ([]byte, error) {
 

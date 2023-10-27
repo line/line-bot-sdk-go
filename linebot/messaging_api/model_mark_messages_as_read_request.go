@@ -29,15 +29,3 @@ type MarkMessagesAsReadRequest struct {
 	 */
 	Chat *ChatReference `json:"chat"`
 }
-
-func NewMarkMessagesAsReadRequest(
-
-	Chat *ChatReference,
-
-) *MarkMessagesAsReadRequest {
-	e := &MarkMessagesAsReadRequest{}
-
-	e.Chat = Chat
-
-	return e
-}

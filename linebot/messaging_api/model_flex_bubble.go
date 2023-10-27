@@ -70,14 +70,6 @@ type FlexBubble struct {
 	Action ActionInterface `json:"action,omitempty"`
 }
 
-func NewFlexBubble() *FlexBubble {
-	e := &FlexBubble{}
-
-	e.Type = "bubble"
-
-	return e
-}
-
 func (cr *FlexBubble) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

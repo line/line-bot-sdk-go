@@ -39,9 +39,3 @@ type Emoji struct {
 	 */
 	EmojiId string `json:"emojiId,omitempty"`
 }
-
-func NewEmoji() *Emoji {
-	e := &Emoji{}
-
-	return e
-}

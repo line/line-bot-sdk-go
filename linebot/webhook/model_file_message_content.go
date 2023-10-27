@@ -45,28 +45,6 @@ type FileMessageContent struct {
 	FileSize int32 `json:"fileSize"`
 }
 
-func NewFileMessageContent(
-
-	Id string,
-
-	FileName string,
-
-	FileSize int32,
-
-) *FileMessageContent {
-	e := &FileMessageContent{}
-
-	e.Type = "file"
-
-	e.Id = Id
-
-	e.FileName = FileName
-
-	e.FileSize = FileSize
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the FileMessageContent struct.
 func (r *FileMessageContent) MarshalJSON() ([]byte, error) {
 

@@ -29,15 +29,3 @@ type ChatControl struct {
 	 */
 	ExpireAt int64 `json:"expireAt"`
 }
-
-func NewChatControl(
-
-	ExpireAt int64,
-
-) *ChatControl {
-	e := &ChatControl{}
-
-	e.ExpireAt = ExpireAt
-
-	return e
-}

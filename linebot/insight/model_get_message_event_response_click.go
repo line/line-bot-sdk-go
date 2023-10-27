@@ -49,9 +49,3 @@ type GetMessageEventResponseClick struct {
 	 */
 	UniqueClickOfRequest int64 `json:"uniqueClickOfRequest"`
 }
-
-func NewGetMessageEventResponseClick() *GetMessageEventResponseClick {
-	e := &GetMessageEventResponseClick{}
-
-	return e
-}

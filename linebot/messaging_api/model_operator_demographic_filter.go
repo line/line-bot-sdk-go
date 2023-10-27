@@ -46,14 +46,6 @@ type OperatorDemographicFilter struct {
 	Not DemographicFilterInterface `json:"not,omitempty"`
 }
 
-func NewOperatorDemographicFilter() *OperatorDemographicFilter {
-	e := &OperatorDemographicFilter{}
-
-	e.Type = "operator"
-
-	return e
-}
-
 func (cr *OperatorDemographicFilter) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

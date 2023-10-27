@@ -35,14 +35,6 @@ type UserSource struct {
 	UserId string `json:"userId,omitempty"`
 }
 
-func NewUserSource() *UserSource {
-	e := &UserSource{}
-
-	e.Type = "user"
-
-	return e
-}
-
 // MarshalJSON customizes the JSON serialization of the UserSource struct.
 func (r *UserSource) MarshalJSON() ([]byte, error) {
 

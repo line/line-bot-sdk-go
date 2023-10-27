@@ -65,40 +65,6 @@ type VideoPlayCompleteEvent struct {
 	VideoPlayComplete *VideoPlayComplete `json:"videoPlayComplete"`
 }
 
-func NewVideoPlayCompleteEvent(
-
-	Timestamp int64,
-
-	Mode EventMode,
-
-	WebhookEventId string,
-
-	DeliveryContext *DeliveryContext,
-
-	ReplyToken string,
-
-	VideoPlayComplete *VideoPlayComplete,
-
-) *VideoPlayCompleteEvent {
-	e := &VideoPlayCompleteEvent{}
-
-	e.Type = "videoPlayComplete"
-
-	e.Timestamp = Timestamp
-
-	e.Mode = Mode
-
-	e.WebhookEventId = WebhookEventId
-
-	e.DeliveryContext = DeliveryContext
-
-	e.ReplyToken = ReplyToken
-
-	e.VideoPlayComplete = VideoPlayComplete
-
-	return e
-}
-
 func (cr *VideoPlayCompleteEvent) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

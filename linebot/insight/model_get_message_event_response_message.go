@@ -84,9 +84,3 @@ type GetMessageEventResponseMessage struct {
 	 */
 	UniqueMediaPlayed100Percent int64 `json:"uniqueMediaPlayed100Percent"`
 }
-
-func NewGetMessageEventResponseMessage() *GetMessageEventResponseMessage {
-	e := &GetMessageEventResponseMessage{}
-
-	return e
-}

@@ -34,19 +34,3 @@ type RichMenuAliasResponse struct {
 	 */
 	RichMenuId string `json:"richMenuId"`
 }
-
-func NewRichMenuAliasResponse(
-
-	RichMenuAliasId string,
-
-	RichMenuId string,
-
-) *RichMenuAliasResponse {
-	e := &RichMenuAliasResponse{}
-
-	e.RichMenuAliasId = RichMenuAliasId
-
-	e.RichMenuId = RichMenuId
-
-	return e
-}

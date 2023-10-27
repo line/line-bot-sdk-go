@@ -39,9 +39,3 @@ type CreateClickBasedAudienceGroupRequest struct {
 	 */
 	ClickUrl string `json:"clickUrl,omitempty"`
 }
-
-func NewCreateClickBasedAudienceGroupRequest() *CreateClickBasedAudienceGroupRequest {
-	e := &CreateClickBasedAudienceGroupRequest{}
-
-	return e
-}

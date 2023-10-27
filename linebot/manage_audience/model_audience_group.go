@@ -84,9 +84,3 @@ type AudienceGroup struct {
 	 */
 	CreateRoute AudienceGroupCreateRoute `json:"createRoute,omitempty"`
 }
-
-func NewAudienceGroup() *AudienceGroup {
-	e := &AudienceGroup{}
-
-	return e
-}

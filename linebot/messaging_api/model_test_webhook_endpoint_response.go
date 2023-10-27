@@ -53,27 +53,3 @@ type TestWebhookEndpointResponse struct {
 	 */
 	Detail string `json:"detail"`
 }
-
-func NewTestWebhookEndpointResponse(
-
-	Timestamp time.Time,
-
-	StatusCode int32,
-
-	Reason string,
-
-	Detail string,
-
-) *TestWebhookEndpointResponse {
-	e := &TestWebhookEndpointResponse{}
-
-	e.Timestamp = Timestamp
-
-	e.StatusCode = StatusCode
-
-	e.Reason = Reason
-
-	e.Detail = Detail
-
-	return e
-}

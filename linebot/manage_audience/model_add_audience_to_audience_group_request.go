@@ -39,9 +39,3 @@ type AddAudienceToAudienceGroupRequest struct {
 	 */
 	Audiences []Audience `json:"audiences,omitempty"`
 }
-
-func NewAddAudienceToAudienceGroupRequest() *AddAudienceToAudienceGroupRequest {
-	e := &AddAudienceToAudienceGroupRequest{}
-
-	return e
-}
