@@ -182,7 +182,7 @@ func (client *{{ classname }}) {{ op.operationId }}(
 	    "{{ fp.baseName }}": []string{ string({{ fp.paramName }}) },
     	{% endfor %}
 	}
-    buf := vs.Encode()
+	buf := vs.Encode()
 	body := bytes.NewBufferString(buf)
 
 	log.Printf("Sending request: method={{ op.httpMethod }} path=%s body=%s\n", path, buf)
