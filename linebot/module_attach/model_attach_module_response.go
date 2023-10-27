@@ -22,6 +22,7 @@ package module_attach
 // AttachModuleResponse
 // Attach by operation of the module channel provider
 
+// Deprecated: Use OpenAPI based classes instead.
 type AttachModuleResponse struct {
 
 	/**

@@ -26,6 +26,7 @@ import (
 // ThingsEvent
 // Indicates that a user linked a device with LINE.
 
+// Deprecated: Use OpenAPI based classes instead.
 type ThingsEvent struct {
 	Event
 

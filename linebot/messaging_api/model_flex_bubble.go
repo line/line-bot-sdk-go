@@ -26,6 +26,7 @@ import (
 // FlexBubble
 // FlexBubble
 
+// Deprecated: Use OpenAPI based classes instead.
 type FlexBubble struct {
 	FlexContainer
 

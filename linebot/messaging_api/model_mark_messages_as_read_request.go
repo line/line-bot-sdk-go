@@ -22,6 +22,7 @@ package messaging_api
 // MarkMessagesAsReadRequest
 // MarkMessagesAsReadRequest
 // https://developers.line.biz/en/reference/partner-docs/#mark-messages-from-users-as-read
+// Deprecated: Use OpenAPI based classes instead.
 type MarkMessagesAsReadRequest struct {
 
 	/**

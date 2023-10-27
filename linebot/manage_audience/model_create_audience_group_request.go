@@ -22,6 +22,7 @@ package manage_audience
 // CreateAudienceGroupRequest
 // Create audience for uploading user IDs (by JSON)
 // https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group
+// Deprecated: Use OpenAPI based classes instead.
 type CreateAudienceGroupRequest struct {
 
 	/**

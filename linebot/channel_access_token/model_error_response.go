@@ -22,6 +22,7 @@ package channel_access_token
 // ErrorResponse
 // Error response of the Channel access token
 
+// Deprecated: Use OpenAPI based classes instead.
 type ErrorResponse struct {
 
 	/**

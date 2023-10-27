@@ -33,6 +33,7 @@ func (e Source) GetType() string {
 	return e.Type
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type UnknownSource struct {
 	SourceInterface
 	Type string
@@ -43,6 +44,7 @@ func (e UnknownSource) GetType() string {
 	return e.Type
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func setDiscriminatorPropertySource(r SourceInterface) SourceInterface {
 	switch v := r.(type) {
 	case *GroupSource:
@@ -86,12 +88,14 @@ func setDiscriminatorPropertySource(r SourceInterface) SourceInterface {
 
 // https://developers.line.biz/en/reference/messaging-api/#source-user
 
+// Deprecated: Use OpenAPI based classes instead.
 type Source struct {
 	// source type
 
 	Type string `json:"type,omitempty"`
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func UnmarshalSource(data []byte) (SourceInterface, error) {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

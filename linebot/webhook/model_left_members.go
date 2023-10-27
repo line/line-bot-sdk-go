@@ -22,6 +22,7 @@ package webhook
 // LeftMembers
 // LeftMembers
 
+// Deprecated: Use OpenAPI based classes instead.
 type LeftMembers struct {
 
 	/**

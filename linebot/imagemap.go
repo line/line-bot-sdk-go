@@ -28,12 +28,14 @@ const (
 )
 
 // ImagemapBaseSize type
+// Deprecated: Use OpenAPI based classes instead.
 type ImagemapBaseSize struct {
 	Width  int `json:"width"`
 	Height int `json:"height"`
 }
 
 // ImagemapArea type
+// Deprecated: Use OpenAPI based classes instead.
 type ImagemapArea struct {
 	X      int `json:"x"`
 	Y      int `json:"y"`
@@ -42,6 +44,7 @@ type ImagemapArea struct {
 }
 
 // ImagemapVideo type
+// Deprecated: Use OpenAPI based classes instead.
 type ImagemapVideo struct {
 	OriginalContentURL string                     `json:"originalContentUrl"`
 	PreviewImageURL    string                     `json:"previewImageUrl"`
@@ -50,6 +53,7 @@ type ImagemapVideo struct {
 }
 
 // ImagemapVideoExternalLink type
+// Deprecated: Use OpenAPI based classes instead.
 type ImagemapVideoExternalLink struct {
 	LinkURI string `json:"linkUri"`
 	Label   string `json:"label"`
@@ -62,6 +66,7 @@ type ImagemapAction interface {
 }
 
 // URIImagemapAction type
+// Deprecated: Use OpenAPI based classes instead.
 type URIImagemapAction struct {
 	Label   string
 	LinkURL string
@@ -84,6 +89,7 @@ func (a *URIImagemapAction) MarshalJSON() ([]byte, error) {
 }
 
 // MessageImagemapAction type
+// Deprecated: Use OpenAPI based classes instead.
 type MessageImagemapAction struct {
 	Label string
 	Text  string
@@ -112,6 +118,7 @@ func (a *URIImagemapAction) ImagemapAction() {}
 func (a *MessageImagemapAction) ImagemapAction() {}
 
 // NewURIImagemapAction function
+// Deprecated: Use OpenAPI based classes instead.
 func NewURIImagemapAction(label, linkURL string, area ImagemapArea) *URIImagemapAction {
 	return &URIImagemapAction{
 		Label:   label,
@@ -121,6 +128,7 @@ func NewURIImagemapAction(label, linkURL string, area ImagemapArea) *URIImagemap
 }
 
 // NewMessageImagemapAction function
+// Deprecated: Use OpenAPI based classes instead.
 func NewMessageImagemapAction(label, text string, area ImagemapArea) *MessageImagemapAction {
 	return &MessageImagemapAction{
 		Label: label,

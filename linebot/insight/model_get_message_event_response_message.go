@@ -22,6 +22,7 @@ package insight
 // GetMessageEventResponseMessage
 // GetMessageEventResponseMessage
 
+// Deprecated: Use OpenAPI based classes instead.
 type GetMessageEventResponseMessage struct {
 
 	/**

@@ -33,6 +33,7 @@ func (e Action) GetType() string {
 	return e.Type
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type UnknownAction struct {
 	ActionInterface
 	Type string
@@ -43,6 +44,7 @@ func (e UnknownAction) GetType() string {
 	return e.Type
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func setDiscriminatorPropertyAction(r ActionInterface) ActionInterface {
 	switch v := r.(type) {
 	case *CameraAction:
@@ -136,6 +138,7 @@ func setDiscriminatorPropertyAction(r ActionInterface) ActionInterface {
 
 // https://developers.line.biz/en/reference/messaging-api/#action-objects
 
+// Deprecated: Use OpenAPI based classes instead.
 type Action struct {
 	// Type of action
 
@@ -145,6 +148,7 @@ type Action struct {
 	Label string `json:"label,omitempty"`
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func UnmarshalAction(data []byte) (ActionInterface, error) {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

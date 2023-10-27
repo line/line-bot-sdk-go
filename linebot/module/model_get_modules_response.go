@@ -22,6 +22,7 @@ package module
 // GetModulesResponse
 // List of bots to which the module is attached
 // https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api
+// Deprecated: Use OpenAPI based classes instead.
 type GetModulesResponse struct {
 
 	/**

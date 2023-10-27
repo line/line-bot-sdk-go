@@ -27,6 +27,7 @@ import (
 // PnpMessagesRequest
 // PnpMessagesRequest
 // https://developers.line.biz/en/reference/partner-docs/#send-line-notification-message
+// Deprecated: Use OpenAPI based classes instead.
 type PnpMessagesRequest struct {
 
 	/**

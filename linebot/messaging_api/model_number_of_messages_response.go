@@ -22,6 +22,7 @@ package messaging_api
 // NumberOfMessagesResponse
 // NumberOfMessagesResponse
 
+// Deprecated: Use OpenAPI based classes instead.
 type NumberOfMessagesResponse struct {
 
 	/**

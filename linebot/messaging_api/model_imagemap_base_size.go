@@ -22,6 +22,7 @@ package messaging_api
 // ImagemapBaseSize
 // ImagemapBaseSize
 
+// Deprecated: Use OpenAPI based classes instead.
 type ImagemapBaseSize struct {
 
 	/**

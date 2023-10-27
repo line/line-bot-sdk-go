@@ -26,6 +26,7 @@ import (
 // BotSuspendedEvent
 // This event indicates that the LINE Official Account has been suspended (Suspend). Sent to the webhook URL server of the module channel.
 
+// Deprecated: Use OpenAPI based classes instead.
 type BotSuspendedEvent struct {
 	Event
 

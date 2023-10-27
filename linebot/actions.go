@@ -59,6 +59,7 @@ type QuickReplyAction interface {
 }
 
 // URIAction type
+// Deprecated: Use OpenAPI based classes instead.
 type URIAction struct {
 	Label  string
 	URI    string
@@ -66,6 +67,7 @@ type URIAction struct {
 }
 
 // URIActionAltURI type
+// Deprecated: Use OpenAPI based classes instead.
 type URIActionAltURI struct {
 	Desktop string `json:"desktop"`
 }
@@ -86,6 +88,7 @@ func (a *URIAction) MarshalJSON() ([]byte, error) {
 }
 
 // MessageAction type
+// Deprecated: Use OpenAPI based classes instead.
 type MessageAction struct {
 	Label string
 	Text  string
@@ -105,6 +108,7 @@ func (a *MessageAction) MarshalJSON() ([]byte, error) {
 }
 
 // PostbackAction type
+// Deprecated: Use OpenAPI based classes instead.
 type PostbackAction struct {
 	Label       string
 	Data        string
@@ -136,6 +140,7 @@ func (a *PostbackAction) MarshalJSON() ([]byte, error) {
 }
 
 // DatetimePickerAction type
+// Deprecated: Use OpenAPI based classes instead.
 type DatetimePickerAction struct {
 	Label   string
 	Data    string
@@ -167,6 +172,7 @@ func (a *DatetimePickerAction) MarshalJSON() ([]byte, error) {
 }
 
 // CameraAction type
+// Deprecated: Use OpenAPI based classes instead.
 type CameraAction struct {
 	Label string
 }
@@ -183,6 +189,7 @@ func (a *CameraAction) MarshalJSON() ([]byte, error) {
 }
 
 // CameraRollAction type
+// Deprecated: Use OpenAPI based classes instead.
 type CameraRollAction struct {
 	Label string
 }
@@ -199,6 +206,7 @@ func (a *CameraRollAction) MarshalJSON() ([]byte, error) {
 }
 
 // LocationAction type
+// Deprecated: Use OpenAPI based classes instead.
 type LocationAction struct {
 	Label string
 }
@@ -248,6 +256,7 @@ func (*LocationAction) QuickReplyAction() {}
 func (*URIAction) QuickReplyAction() {}
 
 // NewURIAction function
+// Deprecated: Use OpenAPI based classes instead.
 func NewURIAction(label, uri string) *URIAction {
 	return &URIAction{
 		Label: label,
@@ -256,6 +265,7 @@ func NewURIAction(label, uri string) *URIAction {
 }
 
 // NewMessageAction function
+// Deprecated: Use OpenAPI based classes instead.
 func NewMessageAction(label, text string) *MessageAction {
 	return &MessageAction{
 		Label: label,
@@ -264,6 +274,7 @@ func NewMessageAction(label, text string) *MessageAction {
 }
 
 // NewPostbackAction function
+// Deprecated: Use OpenAPI based classes instead.
 func NewPostbackAction(label, data, text, displayText string, inputOption InputOption, fillInText string) *PostbackAction {
 	return &PostbackAction{
 		Label:       label,
@@ -276,6 +287,7 @@ func NewPostbackAction(label, data, text, displayText string, inputOption InputO
 }
 
 // NewDatetimePickerAction function
+// Deprecated: Use OpenAPI based classes instead.
 func NewDatetimePickerAction(label, data, mode, initial, max, min string) *DatetimePickerAction {
 	return &DatetimePickerAction{
 		Label:   label,
@@ -288,6 +300,7 @@ func NewDatetimePickerAction(label, data, mode, initial, max, min string) *Datet
 }
 
 // NewCameraAction function
+// Deprecated: Use OpenAPI based classes instead.
 func NewCameraAction(label string) *CameraAction {
 	return &CameraAction{
 		Label: label,
@@ -295,6 +308,7 @@ func NewCameraAction(label string) *CameraAction {
 }
 
 // NewCameraRollAction function
+// Deprecated: Use OpenAPI based classes instead.
 func NewCameraRollAction(label string) *CameraRollAction {
 	return &CameraRollAction{
 		Label: label,
@@ -302,6 +316,7 @@ func NewCameraRollAction(label string) *CameraRollAction {
 }
 
 // NewLocationAction function
+// Deprecated: Use OpenAPI based classes instead.
 func NewLocationAction(label string) *LocationAction {
 	return &LocationAction{
 		Label: label,

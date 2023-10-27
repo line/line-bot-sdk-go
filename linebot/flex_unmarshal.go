@@ -20,6 +20,7 @@ import (
 )
 
 // UnmarshalFlexMessageJSON function
+// Deprecated: Use OpenAPI based classes instead.
 func UnmarshalFlexMessageJSON(data []byte) (FlexContainer, error) {
 	raw := rawFlexContainer{}
 	if err := json.Unmarshal(data, &raw); err != nil {
@@ -28,6 +29,7 @@ func UnmarshalFlexMessageJSON(data []byte) (FlexContainer, error) {
 	return raw.Container, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type rawFlexContainer struct {
 	Type      FlexContainerType `json:"type"`
 	Container FlexContainer     `json:"-"`
@@ -56,6 +58,7 @@ func (c *rawFlexContainer) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type rawFlexComponent struct {
 	Type      FlexComponentType `json:"type"`
 	Component FlexComponent     `json:"-"`
@@ -98,6 +101,7 @@ func (c *rawFlexComponent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type rawAction struct {
 	Type   ActionType     `json:"type"`
 	Action TemplateAction `json:"-"`

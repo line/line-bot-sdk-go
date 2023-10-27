@@ -22,6 +22,7 @@ package messaging_api
 // GetMessageContentTranscodingResponse
 // Transcoding response
 // https://developers.line.biz/en/reference/messaging-api/#verify-video-or-audio-preparation-status
+// Deprecated: Use OpenAPI based classes instead.
 type GetMessageContentTranscodingResponse struct {
 
 	/**

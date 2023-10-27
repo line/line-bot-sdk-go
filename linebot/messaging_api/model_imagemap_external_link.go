@@ -22,6 +22,7 @@ package messaging_api
 // ImagemapExternalLink
 // ImagemapExternalLink
 
+// Deprecated: Use OpenAPI based classes instead.
 type ImagemapExternalLink struct {
 
 	/**

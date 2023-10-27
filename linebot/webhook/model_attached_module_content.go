@@ -26,6 +26,7 @@ import (
 // AttachedModuleContent
 // AttachedModuleContent
 
+// Deprecated: Use OpenAPI based classes instead.
 type AttachedModuleContent struct {
 	ModuleContent
 

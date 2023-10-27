@@ -22,6 +22,7 @@ package messaging_api
 // GroupMemberCountResponse
 // GroupMemberCountResponse
 // https://developers.line.biz/en/reference/messaging-api/#get-members-group-count
+// Deprecated: Use OpenAPI based classes instead.
 type GroupMemberCountResponse struct {
 
 	/**

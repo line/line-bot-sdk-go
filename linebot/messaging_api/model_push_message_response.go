@@ -22,6 +22,7 @@ package messaging_api
 // PushMessageResponse
 // PushMessageResponse
 // https://developers.line.biz/en/reference/messaging-api/#send-push-message-response
+// Deprecated: Use OpenAPI based classes instead.
 type PushMessageResponse struct {
 
 	/**

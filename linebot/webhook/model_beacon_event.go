@@ -26,6 +26,7 @@ import (
 // BeaconEvent
 // Event object for when a user enters the range of a LINE Beacon. You can reply to beacon events.
 
+// Deprecated: Use OpenAPI based classes instead.
 type BeaconEvent struct {
 	Event
 

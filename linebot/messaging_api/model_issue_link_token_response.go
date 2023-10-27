@@ -22,6 +22,7 @@ package messaging_api
 // IssueLinkTokenResponse
 // IssueLinkTokenResponse
 // https://developers.line.biz/en/reference/messaging-api/#issue-link-token
+// Deprecated: Use OpenAPI based classes instead.
 type IssueLinkTokenResponse struct {
 
 	/**

@@ -35,6 +35,7 @@ func (client *Client) GetMessageQuotaConsumption() *GetMessageQuotaCall {
 }
 
 // GetMessageQuotaCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetMessageQuotaCall struct {
 	c        *Client
 	ctx      context.Context
@@ -65,6 +66,7 @@ func (client *Client) GetMessageConsumption() *GetMessageConsumptionCall {
 }
 
 // GetMessageConsumptionCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetMessageConsumptionCall struct {
 	c   *Client
 	ctx context.Context

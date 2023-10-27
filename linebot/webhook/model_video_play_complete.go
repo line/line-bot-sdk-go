@@ -22,6 +22,7 @@ package webhook
 // VideoPlayComplete
 // VideoPlayComplete
 
+// Deprecated: Use OpenAPI based classes instead.
 type VideoPlayComplete struct {
 
 	/**

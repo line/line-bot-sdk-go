@@ -26,6 +26,7 @@ import (
 // UserSource
 // UserSource
 
+// Deprecated: Use OpenAPI based classes instead.
 type UserSource struct {
 	Source
 

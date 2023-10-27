@@ -77,6 +77,7 @@ func (client *Client) GetWebhookInfo() *GetWebhookInfo {
 }
 
 // GetWebhookInfo type
+// Deprecated: Use OpenAPI based classes instead.
 type GetWebhookInfo struct {
 	c        *Client
 	ctx      context.Context
@@ -100,6 +101,7 @@ func (call *GetWebhookInfo) Do() (*WebhookInfoResponse, error) {
 }
 
 // TestWebhook type
+// Deprecated: Use OpenAPI based classes instead.
 type TestWebhook struct {
 	c        *Client
 	ctx      context.Context
@@ -107,6 +109,7 @@ type TestWebhook struct {
 }
 
 // SetWebhookEndpointURLCall type
+// Deprecated: Use OpenAPI based classes instead.
 type SetWebhookEndpointURLCall struct {
 	c   *Client
 	ctx context.Context

@@ -26,6 +26,7 @@ import (
 // MessageImagemapAction
 // MessageImagemapAction
 
+// Deprecated: Use OpenAPI based classes instead.
 type MessageImagemapAction struct {
 	ImagemapAction
 

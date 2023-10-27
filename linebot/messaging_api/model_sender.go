@@ -22,6 +22,7 @@ package messaging_api
 // Sender
 // Change icon and display name
 
+// Deprecated: Use OpenAPI based classes instead.
 type Sender struct {
 
 	/**

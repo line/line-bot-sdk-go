@@ -26,6 +26,7 @@ import (
 // CameraRollAction
 // CameraRollAction
 
+// Deprecated: Use OpenAPI based classes instead.
 type CameraRollAction struct {
 	Action
 

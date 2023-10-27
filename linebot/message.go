@@ -50,6 +50,7 @@ type SendingMessage interface {
 }
 
 // TextMessage type
+// Deprecated: Use OpenAPI based classes instead.
 type TextMessage struct {
 	ID     string
 	Text   string
@@ -98,6 +99,7 @@ func (m *TextMessage) AddEmoji(emoji *Emoji) SendingMessage {
 }
 
 // ImageMessage type
+// Deprecated: Use OpenAPI based classes instead.
 type ImageMessage struct {
 	ID                 string
 	OriginalContentURL string
@@ -149,6 +151,7 @@ func (m *ImageMessage) AddEmoji(*Emoji) SendingMessage {
 }
 
 // VideoMessage type
+// Deprecated: Use OpenAPI based classes instead.
 type VideoMessage struct {
 	ID                 string
 	OriginalContentURL string
@@ -198,6 +201,7 @@ func (m *VideoMessage) AddEmoji(*Emoji) SendingMessage {
 }
 
 // AudioMessage type
+// Deprecated: Use OpenAPI based classes instead.
 type AudioMessage struct {
 	ID                 string
 	OriginalContentURL string
@@ -244,6 +248,7 @@ func (m *AudioMessage) AddEmoji(*Emoji) SendingMessage {
 }
 
 // FileMessage type
+// Deprecated: Use OpenAPI based classes instead.
 type FileMessage struct {
 	ID          string
 	FileName    string
@@ -252,6 +257,7 @@ type FileMessage struct {
 }
 
 // LocationMessage type
+// Deprecated: Use OpenAPI based classes instead.
 type LocationMessage struct {
 	ID        string
 	Title     string
@@ -303,6 +309,7 @@ func (m *LocationMessage) AddEmoji(*Emoji) SendingMessage {
 }
 
 // StickerMessage type
+// Deprecated: Use OpenAPI based classes instead.
 type StickerMessage struct {
 	ID                  string
 	PackageID           string
@@ -357,6 +364,7 @@ func (m *StickerMessage) AddEmoji(*Emoji) SendingMessage {
 }
 
 // TemplateMessage type
+// Deprecated: Use OpenAPI based classes instead.
 type TemplateMessage struct {
 	AltText  string
 	Template Template
@@ -401,6 +409,7 @@ func (m *TemplateMessage) AddEmoji(*Emoji) SendingMessage {
 }
 
 // ImagemapMessage type
+// Deprecated: Use OpenAPI based classes instead.
 type ImagemapMessage struct {
 	BaseURL  string
 	AltText  string
@@ -460,6 +469,7 @@ func (m *ImagemapMessage) AddEmoji(*Emoji) SendingMessage {
 }
 
 // FlexMessage type
+// Deprecated: Use OpenAPI based classes instead.
 type FlexMessage struct {
 	AltText  string
 	Contents FlexContainer
@@ -564,6 +574,7 @@ func (m *ImagemapMessage) Type() MessageType { return m.messageType }
 func (m *FlexMessage) Type() MessageType { return m.messageType }
 
 // NewTextMessage function
+// Deprecated: Use OpenAPI based classes instead.
 func NewTextMessage(content string) *TextMessage {
 	return &TextMessage{
 		Text:        content,
@@ -572,6 +583,7 @@ func NewTextMessage(content string) *TextMessage {
 }
 
 // NewImageMessage function
+// Deprecated: Use OpenAPI based classes instead.
 func NewImageMessage(originalContentURL, previewImageURL string) *ImageMessage {
 	return &ImageMessage{
 		OriginalContentURL: originalContentURL,
@@ -581,6 +593,7 @@ func NewImageMessage(originalContentURL, previewImageURL string) *ImageMessage {
 }
 
 // NewVideoMessage function
+// Deprecated: Use OpenAPI based classes instead.
 func NewVideoMessage(originalContentURL, previewImageURL string) *VideoMessage {
 	return &VideoMessage{
 		OriginalContentURL: originalContentURL,
@@ -590,6 +603,7 @@ func NewVideoMessage(originalContentURL, previewImageURL string) *VideoMessage {
 }
 
 // NewAudioMessage function
+// Deprecated: Use OpenAPI based classes instead.
 func NewAudioMessage(originalContentURL string, duration int) *AudioMessage {
 	return &AudioMessage{
 		OriginalContentURL: originalContentURL,
@@ -599,6 +613,7 @@ func NewAudioMessage(originalContentURL string, duration int) *AudioMessage {
 }
 
 // NewLocationMessage function
+// Deprecated: Use OpenAPI based classes instead.
 func NewLocationMessage(title, address string, latitude, longitude float64) *LocationMessage {
 	return &LocationMessage{
 		Title:       title,
@@ -610,6 +625,7 @@ func NewLocationMessage(title, address string, latitude, longitude float64) *Loc
 }
 
 // NewStickerMessage function
+// Deprecated: Use OpenAPI based classes instead.
 func NewStickerMessage(packageID, stickerID string) *StickerMessage {
 	return &StickerMessage{
 		PackageID:   packageID,
@@ -619,6 +635,7 @@ func NewStickerMessage(packageID, stickerID string) *StickerMessage {
 }
 
 // NewTemplateMessage function
+// Deprecated: Use OpenAPI based classes instead.
 func NewTemplateMessage(altText string, template Template) *TemplateMessage {
 	return &TemplateMessage{
 		AltText:     altText,
@@ -628,6 +645,7 @@ func NewTemplateMessage(altText string, template Template) *TemplateMessage {
 }
 
 // NewImagemapMessage function
+// Deprecated: Use OpenAPI based classes instead.
 func NewImagemapMessage(baseURL, altText string, baseSize ImagemapBaseSize, actions ...ImagemapAction) *ImagemapMessage {
 	return &ImagemapMessage{
 		BaseURL:     baseURL,
@@ -639,6 +657,7 @@ func NewImagemapMessage(baseURL, altText string, baseSize ImagemapBaseSize, acti
 }
 
 // NewFlexMessage function
+// Deprecated: Use OpenAPI based classes instead.
 func NewFlexMessage(altText string, contents FlexContainer) *FlexMessage {
 	return &FlexMessage{
 		AltText:     altText,

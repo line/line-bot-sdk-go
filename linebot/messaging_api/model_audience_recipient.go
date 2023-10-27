@@ -26,6 +26,7 @@ import (
 // AudienceRecipient
 // AudienceRecipient
 
+// Deprecated: Use OpenAPI based classes instead.
 type AudienceRecipient struct {
 	Recipient
 

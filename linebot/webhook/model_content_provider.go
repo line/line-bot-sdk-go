@@ -22,6 +22,7 @@ package webhook
 // ContentProvider
 // Provider of the media file.
 
+// Deprecated: Use OpenAPI based classes instead.
 type ContentProvider struct {
 
 	/**

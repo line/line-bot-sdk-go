@@ -22,6 +22,7 @@ package liff
 // LiffApp
 // LiffApp
 
+// Deprecated: Use OpenAPI based classes instead.
 type LiffApp struct {
 
 	/**

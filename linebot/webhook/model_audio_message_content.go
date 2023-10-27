@@ -26,6 +26,7 @@ import (
 // AudioMessageContent
 // AudioMessageContent
 
+// Deprecated: Use OpenAPI based classes instead.
 type AudioMessageContent struct {
 	MessageContent
 

@@ -22,6 +22,7 @@ package messaging_api
 // RoomMemberCountResponse
 // RoomMemberCountResponse
 // https://developers.line.biz/en/reference/messaging-api/#get-members-room-count
+// Deprecated: Use OpenAPI based classes instead.
 type RoomMemberCountResponse struct {
 
 	/**

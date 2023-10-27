@@ -22,6 +22,7 @@ package messaging_api
 // RoomUserProfileResponse
 // RoomUserProfileResponse
 // https://developers.line.biz/en/reference/messaging-api/#get-room-member-profile
+// Deprecated: Use OpenAPI based classes instead.
 type RoomUserProfileResponse struct {
 
 	/**

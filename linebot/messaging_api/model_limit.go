@@ -22,6 +22,7 @@ package messaging_api
 // Limit
 // Limit of the Narrowcast
 // https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message
+// Deprecated: Use OpenAPI based classes instead.
 type Limit struct {
 
 	/**

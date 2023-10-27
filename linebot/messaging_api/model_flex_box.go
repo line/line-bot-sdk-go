@@ -27,6 +27,7 @@ import (
 // FlexBox
 // FlexBox
 
+// Deprecated: Use OpenAPI based classes instead.
 type FlexBox struct {
 	FlexComponent
 

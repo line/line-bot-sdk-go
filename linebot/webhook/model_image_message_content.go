@@ -26,6 +26,7 @@ import (
 // ImageMessageContent
 // ImageMessageContent
 
+// Deprecated: Use OpenAPI based classes instead.
 type ImageMessageContent struct {
 	MessageContent
 

@@ -26,6 +26,7 @@ import (
 // RichMenuBatchLinkOperation
 // Replace the rich menu with the rich menu specified in the `to` property for all users linked to the rich menu specified in the `from` property.
 
+// Deprecated: Use OpenAPI based classes instead.
 type RichMenuBatchLinkOperation struct {
 	RichMenuBatchOperation
 

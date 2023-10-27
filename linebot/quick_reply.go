@@ -19,11 +19,13 @@ import (
 )
 
 // QuickReplyItems struct
+// Deprecated: Use OpenAPI based classes instead.
 type QuickReplyItems struct {
 	Items []*QuickReplyButton `json:"items"`
 }
 
 // NewQuickReplyItems function
+// Deprecated: Use OpenAPI based classes instead.
 func NewQuickReplyItems(buttons ...*QuickReplyButton) *QuickReplyItems {
 	return &QuickReplyItems{
 		Items: buttons,
@@ -31,6 +33,7 @@ func NewQuickReplyItems(buttons ...*QuickReplyButton) *QuickReplyItems {
 }
 
 // QuickReplyButton type
+// Deprecated: Use OpenAPI based classes instead.
 type QuickReplyButton struct {
 	ImageURL string
 	Action   QuickReplyAction
@@ -50,6 +53,7 @@ func (b *QuickReplyButton) MarshalJSON() ([]byte, error) {
 }
 
 // NewQuickReplyButton function
+// Deprecated: Use OpenAPI based classes instead.
 func NewQuickReplyButton(imageURL string, action QuickReplyAction) *QuickReplyButton {
 	return &QuickReplyButton{
 		ImageURL: imageURL,

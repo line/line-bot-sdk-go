@@ -22,6 +22,7 @@ package messaging_api
 // QuickReply
 // Quick reply
 // https://developers.line.biz/en/reference/messaging-api/#items-object
+// Deprecated: Use OpenAPI based classes instead.
 type QuickReply struct {
 
 	/**

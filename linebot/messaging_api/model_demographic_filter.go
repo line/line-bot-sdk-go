@@ -33,6 +33,7 @@ func (e DemographicFilter) GetType() string {
 	return e.Type
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type UnknownDemographicFilter struct {
 	DemographicFilterInterface
 	Type string
@@ -43,6 +44,7 @@ func (e UnknownDemographicFilter) GetType() string {
 	return e.Type
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func setDiscriminatorPropertyDemographicFilter(r DemographicFilterInterface) DemographicFilterInterface {
 	switch v := r.(type) {
 	case *AgeDemographicFilter:
@@ -114,12 +116,14 @@ func setDiscriminatorPropertyDemographicFilter(r DemographicFilterInterface) Dem
 // DemographicFilter
 // Demographic filter
 
+// Deprecated: Use OpenAPI based classes instead.
 type DemographicFilter struct {
 	// Type of demographic filter
 
 	Type string `json:"type,omitempty"`
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func UnmarshalDemographicFilter(data []byte) (DemographicFilterInterface, error) {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

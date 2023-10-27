@@ -30,6 +30,7 @@ func (client *Client) GetGroupMemberIDs(groupID, continuationToken string) *GetG
 }
 
 // GetGroupMemberIDsCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetGroupMemberIDsCall struct {
 	c   *Client
 	ctx context.Context
@@ -69,6 +70,7 @@ func (client *Client) GetRoomMemberIDs(roomID, continuationToken string) *GetRoo
 }
 
 // GetRoomMemberIDsCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetRoomMemberIDsCall struct {
 	c   *Client
 	ctx context.Context
@@ -150,6 +152,7 @@ type memberIDsCaller interface {
 }
 
 // IDsScanner type
+// Deprecated: Use OpenAPI based classes instead.
 type IDsScanner struct {
 	caller memberIDsCaller
 	ctx    context.Context

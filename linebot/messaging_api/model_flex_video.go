@@ -26,6 +26,7 @@ import (
 // FlexVideo
 // FlexVideo
 
+// Deprecated: Use OpenAPI based classes instead.
 type FlexVideo struct {
 	FlexComponent
 

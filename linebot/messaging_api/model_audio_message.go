@@ -26,6 +26,7 @@ import (
 // AudioMessage
 // AudioMessage
 // https://developers.line.biz/en/reference/messaging-api/#audio-message
+// Deprecated: Use OpenAPI based classes instead.
 type AudioMessage struct {
 	Message
 

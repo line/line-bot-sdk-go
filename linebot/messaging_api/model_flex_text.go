@@ -26,6 +26,7 @@ import (
 // FlexText
 // FlexText
 
+// Deprecated: Use OpenAPI based classes instead.
 type FlexText struct {
 	FlexComponent
 

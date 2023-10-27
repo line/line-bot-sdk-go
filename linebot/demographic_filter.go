@@ -31,12 +31,14 @@ const (
 )
 
 // GenderFilter type
+// Deprecated: Use OpenAPI based classes instead.
 type GenderFilter struct {
 	Type    string       `json:"type"`
 	Genders []GenderType `json:"oneOf"`
 }
 
 // NewGenderFilter function
+// Deprecated: Use OpenAPI based classes instead.
 func NewGenderFilter(genders ...GenderType) *GenderFilter {
 	return &GenderFilter{
 		Type:    "gender",
@@ -64,6 +66,7 @@ const (
 )
 
 // AgeFilter type
+// Deprecated: Use OpenAPI based classes instead.
 type AgeFilter struct {
 	Type string  `json:"type"`
 	GTE  AgeType `json:"gte,omitempty"` // greater than or equal to
@@ -71,6 +74,7 @@ type AgeFilter struct {
 }
 
 // NewAgeFilter function
+// Deprecated: Use OpenAPI based classes instead.
 func NewAgeFilter(gte, lt AgeType) *AgeFilter {
 	return &AgeFilter{
 		Type: "age",
@@ -92,12 +96,14 @@ const (
 )
 
 // AppTypeFilter type
+// Deprecated: Use OpenAPI based classes instead.
 type AppTypeFilter struct {
 	Type     string    `json:"type"`
 	AppTypes []AppType `json:"oneOf"`
 }
 
 // NewAppTypeFilter function
+// Deprecated: Use OpenAPI based classes instead.
 func NewAppTypeFilter(appTypes ...AppType) *AppTypeFilter {
 	return &AppTypeFilter{
 		Type:     "appType",
@@ -205,12 +211,14 @@ const (
 )
 
 // AreaFilter type
+// Deprecated: Use OpenAPI based classes instead.
 type AreaFilter struct {
 	Type  string     `json:"type"`
 	Areas []AreaType `json:"oneOf"`
 }
 
 // NewAreaFilter function
+// Deprecated: Use OpenAPI based classes instead.
 func NewAreaFilter(areaTypes ...AreaType) *AreaFilter {
 	return &AreaFilter{
 		Type:  "area",
@@ -235,6 +243,7 @@ const (
 )
 
 // SubscriptionPeriodFilter type
+// Deprecated: Use OpenAPI based classes instead.
 type SubscriptionPeriodFilter struct {
 	Type string     `json:"type"`
 	GTE  PeriodType `json:"gte,omitempty"` // greater than or equal to
@@ -242,6 +251,7 @@ type SubscriptionPeriodFilter struct {
 }
 
 // NewSubscriptionPeriodFilter function
+// Deprecated: Use OpenAPI based classes instead.
 func NewSubscriptionPeriodFilter(gte, lt PeriodType) *SubscriptionPeriodFilter {
 	return &SubscriptionPeriodFilter{
 		Type: "subscriptionPeriod",
@@ -254,6 +264,7 @@ func NewSubscriptionPeriodFilter(gte, lt PeriodType) *SubscriptionPeriodFilter {
 func (*SubscriptionPeriodFilter) DemographicFilter() {}
 
 // DemographicFilterOperator struct
+// Deprecated: Use OpenAPI based classes instead.
 type DemographicFilterOperator struct {
 	ConditionAnd []DemographicFilter `json:"and,omitempty"`
 	ConditionOr  []DemographicFilter `json:"or,omitempty"`
@@ -261,6 +272,7 @@ type DemographicFilterOperator struct {
 }
 
 // DemographicFilterOperatorAnd method
+// Deprecated: Use OpenAPI based classes instead.
 func DemographicFilterOperatorAnd(conditions ...DemographicFilter) *DemographicFilterOperator {
 	return &DemographicFilterOperator{
 		ConditionAnd: conditions,
@@ -268,6 +280,7 @@ func DemographicFilterOperatorAnd(conditions ...DemographicFilter) *DemographicF
 }
 
 // DemographicFilterOperatorOr method
+// Deprecated: Use OpenAPI based classes instead.
 func DemographicFilterOperatorOr(conditions ...DemographicFilter) *DemographicFilterOperator {
 	return &DemographicFilterOperator{
 		ConditionOr: conditions,
@@ -275,6 +288,7 @@ func DemographicFilterOperatorOr(conditions ...DemographicFilter) *DemographicFi
 }
 
 // DemographicFilterOperatorNot method
+// Deprecated: Use OpenAPI based classes instead.
 func DemographicFilterOperatorNot(condition DemographicFilter) *DemographicFilterOperator {
 	return &DemographicFilterOperator{
 		ConditionNot: condition,

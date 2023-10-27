@@ -6,6 +6,7 @@ import (
 )
 
 // UnmarshalTemplateJSON function
+// Deprecated: Use OpenAPI based classes instead.
 func UnmarshalTemplateJSON(data []byte) (Template, error) {
 	raw := rawTemplate{}
 	if err := json.Unmarshal(data, &raw); err != nil {
@@ -14,6 +15,7 @@ func UnmarshalTemplateJSON(data []byte) (Template, error) {
 	return raw.Template, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type rawTemplate struct {
 	Type     TemplateType `json:"type"`
 	Template Template     `json:"-"`
@@ -86,6 +88,7 @@ func (t *ConfirmTemplate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type rawColumn struct {
 	Column CarouselColumn `json:"-"`
 }
@@ -132,6 +135,7 @@ func (t *CarouselTemplate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type rawImageColumn struct {
 	Column ImageCarouselColumn `json:"-"`
 }

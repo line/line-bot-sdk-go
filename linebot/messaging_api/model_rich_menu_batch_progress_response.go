@@ -26,6 +26,7 @@ import (
 // RichMenuBatchProgressResponse
 // RichMenuBatchProgressResponse
 // https://developers.line.biz/en/reference/messaging-api/#get-batch-control-rich-menus-progress-status-response
+// Deprecated: Use OpenAPI based classes instead.
 type RichMenuBatchProgressResponse struct {
 
 	/**

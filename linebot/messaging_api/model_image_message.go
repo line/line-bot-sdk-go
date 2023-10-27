@@ -26,6 +26,7 @@ import (
 // ImageMessage
 // ImageMessage
 // https://developers.line.biz/en/reference/messaging-api/#image-message
+// Deprecated: Use OpenAPI based classes instead.
 type ImageMessage struct {
 	Message
 

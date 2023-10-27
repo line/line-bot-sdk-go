@@ -22,6 +22,7 @@ package manage_audience
 // CreateClickBasedAudienceGroupRequest
 // Create audience for click-based retargeting
 // https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group
+// Deprecated: Use OpenAPI based classes instead.
 type CreateClickBasedAudienceGroupRequest struct {
 
 	/**

@@ -22,6 +22,7 @@ package messaging_api
 // SentMessage
 // SentMessage
 
+// Deprecated: Use OpenAPI based classes instead.
 type SentMessage struct {
 
 	/**

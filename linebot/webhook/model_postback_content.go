@@ -22,6 +22,7 @@ package webhook
 // PostbackContent
 // PostbackContent
 
+// Deprecated: Use OpenAPI based classes instead.
 type PostbackContent struct {
 
 	/**

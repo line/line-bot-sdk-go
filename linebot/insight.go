@@ -32,6 +32,7 @@ const (
 )
 
 // GetNumberMessagesDeliveryCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetNumberMessagesDeliveryCall struct {
 	c   *Client
 	ctx context.Context
@@ -71,6 +72,7 @@ func (call *GetNumberMessagesDeliveryCall) Do() (*MessagesNumberDeliveryResponse
 }
 
 // GetNumberFollowersCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetNumberFollowersCall struct {
 	c   *Client
 	ctx context.Context
@@ -110,6 +112,7 @@ func (call *GetNumberFollowersCall) Do() (*MessagesNumberFollowersResponse, erro
 }
 
 // GetFriendDemographicsCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetFriendDemographicsCall struct {
 	c   *Client
 	ctx context.Context
@@ -145,6 +148,7 @@ func (call *GetFriendDemographicsCall) Do() (*MessagesFriendDemographicsResponse
 }
 
 // GetUserInteractionStatsCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetUserInteractionStatsCall struct {
 	c   *Client
 	ctx context.Context

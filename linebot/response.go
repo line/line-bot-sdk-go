@@ -23,16 +23,19 @@ import (
 )
 
 // BasicResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type BasicResponse struct {
 	RequestID string
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type errorResponseDetail struct {
 	Message  string `json:"message"`
 	Property string `json:"property"`
 }
 
 // ErrorResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type ErrorResponse struct {
 	Message string                `json:"message"`
 	Details []errorResponseDetail `json:"details"`
@@ -42,6 +45,7 @@ type ErrorResponse struct {
 }
 
 // UserProfileResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type UserProfileResponse struct {
 	UserID        string `json:"userId"`
 	DisplayName   string `json:"displayName"`
@@ -51,12 +55,14 @@ type UserProfileResponse struct {
 }
 
 // UserIDsResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type UserIDsResponse struct {
 	UserIDs []string `json:"userIds"`
 	Next    string   `json:"next"`
 }
 
 // GroupSummaryResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type GroupSummaryResponse struct {
 	GroupID    string `json:"groupId"`
 	GroupName  string `json:"groupName"`
@@ -64,17 +70,20 @@ type GroupSummaryResponse struct {
 }
 
 // MemberIDsResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type MemberIDsResponse struct {
 	MemberIDs []string `json:"memberIds"`
 	Next      string   `json:"next"`
 }
 
 // MemberCountResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type MemberCountResponse struct {
 	Count int `json:"count"`
 }
 
 // MessageContentResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type MessageContentResponse struct {
 	Content       io.ReadCloser
 	ContentLength int64
@@ -82,12 +91,14 @@ type MessageContentResponse struct {
 }
 
 // MessagesNumberResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type MessagesNumberResponse struct {
 	Status  string
 	Success int64
 }
 
 // MessageQuotaResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type MessageQuotaResponse struct {
 	Type       string
 	Value      int64
@@ -95,11 +106,13 @@ type MessageQuotaResponse struct {
 }
 
 // MessageConsumptionResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type MessageConsumptionResponse struct {
 	TotalUsage int64
 }
 
 // BotInfoResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type BotInfoResponse struct {
 	UserID         string         `json:"userId"`
 	BasicID        string         `json:"basicId"`
@@ -111,6 +124,7 @@ type BotInfoResponse struct {
 }
 
 // MessagesNumberDeliveryResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type MessagesNumberDeliveryResponse struct {
 	Status          string `json:"status"`
 	Broadcast       int64  `json:"broadcast"`
@@ -126,6 +140,7 @@ type MessagesNumberDeliveryResponse struct {
 }
 
 // MessagesNumberFollowersResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type MessagesNumberFollowersResponse struct {
 	Status          string `json:"status"`
 	Followers       int64  `json:"followers"`
@@ -134,6 +149,7 @@ type MessagesNumberFollowersResponse struct {
 }
 
 // MessagesProgressResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type MessagesProgressResponse struct {
 	Phase             string `json:"phase"`
 	SuccessCount      int64  `json:"successCount"`
@@ -146,6 +162,7 @@ type MessagesProgressResponse struct {
 }
 
 // MessagesFriendDemographicsResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type MessagesFriendDemographicsResponse struct {
 	Available           bool                       `json:"available"`
 	Genders             []GenderDetail             `json:"genders"`
@@ -156,36 +173,42 @@ type MessagesFriendDemographicsResponse struct {
 }
 
 // GenderDetail type
+// Deprecated: Use OpenAPI based classes instead.
 type GenderDetail struct {
 	Gender     string  `json:"gender"`
 	Percentage float64 `json:"percentage"`
 }
 
 // AgeDetail type
+// Deprecated: Use OpenAPI based classes instead.
 type AgeDetail struct {
 	Age        string  `json:"age"`
 	Percentage float64 `json:"percentage"`
 }
 
 // AreasDetail type
+// Deprecated: Use OpenAPI based classes instead.
 type AreasDetail struct {
 	Area       string  `json:"area"`
 	Percentage float64 `json:"percentage"`
 }
 
 // AppTypeDetail type
+// Deprecated: Use OpenAPI based classes instead.
 type AppTypeDetail struct {
 	AppType    string  `json:"appType"`
 	Percentage float64 `json:"percentage"`
 }
 
 // SubscriptionPeriodDetail type
+// Deprecated: Use OpenAPI based classes instead.
 type SubscriptionPeriodDetail struct {
 	SubscriptionPeriod string  `json:"subscriptionPeriod"`
 	Percentage         float64 `json:"percentage"`
 }
 
 // MessagesUserInteractionStatsResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type MessagesUserInteractionStatsResponse struct {
 	Overview OverviewDetail  `json:"overview"`
 	Messages []MessageDetail `json:"messages"`
@@ -193,6 +216,7 @@ type MessagesUserInteractionStatsResponse struct {
 }
 
 // OverviewDetail type
+// Deprecated: Use OpenAPI based classes instead.
 type OverviewDetail struct {
 	RequestID                   string `json:"requestId"`
 	Timestamp                   int64  `json:"timestamp"`
@@ -204,6 +228,7 @@ type OverviewDetail struct {
 }
 
 // MessageDetail type
+// Deprecated: Use OpenAPI based classes instead.
 type MessageDetail struct {
 	Seq                         int64 `json:"seq"`
 	Impression                  int64 `json:"impression"`
@@ -220,6 +245,7 @@ type MessageDetail struct {
 }
 
 // ClickDetail type
+// Deprecated: Use OpenAPI based classes instead.
 type ClickDetail struct {
 	Seq                  int64  `json:"seq"`
 	URL                  string `json:"url"`
@@ -229,11 +255,13 @@ type ClickDetail struct {
 }
 
 // RichMenuIDResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type RichMenuIDResponse struct {
 	RichMenuID string `json:"richMenuId"`
 }
 
 // RichMenuResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type RichMenuResponse struct {
 	RichMenuID  string       `json:"richMenuId"`
 	Size        RichMenuSize `json:"size"`
@@ -244,33 +272,39 @@ type RichMenuResponse struct {
 }
 
 // RichMenuAliasResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type RichMenuAliasResponse struct {
 	RichMenuAliasID string `json:"richMenuAliasId"`
 	RichMenuID      string `json:"richMenuId"`
 }
 
 // LIFFAppsResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type LIFFAppsResponse struct {
 	Apps []LIFFApp `json:"apps"`
 }
 
 // LIFFIDResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type LIFFIDResponse struct {
 	LIFFID string `json:"liffId"`
 }
 
 // LinkTokenResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type LinkTokenResponse struct {
 	LinkToken string `json:"linkToken"`
 }
 
 // WebhookInfoResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type WebhookInfoResponse struct {
 	Endpoint string `json:"endpoint"`
 	Active   bool   `json:"active"`
 }
 
 // UploadAudienceGroupResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type UploadAudienceGroupResponse struct {
 	RequestID         string `json:"-"`
 	AcceptedRequestID string `json:"-"`
@@ -285,6 +319,7 @@ type UploadAudienceGroupResponse struct {
 }
 
 // ClickAudienceGroupResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type ClickAudienceGroupResponse struct {
 	XRequestID        string `json:"-"` // from header X-Line-Request-Id
 	AcceptedRequestID string `json:"-"`
@@ -301,6 +336,7 @@ type ClickAudienceGroupResponse struct {
 }
 
 // IMPAudienceGroupResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type IMPAudienceGroupResponse struct {
 	XRequestID        string `json:"-"`
 	AcceptedRequestID string `json:"-"`
@@ -316,6 +352,7 @@ type IMPAudienceGroupResponse struct {
 }
 
 // AudienceGroup type
+// Deprecated: Use OpenAPI based classes instead.
 type AudienceGroup struct {
 	AudienceGroupID      int    `json:"audienceGroupId,omitempty"`
 	CreateRoute          string `json:"createRoute,omitempty"`
@@ -335,6 +372,7 @@ type AudienceGroup struct {
 }
 
 // Job type
+// Deprecated: Use OpenAPI based classes instead.
 type Job struct {
 	AudienceGroupJobID int    `json:"audienceGroupJobId,omitempty"`
 	AudienceGroupID    int    `json:"audienceGroupId,omitempty"`
@@ -348,11 +386,13 @@ type Job struct {
 }
 
 // AdAccount type
+// Deprecated: Use OpenAPI based classes instead.
 type AdAccount struct {
 	Name string `json:"name,omitempty"`
 }
 
 // GetAudienceGroupResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type GetAudienceGroupResponse struct {
 	RequestID         string        `json:"-"`
 	AcceptedRequestID string        `json:"-"`
@@ -362,6 +402,7 @@ type GetAudienceGroupResponse struct {
 }
 
 // ListAudienceGroupResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type ListAudienceGroupResponse struct {
 	RequestID                        string          `json:"-"`
 	AcceptedRequestID                string          `json:"-"`
@@ -374,6 +415,7 @@ type ListAudienceGroupResponse struct {
 }
 
 // GetAudienceGroupAuthorityLevelResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type GetAudienceGroupAuthorityLevelResponse struct {
 	RequestID         string                     `json:"-"`
 	AcceptedRequestID string                     `json:"-"`
@@ -382,11 +424,13 @@ type GetAudienceGroupAuthorityLevelResponse struct {
 
 // isSuccess checks if status code is 2xx: The action was successfully received,
 // understood, and accepted.
+// Deprecated: Use OpenAPI based classes instead.
 func isSuccess(code int) bool {
 	return code/100 == 2
 }
 
 // AccessTokenResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type AccessTokenResponse struct {
 	AccessToken string `json:"access_token"`
 	ExpiresIn   int64  `json:"expires_in"`
@@ -395,11 +439,13 @@ type AccessTokenResponse struct {
 }
 
 // AccessTokensResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type AccessTokensResponse struct {
 	KeyIDs []string `json:"kids"`
 }
 
 // VerifiedAccessTokenResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type VerifiedAccessTokenResponse struct {
 	ClientID  string `json:"client_id"`
 	ExpiresIn int64  `json:"expires_in"`
@@ -407,6 +453,7 @@ type VerifiedAccessTokenResponse struct {
 }
 
 // TestWebhookResponse type
+// Deprecated: Use OpenAPI based classes instead.
 type TestWebhookResponse struct {
 	Success    bool      `json:"success"`
 	Timestamp  time.Time `json:"timestamp"`
@@ -415,6 +462,7 @@ type TestWebhookResponse struct {
 	Detail     string    `json:"detail"`
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func checkResponse(res *http.Response) error {
 	if isSuccess(res.StatusCode) {
 		return nil
@@ -432,6 +480,7 @@ func checkResponse(res *http.Response) error {
 	}
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToBasicResponse(res *http.Response) (*BasicResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -449,6 +498,7 @@ func decodeToBasicResponse(res *http.Response) (*BasicResponse, error) {
 	return &result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToUserProfileResponse(res *http.Response) (*UserProfileResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -461,6 +511,7 @@ func decodeToUserProfileResponse(res *http.Response) (*UserProfileResponse, erro
 	return &result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToUserIDsResponse(res *http.Response) (*UserIDsResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -473,6 +524,7 @@ func decodeToUserIDsResponse(res *http.Response) (*UserIDsResponse, error) {
 	return result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToGroupSummaryResponse(res *http.Response) (*GroupSummaryResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -485,6 +537,7 @@ func decodeToGroupSummaryResponse(res *http.Response) (*GroupSummaryResponse, er
 	return result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToMemberIDsResponse(res *http.Response) (*MemberIDsResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -497,6 +550,7 @@ func decodeToMemberIDsResponse(res *http.Response) (*MemberIDsResponse, error) {
 	return result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToMemberCountResponse(res *http.Response) (*MemberCountResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -509,6 +563,7 @@ func decodeToMemberCountResponse(res *http.Response) (*MemberCountResponse, erro
 	return result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToMessageContentResponse(res *http.Response) (*MessageContentResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -525,6 +580,7 @@ func decodeToMessageContentResponse(res *http.Response) (*MessageContentResponse
 	return &result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToMessageQuotaResponse(res *http.Response) (*MessageQuotaResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -537,6 +593,7 @@ func decodeToMessageQuotaResponse(res *http.Response) (*MessageQuotaResponse, er
 	return result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToMessageConsumptionResponse(res *http.Response) (*MessageConsumptionResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -549,6 +606,7 @@ func decodeToMessageConsumptionResponse(res *http.Response) (*MessageConsumption
 	return result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToBotInfoResponse(res *http.Response) (*BotInfoResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -561,6 +619,7 @@ func decodeToBotInfoResponse(res *http.Response) (*BotInfoResponse, error) {
 	return result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToRichMenuResponse(res *http.Response) (*RichMenuResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -573,6 +632,7 @@ func decodeToRichMenuResponse(res *http.Response) (*RichMenuResponse, error) {
 	return &result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToRichMenuListResponse(res *http.Response) ([]*RichMenuResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -587,6 +647,7 @@ func decodeToRichMenuListResponse(res *http.Response) ([]*RichMenuResponse, erro
 	return result.RichMenus, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToRichMenuIDResponse(res *http.Response) (*RichMenuIDResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -599,6 +660,7 @@ func decodeToRichMenuIDResponse(res *http.Response) (*RichMenuIDResponse, error)
 	return &result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToRichMenuAliasResponse(res *http.Response) (*RichMenuAliasResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -611,6 +673,7 @@ func decodeToRichMenuAliasResponse(res *http.Response) (*RichMenuAliasResponse, 
 	return &result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToRichMenuAliasListResponse(res *http.Response) ([]*RichMenuAliasResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -625,6 +688,7 @@ func decodeToRichMenuAliasListResponse(res *http.Response) ([]*RichMenuAliasResp
 	return result.Aliases, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToLIFFResponse(res *http.Response) (*LIFFAppsResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -637,6 +701,7 @@ func decodeToLIFFResponse(res *http.Response) (*LIFFAppsResponse, error) {
 	return result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToLIFFIDResponse(res *http.Response) (*LIFFIDResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -649,6 +714,7 @@ func decodeToLIFFIDResponse(res *http.Response) (*LIFFIDResponse, error) {
 	return &result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToLinkTokenResponse(res *http.Response) (*LinkTokenResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -661,6 +727,7 @@ func decodeToLinkTokenResponse(res *http.Response) (*LinkTokenResponse, error) {
 	return &result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToWebhookInfoResponse(res *http.Response) (*WebhookInfoResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -673,6 +740,7 @@ func decodeToWebhookInfoResponse(res *http.Response) (*WebhookInfoResponse, erro
 	return &result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToMessagesNumberResponse(res *http.Response) (*MessagesNumberResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -685,6 +753,7 @@ func decodeToMessagesNumberResponse(res *http.Response) (*MessagesNumberResponse
 	return &result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToMessagesNumberDeliveryResponse(res *http.Response) (*MessagesNumberDeliveryResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -697,6 +766,7 @@ func decodeToMessagesNumberDeliveryResponse(res *http.Response) (*MessagesNumber
 	return &result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToMessagesNumberFollowersResponse(res *http.Response) (*MessagesNumberFollowersResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -709,6 +779,7 @@ func decodeToMessagesNumberFollowersResponse(res *http.Response) (*MessagesNumbe
 	return &result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToMessagesFriendDemographicsResponse(res *http.Response) (*MessagesFriendDemographicsResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -721,6 +792,7 @@ func decodeToMessagesFriendDemographicsResponse(res *http.Response) (*MessagesFr
 	return &result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToMessagesUserInteractionStatsResponse(res *http.Response) (*MessagesUserInteractionStatsResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -733,6 +805,7 @@ func decodeToMessagesUserInteractionStatsResponse(res *http.Response) (*Messages
 	return &result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToMessagesProgressResponse(res *http.Response) (*MessagesProgressResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -745,6 +818,7 @@ func decodeToMessagesProgressResponse(res *http.Response) (*MessagesProgressResp
 	return &result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToAccessTokenResponse(res *http.Response) (*AccessTokenResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -757,6 +831,7 @@ func decodeToAccessTokenResponse(res *http.Response) (*AccessTokenResponse, erro
 	return &result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToAccessTokensResponse(res *http.Response) (*AccessTokensResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -769,6 +844,7 @@ func decodeToAccessTokensResponse(res *http.Response) (*AccessTokensResponse, er
 	return &result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToVerifiedAccessTokenResponse(res *http.Response) (*VerifiedAccessTokenResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -781,6 +857,7 @@ func decodeToVerifiedAccessTokenResponse(res *http.Response) (*VerifiedAccessTok
 	return &result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToTestWebhookResponse(res *http.Response) (*TestWebhookResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -793,6 +870,7 @@ func decodeToTestWebhookResponse(res *http.Response) (*TestWebhookResponse, erro
 	return &result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToAudienceGroupResponse(res *http.Response) (*UploadAudienceGroupResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -811,6 +889,7 @@ func decodeToAudienceGroupResponse(res *http.Response) (*UploadAudienceGroupResp
 	return &result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToClickAudienceGroupResponse(res *http.Response) (*ClickAudienceGroupResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -829,6 +908,7 @@ func decodeToClickAudienceGroupResponse(res *http.Response) (*ClickAudienceGroup
 	return &result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToIMPAudienceGroupResponse(res *http.Response) (*IMPAudienceGroupResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -847,6 +927,7 @@ func decodeToIMPAudienceGroupResponse(res *http.Response) (*IMPAudienceGroupResp
 	return &result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToGetAudienceGroupResponse(res *http.Response) (*GetAudienceGroupResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -865,6 +946,7 @@ func decodeToGetAudienceGroupResponse(res *http.Response) (*GetAudienceGroupResp
 	return &result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToListAudienceGroupResponse(res *http.Response) (*ListAudienceGroupResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -883,6 +965,7 @@ func decodeToListAudienceGroupResponse(res *http.Response) (*ListAudienceGroupRe
 	return &result, nil
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func decodeToGetAudienceGroupAuthorityLevelResponse(res *http.Response) (*GetAudienceGroupAuthorityLevelResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err

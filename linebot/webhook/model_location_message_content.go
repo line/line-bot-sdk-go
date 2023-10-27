@@ -26,6 +26,7 @@ import (
 // LocationMessageContent
 // LocationMessageContent
 
+// Deprecated: Use OpenAPI based classes instead.
 type LocationMessageContent struct {
 	MessageContent
 

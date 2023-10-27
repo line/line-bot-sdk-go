@@ -27,6 +27,7 @@ import (
 // ReplyMessageRequest
 // ReplyMessageRequest
 // https://developers.line.biz/en/reference/messaging-api/#send-reply-message
+// Deprecated: Use OpenAPI based classes instead.
 type ReplyMessageRequest struct {
 
 	/**

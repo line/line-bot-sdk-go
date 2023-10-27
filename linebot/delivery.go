@@ -68,6 +68,7 @@ func (client *Client) GetNumberBroadcastMessages(date string) *GetNumberMessages
 }
 
 // GetNumberMessagesCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetNumberMessagesCall struct {
 	c   *Client
 	ctx context.Context

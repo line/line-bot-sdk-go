@@ -26,6 +26,7 @@ import (
 // FlexImage
 // FlexImage
 // https://developers.line.biz/en/reference/messaging-api/#f-image
+// Deprecated: Use OpenAPI based classes instead.
 type FlexImage struct {
 	FlexComponent
 

@@ -32,6 +32,7 @@ func (client *Client) PushMessage(to string, messages ...SendingMessage) *PushMe
 }
 
 // PushMessageCall type
+// Deprecated: Use OpenAPI based classes instead.
 type PushMessageCall struct {
 	c   *Client
 	ctx context.Context
@@ -97,6 +98,7 @@ func (client *Client) ReplyMessage(replyToken string, messages ...SendingMessage
 }
 
 // ReplyMessageCall type
+// Deprecated: Use OpenAPI based classes instead.
 type ReplyMessageCall struct {
 	c   *Client
 	ctx context.Context
@@ -156,6 +158,7 @@ func (client *Client) Multicast(to []string, messages ...SendingMessage) *Multic
 }
 
 // MulticastCall type
+// Deprecated: Use OpenAPI based classes instead.
 type MulticastCall struct {
 	c   *Client
 	ctx context.Context
@@ -219,6 +222,7 @@ func (client *Client) BroadcastMessage(messages ...SendingMessage) *BroadcastMes
 }
 
 // BroadcastMessageCall type
+// Deprecated: Use OpenAPI based classes instead.
 type BroadcastMessageCall struct {
 	c   *Client
 	ctx context.Context
@@ -270,6 +274,7 @@ func (client *Client) Narrowcast(messages ...SendingMessage) *NarrowcastCall {
 }
 
 // NarrowcastCall type
+// Deprecated: Use OpenAPI based classes instead.
 type NarrowcastCall struct {
 	c   *Client
 	ctx context.Context
@@ -281,11 +286,13 @@ type NarrowcastCall struct {
 }
 
 // Filter type
+// Deprecated: Use OpenAPI based classes instead.
 type Filter struct {
 	Demographic DemographicFilter `json:"demographic"`
 }
 
 // NarrowcastMessageLimit type
+// Deprecated: Use OpenAPI based classes instead.
 type NarrowcastMessageLimit struct {
 	Max                int  `json:"max"`
 	UpToRemainingQuota bool `json:"upToRemainingQuota,omitempty"`

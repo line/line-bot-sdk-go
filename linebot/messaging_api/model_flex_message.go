@@ -26,6 +26,7 @@ import (
 // FlexMessage
 // FlexMessage
 // https://developers.line.biz/en/reference/messaging-api/#flex-message
+// Deprecated: Use OpenAPI based classes instead.
 type FlexMessage struct {
 	Message
 

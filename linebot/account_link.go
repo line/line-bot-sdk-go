@@ -29,6 +29,7 @@ func (client *Client) IssueLinkToken(userID string) *IssueLinkTokenCall {
 }
 
 // IssueLinkTokenCall type
+// Deprecated: Use OpenAPI based classes instead.
 type IssueLinkTokenCall struct {
 	c   *Client
 	ctx context.Context

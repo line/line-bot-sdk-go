@@ -22,6 +22,7 @@ package messaging_api
 // RichMenuAliasResponse
 // RichMenuAliasResponse
 
+// Deprecated: Use OpenAPI based classes instead.
 type RichMenuAliasResponse struct {
 
 	/**

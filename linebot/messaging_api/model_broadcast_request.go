@@ -27,6 +27,7 @@ import (
 // BroadcastRequest
 // BroadcastRequest
 // https://developers.line.biz/en/reference/messaging-api/#send-broadcast-message
+// Deprecated: Use OpenAPI based classes instead.
 type BroadcastRequest struct {
 
 	/**

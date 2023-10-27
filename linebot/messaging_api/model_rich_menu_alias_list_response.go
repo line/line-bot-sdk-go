@@ -22,6 +22,7 @@ package messaging_api
 // RichMenuAliasListResponse
 // RichMenuAliasListResponse
 // https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-list
+// Deprecated: Use OpenAPI based classes instead.
 type RichMenuAliasListResponse struct {
 
 	/**

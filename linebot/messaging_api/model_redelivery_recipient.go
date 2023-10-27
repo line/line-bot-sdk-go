@@ -26,6 +26,7 @@ import (
 // RedeliveryRecipient
 // RedeliveryRecipient
 
+// Deprecated: Use OpenAPI based classes instead.
 type RedeliveryRecipient struct {
 	Recipient
 

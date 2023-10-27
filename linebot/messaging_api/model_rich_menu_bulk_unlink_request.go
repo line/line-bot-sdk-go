@@ -22,6 +22,7 @@ package messaging_api
 // RichMenuBulkUnlinkRequest
 // RichMenuBulkUnlinkRequest
 // https://developers.line.biz/en/reference/messaging-api/#unlink-rich-menu-from-users
+// Deprecated: Use OpenAPI based classes instead.
 type RichMenuBulkUnlinkRequest struct {
 
 	/**

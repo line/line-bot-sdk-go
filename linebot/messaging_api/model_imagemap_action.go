@@ -33,6 +33,7 @@ func (e ImagemapAction) GetType() string {
 	return e.Type
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type UnknownImagemapAction struct {
 	ImagemapActionInterface
 	Type string
@@ -43,6 +44,7 @@ func (e UnknownImagemapAction) GetType() string {
 	return e.Type
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func setDiscriminatorPropertyImagemapAction(r ImagemapActionInterface) ImagemapActionInterface {
 	switch v := r.(type) {
 	case *MessageImagemapAction:
@@ -75,12 +77,14 @@ func setDiscriminatorPropertyImagemapAction(r ImagemapActionInterface) ImagemapA
 
 // https://developers.line.biz/en/reference/messaging-api/#imagemap-action-objects
 
+// Deprecated: Use OpenAPI based classes instead.
 type ImagemapAction struct {
 	Type string `json:"type"`
 
 	Area ImagemapArea `json:"area"`
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func UnmarshalImagemapAction(data []byte) (ImagemapActionInterface, error) {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

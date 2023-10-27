@@ -22,6 +22,7 @@ package messaging_api
 // ImagemapArea
 // ImagemapArea
 
+// Deprecated: Use OpenAPI based classes instead.
 type ImagemapArea struct {
 
 	/**

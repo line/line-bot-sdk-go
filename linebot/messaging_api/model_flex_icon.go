@@ -26,6 +26,7 @@ import (
 // FlexIcon
 // FlexIcon
 // https://developers.line.biz/en/reference/messaging-api/#icon
+// Deprecated: Use OpenAPI based classes instead.
 type FlexIcon struct {
 	FlexComponent
 

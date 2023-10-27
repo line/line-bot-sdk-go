@@ -26,6 +26,7 @@ import (
 // PostbackEvent
 // Event object for when a user performs a postback action which initiates a postback. You can reply to postback events.
 
+// Deprecated: Use OpenAPI based classes instead.
 type PostbackEvent struct {
 	Event
 

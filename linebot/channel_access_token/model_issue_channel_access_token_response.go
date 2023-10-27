@@ -22,6 +22,7 @@ package channel_access_token
 // IssueChannelAccessTokenResponse
 // Issued channel access token
 // https://developers.line.biz/en/reference/messaging-api/#issue-channel-access-token-v2-1
+// Deprecated: Use OpenAPI based classes instead.
 type IssueChannelAccessTokenResponse struct {
 
 	/**

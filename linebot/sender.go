@@ -19,6 +19,7 @@ import (
 )
 
 // Sender type
+// Deprecated: Use OpenAPI based classes instead.
 type Sender struct {
 	Name    string
 	IconURL string
@@ -36,6 +37,7 @@ func (s *Sender) MarshalJSON() ([]byte, error) {
 }
 
 // NewSender function
+// Deprecated: Use OpenAPI based classes instead.
 func NewSender(name, iconURL string) *Sender {
 	return &Sender{
 		Name:    name,

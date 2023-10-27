@@ -27,6 +27,7 @@ import (
 // ButtonsTemplate
 // ButtonsTemplate
 
+// Deprecated: Use OpenAPI based classes instead.
 type ButtonsTemplate struct {
 	Template
 

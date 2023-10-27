@@ -26,6 +26,7 @@ import (
 // FlexBoxLinearGradient
 // FlexBoxLinearGradient
 
+// Deprecated: Use OpenAPI based classes instead.
 type FlexBoxLinearGradient struct {
 	FlexBoxBackground
 

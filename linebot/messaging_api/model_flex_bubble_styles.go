@@ -22,6 +22,7 @@ package messaging_api
 // FlexBubbleStyles
 // FlexBubbleStyles
 
+// Deprecated: Use OpenAPI based classes instead.
 type FlexBubbleStyles struct {
 
 	/**

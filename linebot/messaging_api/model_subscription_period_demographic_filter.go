@@ -26,6 +26,7 @@ import (
 // SubscriptionPeriodDemographicFilter
 // SubscriptionPeriodDemographicFilter
 
+// Deprecated: Use OpenAPI based classes instead.
 type SubscriptionPeriodDemographicFilter struct {
 	DemographicFilter
 

@@ -26,6 +26,7 @@ import (
 // FlexFiller
 // FlexFiller
 
+// Deprecated: Use OpenAPI based classes instead.
 type FlexFiller struct {
 	FlexComponent
 

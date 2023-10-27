@@ -22,6 +22,7 @@ package shop
 // ErrorResponse
 // ErrorResponse
 // https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3
+// Deprecated: Use OpenAPI based classes instead.
 type ErrorResponse struct {
 
 	/**

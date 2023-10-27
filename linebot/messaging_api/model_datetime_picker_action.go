@@ -26,6 +26,7 @@ import (
 // DatetimePickerAction
 // DatetimePickerAction
 // https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action
+// Deprecated: Use OpenAPI based classes instead.
 type DatetimePickerAction struct {
 	Action
 

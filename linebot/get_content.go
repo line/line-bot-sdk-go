@@ -28,6 +28,7 @@ func (client *Client) GetMessageContent(messageID string) *GetMessageContentCall
 }
 
 // GetMessageContentCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetMessageContentCall struct {
 	c   *Client
 	ctx context.Context

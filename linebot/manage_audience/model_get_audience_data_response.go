@@ -22,6 +22,7 @@ package manage_audience
 // GetAudienceDataResponse
 // Get audience data
 // https://developers.line.biz/en/reference/messaging-api/#get-audience-group
+// Deprecated: Use OpenAPI based classes instead.
 type GetAudienceDataResponse struct {
 
 	/**

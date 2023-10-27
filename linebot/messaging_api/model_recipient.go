@@ -33,6 +33,7 @@ func (e Recipient) GetType() string {
 	return e.Type
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type UnknownRecipient struct {
 	RecipientInterface
 	Type string
@@ -43,6 +44,7 @@ func (e UnknownRecipient) GetType() string {
 	return e.Type
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func setDiscriminatorPropertyRecipient(r RecipientInterface) RecipientInterface {
 	switch v := r.(type) {
 	case *AudienceRecipient:
@@ -84,12 +86,14 @@ func setDiscriminatorPropertyRecipient(r RecipientInterface) RecipientInterface 
 // Recipient
 // Recipient
 
+// Deprecated: Use OpenAPI based classes instead.
 type Recipient struct {
 	// Type of recipient
 
 	Type string `json:"type,omitempty"`
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func UnmarshalRecipient(data []byte) (RecipientInterface, error) {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

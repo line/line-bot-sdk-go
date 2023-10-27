@@ -22,6 +22,7 @@ package messaging_api
 // MessageQuotaResponse
 // MessageQuotaResponse
 // https://developers.line.biz/en/reference/messaging-api/#get-quota
+// Deprecated: Use OpenAPI based classes instead.
 type MessageQuotaResponse struct {
 
 	/**

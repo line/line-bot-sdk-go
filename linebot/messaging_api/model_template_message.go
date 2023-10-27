@@ -26,6 +26,7 @@ import (
 // TemplateMessage
 // TemplateMessage
 // https://developers.line.biz/en/reference/messaging-api/#template-messages
+// Deprecated: Use OpenAPI based classes instead.
 type TemplateMessage struct {
 	Message
 

@@ -22,6 +22,7 @@ package messaging_api
 // MembersIdsResponse
 // MembersIdsResponse
 
+// Deprecated: Use OpenAPI based classes instead.
 type MembersIdsResponse struct {
 
 	/**

@@ -26,6 +26,7 @@ import (
 // MessageEvent
 // Webhook event object which contains the sent message.
 
+// Deprecated: Use OpenAPI based classes instead.
 type MessageEvent struct {
 	Event
 

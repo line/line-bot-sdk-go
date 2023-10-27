@@ -22,6 +22,7 @@ package webhook
 // ActionResult
 // ActionResult
 
+// Deprecated: Use OpenAPI based classes instead.
 type ActionResult struct {
 
 	/**

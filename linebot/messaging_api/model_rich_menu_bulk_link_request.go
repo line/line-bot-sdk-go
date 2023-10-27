@@ -22,6 +22,7 @@ package messaging_api
 // RichMenuBulkLinkRequest
 // RichMenuBulkLinkRequest
 // https://developers.line.biz/en/reference/messaging-api/#link-rich-menu-to-users
+// Deprecated: Use OpenAPI based classes instead.
 type RichMenuBulkLinkRequest struct {
 
 	/**

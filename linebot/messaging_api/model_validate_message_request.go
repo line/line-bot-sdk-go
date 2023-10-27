@@ -27,6 +27,7 @@ import (
 // ValidateMessageRequest
 // ValidateMessageRequest
 
+// Deprecated: Use OpenAPI based classes instead.
 type ValidateMessageRequest struct {
 
 	/**

@@ -27,6 +27,7 @@ import (
 // OperatorDemographicFilter
 // OperatorDemographicFilter
 
+// Deprecated: Use OpenAPI based classes instead.
 type OperatorDemographicFilter struct {
 	DemographicFilter
 

@@ -22,6 +22,7 @@ package webhook
 // JoinedMembers
 // JoinedMembers
 
+// Deprecated: Use OpenAPI based classes instead.
 type JoinedMembers struct {
 
 	/**

@@ -27,6 +27,7 @@ import (
 // AudienceMatchMessagesRequest
 // AudienceMatchMessagesRequest
 // https://developers.line.biz/en/reference/partner-docs/#phone-audience-match
+// Deprecated: Use OpenAPI based classes instead.
 type AudienceMatchMessagesRequest struct {
 
 	/**

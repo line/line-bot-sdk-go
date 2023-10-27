@@ -22,6 +22,7 @@ package manage_audience
 // AddAudienceToAudienceGroupRequest
 // Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by JSON)
 // https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group
+// Deprecated: Use OpenAPI based classes instead.
 type AddAudienceToAudienceGroupRequest struct {
 
 	/**

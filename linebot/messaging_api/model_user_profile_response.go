@@ -22,6 +22,7 @@ package messaging_api
 // UserProfileResponse
 // UserProfileResponse
 // https://developers.line.biz/en/reference/messaging-api/#get-profile
+// Deprecated: Use OpenAPI based classes instead.
 type UserProfileResponse struct {
 
 	/**

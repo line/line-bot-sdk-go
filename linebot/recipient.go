@@ -22,12 +22,14 @@ type Recipient interface {
 }
 
 // AudienceObject type is created to be used with specific recipient objects
+// Deprecated: Use OpenAPI based classes instead.
 type AudienceObject struct {
 	Type    string `json:"type"`
 	GroupID int    `json:"audienceGroupId"`
 }
 
 // NewAudienceObject function
+// Deprecated: Use OpenAPI based classes instead.
 func NewAudienceObject(groupID int) *AudienceObject {
 	return &AudienceObject{
 		Type:    "audience",
@@ -39,12 +41,14 @@ func NewAudienceObject(groupID int) *AudienceObject {
 func (*AudienceObject) Recipient() {}
 
 // RedeliveryObject type is created to be used with specific recipient objects
+// Deprecated: Use OpenAPI based classes instead.
 type RedeliveryObject struct {
 	Type      string `json:"type"`
 	RequestID string `json:"requestId"`
 }
 
 // NewRedeliveryObject function
+// Deprecated: Use OpenAPI based classes instead.
 func NewRedeliveryObject(requestID string) *RedeliveryObject {
 	return &RedeliveryObject{
 		Type:      "redelivery",
@@ -56,6 +60,7 @@ func NewRedeliveryObject(requestID string) *RedeliveryObject {
 func (*RedeliveryObject) Recipient() {}
 
 // RecipientOperator struct
+// Deprecated: Use OpenAPI based classes instead.
 type RecipientOperator struct {
 	ConditionAnd []Recipient `json:"and,omitempty"`
 	ConditionOr  []Recipient `json:"or,omitempty"`
@@ -63,6 +68,7 @@ type RecipientOperator struct {
 }
 
 // RecipientOperatorAnd method
+// Deprecated: Use OpenAPI based classes instead.
 func RecipientOperatorAnd(conditions ...Recipient) *RecipientOperator {
 	return &RecipientOperator{
 		ConditionAnd: conditions,
@@ -70,6 +76,7 @@ func RecipientOperatorAnd(conditions ...Recipient) *RecipientOperator {
 }
 
 // RecipientOperatorOr method
+// Deprecated: Use OpenAPI based classes instead.
 func RecipientOperatorOr(conditions ...Recipient) *RecipientOperator {
 	return &RecipientOperator{
 		ConditionOr: conditions,
@@ -77,6 +84,7 @@ func RecipientOperatorOr(conditions ...Recipient) *RecipientOperator {
 }
 
 // RecipientOperatorNot method
+// Deprecated: Use OpenAPI based classes instead.
 func RecipientOperatorNot(condition Recipient) *RecipientOperator {
 	return &RecipientOperator{
 		ConditionNot: condition,

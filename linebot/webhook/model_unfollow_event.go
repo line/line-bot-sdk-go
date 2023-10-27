@@ -26,6 +26,7 @@ import (
 // UnfollowEvent
 // Event object for when your LINE Official Account is blocked.
 
+// Deprecated: Use OpenAPI based classes instead.
 type UnfollowEvent struct {
 	Event
 
