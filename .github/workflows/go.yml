@@ -31,5 +31,14 @@ jobs:
     - name: go vet
       run: go vet $(go list ./... | grep -v /examples/)
 
+    - name: Compile example scripts
+      run: |
+        for file in $(find ./examples/ -name '*.go'); do
+          dir=$(dirname $file)
+          pushd $dir
+          go build -o /dev/null
+          popd
+        done
+
     - name: Publish to codecov.io
       run: bash <(curl -s https://codecov.io/bash)
