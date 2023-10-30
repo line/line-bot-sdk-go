@@ -55,10 +55,13 @@ func NewMessagingApiBlobAPI(channelToken string, options ...MessagingApiBlobAPIO
 		channelToken: channelToken,
 		httpClient:   http.DefaultClient,
 	}
-	err := c.SetEndpoint("https://api-data.line.me")
+
+	u, err := url.ParseRequestURI("https://api-data.line.me")
 	if err != nil {
 		return nil, err
 	}
+	c.endpoint = u
+
 	for _, option := range options {
 		err := option(c)
 		if err != nil {
@@ -91,13 +94,24 @@ func (client *MessagingApiBlobAPI) Url(endpointPath string) string {
 	return u.String()
 }
 
-func (client *MessagingApiBlobAPI) SetEndpoint(endpoint string) error {
-	u, err := url.ParseRequestURI(endpoint)
-	if err != nil {
-		return err
+// WithHTTPClient function
+func WithHTTPClient(c *http.Client) MessagingApiBlobAPIOption {
+	return func(client *MessagingApiBlobAPI) error {
+		client.httpClient = c
+		return nil
 	}
-	client.endpoint = u
-	return nil
+}
+
+// WithEndpointClient function
+func WithEndpoint(endpoint string) MessagingApiBlobAPIOption {
+	return func(client *MessagingApiBlobAPI) error {
+		u, err := url.ParseRequestURI(endpoint)
+		if err != nil {
+			return err
+		}
+		client.endpoint = u
+		return nil
+	}
 }
 
 // GetMessageContent

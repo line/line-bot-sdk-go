@@ -25,7 +25,6 @@ func generateUUID() (string, error) {
 	return fmt.Sprintf("%08x-%04x-%04x-%04x-%012x", b[0:4], b[4:6], b[6:8], b[8:10], b[10:]), nil
 }
 
-
 func TestStickerMessage(t *testing.T) {
 	// Write some random UUIDs to the temporary file.
 	tempFile, err := os.CreateTemp("", "temp-uuids-")
@@ -33,8 +32,8 @@ func TestStickerMessage(t *testing.T) {
 		fmt.Println("Error:", err)
 		return
 	}
-	defer os.Remove(tempFile.Name())  // Delete the temporary file after use
-	defer tempFile.Close()            // Close the file after use
+	defer os.Remove(tempFile.Name()) // Delete the temporary file after use
+	defer tempFile.Close()           // Close the file after use
 
 	// Generate some random UUIDs
 	for i := 0; i < 10; i++ {
@@ -102,10 +101,7 @@ func TestStickerMessage(t *testing.T) {
 	)
 	client, err := manage_audience.NewManageAudienceBlobAPI(
 		"channelToken",
-		func(maba *manage_audience.ManageAudienceBlobAPI) error {
-			maba.SetEndpoint(server.URL)
-			return nil
-		},
+		manage_audience.WithEndpoint(server.URL),
 	)
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)

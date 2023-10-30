@@ -25,10 +25,7 @@ func TestAcquireChatControl(t *testing.T) {
 
 	client, err := module.NewLineModuleAPI(
 		"MY_CHANNEL_TOKEN",
-		func(client *module.LineModuleAPI) error {
-			client.SetEndpoint(server.URL)
-			return nil
-		},
+		module.WithEndpoint(server.URL),
 	)
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
@@ -60,10 +57,7 @@ func TestDetachModule(t *testing.T) {
 
 	client, err := module.NewLineModuleAPI(
 		"MY_CHANNEL_TOKEN",
-		func(client *module.LineModuleAPI) error {
-			client.SetEndpoint(server.URL)
-			return nil
-		},
+		module.WithEndpoint(server.URL),
 	)
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
@@ -88,10 +82,7 @@ func TestGetModules(t *testing.T) {
 
 	client, err := module.NewLineModuleAPI(
 		"MY_CHANNEL_TOKEN",
-		func(client *module.LineModuleAPI) error {
-			client.SetEndpoint(server.URL)
-			return nil
-		},
+		module.WithEndpoint(server.URL),
 	)
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
@@ -118,10 +109,7 @@ func TestReleaseChatControl(t *testing.T) {
 
 	client, err := module.NewLineModuleAPI(
 		"MY_CHANNEL_TOKEN",
-		func(client *module.LineModuleAPI) error {
-			client.SetEndpoint(server.URL)
-			return nil
-		},
+		module.WithEndpoint(server.URL),
 	)
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)

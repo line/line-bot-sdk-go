@@ -56,10 +56,13 @@ func NewLiffAPI(channelToken string, options ...LiffAPIOption) (*LiffAPI, error)
 		channelToken: channelToken,
 		httpClient:   http.DefaultClient,
 	}
-	err := c.SetEndpoint("https://api.line.me")
+
+	u, err := url.ParseRequestURI("https://api.line.me")
 	if err != nil {
 		return nil, err
 	}
+	c.endpoint = u
+
 	for _, option := range options {
 		err := option(c)
 		if err != nil {
@@ -92,13 +95,24 @@ func (client *LiffAPI) Url(endpointPath string) string {
 	return u.String()
 }
 
-func (client *LiffAPI) SetEndpoint(endpoint string) error {
-	u, err := url.ParseRequestURI(endpoint)
-	if err != nil {
-		return err
+// WithHTTPClient function
+func WithHTTPClient(c *http.Client) LiffAPIOption {
+	return func(client *LiffAPI) error {
+		client.httpClient = c
+		return nil
 	}
-	client.endpoint = u
-	return nil
+}
+
+// WithEndpointClient function
+func WithEndpoint(endpoint string) LiffAPIOption {
+	return func(client *LiffAPI) error {
+		u, err := url.ParseRequestURI(endpoint)
+		if err != nil {
+			return err
+		}
+		client.endpoint = u
+		return nil
+	}
 }
 
 // AddLIFFApp

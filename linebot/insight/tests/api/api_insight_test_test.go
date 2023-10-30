@@ -20,10 +20,7 @@ func TestGetFriendsDemographics(t *testing.T) {
 
 	client, err := insight.NewInsightAPI(
 		"MY_CHANNEL_TOKEN",
-		func(client *insight.InsightAPI) error {
-			client.SetEndpoint(server.URL)
-			return nil
-		},
+		insight.WithEndpoint(server.URL),
 	)
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
@@ -46,10 +43,7 @@ func TestGetMessageEvent(t *testing.T) {
 
 	client, err := insight.NewInsightAPI(
 		"MY_CHANNEL_TOKEN",
-		func(client *insight.InsightAPI) error {
-			client.SetEndpoint(server.URL)
-			return nil
-		},
+		insight.WithEndpoint(server.URL),
 	)
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
@@ -74,10 +68,7 @@ func TestGetNumberOfFollowers(t *testing.T) {
 
 	client, err := insight.NewInsightAPI(
 		"MY_CHANNEL_TOKEN",
-		func(client *insight.InsightAPI) error {
-			client.SetEndpoint(server.URL)
-			return nil
-		},
+		insight.WithEndpoint(server.URL),
 	)
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
@@ -102,10 +93,7 @@ func TestGetNumberOfMessageDeliveries(t *testing.T) {
 
 	client, err := insight.NewInsightAPI(
 		"MY_CHANNEL_TOKEN",
-		func(client *insight.InsightAPI) error {
-			client.SetEndpoint(server.URL)
-			return nil
-		},
+		insight.WithEndpoint(server.URL),
 	)
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
@@ -130,10 +118,7 @@ func TestGetStatisticsPerUnit(t *testing.T) {
 
 	client, err := insight.NewInsightAPI(
 		"MY_CHANNEL_TOKEN",
-		func(client *insight.InsightAPI) error {
-			client.SetEndpoint(server.URL)
-			return nil
-		},
+		insight.WithEndpoint(server.URL),
 	)
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)

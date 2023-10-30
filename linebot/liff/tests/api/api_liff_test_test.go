@@ -25,10 +25,7 @@ func TestAddLIFFApp(t *testing.T) {
 
 	client, err := liff.NewLiffAPI(
 		"MY_CHANNEL_TOKEN",
-		func(client *liff.LiffAPI) error {
-			client.SetEndpoint(server.URL)
-			return nil
-		},
+		liff.WithEndpoint(server.URL),
 	)
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
@@ -53,10 +50,7 @@ func TestDeleteLIFFApp(t *testing.T) {
 
 	client, err := liff.NewLiffAPI(
 		"MY_CHANNEL_TOKEN",
-		func(client *liff.LiffAPI) error {
-			client.SetEndpoint(server.URL)
-			return nil
-		},
+		liff.WithEndpoint(server.URL),
 	)
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
@@ -81,10 +75,7 @@ func TestGetAllLIFFApps(t *testing.T) {
 
 	client, err := liff.NewLiffAPI(
 		"MY_CHANNEL_TOKEN",
-		func(client *liff.LiffAPI) error {
-			client.SetEndpoint(server.URL)
-			return nil
-		},
+		liff.WithEndpoint(server.URL),
 	)
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
@@ -112,10 +103,7 @@ func TestUpdateLIFFApp(t *testing.T) {
 
 	client, err := liff.NewLiffAPI(
 		"MY_CHANNEL_TOKEN",
-		func(client *liff.LiffAPI) error {
-			client.SetEndpoint(server.URL)
-			return nil
-		},
+		liff.WithEndpoint(server.URL),
 	)
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)

@@ -58,10 +58,13 @@ func NewManageAudienceBlobAPI(channelToken string, options ...ManageAudienceBlob
 		channelToken: channelToken,
 		httpClient:   http.DefaultClient,
 	}
-	err := c.SetEndpoint("https://api-data.line.me")
+
+	u, err := url.ParseRequestURI("https://api-data.line.me")
 	if err != nil {
 		return nil, err
 	}
+	c.endpoint = u
+
 	for _, option := range options {
 		err := option(c)
 		if err != nil {
@@ -94,13 +97,24 @@ func (client *ManageAudienceBlobAPI) Url(endpointPath string) string {
 	return u.String()
 }
 
-func (client *ManageAudienceBlobAPI) SetEndpoint(endpoint string) error {
-	u, err := url.ParseRequestURI(endpoint)
-	if err != nil {
-		return err
+// WithHTTPClient function
+func WithHTTPClient(c *http.Client) ManageAudienceBlobAPIOption {
+	return func(client *ManageAudienceBlobAPI) error {
+		client.httpClient = c
+		return nil
 	}
-	client.endpoint = u
-	return nil
+}
+
+// WithEndpointClient function
+func WithEndpoint(endpoint string) ManageAudienceBlobAPIOption {
+	return func(client *ManageAudienceBlobAPI) error {
+		u, err := url.ParseRequestURI(endpoint)
+		if err != nil {
+			return err
+		}
+		client.endpoint = u
+		return nil
+	}
 }
 
 // AddUserIdsToAudience

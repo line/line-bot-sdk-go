@@ -3,3 +3,4 @@ model_acquire_chat_control_request.go
 model_detach_module_request.go
 model_get_modules_response.go
 model_module_bot.go
+tests/api/api_line_module_test_test.go

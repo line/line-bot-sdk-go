@@ -17,3 +17,4 @@ model_get_statistics_per_unit_response_click.go
 model_get_statistics_per_unit_response_message.go
 model_get_statistics_per_unit_response_overview.go
 model_subscription_period_tile.go
+tests/api/api_insight_test_test.go

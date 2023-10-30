@@ -48,10 +48,7 @@ func Test{{ op.operationId }}(t *testing.T) {
 
 	client, err := {{ packageName }}.New{{ classname }}(
 		"MY_CHANNEL_TOKEN",
-		func(client *{{ packageName }}.{{ classname }}) error {
-			client.SetEndpoint(server.URL)
-			return nil
-		},
+        {{ packageName }}.WithEndpoint(server.URL),
 	)
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)

@@ -25,10 +25,7 @@ func TestMissionStickerV3(t *testing.T) {
 
 	client, err := shop.NewShopAPI(
 		"MY_CHANNEL_TOKEN",
-		func(client *shop.ShopAPI) error {
-			client.SetEndpoint(server.URL)
-			return nil
-		},
+		shop.WithEndpoint(server.URL),
 	)
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)

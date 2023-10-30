@@ -25,10 +25,7 @@ func TestAttachModule(t *testing.T) {
 
 	client, err := module_attach.NewLineModuleAttachAPI(
 		"MY_CHANNEL_TOKEN",
-		func(client *module_attach.LineModuleAttachAPI) error {
-			client.SetEndpoint(server.URL)
-			return nil
-		},
+		module_attach.WithEndpoint(server.URL),
 	)
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)

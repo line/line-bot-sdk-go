@@ -59,6 +59,8 @@ def generate_clients():
         output_path = 'linebot/' + sourceYaml.replace('.yml', '').replace('-', '_')
 
         orig_files = read_files_from_openapi_generator(output_path)
+        for f in set(orig_files):
+            run_command(f'rm -rf {f}')
 
         command = f'''java \\
                     -cp ./tools/openapi-generator-cli.jar:./generator/target/line-bot-sdk-go-generator-openapi-generator-1.0.0.jar \\
@@ -75,17 +77,14 @@ def generate_clients():
                   '''
         run_command(command)
 
-        curr_files = read_files_from_openapi_generator(output_path)
-
-        for f in set(orig_files) - set(curr_files):
-            run_command(f'rm -rf {f}')
-
 
 def generate_webhook():
     source_yaml = "webhook.yml"
     output_path = 'linebot/webhook'
 
     orig_files = read_files_from_openapi_generator(output_path)
+    for f in set(orig_files):
+        run_command(f'rm -rf {f}')
 
     command = f'''java \\
                     -cp ./tools/openapi-generator-cli.jar:./generator/target/line-bot-sdk-go-generator-openapi-generator-1.0.0.jar \\
@@ -103,11 +102,6 @@ def generate_webhook():
                     -i line-openapi/{source_yaml} \\
                   '''
     run_command(command)
-
-    curr_files = read_files_from_openapi_generator(output_path)
-
-    for f in set(orig_files) - set(curr_files):
-        run_command(f'rm -rf {f}')
 
 
 def main():

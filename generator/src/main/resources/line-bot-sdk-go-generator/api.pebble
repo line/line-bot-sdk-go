@@ -44,10 +44,13 @@ func New{{ classname }}(channelToken string, options ...{{classname}}Option) (*{
 		channelToken: channelToken,
 		httpClient:   http.DefaultClient,
 	}
-	err := c.SetEndpoint("{{ endpoint(classname) }}")
-	if err != nil {
+
+    u, err := url.ParseRequestURI("{{ endpoint(classname) }}")
+    if err != nil {
         return nil, err
     }
+    c.endpoint = u
+
 	for _, option := range options {
 		err := option(c)
 		if err != nil {
@@ -80,13 +83,24 @@ func (client *{{ classname }}) Url(endpointPath string) string {
 	return u.String()
 }
 
-func (client *{{ classname }}) SetEndpoint(endpoint string) error {
-	u, err := url.ParseRequestURI(endpoint)
-	if err != nil {
-		return err
+// WithHTTPClient function
+func WithHTTPClient(c *http.Client) {{classname}}Option {
+	return func(client *{{ classname }}) error {
+		client.httpClient = c
+		return nil
 	}
-	client.endpoint = u
-	return nil
+}
+
+// WithEndpointClient function
+func WithEndpoint(endpoint string) {{classname}}Option {
+	return func(client *{{ classname }}) error {
+        u, err := url.ParseRequestURI(endpoint)
+        if err != nil {
+            return err
+        }
+        client.endpoint = u
+		return nil
+	}
 }
 
 {# @pebvariable name="param" type="org.openapitools.codegen.CodegenParameter" #}
