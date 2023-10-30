@@ -22,7 +22,6 @@ package channel_access_token
 // IssueStatelessChannelAccessTokenResponse
 // Issued stateless channel access token
 // https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token
-// Deprecated: Use OpenAPI based classes instead.
 type IssueStatelessChannelAccessTokenResponse struct {
 
 	/**

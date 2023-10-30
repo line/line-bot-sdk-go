@@ -26,7 +26,6 @@ import (
 // StickerMessage
 // StickerMessage
 // https://developers.line.biz/en/reference/messaging-api/#sticker-message
-// Deprecated: Use OpenAPI based classes instead.
 type StickerMessage struct {
 	Message
 

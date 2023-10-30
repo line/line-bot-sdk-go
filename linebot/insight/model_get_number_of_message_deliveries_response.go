@@ -22,7 +22,6 @@ package insight
 // GetNumberOfMessageDeliveriesResponse
 // Get number of message deliveries
 // https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages
-// Deprecated: Use OpenAPI based classes instead.
 type GetNumberOfMessageDeliveriesResponse struct {
 
 	/**

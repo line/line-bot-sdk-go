@@ -26,7 +26,6 @@ import (
 // DeactivatedEvent
 // This event indicates that the module channel has been switched to Standby Channel by calling Acquire Control API or Release Control API. Sent to the webhook URL server of the module channel.
 
-// Deprecated: Use OpenAPI based classes instead.
 type DeactivatedEvent struct {
 	Event
 

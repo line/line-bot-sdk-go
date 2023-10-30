@@ -22,7 +22,6 @@ package messaging_api
 // ImagemapVideo
 // ImagemapVideo
 
-// Deprecated: Use OpenAPI based classes instead.
 type ImagemapVideo struct {
 
 	/**

@@ -22,7 +22,6 @@ package webhook
 // ImageSet
 // ImageSet
 
-// Deprecated: Use OpenAPI based classes instead.
 type ImageSet struct {
 
 	/**

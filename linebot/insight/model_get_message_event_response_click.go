@@ -22,7 +22,6 @@ package insight
 // GetMessageEventResponseClick
 // GetMessageEventResponseClick
 
-// Deprecated: Use OpenAPI based classes instead.
 type GetMessageEventResponseClick struct {
 
 	/**

@@ -22,7 +22,6 @@ package module
 // DetachModuleRequest
 // Unlink (detach) the module channel by the operation of the module channel administrator
 // https://developers.line.biz/en/reference/partner-docs/#unlink-detach-module-channel-by-operation-mc-admin
-// Deprecated: Use OpenAPI based classes instead.
 type DetachModuleRequest struct {
 
 	/**

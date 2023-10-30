@@ -33,7 +33,6 @@ func (e ThingsContent) GetType() string {
 	return e.Type
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 type UnknownThingsContent struct {
 	ThingsContentInterface
 	Type string
@@ -44,7 +43,6 @@ func (e UnknownThingsContent) GetType() string {
 	return e.Type
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 func setDiscriminatorPropertyThingsContent(r ThingsContentInterface) ThingsContentInterface {
 	switch v := r.(type) {
 	case *LinkThingsContent:
@@ -85,14 +83,12 @@ func setDiscriminatorPropertyThingsContent(r ThingsContentInterface) ThingsConte
 
 // ThingsContent
 
-// Deprecated: Use OpenAPI based classes instead.
 type ThingsContent struct {
 	// Type
 
 	Type string `json:"type,omitempty"`
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 func UnmarshalThingsContent(data []byte) (ThingsContentInterface, error) {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

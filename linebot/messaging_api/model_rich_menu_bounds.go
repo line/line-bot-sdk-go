@@ -22,7 +22,6 @@ package messaging_api
 // RichMenuBounds
 // Rich menu bounds
 // https://developers.line.biz/en/reference/messaging-api/#bounds-object
-// Deprecated: Use OpenAPI based classes instead.
 type RichMenuBounds struct {
 
 	/**

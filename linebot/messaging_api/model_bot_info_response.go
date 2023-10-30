@@ -22,7 +22,6 @@ package messaging_api
 // BotInfoResponse
 // BotInfoResponse
 // https://developers.line.biz/en/reference/messaging-api/#get-bot-info
-// Deprecated: Use OpenAPI based classes instead.
 type BotInfoResponse struct {
 
 	/**

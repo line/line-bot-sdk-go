@@ -22,7 +22,6 @@ package messaging_api
 // GetAggregationUnitUsageResponse
 // GetAggregationUnitUsageResponse
 // https://developers.line.biz/en/reference/messaging-api/#get-number-of-units-used-this-month
-// Deprecated: Use OpenAPI based classes instead.
 type GetAggregationUnitUsageResponse struct {
 
 	/**

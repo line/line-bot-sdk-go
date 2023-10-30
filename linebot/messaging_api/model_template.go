@@ -33,7 +33,6 @@ func (e Template) GetType() string {
 	return e.Type
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 type UnknownTemplate struct {
 	TemplateInterface
 	Type string
@@ -44,7 +43,6 @@ func (e UnknownTemplate) GetType() string {
 	return e.Type
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 func setDiscriminatorPropertyTemplate(r TemplateInterface) TemplateInterface {
 	switch v := r.(type) {
 	case *ButtonsTemplate:
@@ -95,12 +93,10 @@ func setDiscriminatorPropertyTemplate(r TemplateInterface) TemplateInterface {
 
 // Template
 
-// Deprecated: Use OpenAPI based classes instead.
 type Template struct {
 	Type string `json:"type"`
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 func UnmarshalTemplate(data []byte) (TemplateInterface, error) {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

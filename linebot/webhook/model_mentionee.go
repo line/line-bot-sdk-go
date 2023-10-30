@@ -33,7 +33,6 @@ func (e Mentionee) GetType() string {
 	return e.Type
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 type UnknownMentionee struct {
 	MentioneeInterface
 	Type string
@@ -44,7 +43,6 @@ func (e UnknownMentionee) GetType() string {
 	return e.Type
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 func setDiscriminatorPropertyMentionee(r MentioneeInterface) MentioneeInterface {
 	switch v := r.(type) {
 	case *AllMentionee:
@@ -77,7 +75,6 @@ func setDiscriminatorPropertyMentionee(r MentioneeInterface) MentioneeInterface 
 
 // https://developers.line.biz/en/reference/messaging-api/#wh-text
 
-// Deprecated: Use OpenAPI based classes instead.
 type Mentionee struct {
 	// Mentioned target.
 
@@ -90,7 +87,6 @@ type Mentionee struct {
 	Length int32 `json:"length"`
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 func UnmarshalMentionee(data []byte) (MentioneeInterface, error) {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

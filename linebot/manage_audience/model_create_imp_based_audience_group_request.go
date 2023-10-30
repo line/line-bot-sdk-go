@@ -22,7 +22,6 @@ package manage_audience
 // CreateImpBasedAudienceGroupRequest
 // Create audience for impression-based retargeting
 // https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group
-// Deprecated: Use OpenAPI based classes instead.
 type CreateImpBasedAudienceGroupRequest struct {
 
 	/**

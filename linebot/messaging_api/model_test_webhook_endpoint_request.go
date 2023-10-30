@@ -22,7 +22,6 @@ package messaging_api
 // TestWebhookEndpointRequest
 // TestWebhookEndpointRequest
 // https://developers.line.biz/en/reference/messaging-api/#test-webhook-endpoint
-// Deprecated: Use OpenAPI based classes instead.
 type TestWebhookEndpointRequest struct {
 
 	/**

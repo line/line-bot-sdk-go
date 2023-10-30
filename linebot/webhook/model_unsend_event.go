@@ -26,7 +26,6 @@ import (
 // UnsendEvent
 // Event object for when the user unsends a message.
 
-// Deprecated: Use OpenAPI based classes instead.
 type UnsendEvent struct {
 	Event
 

@@ -26,7 +26,6 @@ import (
 // FlexSeparator
 // FlexSeparator
 
-// Deprecated: Use OpenAPI based classes instead.
 type FlexSeparator struct {
 	FlexComponent
 

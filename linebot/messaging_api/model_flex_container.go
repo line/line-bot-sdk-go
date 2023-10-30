@@ -33,7 +33,6 @@ func (e FlexContainer) GetType() string {
 	return e.Type
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 type UnknownFlexContainer struct {
 	FlexContainerInterface
 	Type string
@@ -44,7 +43,6 @@ func (e UnknownFlexContainer) GetType() string {
 	return e.Type
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 func setDiscriminatorPropertyFlexContainer(r FlexContainerInterface) FlexContainerInterface {
 	switch v := r.(type) {
 	case *FlexBubble:
@@ -75,12 +73,10 @@ func setDiscriminatorPropertyFlexContainer(r FlexContainerInterface) FlexContain
 
 // FlexContainer
 
-// Deprecated: Use OpenAPI based classes instead.
 type FlexContainer struct {
 	Type string `json:"type"`
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 func UnmarshalFlexContainer(data []byte) (FlexContainerInterface, error) {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

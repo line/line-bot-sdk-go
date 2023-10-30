@@ -22,7 +22,6 @@ package insight
 // GenderTile
 // GenderTile
 
-// Deprecated: Use OpenAPI based classes instead.
 type GenderTile struct {
 
 	/**

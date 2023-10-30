@@ -27,7 +27,6 @@ import (
 // MulticastRequest
 // MulticastRequest
 // https://developers.line.biz/en/reference/messaging-api/#send-multicast-message
-// Deprecated: Use OpenAPI based classes instead.
 type MulticastRequest struct {
 
 	/**

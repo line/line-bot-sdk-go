@@ -33,7 +33,6 @@ func (e ModuleContent) GetType() string {
 	return e.Type
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 type UnknownModuleContent struct {
 	ModuleContentInterface
 	Type string
@@ -44,7 +43,6 @@ func (e UnknownModuleContent) GetType() string {
 	return e.Type
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 func setDiscriminatorPropertyModuleContent(r ModuleContentInterface) ModuleContentInterface {
 	switch v := r.(type) {
 	case *AttachedModuleContent:
@@ -75,14 +73,12 @@ func setDiscriminatorPropertyModuleContent(r ModuleContentInterface) ModuleConte
 
 // ModuleContent
 
-// Deprecated: Use OpenAPI based classes instead.
 type ModuleContent struct {
 	// Type
 
 	Type string `json:"type,omitempty"`
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 func UnmarshalModuleContent(data []byte) (ModuleContentInterface, error) {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

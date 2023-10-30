@@ -35,7 +35,6 @@ import (
 	"github.com/line/line-bot-sdk-go/v7/linebot"
 )
 
-// Deprecated: Use OpenAPI based classes instead.
 type ShopAPI struct {
 	httpClient   *http.Client
 	endpoint     *url.URL
@@ -47,7 +46,6 @@ type ShopAPI struct {
 type ShopAPIOption func(*ShopAPI) error
 
 // New returns a new bot client instance.
-// Deprecated: Use OpenAPI based classes instead.
 func NewShopAPI(channelToken string, options ...ShopAPIOption) (*ShopAPI, error) {
 	if channelToken == "" {
 		return nil, errors.New("missing channel access token")

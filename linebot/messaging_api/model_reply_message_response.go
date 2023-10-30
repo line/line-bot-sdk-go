@@ -22,7 +22,6 @@ package messaging_api
 // ReplyMessageResponse
 // ReplyMessageResponse
 // https://developers.line.biz/en/reference/messaging-api/#send-reply-message-response
-// Deprecated: Use OpenAPI based classes instead.
 type ReplyMessageResponse struct {
 
 	/**

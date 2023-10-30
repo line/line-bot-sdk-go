@@ -22,7 +22,6 @@ package webhook
 // LinkContent
 // Content of the account link event.
 
-// Deprecated: Use OpenAPI based classes instead.
 type LinkContent struct {
 
 	/**

@@ -26,7 +26,6 @@ import (
 // NarrowcastProgressResponse
 // NarrowcastProgressResponse
 // https://developers.line.biz/en/reference/messaging-api/#get-narrowcast-progress-status
-// Deprecated: Use OpenAPI based classes instead.
 type NarrowcastProgressResponse struct {
 
 	/**

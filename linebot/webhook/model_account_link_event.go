@@ -26,7 +26,6 @@ import (
 // AccountLinkEvent
 // Event object for when a user has linked their LINE account with a provider&#39;s service account. You can reply to account link events.
 
-// Deprecated: Use OpenAPI based classes instead.
 type AccountLinkEvent struct {
 	Event
 

@@ -26,7 +26,6 @@ import (
 // AllMentionee
 // Mentioned target is entire group
 
-// Deprecated: Use OpenAPI based classes instead.
 type AllMentionee struct {
 	Mentionee
 

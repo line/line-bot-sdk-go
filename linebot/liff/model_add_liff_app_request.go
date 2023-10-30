@@ -22,7 +22,6 @@ package liff
 // AddLiffAppRequest
 // AddLiffAppRequest
 // https://developers.line.biz/en/reference/liff-server/#add-liff-app
-// Deprecated: Use OpenAPI based classes instead.
 type AddLiffAppRequest struct {
 
 	/**

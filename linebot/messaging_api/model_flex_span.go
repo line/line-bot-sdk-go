@@ -26,7 +26,6 @@ import (
 // FlexSpan
 // FlexSpan
 
-// Deprecated: Use OpenAPI based classes instead.
 type FlexSpan struct {
 	FlexComponent
 

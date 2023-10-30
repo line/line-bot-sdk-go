@@ -22,7 +22,6 @@ package messaging_api
 // GroupUserProfileResponse
 // GroupUserProfileResponse
 // https://developers.line.biz/en/reference/messaging-api/#get-group-member-profile
-// Deprecated: Use OpenAPI based classes instead.
 type GroupUserProfileResponse struct {
 
 	/**

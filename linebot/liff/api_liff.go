@@ -36,7 +36,6 @@ import (
 	"github.com/line/line-bot-sdk-go/v7/linebot"
 )
 
-// Deprecated: Use OpenAPI based classes instead.
 type LiffAPI struct {
 	httpClient   *http.Client
 	endpoint     *url.URL
@@ -48,7 +47,6 @@ type LiffAPI struct {
 type LiffAPIOption func(*LiffAPI) error
 
 // New returns a new bot client instance.
-// Deprecated: Use OpenAPI based classes instead.
 func NewLiffAPI(channelToken string, options ...LiffAPIOption) (*LiffAPI, error) {
 	if channelToken == "" {
 		return nil, errors.New("missing channel access token")

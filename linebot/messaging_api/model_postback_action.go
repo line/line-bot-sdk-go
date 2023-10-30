@@ -26,7 +26,6 @@ import (
 // PostbackAction
 // PostbackAction
 
-// Deprecated: Use OpenAPI based classes instead.
 type PostbackAction struct {
 	Action
 

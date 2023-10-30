@@ -26,7 +26,6 @@ import (
 // TextMessageContent
 // TextMessageContent
 
-// Deprecated: Use OpenAPI based classes instead.
 type TextMessageContent struct {
 	MessageContent
 

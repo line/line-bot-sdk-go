@@ -33,7 +33,6 @@ func (e Event) GetType() string {
 	return e.Type
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 type UnknownEvent struct {
 	EventInterface
 	Type string
@@ -44,7 +43,6 @@ func (e UnknownEvent) GetType() string {
 	return e.Type
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 func setDiscriminatorPropertyEvent(r EventInterface) EventInterface {
 	switch v := r.(type) {
 	case *AccountLinkEvent:
@@ -236,7 +234,6 @@ func setDiscriminatorPropertyEvent(r EventInterface) EventInterface {
 // Event
 // Webhook event
 
-// Deprecated: Use OpenAPI based classes instead.
 type Event struct {
 	// Type of the event
 
@@ -255,7 +252,6 @@ type Event struct {
 	DeliveryContext DeliveryContext `json:"deliveryContext"`
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 func UnmarshalEvent(data []byte) (EventInterface, error) {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

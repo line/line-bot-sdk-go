@@ -26,7 +26,6 @@ import (
 // AppTypeDemographicFilter
 // AppTypeDemographicFilter
 
-// Deprecated: Use OpenAPI based classes instead.
 type AppTypeDemographicFilter struct {
 	DemographicFilter
 

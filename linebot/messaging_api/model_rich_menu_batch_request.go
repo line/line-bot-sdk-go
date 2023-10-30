@@ -27,7 +27,6 @@ import (
 // RichMenuBatchRequest
 // RichMenuBatchRequest
 
-// Deprecated: Use OpenAPI based classes instead.
 type RichMenuBatchRequest struct {
 
 	/**

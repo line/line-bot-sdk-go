@@ -33,7 +33,6 @@ func (e FlexComponent) GetType() string {
 	return e.Type
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 type UnknownFlexComponent struct {
 	FlexComponentInterface
 	Type string
@@ -44,7 +43,6 @@ func (e UnknownFlexComponent) GetType() string {
 	return e.Type
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 func setDiscriminatorPropertyFlexComponent(r FlexComponentInterface) FlexComponentInterface {
 	switch v := r.(type) {
 	case *FlexBox:
@@ -145,12 +143,10 @@ func setDiscriminatorPropertyFlexComponent(r FlexComponentInterface) FlexCompone
 
 // FlexComponent
 
-// Deprecated: Use OpenAPI based classes instead.
 type FlexComponent struct {
 	Type string `json:"type"`
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 func UnmarshalFlexComponent(data []byte) (FlexComponentInterface, error) {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

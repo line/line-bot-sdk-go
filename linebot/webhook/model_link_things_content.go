@@ -26,7 +26,6 @@ import (
 // LinkThingsContent
 // LinkThingsContent
 
-// Deprecated: Use OpenAPI based classes instead.
 type LinkThingsContent struct {
 	ThingsContent
 

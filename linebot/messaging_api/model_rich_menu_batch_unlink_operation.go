@@ -26,7 +26,6 @@ import (
 // RichMenuBatchUnlinkOperation
 // Unlink the rich menu for all users linked to the rich menu specified in the `from` property.
 
-// Deprecated: Use OpenAPI based classes instead.
 type RichMenuBatchUnlinkOperation struct {
 	RichMenuBatchOperation
 

@@ -22,7 +22,6 @@ package liff
 // AddLiffAppResponse
 // AddLiffAppResponse
 
-// Deprecated: Use OpenAPI based classes instead.
 type AddLiffAppResponse struct {
 
 	/**

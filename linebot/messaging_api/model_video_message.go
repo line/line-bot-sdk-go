@@ -26,7 +26,6 @@ import (
 // VideoMessage
 // VideoMessage
 // https://developers.line.biz/en/reference/messaging-api/#video-message
-// Deprecated: Use OpenAPI based classes instead.
 type VideoMessage struct {
 	Message
 

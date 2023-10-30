@@ -26,7 +26,6 @@ import (
 // LeaveEvent
 // Event object for when a user removes your LINE Official Account from a group chat or when your LINE Official Account leaves a group chat or multi-person chat.
 
-// Deprecated: Use OpenAPI based classes instead.
 type LeaveEvent struct {
 	Event
 

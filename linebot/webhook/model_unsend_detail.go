@@ -22,7 +22,6 @@ package webhook
 // UnsendDetail
 // UnsendDetail
 
-// Deprecated: Use OpenAPI based classes instead.
 type UnsendDetail struct {
 
 	/**

@@ -22,7 +22,6 @@ package messaging_api
 // FlexBlockStyle
 // FlexBlockStyle
 
-// Deprecated: Use OpenAPI based classes instead.
 type FlexBlockStyle struct {
 
 	/**

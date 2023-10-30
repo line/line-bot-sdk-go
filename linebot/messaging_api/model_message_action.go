@@ -26,7 +26,6 @@ import (
 // MessageAction
 // MessageAction
 
-// Deprecated: Use OpenAPI based classes instead.
 type MessageAction struct {
 	Action
 

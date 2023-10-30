@@ -26,7 +26,6 @@ import (
 // CameraAction
 // CameraAction
 
-// Deprecated: Use OpenAPI based classes instead.
 type CameraAction struct {
 	Action
 

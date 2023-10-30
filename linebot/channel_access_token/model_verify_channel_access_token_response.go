@@ -22,7 +22,6 @@ package channel_access_token
 // VerifyChannelAccessTokenResponse
 // Verification result
 
-// Deprecated: Use OpenAPI based classes instead.
 type VerifyChannelAccessTokenResponse struct {
 
 	/**

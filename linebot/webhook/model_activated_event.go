@@ -26,7 +26,6 @@ import (
 // ActivatedEvent
 // This event indicates that the module channel has been switched to Active Channel by calling the Acquire Control API. Sent to the webhook URL server of the module channel.
 
-// Deprecated: Use OpenAPI based classes instead.
 type ActivatedEvent struct {
 	Event
 

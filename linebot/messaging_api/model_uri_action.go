@@ -26,7 +26,6 @@ import (
 // UriAction
 // UriAction
 
-// Deprecated: Use OpenAPI based classes instead.
 type UriAction struct {
 	Action
 

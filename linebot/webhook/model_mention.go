@@ -27,7 +27,6 @@ import (
 // Mention
 // Mention
 
-// Deprecated: Use OpenAPI based classes instead.
 type Mention struct {
 
 	/**

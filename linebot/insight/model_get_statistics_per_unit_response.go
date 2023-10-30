@@ -22,7 +22,6 @@ package insight
 // GetStatisticsPerUnitResponse
 // Response object for `get statistics per unit`
 // https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response
-// Deprecated: Use OpenAPI based classes instead.
 type GetStatisticsPerUnitResponse struct {
 
 	/**

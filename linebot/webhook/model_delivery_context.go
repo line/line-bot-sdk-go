@@ -22,7 +22,6 @@ package webhook
 // DeliveryContext
 // webhook&#39;s delivery context information
 
-// Deprecated: Use OpenAPI based classes instead.
 type DeliveryContext struct {
 
 	/**

@@ -22,7 +22,6 @@ package messaging_api
 // GroupSummaryResponse
 // GroupSummaryResponse
 // https://developers.line.biz/en/reference/messaging-api/#get-group-summary
-// Deprecated: Use OpenAPI based classes instead.
 type GroupSummaryResponse struct {
 
 	/**

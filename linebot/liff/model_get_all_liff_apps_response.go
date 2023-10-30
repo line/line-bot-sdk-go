@@ -22,7 +22,6 @@ package liff
 // GetAllLiffAppsResponse
 // GetAllLiffAppsResponse
 
-// Deprecated: Use OpenAPI based classes instead.
 type GetAllLiffAppsResponse struct {
 
 	/**

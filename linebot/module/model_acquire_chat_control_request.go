@@ -22,7 +22,6 @@ package module
 // AcquireChatControlRequest
 // Request entity of the Acquire Control API
 // https://developers.line.biz/en/reference/partner-docs/#acquire-control-api
-// Deprecated: Use OpenAPI based classes instead.
 type AcquireChatControlRequest struct {
 
 	/**

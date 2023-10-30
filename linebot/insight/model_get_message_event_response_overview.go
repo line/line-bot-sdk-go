@@ -22,7 +22,6 @@ package insight
 // GetMessageEventResponseOverview
 // Summary of message statistics.
 
-// Deprecated: Use OpenAPI based classes instead.
 type GetMessageEventResponseOverview struct {
 
 	/**

@@ -26,7 +26,6 @@ import (
 // TextMessage
 // TextMessage
 // https://developers.line.biz/en/reference/messaging-api/#text-message
-// Deprecated: Use OpenAPI based classes instead.
 type TextMessage struct {
 	Message
 

@@ -22,7 +22,6 @@ package messaging_api
 // AltUri
 // AltUri
 
-// Deprecated: Use OpenAPI based classes instead.
 type AltUri struct {
 
 	/**

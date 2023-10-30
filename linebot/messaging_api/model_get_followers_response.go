@@ -22,7 +22,6 @@ package messaging_api
 // GetFollowersResponse
 // GetFollowersResponse
 // https://developers.line.biz/en/reference/messaging-api/#get-follower-ids
-// Deprecated: Use OpenAPI based classes instead.
 type GetFollowersResponse struct {
 
 	/**

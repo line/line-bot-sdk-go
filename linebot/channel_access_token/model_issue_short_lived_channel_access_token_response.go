@@ -22,7 +22,6 @@ package channel_access_token
 // IssueShortLivedChannelAccessTokenResponse
 // Issued short-lived channel access token
 // https://developers.line.biz/en/reference/messaging-api/#issue-shortlived-channel-access-token
-// Deprecated: Use OpenAPI based classes instead.
 type IssueShortLivedChannelAccessTokenResponse struct {
 
 	/**

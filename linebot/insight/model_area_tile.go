@@ -22,7 +22,6 @@ package insight
 // AreaTile
 // AreaTile
 
-// Deprecated: Use OpenAPI based classes instead.
 type AreaTile struct {
 
 	/**

@@ -22,7 +22,6 @@ package manage_audience
 // UpdateAudienceGroupDescriptionRequest
 // Rename an audience
 // https://developers.line.biz/en/reference/messaging-api/#set-description-audience-group
-// Deprecated: Use OpenAPI based classes instead.
 type UpdateAudienceGroupDescriptionRequest struct {
 
 	/**

@@ -22,7 +22,6 @@ package insight
 // GetMessageEventResponse
 // Statistics about how users interact with narrowcast messages or broadcast messages sent from your LINE Official Account.
 // https://developers.line.biz/en/reference/messaging-api/#get-insight-message-event-response
-// Deprecated: Use OpenAPI based classes instead.
 type GetMessageEventResponse struct {
 
 	/**

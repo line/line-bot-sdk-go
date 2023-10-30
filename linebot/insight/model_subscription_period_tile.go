@@ -22,7 +22,6 @@ package insight
 // SubscriptionPeriodTile
 // SubscriptionPeriodTile
 
-// Deprecated: Use OpenAPI based classes instead.
 type SubscriptionPeriodTile struct {
 
 	/**

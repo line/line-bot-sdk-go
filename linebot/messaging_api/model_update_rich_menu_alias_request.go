@@ -22,7 +22,6 @@ package messaging_api
 // UpdateRichMenuAliasRequest
 // UpdateRichMenuAliasRequest
 // https://developers.line.biz/en/reference/messaging-api/#update-rich-menu-alias
-// Deprecated: Use OpenAPI based classes instead.
 type UpdateRichMenuAliasRequest struct {
 
 	/**

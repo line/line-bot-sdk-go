@@ -33,7 +33,6 @@ func (e Message) GetType() string {
 	return e.Type
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 type UnknownMessage struct {
 	MessageInterface
 	Type string
@@ -44,7 +43,6 @@ func (e UnknownMessage) GetType() string {
 	return e.Type
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 func setDiscriminatorPropertyMessage(r MessageInterface) MessageInterface {
 	switch v := r.(type) {
 	case *AudioMessage:
@@ -147,7 +145,6 @@ func setDiscriminatorPropertyMessage(r MessageInterface) MessageInterface {
 
 // https://developers.line.biz/en/reference/messaging-api/#message-common-properties
 
-// Deprecated: Use OpenAPI based classes instead.
 type Message struct {
 	// Type of message
 
@@ -158,7 +155,6 @@ type Message struct {
 	Sender Sender `json:"sender,omitempty"`
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 func UnmarshalMessage(data []byte) (MessageInterface, error) {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

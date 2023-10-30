@@ -26,7 +26,6 @@ import (
 // ScenarioResultThingsContent
 // ScenarioResultThingsContent
 
-// Deprecated: Use OpenAPI based classes instead.
 type ScenarioResultThingsContent struct {
 	ThingsContent
 

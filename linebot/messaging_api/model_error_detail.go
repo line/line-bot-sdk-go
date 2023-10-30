@@ -22,7 +22,6 @@ package messaging_api
 // ErrorDetail
 // ErrorDetail
 
-// Deprecated: Use OpenAPI based classes instead.
 type ErrorDetail struct {
 
 	/**

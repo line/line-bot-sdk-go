@@ -34,7 +34,6 @@ import (
 	"github.com/line/line-bot-sdk-go/v7/linebot"
 )
 
-// Deprecated: Use OpenAPI based classes instead.
 type InsightAPI struct {
 	httpClient   *http.Client
 	endpoint     *url.URL
@@ -46,7 +45,6 @@ type InsightAPI struct {
 type InsightAPIOption func(*InsightAPI) error
 
 // New returns a new bot client instance.
-// Deprecated: Use OpenAPI based classes instead.
 func NewInsightAPI(channelToken string, options ...InsightAPIOption) (*InsightAPI, error) {
 	if channelToken == "" {
 		return nil, errors.New("missing channel access token")

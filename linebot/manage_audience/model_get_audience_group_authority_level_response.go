@@ -22,7 +22,6 @@ package manage_audience
 // GetAudienceGroupAuthorityLevelResponse
 // Get the authority level of the audience
 // https://developers.line.biz/en/reference/messaging-api/#get-authority-level
-// Deprecated: Use OpenAPI based classes instead.
 type GetAudienceGroupAuthorityLevelResponse struct {
 
 	/**

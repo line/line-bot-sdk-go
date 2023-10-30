@@ -26,7 +26,6 @@ import (
 // RichMenuArea
 // Rich menu area
 
-// Deprecated: Use OpenAPI based classes instead.
 type RichMenuArea struct {
 
 	/**

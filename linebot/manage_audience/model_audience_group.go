@@ -22,7 +22,6 @@ package manage_audience
 // AudienceGroup
 // Audience group
 
-// Deprecated: Use OpenAPI based classes instead.
 type AudienceGroup struct {
 
 	/**

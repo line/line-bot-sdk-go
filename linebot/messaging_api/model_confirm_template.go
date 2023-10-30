@@ -27,7 +27,6 @@ import (
 // ConfirmTemplate
 // ConfirmTemplate
 
-// Deprecated: Use OpenAPI based classes instead.
 type ConfirmTemplate struct {
 	Template
 

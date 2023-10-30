@@ -26,7 +26,6 @@ import (
 // QuickReplyItem
 // QuickReplyItem
 // https://developers.line.biz/en/reference/messaging-api/#items-object
-// Deprecated: Use OpenAPI based classes instead.
 type QuickReplyItem struct {
 
 	/**

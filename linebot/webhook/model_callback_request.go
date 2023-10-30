@@ -27,7 +27,6 @@ import (
 // CallbackRequest
 // The request body contains a JSON object with the user ID of a bot that should receive webhook events and an array of webhook event objects.
 // https://developers.line.biz/en/reference/messaging-api/#request-body
-// Deprecated: Use OpenAPI based classes instead.
 type CallbackRequest struct {
 
 	/**

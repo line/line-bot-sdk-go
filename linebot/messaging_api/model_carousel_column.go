@@ -27,7 +27,6 @@ import (
 // CarouselColumn
 // Column object for carousel template.
 
-// Deprecated: Use OpenAPI based classes instead.
 type CarouselColumn struct {
 
 	/**

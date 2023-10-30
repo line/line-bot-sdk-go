@@ -26,7 +26,6 @@ import (
 // FlexButton
 // FlexButton
 
-// Deprecated: Use OpenAPI based classes instead.
 type FlexButton struct {
 	FlexComponent
 

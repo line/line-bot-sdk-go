@@ -26,7 +26,6 @@ import (
 // UnlinkThingsContent
 // UnlinkThingsContent
 
-// Deprecated: Use OpenAPI based classes instead.
 type UnlinkThingsContent struct {
 	ThingsContent
 

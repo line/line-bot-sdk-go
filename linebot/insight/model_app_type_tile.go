@@ -22,7 +22,6 @@ package insight
 // AppTypeTile
 // AppTypeTile
 
-// Deprecated: Use OpenAPI based classes instead.
 type AppTypeTile struct {
 
 	/**

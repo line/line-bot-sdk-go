@@ -22,7 +22,6 @@ package module
 // ModuleBot
 // basic information about the bot.
 // https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api
-// Deprecated: Use OpenAPI based classes instead.
 type ModuleBot struct {
 
 	/**

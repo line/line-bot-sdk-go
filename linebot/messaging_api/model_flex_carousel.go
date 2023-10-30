@@ -26,7 +26,6 @@ import (
 // FlexCarousel
 // FlexCarousel
 
-// Deprecated: Use OpenAPI based classes instead.
 type FlexCarousel struct {
 	FlexContainer
 

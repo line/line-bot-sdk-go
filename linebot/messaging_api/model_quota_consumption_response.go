@@ -22,7 +22,6 @@ package messaging_api
 // QuotaConsumptionResponse
 // QuotaConsumptionResponse
 // https://developers.line.biz/en/reference/messaging-api/#get-consumption
-// Deprecated: Use OpenAPI based classes instead.
 type QuotaConsumptionResponse struct {
 
 	/**

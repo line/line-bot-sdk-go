@@ -26,7 +26,6 @@ import (
 // RichMenuSwitchAction
 // RichMenuSwitchAction
 
-// Deprecated: Use OpenAPI based classes instead.
 type RichMenuSwitchAction struct {
 	Action
 

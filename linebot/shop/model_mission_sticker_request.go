@@ -22,7 +22,6 @@ package shop
 // MissionStickerRequest
 // Send mission stickers (v3)
 // https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3
-// Deprecated: Use OpenAPI based classes instead.
 type MissionStickerRequest struct {
 
 	/**

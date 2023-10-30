@@ -22,7 +22,6 @@ package channel_access_token
 // ChannelAccessTokenKeyIdsResponse
 // Channel access token key IDs
 // https://developers.line.biz/en/reference/messaging-api/#get-all-valid-channel-access-token-key-ids-v2-1
-// Deprecated: Use OpenAPI based classes instead.
 type ChannelAccessTokenKeyIdsResponse struct {
 
 	/**

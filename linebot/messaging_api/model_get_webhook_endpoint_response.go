@@ -22,7 +22,6 @@ package messaging_api
 // GetWebhookEndpointResponse
 // GetWebhookEndpointResponse
 // https://developers.line.biz/en/reference/messaging-api/#get-webhook-endpoint-information
-// Deprecated: Use OpenAPI based classes instead.
 type GetWebhookEndpointResponse struct {
 
 	/**

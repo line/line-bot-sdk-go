@@ -22,7 +22,6 @@ package webhook
 // BeaconContent
 // BeaconContent
 
-// Deprecated: Use OpenAPI based classes instead.
 type BeaconContent struct {
 
 	/**

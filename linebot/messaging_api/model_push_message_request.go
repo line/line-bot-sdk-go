@@ -27,7 +27,6 @@ import (
 // PushMessageRequest
 // PushMessageRequest
 // https://developers.line.biz/en/reference/messaging-api/#send-push-message
-// Deprecated: Use OpenAPI based classes instead.
 type PushMessageRequest struct {
 
 	/**

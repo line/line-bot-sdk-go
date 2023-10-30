@@ -26,7 +26,6 @@ import (
 // ModuleEvent
 // This event indicates that the module channel has been attached to the LINE Official Account. Sent to the webhook URL server of the module channel.
 
-// Deprecated: Use OpenAPI based classes instead.
 type ModuleEvent struct {
 	Event
 

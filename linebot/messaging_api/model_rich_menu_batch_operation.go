@@ -33,7 +33,6 @@ func (e RichMenuBatchOperation) GetType() string {
 	return e.Type
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 type UnknownRichMenuBatchOperation struct {
 	RichMenuBatchOperationInterface
 	Type string
@@ -44,7 +43,6 @@ func (e UnknownRichMenuBatchOperation) GetType() string {
 	return e.Type
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 func setDiscriminatorPropertyRichMenuBatchOperation(r RichMenuBatchOperationInterface) RichMenuBatchOperationInterface {
 	switch v := r.(type) {
 	case *RichMenuBatchLinkOperation:
@@ -88,14 +86,12 @@ func setDiscriminatorPropertyRichMenuBatchOperation(r RichMenuBatchOperationInte
 
 // https://developers.line.biz/en/reference/messaging-api/#batch-control-rich-menus-of-users-operations
 
-// Deprecated: Use OpenAPI based classes instead.
 type RichMenuBatchOperation struct {
 	// The type of operation to the rich menu linked to the user. One of link, unlink, or unlinkAll.
 
 	Type string `json:"type"`
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 func UnmarshalRichMenuBatchOperation(data []byte) (RichMenuBatchOperationInterface, error) {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

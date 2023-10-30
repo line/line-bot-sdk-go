@@ -22,7 +22,6 @@ package messaging_api
 // SetWebhookEndpointRequest
 // SetWebhookEndpointRequest
 // https://developers.line.biz/en/reference/messaging-api/#set-webhook-endpoint-url
-// Deprecated: Use OpenAPI based classes instead.
 type SetWebhookEndpointRequest struct {
 
 	/**

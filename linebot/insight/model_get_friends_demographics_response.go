@@ -22,7 +22,6 @@ package insight
 // GetFriendsDemographicsResponse
 // Get friend demographics
 // https://developers.line.biz/en/reference/messaging-api/#get-demographic
-// Deprecated: Use OpenAPI based classes instead.
 type GetFriendsDemographicsResponse struct {
 
 	/**

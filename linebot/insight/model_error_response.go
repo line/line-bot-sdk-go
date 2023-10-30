@@ -22,7 +22,6 @@ package insight
 // ErrorResponse
 // ErrorResponse
 // https://developers.line.biz/en/reference/messaging-api/#error-responses
-// Deprecated: Use OpenAPI based classes instead.
 type ErrorResponse struct {
 
 	/**

@@ -22,7 +22,6 @@ package insight
 // GetNumberOfFollowersResponse
 // Get number of followers
 // https://developers.line.biz/en/reference/messaging-api/#get-number-of-followers
-// Deprecated: Use OpenAPI based classes instead.
 type GetNumberOfFollowersResponse struct {
 
 	/**

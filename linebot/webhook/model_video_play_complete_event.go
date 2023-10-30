@@ -26,7 +26,6 @@ import (
 // VideoPlayCompleteEvent
 // Event for when a user finishes viewing a video at least once with the specified trackingId sent by the LINE Official Account.
 
-// Deprecated: Use OpenAPI based classes instead.
 type VideoPlayCompleteEvent struct {
 	Event
 

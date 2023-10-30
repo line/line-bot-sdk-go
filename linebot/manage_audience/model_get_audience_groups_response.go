@@ -22,7 +22,6 @@ package manage_audience
 // GetAudienceGroupsResponse
 // Gets data for more than one audience.
 // https://developers.line.biz/en/reference/messaging-api/#get-audience-groups
-// Deprecated: Use OpenAPI based classes instead.
 type GetAudienceGroupsResponse struct {
 
 	/**

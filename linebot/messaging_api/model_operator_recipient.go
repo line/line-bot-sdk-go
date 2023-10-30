@@ -27,7 +27,6 @@ import (
 // OperatorRecipient
 // OperatorRecipient
 
-// Deprecated: Use OpenAPI based classes instead.
 type OperatorRecipient struct {
 	Recipient
 

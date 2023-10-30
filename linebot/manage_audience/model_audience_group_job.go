@@ -22,7 +22,6 @@ package manage_audience
 // AudienceGroupJob
 // Audience group job
 // https://developers.line.biz/en/reference/messaging-api/#get-audience-group
-// Deprecated: Use OpenAPI based classes instead.
 type AudienceGroupJob struct {
 
 	/**

@@ -26,7 +26,6 @@ import (
 // Filter
 // Filter for narrowcast
 
-// Deprecated: Use OpenAPI based classes instead.
 type Filter struct {
 
 	/**

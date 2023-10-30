@@ -22,7 +22,6 @@ package liff
 // LiffFeatures
 // LiffFeatures
 
-// Deprecated: Use OpenAPI based classes instead.
 type LiffFeatures struct {
 
 	/**

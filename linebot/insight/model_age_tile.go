@@ -22,7 +22,6 @@ package insight
 // AgeTile
 // AgeTile
 
-// Deprecated: Use OpenAPI based classes instead.
 type AgeTile struct {
 
 	/**

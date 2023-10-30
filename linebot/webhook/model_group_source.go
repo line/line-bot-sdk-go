@@ -26,7 +26,6 @@ import (
 // GroupSource
 // GroupSource
 
-// Deprecated: Use OpenAPI based classes instead.
 type GroupSource struct {
 	Source
 

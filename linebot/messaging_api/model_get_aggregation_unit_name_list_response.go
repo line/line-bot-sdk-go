@@ -22,7 +22,6 @@ package messaging_api
 // GetAggregationUnitNameListResponse
 // GetAggregationUnitNameListResponse
 // https://developers.line.biz/en/reference/messaging-api/#get-name-list-of-units-used-this-month
-// Deprecated: Use OpenAPI based classes instead.
 type GetAggregationUnitNameListResponse struct {
 
 	/**

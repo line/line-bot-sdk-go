@@ -22,7 +22,6 @@ package insight
 // GetStatisticsPerUnitResponseOverview
 // Statistics related to messages.
 // https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response
-// Deprecated: Use OpenAPI based classes instead.
 type GetStatisticsPerUnitResponseOverview struct {
 
 	/**

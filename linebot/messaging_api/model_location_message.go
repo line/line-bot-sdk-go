@@ -26,7 +26,6 @@ import (
 // LocationMessage
 // LocationMessage
 // https://developers.line.biz/en/reference/messaging-api/#location-message
-// Deprecated: Use OpenAPI based classes instead.
 type LocationMessage struct {
 	Message
 

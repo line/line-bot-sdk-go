@@ -26,7 +26,6 @@ import (
 // RoomSource
 // RoomSource
 
-// Deprecated: Use OpenAPI based classes instead.
 type RoomSource struct {
 	Source
 

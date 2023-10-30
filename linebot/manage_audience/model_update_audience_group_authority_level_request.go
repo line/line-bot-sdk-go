@@ -22,7 +22,6 @@ package manage_audience
 // UpdateAudienceGroupAuthorityLevelRequest
 // Change the authority level of the audience
 // https://developers.line.biz/en/reference/messaging-api/#change-authority-level
-// Deprecated: Use OpenAPI based classes instead.
 type UpdateAudienceGroupAuthorityLevelRequest struct {
 
 	/**

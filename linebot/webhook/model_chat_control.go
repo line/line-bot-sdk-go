@@ -22,7 +22,6 @@ package webhook
 // ChatControl
 // ChatControl
 
-// Deprecated: Use OpenAPI based classes instead.
 type ChatControl struct {
 
 	/**

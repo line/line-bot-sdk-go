@@ -27,7 +27,6 @@ import (
 // ImagemapMessage
 // ImagemapMessage
 // https://developers.line.biz/en/reference/messaging-api/#imagemap-message
-// Deprecated: Use OpenAPI based classes instead.
 type ImagemapMessage struct {
 	Message
 

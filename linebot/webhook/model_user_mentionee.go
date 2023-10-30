@@ -26,7 +26,6 @@ import (
 // UserMentionee
 // Mentioned target is user
 
-// Deprecated: Use OpenAPI based classes instead.
 type UserMentionee struct {
 	Mentionee
 

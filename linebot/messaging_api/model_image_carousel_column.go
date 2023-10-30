@@ -26,7 +26,6 @@ import (
 // ImageCarouselColumn
 // ImageCarouselColumn
 
-// Deprecated: Use OpenAPI based classes instead.
 type ImageCarouselColumn struct {
 
 	/**

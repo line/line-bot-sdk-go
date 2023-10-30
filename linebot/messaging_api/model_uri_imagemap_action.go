@@ -26,7 +26,6 @@ import (
 // UriImagemapAction
 // UriImagemapAction
 
-// Deprecated: Use OpenAPI based classes instead.
 type UriImagemapAction struct {
 	ImagemapAction
 

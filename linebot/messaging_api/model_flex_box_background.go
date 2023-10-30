@@ -33,7 +33,6 @@ func (e FlexBoxBackground) GetType() string {
 	return e.Type
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 type UnknownFlexBoxBackground struct {
 	FlexBoxBackgroundInterface
 	Type string
@@ -44,7 +43,6 @@ func (e UnknownFlexBoxBackground) GetType() string {
 	return e.Type
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 func setDiscriminatorPropertyFlexBoxBackground(r FlexBoxBackgroundInterface) FlexBoxBackgroundInterface {
 	switch v := r.(type) {
 	case *FlexBoxLinearGradient:
@@ -65,12 +63,10 @@ func setDiscriminatorPropertyFlexBoxBackground(r FlexBoxBackgroundInterface) Fle
 
 // FlexBoxBackground
 
-// Deprecated: Use OpenAPI based classes instead.
 type FlexBoxBackground struct {
 	Type string `json:"type"`
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 func UnmarshalFlexBoxBackground(data []byte) (FlexBoxBackgroundInterface, error) {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)

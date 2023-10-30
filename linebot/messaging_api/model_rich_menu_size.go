@@ -22,7 +22,6 @@ package messaging_api
 // RichMenuSize
 // Rich menu size
 
-// Deprecated: Use OpenAPI based classes instead.
 type RichMenuSize struct {
 
 	/**

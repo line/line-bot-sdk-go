@@ -26,7 +26,6 @@ import (
 // ImageCarouselTemplate
 // ImageCarouselTemplate
 
-// Deprecated: Use OpenAPI based classes instead.
 type ImageCarouselTemplate struct {
 	Template
 

@@ -22,7 +22,6 @@ package webhook
 // ScenarioResult
 // ScenarioResult
 // https://developers.line.biz/en/reference/messaging-api/#scenario-result-event
-// Deprecated: Use OpenAPI based classes instead.
 type ScenarioResult struct {
 
 	/**

@@ -22,7 +22,6 @@ package messaging_api
 // RichMenuIdResponse
 // RichMenuIdResponse
 
-// Deprecated: Use OpenAPI based classes instead.
 type RichMenuIdResponse struct {
 
 	/**

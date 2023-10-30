@@ -22,7 +22,6 @@ package webhook
 // Emoji
 // Emoji
 
-// Deprecated: Use OpenAPI based classes instead.
 type Emoji struct {
 
 	/**

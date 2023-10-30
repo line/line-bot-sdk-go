@@ -26,7 +26,6 @@ import (
 // LocationAction
 // LocationAction
 
-// Deprecated: Use OpenAPI based classes instead.
 type LocationAction struct {
 	Action
 
