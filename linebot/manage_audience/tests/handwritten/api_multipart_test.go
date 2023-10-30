@@ -101,7 +101,7 @@ func TestStickerMessage(t *testing.T) {
 	)
 	client, err := manage_audience.NewManageAudienceBlobAPI(
 		"channelToken",
-		manage_audience.WithEndpoint(server.URL),
+		manage_audience.WithBlobEndpoint(server.URL),
 	)
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
