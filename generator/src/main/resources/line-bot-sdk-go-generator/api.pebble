@@ -1,0 +1,262 @@
+{# @pebvariable name="imports" type="java.util.List<java.util.Map<String, String>>" -#}
+{# @pebvariable name="operations" type="org.openapitools.codegen.model.OperationMap" -#}
+{# @pebvariable name="generatorClass" type="java.lang.String" -#}
+{# @pebvariable name="classname" type="java.lang.String" -#}
+{# @pebvariable name="authenticated" type="java.lang.Boolean" -#}
+{% include "./licenseInfo.pebble" %}
+//go:generate python3 ../../generate-code.py
+{# @pebvariable name="packageName" type="java.lang.String" #}
+package {{ packageName }}
+
+import (
+    "bytes"
+    "context"
+	"errors"
+	"log"
+    "encoding/json"
+    "strings"
+	"mime/multipart"
+    "net/url"
+    "net/http"
+    "strconv"
+    "fmt"
+
+    "github.com/line/line-bot-sdk-go/v7/linebot"
+)
+
+type {{classname}} struct {
+	httpClient       *http.Client
+	endpoint     *url.URL
+	channelToken string
+	ctx context.Context
+}
+
+// {{ classname }}Option type
+type {{ classname }}Option func (* {{ classname }}) error
+
+// New returns a new bot client instance.
+func New{{ classname }}(channelToken string, options ...{{classname}}Option) (*{{ classname }}, error) {
+	if channelToken == "" {
+		return nil, errors.New("missing channel access token")
+	}
+
+	c := &{{ classname }}{
+		channelToken: channelToken,
+		httpClient:   http.DefaultClient,
+	}
+
+    u, err := url.ParseRequestURI("{{ endpoint(classname) }}")
+    if err != nil {
+        return nil, err
+    }
+    c.endpoint = u
+
+	for _, option := range options {
+		err := option(c)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return c, nil
+}
+
+// WithContext method
+func (call *{{ classname }}) WithContext(ctx context.Context) *{{ classname }} {
+	call.ctx = ctx
+	return call
+}
+
+func (client *{{ classname }}) Do(req *http.Request) (*http.Response, error) {
+	if client.channelToken != "" {
+		req.Header.Set("Authorization", "Bearer "+client.channelToken)
+	}
+	req.Header.Set("User-Agent", "LINE-BotSDK-Go/"+linebot.GetVersion())
+	if client.ctx != nil {
+		req = req.WithContext(client.ctx)
+	}
+	return client.httpClient.Do(req)
+}
+
+func (client *{{ classname }}) Url(endpointPath string) string {
+	u := client.endpoint
+	u.Path = path.Join(u.Path, endpointPath)
+	return u.String()
+}
+
+// WithHTTPClient function
+func With{{ classname contains "Blob" ? "Blob" : "" }}HTTPClient(c *http.Client) {{classname}}Option {
+	return func(client *{{ classname }}) error {
+		client.httpClient = c
+		return nil
+	}
+}
+
+// WithEndpointClient function
+func With{{ classname contains "Blob" ? "Blob" : "" }}Endpoint(endpoint string) {{classname}}Option {
+	return func(client *{{ classname }}) error {
+        u, err := url.ParseRequestURI(endpoint)
+        if err != nil {
+            return err
+        }
+        client.endpoint = u
+		return nil
+	}
+}
+
+{# @pebvariable name="param" type="org.openapitools.codegen.CodegenParameter" #}
+{% macro stringify(param) -%}
+    {%- if param.isLong -%}
+    strconv.FormatInt({{ param.paramName }}, 10)
+    {%- elseif param.isBoolean -%}
+    strconv.FormatBool({{ param.paramName }})
+    {%- else -%}
+    string({{ param.paramName }})
+    {%- endif -%}
+{%- endmacro %}
+
+{% for op in operations.operation %}
+
+    {% set nilval = op.returnType ? "nil" : "struct{}{}" %}
+
+// {{ op.operationId | capitalize }}
+// {{ op.summary }}
+// {{ op.notes }}
+// Parameters:
+{% for param in op.allParams %}
+    {%- if param.isBodyParam and param.isFile -%}
+//        {{ param.paramName }}ContentType  {{ param.description }} content-type
+//        {{ param.paramName }}Reader       {{ param.description }} file content
+   {%- else -%}
+//        {{ param.paramName }}             {{ param.description }}
+   {%- endif %}
+{% endfor %}
+{% if op.isResponseFile %}// You must close the response body when finished with it.{% endif %}
+{% if op.externalDocs != null -%}// {{op.externalDocs.url}}{% endif %}
+func (client *{{ classname }}) {{ op.operationId }}(
+{% for param in op.allParams %}
+    {% if param.isBodyParam and param.isFile %}
+    {{ param.paramName }}ContentType string,
+    {{ param.paramName }}Reader io.Reader,
+    {% else %}
+    {{ param.paramName }} {% if not (param.isPrimitiveType or param.isEnumRef) %}*{% endif %}{{ param.dataType }},
+    {% endif %}
+{% endfor %}
+) ({% if op.isResponseFile %}*http.Response{% elseif op.returnType %}*{{ op.returnType }}{% else %}struct{}{% endif %}, error) {
+    path := "{{ op.path }}"
+    {% for pp in op.pathParams %}
+    path = strings.Replace(path, "{{ "{" }}{{ pp.paramName }}{{ "}" }}", {% if pp.isInteger or pp.isLong %}strconv.FormatInt({{ pp.paramName }}, 10){% else %}{{ pp.paramName }}{% endif %}, -1)
+    {% endfor %}
+    {% if op.bodyParam != null and op.bodyParam.isFile %}
+	log.Printf("Sending request: method={{ op.httpMethod }} path=%s bodyContentType=%s\n", path, {{ op.bodyParam.paramName }}ContentType)
+	req, err := http.NewRequest(http.Method{{ op.httpMethod }}, client.Url(path), {{ op.bodyParam.paramName }}Reader)
+	if err != nil {
+		return {{ nilval }}, err
+	}
+    req.Header.Set("Content-Type", {{ op.bodyParam.paramName }}ContentType)
+    {% elseif op.bodyParam != null %}
+	var buf bytes.Buffer
+	enc := json.NewEncoder(&buf)
+	if err := enc.Encode({{ op.bodyParam.paramName }}); err != nil {
+		return {{ nilval }}, err
+	}
+	log.Printf("Sending request: method={{ op.httpMethod }} path=%s body=%s\n", path, buf.String())
+	req, err := http.NewRequest(http.Method{{ op.httpMethod }}, client.Url(path), &buf)
+	if err != nil {
+		return {{ nilval }}, err
+	}
+	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
+	{% elseif op.hasFormParams and op.isMultipart %}
+	body := &bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+        {% for fp in op.formParams -%}
+            {% if fp.isFile %}
+	fileWriter, err := writer.CreateFormFile("{{ fp.baseName }}", {{ fp.paramName }}.Name())
+	if err != nil {
+		return {{ nilval }}, err
+	}
+	io.Copy(fileWriter, {{ fp.paramName }})
+            {% else %}
+	writer.WriteField("{{ fp.baseName }}", {{ stringify(fp) }})
+	        {% endif %}
+        {% endfor %}
+	err = writer.Close()
+	if err != nil {
+		return {{ nilval }}, err
+	}
+
+	log.Printf("Sending request: method={{ op.httpMethod }} path=%s\n", path)
+	req, err := http.NewRequest(http.Method{{ op.httpMethod }}, client.Url(path), body)
+	if err != nil {
+		return {{ nilval }}, err
+	}
+	req.Header.Set("Content-Type", writer.FormDataContentType())
+	{% elseif op.hasFormParams %}
+	vs := url.Values{
+    	{% for fp in op.formParams -%}
+	    "{{ fp.baseName }}": []string{ string({{ fp.paramName }}) },
+    	{% endfor %}
+	}
+	buf := vs.Encode()
+	body := bytes.NewBufferString(buf)
+
+	log.Printf("Sending request: method={{ op.httpMethod }} path=%s body=%s\n", path, buf)
+	req, err := http.NewRequest(http.Method{{ op.httpMethod }}, client.Url(path), body)
+	if err != nil {
+		return {{ nilval }}, err
+	}
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	{% else %}
+	log.Printf("Sending request: method={{ op.httpMethod }} path=%s\n", path)
+	req, err := http.NewRequest(http.Method{{ op.httpMethod }}, client.Url(path), nil)
+	if err != nil {
+		return {{ nilval }}, err
+	}
+    {% endif %}
+
+    {% for hp in op.headerParams %}
+    req.Header.Set("{{ hp.baseName }}", {{ stringify(hp) }})
+    {% endfor %}
+
+    {% if op.hasQueryParams -%}
+	var query url.Values
+	    {% for qp in op.queryParams -%}
+    query = url.Values{"{{ qp.paramName }}": []string{ {{ stringify(qp) }} }}
+	    {% endfor %}
+    req.URL.RawQuery = query.Encode()
+    {% endif %}
+
+	res, err := client.Do(req)
+	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
+
+	if err != nil {
+		return {{ nilval }}, err
+	}
+
+	if res.StatusCode/100 != 2 {
+        body, err := io.ReadAll(res.Body)
+        if err != nil {
+            return {{ nilval }}, fmt.Errorf("failed to read response body: %w", err)
+        }
+	    return {{ nilval }}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+	}
+
+    {% if op.isResponseFile %}
+    return res, nil
+    {% else %}
+	defer res.Body.Close()
+
+    {% if op.returnType %}
+	decoder := json.NewDecoder(res.Body)
+	result := {{ op.returnType }}{}
+	if err := decoder.Decode(&result); err != nil {
+		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+	}
+	return &result, nil
+    {% else %}
+	return struct{}{}, nil
+    {% endif %}
+    {% endif %}
+}
+
+{% endfor %}
+

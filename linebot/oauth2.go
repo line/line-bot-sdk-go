@@ -31,6 +31,7 @@ func (client *Client) IssueAccessTokenV2(clientAssertion string) *IssueAccessTok
 }
 
 // IssueAccessTokenV2Call type
+// Deprecated: Use OpenAPI based classes instead.
 type IssueAccessTokenV2Call struct {
 	c   *Client
 	ctx context.Context
@@ -69,6 +70,7 @@ func (client *Client) GetAccessTokensV2(clientAssertion string) *GetAccessTokens
 }
 
 // GetAccessTokensV2Call type
+// Deprecated: Use OpenAPI based classes instead.
 type GetAccessTokensV2Call struct {
 	c   *Client
 	ctx context.Context
@@ -109,6 +111,7 @@ func (client *Client) RevokeAccessTokenV2(channelID, channelSecret, accessToken 
 }
 
 // RevokeAccessTokenV2Call type
+// Deprecated: Use OpenAPI based classes instead.
 type RevokeAccessTokenV2Call struct {
 	c   *Client
 	ctx context.Context

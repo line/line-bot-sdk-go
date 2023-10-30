@@ -28,6 +28,7 @@ func (client *Client) GetGroupSummary(groupID string) *GetGroupSummaryCall {
 }
 
 // GetGroupSummaryCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetGroupSummaryCall struct {
 	c   *Client
 	ctx context.Context

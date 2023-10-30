@@ -60,6 +60,7 @@ const (
 )
 
 // EventSource type
+// Deprecated: Use OpenAPI based classes instead.
 type EventSource struct {
 	Type    EventSourceType `json:"type"`
 	UserID  string          `json:"userId,omitempty"`
@@ -68,6 +69,7 @@ type EventSource struct {
 }
 
 // Params type
+// Deprecated: Use OpenAPI based classes instead.
 type Params struct {
 	Date               string `json:"date,omitempty"`
 	Time               string `json:"time,omitempty"`
@@ -77,11 +79,13 @@ type Params struct {
 }
 
 // Members type
+// Deprecated: Use OpenAPI based classes instead.
 type Members struct {
 	Members []EventSource `json:"members"`
 }
 
 // Postback type
+// Deprecated: Use OpenAPI based classes instead.
 type Postback struct {
 	Data   string  `json:"data"`
 	Params *Params `json:"params,omitempty"`
@@ -99,6 +103,7 @@ const (
 )
 
 // Beacon type
+// Deprecated: Use OpenAPI based classes instead.
 type Beacon struct {
 	Hwid          string
 	Type          BeaconEventType
@@ -115,12 +120,14 @@ const (
 )
 
 // AccountLink type
+// Deprecated: Use OpenAPI based classes instead.
 type AccountLink struct {
 	Result AccountLinkResult
 	Nonce  string
 }
 
 // ThingsResult type
+// Deprecated: Use OpenAPI based classes instead.
 type ThingsResult struct {
 	ScenarioID             string
 	Revision               int
@@ -143,6 +150,7 @@ const (
 )
 
 // ThingsActionResult type
+// Deprecated: Use OpenAPI based classes instead.
 type ThingsActionResult struct {
 	Type ThingsActionResultType
 	Data []byte
@@ -158,6 +166,7 @@ const (
 )
 
 // Things type
+// Deprecated: Use OpenAPI based classes instead.
 type Things struct {
 	DeviceID string
 	Type     string
@@ -165,11 +174,13 @@ type Things struct {
 }
 
 // Unsend type
+// Deprecated: Use OpenAPI based classes instead.
 type Unsend struct {
 	MessageID string `json:"messageId"`
 }
 
 // VideoPlayComplete type
+// Deprecated: Use OpenAPI based classes instead.
 type VideoPlayComplete struct {
 	TrackingID string `json:"trackingId"`
 }
@@ -190,11 +201,13 @@ const (
 )
 
 // DeliveryContext type
+// Deprecated: Use OpenAPI based classes instead.
 type DeliveryContext struct {
 	IsRedelivery bool `json:"isRedelivery"`
 }
 
 // Event type
+// Deprecated: Use OpenAPI based classes instead.
 type Event struct {
 	ReplyToken        string
 	Type              EventType
@@ -215,6 +228,7 @@ type Event struct {
 	DeliveryContext   DeliveryContext
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type rawEvent struct {
 	ReplyToken        string               `json:"replyToken,omitempty"`
 	Type              EventType            `json:"type"`
@@ -234,10 +248,12 @@ type rawEvent struct {
 	DeliveryContext   DeliveryContext      `json:"deliveryContext"`
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type rawMemberEvent struct {
 	Members []*EventSource `json:"members"`
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type rawEventMessage struct {
 	ID                  string              `json:"id"`
 	Type                MessageType         `json:"type"`
@@ -259,17 +275,20 @@ type rawEventMessage struct {
 	Mention             *Mention            `json:"mention,omitempty"`
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type rawBeaconEvent struct {
 	Hwid string          `json:"hwid"`
 	Type BeaconEventType `json:"type"`
 	DM   string          `json:"dm,omitempty"`
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type rawAccountLinkEvent struct {
 	Result AccountLinkResult `json:"result"`
 	Nonce  string            `json:"nonce"`
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type rawThingsResult struct {
 	ScenarioID             string                   `json:"scenarioId"`
 	Revision               int                      `json:"revision"`
@@ -281,11 +300,13 @@ type rawThingsResult struct {
 	ErrorReason            string                   `json:"errorReason,omitempty"`
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type rawThingsActionResult struct {
 	Type ThingsActionResultType `json:"type,omitempty"`
 	Data string                 `json:"data,omitempty"`
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type rawThingsEvent struct {
 	DeviceID string           `json:"deviceId"`
 	Type     string           `json:"type"`

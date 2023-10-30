@@ -28,6 +28,7 @@ type EventsHandlerFunc func([]*linebot.Event, *http.Request)
 type ErrorHandlerFunc func(error, *http.Request)
 
 // WebhookHandler type
+// Deprecated: Use OpenAPI based classes instead.
 type WebhookHandler struct {
 	channelSecret string
 	channelToken  string
@@ -37,6 +38,7 @@ type WebhookHandler struct {
 }
 
 // New returns a new WebhookHandler instance.
+// Deprecated: Use OpenAPI based classes instead.
 func New(channelSecret, channelToken string) (*WebhookHandler, error) {
 	if channelSecret == "" {
 		return nil, errors.New("missing channel secret")

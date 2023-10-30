@@ -61,6 +61,7 @@ func (call *GetBotInfoCall) Do() (*BotInfoResponse, error) {
 }
 
 // GetBotInfoCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetBotInfoCall struct {
 	c        *Client
 	ctx      context.Context

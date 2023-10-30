@@ -20,17 +20,40 @@ jobs:
         - '1.20.6'
     steps:
     - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+      with:
+        submodules: true
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
 
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
         go-version: ${{ matrix.go }}
 
+    - name: Install goimports
+      run: go install golang.org/x/tools/cmd/goimports@latest
+
+
+    - name: Generate code
+      run: python generate-code.py
+
     - name: run codecov.sh
       run: bash script/codecov.sh
 
     - name: go vet
       run: go vet $(go list ./... | grep -v /examples/)
+
+    - name: Compile example scripts
+      run: |
+        for file in $(find ./examples/ -name '*.go'); do
+          dir=$(dirname $file)
+          pushd $dir
+          go build -o /dev/null
+          popd
+        done
 
     - name: Publish to codecov.io
       run: bash <(curl -s https://codecov.io/bash)

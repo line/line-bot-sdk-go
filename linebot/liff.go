@@ -44,6 +44,7 @@ const (
 )
 
 // LIFFApp type
+// Deprecated: Use OpenAPI based classes instead.
 type LIFFApp struct {
 	LIFFID               string              `json:"liffId"`
 	View                 View                `json:"view"`
@@ -55,6 +56,7 @@ type LIFFApp struct {
 }
 
 // View type
+// Deprecated: Use OpenAPI based classes instead.
 type View struct {
 	Type       LIFFViewType `json:"type"`
 	URL        string       `json:"url"`
@@ -62,6 +64,7 @@ type View struct {
 }
 
 // LIFFAppFeatures type
+// Deprecated: Use OpenAPI based classes instead.
 type LIFFAppFeatures struct {
 	BLE    bool `json:"ble,omitempty"`
 	QRCode bool `json:"qrCode,omitempty"`
@@ -75,6 +78,7 @@ func (client *Client) GetLIFF() *GetLIFFAllCall {
 }
 
 // GetLIFFAllCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetLIFFAllCall struct {
 	c   *Client
 	ctx context.Context
@@ -105,6 +109,7 @@ func (client *Client) AddLIFF(app LIFFApp) *AddLIFFCall {
 }
 
 // AddLIFFCall type
+// Deprecated: Use OpenAPI based classes instead.
 type AddLIFFCall struct {
 	c   *Client
 	ctx context.Context
@@ -161,6 +166,7 @@ func (client *Client) UpdateLIFF(liffID string, app LIFFApp) *UpdateLIFFCall {
 }
 
 // UpdateLIFFCall type
+// Deprecated: Use OpenAPI based classes instead.
 type UpdateLIFFCall struct {
 	c   *Client
 	ctx context.Context
@@ -219,6 +225,7 @@ func (client *Client) DeleteLIFF(liffID string) *DeleteLIFFCall {
 }
 
 // DeleteLIFFCall type
+// Deprecated: Use OpenAPI based classes instead.
 type DeleteLIFFCall struct {
 	c   *Client
 	ctx context.Context

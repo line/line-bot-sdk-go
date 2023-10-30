@@ -28,6 +28,7 @@ func (client *Client) LeaveGroup(groupID string) *LeaveGroupCall {
 }
 
 // LeaveGroupCall type
+// Deprecated: Use OpenAPI based classes instead.
 type LeaveGroupCall struct {
 	c   *Client
 	ctx context.Context
@@ -61,6 +62,7 @@ func (client *Client) LeaveRoom(roomID string) *LeaveRoomCall {
 }
 
 // LeaveRoomCall type
+// Deprecated: Use OpenAPI based classes instead.
 type LeaveRoomCall struct {
 	c   *Client
 	ctx context.Context

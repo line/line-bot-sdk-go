@@ -24,6 +24,7 @@ const (
 )
 
 // ContentProvider type
+// Deprecated: Use OpenAPI based classes instead.
 type ContentProvider struct {
 	Type               ContentProviderType `json:"type"`
 	OriginalContentURL string              `json:"originalContentUrl,omitempty"`

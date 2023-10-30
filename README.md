@@ -30,11 +30,13 @@ $ go get -u github.com/line/line-bot-sdk-go/v7/linebot
 
 ```go
 import (
-	"github.com/line/line-bot-sdk-go/v7/linebot"
+	"github.com/line/line-bot-sdk-go/v7/linebot/messaging_api"
 )
 
 func main() {
-	bot, err := linebot.New("<channel secret>", "<channel access token>")
+	bot, err := messaging_api.NewMessagingApiAPI(
+		os.Getenv("LINE_CHANNEL_TOKEN"),
+	)
 	...
 }
 
@@ -42,30 +44,43 @@ func main() {
 
 ### Configuration with http.Client ###
 
+Every client application allows configuration with WithHTTPClient and WithEndpoint.
+(For Blob client, configurations WithBlobHTTPClient and WithBlobEndpoint are also available.)
+
 ```go
 client := &http.Client{}
-bot, err := linebot.New("<channel secret>", "<channel access token>", linebot.WithHTTPClient(client))
+bot, err := messaging_api.NewMessagingApiAPI(
+	os.Getenv("LINE_CHANNEL_TOKEN"),
+	messaging_api.WithHTTPClient(client),
+)
 ...
 ```
 
-## How to start ##
+## Getting Started ##
 
-The LINE Messaging API uses the JSON data format.
-```ParseRequest()``` will help you to parse the ```*http.Request``` content and return a slice of Pointer point to Event Object.
+The LINE Messaging API primarily utilizes the JSON data format. To parse the incoming HTTP requests, the `webhook.ParseRequest()` method is provided. This method reads the `*http.Request` content and returns a slice of pointers to Event Objects.
 
 ```go
-events, err := bot.ParseRequest(req)
+import (
+	"github.com/line/line-bot-sdk-go/v7/linebot/webhook"
+)
+
+cb, err := webhook.ParseRequest(req)
 if err != nil {
-	// Do something when something bad happened.
+	// Handle any errors that occur.
 }
 ```
 
-The LINE Messaging API defines 7 types of event - ```EventTypeMessage```, ```EventTypeFollow```, ```EventTypeUnfollow```, ```EventTypeJoin```, ```EventTypeLeave```, ```EventTypePostback```, ```EventTypeBeacon```. You can check the event type by using ```event.Type```
+The LINE Messaging API is capable of handling various event types. The Messaging API SDK automatically unmarshals these events into respective classes like `webhook.MessageEvent`, `webhook.FollowEvent`, and so on. You can easily check the type of the event and respond accordingly using a switch statement as shown below:
+
 
 ```go
-for _, event := range events {
-	if event.Type == linebot.EventTypeMessage {
-		// Do Something...
+for _, event := range cb.Events {
+	switch e := event.(type) {
+		case webhook.MessageEvent:
+			// Do Something...
+		case webhook.StickerMessageContent:
+			// Do Something...
 	}
 }
 ```
@@ -75,9 +90,9 @@ for _, event := range events {
 To send a message to a user, group, or room, you need either an ID
 
 ```go
-userID := event.Source.UserID
-groupID := event.Source.GroupID
-RoomID := event.Source.RoomID
+userID := event.Source.UserId
+groupID := event.Source.GroupId
+RoomID := event.Source.RoomId
 ```
 
 or a reply token.
@@ -88,15 +103,19 @@ replyToken := event.ReplyToken
 
 ### Create message ###
 
-The LINE Messaging API provides various types of message. To create a message, use ```New<Type>Message()```.
+The LINE Messaging API provides various types of message.
 
 ```go
-leftBtn := linebot.NewMessageAction("left", "left clicked")
-rightBtn := linebot.NewMessageAction("right", "right clicked")
-
-template := linebot.NewConfirmTemplate("Hello World", leftBtn, rightBtn)
-
-message := linebot.NewTemplateMessage("Sorry :(, please update your app.", template)
+bot.ReplyMessage(
+	&messaging_api.ReplyMessageRequest{
+		ReplyToken: e.ReplyToken,
+		Messages: []messaging_api.MessageInterface{
+			messaging_api.TextMessage{
+				Text: replyMessage,
+			},
+		},
+	},
+)
 ```
 
 ### Send message ###
@@ -104,27 +123,32 @@ message := linebot.NewTemplateMessage("Sorry :(, please update your app.", templ
 With an ID, you can send message using ```PushMessage()```
 
 ```go
-var messages []linebot.SendingMessage
-
-// append some message to messages
-
-_, err := bot.PushMessage(ID, messages...).Do()
-if err != nil {
-	// Do something when some bad happened
-}
+bot.PushMessage(
+	&messaging_api.PushMessageRequest{
+		To: "U.......",
+		Messages: []messaging_api.MessageInterface{
+			messaging_api.TextMessage{
+				Text: replyMessage,
+			},
+		},
+	},
+	nil, // x-line-retry-key
+)
 ```
 
 With a reply token, you can reply to messages using ```ReplyMessage()```
 
 ```go
-var messages []linebot.SendingMessage
-
-// append some message to messages
-
-_, err := bot.ReplyMessage(replyToken, messages...).Do()
-if err != nil {
-	// Do something when some bad happened
-}
+bot.ReplyMessage(
+	&messaging_api.ReplyMessageRequest{
+		ReplyToken: e.ReplyToken,
+		Messages: []messaging_api.MessageInterface{
+			messaging_api.TextMessage{
+				Text: replyMessage,
+			},
+		},
+	},
+)
 ```
 
 ## Help and media
@@ -135,7 +159,7 @@ Community Q&A: https://www.line-community.me/questions
 
 News: https://developers.line.biz/en/news/
 
-Twitter: @LINE_DEV
+X: @LINE_DEV
 
 
 ## Versioning
@@ -153,13 +177,13 @@ Please check [CONTRIBUTING](CONTRIBUTING.md) before making a contribution.
 
 ```
 Copyright (C) 2016 LINE Corp.
- 
+
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
- 
+
    http://www.apache.org/licenses/LICENSE-2.0
- 
+
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.

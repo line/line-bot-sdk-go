@@ -115,6 +115,8 @@ const (
 )
 
 // Client type
+// Deprecated: use OpenAPI based instead.
+// Deprecated: Use OpenAPI based classes instead.
 type Client struct {
 	channelSecret    string
 	channelToken     string
@@ -128,6 +130,7 @@ type Client struct {
 type ClientOption func(*Client) error
 
 // New returns a new bot client instance.
+// Deprecated: Use OpenAPI based classes instead.
 func New(channelSecret, channelToken string, options ...ClientOption) (*Client, error) {
 	if channelSecret == "" {
 		return nil, errors.New("missing channel secret")
@@ -164,6 +167,7 @@ func New(channelSecret, channelToken string, options ...ClientOption) (*Client, 
 }
 
 // WithHTTPClient function
+// Deprecated: Use OpenAPI based classes instead.
 func WithHTTPClient(c *http.Client) ClientOption {
 	return func(client *Client) error {
 		client.httpClient = c
@@ -172,6 +176,7 @@ func WithHTTPClient(c *http.Client) ClientOption {
 }
 
 // WithEndpointBase function
+// Deprecated: Use OpenAPI based classes instead.
 func WithEndpointBase(endpointBase string) ClientOption {
 	return func(client *Client) error {
 		u, err := url.ParseRequestURI(endpointBase)
@@ -184,6 +189,7 @@ func WithEndpointBase(endpointBase string) ClientOption {
 }
 
 // WithEndpointBaseData function
+// Deprecated: Use OpenAPI based classes instead.
 func WithEndpointBaseData(endpointBaseData string) ClientOption {
 	return func(client *Client) error {
 		u, err := url.ParseRequestURI(endpointBaseData)
@@ -289,12 +295,14 @@ func (client *Client) setRetryKey(retryKey string) {
 	client.retryKeyID = retryKey
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func closeResponse(res *http.Response) error {
 	defer res.Body.Close()
 	_, err := io.Copy(io.Discard, res.Body)
 	return err
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 func uploadFile(values map[string]io.Reader) (bytes.Buffer, string, error) {
 	var (
 		b   bytes.Buffer

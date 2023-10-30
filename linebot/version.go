@@ -17,3 +17,7 @@
 package linebot
 
 const version = "7.21.0"
+
+func GetVersion() string {
+	return version
+}

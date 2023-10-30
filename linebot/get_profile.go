@@ -28,6 +28,7 @@ func (client *Client) GetProfile(userID string) *GetProfileCall {
 }
 
 // GetProfileCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetProfileCall struct {
 	c   *Client
 	ctx context.Context
@@ -62,6 +63,7 @@ func (client *Client) GetGroupMemberProfile(groupID, userID string) *GetGroupMem
 }
 
 // GetGroupMemberProfileCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetGroupMemberProfileCall struct {
 	c   *Client
 	ctx context.Context
@@ -97,6 +99,7 @@ func (client *Client) GetRoomMemberProfile(roomID, userID string) *GetRoomMember
 }
 
 // GetRoomMemberProfileCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetRoomMemberProfileCall struct {
 	c   *Client
 	ctx context.Context

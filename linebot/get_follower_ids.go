@@ -28,6 +28,7 @@ func (client *Client) GetFollowerIDs(continuationToken string) *GetFollowerIDsCa
 }
 
 // GetFollowerIDsCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetFollowerIDsCall struct {
 	c   *Client
 	ctx context.Context
@@ -84,6 +85,7 @@ type userIDsCaller interface {
 }
 
 // UserIDsScanner type
+// Deprecated: Use OpenAPI based classes instead.
 type UserIDsScanner struct {
 	caller userIDsCaller
 	ctx    context.Context

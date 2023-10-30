@@ -55,12 +55,14 @@ type IUploadAudienceGroupOption interface {
 }
 
 // WithUploadAudienceGroupCallIsIfaAudience func
+// Deprecated: Use OpenAPI based classes instead.
 func WithUploadAudienceGroupCallIsIfaAudience(isIfaAudience bool) IUploadAudienceGroupOption {
 	return &withUploadAudienceGroupCallIsIfaAudience{
 		isIfaAudience: isIfaAudience,
 	}
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type withUploadAudienceGroupCallIsIfaAudience struct {
 	isIfaAudience bool
 }
@@ -70,12 +72,14 @@ func (w *withUploadAudienceGroupCallIsIfaAudience) Apply(call *UploadAudienceGro
 }
 
 // WithUploadAudienceGroupCallUploadDescription func
+// Deprecated: Use OpenAPI based classes instead.
 func WithUploadAudienceGroupCallUploadDescription(uploadDescription string) IUploadAudienceGroupOption {
 	return &withUploadAudienceGroupCallUploadDescription{
 		uploadDescription: uploadDescription,
 	}
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type withUploadAudienceGroupCallUploadDescription struct {
 	uploadDescription string
 }
@@ -85,12 +89,14 @@ func (w *withUploadAudienceGroupCallUploadDescription) Apply(call *UploadAudienc
 }
 
 // WithUploadAudienceGroupCallAudiences func
+// Deprecated: Use OpenAPI based classes instead.
 func WithUploadAudienceGroupCallAudiences(audiences ...string) IUploadAudienceGroupOption {
 	return &withUploadAudienceGroupCallAudiences{
 		audiences: audiences,
 	}
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type withUploadAudienceGroupCallAudiences struct {
 	audiences []string
 }
@@ -113,11 +119,13 @@ func (client *Client) UploadAudienceGroup(description string, options ...IUpload
 	return call
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type audience struct {
 	ID string `json:"id,omitempty"`
 }
 
 // UploadAudienceGroupCall type
+// Deprecated: Use OpenAPI based classes instead.
 type UploadAudienceGroupCall struct {
 	c                 *Client
 	ctx               context.Context
@@ -168,12 +176,14 @@ type IUploadAudienceGroupByFileOption interface {
 }
 
 // WithUploadAudienceGroupByFileCallIsIfaAudience func
+// Deprecated: Use OpenAPI based classes instead.
 func WithUploadAudienceGroupByFileCallIsIfaAudience(isIfaAudience bool) IUploadAudienceGroupByFileOption {
 	return &withUploadAudienceGroupByFileCallIsIfaAudience{
 		isIfaAudience: isIfaAudience,
 	}
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type withUploadAudienceGroupByFileCallIsIfaAudience struct {
 	isIfaAudience bool
 }
@@ -183,12 +193,14 @@ func (w *withUploadAudienceGroupByFileCallIsIfaAudience) Apply(call *UploadAudie
 }
 
 // WithUploadAudienceGroupByFileCallUploadDescription func
+// Deprecated: Use OpenAPI based classes instead.
 func WithUploadAudienceGroupByFileCallUploadDescription(uploadDescription string) IUploadAudienceGroupByFileOption {
 	return &withUploadAudienceGroupByFileCallUploadDescription{
 		uploadDescription: uploadDescription,
 	}
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type withUploadAudienceGroupByFileCallUploadDescription struct {
 	uploadDescription string
 }
@@ -211,6 +223,7 @@ func (client *Client) UploadAudienceGroupByFile(description string, audiences []
 }
 
 // UploadAudienceGroupByFileCall type
+// Deprecated: Use OpenAPI based classes instead.
 type UploadAudienceGroupByFileCall struct {
 	c                 *Client
 	ctx               context.Context
@@ -259,12 +272,14 @@ type IAddAudiencesOption interface {
 }
 
 // WithAddAudiencesCallUploadDescription type
+// Deprecated: Use OpenAPI based classes instead.
 func WithAddAudiencesCallUploadDescription(uploadDescription string) IAddAudiencesOption {
 	return &withAddAudiencesCallUploadDescription{
 		uploadDescription: uploadDescription,
 	}
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type withAddAudiencesCallUploadDescription struct {
 	uploadDescription string
 }
@@ -289,6 +304,7 @@ func (client *Client) AddAudiences(audienceGroupID int, audiences []string, opti
 }
 
 // AddAudiencesCall type
+// Deprecated: Use OpenAPI based classes instead.
 type AddAudiencesCall struct {
 	c                 *Client
 	ctx               context.Context
@@ -336,12 +352,14 @@ type IAddAudiencesByFileOption interface {
 }
 
 // WithAddAudiencesByFileCallUploadDescription func
+// Deprecated: Use OpenAPI based classes instead.
 func WithAddAudiencesByFileCallUploadDescription(uploadDescription string) IAddAudiencesByFileOption {
 	return &withAddAudiencesByFileCallUploadDescription{
 		uploadDescription: uploadDescription,
 	}
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type withAddAudiencesByFileCallUploadDescription struct {
 	uploadDescription string
 }
@@ -364,6 +382,7 @@ func (client *Client) AddAudiencesByFile(audienceGroupID int, audiences []string
 }
 
 // AddAudiencesByFileCall type
+// Deprecated: Use OpenAPI based classes instead.
 type AddAudiencesByFileCall struct {
 	c                 *Client
 	ctx               context.Context
@@ -408,12 +427,14 @@ type IClickAudienceGroupOption interface {
 }
 
 // WithClickAudienceGroupCallClickURL func
+// Deprecated: Use OpenAPI based classes instead.
 func WithClickAudienceGroupCallClickURL(clickURL string) IClickAudienceGroupOption {
 	return &withClickAudienceGroupCallClickURL{
 		clickURL: clickURL,
 	}
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type withClickAudienceGroupCallClickURL struct {
 	clickURL string
 }
@@ -436,6 +457,7 @@ func (client *Client) ClickAudienceGroup(description, requestID string, options 
 }
 
 // ClickAudienceGroupCall type
+// Deprecated: Use OpenAPI based classes instead.
 type ClickAudienceGroupCall struct {
 	c           *Client
 	ctx         context.Context
@@ -488,6 +510,7 @@ func (client *Client) IMPAudienceGroup(description, requestID string) *IMPAudien
 }
 
 // IMPAudienceGroupCall type
+// Deprecated: Use OpenAPI based classes instead.
 type IMPAudienceGroupCall struct {
 	c           *Client
 	ctx         context.Context
@@ -537,6 +560,7 @@ func (client *Client) UpdateAudienceGroupDescription(audienceGroupID int, descri
 }
 
 // UpdateAudienceGroupDescriptionCall type
+// Deprecated: Use OpenAPI based classes instead.
 type UpdateAudienceGroupDescriptionCall struct {
 	c               *Client
 	ctx             context.Context
@@ -583,6 +607,7 @@ func (client *Client) ActivateAudienceGroup(audienceGroupID int) *ActivateAudien
 }
 
 // ActivateAudienceGroupCall type
+// Deprecated: Use OpenAPI based classes instead.
 type ActivateAudienceGroupCall struct {
 	c               *Client
 	ctx             context.Context
@@ -615,6 +640,7 @@ func (client *Client) DeleteAudienceGroup(audienceGroupID int) *DeleteAudienceGr
 }
 
 // DeleteAudienceGroupCall type
+// Deprecated: Use OpenAPI based classes instead.
 type DeleteAudienceGroupCall struct {
 	c               *Client
 	ctx             context.Context
@@ -647,6 +673,7 @@ func (client *Client) GetAudienceGroup(audienceGroupID int) *GetAudienceGroupCal
 }
 
 // GetAudienceGroupCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetAudienceGroupCall struct {
 	c               *Client
 	ctx             context.Context
@@ -675,12 +702,14 @@ type IListAudienceGroupOption interface {
 }
 
 // WithListAudienceGroupCallDescription func
+// Deprecated: Use OpenAPI based classes instead.
 func WithListAudienceGroupCallDescription(description string) IListAudienceGroupOption {
 	return &withListAudienceGroupCallDescription{
 		description: description,
 	}
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type withListAudienceGroupCallDescription struct {
 	description string
 }
@@ -690,12 +719,14 @@ func (w *withListAudienceGroupCallDescription) Apply(call *ListAudienceGroupCall
 }
 
 // WithListAudienceGroupCallStatus func
+// Deprecated: Use OpenAPI based classes instead.
 func WithListAudienceGroupCallStatus(status AudienceStatusType) IListAudienceGroupOption {
 	return &withListAudienceGroupCallStatus{
 		status: status,
 	}
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type withListAudienceGroupCallStatus struct {
 	status AudienceStatusType
 }
@@ -705,12 +736,14 @@ func (w *withListAudienceGroupCallStatus) Apply(call *ListAudienceGroupCall) {
 }
 
 // WithListAudienceGroupCallSize func
+// Deprecated: Use OpenAPI based classes instead.
 func WithListAudienceGroupCallSize(size int) IListAudienceGroupOption {
 	return &withListAudienceGroupCallSize{
 		size: size,
 	}
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type withListAudienceGroupCallSize struct {
 	size int
 }
@@ -720,12 +753,14 @@ func (w *withListAudienceGroupCallSize) Apply(call *ListAudienceGroupCall) {
 }
 
 // WithListAudienceGroupCallIncludesExternalPublicGroups func
+// Deprecated: Use OpenAPI based classes instead.
 func WithListAudienceGroupCallIncludesExternalPublicGroups(includesExternalPublicGroups bool) IListAudienceGroupOption {
 	return &withListAudienceGroupCallIncludesExternalPublicGroups{
 		includesExternalPublicGroups: includesExternalPublicGroups,
 	}
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type withListAudienceGroupCallIncludesExternalPublicGroups struct {
 	includesExternalPublicGroups bool
 }
@@ -735,12 +770,14 @@ func (w *withListAudienceGroupCallIncludesExternalPublicGroups) Apply(call *List
 }
 
 // WithListAudienceGroupCallCreateRoute func
+// Deprecated: Use OpenAPI based classes instead.
 func WithListAudienceGroupCallCreateRoute(createRoute string) IListAudienceGroupOption {
 	return &withListAudienceGroupCallCreateRoute{
 		createRoute: createRoute,
 	}
 }
 
+// Deprecated: Use OpenAPI based classes instead.
 type withListAudienceGroupCallCreateRoute struct {
 	createRoute string
 }
@@ -763,6 +800,7 @@ func (client *Client) ListAudienceGroup(page int, options ...IListAudienceGroupO
 }
 
 // ListAudienceGroupCall type
+// Deprecated: Use OpenAPI based classes instead.
 type ListAudienceGroupCall struct {
 	c                            *Client
 	ctx                          context.Context
@@ -813,6 +851,7 @@ func (client *Client) GetAudienceGroupAuthorityLevel() *GetAudienceGroupAuthorit
 }
 
 // GetAudienceGroupAuthorityLevelCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetAudienceGroupAuthorityLevelCall struct {
 	c   *Client
 	ctx context.Context
@@ -844,6 +883,7 @@ func (client *Client) ChangeAudienceGroupAuthorityLevel(authorityLevel AudienceA
 }
 
 // ChangeAudienceGroupAuthorityLevelCall type
+// Deprecated: Use OpenAPI based classes instead.
 type ChangeAudienceGroupAuthorityLevelCall struct {
 	c              *Client
 	ctx            context.Context

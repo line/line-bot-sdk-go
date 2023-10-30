@@ -28,6 +28,7 @@ func (client *Client) GetGroupMemberCount(groupID string) *GetGroupMemberCountCa
 }
 
 // GetGroupMemberCountCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetGroupMemberCountCall struct {
 	c   *Client
 	ctx context.Context
@@ -61,6 +62,7 @@ func (client *Client) GetRoomMemberCount(roomID string) *GetRoomMemberCountCall 
 }
 
 // GetRoomMemberCountCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetRoomMemberCountCall struct {
 	c   *Client
 	ctx context.Context

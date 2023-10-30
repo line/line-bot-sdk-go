@@ -54,6 +54,7 @@ type Template interface {
 }
 
 // ButtonsTemplate type
+// Deprecated: Use OpenAPI based classes instead.
 type ButtonsTemplate struct {
 	ThumbnailImageURL    string
 	ImageAspectRatio     ImageAspectRatioType
@@ -105,6 +106,7 @@ func (t *ButtonsTemplate) WithDefaultAction(defaultAction TemplateAction) *Butto
 }
 
 // ConfirmTemplate type
+// Deprecated: Use OpenAPI based classes instead.
 type ConfirmTemplate struct {
 	Text    string
 	Actions []TemplateAction
@@ -124,6 +126,7 @@ func (t *ConfirmTemplate) MarshalJSON() ([]byte, error) {
 }
 
 // CarouselTemplate type
+// Deprecated: Use OpenAPI based classes instead.
 type CarouselTemplate struct {
 	Columns          []*CarouselColumn
 	ImageAspectRatio ImageAspectRatioType
@@ -131,6 +134,7 @@ type CarouselTemplate struct {
 }
 
 // CarouselColumn type
+// Deprecated: Use OpenAPI based classes instead.
 type CarouselColumn struct {
 	ThumbnailImageURL    string           `json:"thumbnailImageUrl,omitempty"`
 	ImageBackgroundColor string           `json:"imageBackgroundColor,omitempty"`
@@ -175,11 +179,13 @@ func (t *CarouselColumn) WithDefaultAction(defaultAction TemplateAction) *Carous
 }
 
 // ImageCarouselTemplate type
+// Deprecated: Use OpenAPI based classes instead.
 type ImageCarouselTemplate struct {
 	Columns []*ImageCarouselColumn
 }
 
 // ImageCarouselColumn type
+// Deprecated: Use OpenAPI based classes instead.
 type ImageCarouselColumn struct {
 	ImageURL string         `json:"imageUrl"`
 	Action   TemplateAction `json:"action"`
@@ -209,6 +215,7 @@ func (*CarouselTemplate) Template() {}
 func (*ImageCarouselTemplate) Template() {}
 
 // NewConfirmTemplate function
+// Deprecated: Use OpenAPI based classes instead.
 func NewConfirmTemplate(text string, left, right TemplateAction) *ConfirmTemplate {
 	return &ConfirmTemplate{
 		Text:    text,
@@ -218,6 +225,7 @@ func NewConfirmTemplate(text string, left, right TemplateAction) *ConfirmTemplat
 
 // NewButtonsTemplate function
 // `thumbnailImageURL` and `title` are optional. they can be empty.
+// Deprecated: Use OpenAPI based classes instead.
 func NewButtonsTemplate(thumbnailImageURL, title, text string, actions ...TemplateAction) *ButtonsTemplate {
 	return &ButtonsTemplate{
 		ThumbnailImageURL: thumbnailImageURL,
@@ -228,6 +236,7 @@ func NewButtonsTemplate(thumbnailImageURL, title, text string, actions ...Templa
 }
 
 // NewCarouselTemplate function
+// Deprecated: Use OpenAPI based classes instead.
 func NewCarouselTemplate(columns ...*CarouselColumn) *CarouselTemplate {
 	return &CarouselTemplate{
 		Columns: columns,
@@ -236,6 +245,7 @@ func NewCarouselTemplate(columns ...*CarouselColumn) *CarouselTemplate {
 
 // NewCarouselColumn function
 // `thumbnailImageURL` and `title` are optional. they can be empty.
+// Deprecated: Use OpenAPI based classes instead.
 func NewCarouselColumn(thumbnailImageURL, title, text string, actions ...TemplateAction) *CarouselColumn {
 	return &CarouselColumn{
 		ThumbnailImageURL: thumbnailImageURL,
@@ -246,6 +256,7 @@ func NewCarouselColumn(thumbnailImageURL, title, text string, actions ...Templat
 }
 
 // NewImageCarouselTemplate function
+// Deprecated: Use OpenAPI based classes instead.
 func NewImageCarouselTemplate(columns ...*ImageCarouselColumn) *ImageCarouselTemplate {
 	return &ImageCarouselTemplate{
 		Columns: columns,
@@ -253,6 +264,7 @@ func NewImageCarouselTemplate(columns ...*ImageCarouselColumn) *ImageCarouselTem
 }
 
 // NewImageCarouselColumn function
+// Deprecated: Use OpenAPI based classes instead.
 func NewImageCarouselColumn(imageURL string, action TemplateAction) *ImageCarouselColumn {
 	return &ImageCarouselColumn{
 		ImageURL: imageURL,

@@ -30,6 +30,7 @@ func (client *Client) ValidatePushMessage(messages ...SendingMessage) *ValidateP
 }
 
 // ValidatePushMessageCall type
+// Deprecated: Use OpenAPI based classes instead.
 type ValidatePushMessageCall struct {
 	c   *Client
 	ctx context.Context
@@ -75,6 +76,7 @@ func (client *Client) ValidateReplyMessage(messages ...SendingMessage) *Validate
 }
 
 // ValidateReplyMessageCall type
+// Deprecated: Use OpenAPI based classes instead.
 type ValidateReplyMessageCall struct {
 	c   *Client
 	ctx context.Context
@@ -120,6 +122,7 @@ func (client *Client) ValidateMulticastMessage(messages ...SendingMessage) *Vali
 }
 
 // ValidateMulticastMessageCall type
+// Deprecated: Use OpenAPI based classes instead.
 type ValidateMulticastMessageCall struct {
 	c   *Client
 	ctx context.Context
@@ -165,6 +168,7 @@ func (client *Client) ValidateBroadcastMessage(messages ...SendingMessage) *Vali
 }
 
 // ValidateBroadcastMessageCall type
+// Deprecated: Use OpenAPI based classes instead.
 type ValidateBroadcastMessageCall struct {
 	c   *Client
 	ctx context.Context
@@ -210,6 +214,7 @@ func (client *Client) ValidateNarrowcastMessage(messages ...SendingMessage) *Val
 }
 
 // ValidateNarrowcastMessageCall type
+// Deprecated: Use OpenAPI based classes instead.
 type ValidateNarrowcastMessageCall struct {
 	c   *Client
 	ctx context.Context

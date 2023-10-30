@@ -1,0 +1,24 @@
+{# @pebvariable name="models" type="java.util.ArrayList<org.openapitools.codegen.model.ModelMap>" -#}
+{# @pebvariable name="imports" type="java.util.List<java.util.Map<String, String>>" -#}
+{% include "./licenseInfo.pebble" %}
+
+//go:generate python3 ../../generate-code.py
+package {{ packageName }}
+
+{% for import in imports -%}
+{% if loop.first %}import ({% endif %}
+    "{{import.import}}"
+{% if loop.last %}){% endif %}
+{% endfor %}
+
+{% for model in models -%}
+    {%- if model.model.isEnum -%}
+        {%- include "./model/enum.pebble" with {"model": model.model} -%}
+    {%- else -%}
+        {%- if model.model.discriminator != null -%}
+            {%- include "./model/interface.pebble" with {"model": model.model} -%}
+        {%- else -%}
+            {%- include "./model/struct.pebble" with {"model": model.model} -%}
+        {%- endif -%}
+    {%- endif -%}
+{%- endfor -%}

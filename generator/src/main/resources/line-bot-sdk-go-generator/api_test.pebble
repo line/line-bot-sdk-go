@@ -1,0 +1,76 @@
+{# @pebvariable name="imports" type="java.util.List<java.util.Map<String, String>>" -#}
+{# @pebvariable name="operations" type="org.openapitools.codegen.model.OperationMap" -#}
+{# @pebvariable name="packageName" type="String" -#}
+{# @pebvariable name="classname" type="String" -#}
+package tests
+
+import (
+	"crypto/rand"
+	"fmt"
+	"io"
+	"log"
+	"net/http"
+	"net/http/httptest"
+	"os"
+	"strings"
+	"testing"
+
+	"github.com/line/line-bot-sdk-go/v7/linebot/{{ packageName }}"
+)
+
+{% for op in operations.operation %}
+func Test{{ op.operationId }}(t *testing.T) {
+	server := httptest.NewServer(
+		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+    {% if op.bodyParam != null and op.bodyParam.isFile %}
+    {#  Not implemented yet.  #}
+    {% elseif op.bodyParam != null %}
+	if r.Header.Get("Content-Type") != "application/json; charset=UTF-8" {
+		t.Fatalf("Invalid content-type: %s", r.Header.Get("Content-Type"))
+		return
+	}
+	{% elseif op.hasFormParams and op.isMultipart %}
+    if !strings.HasPrefix(r.Header.Get("Content-type"), "multipart/form-data; boundary=") {
+		t.Fatalf("Invalid content-type: %s", r.Header.Get("Content-Type"))
+		return
+	}
+	{% elseif op.hasFormParams %}
+	if r.Header.Get("Content-Type") != "application/x-www-form-urlencoded" {
+		t.Fatalf("Invalid content-type: %s", r.Header.Get("Content-Type"))
+		return
+	}
+	{% endif %}
+
+			w.WriteHeader(http.StatusOK)
+			w.Write([]byte("{}"))
+        }),
+    )
+
+	client, err := {{ packageName }}.New{{ classname }}(
+		"MY_CHANNEL_TOKEN",
+        {{ packageName }}.WithEndpoint(server.URL),
+	)
+	if err != nil {
+		t.Fatalf("Failed to create client: %v", err)
+	}
+	resp, err := client.{{ op.operationId }}(
+	{% for param in op.allParams -%}
+	    {% if param.isInteger or param.isLong -%}
+        0,
+        {% elseif param.isDouble or param.isFloat -%}
+        0.0,
+        {% elseif param.isBoolean -%}
+        false,
+        {% elseif param.isString -%}
+        "hello",
+        {% else -%}
+        nil,
+	    {% endif %}
+	{% endfor %}
+	)
+	if err != nil {
+		t.Fatalf("Failed to call API: %v", err)
+	}
+	log.Printf("Got response: %v", resp)
+}
+{% endfor %}

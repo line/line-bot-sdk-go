@@ -15,6 +15,7 @@
 package linebot
 
 // ImageSet type
+// Deprecated: Use OpenAPI based classes instead.
 type ImageSet struct {
 	ID    string `json:"id"`
 	Index int    `json:"index"`
@@ -22,6 +23,7 @@ type ImageSet struct {
 }
 
 // NewImageSet function
+// Deprecated: Use OpenAPI based classes instead.
 func NewImageSet(ID string, index, total int) *ImageSet {
 	return &ImageSet{
 		ID:    ID,
