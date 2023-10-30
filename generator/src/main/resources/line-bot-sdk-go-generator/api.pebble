@@ -84,7 +84,7 @@ func (client *{{ classname }}) Url(endpointPath string) string {
 }
 
 // WithHTTPClient function
-func WithHTTPClient(c *http.Client) {{classname}}Option {
+func With{{ classname contains "Blob" ? "Blob" : "" }}HTTPClient(c *http.Client) {{classname}}Option {
 	return func(client *{{ classname }}) error {
 		client.httpClient = c
 		return nil
@@ -92,7 +92,7 @@ func WithHTTPClient(c *http.Client) {{classname}}Option {
 }
 
 // WithEndpointClient function
-func WithEndpoint(endpoint string) {{classname}}Option {
+func With{{ classname contains "Blob" ? "Blob" : "" }}Endpoint(endpoint string) {{classname}}Option {
 	return func(client *{{ classname }}) error {
         u, err := url.ParseRequestURI(endpoint)
         if err != nil {

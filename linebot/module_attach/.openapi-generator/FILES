@@ -1,3 +1,2 @@
 api_line_module_attach.go
 model_attach_module_response.go
-tests/api/api_line_module_attach_test_test.go

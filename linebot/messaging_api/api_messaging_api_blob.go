@@ -95,7 +95,7 @@ func (client *MessagingApiBlobAPI) Url(endpointPath string) string {
 }
 
 // WithHTTPClient function
-func WithHTTPClient(c *http.Client) MessagingApiBlobAPIOption {
+func WithBlobHTTPClient(c *http.Client) MessagingApiBlobAPIOption {
 	return func(client *MessagingApiBlobAPI) error {
 		client.httpClient = c
 		return nil
@@ -103,7 +103,7 @@ func WithHTTPClient(c *http.Client) MessagingApiBlobAPIOption {
 }
 
 // WithEndpointClient function
-func WithEndpoint(endpoint string) MessagingApiBlobAPIOption {
+func WithBlobEndpoint(endpoint string) MessagingApiBlobAPIOption {
 	return func(client *MessagingApiBlobAPI) error {
 		u, err := url.ParseRequestURI(endpoint)
 		if err != nil {
