@@ -18,7 +18,6 @@ package linebot
 
 const version = "7.21.0"
 
-// Deprecated: Use OpenAPI based classes instead.
 func GetVersion() string {
 	return version
 }
