@@ -30,7 +30,7 @@ $ go get -u github.com/line/line-bot-sdk-go/v7/linebot
 
 ```go
 import (
-	"github.com/line/line-bot-sdk-go/v7/linebot"
+	"github.com/line/line-bot-sdk-go/v7/linebot/messaging_api"
 )
 
 func main() {
@@ -61,6 +61,10 @@ bot, err := messaging_api.NewMessagingApiAPI(
 The LINE Messaging API primarily utilizes the JSON data format. To parse the incoming HTTP requests, the `webhook.ParseRequest()` method is provided. This method reads the `*http.Request` content and returns a slice of pointers to Event Objects.
 
 ```go
+import (
+	"github.com/line/line-bot-sdk-go/v7/linebot/webhook"
+)
+
 cb, err := webhook.ParseRequest(req)
 if err != nil {
 	// Handle any errors that occur.
