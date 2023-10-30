@@ -20,10 +20,18 @@ jobs:
     steps:
     - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
         go-version: ${{ matrix.go }}
+
+    - name: Generate code
+      run: python generate-code.py
 
     - name: run codecov.sh
       run: bash script/codecov.sh
