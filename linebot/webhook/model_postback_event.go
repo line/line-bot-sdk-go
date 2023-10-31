@@ -62,7 +62,7 @@ type PostbackEvent struct {
 	/**
 	 * Get Postback
 	 */
-	Postback *PostbackContent `json:"postback,omitempty"`
+	Postback *PostbackContent `json:"postback"`
 }
 
 func (cr *PostbackEvent) UnmarshalJSON(data []byte) error {

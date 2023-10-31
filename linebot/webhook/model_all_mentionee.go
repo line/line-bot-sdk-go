@@ -47,7 +47,7 @@ func (r *AllMentionee) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		*Alias
 
-		Type string `json:"type,omitempty"`
+		Type string `json:"type"`
 	}{
 		Alias: (*Alias)(r),
 

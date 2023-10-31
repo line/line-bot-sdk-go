@@ -237,7 +237,7 @@ func setDiscriminatorPropertyEvent(r EventInterface) EventInterface {
 type Event struct {
 	// Type of the event
 
-	Type string `json:"type,omitempty"`
+	Type string `json:"type"`
 
 	Source Source `json:"source,omitempty"`
 	// Time of the event in milliseconds.

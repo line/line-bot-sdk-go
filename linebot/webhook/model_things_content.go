@@ -86,7 +86,7 @@ func setDiscriminatorPropertyThingsContent(r ThingsContentInterface) ThingsConte
 type ThingsContent struct {
 	// Type
 
-	Type string `json:"type,omitempty"`
+	Type string `json:"type"`
 }
 
 func UnmarshalThingsContent(data []byte) (ThingsContentInterface, error) {
