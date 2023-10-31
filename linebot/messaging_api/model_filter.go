@@ -21,6 +21,7 @@ package messaging_api
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 // Filter
@@ -38,15 +39,19 @@ func (cr *Filter) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)
 	if err != nil {
-		return err
+		return fmt.Errorf("JSON parse error in map: %w", err)
 	}
 
-	if rawdemographic, ok := raw["demographic"]; ok && rawdemographic != nil {
-		Demographic, err := UnmarshalDemographicFilter(rawdemographic)
-		if err != nil {
-			return err
+	if raw["demographic"] != nil {
+
+		if rawdemographic, ok := raw["demographic"]; ok && rawdemographic != nil {
+			Demographic, err := UnmarshalDemographicFilter(rawdemographic)
+			if err != nil {
+				return fmt.Errorf("JSON parse error in DemographicFilter(discriminator): %w", err)
+			}
+			cr.Demographic = Demographic
 		}
-		cr.Demographic = Demographic
+
 	}
 
 	return nil

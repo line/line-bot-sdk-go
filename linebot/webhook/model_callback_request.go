@@ -44,26 +44,34 @@ func (cr *CallbackRequest) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)
 	if err != nil {
-		return err
+		return fmt.Errorf("JSON parse error in map: %w", err)
 	}
 
-	err = json.Unmarshal(raw["destination"], &cr.Destination)
-	if err != nil {
-		return err
-	}
+	if raw["destination"] != nil {
 
-	var rawevents []json.RawMessage
-	err = json.Unmarshal(raw["events"], &rawevents)
-	if err != nil {
-		return err
-	}
-
-	for _, data := range rawevents {
-		e, err := UnmarshalEvent(data)
+		err = json.Unmarshal(raw["destination"], &cr.Destination)
 		if err != nil {
-			return fmt.Errorf("JSON parse error in UnmarshalEvent: %w, body: %s", err, string(data))
+			return fmt.Errorf("JSON parse error in string(Destination): %w", err)
 		}
-		cr.Events = append(cr.Events, e)
+
+	}
+
+	if raw["events"] != nil {
+
+		var rawevents []json.RawMessage
+		err = json.Unmarshal(raw["events"], &rawevents)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in events(array): %w", err)
+		}
+
+		for _, data := range rawevents {
+			e, err := UnmarshalEvent(data)
+			if err != nil {
+				return fmt.Errorf("JSON parse error in Event(discriminator array): %w", err)
+			}
+			cr.Events = append(cr.Events, e)
+		}
+
 	}
 
 	return nil

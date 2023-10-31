@@ -21,6 +21,7 @@ package messaging_api
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 // FlexVideo
@@ -59,43 +60,67 @@ func (cr *FlexVideo) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)
 	if err != nil {
-		return err
+		return fmt.Errorf("JSON parse error in map: %w", err)
 	}
 
-	err = json.Unmarshal(raw["type"], &cr.Type)
-	if err != nil {
-		return err
-	}
+	if raw["type"] != nil {
 
-	err = json.Unmarshal(raw["url"], &cr.Url)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["previewUrl"], &cr.PreviewUrl)
-	if err != nil {
-		return err
-	}
-
-	if rawaltContent, ok := raw["altContent"]; ok && rawaltContent != nil {
-		AltContent, err := UnmarshalFlexComponent(rawaltContent)
+		err = json.Unmarshal(raw["type"], &cr.Type)
 		if err != nil {
-			return err
+			return fmt.Errorf("JSON parse error in string(Type): %w", err)
 		}
-		cr.AltContent = AltContent
+
 	}
 
-	err = json.Unmarshal(raw["aspectRatio"], &cr.AspectRatio)
-	if err != nil {
-		return err
-	}
+	if raw["url"] != nil {
 
-	if rawaction, ok := raw["action"]; ok && rawaction != nil {
-		Action, err := UnmarshalAction(rawaction)
+		err = json.Unmarshal(raw["url"], &cr.Url)
 		if err != nil {
-			return err
+			return fmt.Errorf("JSON parse error in string(Url): %w", err)
 		}
-		cr.Action = Action
+
+	}
+
+	if raw["previewUrl"] != nil {
+
+		err = json.Unmarshal(raw["previewUrl"], &cr.PreviewUrl)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(PreviewUrl): %w", err)
+		}
+
+	}
+
+	if raw["altContent"] != nil {
+
+		if rawaltContent, ok := raw["altContent"]; ok && rawaltContent != nil {
+			AltContent, err := UnmarshalFlexComponent(rawaltContent)
+			if err != nil {
+				return fmt.Errorf("JSON parse error in FlexComponent(discriminator): %w", err)
+			}
+			cr.AltContent = AltContent
+		}
+
+	}
+
+	if raw["aspectRatio"] != nil {
+
+		err = json.Unmarshal(raw["aspectRatio"], &cr.AspectRatio)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(AspectRatio): %w", err)
+		}
+
+	}
+
+	if raw["action"] != nil {
+
+		if rawaction, ok := raw["action"]; ok && rawaction != nil {
+			Action, err := UnmarshalAction(rawaction)
+			if err != nil {
+				return fmt.Errorf("JSON parse error in Action(discriminator): %w", err)
+			}
+			cr.Action = Action
+		}
+
 	}
 
 	return nil

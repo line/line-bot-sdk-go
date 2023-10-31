@@ -39,21 +39,25 @@ func (cr *Mention) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)
 	if err != nil {
-		return err
+		return fmt.Errorf("JSON parse error in map: %w", err)
 	}
 
-	var rawmentionees []json.RawMessage
-	err = json.Unmarshal(raw["mentionees"], &rawmentionees)
-	if err != nil {
-		return err
-	}
+	if raw["mentionees"] != nil {
 
-	for _, data := range rawmentionees {
-		e, err := UnmarshalMentionee(data)
+		var rawmentionees []json.RawMessage
+		err = json.Unmarshal(raw["mentionees"], &rawmentionees)
 		if err != nil {
-			return fmt.Errorf("JSON parse error in UnmarshalMentionee: %w, body: %s", err, string(data))
+			return fmt.Errorf("JSON parse error in mentionees(array): %w", err)
 		}
-		cr.Mentionees = append(cr.Mentionees, e)
+
+		for _, data := range rawmentionees {
+			e, err := UnmarshalMentionee(data)
+			if err != nil {
+				return fmt.Errorf("JSON parse error in Mentionee(discriminator array): %w", err)
+			}
+			cr.Mentionees = append(cr.Mentionees, e)
+		}
+
 	}
 
 	return nil

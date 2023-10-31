@@ -21,6 +21,7 @@ package messaging_api
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 // FlexMessage
@@ -54,35 +55,55 @@ func (cr *FlexMessage) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)
 	if err != nil {
-		return err
+		return fmt.Errorf("JSON parse error in map: %w", err)
 	}
 
-	err = json.Unmarshal(raw["type"], &cr.Type)
-	if err != nil {
-		return err
-	}
+	if raw["type"] != nil {
 
-	err = json.Unmarshal(raw["quickReply"], &cr.QuickReply)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["sender"], &cr.Sender)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["altText"], &cr.AltText)
-	if err != nil {
-		return err
-	}
-
-	if rawcontents, ok := raw["contents"]; ok && rawcontents != nil {
-		Contents, err := UnmarshalFlexContainer(rawcontents)
+		err = json.Unmarshal(raw["type"], &cr.Type)
 		if err != nil {
-			return err
+			return fmt.Errorf("JSON parse error in string(Type): %w", err)
 		}
-		cr.Contents = Contents
+
+	}
+
+	if raw["quickReply"] != nil {
+
+		err = json.Unmarshal(raw["quickReply"], &cr.QuickReply)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in QuickReply(QuickReply): %w", err)
+		}
+
+	}
+
+	if raw["sender"] != nil {
+
+		err = json.Unmarshal(raw["sender"], &cr.Sender)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in Sender(Sender): %w", err)
+		}
+
+	}
+
+	if raw["altText"] != nil {
+
+		err = json.Unmarshal(raw["altText"], &cr.AltText)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(AltText): %w", err)
+		}
+
+	}
+
+	if raw["contents"] != nil {
+
+		if rawcontents, ok := raw["contents"]; ok && rawcontents != nil {
+			Contents, err := UnmarshalFlexContainer(rawcontents)
+			if err != nil {
+				return fmt.Errorf("JSON parse error in FlexContainer(discriminator): %w", err)
+			}
+			cr.Contents = Contents
+		}
+
 	}
 
 	return nil

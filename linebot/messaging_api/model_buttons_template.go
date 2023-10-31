@@ -75,64 +75,100 @@ func (cr *ButtonsTemplate) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)
 	if err != nil {
-		return err
+		return fmt.Errorf("JSON parse error in map: %w", err)
 	}
 
-	err = json.Unmarshal(raw["type"], &cr.Type)
-	if err != nil {
-		return err
-	}
+	if raw["type"] != nil {
 
-	err = json.Unmarshal(raw["thumbnailImageUrl"], &cr.ThumbnailImageUrl)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["imageAspectRatio"], &cr.ImageAspectRatio)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["imageSize"], &cr.ImageSize)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["imageBackgroundColor"], &cr.ImageBackgroundColor)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["title"], &cr.Title)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["text"], &cr.Text)
-	if err != nil {
-		return err
-	}
-
-	if rawdefaultAction, ok := raw["defaultAction"]; ok && rawdefaultAction != nil {
-		DefaultAction, err := UnmarshalAction(rawdefaultAction)
+		err = json.Unmarshal(raw["type"], &cr.Type)
 		if err != nil {
-			return err
+			return fmt.Errorf("JSON parse error in string(Type): %w", err)
 		}
-		cr.DefaultAction = DefaultAction
+
 	}
 
-	var rawactions []json.RawMessage
-	err = json.Unmarshal(raw["actions"], &rawactions)
-	if err != nil {
-		return err
-	}
+	if raw["thumbnailImageUrl"] != nil {
 
-	for _, data := range rawactions {
-		e, err := UnmarshalAction(data)
+		err = json.Unmarshal(raw["thumbnailImageUrl"], &cr.ThumbnailImageUrl)
 		if err != nil {
-			return fmt.Errorf("JSON parse error in UnmarshalAction: %w, body: %s", err, string(data))
+			return fmt.Errorf("JSON parse error in string(ThumbnailImageUrl): %w", err)
 		}
-		cr.Actions = append(cr.Actions, e)
+
+	}
+
+	if raw["imageAspectRatio"] != nil {
+
+		err = json.Unmarshal(raw["imageAspectRatio"], &cr.ImageAspectRatio)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(ImageAspectRatio): %w", err)
+		}
+
+	}
+
+	if raw["imageSize"] != nil {
+
+		err = json.Unmarshal(raw["imageSize"], &cr.ImageSize)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(ImageSize): %w", err)
+		}
+
+	}
+
+	if raw["imageBackgroundColor"] != nil {
+
+		err = json.Unmarshal(raw["imageBackgroundColor"], &cr.ImageBackgroundColor)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(ImageBackgroundColor): %w", err)
+		}
+
+	}
+
+	if raw["title"] != nil {
+
+		err = json.Unmarshal(raw["title"], &cr.Title)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(Title): %w", err)
+		}
+
+	}
+
+	if raw["text"] != nil {
+
+		err = json.Unmarshal(raw["text"], &cr.Text)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(Text): %w", err)
+		}
+
+	}
+
+	if raw["defaultAction"] != nil {
+
+		if rawdefaultAction, ok := raw["defaultAction"]; ok && rawdefaultAction != nil {
+			DefaultAction, err := UnmarshalAction(rawdefaultAction)
+			if err != nil {
+				return fmt.Errorf("JSON parse error in Action(discriminator): %w", err)
+			}
+			cr.DefaultAction = DefaultAction
+		}
+
+	}
+
+	if raw["actions"] != nil {
+
+		var rawactions []json.RawMessage
+		err = json.Unmarshal(raw["actions"], &rawactions)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in actions(array): %w", err)
+		}
+
+		for _, data := range rawactions {
+			e, err := UnmarshalAction(data)
+			if err != nil {
+				return fmt.Errorf("JSON parse error in Action(discriminator array): %w", err)
+			}
+			cr.Actions = append(cr.Actions, e)
+		}
+
 	}
 
 	return nil

@@ -21,6 +21,7 @@ package messaging_api
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 // FlexBubble
@@ -74,58 +75,94 @@ func (cr *FlexBubble) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)
 	if err != nil {
-		return err
+		return fmt.Errorf("JSON parse error in map: %w", err)
 	}
 
-	err = json.Unmarshal(raw["type"], &cr.Type)
-	if err != nil {
-		return err
-	}
+	if raw["type"] != nil {
 
-	err = json.Unmarshal(raw["direction"], &cr.Direction)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["styles"], &cr.Styles)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["header"], &cr.Header)
-	if err != nil {
-		return err
-	}
-
-	if rawhero, ok := raw["hero"]; ok && rawhero != nil {
-		Hero, err := UnmarshalFlexComponent(rawhero)
+		err = json.Unmarshal(raw["type"], &cr.Type)
 		if err != nil {
-			return err
+			return fmt.Errorf("JSON parse error in string(Type): %w", err)
 		}
-		cr.Hero = Hero
+
 	}
 
-	err = json.Unmarshal(raw["body"], &cr.Body)
-	if err != nil {
-		return err
-	}
+	if raw["direction"] != nil {
 
-	err = json.Unmarshal(raw["footer"], &cr.Footer)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["size"], &cr.Size)
-	if err != nil {
-		return err
-	}
-
-	if rawaction, ok := raw["action"]; ok && rawaction != nil {
-		Action, err := UnmarshalAction(rawaction)
+		err = json.Unmarshal(raw["direction"], &cr.Direction)
 		if err != nil {
-			return err
+			return fmt.Errorf("JSON parse error in string(Direction): %w", err)
 		}
-		cr.Action = Action
+
+	}
+
+	if raw["styles"] != nil {
+
+		err = json.Unmarshal(raw["styles"], &cr.Styles)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in FlexBubbleStyles(Styles): %w", err)
+		}
+
+	}
+
+	if raw["header"] != nil {
+
+		err = json.Unmarshal(raw["header"], &cr.Header)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in FlexBox(Header): %w", err)
+		}
+
+	}
+
+	if raw["hero"] != nil {
+
+		if rawhero, ok := raw["hero"]; ok && rawhero != nil {
+			Hero, err := UnmarshalFlexComponent(rawhero)
+			if err != nil {
+				return fmt.Errorf("JSON parse error in FlexComponent(discriminator): %w", err)
+			}
+			cr.Hero = Hero
+		}
+
+	}
+
+	if raw["body"] != nil {
+
+		err = json.Unmarshal(raw["body"], &cr.Body)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in FlexBox(Body): %w", err)
+		}
+
+	}
+
+	if raw["footer"] != nil {
+
+		err = json.Unmarshal(raw["footer"], &cr.Footer)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in FlexBox(Footer): %w", err)
+		}
+
+	}
+
+	if raw["size"] != nil {
+
+		err = json.Unmarshal(raw["size"], &cr.Size)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(Size): %w", err)
+		}
+
+	}
+
+	if raw["action"] != nil {
+
+		if rawaction, ok := raw["action"]; ok && rawaction != nil {
+			Action, err := UnmarshalAction(rawaction)
+			if err != nil {
+				return fmt.Errorf("JSON parse error in Action(discriminator): %w", err)
+			}
+			cr.Action = Action
+		}
+
 	}
 
 	return nil

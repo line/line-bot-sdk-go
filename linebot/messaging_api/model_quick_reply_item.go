@@ -21,6 +21,7 @@ package messaging_api
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 // QuickReplyItem
@@ -48,25 +49,37 @@ func (cr *QuickReplyItem) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)
 	if err != nil {
-		return err
+		return fmt.Errorf("JSON parse error in map: %w", err)
 	}
 
-	err = json.Unmarshal(raw["imageUrl"], &cr.ImageUrl)
-	if err != nil {
-		return err
-	}
+	if raw["imageUrl"] != nil {
 
-	if rawaction, ok := raw["action"]; ok && rawaction != nil {
-		Action, err := UnmarshalAction(rawaction)
+		err = json.Unmarshal(raw["imageUrl"], &cr.ImageUrl)
 		if err != nil {
-			return err
+			return fmt.Errorf("JSON parse error in string(ImageUrl): %w", err)
 		}
-		cr.Action = Action
+
 	}
 
-	err = json.Unmarshal(raw["type"], &cr.Type)
-	if err != nil {
-		return err
+	if raw["action"] != nil {
+
+		if rawaction, ok := raw["action"]; ok && rawaction != nil {
+			Action, err := UnmarshalAction(rawaction)
+			if err != nil {
+				return fmt.Errorf("JSON parse error in Action(discriminator): %w", err)
+			}
+			cr.Action = Action
+		}
+
+	}
+
+	if raw["type"] != nil {
+
+		err = json.Unmarshal(raw["type"], &cr.Type)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(Type): %w", err)
+		}
+
 	}
 
 	return nil

@@ -54,36 +54,52 @@ func (cr *PushMessageRequest) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)
 	if err != nil {
-		return err
+		return fmt.Errorf("JSON parse error in map: %w", err)
 	}
 
-	err = json.Unmarshal(raw["to"], &cr.To)
-	if err != nil {
-		return err
-	}
+	if raw["to"] != nil {
 
-	var rawmessages []json.RawMessage
-	err = json.Unmarshal(raw["messages"], &rawmessages)
-	if err != nil {
-		return err
-	}
-
-	for _, data := range rawmessages {
-		e, err := UnmarshalMessage(data)
+		err = json.Unmarshal(raw["to"], &cr.To)
 		if err != nil {
-			return fmt.Errorf("JSON parse error in UnmarshalMessage: %w, body: %s", err, string(data))
+			return fmt.Errorf("JSON parse error in string(To): %w", err)
 		}
-		cr.Messages = append(cr.Messages, e)
+
 	}
 
-	err = json.Unmarshal(raw["notificationDisabled"], &cr.NotificationDisabled)
-	if err != nil {
-		return err
+	if raw["messages"] != nil {
+
+		var rawmessages []json.RawMessage
+		err = json.Unmarshal(raw["messages"], &rawmessages)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in messages(array): %w", err)
+		}
+
+		for _, data := range rawmessages {
+			e, err := UnmarshalMessage(data)
+			if err != nil {
+				return fmt.Errorf("JSON parse error in Message(discriminator array): %w", err)
+			}
+			cr.Messages = append(cr.Messages, e)
+		}
+
 	}
 
-	err = json.Unmarshal(raw["customAggregationUnits"], &cr.CustomAggregationUnits)
-	if err != nil {
-		return err
+	if raw["notificationDisabled"] != nil {
+
+		err = json.Unmarshal(raw["notificationDisabled"], &cr.NotificationDisabled)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in bool(NotificationDisabled): %w", err)
+		}
+
+	}
+
+	if raw["customAggregationUnits"] != nil {
+
+		err = json.Unmarshal(raw["customAggregationUnits"], &cr.CustomAggregationUnits)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in array(CustomAggregationUnits): %w", err)
+		}
+
 	}
 
 	return nil

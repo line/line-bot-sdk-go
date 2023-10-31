@@ -21,6 +21,7 @@ package messaging_api
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 // ImageCarouselColumn
@@ -43,20 +44,28 @@ func (cr *ImageCarouselColumn) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)
 	if err != nil {
-		return err
+		return fmt.Errorf("JSON parse error in map: %w", err)
 	}
 
-	err = json.Unmarshal(raw["imageUrl"], &cr.ImageUrl)
-	if err != nil {
-		return err
-	}
+	if raw["imageUrl"] != nil {
 
-	if rawaction, ok := raw["action"]; ok && rawaction != nil {
-		Action, err := UnmarshalAction(rawaction)
+		err = json.Unmarshal(raw["imageUrl"], &cr.ImageUrl)
 		if err != nil {
-			return err
+			return fmt.Errorf("JSON parse error in string(ImageUrl): %w", err)
 		}
-		cr.Action = Action
+
+	}
+
+	if raw["action"] != nil {
+
+		if rawaction, ok := raw["action"]; ok && rawaction != nil {
+			Action, err := UnmarshalAction(rawaction)
+			if err != nil {
+				return fmt.Errorf("JSON parse error in Action(discriminator): %w", err)
+			}
+			cr.Action = Action
+		}
+
 	}
 
 	return nil
