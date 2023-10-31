@@ -128,7 +128,7 @@ func setDiscriminatorPropertyMessageContent(r MessageContentInterface) MessageCo
 type MessageContent struct {
 	// Type
 
-	Type string `json:"type,omitempty"`
+	Type string `json:"type"`
 	// Message ID
 
 	Id string `json:"id"`
