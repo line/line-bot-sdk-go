@@ -57,7 +57,7 @@ type UnsendEvent struct {
 	/**
 	 * Get Unsend
 	 */
-	Unsend *UnsendDetail `json:"unsend,omitempty"`
+	Unsend *UnsendDetail `json:"unsend"`
 }
 
 func (cr *UnsendEvent) UnmarshalJSON(data []byte) error {
