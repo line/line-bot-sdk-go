@@ -76,7 +76,7 @@ func setDiscriminatorPropertyModuleContent(r ModuleContentInterface) ModuleConte
 type ModuleContent struct {
 	// Type
 
-	Type string `json:"type,omitempty"`
+	Type string `json:"type"`
 }
 
 func UnmarshalModuleContent(data []byte) (ModuleContentInterface, error) {

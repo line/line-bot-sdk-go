@@ -62,7 +62,7 @@ type MessageEvent struct {
 	/**
 	 * Get Message
 	 */
-	Message MessageContentInterface `json:"message,omitempty"`
+	Message MessageContentInterface `json:"message"`
 }
 
 func (cr *MessageEvent) UnmarshalJSON(data []byte) error {

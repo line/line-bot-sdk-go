@@ -30,14 +30,14 @@ import (
 type CallbackRequest struct {
 
 	/**
-	 * User ID of a bot that should receive webhook events. The user ID value is a string that matches the regular expression, `U[0-9a-f]{32}`.
+	 * User ID of a bot that should receive webhook events. The user ID value is a string that matches the regular expression, `U[0-9a-f]{32}`.  (Required)
 	 */
-	Destination string `json:"destination,omitempty"`
+	Destination string `json:"destination"`
 
 	/**
-	 * Array of webhook event objects. The LINE Platform may send an empty array that doesn&#39;t include a webhook event object to confirm communication.
+	 * Array of webhook event objects. The LINE Platform may send an empty array that doesn&#39;t include a webhook event object to confirm communication.  (Required)
 	 */
-	Events []EventInterface `json:"events,omitempty"`
+	Events []EventInterface `json:"events"`
 }
 
 func (cr *CallbackRequest) UnmarshalJSON(data []byte) error {
@@ -81,7 +81,7 @@ func (r *CallbackRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		*Alias
 
-		Events []EventInterface `json:"events,omitempty"`
+		Events []EventInterface `json:"events"`
 	}{
 		Alias: (*Alias)(r),
 

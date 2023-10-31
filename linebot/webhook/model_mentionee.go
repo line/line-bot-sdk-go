@@ -78,7 +78,7 @@ func setDiscriminatorPropertyMentionee(r MentioneeInterface) MentioneeInterface 
 type Mentionee struct {
 	// Mentioned target.
 
-	Type string `json:"type,omitempty"`
+	Type string `json:"type"`
 	// Index position of the user mention for a character in text, with the first character being at position 0.
 
 	Index int32 `json:"index"`
