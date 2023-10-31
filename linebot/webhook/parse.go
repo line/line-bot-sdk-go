@@ -15,7 +15,6 @@ var (
 )
 
 // ParseRequest func
-// Deprecated: Use OpenAPI based classes instead.
 func ParseRequest(channelSecret string, r *http.Request) (*CallbackRequest, error) {
 	defer func() { _ = r.Body.Close() }()
 	body, err := io.ReadAll(r.Body)
@@ -33,7 +32,6 @@ func ParseRequest(channelSecret string, r *http.Request) (*CallbackRequest, erro
 	return &cb, nil
 }
 
-// Deprecated: Use OpenAPI based classes instead.
 func ValidateSignature(channelSecret, signature string, body []byte) bool {
 	decoded, err := base64.StdEncoding.DecodeString(signature)
 	if err != nil {

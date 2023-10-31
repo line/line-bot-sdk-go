@@ -26,6 +26,24 @@ This library requires Go 1.11 or later.
 $ go get -u github.com/line/line-bot-sdk-go/v7/linebot
 ```
 
+## Import all packages in your code ##
+```go
+import (
+    "github.com/line/line-bot-sdk-go/v7/linebot"
+    "github.com/line/line-bot-sdk-go/v7/linebot/channel_access_token"
+    "github.com/line/line-bot-sdk-go/v7/linebot/httphandler"
+    "github.com/line/line-bot-sdk-go/v7/linebot/insight"
+    "github.com/line/line-bot-sdk-go/v7/linebot/liff"
+    "github.com/line/line-bot-sdk-go/v7/linebot/manage_audience"
+    "github.com/line/line-bot-sdk-go/v7/linebot/messaging_api"
+    "github.com/line/line-bot-sdk-go/v7/linebot/module"
+    "github.com/line/line-bot-sdk-go/v7/linebot/module_attach"
+    "github.com/line/line-bot-sdk-go/v7/linebot/shop"
+    "github.com/line/line-bot-sdk-go/v7/linebot/webhook"
+)
+
+```
+
 ## Configuration ##
 
 ```go
@@ -65,7 +83,7 @@ import (
 	"github.com/line/line-bot-sdk-go/v7/linebot/webhook"
 )
 
-cb, err := webhook.ParseRequest(req)
+cb, err := webhook.ParseRequest(os.Getenv("LINE_CHANNEL_SECRET"), req)
 if err != nil {
 	// Handle any errors that occur.
 }
@@ -84,6 +102,16 @@ for _, event := range cb.Events {
 	}
 }
 ```
+
+We provide code [examples](./examples).
+- [EchoBot](./examples/echo_bot/server.go)
+  - a simple echo bot
+- [KitchenSink](./examples/kitchensink/server.go)
+  - a bot that handles many types of events
+- [EchoBotHandler](./examples/echo_bot_handler/server.go)
+- [DeliveryHelper](./examples/delivery_helper/main.go)
+- [InsightHelper](./examples/insight_helper/main.go)
+- [RichmenuHelper](./examples/richmenu_helper/main.go)
 
 ### Receiver ###
 
