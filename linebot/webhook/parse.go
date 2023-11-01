@@ -6,6 +6,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 )
@@ -27,7 +28,7 @@ func ParseRequest(channelSecret string, r *http.Request) (*CallbackRequest, erro
 
 	var cb CallbackRequest
 	if err = json.Unmarshal(body, &cb); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to unmarshal request body: %w, %s", err, body)
 	}
 	return &cb, nil
 }
