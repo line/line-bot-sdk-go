@@ -21,6 +21,7 @@ package webhook
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 // BotResumedEvent
@@ -59,40 +60,64 @@ func (cr *BotResumedEvent) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)
 	if err != nil {
-		return err
+		return fmt.Errorf("JSON parse error in map: %w", err)
 	}
 
-	err = json.Unmarshal(raw["type"], &cr.Type)
-	if err != nil {
-		return err
-	}
+	if raw["type"] != nil {
 
-	if rawsource, ok := raw["source"]; ok && rawsource != nil {
-		Source, err := UnmarshalSource(rawsource)
+		err = json.Unmarshal(raw["type"], &cr.Type)
 		if err != nil {
-			return err
+			return fmt.Errorf("JSON parse error in string(Type): %w", err)
 		}
-		cr.Source = Source
+
 	}
 
-	err = json.Unmarshal(raw["timestamp"], &cr.Timestamp)
-	if err != nil {
-		return err
+	if raw["source"] != nil {
+
+		if rawsource, ok := raw["source"]; ok && rawsource != nil {
+			Source, err := UnmarshalSource(rawsource)
+			if err != nil {
+				return fmt.Errorf("JSON parse error in Source(discriminator): %w", err)
+			}
+			cr.Source = Source
+		}
+
 	}
 
-	err = json.Unmarshal(raw["mode"], &cr.Mode)
-	if err != nil {
-		return err
+	if raw["timestamp"] != nil {
+
+		err = json.Unmarshal(raw["timestamp"], &cr.Timestamp)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in int64(Timestamp): %w", err)
+		}
+
 	}
 
-	err = json.Unmarshal(raw["webhookEventId"], &cr.WebhookEventId)
-	if err != nil {
-		return err
+	if raw["mode"] != nil {
+
+		err = json.Unmarshal(raw["mode"], &cr.Mode)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in EventMode(Mode): %w", err)
+		}
+
 	}
 
-	err = json.Unmarshal(raw["deliveryContext"], &cr.DeliveryContext)
-	if err != nil {
-		return err
+	if raw["webhookEventId"] != nil {
+
+		err = json.Unmarshal(raw["webhookEventId"], &cr.WebhookEventId)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(WebhookEventId): %w", err)
+		}
+
+	}
+
+	if raw["deliveryContext"] != nil {
+
+		err = json.Unmarshal(raw["deliveryContext"], &cr.DeliveryContext)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in DeliveryContext(DeliveryContext): %w", err)
+		}
+
 	}
 
 	return nil

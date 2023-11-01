@@ -39,21 +39,25 @@ func (cr *ValidateMessageRequest) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)
 	if err != nil {
-		return err
+		return fmt.Errorf("JSON parse error in map: %w", err)
 	}
 
-	var rawmessages []json.RawMessage
-	err = json.Unmarshal(raw["messages"], &rawmessages)
-	if err != nil {
-		return err
-	}
+	if raw["messages"] != nil {
 
-	for _, data := range rawmessages {
-		e, err := UnmarshalMessage(data)
+		var rawmessages []json.RawMessage
+		err = json.Unmarshal(raw["messages"], &rawmessages)
 		if err != nil {
-			return fmt.Errorf("JSON parse error in UnmarshalMessage: %w, body: %s", err, string(data))
+			return fmt.Errorf("JSON parse error in messages(array): %w", err)
 		}
-		cr.Messages = append(cr.Messages, e)
+
+		for _, data := range rawmessages {
+			e, err := UnmarshalMessage(data)
+			if err != nil {
+				return fmt.Errorf("JSON parse error in Message(discriminator array): %w", err)
+			}
+			cr.Messages = append(cr.Messages, e)
+		}
+
 	}
 
 	return nil

@@ -48,38 +48,40 @@ func (cr *{{model.classname}}) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)
 	if err != nil {
-		return err
+		return fmt.Errorf("JSON parse error in map: %w", err)
 	}
 
     {% for var in model.allVars %}
+    if raw["{{var.baseName}}"] != nil {
         {% if var.vendorExtensions["x-is-discriminator"] %}
-	if raw{{ var.baseName }}, ok := raw["{{ var.baseName }}"]; ok && raw{{ var.baseName }} != nil {
-		{{ var.name }}, err := Unmarshal{{ var.baseType }}(raw{{ var.baseName }})
-		if err != nil {
-			return err
-		}
-		cr.{{ var.name | capitalize }} = {{ var.name }}
-	}
+        if raw{{ var.baseName }}, ok := raw["{{ var.baseName }}"]; ok && raw{{ var.baseName }} != nil {
+            {{ var.name }}, err := Unmarshal{{ var.baseType }}(raw{{ var.baseName }})
+            if err != nil {
+                return fmt.Errorf("JSON parse error in {{var.baseType}}(discriminator): %w", err)
+            }
+            cr.{{ var.name | capitalize }} = {{ var.name }}
+        }
         {% elseif var.vendorExtensions["x-is-discriminator-array"] %}
-	var raw{{ var.baseName }} []json.RawMessage
-	err = json.Unmarshal(raw["{{ var.baseName }}"], &raw{{ var.baseName }})
-	if err != nil {
-		return err
-	}
+        var raw{{ var.baseName }} []json.RawMessage
+        err = json.Unmarshal(raw["{{ var.baseName }}"], &raw{{ var.baseName }})
+        if err != nil {
+            return fmt.Errorf("JSON parse error in {{var.baseName}}({{var.baseType}}): %w", err)
+        }
 
-	for _, data := range raw{{ var.baseName }} {
-		e, err := Unmarshal{{ var.complexType }}(data)
-		if err != nil {
-			return fmt.Errorf("JSON parse error in Unmarshal{{ var.complexType }}: %w, body: %s", err, string(data))
-		}
-		cr.{{ var.name | capitalize }} = append(cr.{{ var.name | capitalize }}, e)
-	}
+        for _, data := range raw{{ var.baseName }} {
+            e, err := Unmarshal{{ var.complexType }}(data)
+            if err != nil {
+                return fmt.Errorf("JSON parse error in {{ var.complexType }}(discriminator array): %w", err)
+            }
+            cr.{{ var.name | capitalize }} = append(cr.{{ var.name | capitalize }}, e)
+        }
         {% else %}
-	err = json.Unmarshal(raw["{{ var.baseName }}"], &cr.{{ var.name | capitalize }})
-	if err != nil {
-		return err
-	}
+        err = json.Unmarshal(raw["{{ var.baseName }}"], &cr.{{ var.name | capitalize }})
+        if err != nil {
+            return fmt.Errorf("JSON parse error in {{var.baseType}}({{var.name | capitalize}}): %w", err)
+        }
         {% endif %}
+    }
     {% endfor %}
 
 	return nil

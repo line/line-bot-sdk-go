@@ -45,31 +45,43 @@ func (cr *ConfirmTemplate) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)
 	if err != nil {
-		return err
+		return fmt.Errorf("JSON parse error in map: %w", err)
 	}
 
-	err = json.Unmarshal(raw["type"], &cr.Type)
-	if err != nil {
-		return err
-	}
+	if raw["type"] != nil {
 
-	err = json.Unmarshal(raw["text"], &cr.Text)
-	if err != nil {
-		return err
-	}
-
-	var rawactions []json.RawMessage
-	err = json.Unmarshal(raw["actions"], &rawactions)
-	if err != nil {
-		return err
-	}
-
-	for _, data := range rawactions {
-		e, err := UnmarshalAction(data)
+		err = json.Unmarshal(raw["type"], &cr.Type)
 		if err != nil {
-			return fmt.Errorf("JSON parse error in UnmarshalAction: %w, body: %s", err, string(data))
+			return fmt.Errorf("JSON parse error in string(Type): %w", err)
 		}
-		cr.Actions = append(cr.Actions, e)
+
+	}
+
+	if raw["text"] != nil {
+
+		err = json.Unmarshal(raw["text"], &cr.Text)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(Text): %w", err)
+		}
+
+	}
+
+	if raw["actions"] != nil {
+
+		var rawactions []json.RawMessage
+		err = json.Unmarshal(raw["actions"], &rawactions)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in actions(array): %w", err)
+		}
+
+		for _, data := range rawactions {
+			e, err := UnmarshalAction(data)
+			if err != nil {
+				return fmt.Errorf("JSON parse error in Action(discriminator array): %w", err)
+			}
+			cr.Actions = append(cr.Actions, e)
+		}
+
 	}
 
 	return nil

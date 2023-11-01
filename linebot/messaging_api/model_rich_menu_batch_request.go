@@ -44,26 +44,34 @@ func (cr *RichMenuBatchRequest) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)
 	if err != nil {
-		return err
+		return fmt.Errorf("JSON parse error in map: %w", err)
 	}
 
-	var rawoperations []json.RawMessage
-	err = json.Unmarshal(raw["operations"], &rawoperations)
-	if err != nil {
-		return err
-	}
+	if raw["operations"] != nil {
 
-	for _, data := range rawoperations {
-		e, err := UnmarshalRichMenuBatchOperation(data)
+		var rawoperations []json.RawMessage
+		err = json.Unmarshal(raw["operations"], &rawoperations)
 		if err != nil {
-			return fmt.Errorf("JSON parse error in UnmarshalRichMenuBatchOperation: %w, body: %s", err, string(data))
+			return fmt.Errorf("JSON parse error in operations(array): %w", err)
 		}
-		cr.Operations = append(cr.Operations, e)
+
+		for _, data := range rawoperations {
+			e, err := UnmarshalRichMenuBatchOperation(data)
+			if err != nil {
+				return fmt.Errorf("JSON parse error in RichMenuBatchOperation(discriminator array): %w", err)
+			}
+			cr.Operations = append(cr.Operations, e)
+		}
+
 	}
 
-	err = json.Unmarshal(raw["resumeRequestKey"], &cr.ResumeRequestKey)
-	if err != nil {
-		return err
+	if raw["resumeRequestKey"] != nil {
+
+		err = json.Unmarshal(raw["resumeRequestKey"], &cr.ResumeRequestKey)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(ResumeRequestKey): %w", err)
+		}
+
 	}
 
 	return nil

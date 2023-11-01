@@ -50,48 +50,64 @@ func (cr *OperatorDemographicFilter) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)
 	if err != nil {
-		return err
+		return fmt.Errorf("JSON parse error in map: %w", err)
 	}
 
-	err = json.Unmarshal(raw["type"], &cr.Type)
-	if err != nil {
-		return err
-	}
+	if raw["type"] != nil {
 
-	var rawand []json.RawMessage
-	err = json.Unmarshal(raw["and"], &rawand)
-	if err != nil {
-		return err
-	}
-
-	for _, data := range rawand {
-		e, err := UnmarshalDemographicFilter(data)
+		err = json.Unmarshal(raw["type"], &cr.Type)
 		if err != nil {
-			return fmt.Errorf("JSON parse error in UnmarshalDemographicFilter: %w, body: %s", err, string(data))
+			return fmt.Errorf("JSON parse error in string(Type): %w", err)
 		}
-		cr.And = append(cr.And, e)
+
 	}
 
-	var rawor []json.RawMessage
-	err = json.Unmarshal(raw["or"], &rawor)
-	if err != nil {
-		return err
-	}
+	if raw["and"] != nil {
 
-	for _, data := range rawor {
-		e, err := UnmarshalDemographicFilter(data)
+		var rawand []json.RawMessage
+		err = json.Unmarshal(raw["and"], &rawand)
 		if err != nil {
-			return fmt.Errorf("JSON parse error in UnmarshalDemographicFilter: %w, body: %s", err, string(data))
+			return fmt.Errorf("JSON parse error in and(array): %w", err)
 		}
-		cr.Or = append(cr.Or, e)
+
+		for _, data := range rawand {
+			e, err := UnmarshalDemographicFilter(data)
+			if err != nil {
+				return fmt.Errorf("JSON parse error in DemographicFilter(discriminator array): %w", err)
+			}
+			cr.And = append(cr.And, e)
+		}
+
 	}
 
-	if rawnot, ok := raw["not"]; ok && rawnot != nil {
-		Not, err := UnmarshalDemographicFilter(rawnot)
+	if raw["or"] != nil {
+
+		var rawor []json.RawMessage
+		err = json.Unmarshal(raw["or"], &rawor)
 		if err != nil {
-			return err
+			return fmt.Errorf("JSON parse error in or(array): %w", err)
 		}
-		cr.Not = Not
+
+		for _, data := range rawor {
+			e, err := UnmarshalDemographicFilter(data)
+			if err != nil {
+				return fmt.Errorf("JSON parse error in DemographicFilter(discriminator array): %w", err)
+			}
+			cr.Or = append(cr.Or, e)
+		}
+
+	}
+
+	if raw["not"] != nil {
+
+		if rawnot, ok := raw["not"]; ok && rawnot != nil {
+			Not, err := UnmarshalDemographicFilter(rawnot)
+			if err != nil {
+				return fmt.Errorf("JSON parse error in DemographicFilter(discriminator): %w", err)
+			}
+			cr.Not = Not
+		}
+
 	}
 
 	return nil

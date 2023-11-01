@@ -21,6 +21,7 @@ package messaging_api
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 // FlexText
@@ -144,125 +145,217 @@ func (cr *FlexText) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)
 	if err != nil {
-		return err
+		return fmt.Errorf("JSON parse error in map: %w", err)
 	}
 
-	err = json.Unmarshal(raw["type"], &cr.Type)
-	if err != nil {
-		return err
-	}
+	if raw["type"] != nil {
 
-	err = json.Unmarshal(raw["flex"], &cr.Flex)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["text"], &cr.Text)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["size"], &cr.Size)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["align"], &cr.Align)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["gravity"], &cr.Gravity)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["color"], &cr.Color)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["weight"], &cr.Weight)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["style"], &cr.Style)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["decoration"], &cr.Decoration)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["wrap"], &cr.Wrap)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["lineSpacing"], &cr.LineSpacing)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["margin"], &cr.Margin)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["position"], &cr.Position)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["offsetTop"], &cr.OffsetTop)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["offsetBottom"], &cr.OffsetBottom)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["offsetStart"], &cr.OffsetStart)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["offsetEnd"], &cr.OffsetEnd)
-	if err != nil {
-		return err
-	}
-
-	if rawaction, ok := raw["action"]; ok && rawaction != nil {
-		Action, err := UnmarshalAction(rawaction)
+		err = json.Unmarshal(raw["type"], &cr.Type)
 		if err != nil {
-			return err
+			return fmt.Errorf("JSON parse error in string(Type): %w", err)
 		}
-		cr.Action = Action
+
 	}
 
-	err = json.Unmarshal(raw["maxLines"], &cr.MaxLines)
-	if err != nil {
-		return err
+	if raw["flex"] != nil {
+
+		err = json.Unmarshal(raw["flex"], &cr.Flex)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in int32(Flex): %w", err)
+		}
+
 	}
 
-	err = json.Unmarshal(raw["contents"], &cr.Contents)
-	if err != nil {
-		return err
+	if raw["text"] != nil {
+
+		err = json.Unmarshal(raw["text"], &cr.Text)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(Text): %w", err)
+		}
+
 	}
 
-	err = json.Unmarshal(raw["adjustMode"], &cr.AdjustMode)
-	if err != nil {
-		return err
+	if raw["size"] != nil {
+
+		err = json.Unmarshal(raw["size"], &cr.Size)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(Size): %w", err)
+		}
+
 	}
 
-	err = json.Unmarshal(raw["scaling"], &cr.Scaling)
-	if err != nil {
-		return err
+	if raw["align"] != nil {
+
+		err = json.Unmarshal(raw["align"], &cr.Align)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(Align): %w", err)
+		}
+
+	}
+
+	if raw["gravity"] != nil {
+
+		err = json.Unmarshal(raw["gravity"], &cr.Gravity)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(Gravity): %w", err)
+		}
+
+	}
+
+	if raw["color"] != nil {
+
+		err = json.Unmarshal(raw["color"], &cr.Color)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(Color): %w", err)
+		}
+
+	}
+
+	if raw["weight"] != nil {
+
+		err = json.Unmarshal(raw["weight"], &cr.Weight)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(Weight): %w", err)
+		}
+
+	}
+
+	if raw["style"] != nil {
+
+		err = json.Unmarshal(raw["style"], &cr.Style)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(Style): %w", err)
+		}
+
+	}
+
+	if raw["decoration"] != nil {
+
+		err = json.Unmarshal(raw["decoration"], &cr.Decoration)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(Decoration): %w", err)
+		}
+
+	}
+
+	if raw["wrap"] != nil {
+
+		err = json.Unmarshal(raw["wrap"], &cr.Wrap)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in bool(Wrap): %w", err)
+		}
+
+	}
+
+	if raw["lineSpacing"] != nil {
+
+		err = json.Unmarshal(raw["lineSpacing"], &cr.LineSpacing)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(LineSpacing): %w", err)
+		}
+
+	}
+
+	if raw["margin"] != nil {
+
+		err = json.Unmarshal(raw["margin"], &cr.Margin)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(Margin): %w", err)
+		}
+
+	}
+
+	if raw["position"] != nil {
+
+		err = json.Unmarshal(raw["position"], &cr.Position)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(Position): %w", err)
+		}
+
+	}
+
+	if raw["offsetTop"] != nil {
+
+		err = json.Unmarshal(raw["offsetTop"], &cr.OffsetTop)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(OffsetTop): %w", err)
+		}
+
+	}
+
+	if raw["offsetBottom"] != nil {
+
+		err = json.Unmarshal(raw["offsetBottom"], &cr.OffsetBottom)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(OffsetBottom): %w", err)
+		}
+
+	}
+
+	if raw["offsetStart"] != nil {
+
+		err = json.Unmarshal(raw["offsetStart"], &cr.OffsetStart)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(OffsetStart): %w", err)
+		}
+
+	}
+
+	if raw["offsetEnd"] != nil {
+
+		err = json.Unmarshal(raw["offsetEnd"], &cr.OffsetEnd)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(OffsetEnd): %w", err)
+		}
+
+	}
+
+	if raw["action"] != nil {
+
+		if rawaction, ok := raw["action"]; ok && rawaction != nil {
+			Action, err := UnmarshalAction(rawaction)
+			if err != nil {
+				return fmt.Errorf("JSON parse error in Action(discriminator): %w", err)
+			}
+			cr.Action = Action
+		}
+
+	}
+
+	if raw["maxLines"] != nil {
+
+		err = json.Unmarshal(raw["maxLines"], &cr.MaxLines)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in int32(MaxLines): %w", err)
+		}
+
+	}
+
+	if raw["contents"] != nil {
+
+		err = json.Unmarshal(raw["contents"], &cr.Contents)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in array(Contents): %w", err)
+		}
+
+	}
+
+	if raw["adjustMode"] != nil {
+
+		err = json.Unmarshal(raw["adjustMode"], &cr.AdjustMode)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(AdjustMode): %w", err)
+		}
+
+	}
+
+	if raw["scaling"] != nil {
+
+		err = json.Unmarshal(raw["scaling"], &cr.Scaling)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in bool(Scaling): %w", err)
+		}
+
 	}
 
 	return nil

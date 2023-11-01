@@ -59,44 +59,64 @@ func (cr *NarrowcastRequest) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)
 	if err != nil {
-		return err
+		return fmt.Errorf("JSON parse error in map: %w", err)
 	}
 
-	var rawmessages []json.RawMessage
-	err = json.Unmarshal(raw["messages"], &rawmessages)
-	if err != nil {
-		return err
-	}
+	if raw["messages"] != nil {
 
-	for _, data := range rawmessages {
-		e, err := UnmarshalMessage(data)
+		var rawmessages []json.RawMessage
+		err = json.Unmarshal(raw["messages"], &rawmessages)
 		if err != nil {
-			return fmt.Errorf("JSON parse error in UnmarshalMessage: %w, body: %s", err, string(data))
+			return fmt.Errorf("JSON parse error in messages(array): %w", err)
 		}
-		cr.Messages = append(cr.Messages, e)
+
+		for _, data := range rawmessages {
+			e, err := UnmarshalMessage(data)
+			if err != nil {
+				return fmt.Errorf("JSON parse error in Message(discriminator array): %w", err)
+			}
+			cr.Messages = append(cr.Messages, e)
+		}
+
 	}
 
-	if rawrecipient, ok := raw["recipient"]; ok && rawrecipient != nil {
-		Recipient, err := UnmarshalRecipient(rawrecipient)
+	if raw["recipient"] != nil {
+
+		if rawrecipient, ok := raw["recipient"]; ok && rawrecipient != nil {
+			Recipient, err := UnmarshalRecipient(rawrecipient)
+			if err != nil {
+				return fmt.Errorf("JSON parse error in Recipient(discriminator): %w", err)
+			}
+			cr.Recipient = Recipient
+		}
+
+	}
+
+	if raw["filter"] != nil {
+
+		err = json.Unmarshal(raw["filter"], &cr.Filter)
 		if err != nil {
-			return err
+			return fmt.Errorf("JSON parse error in Filter(Filter): %w", err)
 		}
-		cr.Recipient = Recipient
+
 	}
 
-	err = json.Unmarshal(raw["filter"], &cr.Filter)
-	if err != nil {
-		return err
+	if raw["limit"] != nil {
+
+		err = json.Unmarshal(raw["limit"], &cr.Limit)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in Limit(Limit): %w", err)
+		}
+
 	}
 
-	err = json.Unmarshal(raw["limit"], &cr.Limit)
-	if err != nil {
-		return err
-	}
+	if raw["notificationDisabled"] != nil {
 
-	err = json.Unmarshal(raw["notificationDisabled"], &cr.NotificationDisabled)
-	if err != nil {
-		return err
+		err = json.Unmarshal(raw["notificationDisabled"], &cr.NotificationDisabled)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in bool(NotificationDisabled): %w", err)
+		}
+
 	}
 
 	return nil

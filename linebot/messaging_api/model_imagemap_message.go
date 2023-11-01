@@ -70,56 +70,88 @@ func (cr *ImagemapMessage) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	err := json.Unmarshal(data, &raw)
 	if err != nil {
-		return err
+		return fmt.Errorf("JSON parse error in map: %w", err)
 	}
 
-	err = json.Unmarshal(raw["type"], &cr.Type)
-	if err != nil {
-		return err
-	}
+	if raw["type"] != nil {
 
-	err = json.Unmarshal(raw["quickReply"], &cr.QuickReply)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["sender"], &cr.Sender)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["baseUrl"], &cr.BaseUrl)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["altText"], &cr.AltText)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(raw["baseSize"], &cr.BaseSize)
-	if err != nil {
-		return err
-	}
-
-	var rawactions []json.RawMessage
-	err = json.Unmarshal(raw["actions"], &rawactions)
-	if err != nil {
-		return err
-	}
-
-	for _, data := range rawactions {
-		e, err := UnmarshalImagemapAction(data)
+		err = json.Unmarshal(raw["type"], &cr.Type)
 		if err != nil {
-			return fmt.Errorf("JSON parse error in UnmarshalImagemapAction: %w, body: %s", err, string(data))
+			return fmt.Errorf("JSON parse error in string(Type): %w", err)
 		}
-		cr.Actions = append(cr.Actions, e)
+
 	}
 
-	err = json.Unmarshal(raw["video"], &cr.Video)
-	if err != nil {
-		return err
+	if raw["quickReply"] != nil {
+
+		err = json.Unmarshal(raw["quickReply"], &cr.QuickReply)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in QuickReply(QuickReply): %w", err)
+		}
+
+	}
+
+	if raw["sender"] != nil {
+
+		err = json.Unmarshal(raw["sender"], &cr.Sender)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in Sender(Sender): %w", err)
+		}
+
+	}
+
+	if raw["baseUrl"] != nil {
+
+		err = json.Unmarshal(raw["baseUrl"], &cr.BaseUrl)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(BaseUrl): %w", err)
+		}
+
+	}
+
+	if raw["altText"] != nil {
+
+		err = json.Unmarshal(raw["altText"], &cr.AltText)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in string(AltText): %w", err)
+		}
+
+	}
+
+	if raw["baseSize"] != nil {
+
+		err = json.Unmarshal(raw["baseSize"], &cr.BaseSize)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in ImagemapBaseSize(BaseSize): %w", err)
+		}
+
+	}
+
+	if raw["actions"] != nil {
+
+		var rawactions []json.RawMessage
+		err = json.Unmarshal(raw["actions"], &rawactions)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in actions(array): %w", err)
+		}
+
+		for _, data := range rawactions {
+			e, err := UnmarshalImagemapAction(data)
+			if err != nil {
+				return fmt.Errorf("JSON parse error in ImagemapAction(discriminator array): %w", err)
+			}
+			cr.Actions = append(cr.Actions, e)
+		}
+
+	}
+
+	if raw["video"] != nil {
+
+		err = json.Unmarshal(raw["video"], &cr.Video)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in ImagemapVideo(Video): %w", err)
+		}
+
 	}
 
 	return nil
