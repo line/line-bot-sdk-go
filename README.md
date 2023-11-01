@@ -18,7 +18,7 @@ See the official API documentation for more information.
 
 ## Requirements
 
-This library requires Go 1.11 or later.
+This library requires Go 1.20 or later.
 
 ## Installation ##
 
@@ -29,17 +29,17 @@ $ go get -u github.com/line/line-bot-sdk-go/v7/linebot
 ## Import all packages in your code ##
 ```go
 import (
-    "github.com/line/line-bot-sdk-go/v7/linebot"
-    "github.com/line/line-bot-sdk-go/v7/linebot/channel_access_token"
-    "github.com/line/line-bot-sdk-go/v7/linebot/httphandler"
-    "github.com/line/line-bot-sdk-go/v7/linebot/insight"
-    "github.com/line/line-bot-sdk-go/v7/linebot/liff"
-    "github.com/line/line-bot-sdk-go/v7/linebot/manage_audience"
-    "github.com/line/line-bot-sdk-go/v7/linebot/messaging_api"
-    "github.com/line/line-bot-sdk-go/v7/linebot/module"
-    "github.com/line/line-bot-sdk-go/v7/linebot/module_attach"
-    "github.com/line/line-bot-sdk-go/v7/linebot/shop"
-    "github.com/line/line-bot-sdk-go/v7/linebot/webhook"
+	"github.com/line/line-bot-sdk-go/v7/linebot"
+	"github.com/line/line-bot-sdk-go/v7/linebot/channel_access_token"
+	"github.com/line/line-bot-sdk-go/v7/linebot/httphandler"
+	"github.com/line/line-bot-sdk-go/v7/linebot/insight"
+	"github.com/line/line-bot-sdk-go/v7/linebot/liff"
+	"github.com/line/line-bot-sdk-go/v7/linebot/manage_audience"
+	"github.com/line/line-bot-sdk-go/v7/linebot/messaging_api"
+	"github.com/line/line-bot-sdk-go/v7/linebot/module"
+	"github.com/line/line-bot-sdk-go/v7/linebot/module_attach"
+	"github.com/line/line-bot-sdk-go/v7/linebot/shop"
+	"github.com/line/line-bot-sdk-go/v7/linebot/webhook"
 )
 
 ```
