@@ -15,35 +15,48 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
 
-	"github.com/line/line-bot-sdk-go/v7/linebot"
-	"github.com/line/line-bot-sdk-go/v7/linebot/httphandler"
+	"github.com/line/line-bot-sdk-go/v7/linebot/messaging_api"
+	"github.com/line/line-bot-sdk-go/v7/linebot/webhook"
 )
 
 func main() {
-	handler, err := httphandler.New(
-		os.Getenv("CHANNEL_SECRET"),
-		os.Getenv("CHANNEL_TOKEN"),
+	handler, err := webhook.NewWebhookHandler(
+		os.Getenv("LINE_CHANNEL_SECRET"),
 	)
 	if err != nil {
 		log.Fatal(err)
 	}
+	bot, err := messaging_api.NewMessagingApiAPI(os.Getenv("LINE_CHANNEL_TOKEN"))
 
 	// Setup HTTP Server for receiving requests from LINE platform
-	handler.HandleEvents(func(events []*linebot.Event, r *http.Request) {
-		bot, err := handler.NewClient()
+	handler.HandleEvents(func(req *webhook.CallbackRequest, r *http.Request) {
 		if err != nil {
 			log.Print(err)
 			return
 		}
-		for _, event := range events {
-			if event.Type == linebot.EventTypeMessage {
-				switch message := event.Message.(type) {
-				case *linebot.TextMessage:
-					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
+		log.Println("Handling events...")
+		for _, event := range req.Events {
+			log.Printf("/callback called%+v...\n", event)
+			switch e := event.(type) {
+			case webhook.MessageEvent:
+				switch message := e.Message.(type) {
+				case webhook.TextMessageContent:
+					_, err = bot.ReplyMessage(
+						&messaging_api.ReplyMessageRequest{
+							ReplyToken: e.ReplyToken,
+							Messages: []messaging_api.MessageInterface{
+								&messaging_api.TextMessage{
+									Text: message.Text,
+								},
+							},
+						},
+					)
+					if err != nil {
 						log.Print(err)
 					}
 				}
@@ -51,9 +64,15 @@ func main() {
 		}
 	})
 	http.Handle("/callback", handler)
+
 	// This is just a sample code.
 	// For actually use, you must support HTTPS by using `ListenAndServeTLS`, reverse proxy or etc.
-	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "5000"
+	}
+	fmt.Println("http://localhost:" + port + "/")
+	if err := http.ListenAndServe(":"+port, nil); err != nil {
 		log.Fatal(err)
 	}
 }
