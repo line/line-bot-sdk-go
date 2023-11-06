@@ -149,7 +149,6 @@ func (client *ChannelAccessTokenAPI) GetsAllValidChannelAccessTokenKeyIds(
 //        clientAssertionType             `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`
 //        clientAssertion             A JSON Web Token (JWT) (opens new window)the client needs to create and sign with the private key.
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#get-all-valid-channel-access-token-key-ids-v2-1
 func (client *ChannelAccessTokenAPI) GetsAllValidChannelAccessTokenKeyIdsWithHttpInfo(
 
@@ -239,7 +238,6 @@ func (client *ChannelAccessTokenAPI) IssueChannelToken(
 //        clientId             Channel ID.
 //        clientSecret             Channel secret.
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#issue-shortlived-channel-access-token
 func (client *ChannelAccessTokenAPI) IssueChannelTokenWithHttpInfo(
 
@@ -334,7 +332,6 @@ func (client *ChannelAccessTokenAPI) IssueChannelTokenByJWT(
 //        clientAssertionType             urn:ietf:params:oauth:client-assertion-type:jwt-bearer
 //        clientAssertion             A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#issue-channel-access-token-v2-1
 func (client *ChannelAccessTokenAPI) IssueChannelTokenByJWTWithHttpInfo(
 
@@ -441,7 +438,6 @@ func (client *ChannelAccessTokenAPI) IssueStatelessChannelToken(
 //        clientId             Channel ID.
 //        clientSecret             Channel secret.
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token
 func (client *ChannelAccessTokenAPI) IssueStatelessChannelTokenWithHttpInfo(
 
@@ -530,7 +526,6 @@ func (client *ChannelAccessTokenAPI) RevokeChannelToken(
 // Parameters:
 //        accessToken             Channel access token
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#revoke-longlived-or-shortlived-channel-access-token
 func (client *ChannelAccessTokenAPI) RevokeChannelTokenWithHttpInfo(
 
@@ -614,7 +609,6 @@ func (client *ChannelAccessTokenAPI) RevokeChannelTokenByJWT(
 //        clientSecret             Channel Secret
 //        accessToken             Channel access token
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#revoke-channel-access-token-v2-1
 func (client *ChannelAccessTokenAPI) RevokeChannelTokenByJWTWithHttpInfo(
 
@@ -692,7 +686,6 @@ func (client *ChannelAccessTokenAPI) VerifyChannelToken(
 // Parameters:
 //        accessToken             A short-lived or long-lived channel access token.
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#verfiy-channel-access-token
 func (client *ChannelAccessTokenAPI) VerifyChannelTokenWithHttpInfo(
 
@@ -769,7 +762,6 @@ func (client *ChannelAccessTokenAPI) VerifyChannelTokenByJWT(
 // Parameters:
 //        accessToken             Channel access token with a user-specified expiration (Channel Access Token v2.1).
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#verfiy-channel-access-token-v2-1
 func (client *ChannelAccessTokenAPI) VerifyChannelTokenByJWTWithHttpInfo(
 

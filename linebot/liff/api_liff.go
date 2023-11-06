@@ -144,7 +144,6 @@ func (client *LiffAPI) AddLIFFApp(
 // Parameters:
 //        addLiffAppRequest
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/liff-server/#add-liff-app
 func (client *LiffAPI) AddLIFFAppWithHttpInfo(
 
@@ -220,7 +219,6 @@ func (client *LiffAPI) DeleteLIFFApp(
 // Parameters:
 //        liffId             ID of the LIFF app to be updated
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/liff-server/#delete-liff-app
 func (client *LiffAPI) DeleteLIFFAppWithHttpInfo(
 
@@ -278,7 +276,6 @@ func (client *LiffAPI) GetAllLIFFApps() (*GetAllLiffAppsResponse, error) {
 // Gets information on all the LIFF apps added to the channel.
 // Parameters:
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps
 func (client *LiffAPI) GetAllLIFFAppsWithHttpInfo() (*http.Response, *GetAllLiffAppsResponse, error) {
 	path := "/liff/v1/apps"
@@ -350,7 +347,6 @@ func (client *LiffAPI) UpdateLIFFApp(
 //        liffId             ID of the LIFF app to be updated
 //        updateLiffAppRequest
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/liff-server/#update-liff-app
 func (client *LiffAPI) UpdateLIFFAppWithHttpInfo(
 

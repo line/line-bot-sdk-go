@@ -133,7 +133,6 @@ func (client *InsightAPI) GetFriendsDemographics() (*GetFriendsDemographicsRespo
 // Retrieves the demographic attributes for a LINE Official Account's friends.You can only retrieve information about friends for LINE Official Accounts created by users in Japan (JP), Thailand (TH), Taiwan (TW) and Indonesia (ID).
 // Parameters:
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#get-demographic
 func (client *InsightAPI) GetFriendsDemographicsWithHttpInfo() (*http.Response, *GetFriendsDemographicsResponse, error) {
 	path := "/v2/bot/insight/demographic"
@@ -199,7 +198,6 @@ func (client *InsightAPI) GetMessageEvent(
 // Parameters:
 //        requestId             Request ID of a narrowcast message or broadcast message. Each Messaging API request has a request ID.
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#get-message-event
 func (client *InsightAPI) GetMessageEventWithHttpInfo(
 
@@ -274,7 +272,6 @@ func (client *InsightAPI) GetNumberOfFollowers(
 // Parameters:
 //        date             Date for which to retrieve the number of followers.  Format: yyyyMMdd (e.g. 20191231) Timezone: UTC+9
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#get-number-of-followers
 func (client *InsightAPI) GetNumberOfFollowersWithHttpInfo(
 
@@ -349,7 +346,6 @@ func (client *InsightAPI) GetNumberOfMessageDeliveries(
 // Parameters:
 //        date             Date for which to retrieve number of sent messages. - Format: yyyyMMdd (e.g. 20191231) - Timezone: UTC+9
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages
 func (client *InsightAPI) GetNumberOfMessageDeliveriesWithHttpInfo(
 
@@ -436,7 +432,6 @@ func (client *InsightAPI) GetStatisticsPerUnit(
 //        from             Start date of aggregation period.  Format: yyyyMMdd (e.g. 20210301) Time zone: UTC+9
 //        to             End date of aggregation period. The end date can be specified for up to 30 days later. For example, if the start date is 20210301, the latest end date is 20210331.  Format: yyyyMMdd (e.g. 20210301) Time zone: UTC+9
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit
 func (client *InsightAPI) GetStatisticsPerUnitWithHttpInfo(
 

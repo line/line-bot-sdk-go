@@ -271,7 +271,6 @@ func (client *MessagingApiBlobAPI) GetMessageContentTranscodingByMessageId(
 // Parameters:
 //        messageId             Message ID of video or audio
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#verify-video-or-audio-preparation-status
 func (client *MessagingApiBlobAPI) GetMessageContentTranscodingByMessageIdWithHttpInfo(
 
@@ -417,7 +416,6 @@ func (client *MessagingApiBlobAPI) SetRichMenuImage(
 //        bodyContentType   content-type
 //        bodyReader        file content
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#upload-rich-menu-image
 func (client *MessagingApiBlobAPI) SetRichMenuImageWithHttpInfo(
 

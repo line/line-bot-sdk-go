@@ -197,7 +197,6 @@ func (client *LineModuleAttachAPI) AttachModule(
 //        scope             If you specified a value for scope in the URL for authentication and authorization, specify the same value.
 //        brandType             If you specified a value for brand_type in the URL for authentication and authorization, specify the same value.
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/partner-docs/#link-attach-by-operation-module-channel-provider
 func (client *LineModuleAttachAPI) AttachModuleWithHttpInfo(
 

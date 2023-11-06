@@ -158,7 +158,6 @@ func (client *ManageAudienceBlobAPI) AddUserIdsToAudience(
 //        audienceGroupId             The audience ID.
 //        uploadDescription             The description to register with the job
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group-by-file
 func (client *ManageAudienceBlobAPI) AddUserIdsToAudienceWithHttpInfo(
 
@@ -264,7 +263,6 @@ func (client *ManageAudienceBlobAPI) CreateAudienceForUploadingUserIds(
 //        isIfaAudience             To specify recipients by IFAs: set `true`. To specify recipients by user IDs: set `false` or omit isIfaAudience property.
 //        uploadDescription             The description to register for the job (in `jobs[].description`).
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group-by-file
 func (client *ManageAudienceBlobAPI) CreateAudienceForUploadingUserIdsWithHttpInfo(
 

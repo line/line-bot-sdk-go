@@ -145,7 +145,6 @@ func (client *ManageAudienceAPI) ActivateAudienceGroup(
 // Parameters:
 //        audienceGroupId             The audience ID.
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#activate-audience-group
 func (client *ManageAudienceAPI) ActivateAudienceGroupWithHttpInfo(
 
@@ -212,7 +211,6 @@ func (client *ManageAudienceAPI) AddAudienceToAudienceGroup(
 // Parameters:
 //        addAudienceToAudienceGroupRequest
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group
 func (client *ManageAudienceAPI) AddAudienceToAudienceGroupWithHttpInfo(
 
@@ -283,7 +281,6 @@ func (client *ManageAudienceAPI) CreateAudienceGroup(
 // Parameters:
 //        createAudienceGroupRequest
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group
 func (client *ManageAudienceAPI) CreateAudienceGroupWithHttpInfo(
 
@@ -359,7 +356,6 @@ func (client *ManageAudienceAPI) CreateClickBasedAudienceGroup(
 // Parameters:
 //        createClickBasedAudienceGroupRequest
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group
 func (client *ManageAudienceAPI) CreateClickBasedAudienceGroupWithHttpInfo(
 
@@ -435,7 +431,6 @@ func (client *ManageAudienceAPI) CreateImpBasedAudienceGroup(
 // Parameters:
 //        createImpBasedAudienceGroupRequest
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group
 func (client *ManageAudienceAPI) CreateImpBasedAudienceGroupWithHttpInfo(
 
@@ -511,7 +506,6 @@ func (client *ManageAudienceAPI) DeleteAudienceGroup(
 // Parameters:
 //        audienceGroupId             The audience ID.
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#delete-audience-group
 func (client *ManageAudienceAPI) DeleteAudienceGroupWithHttpInfo(
 
@@ -578,7 +572,6 @@ func (client *ManageAudienceAPI) GetAudienceData(
 // Parameters:
 //        audienceGroupId             The audience ID.
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#get-audience-group
 func (client *ManageAudienceAPI) GetAudienceDataWithHttpInfo(
 
@@ -641,7 +634,6 @@ func (client *ManageAudienceAPI) GetAudienceGroupAuthorityLevel() (*GetAudienceG
 // Get the authority level of the audience
 // Parameters:
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#get-authority-level
 func (client *ManageAudienceAPI) GetAudienceGroupAuthorityLevelWithHttpInfo() (*http.Response, *GetAudienceGroupAuthorityLevelResponse, error) {
 	path := "/v2/bot/audienceGroup/authorityLevel"
@@ -737,7 +729,6 @@ func (client *ManageAudienceAPI) GetAudienceGroups(
 //        includesExternalPublicGroups             true (default): Get public audiences created in all channels linked to the same bot. false: Get audiences created in the same channel.
 //        createRoute             How the audience was created. If omitted, all audiences are included.  `OA_MANAGER`: Return only audiences created with LINE Official Account Manager (opens new window). `MESSAGING_API`: Return only audiences created with Messaging API.
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#get-audience-groups
 func (client *ManageAudienceAPI) GetAudienceGroupsWithHttpInfo(
 
@@ -827,7 +818,6 @@ func (client *ManageAudienceAPI) UpdateAudienceGroupAuthorityLevel(
 // Parameters:
 //        updateAudienceGroupAuthorityLevelRequest
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#change-authority-level
 func (client *ManageAudienceAPI) UpdateAudienceGroupAuthorityLevelWithHttpInfo(
 
@@ -904,7 +894,6 @@ func (client *ManageAudienceAPI) UpdateAudienceGroupDescription(
 //        audienceGroupId             The audience ID.
 //        updateAudienceGroupDescriptionRequest
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/messaging-api/#set-description-audience-group
 func (client *ManageAudienceAPI) UpdateAudienceGroupDescriptionWithHttpInfo(
 

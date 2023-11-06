@@ -150,7 +150,6 @@ func (client *LineModuleAPI) AcquireChatControl(
 //        chatId             The `userId`, `roomId`, or `groupId`
 //        acquireChatControlRequest
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/partner-docs/#acquire-control-api
 func (client *LineModuleAPI) AcquireChatControlWithHttpInfo(
 
@@ -225,7 +224,6 @@ func (client *LineModuleAPI) DetachModule(
 // Parameters:
 //        detachModuleRequest
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/partner-docs/#unlink-detach-module-channel-by-operation-mc-admin
 func (client *LineModuleAPI) DetachModuleWithHttpInfo(
 
@@ -302,7 +300,6 @@ func (client *LineModuleAPI) GetModules(
 //        start             Value of the continuation token found in the next property of the JSON object returned in the response. If you can't get all basic information about the bots in one request, include this parameter to get the remaining array.
 //        limit             Specify the maximum number of bots that you get basic information from. The default value is 100. Max value: 100
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api
 func (client *LineModuleAPI) GetModulesWithHttpInfo(
 
@@ -380,7 +377,6 @@ func (client *LineModuleAPI) ReleaseChatControl(
 // Parameters:
 //        chatId             The `userId`, `roomId`, or `groupId`
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/partner-docs/#release-control-api
 func (client *LineModuleAPI) ReleaseChatControlWithHttpInfo(
 

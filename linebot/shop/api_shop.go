@@ -143,7 +143,6 @@ func (client *ShopAPI) MissionStickerV3(
 // Parameters:
 //        missionStickerRequest
 
-// You must close the response body when finished with it.
 // https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3
 func (client *ShopAPI) MissionStickerV3WithHttpInfo(
 
