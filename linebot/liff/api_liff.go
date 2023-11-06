@@ -127,17 +127,41 @@ func (client *LiffAPI) AddLIFFApp(
 	addLiffAppRequest *AddLiffAppRequest,
 
 ) (*AddLiffAppResponse, error) {
+	response, body, error := client.AddLIFFAppWithHttpInfo(
+
+		addLiffAppRequest,
+	)
+
+	defer response.Body.Close()
+
+	return body, error
+}
+
+// AddLIFFApp
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Adding the LIFF app to a channel
+// Parameters:
+//        addLiffAppRequest
+
+// You must close the response body when finished with it.
+// https://developers.line.biz/en/reference/liff-server/#add-liff-app
+func (client *LiffAPI) AddLIFFAppWithHttpInfo(
+
+	addLiffAppRequest *AddLiffAppRequest,
+
+) (*http.Response, *AddLiffAppResponse, error) {
 	path := "/liff/v1/apps"
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
 	if err := enc.Encode(addLiffAppRequest); err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -145,15 +169,15 @@ func (client *LiffAPI) AddLIFFApp(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
@@ -161,9 +185,9 @@ func (client *LiffAPI) AddLIFFApp(
 	decoder := json.NewDecoder(res.Body)
 	result := AddLiffAppResponse{}
 	if err := decoder.Decode(&result); err != nil {
-		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
-	return &result, nil
+	return res, &result, nil
 
 }
 
@@ -179,6 +203,30 @@ func (client *LiffAPI) DeleteLIFFApp(
 	liffId string,
 
 ) (struct{}, error) {
+	response, body, error := client.DeleteLIFFAppWithHttpInfo(
+
+		liffId,
+	)
+
+	defer response.Body.Close()
+
+	return body, error
+}
+
+// DeleteLIFFApp
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+// Delete LIFF app from a channel
+// Deletes a LIFF app from a channel.
+// Parameters:
+//        liffId             ID of the LIFF app to be updated
+
+// You must close the response body when finished with it.
+// https://developers.line.biz/en/reference/liff-server/#delete-liff-app
+func (client *LiffAPI) DeleteLIFFAppWithHttpInfo(
+
+	liffId string,
+
+) (*http.Response, struct{}, error) {
 	path := "/liff/v1/apps/{liffId}"
 
 	path = strings.Replace(path, "{liffId}", liffId, -1)
@@ -186,27 +234,27 @@ func (client *LiffAPI) DeleteLIFFApp(
 	log.Printf("Sending request: method=Delete path=%s\n", path)
 	req, err := http.NewRequest(http.MethodDelete, client.Url(path), nil)
 	if err != nil {
-		return struct{}{}, err
+		return nil, struct{}{}, err
 	}
 
 	res, err := client.Do(req)
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return struct{}{}, err
+		return res, struct{}{}, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return struct{}{}, fmt.Errorf("failed to read response body: %w", err)
+			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
 
-	return struct{}{}, nil
+	return res, struct{}{}, nil
 
 }
 
@@ -217,27 +265,43 @@ func (client *LiffAPI) DeleteLIFFApp(
 
 // https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps
 func (client *LiffAPI) GetAllLIFFApps() (*GetAllLiffAppsResponse, error) {
+	response, body, error := client.GetAllLIFFAppsWithHttpInfo()
+
+	defer response.Body.Close()
+
+	return body, error
+}
+
+// GetAllLIFFApps
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+// Get all LIFF apps
+// Gets information on all the LIFF apps added to the channel.
+// Parameters:
+
+// You must close the response body when finished with it.
+// https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps
+func (client *LiffAPI) GetAllLIFFAppsWithHttpInfo() (*http.Response, *GetAllLiffAppsResponse, error) {
 	path := "/liff/v1/apps"
 
 	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
@@ -245,9 +309,9 @@ func (client *LiffAPI) GetAllLIFFApps() (*GetAllLiffAppsResponse, error) {
 	decoder := json.NewDecoder(res.Body)
 	result := GetAllLiffAppsResponse{}
 	if err := decoder.Decode(&result); err != nil {
-		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
-	return &result, nil
+	return res, &result, nil
 
 }
 
@@ -266,6 +330,35 @@ func (client *LiffAPI) UpdateLIFFApp(
 	updateLiffAppRequest *UpdateLiffAppRequest,
 
 ) (struct{}, error) {
+	response, body, error := client.UpdateLIFFAppWithHttpInfo(
+
+		liffId,
+
+		updateLiffAppRequest,
+	)
+
+	defer response.Body.Close()
+
+	return body, error
+}
+
+// UpdateLIFFApp
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Update LIFF app settings
+// Parameters:
+//        liffId             ID of the LIFF app to be updated
+//        updateLiffAppRequest
+
+// You must close the response body when finished with it.
+// https://developers.line.biz/en/reference/liff-server/#update-liff-app
+func (client *LiffAPI) UpdateLIFFAppWithHttpInfo(
+
+	liffId string,
+
+	updateLiffAppRequest *UpdateLiffAppRequest,
+
+) (*http.Response, struct{}, error) {
 	path := "/liff/v1/apps/{liffId}"
 
 	path = strings.Replace(path, "{liffId}", liffId, -1)
@@ -273,12 +366,12 @@ func (client *LiffAPI) UpdateLIFFApp(
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
 	if err := enc.Encode(updateLiffAppRequest); err != nil {
-		return struct{}{}, err
+		return nil, struct{}{}, err
 	}
 	log.Printf("Sending request: method=Put path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPut, client.Url(path), &buf)
 	if err != nil {
-		return struct{}{}, err
+		return nil, struct{}{}, err
 	}
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -286,19 +379,19 @@ func (client *LiffAPI) UpdateLIFFApp(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return struct{}{}, err
+		return res, struct{}{}, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return struct{}{}, fmt.Errorf("failed to read response body: %w", err)
+			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
 
-	return struct{}{}, nil
+	return res, struct{}{}, nil
 
 }

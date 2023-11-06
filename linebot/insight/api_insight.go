@@ -120,27 +120,43 @@ func WithEndpoint(endpoint string) InsightAPIOption {
 
 // https://developers.line.biz/en/reference/messaging-api/#get-demographic
 func (client *InsightAPI) GetFriendsDemographics() (*GetFriendsDemographicsResponse, error) {
+	response, body, error := client.GetFriendsDemographicsWithHttpInfo()
+
+	defer response.Body.Close()
+
+	return body, error
+}
+
+// GetFriendsDemographics
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Retrieves the demographic attributes for a LINE Official Account's friends.You can only retrieve information about friends for LINE Official Accounts created by users in Japan (JP), Thailand (TH), Taiwan (TW) and Indonesia (ID).
+// Parameters:
+
+// You must close the response body when finished with it.
+// https://developers.line.biz/en/reference/messaging-api/#get-demographic
+func (client *InsightAPI) GetFriendsDemographicsWithHttpInfo() (*http.Response, *GetFriendsDemographicsResponse, error) {
 	path := "/v2/bot/insight/demographic"
 
 	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
@@ -148,9 +164,9 @@ func (client *InsightAPI) GetFriendsDemographics() (*GetFriendsDemographicsRespo
 	decoder := json.NewDecoder(res.Body)
 	result := GetFriendsDemographicsResponse{}
 	if err := decoder.Decode(&result); err != nil {
-		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
-	return &result, nil
+	return res, &result, nil
 
 }
 
@@ -166,12 +182,36 @@ func (client *InsightAPI) GetMessageEvent(
 	requestId string,
 
 ) (*GetMessageEventResponse, error) {
+	response, body, error := client.GetMessageEventWithHttpInfo(
+
+		requestId,
+	)
+
+	defer response.Body.Close()
+
+	return body, error
+}
+
+// GetMessageEvent
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+// Get user interaction statistics
+// Returns statistics about how users interact with narrowcast messages or broadcast messages sent from your LINE Official Account.
+// Parameters:
+//        requestId             Request ID of a narrowcast message or broadcast message. Each Messaging API request has a request ID.
+
+// You must close the response body when finished with it.
+// https://developers.line.biz/en/reference/messaging-api/#get-message-event
+func (client *InsightAPI) GetMessageEventWithHttpInfo(
+
+	requestId string,
+
+) (*http.Response, *GetMessageEventResponse, error) {
 	path := "/v2/bot/insight/message/event"
 
 	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	var query url.Values
@@ -183,15 +223,15 @@ func (client *InsightAPI) GetMessageEvent(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
@@ -199,9 +239,9 @@ func (client *InsightAPI) GetMessageEvent(
 	decoder := json.NewDecoder(res.Body)
 	result := GetMessageEventResponse{}
 	if err := decoder.Decode(&result); err != nil {
-		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
-	return &result, nil
+	return res, &result, nil
 
 }
 
@@ -217,12 +257,36 @@ func (client *InsightAPI) GetNumberOfFollowers(
 	date string,
 
 ) (*GetNumberOfFollowersResponse, error) {
+	response, body, error := client.GetNumberOfFollowersWithHttpInfo(
+
+		date,
+	)
+
+	defer response.Body.Close()
+
+	return body, error
+}
+
+// GetNumberOfFollowers
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+// Get number of followers
+// Returns the number of users who have added the LINE Official Account on or before a specified date.
+// Parameters:
+//        date             Date for which to retrieve the number of followers.  Format: yyyyMMdd (e.g. 20191231) Timezone: UTC+9
+
+// You must close the response body when finished with it.
+// https://developers.line.biz/en/reference/messaging-api/#get-number-of-followers
+func (client *InsightAPI) GetNumberOfFollowersWithHttpInfo(
+
+	date string,
+
+) (*http.Response, *GetNumberOfFollowersResponse, error) {
 	path := "/v2/bot/insight/followers"
 
 	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	var query url.Values
@@ -234,15 +298,15 @@ func (client *InsightAPI) GetNumberOfFollowers(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
@@ -250,9 +314,9 @@ func (client *InsightAPI) GetNumberOfFollowers(
 	decoder := json.NewDecoder(res.Body)
 	result := GetNumberOfFollowersResponse{}
 	if err := decoder.Decode(&result); err != nil {
-		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
-	return &result, nil
+	return res, &result, nil
 
 }
 
@@ -268,12 +332,36 @@ func (client *InsightAPI) GetNumberOfMessageDeliveries(
 	date string,
 
 ) (*GetNumberOfMessageDeliveriesResponse, error) {
+	response, body, error := client.GetNumberOfMessageDeliveriesWithHttpInfo(
+
+		date,
+	)
+
+	defer response.Body.Close()
+
+	return body, error
+}
+
+// GetNumberOfMessageDeliveries
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+// Get number of message deliveries
+// Returns the number of messages sent from LINE Official Account on a specified day.
+// Parameters:
+//        date             Date for which to retrieve number of sent messages. - Format: yyyyMMdd (e.g. 20191231) - Timezone: UTC+9
+
+// You must close the response body when finished with it.
+// https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages
+func (client *InsightAPI) GetNumberOfMessageDeliveriesWithHttpInfo(
+
+	date string,
+
+) (*http.Response, *GetNumberOfMessageDeliveriesResponse, error) {
 	path := "/v2/bot/insight/message/delivery"
 
 	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	var query url.Values
@@ -285,15 +373,15 @@ func (client *InsightAPI) GetNumberOfMessageDeliveries(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
@@ -301,9 +389,9 @@ func (client *InsightAPI) GetNumberOfMessageDeliveries(
 	decoder := json.NewDecoder(res.Body)
 	result := GetNumberOfMessageDeliveriesResponse{}
 	if err := decoder.Decode(&result); err != nil {
-		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
-	return &result, nil
+	return res, &result, nil
 
 }
 
@@ -325,12 +413,46 @@ func (client *InsightAPI) GetStatisticsPerUnit(
 	to string,
 
 ) (*GetStatisticsPerUnitResponse, error) {
+	response, body, error := client.GetStatisticsPerUnitWithHttpInfo(
+
+		customAggregationUnit,
+
+		from,
+
+		to,
+	)
+
+	defer response.Body.Close()
+
+	return body, error
+}
+
+// GetStatisticsPerUnit
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// You can check the per-unit statistics of how users interact with push messages and multicast messages sent from your LINE Official Account.
+// Parameters:
+//        customAggregationUnit             Name of aggregation unit specified when sending the message. Case-sensitive. For example, `Promotion_a` and `Promotion_A` are regarded as different unit names.
+//        from             Start date of aggregation period.  Format: yyyyMMdd (e.g. 20210301) Time zone: UTC+9
+//        to             End date of aggregation period. The end date can be specified for up to 30 days later. For example, if the start date is 20210301, the latest end date is 20210331.  Format: yyyyMMdd (e.g. 20210301) Time zone: UTC+9
+
+// You must close the response body when finished with it.
+// https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit
+func (client *InsightAPI) GetStatisticsPerUnitWithHttpInfo(
+
+	customAggregationUnit string,
+
+	from string,
+
+	to string,
+
+) (*http.Response, *GetStatisticsPerUnitResponse, error) {
 	path := "/v2/bot/insight/message/event/aggregation"
 
 	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	var query url.Values
@@ -344,15 +466,15 @@ func (client *InsightAPI) GetStatisticsPerUnit(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
@@ -360,8 +482,8 @@ func (client *InsightAPI) GetStatisticsPerUnit(
 	decoder := json.NewDecoder(res.Body)
 	result := GetStatisticsPerUnitResponse{}
 	if err := decoder.Decode(&result); err != nil {
-		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
-	return &result, nil
+	return res, &result, nil
 
 }

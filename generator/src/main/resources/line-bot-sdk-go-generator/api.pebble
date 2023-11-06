@@ -142,6 +142,47 @@ func (client *{{ classname }}) {{ op.operationId }}(
     {% endif %}
 {% endfor %}
 ) ({% if op.isResponseFile %}*http.Response{% elseif op.returnType %}*{{ op.returnType }}{% else %}struct{}{% endif %}, error) {
+    {% if op.isResponseFile %}_{% else %}response{% endif %}, body, error := client.{{ op.operationId }}WithHttpInfo(
+    {% for param in op.allParams %}
+        {% if param.isBodyParam and param.isFile %}
+        {{ param.paramName }}ContentType,
+        {{ param.paramName }}Reader,
+        {% else %}
+        {{ param.paramName }},
+        {% endif %}
+    {% endfor %}
+    )
+    {% if not op.isResponseFile %}
+    defer response.Body.Close()
+    {% endif %}
+    return body, error
+}
+
+// {{ op.operationId | capitalize }}
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+// {{ op.summary }}
+// {{ op.notes }}
+// Parameters:
+{% for param in op.allParams %}
+    {%- if param.isBodyParam and param.isFile -%}
+//        {{ param.paramName }}ContentType  {{ param.description }} content-type
+//        {{ param.paramName }}Reader       {{ param.description }} file content
+   {%- else -%}
+//        {{ param.paramName }}             {{ param.description }}
+   {%- endif %}
+{% endfor %}
+// You must close the response body when finished with it.
+{% if op.externalDocs != null -%}// {{op.externalDocs.url}}{% endif %}
+func (client *{{ classname }}) {{ op.operationId }}WithHttpInfo(
+{% for param in op.allParams %}
+    {% if param.isBodyParam and param.isFile %}
+    {{ param.paramName }}ContentType string,
+    {{ param.paramName }}Reader io.Reader,
+    {% else %}
+    {{ param.paramName }} {% if not (param.isPrimitiveType or param.isEnumRef) %}*{% endif %}{{ param.dataType }},
+    {% endif %}
+{% endfor %}
+) (*http.Response, {% if op.isResponseFile %}*http.Response{% elseif op.returnType %}*{{ op.returnType }}{% else %}struct{}{% endif %}, error) {
     path := "{{ op.path }}"
     {% for pp in op.pathParams %}
     path = strings.Replace(path, "{{ "{" }}{{ pp.paramName }}{{ "}" }}", {% if pp.isInteger or pp.isLong %}strconv.FormatInt({{ pp.paramName }}, 10){% else %}{{ pp.paramName }}{% endif %}, -1)
@@ -150,19 +191,19 @@ func (client *{{ classname }}) {{ op.operationId }}(
 	log.Printf("Sending request: method={{ op.httpMethod }} path=%s bodyContentType=%s\n", path, {{ op.bodyParam.paramName }}ContentType)
 	req, err := http.NewRequest(http.Method{{ op.httpMethod }}, client.Url(path), {{ op.bodyParam.paramName }}Reader)
 	if err != nil {
-		return {{ nilval }}, err
+		return nil, {{ nilval }}, err
 	}
     req.Header.Set("Content-Type", {{ op.bodyParam.paramName }}ContentType)
     {% elseif op.bodyParam != null %}
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
 	if err := enc.Encode({{ op.bodyParam.paramName }}); err != nil {
-		return {{ nilval }}, err
+		return nil, {{ nilval }}, err
 	}
 	log.Printf("Sending request: method={{ op.httpMethod }} path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.Method{{ op.httpMethod }}, client.Url(path), &buf)
 	if err != nil {
-		return {{ nilval }}, err
+		return nil, {{ nilval }}, err
 	}
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 	{% elseif op.hasFormParams and op.isMultipart %}
@@ -172,7 +213,7 @@ func (client *{{ classname }}) {{ op.operationId }}(
             {% if fp.isFile %}
 	fileWriter, err := writer.CreateFormFile("{{ fp.baseName }}", {{ fp.paramName }}.Name())
 	if err != nil {
-		return {{ nilval }}, err
+		return nil, {{ nilval }}, err
 	}
 	io.Copy(fileWriter, {{ fp.paramName }})
             {% else %}
@@ -181,13 +222,13 @@ func (client *{{ classname }}) {{ op.operationId }}(
         {% endfor %}
 	err = writer.Close()
 	if err != nil {
-		return {{ nilval }}, err
+		return nil, {{ nilval }}, err
 	}
 
 	log.Printf("Sending request: method={{ op.httpMethod }} path=%s\n", path)
 	req, err := http.NewRequest(http.Method{{ op.httpMethod }}, client.Url(path), body)
 	if err != nil {
-		return {{ nilval }}, err
+		return nil, {{ nilval }}, err
 	}
 	req.Header.Set("Content-Type", writer.FormDataContentType())
 	{% elseif op.hasFormParams %}
@@ -202,14 +243,14 @@ func (client *{{ classname }}) {{ op.operationId }}(
 	log.Printf("Sending request: method={{ op.httpMethod }} path=%s body=%s\n", path, buf)
 	req, err := http.NewRequest(http.Method{{ op.httpMethod }}, client.Url(path), body)
 	if err != nil {
-		return {{ nilval }}, err
+		return nil, {{ nilval }}, err
 	}
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	{% else %}
 	log.Printf("Sending request: method={{ op.httpMethod }} path=%s\n", path)
 	req, err := http.NewRequest(http.Method{{ op.httpMethod }}, client.Url(path), nil)
 	if err != nil {
-		return {{ nilval }}, err
+		return nil, {{ nilval }}, err
 	}
     {% endif %}
 
@@ -229,19 +270,19 @@ func (client *{{ classname }}) {{ op.operationId }}(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return {{ nilval }}, err
+		return res, {{ nilval }}, err
 	}
 
 	if res.StatusCode/100 != 2 {
         body, err := io.ReadAll(res.Body)
         if err != nil {
-            return {{ nilval }}, fmt.Errorf("failed to read response body: %w", err)
+            return res, {{ nilval }}, fmt.Errorf("failed to read response body: %w", err)
         }
-	    return {{ nilval }}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+	    return res, {{ nilval }}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
     {% if op.isResponseFile %}
-    return res, nil
+    return res, res, nil
     {% else %}
 	defer res.Body.Close()
 
@@ -249,11 +290,11 @@ func (client *{{ classname }}) {{ op.operationId }}(
 	decoder := json.NewDecoder(res.Body)
 	result := {{ op.returnType }}{}
 	if err := decoder.Decode(&result); err != nil {
-		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
-	return &result, nil
+	return res, &result, nil
     {% else %}
-	return struct{}{}, nil
+	return res, struct{}{}, nil
     {% endif %}
     {% endif %}
 }

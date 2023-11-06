@@ -130,6 +130,35 @@ func (client *LineModuleAPI) AcquireChatControl(
 	acquireChatControlRequest *AcquireChatControlRequest,
 
 ) (struct{}, error) {
+	response, body, error := client.AcquireChatControlWithHttpInfo(
+
+		chatId,
+
+		acquireChatControlRequest,
+	)
+
+	defer response.Body.Close()
+
+	return body, error
+}
+
+// AcquireChatControl
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// If the Standby Channel wants to take the initiative (Chat Control), it calls the Acquire Control API. The channel that was previously an Active Channel will automatically switch to a Standby Channel.
+// Parameters:
+//        chatId             The `userId`, `roomId`, or `groupId`
+//        acquireChatControlRequest
+
+// You must close the response body when finished with it.
+// https://developers.line.biz/en/reference/partner-docs/#acquire-control-api
+func (client *LineModuleAPI) AcquireChatControlWithHttpInfo(
+
+	chatId string,
+
+	acquireChatControlRequest *AcquireChatControlRequest,
+
+) (*http.Response, struct{}, error) {
 	path := "/v2/bot/chat/{chatId}/control/acquire"
 
 	path = strings.Replace(path, "{chatId}", chatId, -1)
@@ -137,12 +166,12 @@ func (client *LineModuleAPI) AcquireChatControl(
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
 	if err := enc.Encode(acquireChatControlRequest); err != nil {
-		return struct{}{}, err
+		return nil, struct{}{}, err
 	}
 	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
-		return struct{}{}, err
+		return nil, struct{}{}, err
 	}
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -150,20 +179,20 @@ func (client *LineModuleAPI) AcquireChatControl(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return struct{}{}, err
+		return res, struct{}{}, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return struct{}{}, fmt.Errorf("failed to read response body: %w", err)
+			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
 
-	return struct{}{}, nil
+	return res, struct{}{}, nil
 
 }
 
@@ -179,17 +208,41 @@ func (client *LineModuleAPI) DetachModule(
 	detachModuleRequest *DetachModuleRequest,
 
 ) (struct{}, error) {
+	response, body, error := client.DetachModuleWithHttpInfo(
+
+		detachModuleRequest,
+	)
+
+	defer response.Body.Close()
+
+	return body, error
+}
+
+// DetachModule
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// The module channel admin calls the Detach API to detach the module channel from a LINE Official Account.
+// Parameters:
+//        detachModuleRequest
+
+// You must close the response body when finished with it.
+// https://developers.line.biz/en/reference/partner-docs/#unlink-detach-module-channel-by-operation-mc-admin
+func (client *LineModuleAPI) DetachModuleWithHttpInfo(
+
+	detachModuleRequest *DetachModuleRequest,
+
+) (*http.Response, struct{}, error) {
 	path := "/v2/bot/channel/detach"
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
 	if err := enc.Encode(detachModuleRequest); err != nil {
-		return struct{}{}, err
+		return nil, struct{}{}, err
 	}
 	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
-		return struct{}{}, err
+		return nil, struct{}{}, err
 	}
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -197,20 +250,20 @@ func (client *LineModuleAPI) DetachModule(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return struct{}{}, err
+		return res, struct{}{}, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return struct{}{}, fmt.Errorf("failed to read response body: %w", err)
+			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
 
-	return struct{}{}, nil
+	return res, struct{}{}, nil
 
 }
 
@@ -229,12 +282,41 @@ func (client *LineModuleAPI) GetModules(
 	limit int32,
 
 ) (*GetModulesResponse, error) {
+	response, body, error := client.GetModulesWithHttpInfo(
+
+		start,
+
+		limit,
+	)
+
+	defer response.Body.Close()
+
+	return body, error
+}
+
+// GetModules
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Gets a list of basic information about the bots of multiple LINE Official Accounts that have attached module channels.
+// Parameters:
+//        start             Value of the continuation token found in the next property of the JSON object returned in the response. If you can't get all basic information about the bots in one request, include this parameter to get the remaining array.
+//        limit             Specify the maximum number of bots that you get basic information from. The default value is 100. Max value: 100
+
+// You must close the response body when finished with it.
+// https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api
+func (client *LineModuleAPI) GetModulesWithHttpInfo(
+
+	start string,
+
+	limit int32,
+
+) (*http.Response, *GetModulesResponse, error) {
 	path := "/v2/bot/list"
 
 	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	var query url.Values
@@ -247,15 +329,15 @@ func (client *LineModuleAPI) GetModules(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
@@ -263,9 +345,9 @@ func (client *LineModuleAPI) GetModules(
 	decoder := json.NewDecoder(res.Body)
 	result := GetModulesResponse{}
 	if err := decoder.Decode(&result); err != nil {
-		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
-	return &result, nil
+	return res, &result, nil
 
 }
 
@@ -281,6 +363,30 @@ func (client *LineModuleAPI) ReleaseChatControl(
 	chatId string,
 
 ) (struct{}, error) {
+	response, body, error := client.ReleaseChatControlWithHttpInfo(
+
+		chatId,
+	)
+
+	defer response.Body.Close()
+
+	return body, error
+}
+
+// ReleaseChatControl
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// To return the initiative (Chat Control) of Active Channel to Primary Channel, call the Release Control API.
+// Parameters:
+//        chatId             The `userId`, `roomId`, or `groupId`
+
+// You must close the response body when finished with it.
+// https://developers.line.biz/en/reference/partner-docs/#release-control-api
+func (client *LineModuleAPI) ReleaseChatControlWithHttpInfo(
+
+	chatId string,
+
+) (*http.Response, struct{}, error) {
 	path := "/v2/bot/chat/{chatId}/control/release"
 
 	path = strings.Replace(path, "{chatId}", chatId, -1)
@@ -288,26 +394,26 @@ func (client *LineModuleAPI) ReleaseChatControl(
 	log.Printf("Sending request: method=Post path=%s\n", path)
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), nil)
 	if err != nil {
-		return struct{}{}, err
+		return nil, struct{}{}, err
 	}
 
 	res, err := client.Do(req)
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return struct{}{}, err
+		return res, struct{}{}, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return struct{}{}, fmt.Errorf("failed to read response body: %w", err)
+			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
 
-	return struct{}{}, nil
+	return res, struct{}{}, nil
 
 }
