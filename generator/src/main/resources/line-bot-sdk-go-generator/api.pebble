@@ -171,7 +171,7 @@ func (client *{{ classname }}) {{ op.operationId }}(
 //        {{ param.paramName }}             {{ param.description }}
    {%- endif %}
 {% endfor %}
-// You must close the response body when finished with it.
+{% if op.isResponseFile %}// You must close the response body when finished with it.{% endif %}
 {% if op.externalDocs != null -%}// {{op.externalDocs.url}}{% endif %}
 func (client *{{ classname }}) {{ op.operationId }}WithHttpInfo(
 {% for param in op.allParams %}
