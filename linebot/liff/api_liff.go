@@ -131,9 +131,6 @@ func (client *LiffAPI) AddLIFFApp(
 
 		addLiffAppRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -206,9 +203,6 @@ func (client *LiffAPI) DeleteLIFFApp(
 
 		liffId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -264,9 +258,6 @@ func (client *LiffAPI) DeleteLIFFAppWithHttpInfo(
 // https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps
 func (client *LiffAPI) GetAllLIFFApps() (*GetAllLiffAppsResponse, error) {
 	response, body, error := client.GetAllLIFFAppsWithHttpInfo()
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -333,9 +324,6 @@ func (client *LiffAPI) UpdateLIFFApp(
 
 		updateLiffAppRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 

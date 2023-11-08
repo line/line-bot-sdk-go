@@ -175,9 +175,6 @@ func (client *LineModuleAttachAPI) AttachModule(
 
 		brandType,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 

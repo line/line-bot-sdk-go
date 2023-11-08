@@ -121,9 +121,6 @@ func WithEndpoint(endpoint string) InsightAPIOption {
 // https://developers.line.biz/en/reference/messaging-api/#get-demographic
 func (client *InsightAPI) GetFriendsDemographics() (*GetFriendsDemographicsResponse, error) {
 	response, body, error := client.GetFriendsDemographicsWithHttpInfo()
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -185,9 +182,6 @@ func (client *InsightAPI) GetMessageEvent(
 
 		requestId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -259,9 +253,6 @@ func (client *InsightAPI) GetNumberOfFollowers(
 
 		date,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -333,9 +324,6 @@ func (client *InsightAPI) GetNumberOfMessageDeliveries(
 
 		date,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -417,9 +405,6 @@ func (client *InsightAPI) GetStatisticsPerUnit(
 
 		to,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 

@@ -130,9 +130,6 @@ func (client *ShopAPI) MissionStickerV3(
 
 		missionStickerRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 

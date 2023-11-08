@@ -152,9 +152,6 @@ func (client *{{ classname }}) {{ op.operationId }}(
         {% endif %}
     {% endfor %}
     )
-    {% if not op.isResponseFile %}
-    defer response.Body.Close()
-    {% endif %}
     return body, error
 }
 

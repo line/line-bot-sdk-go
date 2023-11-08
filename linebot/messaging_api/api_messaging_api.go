@@ -131,9 +131,6 @@ func (client *MessagingApiAPI) AudienceMatch(
 
 		audienceMatchMessagesRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -206,9 +203,6 @@ func (client *MessagingApiAPI) Broadcast(
 
 		xLineRetryKey,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -278,9 +272,6 @@ func (client *MessagingApiAPI) BroadcastWithHttpInfo(
 // https://developers.line.biz/en/reference/messaging-api/#cancel-default-rich-menu
 func (client *MessagingApiAPI) CancelDefaultRichMenu() (struct{}, error) {
 	response, body, error := client.CancelDefaultRichMenuWithHttpInfo()
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -337,9 +328,6 @@ func (client *MessagingApiAPI) CreateRichMenu(
 
 		richMenuRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -412,9 +400,6 @@ func (client *MessagingApiAPI) CreateRichMenuAlias(
 
 		createRichMenuAliasRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -482,9 +467,6 @@ func (client *MessagingApiAPI) DeleteRichMenu(
 
 		richMenuId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -548,9 +530,6 @@ func (client *MessagingApiAPI) DeleteRichMenuAlias(
 
 		richMenuAliasId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -614,9 +593,6 @@ func (client *MessagingApiAPI) GetAdPhoneMessageStatistics(
 
 		date,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -693,9 +669,6 @@ func (client *MessagingApiAPI) GetAggregationUnitNameList(
 
 		start,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -763,9 +736,6 @@ func (client *MessagingApiAPI) GetAggregationUnitNameListWithHttpInfo(
 // https://developers.line.biz/en/reference/messaging-api/#get-number-of-units-used-this-month
 func (client *MessagingApiAPI) GetAggregationUnitUsage() (*GetAggregationUnitUsageResponse, error) {
 	response, body, error := client.GetAggregationUnitUsageWithHttpInfo()
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -819,9 +789,6 @@ func (client *MessagingApiAPI) GetAggregationUnitUsageWithHttpInfo() (*http.Resp
 // https://developers.line.biz/en/reference/messaging-api/#get-bot-info
 func (client *MessagingApiAPI) GetBotInfo() (*BotInfoResponse, error) {
 	response, body, error := client.GetBotInfoWithHttpInfo()
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -875,9 +842,6 @@ func (client *MessagingApiAPI) GetBotInfoWithHttpInfo() (*http.Response, *BotInf
 // https://developers.line.biz/en/reference/messaging-api/#get-default-rich-menu-id
 func (client *MessagingApiAPI) GetDefaultRichMenuId() (*RichMenuIdResponse, error) {
 	response, body, error := client.GetDefaultRichMenuIdWithHttpInfo()
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -944,9 +908,6 @@ func (client *MessagingApiAPI) GetFollowers(
 
 		limit,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -1022,9 +983,6 @@ func (client *MessagingApiAPI) GetGroupMemberCount(
 
 		groupId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -1098,9 +1056,6 @@ func (client *MessagingApiAPI) GetGroupMemberProfile(
 
 		userId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -1179,9 +1134,6 @@ func (client *MessagingApiAPI) GetGroupMembersIds(
 
 		start,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -1258,9 +1210,6 @@ func (client *MessagingApiAPI) GetGroupSummary(
 
 		groupId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -1321,9 +1270,6 @@ func (client *MessagingApiAPI) GetGroupSummaryWithHttpInfo(
 // https://developers.line.biz/en/reference/messaging-api/#get-quota
 func (client *MessagingApiAPI) GetMessageQuota() (*MessageQuotaResponse, error) {
 	response, body, error := client.GetMessageQuotaWithHttpInfo()
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -1377,9 +1323,6 @@ func (client *MessagingApiAPI) GetMessageQuotaWithHttpInfo() (*http.Response, *M
 // https://developers.line.biz/en/reference/messaging-api/#get-consumption
 func (client *MessagingApiAPI) GetMessageQuotaConsumption() (*QuotaConsumptionResponse, error) {
 	response, body, error := client.GetMessageQuotaConsumptionWithHttpInfo()
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -1441,9 +1384,6 @@ func (client *MessagingApiAPI) GetNarrowcastProgress(
 
 		requestId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -1515,9 +1455,6 @@ func (client *MessagingApiAPI) GetNumberOfSentBroadcastMessages(
 
 		date,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -1589,9 +1526,6 @@ func (client *MessagingApiAPI) GetNumberOfSentMulticastMessages(
 
 		date,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -1663,9 +1597,6 @@ func (client *MessagingApiAPI) GetNumberOfSentPushMessages(
 
 		date,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -1737,9 +1668,6 @@ func (client *MessagingApiAPI) GetNumberOfSentReplyMessages(
 
 		date,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -1811,9 +1739,6 @@ func (client *MessagingApiAPI) GetPNPMessageStatistics(
 
 		date,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -1885,9 +1810,6 @@ func (client *MessagingApiAPI) GetProfile(
 
 		userId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -1956,9 +1878,6 @@ func (client *MessagingApiAPI) GetRichMenu(
 
 		richMenuId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -2027,9 +1946,6 @@ func (client *MessagingApiAPI) GetRichMenuAlias(
 
 		richMenuAliasId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -2090,9 +2006,6 @@ func (client *MessagingApiAPI) GetRichMenuAliasWithHttpInfo(
 // https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-list
 func (client *MessagingApiAPI) GetRichMenuAliasList() (*RichMenuAliasListResponse, error) {
 	response, body, error := client.GetRichMenuAliasListWithHttpInfo()
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -2154,9 +2067,6 @@ func (client *MessagingApiAPI) GetRichMenuBatchProgress(
 
 		requestId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -2228,9 +2138,6 @@ func (client *MessagingApiAPI) GetRichMenuIdOfUser(
 
 		userId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -2291,9 +2198,6 @@ func (client *MessagingApiAPI) GetRichMenuIdOfUserWithHttpInfo(
 // https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-list
 func (client *MessagingApiAPI) GetRichMenuList() (*RichMenuListResponse, error) {
 	response, body, error := client.GetRichMenuListWithHttpInfo()
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -2355,9 +2259,6 @@ func (client *MessagingApiAPI) GetRoomMemberCount(
 
 		roomId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -2431,9 +2332,6 @@ func (client *MessagingApiAPI) GetRoomMemberProfile(
 
 		userId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -2512,9 +2410,6 @@ func (client *MessagingApiAPI) GetRoomMembersIds(
 
 		start,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -2583,9 +2478,6 @@ func (client *MessagingApiAPI) GetRoomMembersIdsWithHttpInfo(
 // https://developers.line.biz/en/reference/messaging-api/#get-webhook-endpoint-information
 func (client *MessagingApiAPI) GetWebhookEndpoint() (*GetWebhookEndpointResponse, error) {
 	response, body, error := client.GetWebhookEndpointWithHttpInfo()
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -2647,9 +2539,6 @@ func (client *MessagingApiAPI) IssueLinkToken(
 
 		userId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -2718,9 +2607,6 @@ func (client *MessagingApiAPI) LeaveGroup(
 
 		groupId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -2784,9 +2670,6 @@ func (client *MessagingApiAPI) LeaveRoom(
 
 		roomId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -2855,9 +2738,6 @@ func (client *MessagingApiAPI) LinkRichMenuIdToUser(
 
 		richMenuId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -2926,9 +2806,6 @@ func (client *MessagingApiAPI) LinkRichMenuIdToUsers(
 
 		richMenuBulkLinkRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -2996,9 +2873,6 @@ func (client *MessagingApiAPI) MarkMessagesAsRead(
 
 		markMessagesAsReadRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -3071,9 +2945,6 @@ func (client *MessagingApiAPI) Multicast(
 
 		xLineRetryKey,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -3156,9 +3027,6 @@ func (client *MessagingApiAPI) Narrowcast(
 
 		xLineRetryKey,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -3241,9 +3109,6 @@ func (client *MessagingApiAPI) PushMessage(
 
 		xLineRetryKey,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -3326,9 +3191,6 @@ func (client *MessagingApiAPI) PushMessagesByPhone(
 
 		xLineDeliveryTag,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -3401,9 +3263,6 @@ func (client *MessagingApiAPI) ReplyMessage(
 
 		replyMessageRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -3476,9 +3335,6 @@ func (client *MessagingApiAPI) RichMenuBatch(
 
 		richMenuBatchRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -3546,9 +3402,6 @@ func (client *MessagingApiAPI) SetDefaultRichMenu(
 
 		richMenuId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -3612,9 +3465,6 @@ func (client *MessagingApiAPI) SetWebhookEndpoint(
 
 		setWebhookEndpointRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -3682,9 +3532,6 @@ func (client *MessagingApiAPI) TestWebhookEndpoint(
 
 		testWebhookEndpointRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -3757,9 +3604,6 @@ func (client *MessagingApiAPI) UnlinkRichMenuIdFromUser(
 
 		userId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -3823,9 +3667,6 @@ func (client *MessagingApiAPI) UnlinkRichMenuIdFromUsers(
 
 		richMenuBulkUnlinkRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -3898,9 +3739,6 @@ func (client *MessagingApiAPI) UpdateRichMenuAlias(
 
 		updateRichMenuAliasRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -3973,9 +3811,6 @@ func (client *MessagingApiAPI) ValidateBroadcast(
 
 		validateMessageRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -4043,9 +3878,6 @@ func (client *MessagingApiAPI) ValidateMulticast(
 
 		validateMessageRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -4113,9 +3945,6 @@ func (client *MessagingApiAPI) ValidateNarrowcast(
 
 		validateMessageRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -4183,9 +4012,6 @@ func (client *MessagingApiAPI) ValidatePush(
 
 		validateMessageRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -4253,9 +4079,6 @@ func (client *MessagingApiAPI) ValidateReply(
 
 		validateMessageRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -4323,9 +4146,6 @@ func (client *MessagingApiAPI) ValidateRichMenuBatchRequest(
 
 		richMenuBatchRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -4393,9 +4213,6 @@ func (client *MessagingApiAPI) ValidateRichMenuObject(
 
 		richMenuRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 

@@ -143,9 +143,6 @@ func (client *ManageAudienceBlobAPI) AddUserIdsToAudience(
 
 		uploadDescription,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -247,9 +244,6 @@ func (client *ManageAudienceBlobAPI) CreateAudienceForUploadingUserIds(
 
 		uploadDescription,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 

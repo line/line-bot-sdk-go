@@ -135,9 +135,6 @@ func (client *ChannelAccessTokenAPI) GetsAllValidChannelAccessTokenKeyIds(
 
 		clientAssertion,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -223,9 +220,6 @@ func (client *ChannelAccessTokenAPI) IssueChannelToken(
 
 		clientSecret,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -317,9 +311,6 @@ func (client *ChannelAccessTokenAPI) IssueChannelTokenByJWT(
 
 		clientAssertion,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -421,9 +412,6 @@ func (client *ChannelAccessTokenAPI) IssueStatelessChannelToken(
 
 		clientSecret,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -513,9 +501,6 @@ func (client *ChannelAccessTokenAPI) RevokeChannelToken(
 
 		accessToken,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -594,9 +579,6 @@ func (client *ChannelAccessTokenAPI) RevokeChannelTokenByJWT(
 
 		accessToken,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -673,9 +655,6 @@ func (client *ChannelAccessTokenAPI) VerifyChannelToken(
 
 		accessToken,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -749,9 +728,6 @@ func (client *ChannelAccessTokenAPI) VerifyChannelTokenByJWT(
 
 		accessToken,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 

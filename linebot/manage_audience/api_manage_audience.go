@@ -132,9 +132,6 @@ func (client *ManageAudienceAPI) ActivateAudienceGroup(
 
 		audienceGroupId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -198,9 +195,6 @@ func (client *ManageAudienceAPI) AddAudienceToAudienceGroup(
 
 		addAudienceToAudienceGroupRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -268,9 +262,6 @@ func (client *ManageAudienceAPI) CreateAudienceGroup(
 
 		createAudienceGroupRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -343,9 +334,6 @@ func (client *ManageAudienceAPI) CreateClickBasedAudienceGroup(
 
 		createClickBasedAudienceGroupRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -418,9 +406,6 @@ func (client *ManageAudienceAPI) CreateImpBasedAudienceGroup(
 
 		createImpBasedAudienceGroupRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -493,9 +478,6 @@ func (client *ManageAudienceAPI) DeleteAudienceGroup(
 
 		audienceGroupId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -559,9 +541,6 @@ func (client *ManageAudienceAPI) GetAudienceData(
 
 		audienceGroupId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -622,9 +601,6 @@ func (client *ManageAudienceAPI) GetAudienceDataWithHttpInfo(
 // https://developers.line.biz/en/reference/messaging-api/#get-authority-level
 func (client *ManageAudienceAPI) GetAudienceGroupAuthorityLevel() (*GetAudienceGroupAuthorityLevelResponse, error) {
 	response, body, error := client.GetAudienceGroupAuthorityLevelWithHttpInfo()
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -711,9 +687,6 @@ func (client *ManageAudienceAPI) GetAudienceGroups(
 
 		createRoute,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -805,9 +778,6 @@ func (client *ManageAudienceAPI) UpdateAudienceGroupAuthorityLevel(
 
 		updateAudienceGroupAuthorityLevelRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -880,9 +850,6 @@ func (client *ManageAudienceAPI) UpdateAudienceGroupDescription(
 
 		updateAudienceGroupDescriptionRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 

@@ -136,9 +136,6 @@ func (client *LineModuleAPI) AcquireChatControl(
 
 		acquireChatControlRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -211,9 +208,6 @@ func (client *LineModuleAPI) DetachModule(
 
 		detachModuleRequest,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -286,9 +280,6 @@ func (client *LineModuleAPI) GetModules(
 
 		limit,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -364,9 +355,6 @@ func (client *LineModuleAPI) ReleaseChatControl(
 
 		chatId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 

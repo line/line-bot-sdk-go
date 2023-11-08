@@ -131,7 +131,6 @@ func (client *MessagingApiBlobAPI) GetMessageContent(
 
 		messageId,
 	)
-
 	return body, error
 }
 
@@ -195,7 +194,6 @@ func (client *MessagingApiBlobAPI) GetMessageContentPreview(
 
 		messageId,
 	)
-
 	return body, error
 }
 
@@ -258,9 +256,6 @@ func (client *MessagingApiBlobAPI) GetMessageContentTranscodingByMessageId(
 
 		messageId,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
@@ -330,7 +325,6 @@ func (client *MessagingApiBlobAPI) GetRichMenuImage(
 
 		richMenuId,
 	)
-
 	return body, error
 }
 
@@ -401,9 +395,6 @@ func (client *MessagingApiBlobAPI) SetRichMenuImage(
 		bodyContentType,
 		bodyReader,
 	)
-
-	defer response.Body.Close()
-
 	return body, error
 }
 
