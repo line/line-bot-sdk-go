@@ -130,7 +130,7 @@ func (client *LineModuleAPI) AcquireChatControl(
 	acquireChatControlRequest *AcquireChatControlRequest,
 
 ) (struct{}, error) {
-	response, body, error := client.AcquireChatControlWithHttpInfo(
+	_, body, error := client.AcquireChatControlWithHttpInfo(
 
 		chatId,
 
@@ -204,7 +204,7 @@ func (client *LineModuleAPI) DetachModule(
 	detachModuleRequest *DetachModuleRequest,
 
 ) (struct{}, error) {
-	response, body, error := client.DetachModuleWithHttpInfo(
+	_, body, error := client.DetachModuleWithHttpInfo(
 
 		detachModuleRequest,
 	)
@@ -274,7 +274,7 @@ func (client *LineModuleAPI) GetModules(
 	limit int32,
 
 ) (*GetModulesResponse, error) {
-	response, body, error := client.GetModulesWithHttpInfo(
+	_, body, error := client.GetModulesWithHttpInfo(
 
 		start,
 
@@ -351,7 +351,7 @@ func (client *LineModuleAPI) ReleaseChatControl(
 	chatId string,
 
 ) (struct{}, error) {
-	response, body, error := client.ReleaseChatControlWithHttpInfo(
+	_, body, error := client.ReleaseChatControlWithHttpInfo(
 
 		chatId,
 	)

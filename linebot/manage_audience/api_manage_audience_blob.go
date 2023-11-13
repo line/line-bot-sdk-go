@@ -135,7 +135,7 @@ func (client *ManageAudienceBlobAPI) AddUserIdsToAudience(
 	uploadDescription string,
 
 ) (struct{}, error) {
-	response, body, error := client.AddUserIdsToAudienceWithHttpInfo(
+	_, body, error := client.AddUserIdsToAudienceWithHttpInfo(
 
 		file,
 
@@ -234,7 +234,7 @@ func (client *ManageAudienceBlobAPI) CreateAudienceForUploadingUserIds(
 	uploadDescription string,
 
 ) (*CreateAudienceGroupResponse, error) {
-	response, body, error := client.CreateAudienceForUploadingUserIdsWithHttpInfo(
+	_, body, error := client.CreateAudienceForUploadingUserIdsWithHttpInfo(
 
 		file,
 

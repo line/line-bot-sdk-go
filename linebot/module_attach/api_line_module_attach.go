@@ -153,7 +153,7 @@ func (client *LineModuleAttachAPI) AttachModule(
 	brandType string,
 
 ) (*AttachModuleResponse, error) {
-	response, body, error := client.AttachModuleWithHttpInfo(
+	_, body, error := client.AttachModuleWithHttpInfo(
 
 		grantType,
 

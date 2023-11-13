@@ -120,7 +120,7 @@ func WithEndpoint(endpoint string) InsightAPIOption {
 
 // https://developers.line.biz/en/reference/messaging-api/#get-demographic
 func (client *InsightAPI) GetFriendsDemographics() (*GetFriendsDemographicsResponse, error) {
-	response, body, error := client.GetFriendsDemographicsWithHttpInfo()
+	_, body, error := client.GetFriendsDemographicsWithHttpInfo()
 	return body, error
 }
 
@@ -178,7 +178,7 @@ func (client *InsightAPI) GetMessageEvent(
 	requestId string,
 
 ) (*GetMessageEventResponse, error) {
-	response, body, error := client.GetMessageEventWithHttpInfo(
+	_, body, error := client.GetMessageEventWithHttpInfo(
 
 		requestId,
 	)
@@ -249,7 +249,7 @@ func (client *InsightAPI) GetNumberOfFollowers(
 	date string,
 
 ) (*GetNumberOfFollowersResponse, error) {
-	response, body, error := client.GetNumberOfFollowersWithHttpInfo(
+	_, body, error := client.GetNumberOfFollowersWithHttpInfo(
 
 		date,
 	)
@@ -320,7 +320,7 @@ func (client *InsightAPI) GetNumberOfMessageDeliveries(
 	date string,
 
 ) (*GetNumberOfMessageDeliveriesResponse, error) {
-	response, body, error := client.GetNumberOfMessageDeliveriesWithHttpInfo(
+	_, body, error := client.GetNumberOfMessageDeliveriesWithHttpInfo(
 
 		date,
 	)
@@ -397,7 +397,7 @@ func (client *InsightAPI) GetStatisticsPerUnit(
 	to string,
 
 ) (*GetStatisticsPerUnitResponse, error) {
-	response, body, error := client.GetStatisticsPerUnitWithHttpInfo(
+	_, body, error := client.GetStatisticsPerUnitWithHttpInfo(
 
 		customAggregationUnit,
 

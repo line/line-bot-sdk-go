@@ -127,7 +127,7 @@ func (client *MessagingApiAPI) AudienceMatch(
 	audienceMatchMessagesRequest *AudienceMatchMessagesRequest,
 
 ) (struct{}, error) {
-	response, body, error := client.AudienceMatchWithHttpInfo(
+	_, body, error := client.AudienceMatchWithHttpInfo(
 
 		audienceMatchMessagesRequest,
 	)
@@ -197,7 +197,7 @@ func (client *MessagingApiAPI) Broadcast(
 	xLineRetryKey string,
 
 ) (*map[string]interface{}, error) {
-	response, body, error := client.BroadcastWithHttpInfo(
+	_, body, error := client.BroadcastWithHttpInfo(
 
 		broadcastRequest,
 
@@ -271,7 +271,7 @@ func (client *MessagingApiAPI) BroadcastWithHttpInfo(
 
 // https://developers.line.biz/en/reference/messaging-api/#cancel-default-rich-menu
 func (client *MessagingApiAPI) CancelDefaultRichMenu() (struct{}, error) {
-	response, body, error := client.CancelDefaultRichMenuWithHttpInfo()
+	_, body, error := client.CancelDefaultRichMenuWithHttpInfo()
 	return body, error
 }
 
@@ -324,7 +324,7 @@ func (client *MessagingApiAPI) CreateRichMenu(
 	richMenuRequest *RichMenuRequest,
 
 ) (*RichMenuIdResponse, error) {
-	response, body, error := client.CreateRichMenuWithHttpInfo(
+	_, body, error := client.CreateRichMenuWithHttpInfo(
 
 		richMenuRequest,
 	)
@@ -396,7 +396,7 @@ func (client *MessagingApiAPI) CreateRichMenuAlias(
 	createRichMenuAliasRequest *CreateRichMenuAliasRequest,
 
 ) (struct{}, error) {
-	response, body, error := client.CreateRichMenuAliasWithHttpInfo(
+	_, body, error := client.CreateRichMenuAliasWithHttpInfo(
 
 		createRichMenuAliasRequest,
 	)
@@ -463,7 +463,7 @@ func (client *MessagingApiAPI) DeleteRichMenu(
 	richMenuId string,
 
 ) (struct{}, error) {
-	response, body, error := client.DeleteRichMenuWithHttpInfo(
+	_, body, error := client.DeleteRichMenuWithHttpInfo(
 
 		richMenuId,
 	)
@@ -526,7 +526,7 @@ func (client *MessagingApiAPI) DeleteRichMenuAlias(
 	richMenuAliasId string,
 
 ) (struct{}, error) {
-	response, body, error := client.DeleteRichMenuAliasWithHttpInfo(
+	_, body, error := client.DeleteRichMenuAliasWithHttpInfo(
 
 		richMenuAliasId,
 	)
@@ -589,7 +589,7 @@ func (client *MessagingApiAPI) GetAdPhoneMessageStatistics(
 	date string,
 
 ) (*NumberOfMessagesResponse, error) {
-	response, body, error := client.GetAdPhoneMessageStatisticsWithHttpInfo(
+	_, body, error := client.GetAdPhoneMessageStatisticsWithHttpInfo(
 
 		date,
 	)
@@ -663,7 +663,7 @@ func (client *MessagingApiAPI) GetAggregationUnitNameList(
 	start string,
 
 ) (*GetAggregationUnitNameListResponse, error) {
-	response, body, error := client.GetAggregationUnitNameListWithHttpInfo(
+	_, body, error := client.GetAggregationUnitNameListWithHttpInfo(
 
 		limit,
 
@@ -735,7 +735,7 @@ func (client *MessagingApiAPI) GetAggregationUnitNameListWithHttpInfo(
 
 // https://developers.line.biz/en/reference/messaging-api/#get-number-of-units-used-this-month
 func (client *MessagingApiAPI) GetAggregationUnitUsage() (*GetAggregationUnitUsageResponse, error) {
-	response, body, error := client.GetAggregationUnitUsageWithHttpInfo()
+	_, body, error := client.GetAggregationUnitUsageWithHttpInfo()
 	return body, error
 }
 
@@ -788,7 +788,7 @@ func (client *MessagingApiAPI) GetAggregationUnitUsageWithHttpInfo() (*http.Resp
 
 // https://developers.line.biz/en/reference/messaging-api/#get-bot-info
 func (client *MessagingApiAPI) GetBotInfo() (*BotInfoResponse, error) {
-	response, body, error := client.GetBotInfoWithHttpInfo()
+	_, body, error := client.GetBotInfoWithHttpInfo()
 	return body, error
 }
 
@@ -841,7 +841,7 @@ func (client *MessagingApiAPI) GetBotInfoWithHttpInfo() (*http.Response, *BotInf
 
 // https://developers.line.biz/en/reference/messaging-api/#get-default-rich-menu-id
 func (client *MessagingApiAPI) GetDefaultRichMenuId() (*RichMenuIdResponse, error) {
-	response, body, error := client.GetDefaultRichMenuIdWithHttpInfo()
+	_, body, error := client.GetDefaultRichMenuIdWithHttpInfo()
 	return body, error
 }
 
@@ -902,7 +902,7 @@ func (client *MessagingApiAPI) GetFollowers(
 	limit int32,
 
 ) (*GetFollowersResponse, error) {
-	response, body, error := client.GetFollowersWithHttpInfo(
+	_, body, error := client.GetFollowersWithHttpInfo(
 
 		start,
 
@@ -979,7 +979,7 @@ func (client *MessagingApiAPI) GetGroupMemberCount(
 	groupId string,
 
 ) (*GroupMemberCountResponse, error) {
-	response, body, error := client.GetGroupMemberCountWithHttpInfo(
+	_, body, error := client.GetGroupMemberCountWithHttpInfo(
 
 		groupId,
 	)
@@ -1050,7 +1050,7 @@ func (client *MessagingApiAPI) GetGroupMemberProfile(
 	userId string,
 
 ) (*GroupUserProfileResponse, error) {
-	response, body, error := client.GetGroupMemberProfileWithHttpInfo(
+	_, body, error := client.GetGroupMemberProfileWithHttpInfo(
 
 		groupId,
 
@@ -1128,7 +1128,7 @@ func (client *MessagingApiAPI) GetGroupMembersIds(
 	start string,
 
 ) (*MembersIdsResponse, error) {
-	response, body, error := client.GetGroupMembersIdsWithHttpInfo(
+	_, body, error := client.GetGroupMembersIdsWithHttpInfo(
 
 		groupId,
 
@@ -1206,7 +1206,7 @@ func (client *MessagingApiAPI) GetGroupSummary(
 	groupId string,
 
 ) (*GroupSummaryResponse, error) {
-	response, body, error := client.GetGroupSummaryWithHttpInfo(
+	_, body, error := client.GetGroupSummaryWithHttpInfo(
 
 		groupId,
 	)
@@ -1269,7 +1269,7 @@ func (client *MessagingApiAPI) GetGroupSummaryWithHttpInfo(
 
 // https://developers.line.biz/en/reference/messaging-api/#get-quota
 func (client *MessagingApiAPI) GetMessageQuota() (*MessageQuotaResponse, error) {
-	response, body, error := client.GetMessageQuotaWithHttpInfo()
+	_, body, error := client.GetMessageQuotaWithHttpInfo()
 	return body, error
 }
 
@@ -1322,7 +1322,7 @@ func (client *MessagingApiAPI) GetMessageQuotaWithHttpInfo() (*http.Response, *M
 
 // https://developers.line.biz/en/reference/messaging-api/#get-consumption
 func (client *MessagingApiAPI) GetMessageQuotaConsumption() (*QuotaConsumptionResponse, error) {
-	response, body, error := client.GetMessageQuotaConsumptionWithHttpInfo()
+	_, body, error := client.GetMessageQuotaConsumptionWithHttpInfo()
 	return body, error
 }
 
@@ -1380,7 +1380,7 @@ func (client *MessagingApiAPI) GetNarrowcastProgress(
 	requestId string,
 
 ) (*NarrowcastProgressResponse, error) {
-	response, body, error := client.GetNarrowcastProgressWithHttpInfo(
+	_, body, error := client.GetNarrowcastProgressWithHttpInfo(
 
 		requestId,
 	)
@@ -1451,7 +1451,7 @@ func (client *MessagingApiAPI) GetNumberOfSentBroadcastMessages(
 	date string,
 
 ) (*NumberOfMessagesResponse, error) {
-	response, body, error := client.GetNumberOfSentBroadcastMessagesWithHttpInfo(
+	_, body, error := client.GetNumberOfSentBroadcastMessagesWithHttpInfo(
 
 		date,
 	)
@@ -1522,7 +1522,7 @@ func (client *MessagingApiAPI) GetNumberOfSentMulticastMessages(
 	date string,
 
 ) (*NumberOfMessagesResponse, error) {
-	response, body, error := client.GetNumberOfSentMulticastMessagesWithHttpInfo(
+	_, body, error := client.GetNumberOfSentMulticastMessagesWithHttpInfo(
 
 		date,
 	)
@@ -1593,7 +1593,7 @@ func (client *MessagingApiAPI) GetNumberOfSentPushMessages(
 	date string,
 
 ) (*NumberOfMessagesResponse, error) {
-	response, body, error := client.GetNumberOfSentPushMessagesWithHttpInfo(
+	_, body, error := client.GetNumberOfSentPushMessagesWithHttpInfo(
 
 		date,
 	)
@@ -1664,7 +1664,7 @@ func (client *MessagingApiAPI) GetNumberOfSentReplyMessages(
 	date string,
 
 ) (*NumberOfMessagesResponse, error) {
-	response, body, error := client.GetNumberOfSentReplyMessagesWithHttpInfo(
+	_, body, error := client.GetNumberOfSentReplyMessagesWithHttpInfo(
 
 		date,
 	)
@@ -1735,7 +1735,7 @@ func (client *MessagingApiAPI) GetPNPMessageStatistics(
 	date string,
 
 ) (*NumberOfMessagesResponse, error) {
-	response, body, error := client.GetPNPMessageStatisticsWithHttpInfo(
+	_, body, error := client.GetPNPMessageStatisticsWithHttpInfo(
 
 		date,
 	)
@@ -1806,7 +1806,7 @@ func (client *MessagingApiAPI) GetProfile(
 	userId string,
 
 ) (*UserProfileResponse, error) {
-	response, body, error := client.GetProfileWithHttpInfo(
+	_, body, error := client.GetProfileWithHttpInfo(
 
 		userId,
 	)
@@ -1874,7 +1874,7 @@ func (client *MessagingApiAPI) GetRichMenu(
 	richMenuId string,
 
 ) (*RichMenuResponse, error) {
-	response, body, error := client.GetRichMenuWithHttpInfo(
+	_, body, error := client.GetRichMenuWithHttpInfo(
 
 		richMenuId,
 	)
@@ -1942,7 +1942,7 @@ func (client *MessagingApiAPI) GetRichMenuAlias(
 	richMenuAliasId string,
 
 ) (*RichMenuAliasResponse, error) {
-	response, body, error := client.GetRichMenuAliasWithHttpInfo(
+	_, body, error := client.GetRichMenuAliasWithHttpInfo(
 
 		richMenuAliasId,
 	)
@@ -2005,7 +2005,7 @@ func (client *MessagingApiAPI) GetRichMenuAliasWithHttpInfo(
 
 // https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-list
 func (client *MessagingApiAPI) GetRichMenuAliasList() (*RichMenuAliasListResponse, error) {
-	response, body, error := client.GetRichMenuAliasListWithHttpInfo()
+	_, body, error := client.GetRichMenuAliasListWithHttpInfo()
 	return body, error
 }
 
@@ -2063,7 +2063,7 @@ func (client *MessagingApiAPI) GetRichMenuBatchProgress(
 	requestId string,
 
 ) (*RichMenuBatchProgressResponse, error) {
-	response, body, error := client.GetRichMenuBatchProgressWithHttpInfo(
+	_, body, error := client.GetRichMenuBatchProgressWithHttpInfo(
 
 		requestId,
 	)
@@ -2134,7 +2134,7 @@ func (client *MessagingApiAPI) GetRichMenuIdOfUser(
 	userId string,
 
 ) (*RichMenuIdResponse, error) {
-	response, body, error := client.GetRichMenuIdOfUserWithHttpInfo(
+	_, body, error := client.GetRichMenuIdOfUserWithHttpInfo(
 
 		userId,
 	)
@@ -2197,7 +2197,7 @@ func (client *MessagingApiAPI) GetRichMenuIdOfUserWithHttpInfo(
 
 // https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-list
 func (client *MessagingApiAPI) GetRichMenuList() (*RichMenuListResponse, error) {
-	response, body, error := client.GetRichMenuListWithHttpInfo()
+	_, body, error := client.GetRichMenuListWithHttpInfo()
 	return body, error
 }
 
@@ -2255,7 +2255,7 @@ func (client *MessagingApiAPI) GetRoomMemberCount(
 	roomId string,
 
 ) (*RoomMemberCountResponse, error) {
-	response, body, error := client.GetRoomMemberCountWithHttpInfo(
+	_, body, error := client.GetRoomMemberCountWithHttpInfo(
 
 		roomId,
 	)
@@ -2326,7 +2326,7 @@ func (client *MessagingApiAPI) GetRoomMemberProfile(
 	userId string,
 
 ) (*RoomUserProfileResponse, error) {
-	response, body, error := client.GetRoomMemberProfileWithHttpInfo(
+	_, body, error := client.GetRoomMemberProfileWithHttpInfo(
 
 		roomId,
 
@@ -2404,7 +2404,7 @@ func (client *MessagingApiAPI) GetRoomMembersIds(
 	start string,
 
 ) (*MembersIdsResponse, error) {
-	response, body, error := client.GetRoomMembersIdsWithHttpInfo(
+	_, body, error := client.GetRoomMembersIdsWithHttpInfo(
 
 		roomId,
 
@@ -2477,7 +2477,7 @@ func (client *MessagingApiAPI) GetRoomMembersIdsWithHttpInfo(
 
 // https://developers.line.biz/en/reference/messaging-api/#get-webhook-endpoint-information
 func (client *MessagingApiAPI) GetWebhookEndpoint() (*GetWebhookEndpointResponse, error) {
-	response, body, error := client.GetWebhookEndpointWithHttpInfo()
+	_, body, error := client.GetWebhookEndpointWithHttpInfo()
 	return body, error
 }
 
@@ -2535,7 +2535,7 @@ func (client *MessagingApiAPI) IssueLinkToken(
 	userId string,
 
 ) (*IssueLinkTokenResponse, error) {
-	response, body, error := client.IssueLinkTokenWithHttpInfo(
+	_, body, error := client.IssueLinkTokenWithHttpInfo(
 
 		userId,
 	)
@@ -2603,7 +2603,7 @@ func (client *MessagingApiAPI) LeaveGroup(
 	groupId string,
 
 ) (struct{}, error) {
-	response, body, error := client.LeaveGroupWithHttpInfo(
+	_, body, error := client.LeaveGroupWithHttpInfo(
 
 		groupId,
 	)
@@ -2666,7 +2666,7 @@ func (client *MessagingApiAPI) LeaveRoom(
 	roomId string,
 
 ) (struct{}, error) {
-	response, body, error := client.LeaveRoomWithHttpInfo(
+	_, body, error := client.LeaveRoomWithHttpInfo(
 
 		roomId,
 	)
@@ -2732,7 +2732,7 @@ func (client *MessagingApiAPI) LinkRichMenuIdToUser(
 	richMenuId string,
 
 ) (struct{}, error) {
-	response, body, error := client.LinkRichMenuIdToUserWithHttpInfo(
+	_, body, error := client.LinkRichMenuIdToUserWithHttpInfo(
 
 		userId,
 
@@ -2802,7 +2802,7 @@ func (client *MessagingApiAPI) LinkRichMenuIdToUsers(
 	richMenuBulkLinkRequest *RichMenuBulkLinkRequest,
 
 ) (struct{}, error) {
-	response, body, error := client.LinkRichMenuIdToUsersWithHttpInfo(
+	_, body, error := client.LinkRichMenuIdToUsersWithHttpInfo(
 
 		richMenuBulkLinkRequest,
 	)
@@ -2869,7 +2869,7 @@ func (client *MessagingApiAPI) MarkMessagesAsRead(
 	markMessagesAsReadRequest *MarkMessagesAsReadRequest,
 
 ) (struct{}, error) {
-	response, body, error := client.MarkMessagesAsReadWithHttpInfo(
+	_, body, error := client.MarkMessagesAsReadWithHttpInfo(
 
 		markMessagesAsReadRequest,
 	)
@@ -2939,7 +2939,7 @@ func (client *MessagingApiAPI) Multicast(
 	xLineRetryKey string,
 
 ) (*map[string]interface{}, error) {
-	response, body, error := client.MulticastWithHttpInfo(
+	_, body, error := client.MulticastWithHttpInfo(
 
 		multicastRequest,
 
@@ -3021,7 +3021,7 @@ func (client *MessagingApiAPI) Narrowcast(
 	xLineRetryKey string,
 
 ) (*map[string]interface{}, error) {
-	response, body, error := client.NarrowcastWithHttpInfo(
+	_, body, error := client.NarrowcastWithHttpInfo(
 
 		narrowcastRequest,
 
@@ -3103,7 +3103,7 @@ func (client *MessagingApiAPI) PushMessage(
 	xLineRetryKey string,
 
 ) (*PushMessageResponse, error) {
-	response, body, error := client.PushMessageWithHttpInfo(
+	_, body, error := client.PushMessageWithHttpInfo(
 
 		pushMessageRequest,
 
@@ -3185,7 +3185,7 @@ func (client *MessagingApiAPI) PushMessagesByPhone(
 	xLineDeliveryTag string,
 
 ) (struct{}, error) {
-	response, body, error := client.PushMessagesByPhoneWithHttpInfo(
+	_, body, error := client.PushMessagesByPhoneWithHttpInfo(
 
 		pnpMessagesRequest,
 
@@ -3259,7 +3259,7 @@ func (client *MessagingApiAPI) ReplyMessage(
 	replyMessageRequest *ReplyMessageRequest,
 
 ) (*ReplyMessageResponse, error) {
-	response, body, error := client.ReplyMessageWithHttpInfo(
+	_, body, error := client.ReplyMessageWithHttpInfo(
 
 		replyMessageRequest,
 	)
@@ -3331,7 +3331,7 @@ func (client *MessagingApiAPI) RichMenuBatch(
 	richMenuBatchRequest *RichMenuBatchRequest,
 
 ) (struct{}, error) {
-	response, body, error := client.RichMenuBatchWithHttpInfo(
+	_, body, error := client.RichMenuBatchWithHttpInfo(
 
 		richMenuBatchRequest,
 	)
@@ -3398,7 +3398,7 @@ func (client *MessagingApiAPI) SetDefaultRichMenu(
 	richMenuId string,
 
 ) (struct{}, error) {
-	response, body, error := client.SetDefaultRichMenuWithHttpInfo(
+	_, body, error := client.SetDefaultRichMenuWithHttpInfo(
 
 		richMenuId,
 	)
@@ -3461,7 +3461,7 @@ func (client *MessagingApiAPI) SetWebhookEndpoint(
 	setWebhookEndpointRequest *SetWebhookEndpointRequest,
 
 ) (struct{}, error) {
-	response, body, error := client.SetWebhookEndpointWithHttpInfo(
+	_, body, error := client.SetWebhookEndpointWithHttpInfo(
 
 		setWebhookEndpointRequest,
 	)
@@ -3528,7 +3528,7 @@ func (client *MessagingApiAPI) TestWebhookEndpoint(
 	testWebhookEndpointRequest *TestWebhookEndpointRequest,
 
 ) (*TestWebhookEndpointResponse, error) {
-	response, body, error := client.TestWebhookEndpointWithHttpInfo(
+	_, body, error := client.TestWebhookEndpointWithHttpInfo(
 
 		testWebhookEndpointRequest,
 	)
@@ -3600,7 +3600,7 @@ func (client *MessagingApiAPI) UnlinkRichMenuIdFromUser(
 	userId string,
 
 ) (struct{}, error) {
-	response, body, error := client.UnlinkRichMenuIdFromUserWithHttpInfo(
+	_, body, error := client.UnlinkRichMenuIdFromUserWithHttpInfo(
 
 		userId,
 	)
@@ -3663,7 +3663,7 @@ func (client *MessagingApiAPI) UnlinkRichMenuIdFromUsers(
 	richMenuBulkUnlinkRequest *RichMenuBulkUnlinkRequest,
 
 ) (struct{}, error) {
-	response, body, error := client.UnlinkRichMenuIdFromUsersWithHttpInfo(
+	_, body, error := client.UnlinkRichMenuIdFromUsersWithHttpInfo(
 
 		richMenuBulkUnlinkRequest,
 	)
@@ -3733,7 +3733,7 @@ func (client *MessagingApiAPI) UpdateRichMenuAlias(
 	updateRichMenuAliasRequest *UpdateRichMenuAliasRequest,
 
 ) (struct{}, error) {
-	response, body, error := client.UpdateRichMenuAliasWithHttpInfo(
+	_, body, error := client.UpdateRichMenuAliasWithHttpInfo(
 
 		richMenuAliasId,
 
@@ -3807,7 +3807,7 @@ func (client *MessagingApiAPI) ValidateBroadcast(
 	validateMessageRequest *ValidateMessageRequest,
 
 ) (struct{}, error) {
-	response, body, error := client.ValidateBroadcastWithHttpInfo(
+	_, body, error := client.ValidateBroadcastWithHttpInfo(
 
 		validateMessageRequest,
 	)
@@ -3874,7 +3874,7 @@ func (client *MessagingApiAPI) ValidateMulticast(
 	validateMessageRequest *ValidateMessageRequest,
 
 ) (struct{}, error) {
-	response, body, error := client.ValidateMulticastWithHttpInfo(
+	_, body, error := client.ValidateMulticastWithHttpInfo(
 
 		validateMessageRequest,
 	)
@@ -3941,7 +3941,7 @@ func (client *MessagingApiAPI) ValidateNarrowcast(
 	validateMessageRequest *ValidateMessageRequest,
 
 ) (struct{}, error) {
-	response, body, error := client.ValidateNarrowcastWithHttpInfo(
+	_, body, error := client.ValidateNarrowcastWithHttpInfo(
 
 		validateMessageRequest,
 	)
@@ -4008,7 +4008,7 @@ func (client *MessagingApiAPI) ValidatePush(
 	validateMessageRequest *ValidateMessageRequest,
 
 ) (struct{}, error) {
-	response, body, error := client.ValidatePushWithHttpInfo(
+	_, body, error := client.ValidatePushWithHttpInfo(
 
 		validateMessageRequest,
 	)
@@ -4075,7 +4075,7 @@ func (client *MessagingApiAPI) ValidateReply(
 	validateMessageRequest *ValidateMessageRequest,
 
 ) (struct{}, error) {
-	response, body, error := client.ValidateReplyWithHttpInfo(
+	_, body, error := client.ValidateReplyWithHttpInfo(
 
 		validateMessageRequest,
 	)
@@ -4142,7 +4142,7 @@ func (client *MessagingApiAPI) ValidateRichMenuBatchRequest(
 	richMenuBatchRequest *RichMenuBatchRequest,
 
 ) (struct{}, error) {
-	response, body, error := client.ValidateRichMenuBatchRequestWithHttpInfo(
+	_, body, error := client.ValidateRichMenuBatchRequestWithHttpInfo(
 
 		richMenuBatchRequest,
 	)
@@ -4209,7 +4209,7 @@ func (client *MessagingApiAPI) ValidateRichMenuObject(
 	richMenuRequest *RichMenuRequest,
 
 ) (struct{}, error) {
-	response, body, error := client.ValidateRichMenuObjectWithHttpInfo(
+	_, body, error := client.ValidateRichMenuObjectWithHttpInfo(
 
 		richMenuRequest,
 	)

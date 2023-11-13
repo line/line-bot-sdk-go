@@ -252,7 +252,7 @@ func (client *MessagingApiBlobAPI) GetMessageContentTranscodingByMessageId(
 	messageId string,
 
 ) (*GetMessageContentTranscodingResponse, error) {
-	response, body, error := client.GetMessageContentTranscodingByMessageIdWithHttpInfo(
+	_, body, error := client.GetMessageContentTranscodingByMessageIdWithHttpInfo(
 
 		messageId,
 	)
@@ -388,7 +388,7 @@ func (client *MessagingApiBlobAPI) SetRichMenuImage(
 	bodyReader io.Reader,
 
 ) (struct{}, error) {
-	response, body, error := client.SetRichMenuImageWithHttpInfo(
+	_, body, error := client.SetRichMenuImageWithHttpInfo(
 
 		richMenuId,
 

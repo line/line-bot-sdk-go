@@ -142,7 +142,7 @@ func (client *{{ classname }}) {{ op.operationId }}(
     {% endif %}
 {% endfor %}
 ) ({% if op.isResponseFile %}*http.Response{% elseif op.returnType %}*{{ op.returnType }}{% else %}struct{}{% endif %}, error) {
-    {% if op.isResponseFile %}_{% else %}response{% endif %}, body, error := client.{{ op.operationId }}WithHttpInfo(
+    _, body, error := client.{{ op.operationId }}WithHttpInfo(
     {% for param in op.allParams %}
         {% if param.isBodyParam and param.isFile %}
         {{ param.paramName }}ContentType,

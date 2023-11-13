@@ -127,7 +127,7 @@ func (client *LiffAPI) AddLIFFApp(
 	addLiffAppRequest *AddLiffAppRequest,
 
 ) (*AddLiffAppResponse, error) {
-	response, body, error := client.AddLIFFAppWithHttpInfo(
+	_, body, error := client.AddLIFFAppWithHttpInfo(
 
 		addLiffAppRequest,
 	)
@@ -199,7 +199,7 @@ func (client *LiffAPI) DeleteLIFFApp(
 	liffId string,
 
 ) (struct{}, error) {
-	response, body, error := client.DeleteLIFFAppWithHttpInfo(
+	_, body, error := client.DeleteLIFFAppWithHttpInfo(
 
 		liffId,
 	)
@@ -257,7 +257,7 @@ func (client *LiffAPI) DeleteLIFFAppWithHttpInfo(
 
 // https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps
 func (client *LiffAPI) GetAllLIFFApps() (*GetAllLiffAppsResponse, error) {
-	response, body, error := client.GetAllLIFFAppsWithHttpInfo()
+	_, body, error := client.GetAllLIFFAppsWithHttpInfo()
 	return body, error
 }
 
@@ -318,7 +318,7 @@ func (client *LiffAPI) UpdateLIFFApp(
 	updateLiffAppRequest *UpdateLiffAppRequest,
 
 ) (struct{}, error) {
-	response, body, error := client.UpdateLIFFAppWithHttpInfo(
+	_, body, error := client.UpdateLIFFAppWithHttpInfo(
 
 		liffId,
 

@@ -129,7 +129,7 @@ func (client *ChannelAccessTokenAPI) GetsAllValidChannelAccessTokenKeyIds(
 	clientAssertion string,
 
 ) (*ChannelAccessTokenKeyIdsResponse, error) {
-	response, body, error := client.GetsAllValidChannelAccessTokenKeyIdsWithHttpInfo(
+	_, body, error := client.GetsAllValidChannelAccessTokenKeyIdsWithHttpInfo(
 
 		clientAssertionType,
 
@@ -212,7 +212,7 @@ func (client *ChannelAccessTokenAPI) IssueChannelToken(
 	clientSecret string,
 
 ) (*IssueShortLivedChannelAccessTokenResponse, error) {
-	response, body, error := client.IssueChannelTokenWithHttpInfo(
+	_, body, error := client.IssueChannelTokenWithHttpInfo(
 
 		grantType,
 
@@ -303,7 +303,7 @@ func (client *ChannelAccessTokenAPI) IssueChannelTokenByJWT(
 	clientAssertion string,
 
 ) (*IssueChannelAccessTokenResponse, error) {
-	response, body, error := client.IssueChannelTokenByJWTWithHttpInfo(
+	_, body, error := client.IssueChannelTokenByJWTWithHttpInfo(
 
 		grantType,
 
@@ -400,7 +400,7 @@ func (client *ChannelAccessTokenAPI) IssueStatelessChannelToken(
 	clientSecret string,
 
 ) (*IssueStatelessChannelAccessTokenResponse, error) {
-	response, body, error := client.IssueStatelessChannelTokenWithHttpInfo(
+	_, body, error := client.IssueStatelessChannelTokenWithHttpInfo(
 
 		grantType,
 
@@ -497,7 +497,7 @@ func (client *ChannelAccessTokenAPI) RevokeChannelToken(
 	accessToken string,
 
 ) (struct{}, error) {
-	response, body, error := client.RevokeChannelTokenWithHttpInfo(
+	_, body, error := client.RevokeChannelTokenWithHttpInfo(
 
 		accessToken,
 	)
@@ -571,7 +571,7 @@ func (client *ChannelAccessTokenAPI) RevokeChannelTokenByJWT(
 	accessToken string,
 
 ) (struct{}, error) {
-	response, body, error := client.RevokeChannelTokenByJWTWithHttpInfo(
+	_, body, error := client.RevokeChannelTokenByJWTWithHttpInfo(
 
 		clientId,
 
@@ -651,7 +651,7 @@ func (client *ChannelAccessTokenAPI) VerifyChannelToken(
 	accessToken string,
 
 ) (*VerifyChannelAccessTokenResponse, error) {
-	response, body, error := client.VerifyChannelTokenWithHttpInfo(
+	_, body, error := client.VerifyChannelTokenWithHttpInfo(
 
 		accessToken,
 	)
@@ -724,7 +724,7 @@ func (client *ChannelAccessTokenAPI) VerifyChannelTokenByJWT(
 	accessToken string,
 
 ) (*VerifyChannelAccessTokenResponse, error) {
-	response, body, error := client.VerifyChannelTokenByJWTWithHttpInfo(
+	_, body, error := client.VerifyChannelTokenByJWTWithHttpInfo(
 
 		accessToken,
 	)

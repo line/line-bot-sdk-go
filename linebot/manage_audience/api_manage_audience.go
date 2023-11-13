@@ -128,7 +128,7 @@ func (client *ManageAudienceAPI) ActivateAudienceGroup(
 	audienceGroupId int64,
 
 ) (struct{}, error) {
-	response, body, error := client.ActivateAudienceGroupWithHttpInfo(
+	_, body, error := client.ActivateAudienceGroupWithHttpInfo(
 
 		audienceGroupId,
 	)
@@ -191,7 +191,7 @@ func (client *ManageAudienceAPI) AddAudienceToAudienceGroup(
 	addAudienceToAudienceGroupRequest *AddAudienceToAudienceGroupRequest,
 
 ) (struct{}, error) {
-	response, body, error := client.AddAudienceToAudienceGroupWithHttpInfo(
+	_, body, error := client.AddAudienceToAudienceGroupWithHttpInfo(
 
 		addAudienceToAudienceGroupRequest,
 	)
@@ -258,7 +258,7 @@ func (client *ManageAudienceAPI) CreateAudienceGroup(
 	createAudienceGroupRequest *CreateAudienceGroupRequest,
 
 ) (*CreateAudienceGroupResponse, error) {
-	response, body, error := client.CreateAudienceGroupWithHttpInfo(
+	_, body, error := client.CreateAudienceGroupWithHttpInfo(
 
 		createAudienceGroupRequest,
 	)
@@ -330,7 +330,7 @@ func (client *ManageAudienceAPI) CreateClickBasedAudienceGroup(
 	createClickBasedAudienceGroupRequest *CreateClickBasedAudienceGroupRequest,
 
 ) (*CreateClickBasedAudienceGroupResponse, error) {
-	response, body, error := client.CreateClickBasedAudienceGroupWithHttpInfo(
+	_, body, error := client.CreateClickBasedAudienceGroupWithHttpInfo(
 
 		createClickBasedAudienceGroupRequest,
 	)
@@ -402,7 +402,7 @@ func (client *ManageAudienceAPI) CreateImpBasedAudienceGroup(
 	createImpBasedAudienceGroupRequest *CreateImpBasedAudienceGroupRequest,
 
 ) (*CreateImpBasedAudienceGroupResponse, error) {
-	response, body, error := client.CreateImpBasedAudienceGroupWithHttpInfo(
+	_, body, error := client.CreateImpBasedAudienceGroupWithHttpInfo(
 
 		createImpBasedAudienceGroupRequest,
 	)
@@ -474,7 +474,7 @@ func (client *ManageAudienceAPI) DeleteAudienceGroup(
 	audienceGroupId int64,
 
 ) (struct{}, error) {
-	response, body, error := client.DeleteAudienceGroupWithHttpInfo(
+	_, body, error := client.DeleteAudienceGroupWithHttpInfo(
 
 		audienceGroupId,
 	)
@@ -537,7 +537,7 @@ func (client *ManageAudienceAPI) GetAudienceData(
 	audienceGroupId int64,
 
 ) (*GetAudienceDataResponse, error) {
-	response, body, error := client.GetAudienceDataWithHttpInfo(
+	_, body, error := client.GetAudienceDataWithHttpInfo(
 
 		audienceGroupId,
 	)
@@ -600,7 +600,7 @@ func (client *ManageAudienceAPI) GetAudienceDataWithHttpInfo(
 
 // https://developers.line.biz/en/reference/messaging-api/#get-authority-level
 func (client *ManageAudienceAPI) GetAudienceGroupAuthorityLevel() (*GetAudienceGroupAuthorityLevelResponse, error) {
-	response, body, error := client.GetAudienceGroupAuthorityLevelWithHttpInfo()
+	_, body, error := client.GetAudienceGroupAuthorityLevelWithHttpInfo()
 	return body, error
 }
 
@@ -673,7 +673,7 @@ func (client *ManageAudienceAPI) GetAudienceGroups(
 	createRoute AudienceGroupCreateRoute,
 
 ) (*GetAudienceGroupsResponse, error) {
-	response, body, error := client.GetAudienceGroupsWithHttpInfo(
+	_, body, error := client.GetAudienceGroupsWithHttpInfo(
 
 		page,
 
@@ -774,7 +774,7 @@ func (client *ManageAudienceAPI) UpdateAudienceGroupAuthorityLevel(
 	updateAudienceGroupAuthorityLevelRequest *UpdateAudienceGroupAuthorityLevelRequest,
 
 ) (struct{}, error) {
-	response, body, error := client.UpdateAudienceGroupAuthorityLevelWithHttpInfo(
+	_, body, error := client.UpdateAudienceGroupAuthorityLevelWithHttpInfo(
 
 		updateAudienceGroupAuthorityLevelRequest,
 	)
@@ -844,7 +844,7 @@ func (client *ManageAudienceAPI) UpdateAudienceGroupDescription(
 	updateAudienceGroupDescriptionRequest *UpdateAudienceGroupDescriptionRequest,
 
 ) (struct{}, error) {
-	response, body, error := client.UpdateAudienceGroupDescriptionWithHttpInfo(
+	_, body, error := client.UpdateAudienceGroupDescriptionWithHttpInfo(
 
 		audienceGroupId,
 

@@ -126,7 +126,7 @@ func (client *ShopAPI) MissionStickerV3(
 	missionStickerRequest *MissionStickerRequest,
 
 ) (struct{}, error) {
-	response, body, error := client.MissionStickerV3WithHttpInfo(
+	_, body, error := client.MissionStickerV3WithHttpInfo(
 
 		missionStickerRequest,
 	)
