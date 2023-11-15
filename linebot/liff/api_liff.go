@@ -169,11 +169,13 @@ func (client *LiffAPI) AddLIFFAppWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -237,11 +239,13 @@ func (client *LiffAPI) DeleteLIFFAppWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -285,11 +289,13 @@ func (client *LiffAPI) GetAllLIFFAppsWithHttpInfo() (*http.Response, *GetAllLiff
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -367,11 +373,13 @@ func (client *LiffAPI) UpdateLIFFAppWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()

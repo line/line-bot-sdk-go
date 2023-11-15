@@ -271,11 +271,13 @@ func (client *{{ classname }}) {{ op.operationId }}WithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-        body, err := io.ReadAll(res.Body)
+        bodyBytes, err := io.ReadAll(res.Body)
+        bodyReader := bytes.NewReader(bodyBytes)
         if err != nil {
             return res, {{ nilval }}, fmt.Errorf("failed to read response body: %w", err)
         }
-	    return res, {{ nilval }}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+        res.Body = io.NopCloser(bodyReader)
+	    return res, {{ nilval }}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
     {% if op.isResponseFile %}
