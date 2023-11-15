@@ -127,6 +127,27 @@ func (client *MessagingApiBlobAPI) GetMessageContent(
 	messageId string,
 
 ) (*http.Response, error) {
+	_, body, error := client.GetMessageContentWithHttpInfo(
+
+		messageId,
+	)
+	return body, error
+}
+
+// GetMessageContent
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Download image, video, and audio data sent from users.
+// Parameters:
+//        messageId             Message ID of video or audio
+
+// You must close the response body when finished with it.
+// https://developers.line.biz/en/reference/messaging-api/#get-content
+func (client *MessagingApiBlobAPI) GetMessageContentWithHttpInfo(
+
+	messageId string,
+
+) (*http.Response, *http.Response, error) {
 	path := "/v2/bot/message/{messageId}/content"
 
 	path = strings.Replace(path, "{messageId}", messageId, -1)
@@ -134,25 +155,25 @@ func (client *MessagingApiBlobAPI) GetMessageContent(
 	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
-	return res, nil
+	return res, res, nil
 
 }
 
@@ -169,6 +190,27 @@ func (client *MessagingApiBlobAPI) GetMessageContentPreview(
 	messageId string,
 
 ) (*http.Response, error) {
+	_, body, error := client.GetMessageContentPreviewWithHttpInfo(
+
+		messageId,
+	)
+	return body, error
+}
+
+// GetMessageContentPreview
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Get a preview image of the image or video
+// Parameters:
+//        messageId             Message ID of image or video
+
+// You must close the response body when finished with it.
+// https://developers.line.biz/en/reference/messaging-api/#get-image-or-video-preview
+func (client *MessagingApiBlobAPI) GetMessageContentPreviewWithHttpInfo(
+
+	messageId string,
+
+) (*http.Response, *http.Response, error) {
 	path := "/v2/bot/message/{messageId}/content/preview"
 
 	path = strings.Replace(path, "{messageId}", messageId, -1)
@@ -176,25 +218,25 @@ func (client *MessagingApiBlobAPI) GetMessageContentPreview(
 	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
-	return res, nil
+	return res, res, nil
 
 }
 
@@ -210,6 +252,26 @@ func (client *MessagingApiBlobAPI) GetMessageContentTranscodingByMessageId(
 	messageId string,
 
 ) (*GetMessageContentTranscodingResponse, error) {
+	_, body, error := client.GetMessageContentTranscodingByMessageIdWithHttpInfo(
+
+		messageId,
+	)
+	return body, error
+}
+
+// GetMessageContentTranscodingByMessageId
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Verify the preparation status of a video or audio for getting
+// Parameters:
+//        messageId             Message ID of video or audio
+
+// https://developers.line.biz/en/reference/messaging-api/#verify-video-or-audio-preparation-status
+func (client *MessagingApiBlobAPI) GetMessageContentTranscodingByMessageIdWithHttpInfo(
+
+	messageId string,
+
+) (*http.Response, *GetMessageContentTranscodingResponse, error) {
 	path := "/v2/bot/message/{messageId}/content/transcoding"
 
 	path = strings.Replace(path, "{messageId}", messageId, -1)
@@ -217,22 +279,22 @@ func (client *MessagingApiBlobAPI) GetMessageContentTranscodingByMessageId(
 	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
@@ -240,9 +302,9 @@ func (client *MessagingApiBlobAPI) GetMessageContentTranscodingByMessageId(
 	decoder := json.NewDecoder(res.Body)
 	result := GetMessageContentTranscodingResponse{}
 	if err := decoder.Decode(&result); err != nil {
-		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
-	return &result, nil
+	return res, &result, nil
 
 }
 
@@ -259,6 +321,27 @@ func (client *MessagingApiBlobAPI) GetRichMenuImage(
 	richMenuId string,
 
 ) (*http.Response, error) {
+	_, body, error := client.GetRichMenuImageWithHttpInfo(
+
+		richMenuId,
+	)
+	return body, error
+}
+
+// GetRichMenuImage
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Download rich menu image.
+// Parameters:
+//        richMenuId             ID of the rich menu with the image to be downloaded
+
+// You must close the response body when finished with it.
+// https://developers.line.biz/en/reference/messaging-api/#download-rich-menu-image
+func (client *MessagingApiBlobAPI) GetRichMenuImageWithHttpInfo(
+
+	richMenuId string,
+
+) (*http.Response, *http.Response, error) {
 	path := "/v2/bot/richmenu/{richMenuId}/content"
 
 	path = strings.Replace(path, "{richMenuId}", richMenuId, -1)
@@ -266,25 +349,25 @@ func (client *MessagingApiBlobAPI) GetRichMenuImage(
 	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
-	return res, nil
+	return res, res, nil
 
 }
 
@@ -305,6 +388,34 @@ func (client *MessagingApiBlobAPI) SetRichMenuImage(
 	bodyReader io.Reader,
 
 ) (struct{}, error) {
+	_, body, error := client.SetRichMenuImageWithHttpInfo(
+
+		richMenuId,
+
+		bodyContentType,
+		bodyReader,
+	)
+	return body, error
+}
+
+// SetRichMenuImage
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Upload rich menu image
+// Parameters:
+//        richMenuId             The ID of the rich menu to attach the image to
+//        bodyContentType   content-type
+//        bodyReader        file content
+
+// https://developers.line.biz/en/reference/messaging-api/#upload-rich-menu-image
+func (client *MessagingApiBlobAPI) SetRichMenuImageWithHttpInfo(
+
+	richMenuId string,
+
+	bodyContentType string,
+	bodyReader io.Reader,
+
+) (*http.Response, struct{}, error) {
 	path := "/v2/bot/richmenu/{richMenuId}/content"
 
 	path = strings.Replace(path, "{richMenuId}", richMenuId, -1)
@@ -312,7 +423,7 @@ func (client *MessagingApiBlobAPI) SetRichMenuImage(
 	log.Printf("Sending request: method=Post path=%s bodyContentType=%s\n", path, bodyContentType)
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), bodyReader)
 	if err != nil {
-		return struct{}{}, err
+		return nil, struct{}{}, err
 	}
 	req.Header.Set("Content-Type", bodyContentType)
 
@@ -320,19 +431,19 @@ func (client *MessagingApiBlobAPI) SetRichMenuImage(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return struct{}{}, err
+		return res, struct{}{}, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return struct{}{}, fmt.Errorf("failed to read response body: %w", err)
+			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
 
-	return struct{}{}, nil
+	return res, struct{}{}, nil
 
 }

@@ -153,6 +153,71 @@ func (client *LineModuleAttachAPI) AttachModule(
 	brandType string,
 
 ) (*AttachModuleResponse, error) {
+	_, body, error := client.AttachModuleWithHttpInfo(
+
+		grantType,
+
+		code,
+
+		redirectUri,
+
+		codeVerifier,
+
+		clientId,
+
+		clientSecret,
+
+		region,
+
+		basicSearchId,
+
+		scope,
+
+		brandType,
+	)
+	return body, error
+}
+
+// AttachModule
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Attach by operation of the module channel provider
+// Parameters:
+//        grantType             authorization_code
+//        code             Authorization code received from the LINE Platform.
+//        redirectUri             Specify the redirect_uri specified in the URL for authentication and authorization.
+//        codeVerifier             Specify when using PKCE (Proof Key for Code Exchange) defined in the OAuth 2.0 extension specification as a countermeasure against authorization code interception attacks.
+//        clientId             Instead of using Authorization header, you can use this parameter to specify the channel ID of the module channel. You can find the channel ID of the module channel in the LINE Developers Console.
+//        clientSecret             Instead of using Authorization header, you can use this parameter to specify the channel secret of the module channel. You can find the channel secret of the module channel in the LINE Developers Console.
+//        region             If you specified a value for region in the URL for authentication and authorization, specify the same value.
+//        basicSearchId             If you specified a value for basic_search_id in the URL for authentication and authorization, specify the same value.
+//        scope             If you specified a value for scope in the URL for authentication and authorization, specify the same value.
+//        brandType             If you specified a value for brand_type in the URL for authentication and authorization, specify the same value.
+
+// https://developers.line.biz/en/reference/partner-docs/#link-attach-by-operation-module-channel-provider
+func (client *LineModuleAttachAPI) AttachModuleWithHttpInfo(
+
+	grantType string,
+
+	code string,
+
+	redirectUri string,
+
+	codeVerifier string,
+
+	clientId string,
+
+	clientSecret string,
+
+	region string,
+
+	basicSearchId string,
+
+	scope string,
+
+	brandType string,
+
+) (*http.Response, *AttachModuleResponse, error) {
 	path := "/module/auth/v1/token"
 
 	vs := url.Values{
@@ -173,7 +238,7 @@ func (client *LineModuleAttachAPI) AttachModule(
 	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf)
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), body)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
@@ -181,15 +246,15 @@ func (client *LineModuleAttachAPI) AttachModule(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
@@ -197,8 +262,8 @@ func (client *LineModuleAttachAPI) AttachModule(
 	decoder := json.NewDecoder(res.Body)
 	result := AttachModuleResponse{}
 	if err := decoder.Decode(&result); err != nil {
-		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
-	return &result, nil
+	return res, &result, nil
 
 }

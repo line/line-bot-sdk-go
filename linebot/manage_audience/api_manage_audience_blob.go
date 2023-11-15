@@ -135,6 +135,36 @@ func (client *ManageAudienceBlobAPI) AddUserIdsToAudience(
 	uploadDescription string,
 
 ) (struct{}, error) {
+	_, body, error := client.AddUserIdsToAudienceWithHttpInfo(
+
+		file,
+
+		audienceGroupId,
+
+		uploadDescription,
+	)
+	return body, error
+}
+
+// AddUserIdsToAudience
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by file).
+// Parameters:
+//        file             A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
+//        audienceGroupId             The audience ID.
+//        uploadDescription             The description to register with the job
+
+// https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group-by-file
+func (client *ManageAudienceBlobAPI) AddUserIdsToAudienceWithHttpInfo(
+
+	file *os.File,
+
+	audienceGroupId int64,
+
+	uploadDescription string,
+
+) (*http.Response, struct{}, error) {
 	path := "/v2/bot/audienceGroup/upload/byFile"
 
 	body := &bytes.Buffer{}
@@ -146,19 +176,19 @@ func (client *ManageAudienceBlobAPI) AddUserIdsToAudience(
 
 	fileWriter, err := writer.CreateFormFile("file", file.Name())
 	if err != nil {
-		return struct{}{}, err
+		return nil, struct{}{}, err
 	}
 	io.Copy(fileWriter, file)
 
 	err = writer.Close()
 	if err != nil {
-		return struct{}{}, err
+		return nil, struct{}{}, err
 	}
 
 	log.Printf("Sending request: method=Put path=%s\n", path)
 	req, err := http.NewRequest(http.MethodPut, client.Url(path), body)
 	if err != nil {
-		return struct{}{}, err
+		return nil, struct{}{}, err
 	}
 	req.Header.Set("Content-Type", writer.FormDataContentType())
 
@@ -166,20 +196,20 @@ func (client *ManageAudienceBlobAPI) AddUserIdsToAudience(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return struct{}{}, err
+		return res, struct{}{}, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return struct{}{}, fmt.Errorf("failed to read response body: %w", err)
+			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
 
-	return struct{}{}, nil
+	return res, struct{}{}, nil
 
 }
 
@@ -204,6 +234,41 @@ func (client *ManageAudienceBlobAPI) CreateAudienceForUploadingUserIds(
 	uploadDescription string,
 
 ) (*CreateAudienceGroupResponse, error) {
+	_, body, error := client.CreateAudienceForUploadingUserIdsWithHttpInfo(
+
+		file,
+
+		description,
+
+		isIfaAudience,
+
+		uploadDescription,
+	)
+	return body, error
+}
+
+// CreateAudienceForUploadingUserIds
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Create audience for uploading user IDs (by file).
+// Parameters:
+//        file             A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
+//        description             The audience's name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
+//        isIfaAudience             To specify recipients by IFAs: set `true`. To specify recipients by user IDs: set `false` or omit isIfaAudience property.
+//        uploadDescription             The description to register for the job (in `jobs[].description`).
+
+// https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group-by-file
+func (client *ManageAudienceBlobAPI) CreateAudienceForUploadingUserIdsWithHttpInfo(
+
+	file *os.File,
+
+	description string,
+
+	isIfaAudience bool,
+
+	uploadDescription string,
+
+) (*http.Response, *CreateAudienceGroupResponse, error) {
 	path := "/v2/bot/audienceGroup/upload/byFile"
 
 	body := &bytes.Buffer{}
@@ -217,19 +282,19 @@ func (client *ManageAudienceBlobAPI) CreateAudienceForUploadingUserIds(
 
 	fileWriter, err := writer.CreateFormFile("file", file.Name())
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	io.Copy(fileWriter, file)
 
 	err = writer.Close()
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	log.Printf("Sending request: method=Post path=%s\n", path)
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), body)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	req.Header.Set("Content-Type", writer.FormDataContentType())
 
@@ -237,15 +302,15 @@ func (client *ManageAudienceBlobAPI) CreateAudienceForUploadingUserIds(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
@@ -253,8 +318,8 @@ func (client *ManageAudienceBlobAPI) CreateAudienceForUploadingUserIds(
 	decoder := json.NewDecoder(res.Body)
 	result := CreateAudienceGroupResponse{}
 	if err := decoder.Decode(&result); err != nil {
-		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
-	return &result, nil
+	return res, &result, nil
 
 }

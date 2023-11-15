@@ -126,17 +126,37 @@ func (client *ShopAPI) MissionStickerV3(
 	missionStickerRequest *MissionStickerRequest,
 
 ) (struct{}, error) {
+	_, body, error := client.MissionStickerV3WithHttpInfo(
+
+		missionStickerRequest,
+	)
+	return body, error
+}
+
+// MissionStickerV3
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Sends a mission sticker.
+// Parameters:
+//        missionStickerRequest
+
+// https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3
+func (client *ShopAPI) MissionStickerV3WithHttpInfo(
+
+	missionStickerRequest *MissionStickerRequest,
+
+) (*http.Response, struct{}, error) {
 	path := "/shop/v3/mission"
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
 	if err := enc.Encode(missionStickerRequest); err != nil {
-		return struct{}{}, err
+		return nil, struct{}{}, err
 	}
 	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
-		return struct{}{}, err
+		return nil, struct{}{}, err
 	}
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -144,19 +164,19 @@ func (client *ShopAPI) MissionStickerV3(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return struct{}{}, err
+		return res, struct{}{}, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return struct{}{}, fmt.Errorf("failed to read response body: %w", err)
+			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
 
-	return struct{}{}, nil
+	return res, struct{}{}, nil
 
 }

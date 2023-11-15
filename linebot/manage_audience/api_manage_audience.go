@@ -128,6 +128,26 @@ func (client *ManageAudienceAPI) ActivateAudienceGroup(
 	audienceGroupId int64,
 
 ) (struct{}, error) {
+	_, body, error := client.ActivateAudienceGroupWithHttpInfo(
+
+		audienceGroupId,
+	)
+	return body, error
+}
+
+// ActivateAudienceGroup
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Activate audience
+// Parameters:
+//        audienceGroupId             The audience ID.
+
+// https://developers.line.biz/en/reference/messaging-api/#activate-audience-group
+func (client *ManageAudienceAPI) ActivateAudienceGroupWithHttpInfo(
+
+	audienceGroupId int64,
+
+) (*http.Response, struct{}, error) {
 	path := "/v2/bot/audienceGroup/{audienceGroupId}/activate"
 
 	path = strings.Replace(path, "{audienceGroupId}", strconv.FormatInt(audienceGroupId, 10), -1)
@@ -135,27 +155,27 @@ func (client *ManageAudienceAPI) ActivateAudienceGroup(
 	log.Printf("Sending request: method=Put path=%s\n", path)
 	req, err := http.NewRequest(http.MethodPut, client.Url(path), nil)
 	if err != nil {
-		return struct{}{}, err
+		return nil, struct{}{}, err
 	}
 
 	res, err := client.Do(req)
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return struct{}{}, err
+		return res, struct{}{}, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return struct{}{}, fmt.Errorf("failed to read response body: %w", err)
+			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
 
-	return struct{}{}, nil
+	return res, struct{}{}, nil
 
 }
 
@@ -171,17 +191,37 @@ func (client *ManageAudienceAPI) AddAudienceToAudienceGroup(
 	addAudienceToAudienceGroupRequest *AddAudienceToAudienceGroupRequest,
 
 ) (struct{}, error) {
+	_, body, error := client.AddAudienceToAudienceGroupWithHttpInfo(
+
+		addAudienceToAudienceGroupRequest,
+	)
+	return body, error
+}
+
+// AddAudienceToAudienceGroup
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by JSON)
+// Parameters:
+//        addAudienceToAudienceGroupRequest
+
+// https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group
+func (client *ManageAudienceAPI) AddAudienceToAudienceGroupWithHttpInfo(
+
+	addAudienceToAudienceGroupRequest *AddAudienceToAudienceGroupRequest,
+
+) (*http.Response, struct{}, error) {
 	path := "/v2/bot/audienceGroup/upload"
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
 	if err := enc.Encode(addAudienceToAudienceGroupRequest); err != nil {
-		return struct{}{}, err
+		return nil, struct{}{}, err
 	}
 	log.Printf("Sending request: method=Put path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPut, client.Url(path), &buf)
 	if err != nil {
-		return struct{}{}, err
+		return nil, struct{}{}, err
 	}
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -189,20 +229,20 @@ func (client *ManageAudienceAPI) AddAudienceToAudienceGroup(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return struct{}{}, err
+		return res, struct{}{}, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return struct{}{}, fmt.Errorf("failed to read response body: %w", err)
+			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
 
-	return struct{}{}, nil
+	return res, struct{}{}, nil
 
 }
 
@@ -218,17 +258,37 @@ func (client *ManageAudienceAPI) CreateAudienceGroup(
 	createAudienceGroupRequest *CreateAudienceGroupRequest,
 
 ) (*CreateAudienceGroupResponse, error) {
+	_, body, error := client.CreateAudienceGroupWithHttpInfo(
+
+		createAudienceGroupRequest,
+	)
+	return body, error
+}
+
+// CreateAudienceGroup
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Create audience for uploading user IDs (by JSON)
+// Parameters:
+//        createAudienceGroupRequest
+
+// https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group
+func (client *ManageAudienceAPI) CreateAudienceGroupWithHttpInfo(
+
+	createAudienceGroupRequest *CreateAudienceGroupRequest,
+
+) (*http.Response, *CreateAudienceGroupResponse, error) {
 	path := "/v2/bot/audienceGroup/upload"
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
 	if err := enc.Encode(createAudienceGroupRequest); err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -236,15 +296,15 @@ func (client *ManageAudienceAPI) CreateAudienceGroup(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
@@ -252,9 +312,9 @@ func (client *ManageAudienceAPI) CreateAudienceGroup(
 	decoder := json.NewDecoder(res.Body)
 	result := CreateAudienceGroupResponse{}
 	if err := decoder.Decode(&result); err != nil {
-		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
-	return &result, nil
+	return res, &result, nil
 
 }
 
@@ -270,17 +330,37 @@ func (client *ManageAudienceAPI) CreateClickBasedAudienceGroup(
 	createClickBasedAudienceGroupRequest *CreateClickBasedAudienceGroupRequest,
 
 ) (*CreateClickBasedAudienceGroupResponse, error) {
+	_, body, error := client.CreateClickBasedAudienceGroupWithHttpInfo(
+
+		createClickBasedAudienceGroupRequest,
+	)
+	return body, error
+}
+
+// CreateClickBasedAudienceGroup
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Create audience for click-based retargeting
+// Parameters:
+//        createClickBasedAudienceGroupRequest
+
+// https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group
+func (client *ManageAudienceAPI) CreateClickBasedAudienceGroupWithHttpInfo(
+
+	createClickBasedAudienceGroupRequest *CreateClickBasedAudienceGroupRequest,
+
+) (*http.Response, *CreateClickBasedAudienceGroupResponse, error) {
 	path := "/v2/bot/audienceGroup/click"
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
 	if err := enc.Encode(createClickBasedAudienceGroupRequest); err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -288,15 +368,15 @@ func (client *ManageAudienceAPI) CreateClickBasedAudienceGroup(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
@@ -304,9 +384,9 @@ func (client *ManageAudienceAPI) CreateClickBasedAudienceGroup(
 	decoder := json.NewDecoder(res.Body)
 	result := CreateClickBasedAudienceGroupResponse{}
 	if err := decoder.Decode(&result); err != nil {
-		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
-	return &result, nil
+	return res, &result, nil
 
 }
 
@@ -322,17 +402,37 @@ func (client *ManageAudienceAPI) CreateImpBasedAudienceGroup(
 	createImpBasedAudienceGroupRequest *CreateImpBasedAudienceGroupRequest,
 
 ) (*CreateImpBasedAudienceGroupResponse, error) {
+	_, body, error := client.CreateImpBasedAudienceGroupWithHttpInfo(
+
+		createImpBasedAudienceGroupRequest,
+	)
+	return body, error
+}
+
+// CreateImpBasedAudienceGroup
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Create audience for impression-based retargeting
+// Parameters:
+//        createImpBasedAudienceGroupRequest
+
+// https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group
+func (client *ManageAudienceAPI) CreateImpBasedAudienceGroupWithHttpInfo(
+
+	createImpBasedAudienceGroupRequest *CreateImpBasedAudienceGroupRequest,
+
+) (*http.Response, *CreateImpBasedAudienceGroupResponse, error) {
 	path := "/v2/bot/audienceGroup/imp"
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
 	if err := enc.Encode(createImpBasedAudienceGroupRequest); err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -340,15 +440,15 @@ func (client *ManageAudienceAPI) CreateImpBasedAudienceGroup(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
@@ -356,9 +456,9 @@ func (client *ManageAudienceAPI) CreateImpBasedAudienceGroup(
 	decoder := json.NewDecoder(res.Body)
 	result := CreateImpBasedAudienceGroupResponse{}
 	if err := decoder.Decode(&result); err != nil {
-		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
-	return &result, nil
+	return res, &result, nil
 
 }
 
@@ -374,6 +474,26 @@ func (client *ManageAudienceAPI) DeleteAudienceGroup(
 	audienceGroupId int64,
 
 ) (struct{}, error) {
+	_, body, error := client.DeleteAudienceGroupWithHttpInfo(
+
+		audienceGroupId,
+	)
+	return body, error
+}
+
+// DeleteAudienceGroup
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Delete audience
+// Parameters:
+//        audienceGroupId             The audience ID.
+
+// https://developers.line.biz/en/reference/messaging-api/#delete-audience-group
+func (client *ManageAudienceAPI) DeleteAudienceGroupWithHttpInfo(
+
+	audienceGroupId int64,
+
+) (*http.Response, struct{}, error) {
 	path := "/v2/bot/audienceGroup/{audienceGroupId}"
 
 	path = strings.Replace(path, "{audienceGroupId}", strconv.FormatInt(audienceGroupId, 10), -1)
@@ -381,27 +501,27 @@ func (client *ManageAudienceAPI) DeleteAudienceGroup(
 	log.Printf("Sending request: method=Delete path=%s\n", path)
 	req, err := http.NewRequest(http.MethodDelete, client.Url(path), nil)
 	if err != nil {
-		return struct{}{}, err
+		return nil, struct{}{}, err
 	}
 
 	res, err := client.Do(req)
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return struct{}{}, err
+		return res, struct{}{}, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return struct{}{}, fmt.Errorf("failed to read response body: %w", err)
+			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
 
-	return struct{}{}, nil
+	return res, struct{}{}, nil
 
 }
 
@@ -417,6 +537,26 @@ func (client *ManageAudienceAPI) GetAudienceData(
 	audienceGroupId int64,
 
 ) (*GetAudienceDataResponse, error) {
+	_, body, error := client.GetAudienceDataWithHttpInfo(
+
+		audienceGroupId,
+	)
+	return body, error
+}
+
+// GetAudienceData
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Gets audience data.
+// Parameters:
+//        audienceGroupId             The audience ID.
+
+// https://developers.line.biz/en/reference/messaging-api/#get-audience-group
+func (client *ManageAudienceAPI) GetAudienceDataWithHttpInfo(
+
+	audienceGroupId int64,
+
+) (*http.Response, *GetAudienceDataResponse, error) {
 	path := "/v2/bot/audienceGroup/{audienceGroupId}"
 
 	path = strings.Replace(path, "{audienceGroupId}", strconv.FormatInt(audienceGroupId, 10), -1)
@@ -424,22 +564,22 @@ func (client *ManageAudienceAPI) GetAudienceData(
 	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
@@ -447,9 +587,9 @@ func (client *ManageAudienceAPI) GetAudienceData(
 	decoder := json.NewDecoder(res.Body)
 	result := GetAudienceDataResponse{}
 	if err := decoder.Decode(&result); err != nil {
-		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
-	return &result, nil
+	return res, &result, nil
 
 }
 
@@ -460,27 +600,39 @@ func (client *ManageAudienceAPI) GetAudienceData(
 
 // https://developers.line.biz/en/reference/messaging-api/#get-authority-level
 func (client *ManageAudienceAPI) GetAudienceGroupAuthorityLevel() (*GetAudienceGroupAuthorityLevelResponse, error) {
+	_, body, error := client.GetAudienceGroupAuthorityLevelWithHttpInfo()
+	return body, error
+}
+
+// GetAudienceGroupAuthorityLevel
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Get the authority level of the audience
+// Parameters:
+
+// https://developers.line.biz/en/reference/messaging-api/#get-authority-level
+func (client *ManageAudienceAPI) GetAudienceGroupAuthorityLevelWithHttpInfo() (*http.Response, *GetAudienceGroupAuthorityLevelResponse, error) {
 	path := "/v2/bot/audienceGroup/authorityLevel"
 
 	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
@@ -488,9 +640,9 @@ func (client *ManageAudienceAPI) GetAudienceGroupAuthorityLevel() (*GetAudienceG
 	decoder := json.NewDecoder(res.Body)
 	result := GetAudienceGroupAuthorityLevelResponse{}
 	if err := decoder.Decode(&result); err != nil {
-		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
-	return &result, nil
+	return res, &result, nil
 
 }
 
@@ -521,12 +673,57 @@ func (client *ManageAudienceAPI) GetAudienceGroups(
 	createRoute AudienceGroupCreateRoute,
 
 ) (*GetAudienceGroupsResponse, error) {
+	_, body, error := client.GetAudienceGroupsWithHttpInfo(
+
+		page,
+
+		description,
+
+		status,
+
+		size,
+
+		includesExternalPublicGroups,
+
+		createRoute,
+	)
+	return body, error
+}
+
+// GetAudienceGroups
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Gets data for more than one audience.
+// Parameters:
+//        page             The page to return when getting (paginated) results. Must be 1 or higher.
+//        description             The name of the audience(s) to return. You can search for partial matches. This is case-insensitive, meaning AUDIENCE and audience are considered identical. If omitted, the name of the audience(s) will not be used as a search criterion.
+//        status             The status of the audience(s) to return. If omitted, the status of the audience(s) will not be used as a search criterion.
+//        size             The number of audiences per page. Default: 20 Max: 40
+//        includesExternalPublicGroups             true (default): Get public audiences created in all channels linked to the same bot. false: Get audiences created in the same channel.
+//        createRoute             How the audience was created. If omitted, all audiences are included.  `OA_MANAGER`: Return only audiences created with LINE Official Account Manager (opens new window). `MESSAGING_API`: Return only audiences created with Messaging API.
+
+// https://developers.line.biz/en/reference/messaging-api/#get-audience-groups
+func (client *ManageAudienceAPI) GetAudienceGroupsWithHttpInfo(
+
+	page int64,
+
+	description string,
+
+	status AudienceGroupStatus,
+
+	size int64,
+
+	includesExternalPublicGroups bool,
+
+	createRoute AudienceGroupCreateRoute,
+
+) (*http.Response, *GetAudienceGroupsResponse, error) {
 	path := "/v2/bot/audienceGroup/list"
 
 	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	var query url.Values
@@ -543,15 +740,15 @@ func (client *ManageAudienceAPI) GetAudienceGroups(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
@@ -559,9 +756,9 @@ func (client *ManageAudienceAPI) GetAudienceGroups(
 	decoder := json.NewDecoder(res.Body)
 	result := GetAudienceGroupsResponse{}
 	if err := decoder.Decode(&result); err != nil {
-		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
-	return &result, nil
+	return res, &result, nil
 
 }
 
@@ -577,17 +774,37 @@ func (client *ManageAudienceAPI) UpdateAudienceGroupAuthorityLevel(
 	updateAudienceGroupAuthorityLevelRequest *UpdateAudienceGroupAuthorityLevelRequest,
 
 ) (struct{}, error) {
+	_, body, error := client.UpdateAudienceGroupAuthorityLevelWithHttpInfo(
+
+		updateAudienceGroupAuthorityLevelRequest,
+	)
+	return body, error
+}
+
+// UpdateAudienceGroupAuthorityLevel
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Change the authority level of the audience
+// Parameters:
+//        updateAudienceGroupAuthorityLevelRequest
+
+// https://developers.line.biz/en/reference/messaging-api/#change-authority-level
+func (client *ManageAudienceAPI) UpdateAudienceGroupAuthorityLevelWithHttpInfo(
+
+	updateAudienceGroupAuthorityLevelRequest *UpdateAudienceGroupAuthorityLevelRequest,
+
+) (*http.Response, struct{}, error) {
 	path := "/v2/bot/audienceGroup/authorityLevel"
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
 	if err := enc.Encode(updateAudienceGroupAuthorityLevelRequest); err != nil {
-		return struct{}{}, err
+		return nil, struct{}{}, err
 	}
 	log.Printf("Sending request: method=Put path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPut, client.Url(path), &buf)
 	if err != nil {
-		return struct{}{}, err
+		return nil, struct{}{}, err
 	}
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -595,20 +812,20 @@ func (client *ManageAudienceAPI) UpdateAudienceGroupAuthorityLevel(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return struct{}{}, err
+		return res, struct{}{}, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return struct{}{}, fmt.Errorf("failed to read response body: %w", err)
+			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
 
-	return struct{}{}, nil
+	return res, struct{}{}, nil
 
 }
 
@@ -627,6 +844,31 @@ func (client *ManageAudienceAPI) UpdateAudienceGroupDescription(
 	updateAudienceGroupDescriptionRequest *UpdateAudienceGroupDescriptionRequest,
 
 ) (struct{}, error) {
+	_, body, error := client.UpdateAudienceGroupDescriptionWithHttpInfo(
+
+		audienceGroupId,
+
+		updateAudienceGroupDescriptionRequest,
+	)
+	return body, error
+}
+
+// UpdateAudienceGroupDescription
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Renames an existing audience.
+// Parameters:
+//        audienceGroupId             The audience ID.
+//        updateAudienceGroupDescriptionRequest
+
+// https://developers.line.biz/en/reference/messaging-api/#set-description-audience-group
+func (client *ManageAudienceAPI) UpdateAudienceGroupDescriptionWithHttpInfo(
+
+	audienceGroupId int64,
+
+	updateAudienceGroupDescriptionRequest *UpdateAudienceGroupDescriptionRequest,
+
+) (*http.Response, struct{}, error) {
 	path := "/v2/bot/audienceGroup/{audienceGroupId}/updateDescription"
 
 	path = strings.Replace(path, "{audienceGroupId}", strconv.FormatInt(audienceGroupId, 10), -1)
@@ -634,12 +876,12 @@ func (client *ManageAudienceAPI) UpdateAudienceGroupDescription(
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
 	if err := enc.Encode(updateAudienceGroupDescriptionRequest); err != nil {
-		return struct{}{}, err
+		return nil, struct{}{}, err
 	}
 	log.Printf("Sending request: method=Put path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPut, client.Url(path), &buf)
 	if err != nil {
-		return struct{}{}, err
+		return nil, struct{}{}, err
 	}
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -647,19 +889,19 @@ func (client *ManageAudienceAPI) UpdateAudienceGroupDescription(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return struct{}{}, err
+		return res, struct{}{}, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return struct{}{}, fmt.Errorf("failed to read response body: %w", err)
+			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
 
-	return struct{}{}, nil
+	return res, struct{}{}, nil
 
 }

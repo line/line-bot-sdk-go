@@ -129,12 +129,37 @@ func (client *ChannelAccessTokenAPI) GetsAllValidChannelAccessTokenKeyIds(
 	clientAssertion string,
 
 ) (*ChannelAccessTokenKeyIdsResponse, error) {
+	_, body, error := client.GetsAllValidChannelAccessTokenKeyIdsWithHttpInfo(
+
+		clientAssertionType,
+
+		clientAssertion,
+	)
+	return body, error
+}
+
+// GetsAllValidChannelAccessTokenKeyIds
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Gets all valid channel access token key IDs.
+// Parameters:
+//        clientAssertionType             `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`
+//        clientAssertion             A JSON Web Token (JWT) (opens new window)the client needs to create and sign with the private key.
+
+// https://developers.line.biz/en/reference/messaging-api/#get-all-valid-channel-access-token-key-ids-v2-1
+func (client *ChannelAccessTokenAPI) GetsAllValidChannelAccessTokenKeyIdsWithHttpInfo(
+
+	clientAssertionType string,
+
+	clientAssertion string,
+
+) (*http.Response, *ChannelAccessTokenKeyIdsResponse, error) {
 	path := "/oauth2/v2.1/tokens/kid"
 
 	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	var query url.Values
@@ -147,15 +172,15 @@ func (client *ChannelAccessTokenAPI) GetsAllValidChannelAccessTokenKeyIds(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
@@ -163,9 +188,9 @@ func (client *ChannelAccessTokenAPI) GetsAllValidChannelAccessTokenKeyIds(
 	decoder := json.NewDecoder(res.Body)
 	result := ChannelAccessTokenKeyIdsResponse{}
 	if err := decoder.Decode(&result); err != nil {
-		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
-	return &result, nil
+	return res, &result, nil
 
 }
 
@@ -187,6 +212,36 @@ func (client *ChannelAccessTokenAPI) IssueChannelToken(
 	clientSecret string,
 
 ) (*IssueShortLivedChannelAccessTokenResponse, error) {
+	_, body, error := client.IssueChannelTokenWithHttpInfo(
+
+		grantType,
+
+		clientId,
+
+		clientSecret,
+	)
+	return body, error
+}
+
+// IssueChannelToken
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Issue short-lived channel access token
+// Parameters:
+//        grantType             `client_credentials`
+//        clientId             Channel ID.
+//        clientSecret             Channel secret.
+
+// https://developers.line.biz/en/reference/messaging-api/#issue-shortlived-channel-access-token
+func (client *ChannelAccessTokenAPI) IssueChannelTokenWithHttpInfo(
+
+	grantType string,
+
+	clientId string,
+
+	clientSecret string,
+
+) (*http.Response, *IssueShortLivedChannelAccessTokenResponse, error) {
 	path := "/v2/oauth/accessToken"
 
 	vs := url.Values{
@@ -200,7 +255,7 @@ func (client *ChannelAccessTokenAPI) IssueChannelToken(
 	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf)
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), body)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
@@ -208,15 +263,15 @@ func (client *ChannelAccessTokenAPI) IssueChannelToken(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
@@ -224,9 +279,9 @@ func (client *ChannelAccessTokenAPI) IssueChannelToken(
 	decoder := json.NewDecoder(res.Body)
 	result := IssueShortLivedChannelAccessTokenResponse{}
 	if err := decoder.Decode(&result); err != nil {
-		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
-	return &result, nil
+	return res, &result, nil
 
 }
 
@@ -248,6 +303,36 @@ func (client *ChannelAccessTokenAPI) IssueChannelTokenByJWT(
 	clientAssertion string,
 
 ) (*IssueChannelAccessTokenResponse, error) {
+	_, body, error := client.IssueChannelTokenByJWTWithHttpInfo(
+
+		grantType,
+
+		clientAssertionType,
+
+		clientAssertion,
+	)
+	return body, error
+}
+
+// IssueChannelTokenByJWT
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Issues a channel access token that allows you to specify a desired expiration date. This method lets you use JWT assertion for authentication.
+// Parameters:
+//        grantType             client_credentials
+//        clientAssertionType             urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+//        clientAssertion             A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
+
+// https://developers.line.biz/en/reference/messaging-api/#issue-channel-access-token-v2-1
+func (client *ChannelAccessTokenAPI) IssueChannelTokenByJWTWithHttpInfo(
+
+	grantType string,
+
+	clientAssertionType string,
+
+	clientAssertion string,
+
+) (*http.Response, *IssueChannelAccessTokenResponse, error) {
 	path := "/oauth2/v2.1/token"
 
 	vs := url.Values{
@@ -261,7 +346,7 @@ func (client *ChannelAccessTokenAPI) IssueChannelTokenByJWT(
 	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf)
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), body)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
@@ -269,15 +354,15 @@ func (client *ChannelAccessTokenAPI) IssueChannelTokenByJWT(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
@@ -285,9 +370,9 @@ func (client *ChannelAccessTokenAPI) IssueChannelTokenByJWT(
 	decoder := json.NewDecoder(res.Body)
 	result := IssueChannelAccessTokenResponse{}
 	if err := decoder.Decode(&result); err != nil {
-		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
-	return &result, nil
+	return res, &result, nil
 
 }
 
@@ -315,6 +400,46 @@ func (client *ChannelAccessTokenAPI) IssueStatelessChannelToken(
 	clientSecret string,
 
 ) (*IssueStatelessChannelAccessTokenResponse, error) {
+	_, body, error := client.IssueStatelessChannelTokenWithHttpInfo(
+
+		grantType,
+
+		clientAssertionType,
+
+		clientAssertion,
+
+		clientId,
+
+		clientSecret,
+	)
+	return body, error
+}
+
+// IssueStatelessChannelToken
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Issues a new stateless channel access token, which doesn't have max active token limit unlike the other token types. The newly issued token is only valid for 15 minutes but can not be revoked until it naturally expires.
+// Parameters:
+//        grantType             `client_credentials`
+//        clientAssertionType             URL-encoded value of `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`
+//        clientAssertion             A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
+//        clientId             Channel ID.
+//        clientSecret             Channel secret.
+
+// https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token
+func (client *ChannelAccessTokenAPI) IssueStatelessChannelTokenWithHttpInfo(
+
+	grantType string,
+
+	clientAssertionType string,
+
+	clientAssertion string,
+
+	clientId string,
+
+	clientSecret string,
+
+) (*http.Response, *IssueStatelessChannelAccessTokenResponse, error) {
 	path := "/oauth2/v3/token"
 
 	vs := url.Values{
@@ -330,7 +455,7 @@ func (client *ChannelAccessTokenAPI) IssueStatelessChannelToken(
 	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf)
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), body)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
@@ -338,15 +463,15 @@ func (client *ChannelAccessTokenAPI) IssueStatelessChannelToken(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
@@ -354,9 +479,9 @@ func (client *ChannelAccessTokenAPI) IssueStatelessChannelToken(
 	decoder := json.NewDecoder(res.Body)
 	result := IssueStatelessChannelAccessTokenResponse{}
 	if err := decoder.Decode(&result); err != nil {
-		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
-	return &result, nil
+	return res, &result, nil
 
 }
 
@@ -372,6 +497,26 @@ func (client *ChannelAccessTokenAPI) RevokeChannelToken(
 	accessToken string,
 
 ) (struct{}, error) {
+	_, body, error := client.RevokeChannelTokenWithHttpInfo(
+
+		accessToken,
+	)
+	return body, error
+}
+
+// RevokeChannelToken
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Revoke short-lived or long-lived channel access token
+// Parameters:
+//        accessToken             Channel access token
+
+// https://developers.line.biz/en/reference/messaging-api/#revoke-longlived-or-shortlived-channel-access-token
+func (client *ChannelAccessTokenAPI) RevokeChannelTokenWithHttpInfo(
+
+	accessToken string,
+
+) (*http.Response, struct{}, error) {
 	path := "/v2/oauth/revoke"
 
 	vs := url.Values{
@@ -383,7 +528,7 @@ func (client *ChannelAccessTokenAPI) RevokeChannelToken(
 	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf)
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), body)
 	if err != nil {
-		return struct{}{}, err
+		return nil, struct{}{}, err
 	}
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
@@ -391,20 +536,20 @@ func (client *ChannelAccessTokenAPI) RevokeChannelToken(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return struct{}{}, err
+		return res, struct{}{}, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return struct{}{}, fmt.Errorf("failed to read response body: %w", err)
+			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
 
-	return struct{}{}, nil
+	return res, struct{}{}, nil
 
 }
 
@@ -426,6 +571,36 @@ func (client *ChannelAccessTokenAPI) RevokeChannelTokenByJWT(
 	accessToken string,
 
 ) (struct{}, error) {
+	_, body, error := client.RevokeChannelTokenByJWTWithHttpInfo(
+
+		clientId,
+
+		clientSecret,
+
+		accessToken,
+	)
+	return body, error
+}
+
+// RevokeChannelTokenByJWT
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Revoke channel access token v2.1
+// Parameters:
+//        clientId             Channel ID
+//        clientSecret             Channel Secret
+//        accessToken             Channel access token
+
+// https://developers.line.biz/en/reference/messaging-api/#revoke-channel-access-token-v2-1
+func (client *ChannelAccessTokenAPI) RevokeChannelTokenByJWTWithHttpInfo(
+
+	clientId string,
+
+	clientSecret string,
+
+	accessToken string,
+
+) (*http.Response, struct{}, error) {
 	path := "/oauth2/v2.1/revoke"
 
 	vs := url.Values{
@@ -439,7 +614,7 @@ func (client *ChannelAccessTokenAPI) RevokeChannelTokenByJWT(
 	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf)
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), body)
 	if err != nil {
-		return struct{}{}, err
+		return nil, struct{}{}, err
 	}
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
@@ -447,20 +622,20 @@ func (client *ChannelAccessTokenAPI) RevokeChannelTokenByJWT(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return struct{}{}, err
+		return res, struct{}{}, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return struct{}{}, fmt.Errorf("failed to read response body: %w", err)
+			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
 
-	return struct{}{}, nil
+	return res, struct{}{}, nil
 
 }
 
@@ -476,6 +651,26 @@ func (client *ChannelAccessTokenAPI) VerifyChannelToken(
 	accessToken string,
 
 ) (*VerifyChannelAccessTokenResponse, error) {
+	_, body, error := client.VerifyChannelTokenWithHttpInfo(
+
+		accessToken,
+	)
+	return body, error
+}
+
+// VerifyChannelToken
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Verify the validity of short-lived and long-lived channel access tokens
+// Parameters:
+//        accessToken             A short-lived or long-lived channel access token.
+
+// https://developers.line.biz/en/reference/messaging-api/#verfiy-channel-access-token
+func (client *ChannelAccessTokenAPI) VerifyChannelTokenWithHttpInfo(
+
+	accessToken string,
+
+) (*http.Response, *VerifyChannelAccessTokenResponse, error) {
 	path := "/v2/oauth/verify"
 
 	vs := url.Values{
@@ -487,7 +682,7 @@ func (client *ChannelAccessTokenAPI) VerifyChannelToken(
 	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf)
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), body)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
@@ -495,15 +690,15 @@ func (client *ChannelAccessTokenAPI) VerifyChannelToken(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
@@ -511,9 +706,9 @@ func (client *ChannelAccessTokenAPI) VerifyChannelToken(
 	decoder := json.NewDecoder(res.Body)
 	result := VerifyChannelAccessTokenResponse{}
 	if err := decoder.Decode(&result); err != nil {
-		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
-	return &result, nil
+	return res, &result, nil
 
 }
 
@@ -529,12 +724,32 @@ func (client *ChannelAccessTokenAPI) VerifyChannelTokenByJWT(
 	accessToken string,
 
 ) (*VerifyChannelAccessTokenResponse, error) {
+	_, body, error := client.VerifyChannelTokenByJWTWithHttpInfo(
+
+		accessToken,
+	)
+	return body, error
+}
+
+// VerifyChannelTokenByJWT
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// You can verify whether a Channel access token with a user-specified expiration (Channel Access Token v2.1) is valid.
+// Parameters:
+//        accessToken             Channel access token with a user-specified expiration (Channel Access Token v2.1).
+
+// https://developers.line.biz/en/reference/messaging-api/#verfiy-channel-access-token-v2-1
+func (client *ChannelAccessTokenAPI) VerifyChannelTokenByJWTWithHttpInfo(
+
+	accessToken string,
+
+) (*http.Response, *VerifyChannelAccessTokenResponse, error) {
 	path := "/oauth2/v2.1/verify"
 
 	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	var query url.Values
@@ -546,15 +761,15 @@ func (client *ChannelAccessTokenAPI) VerifyChannelTokenByJWT(
 	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
-		return nil, err
+		return res, nil, err
 	}
 
 	if res.StatusCode/100 != 2 {
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
-			return nil, fmt.Errorf("failed to read response body: %w", err)
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
 	}
 
 	defer res.Body.Close()
@@ -562,8 +777,8 @@ func (client *ChannelAccessTokenAPI) VerifyChannelTokenByJWT(
 	decoder := json.NewDecoder(res.Body)
 	result := VerifyChannelAccessTokenResponse{}
 	if err := decoder.Decode(&result); err != nil {
-		return nil, fmt.Errorf("failed to decode JSON: %w", err)
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
-	return &result, nil
+	return res, &result, nil
 
 }
