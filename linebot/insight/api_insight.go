@@ -21,6 +21,7 @@
 package insight
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
@@ -148,11 +149,13 @@ func (client *InsightAPI) GetFriendsDemographicsWithHttpInfo() (*http.Response, 
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -219,11 +222,13 @@ func (client *InsightAPI) GetMessageEventWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -290,11 +295,13 @@ func (client *InsightAPI) GetNumberOfFollowersWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -361,11 +368,13 @@ func (client *InsightAPI) GetNumberOfMessageDeliveriesWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -450,11 +459,13 @@ func (client *InsightAPI) GetStatisticsPerUnitWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()

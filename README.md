@@ -31,7 +31,6 @@ $ go get -u github.com/line/line-bot-sdk-go/v7/linebot
 import (
 	"github.com/line/line-bot-sdk-go/v7/linebot"
 	"github.com/line/line-bot-sdk-go/v7/linebot/channel_access_token"
-	"github.com/line/line-bot-sdk-go/v7/linebot/httphandler"
 	"github.com/line/line-bot-sdk-go/v7/linebot/insight"
 	"github.com/line/line-bot-sdk-go/v7/linebot/liff"
 	"github.com/line/line-bot-sdk-go/v7/linebot/manage_audience"
@@ -109,6 +108,7 @@ We provide code [examples](./examples).
 - [KitchenSink](./examples/kitchensink/server.go)
   - a bot that handles many types of events
 - [EchoBotHandler](./examples/echo_bot_handler/server.go)
+  - A simple bot that automatically verifies signatures and only handles Webhook events
 - [DeliveryHelper](./examples/delivery_helper/main.go)
 - [InsightHelper](./examples/insight_helper/main.go)
 - [RichmenuHelper](./examples/richmenu_helper/main.go)
@@ -177,6 +177,47 @@ bot.ReplyMessage(
 		},
 	},
 )
+```
+
+### How to get response header and error message ###
+You may need to store the ```x-line-request-id``` header obtained as a response from several APIs. In this case, please use ```~WithHttpInfo```. You can get headers and status codes. The ```x-line-accepted-request-id``` or ```content-type``` header can also be obtained in the same way.
+
+```go
+resp, _, _ := app.bot.ReplyMessageWithHttpInfo(
+	&messaging_api.ReplyMessageRequest{
+		ReplyToken: replyToken,
+		Messages: []messaging_api.MessageInterface{
+			messaging_api.TextMessage{
+				Text: "Hello, world",
+			},
+		},
+	}, 
+)
+log.Printf("status code: (%v), x-line-request-id: (%v)", resp.StatusCode, resp.Header.Get("x-line-request-id"))
+
+```
+
+Similarly, you can get specific error messages by using ```~WithHttpInfo```.
+
+```go
+resp, _, err := app.bot.ReplyMessageWithHttpInfo(
+    &messaging_api.ReplyMessageRequest{
+        ReplyToken: replyToken + "invalid",
+        Messages: []messaging_api.MessageInterface{
+            messaging_api.TextMessage{
+                Text: "Hello, world",
+            },
+        },
+    },
+)
+if err != nil && resp.StatusCode >= 400 && resp.StatusCode < 500 {
+    decoder := json.NewDecoder(resp.Body)
+    errorResponse := &messaging_api.ErrorResponse{}
+    if err := decoder.Decode(&errorResponse); err != nil {
+        log.Fatal("failed to decode JSON: %w", err)
+    }
+    log.Printf("status code: (%v), x-line-request-id: (%v), error response: (%v)", resp.StatusCode, resp.Header.Get("x-line-request-id"), errorResponse)
+}
 ```
 
 ## Help and media

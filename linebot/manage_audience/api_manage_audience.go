@@ -166,11 +166,13 @@ func (client *ManageAudienceAPI) ActivateAudienceGroupWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -233,11 +235,13 @@ func (client *ManageAudienceAPI) AddAudienceToAudienceGroupWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -300,11 +304,13 @@ func (client *ManageAudienceAPI) CreateAudienceGroupWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -372,11 +378,13 @@ func (client *ManageAudienceAPI) CreateClickBasedAudienceGroupWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -444,11 +452,13 @@ func (client *ManageAudienceAPI) CreateImpBasedAudienceGroupWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -512,11 +522,13 @@ func (client *ManageAudienceAPI) DeleteAudienceGroupWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -575,11 +587,13 @@ func (client *ManageAudienceAPI) GetAudienceDataWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -628,11 +642,13 @@ func (client *ManageAudienceAPI) GetAudienceGroupAuthorityLevelWithHttpInfo() (*
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -744,11 +760,13 @@ func (client *ManageAudienceAPI) GetAudienceGroupsWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -816,11 +834,13 @@ func (client *ManageAudienceAPI) UpdateAudienceGroupAuthorityLevelWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -893,11 +913,13 @@ func (client *ManageAudienceAPI) UpdateAudienceGroupDescriptionWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()

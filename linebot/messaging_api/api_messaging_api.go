@@ -169,11 +169,13 @@ func (client *MessagingApiAPI) AudienceMatchWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -246,11 +248,13 @@ func (client *MessagingApiAPI) BroadcastWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -299,11 +303,13 @@ func (client *MessagingApiAPI) CancelDefaultRichMenuWithHttpInfo() (*http.Respon
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -366,11 +372,13 @@ func (client *MessagingApiAPI) CreateRichMenuWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -438,11 +446,13 @@ func (client *MessagingApiAPI) CreateRichMenuAliasWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -501,11 +511,13 @@ func (client *MessagingApiAPI) DeleteRichMenuWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -564,11 +576,13 @@ func (client *MessagingApiAPI) DeleteRichMenuAliasWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -630,11 +644,13 @@ func (client *MessagingApiAPI) GetAdPhoneMessageStatisticsWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -710,11 +726,13 @@ func (client *MessagingApiAPI) GetAggregationUnitNameListWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -763,11 +781,13 @@ func (client *MessagingApiAPI) GetAggregationUnitUsageWithHttpInfo() (*http.Resp
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -816,11 +836,13 @@ func (client *MessagingApiAPI) GetBotInfoWithHttpInfo() (*http.Response, *BotInf
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -869,11 +891,13 @@ func (client *MessagingApiAPI) GetDefaultRichMenuIdWithHttpInfo() (*http.Respons
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -949,11 +973,13 @@ func (client *MessagingApiAPI) GetFollowersWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -1017,11 +1043,13 @@ func (client *MessagingApiAPI) GetGroupMemberCountWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -1095,11 +1123,13 @@ func (client *MessagingApiAPI) GetGroupMemberProfileWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -1176,11 +1206,13 @@ func (client *MessagingApiAPI) GetGroupMembersIdsWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -1244,11 +1276,13 @@ func (client *MessagingApiAPI) GetGroupSummaryWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -1297,11 +1331,13 @@ func (client *MessagingApiAPI) GetMessageQuotaWithHttpInfo() (*http.Response, *M
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -1350,11 +1386,13 @@ func (client *MessagingApiAPI) GetMessageQuotaConsumptionWithHttpInfo() (*http.R
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -1421,11 +1459,13 @@ func (client *MessagingApiAPI) GetNarrowcastProgressWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -1492,11 +1532,13 @@ func (client *MessagingApiAPI) GetNumberOfSentBroadcastMessagesWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -1563,11 +1605,13 @@ func (client *MessagingApiAPI) GetNumberOfSentMulticastMessagesWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -1634,11 +1678,13 @@ func (client *MessagingApiAPI) GetNumberOfSentPushMessagesWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -1705,11 +1751,13 @@ func (client *MessagingApiAPI) GetNumberOfSentReplyMessagesWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -1776,11 +1824,13 @@ func (client *MessagingApiAPI) GetPNPMessageStatisticsWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -1844,11 +1894,13 @@ func (client *MessagingApiAPI) GetProfileWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -1912,11 +1964,13 @@ func (client *MessagingApiAPI) GetRichMenuWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -1980,11 +2034,13 @@ func (client *MessagingApiAPI) GetRichMenuAliasWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -2033,11 +2089,13 @@ func (client *MessagingApiAPI) GetRichMenuAliasListWithHttpInfo() (*http.Respons
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -2104,11 +2162,13 @@ func (client *MessagingApiAPI) GetRichMenuBatchProgressWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -2172,11 +2232,13 @@ func (client *MessagingApiAPI) GetRichMenuIdOfUserWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -2225,11 +2287,13 @@ func (client *MessagingApiAPI) GetRichMenuListWithHttpInfo() (*http.Response, *R
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -2293,11 +2357,13 @@ func (client *MessagingApiAPI) GetRoomMemberCountWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -2371,11 +2437,13 @@ func (client *MessagingApiAPI) GetRoomMemberProfileWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -2452,11 +2520,13 @@ func (client *MessagingApiAPI) GetRoomMembersIdsWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -2505,11 +2575,13 @@ func (client *MessagingApiAPI) GetWebhookEndpointWithHttpInfo() (*http.Response,
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -2573,11 +2645,13 @@ func (client *MessagingApiAPI) IssueLinkTokenWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -2641,11 +2715,13 @@ func (client *MessagingApiAPI) LeaveGroupWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -2704,11 +2780,13 @@ func (client *MessagingApiAPI) LeaveRoomWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -2777,11 +2855,13 @@ func (client *MessagingApiAPI) LinkRichMenuIdToUserWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -2844,11 +2924,13 @@ func (client *MessagingApiAPI) LinkRichMenuIdToUsersWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -2911,11 +2993,13 @@ func (client *MessagingApiAPI) MarkMessagesAsReadWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -2988,11 +3072,13 @@ func (client *MessagingApiAPI) MulticastWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -3070,11 +3156,13 @@ func (client *MessagingApiAPI) NarrowcastWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -3152,11 +3240,13 @@ func (client *MessagingApiAPI) PushMessageWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -3234,11 +3324,13 @@ func (client *MessagingApiAPI) PushMessagesByPhoneWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -3301,11 +3393,13 @@ func (client *MessagingApiAPI) ReplyMessageWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -3373,11 +3467,13 @@ func (client *MessagingApiAPI) RichMenuBatchWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -3436,11 +3532,13 @@ func (client *MessagingApiAPI) SetDefaultRichMenuWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -3503,11 +3601,13 @@ func (client *MessagingApiAPI) SetWebhookEndpointWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -3570,11 +3670,13 @@ func (client *MessagingApiAPI) TestWebhookEndpointWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, nil, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -3638,11 +3740,13 @@ func (client *MessagingApiAPI) UnlinkRichMenuIdFromUserWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -3705,11 +3809,13 @@ func (client *MessagingApiAPI) UnlinkRichMenuIdFromUsersWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -3782,11 +3888,13 @@ func (client *MessagingApiAPI) UpdateRichMenuAliasWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -3849,11 +3957,13 @@ func (client *MessagingApiAPI) ValidateBroadcastWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -3916,11 +4026,13 @@ func (client *MessagingApiAPI) ValidateMulticastWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -3983,11 +4095,13 @@ func (client *MessagingApiAPI) ValidateNarrowcastWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -4050,11 +4164,13 @@ func (client *MessagingApiAPI) ValidatePushWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -4117,11 +4233,13 @@ func (client *MessagingApiAPI) ValidateReplyWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -4184,11 +4302,13 @@ func (client *MessagingApiAPI) ValidateRichMenuBatchRequestWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()
@@ -4251,11 +4371,13 @@ func (client *MessagingApiAPI) ValidateRichMenuObjectWithHttpInfo(
 	}
 
 	if res.StatusCode/100 != 2 {
-		body, err := io.ReadAll(res.Body)
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
 		if err != nil {
 			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
 		}
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(body))
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
 	}
 
 	defer res.Body.Close()

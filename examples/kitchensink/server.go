@@ -15,6 +15,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"log"
@@ -515,6 +516,37 @@ func (app *KitchenSink) handleText(message *webhook.TextMessageContent, replyTok
 			if _, err := app.bot.LeaveRoom(s.RoomId); err != nil {
 				return app.replyText(replyToken, err.Error())
 			}
+		}
+	case "with http info":
+		resp, _, _ := app.bot.ReplyMessageWithHttpInfo(
+			&messaging_api.ReplyMessageRequest{
+				ReplyToken: replyToken,
+				Messages: []messaging_api.MessageInterface{
+					messaging_api.TextMessage{
+						Text: "Hello, world",
+					},
+				},
+			},
+		)
+		log.Printf("status code: (%v), x-line-request-id: (%v)", resp.StatusCode, resp.Header.Get("x-line-request-id"))
+	case "with http info error":
+		resp, _, err := app.bot.ReplyMessageWithHttpInfo(
+			&messaging_api.ReplyMessageRequest{
+				ReplyToken: replyToken + "invalid",
+				Messages: []messaging_api.MessageInterface{
+					messaging_api.TextMessage{
+						Text: "Hello, world",
+					},
+				},
+			},
+		)
+		if err != nil && resp.StatusCode >= 400 && resp.StatusCode < 500 {
+			decoder := json.NewDecoder(resp.Body)
+			errorResponse := &messaging_api.ErrorResponse{}
+			if err := decoder.Decode(&errorResponse); err != nil {
+				log.Fatal("failed to decode JSON: %w", err)
+			}
+			log.Printf("status code: (%v), x-line-request-id: (%v), error response: (%v)", resp.StatusCode, resp.Header.Get("x-line-request-id"), errorResponse)
 		}
 	default:
 		log.Printf("Echo message to %s: %s", replyToken, message.Text)
