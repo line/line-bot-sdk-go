@@ -22,7 +22,6 @@ package webhook
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 )
 
 type ThingsContentInterface interface {
@@ -123,7 +122,6 @@ func UnmarshalThingsContent(data []byte) (ThingsContentInterface, error) {
 		return unlink, nil
 
 	default:
-		log.Println("ThingsContent fallback: ", discriminator)
 		var unknown UnknownThingsContent
 		unknown.Type = discriminator
 		unknown.Raw = raw

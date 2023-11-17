@@ -22,7 +22,6 @@ package messaging_api
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 )
 
 type TemplateInterface interface {
@@ -137,7 +136,6 @@ func UnmarshalTemplate(data []byte) (TemplateInterface, error) {
 		return image_carousel, nil
 
 	default:
-		log.Println("Template fallback: ", discriminator)
 		var unknown UnknownTemplate
 		unknown.Type = discriminator
 		unknown.Raw = raw

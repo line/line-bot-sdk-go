@@ -82,7 +82,6 @@ func Unmarshal{{ model.classname }}(data []byte) ({{ model.classname }}Interface
 		return {{ mm.mappingName }}, nil
 {% endfor %}
 	default:
-        log.Println("{{ model.classname }} fallback: ", discriminator)
 	    var unknown Unknown{{ model.classname }}
 	    unknown.{{ model.discriminator.propertyName }} = discriminator
 	    unknown.Raw = raw

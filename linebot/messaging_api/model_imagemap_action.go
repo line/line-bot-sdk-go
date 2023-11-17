@@ -22,7 +22,6 @@ package messaging_api
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 )
 
 type ImagemapActionInterface interface {
@@ -109,7 +108,6 @@ func UnmarshalImagemapAction(data []byte) (ImagemapActionInterface, error) {
 		return uri, nil
 
 	default:
-		log.Println("ImagemapAction fallback: ", discriminator)
 		var unknown UnknownImagemapAction
 		unknown.Type = discriminator
 		unknown.Raw = raw

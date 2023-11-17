@@ -22,7 +22,6 @@ package messaging_api
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 )
 
 type FlexComponentInterface interface {
@@ -217,7 +216,6 @@ func UnmarshalFlexComponent(data []byte) (FlexComponentInterface, error) {
 		return video, nil
 
 	default:
-		log.Println("FlexComponent fallback: ", discriminator)
 		var unknown UnknownFlexComponent
 		unknown.Type = discriminator
 		unknown.Raw = raw

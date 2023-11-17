@@ -22,7 +22,6 @@ package messaging_api
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 )
 
 type DemographicFilterInterface interface {
@@ -172,7 +171,6 @@ func UnmarshalDemographicFilter(data []byte) (DemographicFilterInterface, error)
 		return subscriptionPeriod, nil
 
 	default:
-		log.Println("DemographicFilter fallback: ", discriminator)
 		var unknown UnknownDemographicFilter
 		unknown.Type = discriminator
 		unknown.Raw = raw

@@ -22,7 +22,6 @@ package webhook
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 )
 
 type ModuleContentInterface interface {
@@ -107,7 +106,6 @@ func UnmarshalModuleContent(data []byte) (ModuleContentInterface, error) {
 		return detached, nil
 
 	default:
-		log.Println("ModuleContent fallback: ", discriminator)
 		var unknown UnknownModuleContent
 		unknown.Type = discriminator
 		unknown.Raw = raw

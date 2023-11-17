@@ -22,7 +22,6 @@ package messaging_api
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 )
 
 type FlexContainerInterface interface {
@@ -105,7 +104,6 @@ func UnmarshalFlexContainer(data []byte) (FlexContainerInterface, error) {
 		return carousel, nil
 
 	default:
-		log.Println("FlexContainer fallback: ", discriminator)
 		var unknown UnknownFlexContainer
 		unknown.Type = discriminator
 		unknown.Raw = raw

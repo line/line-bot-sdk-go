@@ -27,7 +27,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"net/url"
 	"path"
@@ -154,7 +153,6 @@ func (client *MessagingApiAPI) AudienceMatchWithHttpInfo(
 	if err := enc.Encode(audienceMatchMessagesRequest); err != nil {
 		return nil, struct{}{}, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -162,7 +160,6 @@ func (client *MessagingApiAPI) AudienceMatchWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -231,7 +228,6 @@ func (client *MessagingApiAPI) BroadcastWithHttpInfo(
 	if err := enc.Encode(broadcastRequest); err != nil {
 		return nil, nil, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, nil, err
@@ -241,7 +237,6 @@ func (client *MessagingApiAPI) BroadcastWithHttpInfo(
 	req.Header.Set("X-Line-Retry-Key", string(xLineRetryKey))
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -289,14 +284,12 @@ func (client *MessagingApiAPI) CancelDefaultRichMenu() (struct{}, error) {
 func (client *MessagingApiAPI) CancelDefaultRichMenuWithHttpInfo() (*http.Response, struct{}, error) {
 	path := "/v2/bot/user/all/richmenu"
 
-	log.Printf("Sending request: method=Delete path=%s\n", path)
 	req, err := http.NewRequest(http.MethodDelete, client.Url(path), nil)
 	if err != nil {
 		return nil, struct{}{}, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -357,7 +350,6 @@ func (client *MessagingApiAPI) CreateRichMenuWithHttpInfo(
 	if err := enc.Encode(richMenuRequest); err != nil {
 		return nil, nil, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, nil, err
@@ -365,7 +357,6 @@ func (client *MessagingApiAPI) CreateRichMenuWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -431,7 +422,6 @@ func (client *MessagingApiAPI) CreateRichMenuAliasWithHttpInfo(
 	if err := enc.Encode(createRichMenuAliasRequest); err != nil {
 		return nil, struct{}{}, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -439,7 +429,6 @@ func (client *MessagingApiAPI) CreateRichMenuAliasWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -497,14 +486,12 @@ func (client *MessagingApiAPI) DeleteRichMenuWithHttpInfo(
 
 	path = strings.Replace(path, "{richMenuId}", richMenuId, -1)
 
-	log.Printf("Sending request: method=Delete path=%s\n", path)
 	req, err := http.NewRequest(http.MethodDelete, client.Url(path), nil)
 	if err != nil {
 		return nil, struct{}{}, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -562,14 +549,12 @@ func (client *MessagingApiAPI) DeleteRichMenuAliasWithHttpInfo(
 
 	path = strings.Replace(path, "{richMenuAliasId}", richMenuAliasId, -1)
 
-	log.Printf("Sending request: method=Delete path=%s\n", path)
 	req, err := http.NewRequest(http.MethodDelete, client.Url(path), nil)
 	if err != nil {
 		return nil, struct{}{}, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -625,7 +610,6 @@ func (client *MessagingApiAPI) GetAdPhoneMessageStatisticsWithHttpInfo(
 ) (*http.Response, *NumberOfMessagesResponse, error) {
 	path := "/v2/bot/message/delivery/ad_phone"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
@@ -637,7 +621,6 @@ func (client *MessagingApiAPI) GetAdPhoneMessageStatisticsWithHttpInfo(
 	req.URL.RawQuery = query.Encode()
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -706,7 +689,6 @@ func (client *MessagingApiAPI) GetAggregationUnitNameListWithHttpInfo(
 ) (*http.Response, *GetAggregationUnitNameListResponse, error) {
 	path := "/v2/bot/message/aggregation/list"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
@@ -719,7 +701,6 @@ func (client *MessagingApiAPI) GetAggregationUnitNameListWithHttpInfo(
 	req.URL.RawQuery = query.Encode()
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -767,14 +748,12 @@ func (client *MessagingApiAPI) GetAggregationUnitUsage() (*GetAggregationUnitUsa
 func (client *MessagingApiAPI) GetAggregationUnitUsageWithHttpInfo() (*http.Response, *GetAggregationUnitUsageResponse, error) {
 	path := "/v2/bot/message/aggregation/info"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -822,14 +801,12 @@ func (client *MessagingApiAPI) GetBotInfo() (*BotInfoResponse, error) {
 func (client *MessagingApiAPI) GetBotInfoWithHttpInfo() (*http.Response, *BotInfoResponse, error) {
 	path := "/v2/bot/info"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -877,14 +854,12 @@ func (client *MessagingApiAPI) GetDefaultRichMenuId() (*RichMenuIdResponse, erro
 func (client *MessagingApiAPI) GetDefaultRichMenuIdWithHttpInfo() (*http.Response, *RichMenuIdResponse, error) {
 	path := "/v2/bot/user/all/richmenu"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -953,7 +928,6 @@ func (client *MessagingApiAPI) GetFollowersWithHttpInfo(
 ) (*http.Response, *GetFollowersResponse, error) {
 	path := "/v2/bot/followers/ids"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
@@ -966,7 +940,6 @@ func (client *MessagingApiAPI) GetFollowersWithHttpInfo(
 	req.URL.RawQuery = query.Encode()
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -1029,14 +1002,12 @@ func (client *MessagingApiAPI) GetGroupMemberCountWithHttpInfo(
 
 	path = strings.Replace(path, "{groupId}", groupId, -1)
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -1109,14 +1080,12 @@ func (client *MessagingApiAPI) GetGroupMemberProfileWithHttpInfo(
 
 	path = strings.Replace(path, "{userId}", userId, -1)
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -1187,7 +1156,6 @@ func (client *MessagingApiAPI) GetGroupMembersIdsWithHttpInfo(
 
 	path = strings.Replace(path, "{groupId}", groupId, -1)
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
@@ -1199,7 +1167,6 @@ func (client *MessagingApiAPI) GetGroupMembersIdsWithHttpInfo(
 	req.URL.RawQuery = query.Encode()
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -1262,14 +1229,12 @@ func (client *MessagingApiAPI) GetGroupSummaryWithHttpInfo(
 
 	path = strings.Replace(path, "{groupId}", groupId, -1)
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -1317,14 +1282,12 @@ func (client *MessagingApiAPI) GetMessageQuota() (*MessageQuotaResponse, error) 
 func (client *MessagingApiAPI) GetMessageQuotaWithHttpInfo() (*http.Response, *MessageQuotaResponse, error) {
 	path := "/v2/bot/message/quota"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -1372,14 +1335,12 @@ func (client *MessagingApiAPI) GetMessageQuotaConsumption() (*QuotaConsumptionRe
 func (client *MessagingApiAPI) GetMessageQuotaConsumptionWithHttpInfo() (*http.Response, *QuotaConsumptionResponse, error) {
 	path := "/v2/bot/message/quota/consumption"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -1440,7 +1401,6 @@ func (client *MessagingApiAPI) GetNarrowcastProgressWithHttpInfo(
 ) (*http.Response, *NarrowcastProgressResponse, error) {
 	path := "/v2/bot/message/progress/narrowcast"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
@@ -1452,7 +1412,6 @@ func (client *MessagingApiAPI) GetNarrowcastProgressWithHttpInfo(
 	req.URL.RawQuery = query.Encode()
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -1513,7 +1472,6 @@ func (client *MessagingApiAPI) GetNumberOfSentBroadcastMessagesWithHttpInfo(
 ) (*http.Response, *NumberOfMessagesResponse, error) {
 	path := "/v2/bot/message/delivery/broadcast"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
@@ -1525,7 +1483,6 @@ func (client *MessagingApiAPI) GetNumberOfSentBroadcastMessagesWithHttpInfo(
 	req.URL.RawQuery = query.Encode()
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -1586,7 +1543,6 @@ func (client *MessagingApiAPI) GetNumberOfSentMulticastMessagesWithHttpInfo(
 ) (*http.Response, *NumberOfMessagesResponse, error) {
 	path := "/v2/bot/message/delivery/multicast"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
@@ -1598,7 +1554,6 @@ func (client *MessagingApiAPI) GetNumberOfSentMulticastMessagesWithHttpInfo(
 	req.URL.RawQuery = query.Encode()
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -1659,7 +1614,6 @@ func (client *MessagingApiAPI) GetNumberOfSentPushMessagesWithHttpInfo(
 ) (*http.Response, *NumberOfMessagesResponse, error) {
 	path := "/v2/bot/message/delivery/push"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
@@ -1671,7 +1625,6 @@ func (client *MessagingApiAPI) GetNumberOfSentPushMessagesWithHttpInfo(
 	req.URL.RawQuery = query.Encode()
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -1732,7 +1685,6 @@ func (client *MessagingApiAPI) GetNumberOfSentReplyMessagesWithHttpInfo(
 ) (*http.Response, *NumberOfMessagesResponse, error) {
 	path := "/v2/bot/message/delivery/reply"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
@@ -1744,7 +1696,6 @@ func (client *MessagingApiAPI) GetNumberOfSentReplyMessagesWithHttpInfo(
 	req.URL.RawQuery = query.Encode()
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -1805,7 +1756,6 @@ func (client *MessagingApiAPI) GetPNPMessageStatisticsWithHttpInfo(
 ) (*http.Response, *NumberOfMessagesResponse, error) {
 	path := "/v2/bot/message/delivery/pnp"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
@@ -1817,7 +1767,6 @@ func (client *MessagingApiAPI) GetPNPMessageStatisticsWithHttpInfo(
 	req.URL.RawQuery = query.Encode()
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -1880,14 +1829,12 @@ func (client *MessagingApiAPI) GetProfileWithHttpInfo(
 
 	path = strings.Replace(path, "{userId}", userId, -1)
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -1950,14 +1897,12 @@ func (client *MessagingApiAPI) GetRichMenuWithHttpInfo(
 
 	path = strings.Replace(path, "{richMenuId}", richMenuId, -1)
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -2020,14 +1965,12 @@ func (client *MessagingApiAPI) GetRichMenuAliasWithHttpInfo(
 
 	path = strings.Replace(path, "{richMenuAliasId}", richMenuAliasId, -1)
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -2075,14 +2018,12 @@ func (client *MessagingApiAPI) GetRichMenuAliasList() (*RichMenuAliasListRespons
 func (client *MessagingApiAPI) GetRichMenuAliasListWithHttpInfo() (*http.Response, *RichMenuAliasListResponse, error) {
 	path := "/v2/bot/richmenu/alias/list"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -2143,7 +2084,6 @@ func (client *MessagingApiAPI) GetRichMenuBatchProgressWithHttpInfo(
 ) (*http.Response, *RichMenuBatchProgressResponse, error) {
 	path := "/v2/bot/richmenu/progress/batch"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
@@ -2155,7 +2095,6 @@ func (client *MessagingApiAPI) GetRichMenuBatchProgressWithHttpInfo(
 	req.URL.RawQuery = query.Encode()
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -2218,14 +2157,12 @@ func (client *MessagingApiAPI) GetRichMenuIdOfUserWithHttpInfo(
 
 	path = strings.Replace(path, "{userId}", userId, -1)
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -2273,14 +2210,12 @@ func (client *MessagingApiAPI) GetRichMenuList() (*RichMenuListResponse, error) 
 func (client *MessagingApiAPI) GetRichMenuListWithHttpInfo() (*http.Response, *RichMenuListResponse, error) {
 	path := "/v2/bot/richmenu/list"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -2343,14 +2278,12 @@ func (client *MessagingApiAPI) GetRoomMemberCountWithHttpInfo(
 
 	path = strings.Replace(path, "{roomId}", roomId, -1)
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -2423,14 +2356,12 @@ func (client *MessagingApiAPI) GetRoomMemberProfileWithHttpInfo(
 
 	path = strings.Replace(path, "{userId}", userId, -1)
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -2501,7 +2432,6 @@ func (client *MessagingApiAPI) GetRoomMembersIdsWithHttpInfo(
 
 	path = strings.Replace(path, "{roomId}", roomId, -1)
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
@@ -2513,7 +2443,6 @@ func (client *MessagingApiAPI) GetRoomMembersIdsWithHttpInfo(
 	req.URL.RawQuery = query.Encode()
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -2561,14 +2490,12 @@ func (client *MessagingApiAPI) GetWebhookEndpoint() (*GetWebhookEndpointResponse
 func (client *MessagingApiAPI) GetWebhookEndpointWithHttpInfo() (*http.Response, *GetWebhookEndpointResponse, error) {
 	path := "/v2/bot/channel/webhook/endpoint"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -2631,14 +2558,12 @@ func (client *MessagingApiAPI) IssueLinkTokenWithHttpInfo(
 
 	path = strings.Replace(path, "{userId}", userId, -1)
 
-	log.Printf("Sending request: method=Post path=%s\n", path)
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -2701,14 +2626,12 @@ func (client *MessagingApiAPI) LeaveGroupWithHttpInfo(
 
 	path = strings.Replace(path, "{groupId}", groupId, -1)
 
-	log.Printf("Sending request: method=Post path=%s\n", path)
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), nil)
 	if err != nil {
 		return nil, struct{}{}, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -2766,14 +2689,12 @@ func (client *MessagingApiAPI) LeaveRoomWithHttpInfo(
 
 	path = strings.Replace(path, "{roomId}", roomId, -1)
 
-	log.Printf("Sending request: method=Post path=%s\n", path)
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), nil)
 	if err != nil {
 		return nil, struct{}{}, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -2841,14 +2762,12 @@ func (client *MessagingApiAPI) LinkRichMenuIdToUserWithHttpInfo(
 
 	path = strings.Replace(path, "{richMenuId}", richMenuId, -1)
 
-	log.Printf("Sending request: method=Post path=%s\n", path)
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), nil)
 	if err != nil {
 		return nil, struct{}{}, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -2909,7 +2828,6 @@ func (client *MessagingApiAPI) LinkRichMenuIdToUsersWithHttpInfo(
 	if err := enc.Encode(richMenuBulkLinkRequest); err != nil {
 		return nil, struct{}{}, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -2917,7 +2835,6 @@ func (client *MessagingApiAPI) LinkRichMenuIdToUsersWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -2978,7 +2895,6 @@ func (client *MessagingApiAPI) MarkMessagesAsReadWithHttpInfo(
 	if err := enc.Encode(markMessagesAsReadRequest); err != nil {
 		return nil, struct{}{}, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -2986,7 +2902,6 @@ func (client *MessagingApiAPI) MarkMessagesAsReadWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -3055,7 +2970,6 @@ func (client *MessagingApiAPI) MulticastWithHttpInfo(
 	if err := enc.Encode(multicastRequest); err != nil {
 		return nil, nil, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, nil, err
@@ -3065,7 +2979,6 @@ func (client *MessagingApiAPI) MulticastWithHttpInfo(
 	req.Header.Set("X-Line-Retry-Key", string(xLineRetryKey))
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -3139,7 +3052,6 @@ func (client *MessagingApiAPI) NarrowcastWithHttpInfo(
 	if err := enc.Encode(narrowcastRequest); err != nil {
 		return nil, nil, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, nil, err
@@ -3149,7 +3061,6 @@ func (client *MessagingApiAPI) NarrowcastWithHttpInfo(
 	req.Header.Set("X-Line-Retry-Key", string(xLineRetryKey))
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -3223,7 +3134,6 @@ func (client *MessagingApiAPI) PushMessageWithHttpInfo(
 	if err := enc.Encode(pushMessageRequest); err != nil {
 		return nil, nil, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, nil, err
@@ -3233,7 +3143,6 @@ func (client *MessagingApiAPI) PushMessageWithHttpInfo(
 	req.Header.Set("X-Line-Retry-Key", string(xLineRetryKey))
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -3307,7 +3216,6 @@ func (client *MessagingApiAPI) PushMessagesByPhoneWithHttpInfo(
 	if err := enc.Encode(pnpMessagesRequest); err != nil {
 		return nil, struct{}{}, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -3317,7 +3225,6 @@ func (client *MessagingApiAPI) PushMessagesByPhoneWithHttpInfo(
 	req.Header.Set("X-Line-Delivery-Tag", string(xLineDeliveryTag))
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -3378,7 +3285,6 @@ func (client *MessagingApiAPI) ReplyMessageWithHttpInfo(
 	if err := enc.Encode(replyMessageRequest); err != nil {
 		return nil, nil, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, nil, err
@@ -3386,7 +3292,6 @@ func (client *MessagingApiAPI) ReplyMessageWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -3452,7 +3357,6 @@ func (client *MessagingApiAPI) RichMenuBatchWithHttpInfo(
 	if err := enc.Encode(richMenuBatchRequest); err != nil {
 		return nil, struct{}{}, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -3460,7 +3364,6 @@ func (client *MessagingApiAPI) RichMenuBatchWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -3518,14 +3421,12 @@ func (client *MessagingApiAPI) SetDefaultRichMenuWithHttpInfo(
 
 	path = strings.Replace(path, "{richMenuId}", richMenuId, -1)
 
-	log.Printf("Sending request: method=Post path=%s\n", path)
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), nil)
 	if err != nil {
 		return nil, struct{}{}, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -3586,7 +3487,6 @@ func (client *MessagingApiAPI) SetWebhookEndpointWithHttpInfo(
 	if err := enc.Encode(setWebhookEndpointRequest); err != nil {
 		return nil, struct{}{}, err
 	}
-	log.Printf("Sending request: method=Put path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPut, client.Url(path), &buf)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -3594,7 +3494,6 @@ func (client *MessagingApiAPI) SetWebhookEndpointWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -3655,7 +3554,6 @@ func (client *MessagingApiAPI) TestWebhookEndpointWithHttpInfo(
 	if err := enc.Encode(testWebhookEndpointRequest); err != nil {
 		return nil, nil, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, nil, err
@@ -3663,7 +3561,6 @@ func (client *MessagingApiAPI) TestWebhookEndpointWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -3726,14 +3623,12 @@ func (client *MessagingApiAPI) UnlinkRichMenuIdFromUserWithHttpInfo(
 
 	path = strings.Replace(path, "{userId}", userId, -1)
 
-	log.Printf("Sending request: method=Delete path=%s\n", path)
 	req, err := http.NewRequest(http.MethodDelete, client.Url(path), nil)
 	if err != nil {
 		return nil, struct{}{}, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -3794,7 +3689,6 @@ func (client *MessagingApiAPI) UnlinkRichMenuIdFromUsersWithHttpInfo(
 	if err := enc.Encode(richMenuBulkUnlinkRequest); err != nil {
 		return nil, struct{}{}, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -3802,7 +3696,6 @@ func (client *MessagingApiAPI) UnlinkRichMenuIdFromUsersWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -3873,7 +3766,6 @@ func (client *MessagingApiAPI) UpdateRichMenuAliasWithHttpInfo(
 	if err := enc.Encode(updateRichMenuAliasRequest); err != nil {
 		return nil, struct{}{}, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -3881,7 +3773,6 @@ func (client *MessagingApiAPI) UpdateRichMenuAliasWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -3942,7 +3833,6 @@ func (client *MessagingApiAPI) ValidateBroadcastWithHttpInfo(
 	if err := enc.Encode(validateMessageRequest); err != nil {
 		return nil, struct{}{}, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -3950,7 +3840,6 @@ func (client *MessagingApiAPI) ValidateBroadcastWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -4011,7 +3900,6 @@ func (client *MessagingApiAPI) ValidateMulticastWithHttpInfo(
 	if err := enc.Encode(validateMessageRequest); err != nil {
 		return nil, struct{}{}, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -4019,7 +3907,6 @@ func (client *MessagingApiAPI) ValidateMulticastWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -4080,7 +3967,6 @@ func (client *MessagingApiAPI) ValidateNarrowcastWithHttpInfo(
 	if err := enc.Encode(validateMessageRequest); err != nil {
 		return nil, struct{}{}, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -4088,7 +3974,6 @@ func (client *MessagingApiAPI) ValidateNarrowcastWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -4149,7 +4034,6 @@ func (client *MessagingApiAPI) ValidatePushWithHttpInfo(
 	if err := enc.Encode(validateMessageRequest); err != nil {
 		return nil, struct{}{}, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -4157,7 +4041,6 @@ func (client *MessagingApiAPI) ValidatePushWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -4218,7 +4101,6 @@ func (client *MessagingApiAPI) ValidateReplyWithHttpInfo(
 	if err := enc.Encode(validateMessageRequest); err != nil {
 		return nil, struct{}{}, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -4226,7 +4108,6 @@ func (client *MessagingApiAPI) ValidateReplyWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -4287,7 +4168,6 @@ func (client *MessagingApiAPI) ValidateRichMenuBatchRequestWithHttpInfo(
 	if err := enc.Encode(richMenuBatchRequest); err != nil {
 		return nil, struct{}{}, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -4295,7 +4175,6 @@ func (client *MessagingApiAPI) ValidateRichMenuBatchRequestWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -4356,7 +4235,6 @@ func (client *MessagingApiAPI) ValidateRichMenuObjectWithHttpInfo(
 	if err := enc.Encode(richMenuRequest); err != nil {
 		return nil, struct{}{}, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -4364,7 +4242,6 @@ func (client *MessagingApiAPI) ValidateRichMenuObjectWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err

@@ -27,7 +27,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"net/url"
 	"path"
@@ -153,14 +152,12 @@ func (client *MessagingApiBlobAPI) GetMessageContentWithHttpInfo(
 
 	path = strings.Replace(path, "{messageId}", messageId, -1)
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -218,14 +215,12 @@ func (client *MessagingApiBlobAPI) GetMessageContentPreviewWithHttpInfo(
 
 	path = strings.Replace(path, "{messageId}", messageId, -1)
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -281,14 +276,12 @@ func (client *MessagingApiBlobAPI) GetMessageContentTranscodingByMessageIdWithHt
 
 	path = strings.Replace(path, "{messageId}", messageId, -1)
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -353,14 +346,12 @@ func (client *MessagingApiBlobAPI) GetRichMenuImageWithHttpInfo(
 
 	path = strings.Replace(path, "{richMenuId}", richMenuId, -1)
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -429,7 +420,6 @@ func (client *MessagingApiBlobAPI) SetRichMenuImageWithHttpInfo(
 
 	path = strings.Replace(path, "{richMenuId}", richMenuId, -1)
 
-	log.Printf("Sending request: method=Post path=%s bodyContentType=%s\n", path, bodyContentType)
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), bodyReader)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -437,7 +427,6 @@ func (client *MessagingApiBlobAPI) SetRichMenuImageWithHttpInfo(
 	req.Header.Set("Content-Type", bodyContentType)
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err

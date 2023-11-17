@@ -22,7 +22,6 @@ package webhook
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 )
 
 type MentioneeInterface interface {
@@ -115,7 +114,6 @@ func UnmarshalMentionee(data []byte) (MentioneeInterface, error) {
 		return user, nil
 
 	default:
-		log.Println("Mentionee fallback: ", discriminator)
 		var unknown UnknownMentionee
 		unknown.Type = discriminator
 		unknown.Raw = raw

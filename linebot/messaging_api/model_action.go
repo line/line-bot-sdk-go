@@ -22,7 +22,6 @@ package messaging_api
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 )
 
 type ActionInterface interface {
@@ -209,7 +208,6 @@ func UnmarshalAction(data []byte) (ActionInterface, error) {
 		return uri, nil
 
 	default:
-		log.Println("Action fallback: ", discriminator)
 		var unknown UnknownAction
 		unknown.Type = discriminator
 		unknown.Raw = raw

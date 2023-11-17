@@ -27,7 +27,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"net/url"
 	"path"
@@ -164,7 +163,6 @@ func (client *LineModuleAPI) AcquireChatControlWithHttpInfo(
 	if err := enc.Encode(acquireChatControlRequest); err != nil {
 		return nil, struct{}{}, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -172,7 +170,6 @@ func (client *LineModuleAPI) AcquireChatControlWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -233,7 +230,6 @@ func (client *LineModuleAPI) DetachModuleWithHttpInfo(
 	if err := enc.Encode(detachModuleRequest); err != nil {
 		return nil, struct{}{}, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -241,7 +237,6 @@ func (client *LineModuleAPI) DetachModuleWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -305,7 +300,6 @@ func (client *LineModuleAPI) GetModulesWithHttpInfo(
 ) (*http.Response, *GetModulesResponse, error) {
 	path := "/v2/bot/list"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
@@ -318,7 +312,6 @@ func (client *LineModuleAPI) GetModulesWithHttpInfo(
 	req.URL.RawQuery = query.Encode()
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -381,14 +374,12 @@ func (client *LineModuleAPI) ReleaseChatControlWithHttpInfo(
 
 	path = strings.Replace(path, "{chatId}", chatId, -1)
 
-	log.Printf("Sending request: method=Post path=%s\n", path)
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), nil)
 	if err != nil {
 		return nil, struct{}{}, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err

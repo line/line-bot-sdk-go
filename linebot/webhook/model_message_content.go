@@ -22,7 +22,6 @@ package webhook
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 )
 
 type MessageContentInterface interface {
@@ -192,7 +191,6 @@ func UnmarshalMessageContent(data []byte) (MessageContentInterface, error) {
 		return video, nil
 
 	default:
-		log.Println("MessageContent fallback: ", discriminator)
 		var unknown UnknownMessageContent
 		unknown.Type = discriminator
 		unknown.Raw = raw

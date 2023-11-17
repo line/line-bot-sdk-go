@@ -72,6 +72,5 @@ func Test{{ op.operationId }}(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to call API: %v", err)
 	}
-	log.Printf("Got response: %v", resp)
 }
 {% endfor %}
