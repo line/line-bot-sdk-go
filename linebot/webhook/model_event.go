@@ -22,7 +22,6 @@ package webhook
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 )
 
 type EventInterface interface {
@@ -376,7 +375,6 @@ func UnmarshalEvent(data []byte) (EventInterface, error) {
 		return videoPlayComplete, nil
 
 	default:
-		log.Println("Event fallback: ", discriminator)
 		var unknown UnknownEvent
 		unknown.Type = discriminator
 		unknown.Raw = raw

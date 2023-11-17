@@ -22,7 +22,6 @@ package webhook
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 )
 
 type SourceInterface interface {
@@ -126,7 +125,6 @@ func UnmarshalSource(data []byte) (SourceInterface, error) {
 		return user, nil
 
 	default:
-		log.Println("Source fallback: ", discriminator)
 		var unknown UnknownSource
 		unknown.Type = discriminator
 		unknown.Raw = raw

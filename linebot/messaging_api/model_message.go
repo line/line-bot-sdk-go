@@ -22,7 +22,6 @@ package messaging_api
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 )
 
 type MessageInterface interface {
@@ -225,7 +224,6 @@ func UnmarshalMessage(data []byte) (MessageInterface, error) {
 		return video, nil
 
 	default:
-		log.Println("Message fallback: ", discriminator)
 		var unknown UnknownMessage
 		unknown.Type = discriminator
 		unknown.Raw = raw

@@ -22,7 +22,6 @@ package messaging_api
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 )
 
 type RichMenuBatchOperationInterface interface {
@@ -126,7 +125,6 @@ func UnmarshalRichMenuBatchOperation(data []byte) (RichMenuBatchOperationInterfa
 		return unlinkAll, nil
 
 	default:
-		log.Println("RichMenuBatchOperation fallback: ", discriminator)
 		var unknown UnknownRichMenuBatchOperation
 		unknown.Type = discriminator
 		unknown.Raw = raw

@@ -22,7 +22,6 @@ package messaging_api
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 )
 
 type RecipientInterface interface {
@@ -124,7 +123,6 @@ func UnmarshalRecipient(data []byte) (RecipientInterface, error) {
 		return redelivery, nil
 
 	default:
-		log.Println("Recipient fallback: ", discriminator)
 		var unknown UnknownRecipient
 		unknown.Type = discriminator
 		unknown.Raw = raw

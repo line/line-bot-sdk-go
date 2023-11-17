@@ -22,7 +22,6 @@ package messaging_api
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 )
 
 type FlexBoxBackgroundInterface interface {
@@ -89,7 +88,6 @@ func UnmarshalFlexBoxBackground(data []byte) (FlexBoxBackgroundInterface, error)
 		return linearGradient, nil
 
 	default:
-		log.Println("FlexBoxBackground fallback: ", discriminator)
 		var unknown UnknownFlexBoxBackground
 		unknown.Type = discriminator
 		unknown.Raw = raw
