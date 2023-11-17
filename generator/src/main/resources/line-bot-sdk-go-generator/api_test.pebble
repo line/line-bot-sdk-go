@@ -2,6 +2,7 @@
 {# @pebvariable name="operations" type="org.openapitools.codegen.model.OperationMap" -#}
 {# @pebvariable name="packageName" type="String" -#}
 {# @pebvariable name="classname" type="String" -#}
+{# @pebvariable name="authMethods" type="java.util.ArrayList<org.openapitools.codegen.CodegenSecurity>" -#}
 package tests
 
 import (
@@ -47,7 +48,7 @@ func Test{{ op.operationId }}(t *testing.T) {
     )
 
 	client, err := {{ packageName }}.New{{ classname }}(
-		"MY_CHANNEL_TOKEN",
+		{% if authMethods != null %}"MY_CHANNEL_TOKEN",{% endif %}
         {{ packageName }}.WithEndpoint(server.URL),
 	)
 	if err != nil {

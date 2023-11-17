@@ -3,6 +3,7 @@
 {# @pebvariable name="generatorClass" type="java.lang.String" -#}
 {# @pebvariable name="classname" type="java.lang.String" -#}
 {# @pebvariable name="authenticated" type="java.lang.Boolean" -#}
+{# @pebvariable name="authMethods" type="java.util.ArrayList<org.openapitools.codegen.CodegenSecurity>" -#}
 {% include "./licenseInfo.pebble" %}
 //go:generate python3 ../../generate-code.py
 {# @pebvariable name="packageName" type="java.lang.String" #}
@@ -27,7 +28,9 @@ import (
 type {{classname}} struct {
 	httpClient       *http.Client
 	endpoint     *url.URL
+{% if authMethods != null -%}
 	channelToken string
+{% endif -%}
 	ctx context.Context
 }
 
@@ -35,13 +38,18 @@ type {{classname}} struct {
 type {{ classname }}Option func (* {{ classname }}) error
 
 // New returns a new bot client instance.
-func New{{ classname }}(channelToken string, options ...{{classname}}Option) (*{{ classname }}, error) {
+func New{{ classname }}({% if authMethods != null %}channelToken string, {% endif %}options ...{{classname}}Option) (*{{ classname }}, error) {
+    {% if authMethods != null -%}
 	if channelToken == "" {
 		return nil, errors.New("missing channel access token")
 	}
 
+    {% endif -%}
+
 	c := &{{ classname }}{
+{% if authMethods != null -%}
 		channelToken: channelToken,
+{% endif -%}
 		httpClient:   http.DefaultClient,
 	}
 
@@ -67,9 +75,11 @@ func (call *{{ classname }}) WithContext(ctx context.Context) *{{ classname }} {
 }
 
 func (client *{{ classname }}) Do(req *http.Request) (*http.Response, error) {
+{% if authMethods != null -%}
 	if client.channelToken != "" {
 		req.Header.Set("Authorization", "Bearer "+client.channelToken)
 	}
+{% endif -%}
 	req.Header.Set("User-Agent", "LINE-BotSDK-Go/"+linebot.GetVersion())
 	if client.ctx != nil {
 		req = req.WithContext(client.ctx)
