@@ -24,7 +24,6 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -36,24 +35,18 @@ import (
 )
 
 type ChannelAccessTokenAPI struct {
-	httpClient   *http.Client
-	endpoint     *url.URL
-	channelToken string
-	ctx          context.Context
+	httpClient *http.Client
+	endpoint   *url.URL
+	ctx        context.Context
 }
 
 // ChannelAccessTokenAPIOption type
 type ChannelAccessTokenAPIOption func(*ChannelAccessTokenAPI) error
 
 // New returns a new bot client instance.
-func NewChannelAccessTokenAPI(channelToken string, options ...ChannelAccessTokenAPIOption) (*ChannelAccessTokenAPI, error) {
-	if channelToken == "" {
-		return nil, errors.New("missing channel access token")
-	}
-
+func NewChannelAccessTokenAPI(options ...ChannelAccessTokenAPIOption) (*ChannelAccessTokenAPI, error) {
 	c := &ChannelAccessTokenAPI{
-		channelToken: channelToken,
-		httpClient:   http.DefaultClient,
+		httpClient: http.DefaultClient,
 	}
 
 	u, err := url.ParseRequestURI("https://api.line.me")
@@ -78,9 +71,6 @@ func (call *ChannelAccessTokenAPI) WithContext(ctx context.Context) *ChannelAcce
 }
 
 func (client *ChannelAccessTokenAPI) Do(req *http.Request) (*http.Response, error) {
-	if client.channelToken != "" {
-		req.Header.Set("Authorization", "Bearer "+client.channelToken)
-	}
 	req.Header.Set("User-Agent", "LINE-BotSDK-Go/"+linebot.GetVersion())
 	if client.ctx != nil {
 		req = req.WithContext(client.ctx)
