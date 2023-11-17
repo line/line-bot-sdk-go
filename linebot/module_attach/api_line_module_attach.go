@@ -27,7 +27,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"net/url"
 	"path"
@@ -235,7 +234,6 @@ func (client *LineModuleAttachAPI) AttachModuleWithHttpInfo(
 	buf := vs.Encode()
 	body := bytes.NewBufferString(buf)
 
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf)
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), body)
 	if err != nil {
 		return nil, nil, err
@@ -243,7 +241,6 @@ func (client *LineModuleAttachAPI) AttachModuleWithHttpInfo(
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err

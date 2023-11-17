@@ -27,7 +27,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"net/url"
 	"path"
@@ -135,14 +134,12 @@ func (client *InsightAPI) GetFriendsDemographics() (*GetFriendsDemographicsRespo
 func (client *InsightAPI) GetFriendsDemographicsWithHttpInfo() (*http.Response, *GetFriendsDemographicsResponse, error) {
 	path := "/v2/bot/insight/demographic"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -203,7 +200,6 @@ func (client *InsightAPI) GetMessageEventWithHttpInfo(
 ) (*http.Response, *GetMessageEventResponse, error) {
 	path := "/v2/bot/insight/message/event"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
@@ -215,7 +211,6 @@ func (client *InsightAPI) GetMessageEventWithHttpInfo(
 	req.URL.RawQuery = query.Encode()
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -276,7 +271,6 @@ func (client *InsightAPI) GetNumberOfFollowersWithHttpInfo(
 ) (*http.Response, *GetNumberOfFollowersResponse, error) {
 	path := "/v2/bot/insight/followers"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
@@ -288,7 +282,6 @@ func (client *InsightAPI) GetNumberOfFollowersWithHttpInfo(
 	req.URL.RawQuery = query.Encode()
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -349,7 +342,6 @@ func (client *InsightAPI) GetNumberOfMessageDeliveriesWithHttpInfo(
 ) (*http.Response, *GetNumberOfMessageDeliveriesResponse, error) {
 	path := "/v2/bot/insight/message/delivery"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
@@ -361,7 +353,6 @@ func (client *InsightAPI) GetNumberOfMessageDeliveriesWithHttpInfo(
 	req.URL.RawQuery = query.Encode()
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -438,7 +429,6 @@ func (client *InsightAPI) GetStatisticsPerUnitWithHttpInfo(
 ) (*http.Response, *GetStatisticsPerUnitResponse, error) {
 	path := "/v2/bot/insight/message/event/aggregation"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
@@ -452,7 +442,6 @@ func (client *InsightAPI) GetStatisticsPerUnitWithHttpInfo(
 	req.URL.RawQuery = query.Encode()
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err

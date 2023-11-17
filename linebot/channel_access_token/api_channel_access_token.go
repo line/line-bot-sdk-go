@@ -26,7 +26,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"net/url"
 	"path"
@@ -146,7 +145,6 @@ func (client *ChannelAccessTokenAPI) GetsAllValidChannelAccessTokenKeyIdsWithHtt
 ) (*http.Response, *ChannelAccessTokenKeyIdsResponse, error) {
 	path := "/oauth2/v2.1/tokens/kid"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
@@ -159,7 +157,6 @@ func (client *ChannelAccessTokenAPI) GetsAllValidChannelAccessTokenKeyIdsWithHtt
 	req.URL.RawQuery = query.Encode()
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -244,7 +241,6 @@ func (client *ChannelAccessTokenAPI) IssueChannelTokenWithHttpInfo(
 	buf := vs.Encode()
 	body := bytes.NewBufferString(buf)
 
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf)
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), body)
 	if err != nil {
 		return nil, nil, err
@@ -252,7 +248,6 @@ func (client *ChannelAccessTokenAPI) IssueChannelTokenWithHttpInfo(
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -337,7 +332,6 @@ func (client *ChannelAccessTokenAPI) IssueChannelTokenByJWTWithHttpInfo(
 	buf := vs.Encode()
 	body := bytes.NewBufferString(buf)
 
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf)
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), body)
 	if err != nil {
 		return nil, nil, err
@@ -345,7 +339,6 @@ func (client *ChannelAccessTokenAPI) IssueChannelTokenByJWTWithHttpInfo(
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -448,7 +441,6 @@ func (client *ChannelAccessTokenAPI) IssueStatelessChannelTokenWithHttpInfo(
 	buf := vs.Encode()
 	body := bytes.NewBufferString(buf)
 
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf)
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), body)
 	if err != nil {
 		return nil, nil, err
@@ -456,7 +448,6 @@ func (client *ChannelAccessTokenAPI) IssueStatelessChannelTokenWithHttpInfo(
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -523,7 +514,6 @@ func (client *ChannelAccessTokenAPI) RevokeChannelTokenWithHttpInfo(
 	buf := vs.Encode()
 	body := bytes.NewBufferString(buf)
 
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf)
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), body)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -531,7 +521,6 @@ func (client *ChannelAccessTokenAPI) RevokeChannelTokenWithHttpInfo(
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -611,7 +600,6 @@ func (client *ChannelAccessTokenAPI) RevokeChannelTokenByJWTWithHttpInfo(
 	buf := vs.Encode()
 	body := bytes.NewBufferString(buf)
 
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf)
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), body)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -619,7 +607,6 @@ func (client *ChannelAccessTokenAPI) RevokeChannelTokenByJWTWithHttpInfo(
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -681,7 +668,6 @@ func (client *ChannelAccessTokenAPI) VerifyChannelTokenWithHttpInfo(
 	buf := vs.Encode()
 	body := bytes.NewBufferString(buf)
 
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf)
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), body)
 	if err != nil {
 		return nil, nil, err
@@ -689,7 +675,6 @@ func (client *ChannelAccessTokenAPI) VerifyChannelTokenWithHttpInfo(
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -750,7 +735,6 @@ func (client *ChannelAccessTokenAPI) VerifyChannelTokenByJWTWithHttpInfo(
 ) (*http.Response, *VerifyChannelAccessTokenResponse, error) {
 	path := "/oauth2/v2.1/verify"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
@@ -762,7 +746,6 @@ func (client *ChannelAccessTokenAPI) VerifyChannelTokenByJWTWithHttpInfo(
 	req.URL.RawQuery = query.Encode()
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err

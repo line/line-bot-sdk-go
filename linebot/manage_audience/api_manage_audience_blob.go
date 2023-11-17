@@ -27,7 +27,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"mime/multipart"
 	"net/http"
 	"net/url"
@@ -185,7 +184,6 @@ func (client *ManageAudienceBlobAPI) AddUserIdsToAudienceWithHttpInfo(
 		return nil, struct{}{}, err
 	}
 
-	log.Printf("Sending request: method=Put path=%s\n", path)
 	req, err := http.NewRequest(http.MethodPut, client.Url(path), body)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -193,7 +191,6 @@ func (client *ManageAudienceBlobAPI) AddUserIdsToAudienceWithHttpInfo(
 	req.Header.Set("Content-Type", writer.FormDataContentType())
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -293,7 +290,6 @@ func (client *ManageAudienceBlobAPI) CreateAudienceForUploadingUserIdsWithHttpIn
 		return nil, nil, err
 	}
 
-	log.Printf("Sending request: method=Post path=%s\n", path)
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), body)
 	if err != nil {
 		return nil, nil, err
@@ -301,7 +297,6 @@ func (client *ManageAudienceBlobAPI) CreateAudienceForUploadingUserIdsWithHttpIn
 	req.Header.Set("Content-Type", writer.FormDataContentType())
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err

@@ -16,7 +16,6 @@ package webhook
 
 import (
 	"errors"
-	"log"
 	"net/http"
 )
 
@@ -62,10 +61,8 @@ func (wh *WebhookHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			wh.handleError(err, r)
 		}
 		if err == ErrInvalidSignature {
-			log.Printf("linebot webhook request validation error: %v", err)
 			w.WriteHeader(400)
 		} else {
-			log.Printf("linebot internal server error: %v", err)
 			w.WriteHeader(500)
 		}
 		return

@@ -27,7 +27,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"net/url"
 	"path"
@@ -152,14 +151,12 @@ func (client *ManageAudienceAPI) ActivateAudienceGroupWithHttpInfo(
 
 	path = strings.Replace(path, "{audienceGroupId}", strconv.FormatInt(audienceGroupId, 10), -1)
 
-	log.Printf("Sending request: method=Put path=%s\n", path)
 	req, err := http.NewRequest(http.MethodPut, client.Url(path), nil)
 	if err != nil {
 		return nil, struct{}{}, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -220,7 +217,6 @@ func (client *ManageAudienceAPI) AddAudienceToAudienceGroupWithHttpInfo(
 	if err := enc.Encode(addAudienceToAudienceGroupRequest); err != nil {
 		return nil, struct{}{}, err
 	}
-	log.Printf("Sending request: method=Put path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPut, client.Url(path), &buf)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -228,7 +224,6 @@ func (client *ManageAudienceAPI) AddAudienceToAudienceGroupWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -289,7 +284,6 @@ func (client *ManageAudienceAPI) CreateAudienceGroupWithHttpInfo(
 	if err := enc.Encode(createAudienceGroupRequest); err != nil {
 		return nil, nil, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, nil, err
@@ -297,7 +291,6 @@ func (client *ManageAudienceAPI) CreateAudienceGroupWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -363,7 +356,6 @@ func (client *ManageAudienceAPI) CreateClickBasedAudienceGroupWithHttpInfo(
 	if err := enc.Encode(createClickBasedAudienceGroupRequest); err != nil {
 		return nil, nil, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, nil, err
@@ -371,7 +363,6 @@ func (client *ManageAudienceAPI) CreateClickBasedAudienceGroupWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -437,7 +428,6 @@ func (client *ManageAudienceAPI) CreateImpBasedAudienceGroupWithHttpInfo(
 	if err := enc.Encode(createImpBasedAudienceGroupRequest); err != nil {
 		return nil, nil, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, nil, err
@@ -445,7 +435,6 @@ func (client *ManageAudienceAPI) CreateImpBasedAudienceGroupWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -508,14 +497,12 @@ func (client *ManageAudienceAPI) DeleteAudienceGroupWithHttpInfo(
 
 	path = strings.Replace(path, "{audienceGroupId}", strconv.FormatInt(audienceGroupId, 10), -1)
 
-	log.Printf("Sending request: method=Delete path=%s\n", path)
 	req, err := http.NewRequest(http.MethodDelete, client.Url(path), nil)
 	if err != nil {
 		return nil, struct{}{}, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -573,14 +560,12 @@ func (client *ManageAudienceAPI) GetAudienceDataWithHttpInfo(
 
 	path = strings.Replace(path, "{audienceGroupId}", strconv.FormatInt(audienceGroupId, 10), -1)
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -628,14 +613,12 @@ func (client *ManageAudienceAPI) GetAudienceGroupAuthorityLevel() (*GetAudienceG
 func (client *ManageAudienceAPI) GetAudienceGroupAuthorityLevelWithHttpInfo() (*http.Response, *GetAudienceGroupAuthorityLevelResponse, error) {
 	path := "/v2/bot/audienceGroup/authorityLevel"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -736,7 +719,6 @@ func (client *ManageAudienceAPI) GetAudienceGroupsWithHttpInfo(
 ) (*http.Response, *GetAudienceGroupsResponse, error) {
 	path := "/v2/bot/audienceGroup/list"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
@@ -753,7 +735,6 @@ func (client *ManageAudienceAPI) GetAudienceGroupsWithHttpInfo(
 	req.URL.RawQuery = query.Encode()
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -819,7 +800,6 @@ func (client *ManageAudienceAPI) UpdateAudienceGroupAuthorityLevelWithHttpInfo(
 	if err := enc.Encode(updateAudienceGroupAuthorityLevelRequest); err != nil {
 		return nil, struct{}{}, err
 	}
-	log.Printf("Sending request: method=Put path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPut, client.Url(path), &buf)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -827,7 +807,6 @@ func (client *ManageAudienceAPI) UpdateAudienceGroupAuthorityLevelWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -898,7 +877,6 @@ func (client *ManageAudienceAPI) UpdateAudienceGroupDescriptionWithHttpInfo(
 	if err := enc.Encode(updateAudienceGroupDescriptionRequest); err != nil {
 		return nil, struct{}{}, err
 	}
-	log.Printf("Sending request: method=Put path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPut, client.Url(path), &buf)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -906,7 +884,6 @@ func (client *ManageAudienceAPI) UpdateAudienceGroupDescriptionWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err

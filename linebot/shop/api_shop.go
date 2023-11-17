@@ -27,7 +27,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"net/url"
 	"path"
@@ -153,7 +152,6 @@ func (client *ShopAPI) MissionStickerV3WithHttpInfo(
 	if err := enc.Encode(missionStickerRequest); err != nil {
 		return nil, struct{}{}, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -161,7 +159,6 @@ func (client *ShopAPI) MissionStickerV3WithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err

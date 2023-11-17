@@ -27,7 +27,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"net/url"
 	"path"
@@ -154,7 +153,6 @@ func (client *LiffAPI) AddLIFFAppWithHttpInfo(
 	if err := enc.Encode(addLiffAppRequest); err != nil {
 		return nil, nil, err
 	}
-	log.Printf("Sending request: method=Post path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
 	if err != nil {
 		return nil, nil, err
@@ -162,7 +160,6 @@ func (client *LiffAPI) AddLIFFAppWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -225,14 +222,12 @@ func (client *LiffAPI) DeleteLIFFAppWithHttpInfo(
 
 	path = strings.Replace(path, "{liffId}", liffId, -1)
 
-	log.Printf("Sending request: method=Delete path=%s\n", path)
 	req, err := http.NewRequest(http.MethodDelete, client.Url(path), nil)
 	if err != nil {
 		return nil, struct{}{}, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err
@@ -275,14 +270,12 @@ func (client *LiffAPI) GetAllLIFFApps() (*GetAllLiffAppsResponse, error) {
 func (client *LiffAPI) GetAllLIFFAppsWithHttpInfo() (*http.Response, *GetAllLiffAppsResponse, error) {
 	path := "/liff/v1/apps"
 
-	log.Printf("Sending request: method=Get path=%s\n", path)
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, nil, err
@@ -358,7 +351,6 @@ func (client *LiffAPI) UpdateLIFFAppWithHttpInfo(
 	if err := enc.Encode(updateLiffAppRequest); err != nil {
 		return nil, struct{}{}, err
 	}
-	log.Printf("Sending request: method=Put path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.MethodPut, client.Url(path), &buf)
 	if err != nil {
 		return nil, struct{}{}, err
@@ -366,7 +358,6 @@ func (client *LiffAPI) UpdateLIFFAppWithHttpInfo(
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, struct{}{}, err

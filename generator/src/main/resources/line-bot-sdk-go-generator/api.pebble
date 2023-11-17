@@ -195,7 +195,6 @@ func (client *{{ classname }}) {{ op.operationId }}WithHttpInfo(
     path = strings.Replace(path, "{{ "{" }}{{ pp.paramName }}{{ "}" }}", {% if pp.isInteger or pp.isLong %}strconv.FormatInt({{ pp.paramName }}, 10){% else %}{{ pp.paramName }}{% endif %}, -1)
     {% endfor %}
     {% if op.bodyParam != null and op.bodyParam.isFile %}
-	log.Printf("Sending request: method={{ op.httpMethod }} path=%s bodyContentType=%s\n", path, {{ op.bodyParam.paramName }}ContentType)
 	req, err := http.NewRequest(http.Method{{ op.httpMethod }}, client.Url(path), {{ op.bodyParam.paramName }}Reader)
 	if err != nil {
 		return nil, {{ nilval }}, err
@@ -207,7 +206,6 @@ func (client *{{ classname }}) {{ op.operationId }}WithHttpInfo(
 	if err := enc.Encode({{ op.bodyParam.paramName }}); err != nil {
 		return nil, {{ nilval }}, err
 	}
-	log.Printf("Sending request: method={{ op.httpMethod }} path=%s body=%s\n", path, buf.String())
 	req, err := http.NewRequest(http.Method{{ op.httpMethod }}, client.Url(path), &buf)
 	if err != nil {
 		return nil, {{ nilval }}, err
@@ -232,7 +230,6 @@ func (client *{{ classname }}) {{ op.operationId }}WithHttpInfo(
 		return nil, {{ nilval }}, err
 	}
 
-	log.Printf("Sending request: method={{ op.httpMethod }} path=%s\n", path)
 	req, err := http.NewRequest(http.Method{{ op.httpMethod }}, client.Url(path), body)
 	if err != nil {
 		return nil, {{ nilval }}, err
@@ -247,14 +244,12 @@ func (client *{{ classname }}) {{ op.operationId }}WithHttpInfo(
 	buf := vs.Encode()
 	body := bytes.NewBufferString(buf)
 
-	log.Printf("Sending request: method={{ op.httpMethod }} path=%s body=%s\n", path, buf)
 	req, err := http.NewRequest(http.Method{{ op.httpMethod }}, client.Url(path), body)
 	if err != nil {
 		return nil, {{ nilval }}, err
 	}
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	{% else %}
-	log.Printf("Sending request: method={{ op.httpMethod }} path=%s\n", path)
 	req, err := http.NewRequest(http.Method{{ op.httpMethod }}, client.Url(path), nil)
 	if err != nil {
 		return nil, {{ nilval }}, err
@@ -274,7 +269,6 @@ func (client *{{ classname }}) {{ op.operationId }}WithHttpInfo(
     {% endif %}
 
 	res, err := client.Do(req)
-	log.Printf("Got response from '%s %s': status=%d, contentLength=%d", req.Method, req.URL, res.StatusCode, res.ContentLength)
 
 	if err != nil {
 		return res, {{ nilval }}, err
