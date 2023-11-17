@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/line/line-bot-sdk-go/v7/linebot/channel_access_token"
+	"github.com/line/line-bot-sdk-go/v8/linebot/channel_access_token"
 )
 
 func TestGetsAllValidChannelAccessTokenKeyIds(t *testing.T) {

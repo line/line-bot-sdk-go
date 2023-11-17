@@ -1,12 +1,11 @@
 package tests
 
-
 import (
 	"encoding/json"
 	"strings"
 	"testing"
 
-	"github.com/line/line-bot-sdk-go/v7/linebot/messaging_api"
+	"github.com/line/line-bot-sdk-go/v8/linebot/messaging_api"
 )
 
 func TestTemplateMessage(t *testing.T) {
@@ -14,7 +13,7 @@ func TestTemplateMessage(t *testing.T) {
 		ReplyToken: "JKLJDSFhkljdsjfkla",
 		Messages: []messaging_api.MessageInterface{
 			&messaging_api.TemplateMessage{
-				AltText:  "Buttons alt text",
+				AltText: "Buttons alt text",
 				Template: &messaging_api.ButtonsTemplate{
 					ThumbnailImageUrl: "https://example.com/static/buttons/1040.jpg",
 					Title:             "My button sample",
@@ -43,7 +42,7 @@ func TestFlexBubble(t *testing.T) {
 		ReplyToken: "KHJKLJSDFKLJSfudsifsjfakljfl",
 		Messages: []messaging_api.MessageInterface{
 			&messaging_api.FlexMessage{
-				AltText:  "Flex message alt text",
+				AltText: "Flex message alt text",
 				Contents: messaging_api.FlexBubble{
 					Body: &messaging_api.FlexBox{
 						Layout: messaging_api.FlexBoxLAYOUT_HORIZONTAL,

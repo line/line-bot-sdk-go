@@ -16,7 +16,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/line/line-bot-sdk-go/v7/linebot/{{ packageName }}"
+	"github.com/line/line-bot-sdk-go/v8/linebot/{{ packageName }}"
 )
 
 {% for op in operations.operation %}

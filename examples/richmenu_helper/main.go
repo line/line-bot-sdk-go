@@ -21,7 +21,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/line/line-bot-sdk-go/v7/linebot/messaging_api"
+	"github.com/line/line-bot-sdk-go/v8/linebot/messaging_api"
 )
 
 func main() {

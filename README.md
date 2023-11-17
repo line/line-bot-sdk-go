@@ -23,22 +23,22 @@ This library requires Go 1.20 or later.
 ## Installation ##
 
 ```sh
-$ go get -u github.com/line/line-bot-sdk-go/v7/linebot
+$ go get -u github.com/line/line-bot-sdk-go/v8/linebot
 ```
 
 ## Import all packages in your code ##
 ```go
 import (
-	"github.com/line/line-bot-sdk-go/v7/linebot"
-	"github.com/line/line-bot-sdk-go/v7/linebot/channel_access_token"
-	"github.com/line/line-bot-sdk-go/v7/linebot/insight"
-	"github.com/line/line-bot-sdk-go/v7/linebot/liff"
-	"github.com/line/line-bot-sdk-go/v7/linebot/manage_audience"
-	"github.com/line/line-bot-sdk-go/v7/linebot/messaging_api"
-	"github.com/line/line-bot-sdk-go/v7/linebot/module"
-	"github.com/line/line-bot-sdk-go/v7/linebot/module_attach"
-	"github.com/line/line-bot-sdk-go/v7/linebot/shop"
-	"github.com/line/line-bot-sdk-go/v7/linebot/webhook"
+	"github.com/line/line-bot-sdk-go/v8/linebot"
+	"github.com/line/line-bot-sdk-go/v8/linebot/channel_access_token"
+	"github.com/line/line-bot-sdk-go/v8/linebot/insight"
+	"github.com/line/line-bot-sdk-go/v8/linebot/liff"
+	"github.com/line/line-bot-sdk-go/v8/linebot/manage_audience"
+	"github.com/line/line-bot-sdk-go/v8/linebot/messaging_api"
+	"github.com/line/line-bot-sdk-go/v8/linebot/module"
+	"github.com/line/line-bot-sdk-go/v8/linebot/module_attach"
+	"github.com/line/line-bot-sdk-go/v8/linebot/shop"
+	"github.com/line/line-bot-sdk-go/v8/linebot/webhook"
 )
 
 ```
@@ -47,7 +47,7 @@ import (
 
 ```go
 import (
-	"github.com/line/line-bot-sdk-go/v7/linebot/messaging_api"
+	"github.com/line/line-bot-sdk-go/v8/linebot/messaging_api"
 )
 
 func main() {
@@ -79,7 +79,7 @@ The LINE Messaging API primarily utilizes the JSON data format. To parse the inc
 
 ```go
 import (
-	"github.com/line/line-bot-sdk-go/v7/linebot/webhook"
+	"github.com/line/line-bot-sdk-go/v8/linebot/webhook"
 )
 
 cb, err := webhook.ParseRequest(os.Getenv("LINE_CHANNEL_SECRET"), req)
