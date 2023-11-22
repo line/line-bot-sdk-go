@@ -89,8 +89,9 @@ func (client *MessagingApiAPI) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (client *MessagingApiAPI) Url(endpointPath string) string {
-	u := client.endpoint
-	u.Path = path.Join(u.Path, endpointPath)
+	newPath := path.Join(client.endpoint.Path, endpointPath)
+	u := *client.endpoint
+	u.Path = newPath
 	return u.String()
 }
 
