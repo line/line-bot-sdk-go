@@ -8,7 +8,7 @@ import (
 	"github.com/line/line-bot-sdk-go/v8/linebot/messaging_api"
 )
 
-func CallingAPITwice(t *testing.T) {
+func TestCallingAPITwice(t *testing.T) {
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			if r.URL.Path != "/v2/bot/message/push" {
