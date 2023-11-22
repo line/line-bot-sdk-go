@@ -91,8 +91,9 @@ func (client *ManageAudienceBlobAPI) Do(req *http.Request) (*http.Response, erro
 }
 
 func (client *ManageAudienceBlobAPI) Url(endpointPath string) string {
-	u := client.endpoint
-	u.Path = path.Join(u.Path, endpointPath)
+	newPath := path.Join(client.endpoint.Path, endpointPath)
+	u := *client.endpoint
+	u.Path = newPath
 	return u.String()
 }
 
