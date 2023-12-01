@@ -17,6 +17,7 @@ package linebot
 import (
 	"context"
 	"net/url"
+	"strconv"
 )
 
 // GetFollowerIDs method
@@ -34,6 +35,7 @@ type GetFollowerIDsCall struct {
 	ctx context.Context
 
 	continuationToken string
+	limit             uint16
 }
 
 // WithContext method
@@ -42,12 +44,16 @@ func (call *GetFollowerIDsCall) WithContext(ctx context.Context) *GetFollowerIDs
 	return call
 }
 
+// WithLimit will set limit parmeter on query.
+// The limit can be a maximum of 1000 for a single request.
+func (call *GetFollowerIDsCall) WithLimit(limit uint16) *GetFollowerIDsCall {
+	call.bindLimit(limit)
+	return call
+}
+
 // Do method
 func (call *GetFollowerIDsCall) Do() (*UserIDsResponse, error) {
-	var q url.Values
-	if call.continuationToken != "" {
-		q = url.Values{"start": []string{call.continuationToken}}
-	}
+	q := call.bindToQuery()
 	res, err := call.c.get(call.ctx, call.c.endpointBase, APIEndpointGetFollowerIDs, q)
 	if err != nil {
 		return nil, err
@@ -73,6 +79,27 @@ func (call *GetFollowerIDsCall) NewScanner() *UserIDsScanner {
 		caller: c2,
 		ctx:    ctx,
 	}
+}
+
+func (call *GetFollowerIDsCall) bindLimit(limit uint16) {
+	if limit > 1000 {
+		limit = 1000
+	}
+	if limit == 0 {
+		limit = 300
+	}
+	call.limit = limit
+}
+
+func (call *GetFollowerIDsCall) bindToQuery() url.Values {
+	q := make(url.Values)
+	if call.continuationToken != "" {
+		q.Set("start", call.continuationToken)
+	}
+	if call.limit != 0 {
+		q.Set("limit", strconv.FormatUint(uint64(call.limit), 10))
+	}
+	return q
 }
 
 func (call *GetFollowerIDsCall) setContinuationToken(token string) {
