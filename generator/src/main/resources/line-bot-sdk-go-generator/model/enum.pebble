@@ -1,0 +1,21 @@
+{# @pebvariable name="model" type="org.openapitools.codegen.CodegenModel" -#}
+{% if model.description %}
+/*
+ * {{ model.description | escape }}
+ */
+{% endif %}
+
+// {{model.classname}} type
+type {{model.classname}} {% if model.format %}{{ model.format }}{% else %}{{ model.dataType }}{% endif %}
+
+// {{model.classname}} constants
+const (
+{% if model.allowableValues != null %}
+    {% for enumVar in model.allowableValues.get("enumVars") -%}
+        {% if enumVar.enumDescription %}
+    // {{enumVar.enumDescription }}
+        {% endif %}
+    {{ model.classname }}_{{ enumVar.name }} {{ model.classname }} = {{ enumVar.value }}
+    {% endfor %}
+{% endif %}
+)

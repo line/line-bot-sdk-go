@@ -45,6 +45,7 @@ func (client *Client) NewRawCallWithBody(method string, endpoint string, body io
 }
 
 // RawCall type
+// Deprecated: Use OpenAPI based classes instead.
 type RawCall struct {
 	c   *Client
 	ctx context.Context

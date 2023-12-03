@@ -17,7 +17,7 @@ package linebot
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -82,7 +82,7 @@ func TestGetProfile(t *testing.T) {
 		if r.URL.Path != tc.Want.URLPath {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -235,7 +235,7 @@ func TestGetGroupMemberProfile(t *testing.T) {
 		if r.URL.Path != tc.Want.URLPath {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -388,7 +388,7 @@ func TestGetRoomMemberProfile(t *testing.T) {
 		if r.URL.Path != tc.Want.URLPath {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}

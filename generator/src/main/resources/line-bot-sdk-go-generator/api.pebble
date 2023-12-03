@@ -1,0 +1,307 @@
+{# @pebvariable name="imports" type="java.util.List<java.util.Map<String, String>>" -#}
+{# @pebvariable name="operations" type="org.openapitools.codegen.model.OperationMap" -#}
+{# @pebvariable name="generatorClass" type="java.lang.String" -#}
+{# @pebvariable name="classname" type="java.lang.String" -#}
+{# @pebvariable name="authenticated" type="java.lang.Boolean" -#}
+{# @pebvariable name="authMethods" type="java.util.ArrayList<org.openapitools.codegen.CodegenSecurity>" -#}
+{% include "./licenseInfo.pebble" %}
+//go:generate python3 ../../generate-code.py
+{# @pebvariable name="packageName" type="java.lang.String" #}
+package {{ packageName }}
+
+import (
+    "bytes"
+    "context"
+	"errors"
+	"log"
+    "encoding/json"
+    "strings"
+	"mime/multipart"
+    "net/url"
+    "net/http"
+    "strconv"
+    "fmt"
+
+    "github.com/line/line-bot-sdk-go/v8/linebot"
+)
+
+type {{classname}} struct {
+	httpClient       *http.Client
+	endpoint     *url.URL
+{% if authMethods != null -%}
+	channelToken string
+{% endif -%}
+	ctx context.Context
+}
+
+// {{ classname }}Option type
+type {{ classname }}Option func (* {{ classname }}) error
+
+// New returns a new bot client instance.
+func New{{ classname }}({% if authMethods != null %}channelToken string, {% endif %}options ...{{classname}}Option) (*{{ classname }}, error) {
+    {% if authMethods != null -%}
+	if channelToken == "" {
+		return nil, errors.New("missing channel access token")
+	}
+
+    {% endif -%}
+
+	c := &{{ classname }}{
+{% if authMethods != null -%}
+		channelToken: channelToken,
+{% endif -%}
+		httpClient:   http.DefaultClient,
+	}
+
+    u, err := url.ParseRequestURI("{{ endpoint(classname) }}")
+    if err != nil {
+        return nil, err
+    }
+    c.endpoint = u
+
+	for _, option := range options {
+		err := option(c)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return c, nil
+}
+
+// WithContext method
+func (call *{{ classname }}) WithContext(ctx context.Context) *{{ classname }} {
+	call.ctx = ctx
+	return call
+}
+
+func (client *{{ classname }}) Do(req *http.Request) (*http.Response, error) {
+{% if authMethods != null -%}
+	if client.channelToken != "" {
+		req.Header.Set("Authorization", "Bearer "+client.channelToken)
+	}
+{% endif -%}
+	req.Header.Set("User-Agent", "LINE-BotSDK-Go/"+linebot.GetVersion())
+	if client.ctx != nil {
+		req = req.WithContext(client.ctx)
+	}
+	return client.httpClient.Do(req)
+}
+
+func (client *{{ classname }}) Url(endpointPath string) string {
+	newPath := path.Join(client.endpoint.Path, endpointPath)
+	u := *client.endpoint
+	u.Path = newPath
+	return u.String()
+}
+
+// WithHTTPClient function
+func With{{ classname contains "Blob" ? "Blob" : "" }}HTTPClient(c *http.Client) {{classname}}Option {
+	return func(client *{{ classname }}) error {
+		client.httpClient = c
+		return nil
+	}
+}
+
+// WithEndpointClient function
+func With{{ classname contains "Blob" ? "Blob" : "" }}Endpoint(endpoint string) {{classname}}Option {
+	return func(client *{{ classname }}) error {
+        u, err := url.ParseRequestURI(endpoint)
+        if err != nil {
+            return err
+        }
+        client.endpoint = u
+		return nil
+	}
+}
+
+{# @pebvariable name="param" type="org.openapitools.codegen.CodegenParameter" #}
+{% macro stringify(param) -%}
+    {%- if param.isLong -%}
+    strconv.FormatInt({{ param.paramName }}, 10)
+    {%- elseif param.isBoolean -%}
+    strconv.FormatBool({{ param.paramName }})
+    {%- else -%}
+    string({{ param.paramName }})
+    {%- endif -%}
+{%- endmacro %}
+
+{% for op in operations.operation %}
+
+    {% set nilval = op.returnType ? "nil" : "struct{}{}" %}
+
+// {{ op.operationId | capitalize }}
+// {{ op.summary }}
+// {{ op.notes }}
+// Parameters:
+{% for param in op.allParams %}
+    {%- if param.isBodyParam and param.isFile -%}
+//        {{ param.paramName }}ContentType  {{ param.description }} content-type
+//        {{ param.paramName }}Reader       {{ param.description }} file content
+   {%- else -%}
+//        {{ param.paramName }}             {{ param.description }}
+   {%- endif %}
+{% endfor %}
+{% if op.isResponseFile %}// You must close the response body when finished with it.{% endif %}
+{% if op.externalDocs != null -%}// {{op.externalDocs.url}}{% endif %}
+func (client *{{ classname }}) {{ op.operationId }}(
+{% for param in op.allParams %}
+    {% if param.isBodyParam and param.isFile %}
+    {{ param.paramName }}ContentType string,
+    {{ param.paramName }}Reader io.Reader,
+    {% else %}
+    {{ param.paramName }} {% if not (param.isPrimitiveType or param.isEnumRef) %}*{% endif %}{{ param.dataType }},
+    {% endif %}
+{% endfor %}
+) ({% if op.isResponseFile %}*http.Response{% elseif op.returnType %}*{{ op.returnType }}{% else %}struct{}{% endif %}, error) {
+    _, body, error := client.{{ op.operationId }}WithHttpInfo(
+    {% for param in op.allParams %}
+        {% if param.isBodyParam and param.isFile %}
+        {{ param.paramName }}ContentType,
+        {{ param.paramName }}Reader,
+        {% else %}
+        {{ param.paramName }},
+        {% endif %}
+    {% endfor %}
+    )
+    return body, error
+}
+
+// {{ op.operationId | capitalize }}
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+// {{ op.summary }}
+// {{ op.notes }}
+// Parameters:
+{% for param in op.allParams %}
+    {%- if param.isBodyParam and param.isFile -%}
+//        {{ param.paramName }}ContentType  {{ param.description }} content-type
+//        {{ param.paramName }}Reader       {{ param.description }} file content
+   {%- else -%}
+//        {{ param.paramName }}             {{ param.description }}
+   {%- endif %}
+{% endfor %}
+{% if op.isResponseFile %}// You must close the response body when finished with it.{% endif %}
+{% if op.externalDocs != null -%}// {{op.externalDocs.url}}{% endif %}
+func (client *{{ classname }}) {{ op.operationId }}WithHttpInfo(
+{% for param in op.allParams %}
+    {% if param.isBodyParam and param.isFile %}
+    {{ param.paramName }}ContentType string,
+    {{ param.paramName }}Reader io.Reader,
+    {% else %}
+    {{ param.paramName }} {% if not (param.isPrimitiveType or param.isEnumRef) %}*{% endif %}{{ param.dataType }},
+    {% endif %}
+{% endfor %}
+) (*http.Response, {% if op.isResponseFile %}*http.Response{% elseif op.returnType %}*{{ op.returnType }}{% else %}struct{}{% endif %}, error) {
+    path := "{{ op.path }}"
+    {% for pp in op.pathParams %}
+    path = strings.Replace(path, "{{ "{" }}{{ pp.paramName }}{{ "}" }}", {% if pp.isInteger or pp.isLong %}strconv.FormatInt({{ pp.paramName }}, 10){% else %}{{ pp.paramName }}{% endif %}, -1)
+    {% endfor %}
+    {% if op.bodyParam != null and op.bodyParam.isFile %}
+	req, err := http.NewRequest(http.Method{{ op.httpMethod }}, client.Url(path), {{ op.bodyParam.paramName }}Reader)
+	if err != nil {
+		return nil, {{ nilval }}, err
+	}
+    req.Header.Set("Content-Type", {{ op.bodyParam.paramName }}ContentType)
+    {% elseif op.bodyParam != null %}
+	var buf bytes.Buffer
+	enc := json.NewEncoder(&buf)
+	if err := enc.Encode({{ op.bodyParam.paramName }}); err != nil {
+		return nil, {{ nilval }}, err
+	}
+	req, err := http.NewRequest(http.Method{{ op.httpMethod }}, client.Url(path), &buf)
+	if err != nil {
+		return nil, {{ nilval }}, err
+	}
+	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
+	{% elseif op.hasFormParams and op.isMultipart %}
+	body := &bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+        {% for fp in op.formParams -%}
+            {% if fp.isFile %}
+	fileWriter, err := writer.CreateFormFile("{{ fp.baseName }}", {{ fp.paramName }}.Name())
+	if err != nil {
+		return nil, {{ nilval }}, err
+	}
+	io.Copy(fileWriter, {{ fp.paramName }})
+            {% else %}
+	writer.WriteField("{{ fp.baseName }}", {{ stringify(fp) }})
+	        {% endif %}
+        {% endfor %}
+	err = writer.Close()
+	if err != nil {
+		return nil, {{ nilval }}, err
+	}
+
+	req, err := http.NewRequest(http.Method{{ op.httpMethod }}, client.Url(path), body)
+	if err != nil {
+		return nil, {{ nilval }}, err
+	}
+	req.Header.Set("Content-Type", writer.FormDataContentType())
+	{% elseif op.hasFormParams %}
+	vs := url.Values{
+    	{% for fp in op.formParams -%}
+	    "{{ fp.baseName }}": []string{ string({{ fp.paramName }}) },
+    	{% endfor %}
+	}
+	buf := vs.Encode()
+	body := bytes.NewBufferString(buf)
+
+	req, err := http.NewRequest(http.Method{{ op.httpMethod }}, client.Url(path), body)
+	if err != nil {
+		return nil, {{ nilval }}, err
+	}
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	{% else %}
+	req, err := http.NewRequest(http.Method{{ op.httpMethod }}, client.Url(path), nil)
+	if err != nil {
+		return nil, {{ nilval }}, err
+	}
+    {% endif %}
+
+    {% for hp in op.headerParams %}
+    req.Header.Set("{{ hp.baseName }}", {{ stringify(hp) }})
+    {% endfor %}
+
+    {% if op.hasQueryParams -%}
+	var query url.Values
+	    {% for qp in op.queryParams -%}
+    query = url.Values{"{{ qp.paramName }}": []string{ {{ stringify(qp) }} }}
+	    {% endfor %}
+    req.URL.RawQuery = query.Encode()
+    {% endif %}
+
+	res, err := client.Do(req)
+
+	if err != nil {
+		return res, {{ nilval }}, err
+	}
+
+	if res.StatusCode/100 != 2 {
+        bodyBytes, err := io.ReadAll(res.Body)
+        bodyReader := bytes.NewReader(bodyBytes)
+        if err != nil {
+            return res, {{ nilval }}, fmt.Errorf("failed to read response body: %w", err)
+        }
+        res.Body = io.NopCloser(bodyReader)
+	    return res, {{ nilval }}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
+	}
+
+    {% if op.isResponseFile %}
+    return res, res, nil
+    {% else %}
+	defer res.Body.Close()
+
+    {% if op.returnType %}
+	decoder := json.NewDecoder(res.Body)
+	result := {{ op.returnType }}{}
+	if err := decoder.Decode(&result); err != nil {
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
+	}
+	return res, &result, nil
+    {% else %}
+	return res, struct{}{}, nil
+    {% endif %}
+    {% endif %}
+}
+
+{% endfor %}
+

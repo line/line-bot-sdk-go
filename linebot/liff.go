@@ -32,21 +32,42 @@ const (
 	LIFFViewTypeFull    LIFFViewType = "full"
 )
 
-// LIFFApp type
-type LIFFApp struct {
-	LIFFID string `json:"liffId"`
-	View   View   `json:"view"`
-}
+// LIFFViewScopeType type
+type LIFFViewScopeType string
 
-// ViewRequest type
-type ViewRequest struct {
-	View View `json:"view"`
+// LIFFViewScopeType constants
+const (
+	LIFFViewScopeTypeOpenID           LIFFViewScopeType = "openid"
+	LIFFViewScopeTypeEmail            LIFFViewScopeType = "email"
+	LIFFViewScopeTypeProfile          LIFFViewScopeType = "profile"
+	LIFFViewScopeTypeChatMessageWrite LIFFViewScopeType = "chat_message.write"
+)
+
+// LIFFApp type
+// Deprecated: Use OpenAPI based classes instead.
+type LIFFApp struct {
+	LIFFID               string              `json:"liffId"`
+	View                 View                `json:"view"`
+	Description          string              `json:"description,omitempty"`
+	Features             *LIFFAppFeatures    `json:"features,omitempty"`
+	PermanentLinkPattern string              `json:"permanentLinkPattern,omitempty"`
+	Scope                []LIFFViewScopeType `json:"scope,omitempty"`
+	BotPrompt            string              `json:"botprompt,omitempty"`
 }
 
 // View type
+// Deprecated: Use OpenAPI based classes instead.
 type View struct {
-	Type LIFFViewType `json:"type"`
-	URL  string       `json:"url"`
+	Type       LIFFViewType `json:"type"`
+	URL        string       `json:"url"`
+	ModlueMode bool         `json:"moduleMode,omitempty"`
+}
+
+// LIFFAppFeatures type
+// Deprecated: Use OpenAPI based classes instead.
+type LIFFAppFeatures struct {
+	BLE    bool `json:"ble,omitempty"`
+	QRCode bool `json:"qrCode,omitempty"`
 }
 
 // GetLIFF method
@@ -57,6 +78,7 @@ func (client *Client) GetLIFF() *GetLIFFAllCall {
 }
 
 // GetLIFFAllCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetLIFFAllCall struct {
 	c   *Client
 	ctx context.Context
@@ -79,19 +101,20 @@ func (call *GetLIFFAllCall) Do() (*LIFFAppsResponse, error) {
 }
 
 // AddLIFF method
-func (client *Client) AddLIFF(view View) *AddLIFFCall {
+func (client *Client) AddLIFF(app LIFFApp) *AddLIFFCall {
 	return &AddLIFFCall{
-		c:    client,
-		view: view,
+		c:   client,
+		app: app,
 	}
 }
 
 // AddLIFFCall type
+// Deprecated: Use OpenAPI based classes instead.
 type AddLIFFCall struct {
 	c   *Client
 	ctx context.Context
 
-	view View
+	app LIFFApp
 }
 
 // WithContext method
@@ -103,9 +126,19 @@ func (call *AddLIFFCall) WithContext(ctx context.Context) *AddLIFFCall {
 func (call *AddLIFFCall) encodeJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
 	return enc.Encode(&struct {
-		View View `json:"view"`
+		View                 View                `json:"view"`
+		Description          string              `json:"description,omitempty"`
+		Features             *LIFFAppFeatures    `json:"features,omitempty"`
+		PermanentLinkPattern string              `json:"permanentLinkPattern,omitempty"`
+		Scope                []LIFFViewScopeType `json:"scope,omitempty"`
+		BotPrompt            string              `json:"botPrompt,omitempty"`
 	}{
-		View: call.view,
+		View:                 call.app.View,
+		Description:          call.app.Description,
+		Features:             call.app.Features,
+		PermanentLinkPattern: call.app.PermanentLinkPattern,
+		Scope:                call.app.Scope,
+		BotPrompt:            call.app.BotPrompt,
 	})
 }
 
@@ -124,21 +157,22 @@ func (call *AddLIFFCall) Do() (*LIFFIDResponse, error) {
 }
 
 // UpdateLIFF method
-func (client *Client) UpdateLIFF(liffID string, view View) *UpdateLIFFCall {
+func (client *Client) UpdateLIFF(liffID string, app LIFFApp) *UpdateLIFFCall {
 	return &UpdateLIFFCall{
 		c:      client,
 		liffID: liffID,
-		view:   view,
+		app:    app,
 	}
 }
 
 // UpdateLIFFCall type
+// Deprecated: Use OpenAPI based classes instead.
 type UpdateLIFFCall struct {
 	c   *Client
 	ctx context.Context
 
 	liffID string
-	view   View
+	app    LIFFApp
 }
 
 // WithContext method
@@ -150,11 +184,19 @@ func (call *UpdateLIFFCall) WithContext(ctx context.Context) *UpdateLIFFCall {
 func (call *UpdateLIFFCall) encodeJSON(w io.Writer) error {
 	enc := json.NewEncoder(w)
 	return enc.Encode(&struct {
-		Type LIFFViewType `json:"type"`
-		URL  string       `json:"url"`
+		View                 View                `json:"view"`
+		Description          string              `json:"description,omitempty"`
+		Features             *LIFFAppFeatures    `json:"features,omitempty"`
+		PermanentLinkPattern string              `json:"permanentLinkPattern,omitempty"`
+		Scope                []LIFFViewScopeType `json:"scope,omitempty"`
+		BotPrompt            string              `json:"botPrompt,omitempty"`
 	}{
-		Type: call.view.Type,
-		URL:  call.view.URL,
+		View:                 call.app.View,
+		Description:          call.app.Description,
+		Features:             call.app.Features,
+		PermanentLinkPattern: call.app.PermanentLinkPattern,
+		Scope:                call.app.Scope,
+		BotPrompt:            call.app.BotPrompt,
 	})
 }
 
@@ -183,6 +225,7 @@ func (client *Client) DeleteLIFF(liffID string) *DeleteLIFFCall {
 }
 
 // DeleteLIFFCall type
+// Deprecated: Use OpenAPI based classes instead.
 type DeleteLIFFCall struct {
 	c   *Client
 	ctx context.Context

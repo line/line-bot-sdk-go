@@ -22,23 +22,24 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"io"
-	"io/ioutil"
 	"net/http"
 )
 
 // ParseRequest method
+// Deprecated: use webhook.ParseRequest instead.
 func (client *Client) ParseRequest(r *http.Request) ([]*Event, error) {
 	return ParseRequest(client.channelSecret, r)
 }
 
 // ParseRequest func
+// Deprecated: use webhook.ParseRequest instead.
 func ParseRequest(channelSecret string, r *http.Request) ([]*Event, error) {
 	defer r.Body.Close()
-	body, err := ioutil.ReadAll(r.Body)
+	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		return nil, err
 	}
-	if !validateSignature(channelSecret, r.Header.Get("x-line-signature"), body) {
+	if !ValidateSignature(channelSecret, r.Header.Get("x-line-signature"), body) {
 		return nil, ErrInvalidSignature
 	}
 
@@ -51,7 +52,8 @@ func ParseRequest(channelSecret string, r *http.Request) ([]*Event, error) {
 	return request.Events, nil
 }
 
-func validateSignature(channelSecret, signature string, body []byte) bool {
+// Deprecated: use webhook.ValidateSignature instead.
+func ValidateSignature(channelSecret, signature string, body []byte) bool {
 	decoded, err := base64.StdEncoding.DecodeString(signature)
 	if err != nil {
 		return false
@@ -75,6 +77,7 @@ func (client *Client) GetWebhookInfo() *GetWebhookInfo {
 }
 
 // GetWebhookInfo type
+// Deprecated: Use OpenAPI based classes instead.
 type GetWebhookInfo struct {
 	c        *Client
 	ctx      context.Context
@@ -98,6 +101,7 @@ func (call *GetWebhookInfo) Do() (*WebhookInfoResponse, error) {
 }
 
 // TestWebhook type
+// Deprecated: Use OpenAPI based classes instead.
 type TestWebhook struct {
 	c        *Client
 	ctx      context.Context
@@ -105,6 +109,7 @@ type TestWebhook struct {
 }
 
 // SetWebhookEndpointURLCall type
+// Deprecated: Use OpenAPI based classes instead.
 type SetWebhookEndpointURLCall struct {
 	c   *Client
 	ctx context.Context
@@ -165,7 +170,7 @@ func (call *TestWebhook) WithContext(ctx context.Context) *TestWebhook {
 
 // Do method
 func (call *TestWebhook) Do() (*TestWebhookResponse, error) {
-	res, err := call.c.get(call.ctx, call.c.endpointBase, call.endpoint, nil)
+	res, err := call.c.post(call.ctx, call.endpoint, nil)
 	if err != nil {
 		return nil, err
 	}

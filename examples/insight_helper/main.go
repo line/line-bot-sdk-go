@@ -19,7 +19,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/line/line-bot-sdk-go/v7/linebot"
+	"github.com/line/line-bot-sdk-go/v8/linebot/insight"
 )
 
 func main() {
@@ -28,29 +28,26 @@ func main() {
 		date = flag.String("date", "", "date the messages were sent, format 'yyyyMMdd'")
 	)
 	flag.Parse()
-	bot, err := linebot.New(
-		os.Getenv("CHANNEL_SECRET"),
-		os.Getenv("CHANNEL_TOKEN"),
-	)
+	client, err := insight.NewInsightAPI(os.Getenv("LINE_CHANNEL_TOKEN"))
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	switch *mode {
 	case "messages":
-		res, err := bot.GetNumberMessagesDelivery(*date).Do()
+		res, err := client.GetNumberOfMessageDeliveries(*date)
 		if err != nil {
 			log.Fatal(err)
 		}
 		log.Printf("%v", res)
 	case "followers":
-		res, err := bot.GetNumberFollowers(*date).Do()
+		res, err := client.GetNumberOfFollowers(*date)
 		if err != nil {
 			log.Fatal(err)
 		}
 		log.Printf("%v", res)
 	case "demographics":
-		res, err := bot.GetFriendDemographics().Do()
+		res, err := client.GetFriendsDemographics()
 		if err != nil {
 			log.Fatal(err)
 		}

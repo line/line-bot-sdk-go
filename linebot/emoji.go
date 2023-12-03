@@ -15,6 +15,7 @@
 package linebot
 
 // Emoji type
+// Deprecated: Use OpenAPI based classes instead.
 type Emoji struct {
 	Index     int    `json:"index"`
 	Length    int    `json:"length,omitempty"`
@@ -23,6 +24,7 @@ type Emoji struct {
 }
 
 // NewEmoji function
+// Deprecated: Use OpenAPI based classes instead.
 func NewEmoji(index int, productID, emojiID string) *Emoji {
 	return &Emoji{
 		Index:     index,

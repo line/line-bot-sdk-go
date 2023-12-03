@@ -20,6 +20,7 @@ import "encoding/json"
 type FlexContainerType string
 
 // IntPtr is a helper function for using *int values
+// Deprecated: Use OpenAPI based classes instead.
 func IntPtr(v int) *int {
 	return &v
 }
@@ -388,6 +389,7 @@ type FlexContainer interface {
 }
 
 // BubbleContainer type
+// Deprecated: Use OpenAPI based classes instead.
 type BubbleContainer struct {
 	Type      FlexContainerType
 	Size      FlexBubbleSizeType
@@ -449,6 +451,7 @@ func (c *BubbleContainer) UnmarshalJSON(b []byte) error {
 }
 
 // CarouselContainer type
+// Deprecated: Use OpenAPI based classes instead.
 type CarouselContainer struct {
 	Type     FlexContainerType
 	Contents []*BubbleContainer
@@ -472,6 +475,7 @@ func (*BubbleContainer) FlexContainer() {}
 func (*CarouselContainer) FlexContainer() {}
 
 // BubbleStyle type
+// Deprecated: Use OpenAPI based classes instead.
 type BubbleStyle struct {
 	Header *BlockStyle `json:"header,omitempty"`
 	Hero   *BlockStyle `json:"hero,omitempty"`
@@ -480,6 +484,7 @@ type BubbleStyle struct {
 }
 
 // BlockStyle type
+// Deprecated: Use OpenAPI based classes instead.
 type BlockStyle struct {
 	BackgroundColor string `json:"backgroundColor,omitempty"`
 	Separator       bool   `json:"separator,omitempty"`
@@ -492,6 +497,7 @@ type FlexComponent interface {
 }
 
 // BoxComponent type
+// Deprecated: Use OpenAPI based classes instead.
 type BoxComponent struct {
 	Type            FlexComponentType
 	Layout          FlexBoxLayoutType
@@ -587,6 +593,7 @@ func (c *BoxComponent) MarshalJSON() ([]byte, error) {
 }
 
 // BoxBackground type
+// Deprecated: Use OpenAPI based classes instead.
 type BoxBackground struct {
 	Type           FlexBoxBackgroundType `json:"type,omitempty"`
 	Angle          string                `json:"angle,omitempty"`
@@ -597,6 +604,7 @@ type BoxBackground struct {
 }
 
 // ButtonComponent type
+// Deprecated: Use OpenAPI based classes instead.
 type ButtonComponent struct {
 	Type         FlexComponentType
 	Action       TemplateAction
@@ -650,6 +658,7 @@ func (c *ButtonComponent) MarshalJSON() ([]byte, error) {
 }
 
 // FillerComponent type
+// Deprecated: Use OpenAPI based classes instead.
 type FillerComponent struct {
 	Type FlexComponentType
 	Flex *int
@@ -667,6 +676,7 @@ func (c *FillerComponent) MarshalJSON() ([]byte, error) {
 }
 
 // IconComponent type
+// Deprecated: Use OpenAPI based classes instead.
 type IconComponent struct {
 	Type        FlexComponentType
 	URL         string
@@ -693,6 +703,7 @@ func (c *IconComponent) MarshalJSON() ([]byte, error) {
 }
 
 // ImageComponent type
+// Deprecated: Use OpenAPI based classes instead.
 type ImageComponent struct {
 	Type            FlexComponentType
 	URL             string
@@ -755,6 +766,7 @@ func (c *ImageComponent) MarshalJSON() ([]byte, error) {
 }
 
 // SeparatorComponent type
+// Deprecated: Use OpenAPI based classes instead.
 type SeparatorComponent struct {
 	Type   FlexComponentType
 	Margin FlexComponentMarginType
@@ -775,6 +787,7 @@ func (c *SeparatorComponent) MarshalJSON() ([]byte, error) {
 }
 
 // SpacerComponent type
+// Deprecated: Use OpenAPI based classes instead.
 type SpacerComponent struct {
 	Type FlexComponentType
 	Size FlexSpacerSizeType
@@ -792,6 +805,7 @@ func (c *SpacerComponent) MarshalJSON() ([]byte, error) {
 }
 
 // SpanComponent type
+// Deprecated: Use OpenAPI based classes instead.
 type SpanComponent struct {
 	Type       FlexComponentType
 	Text       string
@@ -824,6 +838,7 @@ func (c *SpanComponent) MarshalJSON() ([]byte, error) {
 }
 
 // TextComponent type
+// Deprecated: Use OpenAPI based classes instead.
 type TextComponent struct {
 	Type         FlexComponentType
 	Text         string
@@ -901,6 +916,7 @@ func (c *TextComponent) MarshalJSON() ([]byte, error) {
 }
 
 // VideoComponent type
+// Deprecated: Use OpenAPI based classes instead.
 type VideoComponent struct {
 	Type        FlexComponentType
 	URL         string

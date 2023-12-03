@@ -38,6 +38,7 @@ func (client *Client) GetProgressNarrowcastMessages(requestID string) *GetProgre
 }
 
 // GetProgressMessagesCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetProgressMessagesCall struct {
 	c   *Client
 	ctx context.Context

@@ -30,6 +30,7 @@ func (client *Client) IssueAccessToken(channelID, channelSecret string) *IssueAc
 }
 
 // IssueAccessTokenCall type
+// Deprecated: Use OpenAPI based classes instead.
 type IssueAccessTokenCall struct {
 	c   *Client
 	ctx context.Context
@@ -69,6 +70,7 @@ func (client *Client) RevokeAccessToken(accessToken string) *RevokeAccessTokenCa
 }
 
 // RevokeAccessTokenCall type
+// Deprecated: Use OpenAPI based classes instead.
 type RevokeAccessTokenCall struct {
 	c   *Client
 	ctx context.Context
@@ -94,4 +96,41 @@ func (call *RevokeAccessTokenCall) Do() (*BasicResponse, error) {
 	}
 	defer closeResponse(res)
 	return decodeToBasicResponse(res)
+}
+
+// VerifyAccessToken method
+func (client *Client) VerifyAccessToken(accessToken string) *VerifyAccessTokenCall {
+	return &VerifyAccessTokenCall{
+		c:           client,
+		accessToken: accessToken,
+	}
+}
+
+// VerifyAccessTokenCall type
+// Deprecated: Use OpenAPI based classes instead.
+type VerifyAccessTokenCall struct {
+	c   *Client
+	ctx context.Context
+
+	accessToken string
+}
+
+// WithContext method
+func (call *VerifyAccessTokenCall) WithContext(ctx context.Context) *VerifyAccessTokenCall {
+	call.ctx = ctx
+	return call
+}
+
+// Do method
+func (call *VerifyAccessTokenCall) Do() (*VerifiedAccessTokenResponse, error) {
+	vs := url.Values{}
+	vs.Set("access_token", call.accessToken)
+	body := strings.NewReader(vs.Encode())
+
+	res, err := call.c.postForm(call.ctx, APIEndpointVerifyAccessToken, body)
+	if err != nil {
+		return nil, err
+	}
+	defer closeResponse(res)
+	return decodeToVerifiedAccessTokenResponse(res)
 }

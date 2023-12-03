@@ -22,7 +22,7 @@ import (
 	"crypto/tls"
 	"encoding/base64"
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -95,11 +95,13 @@ var webhookTestRequestBody = `{
                         {
                             "index": 0,
                             "length": 16,
-                            "userId": "U0047556f2e40dba2456887320ba7c76d"
+                            "userId": "U0047556f2e40dba2456887320ba7c76d",
+                            "type": "user"
                         },
                         {
                             "index": 24,
-                            "length": 16
+                            "length": 16,
+                            "type": "user"
                         }
                     ]
                 }
@@ -751,7 +753,50 @@ var webhookTestRequestBody = `{
             "videoPlayComplete": {
                 "trackingId": "track_id"
             }
-        }
+        },
+		{
+			"replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+			"type": "message",
+			"mode": "active",
+			"timestamp": 1462629479859,
+			"source": {
+				"type": "group",
+				"groupId": "Ca56f94637c...",
+				"userId": "U4af4980629..."
+			},
+			"webhookEventId": "01FZ74A0TDDPYRVKNK77XKC3ZR",
+			"deliveryContext": {
+				"isRedelivery": false
+			},
+			"message": {
+				"id": "444573844083572737",
+				"type": "text",
+				"text": "@All @example Good Morning!! (love)",
+				"emojis": [
+					{
+						"index": 29,
+						"length": 6,
+						"productId": "5ac1bfd5040ab15980c9b435",
+						"emojiId": "001"
+					}
+				],
+				"mention": {
+					"mentionees": [
+						{
+							"index": 0,
+							"length": 4,
+							"type": "all"
+						},
+						{
+							"index": 5,
+							"length": 8,
+							"userId": "U49585cd0d5...",
+							"type": "user"
+						}
+					]
+				}
+			}
+		}
     ]
 }
 `
@@ -818,11 +863,13 @@ var webhookTestWantEvents = []*Event{
 					{
 						Index:  0,
 						Length: 16,
+						Type:   MentionedTargetTypeUser,
 						UserID: "U0047556f2e40dba2456887320ba7c76d",
 					},
 					{
 						Index:  24,
 						Length: 16,
+						Type:   MentionedTargetTypeUser,
 					},
 				},
 			},
@@ -1467,6 +1514,43 @@ var webhookTestWantEvents = []*Event{
 			TrackingID: "track_id",
 		},
 	},
+	{
+		ReplyToken: "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+		Type:       EventTypeMessage,
+		Mode:       EventModeActive,
+		Timestamp:  time.Date(2016, time.May, 7, 13, 57, 59, int(859*time.Millisecond), time.UTC),
+		Source: &EventSource{
+			Type:    EventSourceTypeGroup,
+			GroupID: "Ca56f94637c...",
+			UserID:  "U4af4980629...",
+		},
+		WebhookEventID: "01FZ74A0TDDPYRVKNK77XKC3ZR",
+		DeliveryContext: DeliveryContext{
+			IsRedelivery: false,
+		},
+		Message: &TextMessage{
+			ID:   "444573844083572737",
+			Text: "@All @example Good Morning!! (love)",
+			Emojis: []*Emoji{
+				{Index: 29, Length: 6, ProductID: "5ac1bfd5040ab15980c9b435", EmojiID: "001"},
+			},
+			Mention: &Mention{
+				Mentionees: []*Mentionee{
+					{
+						Index:  0,
+						Length: 4,
+						Type:   MentionedTargetTypeAll,
+					},
+					{
+						Index:  5,
+						Length: 8,
+						Type:   MentionedTargetTypeUser,
+						UserID: "U49585cd0d5...",
+					},
+				},
+			},
+		},
+	},
 }
 
 func TestParseRequest(t *testing.T) {
@@ -1664,7 +1748,7 @@ func TestGetWebhookInfo(t *testing.T) {
 		if r.URL.Path != tc.Want.URLPath {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1795,6 +1879,28 @@ func TestTestWebhook(t *testing.T) {
 			},
 		},
 		{
+			Label:        "Failed with timeout",
+			ResponseCode: 200,
+			Response: []byte(`{
+				"success": false,
+				"timestamp": "2023-09-12T14:00:10.015Z",
+				"statusCode": 0,
+				"reason": "REQUEST_TIMEOUT",
+				"detail": "Request timeout: https://example.com/"
+			}`),
+			Want: want{
+				URLPath:     APIEndpointTestWebhook,
+				RequestBody: []byte(""),
+				Response: &TestWebhookResponse{
+					Success:    false,
+					Timestamp:  time.Date(2023, time.September, 12, 14, 00, 10, int(15*time.Millisecond), time.UTC),
+					StatusCode: 0,
+					Reason:     "REQUEST_TIMEOUT",
+					Detail:     "Request timeout: https://example.com/",
+				},
+			},
+		},
+		{
 			Label:        "Internal server error",
 			ResponseCode: 500,
 			Response:     []byte("500 Internal server error"),
@@ -1827,13 +1933,13 @@ func TestTestWebhook(t *testing.T) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 		tc := testCases[currentTestIdx]
-		if r.Method != http.MethodGet {
-			t.Errorf("Method %s; want %s", r.Method, http.MethodGet)
+		if r.Method != http.MethodPost {
+			t.Errorf("Method %s; want %s", r.Method, http.MethodPost)
 		}
 		if r.URL.Path != tc.Want.URLPath {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1998,7 +2104,7 @@ func TestSetWebhookEndpointURL(t *testing.T) {
 		if r.URL.Path != tc.Want.URLPath {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}

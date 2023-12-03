@@ -19,7 +19,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/line/line-bot-sdk-go/v7/linebot"
+	"github.com/line/line-bot-sdk-go/v8/linebot/messaging_api"
 )
 
 func main() {
@@ -28,24 +28,25 @@ func main() {
 		date = flag.String("date", "", "date the messages were sent, format 'yyyyMMdd'")
 	)
 	flag.Parse()
-	bot, err := linebot.New(
-		os.Getenv("CHANNEL_SECRET"),
-		os.Getenv("CHANNEL_TOKEN"),
+	client, err := messaging_api.NewMessagingApiAPI(
+		os.Getenv("LINE_CHANNEL_TOKEN"),
 	)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	var res *linebot.MessagesNumberResponse
+	log.Printf("Getting stats for date=%s, mode=%s\n", *date, *mode)
+
+	var res *messaging_api.NumberOfMessagesResponse
 	switch *mode {
 	case "multicast":
-		res, err = bot.GetNumberMulticastMessages(*date).Do()
+		res, err = client.GetNumberOfSentMulticastMessages(*date)
 	case "push":
-		res, err = bot.GetNumberPushMessages(*date).Do()
+		res, err = client.GetNumberOfSentPushMessages(*date)
 	case "reply":
-		res, err = bot.GetNumberReplyMessages(*date).Do()
+		res, err = client.GetNumberOfSentReplyMessages(*date)
 	case "broadcast":
-		res, err = bot.GetNumberBroadcastMessages(*date).Do()
+		res, err = client.GetNumberOfSentBroadcastMessages(*date)
 	default:
 		log.Fatal("implement me")
 	}

@@ -37,12 +37,14 @@ const (
 )
 
 // RichMenuSize type
+// Deprecated: Use OpenAPI based classes instead.
 type RichMenuSize struct {
 	Width  int `json:"width"`
 	Height int `json:"height"`
 }
 
 // RichMenuBounds type
+// Deprecated: Use OpenAPI based classes instead.
 type RichMenuBounds struct {
 	X      int `json:"x"`
 	Y      int `json:"y"`
@@ -51,6 +53,7 @@ type RichMenuBounds struct {
 }
 
 // RichMenuAction with type
+// Deprecated: Use OpenAPI based classes instead.
 type RichMenuAction struct {
 	Type            RichMenuActionType `json:"type"`
 	URI             string             `json:"uri,omitempty"`
@@ -63,15 +66,19 @@ type RichMenuAction struct {
 	Max             string             `json:"max,omitempty"`
 	Min             string             `json:"min,omitempty"`
 	RichMenuAliasID string             `json:"richMenuAliasId,omitempty"`
+	InputOption     InputOption        `json:"inputOption,omitempty"`
+	FillInText      string             `json:"fillInText,omitempty"`
 }
 
 // AreaDetail type for areas array
+// Deprecated: Use OpenAPI based classes instead.
 type AreaDetail struct {
 	Bounds RichMenuBounds `json:"bounds"`
 	Action RichMenuAction `json:"action"`
 }
 
 // RichMenu type
+// Deprecated: Use OpenAPI based classes instead.
 type RichMenu struct {
 	Size        RichMenuSize
 	Selected    bool
@@ -120,6 +127,7 @@ func (client *Client) GetRichMenu(richMenuID string) *GetRichMenuCall {
 }
 
 // GetRichMenuCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetRichMenuCall struct {
 	c   *Client
 	ctx context.Context
@@ -153,6 +161,7 @@ func (client *Client) GetUserRichMenu(userID string) *GetUserRichMenuCall {
 }
 
 // GetUserRichMenuCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetUserRichMenuCall struct {
 	c   *Client
 	ctx context.Context
@@ -186,6 +195,7 @@ func (client *Client) CreateRichMenu(richMenu RichMenu) *CreateRichMenuCall {
 }
 
 // CreateRichMenuCall type
+// Deprecated: Use OpenAPI based classes instead.
 type CreateRichMenuCall struct {
 	c   *Client
 	ctx context.Context
@@ -239,6 +249,7 @@ func (client *Client) DeleteRichMenu(richMenuID string) *DeleteRichMenuCall {
 }
 
 // DeleteRichMenuCall type
+// Deprecated: Use OpenAPI based classes instead.
 type DeleteRichMenuCall struct {
 	c   *Client
 	ctx context.Context
@@ -273,6 +284,7 @@ func (client *Client) LinkUserRichMenu(userID, richMenuID string) *LinkUserRichM
 }
 
 // LinkUserRichMenuCall type
+// Deprecated: Use OpenAPI based classes instead.
 type LinkUserRichMenuCall struct {
 	c   *Client
 	ctx context.Context
@@ -307,6 +319,7 @@ func (client *Client) UnlinkUserRichMenu(userID string) *UnlinkUserRichMenuCall 
 }
 
 // UnlinkUserRichMenuCall type
+// Deprecated: Use OpenAPI based classes instead.
 type UnlinkUserRichMenuCall struct {
 	c   *Client
 	ctx context.Context
@@ -340,6 +353,7 @@ func (client *Client) SetDefaultRichMenu(richMenuID string) *SetDefaultRichMenuC
 }
 
 // SetDefaultRichMenuCall type
+// Deprecated: Use OpenAPI based classes instead.
 type SetDefaultRichMenuCall struct {
 	c   *Client
 	ctx context.Context
@@ -372,6 +386,7 @@ func (client *Client) CancelDefaultRichMenu() *CancelDefaultRichMenuCall {
 }
 
 // CancelDefaultRichMenuCall type
+// Deprecated: Use OpenAPI based classes instead.
 type CancelDefaultRichMenuCall struct {
 	c   *Client
 	ctx context.Context
@@ -401,6 +416,7 @@ func (client *Client) GetDefaultRichMenu() *GetDefaultRichMenuCall {
 }
 
 // GetDefaultRichMenuCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetDefaultRichMenuCall struct {
 	c   *Client
 	ctx context.Context
@@ -430,6 +446,7 @@ func (client *Client) GetRichMenuList() *GetRichMenuListCall {
 }
 
 // GetRichMenuListCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetRichMenuListCall struct {
 	c   *Client
 	ctx context.Context
@@ -460,6 +477,7 @@ func (client *Client) DownloadRichMenuImage(richMenuID string) *DownloadRichMenu
 }
 
 // DownloadRichMenuImageCall type
+// Deprecated: Use OpenAPI based classes instead.
 type DownloadRichMenuImageCall struct {
 	c   *Client
 	ctx context.Context
@@ -494,6 +512,7 @@ func (client *Client) UploadRichMenuImage(richMenuID, imgPath string) *UploadRic
 }
 
 // UploadRichMenuImageCall type
+// Deprecated: Use OpenAPI based classes instead.
 type UploadRichMenuImageCall struct {
 	c   *Client
 	ctx context.Context
@@ -550,6 +569,7 @@ func (client *Client) BulkLinkRichMenu(richMenuID string, userIDs ...string) *Bu
 }
 
 // BulkLinkRichMenuCall type
+// Deprecated: Use OpenAPI based classes instead.
 type BulkLinkRichMenuCall struct {
 	c   *Client
 	ctx context.Context
@@ -598,6 +618,7 @@ func (client *Client) BulkUnlinkRichMenu(userIDs ...string) *BulkUnlinkRichMenuC
 }
 
 // BulkUnlinkRichMenuCall type
+// Deprecated: Use OpenAPI based classes instead.
 type BulkUnlinkRichMenuCall struct {
 	c   *Client
 	ctx context.Context
@@ -644,6 +665,7 @@ func (client *Client) CreateRichMenuAlias(richMenuAliasID, richMenuID string) *C
 }
 
 // CreateRichMenuAliasCall type
+// Deprecated: Use OpenAPI based classes instead.
 type CreateRichMenuAliasCall struct {
 	c   *Client
 	ctx context.Context
@@ -693,6 +715,7 @@ func (client *Client) UpdateRichMenuAlias(richMenuAliasID, richMenuID string) *U
 }
 
 // UpdateRichMenuAliasCall type
+// Deprecated: Use OpenAPI based classes instead.
 type UpdateRichMenuAliasCall struct {
 	c   *Client
 	ctx context.Context
@@ -740,6 +763,7 @@ func (client *Client) DeleteRichMenuAlias(richMenuAliasID string) *DeleteRichMen
 }
 
 // DeleteRichMenuAliasCall type
+// Deprecated: Use OpenAPI based classes instead.
 type DeleteRichMenuAliasCall struct {
 	c   *Client
 	ctx context.Context
@@ -773,6 +797,7 @@ func (client *Client) GetRichMenuAlias(richMenuAliasID string) *GetRichMenuAlias
 }
 
 // GetRichMenuAliasCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetRichMenuAliasCall struct {
 	c   *Client
 	ctx context.Context
@@ -805,6 +830,7 @@ func (client *Client) GetRichMenuAliasList() *GetRichMenuAliasListCall {
 }
 
 // GetRichMenuAliasListCall type
+// Deprecated: Use OpenAPI based classes instead.
 type GetRichMenuAliasListCall struct {
 	c   *Client
 	ctx context.Context
@@ -835,6 +861,7 @@ func (client *Client) ValidateRichMenuObject(richMenu RichMenu) *ValidateRichMen
 }
 
 // ValidateRichMenuObjectCall type
+// Deprecated: Use OpenAPI based classes instead.
 type ValidateRichMenuObjectCall struct {
 	c   *Client
 	ctx context.Context

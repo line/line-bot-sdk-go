@@ -26,6 +26,7 @@ var (
 )
 
 // APIError type
+// Deprecated: Use OpenAPI based classes instead.
 type APIError struct {
 	Code     int
 	Response *ErrorResponse

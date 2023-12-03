@@ -18,7 +18,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -31,6 +31,7 @@ func TestGetFollowerIDs(t *testing.T) {
 	type want struct {
 		URLPath           string
 		ContinuationToken string
+		Limit             string
 		RequestBody       []byte
 		Response          *UserIDsResponse
 		Error             error
@@ -39,6 +40,7 @@ func TestGetFollowerIDs(t *testing.T) {
 		Label             string
 		GroupID           string
 		ContinuationToken string
+		Limit             uint16
 		ResponseCode      int
 		Response          []byte
 		Want              want
@@ -78,6 +80,24 @@ func TestGetFollowerIDs(t *testing.T) {
 			},
 		},
 		{
+			Label:        "With Limit",
+			GroupID:      "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			Limit:        1,
+			ResponseCode: 200,
+			Response:     []byte(`{"userIds": ["U0047556f2e40dba2456887320ba7c76d"], "next": "xxxxx"}`),
+			Want: want{
+				URLPath:     APIEndpointGetFollowerIDs,
+				Limit:       "1",
+				RequestBody: []byte(""),
+				Response: &UserIDsResponse{
+					UserIDs: []string{
+						"U0047556f2e40dba2456887320ba7c76d",
+					},
+					Next: "xxxxx",
+				},
+			},
+		},
+		{
 			Label:             "Internal server error",
 			GroupID:           "cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			ContinuationToken: "xxxxx",
@@ -108,7 +128,10 @@ func TestGetFollowerIDs(t *testing.T) {
 		if start, want := q.Get("start"), tc.Want.ContinuationToken; start != want {
 			t.Errorf("ContinuationToken: %s; want %s", start, want)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		if limit, want := q.Get("limit"), tc.Want.Limit; limit != want {
+			t.Errorf("Limit: %s; want %s", limit, want)
+		}
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -135,7 +158,11 @@ func TestGetFollowerIDs(t *testing.T) {
 	for i, tc := range testCases {
 		currentTestIdx = i
 		t.Run(strconv.Itoa(i)+"/"+tc.Label, func(t *testing.T) {
-			res, err := client.GetFollowerIDs(tc.ContinuationToken).Do()
+			call := client.GetFollowerIDs(tc.ContinuationToken)
+			if tc.Limit != 0 {
+				call.WithLimit(tc.Limit)
+			}
+			res, err := call.Do()
 			if tc.Want.Error != nil {
 				if !reflect.DeepEqual(err, tc.Want.Error) {
 					t.Errorf("Error %v; want %v", err, tc.Want.Error)

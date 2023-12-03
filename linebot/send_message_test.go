@@ -16,7 +16,7 @@ package linebot
 
 import (
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -271,8 +271,8 @@ func TestPushMessages(t *testing.T) {
 							"description",
 							NewPostbackAction("Buy", "action=buy&itemid=111", "", "", "", ""),
 							NewPostbackAction("Add to cart", "action=add&itemid=111", "", "", "", ""),
-						NewPostbackAction("Buy", "action=buy&itemid=123", "", "", InputOptionOpenKeyboard, "text"),
-						NewURIAction("View detail", "https://example.com/page/111"),
+							NewPostbackAction("Buy", "action=buy&itemid=123", "", "", InputOptionOpenKeyboard, "text"),
+							NewURIAction("View detail", "https://example.com/page/111"),
 						),
 					),
 				),
@@ -296,8 +296,8 @@ func TestPushMessages(t *testing.T) {
 							"description",
 							NewPostbackAction("Buy", "action=buy&itemid=111", "", "", "", ""),
 							NewPostbackAction("Add to cart", "action=add&itemid=111", "", "", "", ""),
-						NewPostbackAction("Buy", "action=buy&itemid=123", "", "", InputOptionOpenKeyboard, "text"),
-						NewURIAction("View detail", "https://example.com/page/111"),
+							NewPostbackAction("Buy", "action=buy&itemid=123", "", "", InputOptionOpenKeyboard, "text"),
+							NewURIAction("View detail", "https://example.com/page/111"),
 						).WithImageOptions("#FFFFFF"),
 					).WithImageOptions("rectangle", "cover"),
 				),
@@ -499,7 +499,7 @@ func TestPushMessages(t *testing.T) {
 		if r.URL.Path != APIEndpointPushMessage {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, APIEndpointPushMessage)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -661,7 +661,7 @@ func TestReplyMessages(t *testing.T) {
 		if r.URL.Path != APIEndpointReplyMessage {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, APIEndpointReplyMessage)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -827,7 +827,7 @@ func TestMulticastMessages(t *testing.T) {
 		if r.URL.Path != APIEndpointMulticast {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, APIEndpointMulticast)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1471,7 +1471,7 @@ func TestBroadcastMessages(t *testing.T) {
 		if r.URL.Path != APIEndpointBroadcastMessage {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, APIEndpointBroadcastMessage)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1603,7 +1603,7 @@ func TestMessagesWithNotificationDisabled(t *testing.T) {
 		if r.Method != http.MethodPost {
 			t.Errorf("Method %s; want %s", r.Method, http.MethodPost)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1782,7 +1782,7 @@ func TestNarrowcastMessages(t *testing.T) {
 		if r.Method != http.MethodPost {
 			t.Errorf("Method %s; want %s", r.Method, http.MethodPost)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1943,7 +1943,7 @@ func TestMessagesWithRetryKey(t *testing.T) {
 		if r.Method != http.MethodPost {
 			t.Errorf("Method %s; want %s", r.Method, http.MethodPost)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}

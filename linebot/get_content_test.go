@@ -17,7 +17,7 @@ package linebot
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -94,7 +94,7 @@ func TestGetMessageContent(t *testing.T) {
 		if r.URL.Path != tc.Want.URLPath {
 			t.Errorf("URLPath %s; want %s", r.URL.Path, tc.Want.URLPath)
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -133,7 +133,7 @@ func TestGetMessageContent(t *testing.T) {
 				if !reflect.DeepEqual(res, tc.Want.Response) {
 					t.Errorf("Response %v; want %v", res, tc.Want.Response)
 				}
-				bodyGot, err := ioutil.ReadAll(body)
+				bodyGot, err := io.ReadAll(body)
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -194,6 +194,6 @@ func BenchmarkGetMessageContent(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		res, _ := client.GetMessageContent("325708A").Do()
 		defer res.Content.Close()
-		ioutil.ReadAll(res.Content)
+		io.ReadAll(res.Content)
 	}
 }
