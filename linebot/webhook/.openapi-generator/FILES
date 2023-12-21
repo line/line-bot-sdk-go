@@ -37,6 +37,8 @@ model_message_content.go
 model_message_event.go
 model_module_content.go
 model_module_event.go
+model_pnp_delivery.go
+model_pnp_delivery_completion_event.go
 model_postback_content.go
 model_postback_event.go
 model_room_source.go
