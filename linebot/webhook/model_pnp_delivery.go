@@ -1,6 +1,6 @@
 /**
- * LIFF server API
- * LIFF Server API.
+ * Webhook Type Definition
+ * Webhook event definition of the LINE Messaging API
  *
  * The version of the OpenAPI document: 1.0.0
  *
@@ -17,15 +17,15 @@
  */
 
 //go:generate python3 ../../generate-code.py
-package liff
+package webhook
 
-// AddLiffAppResponse
-// AddLiffAppResponse
+// PnpDelivery
+// A delivery object containing a hashed phone number string or a string specified by `X-Line-Delivery-Tag` header
 
-type AddLiffAppResponse struct {
+type PnpDelivery struct {
 
 	/**
-	 * Get LiffId
+	 * A hashed phone number string or a string specified by `X-Line-Delivery-Tag` header (Required)
 	 */
-	LiffId string `json:"liffId"`
+	Data string `json:"data"`
 }
