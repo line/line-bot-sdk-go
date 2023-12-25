@@ -104,6 +104,16 @@ func setDiscriminatorPropertyEvent(r EventInterface) EventInterface {
 			v.Type = "deactivated"
 		}
 		return v
+	case *PnpDeliveryCompletionEvent:
+		if v.Type == "" {
+			v.Type = "delivery"
+		}
+		return v
+	case PnpDeliveryCompletionEvent:
+		if v.Type == "" {
+			v.Type = "delivery"
+		}
+		return v
 	case *FollowEvent:
 		if v.Type == "" {
 			v.Type = "follow"
@@ -301,6 +311,12 @@ func UnmarshalEvent(data []byte) (EventInterface, error) {
 			return nil, fmt.Errorf("UnmarshalEvent: Cannot read deactivated: %w", err)
 		}
 		return deactivated, nil
+	case "delivery":
+		var delivery PnpDeliveryCompletionEvent
+		if err := json.Unmarshal(data, &delivery); err != nil {
+			return nil, fmt.Errorf("UnmarshalEvent: Cannot read delivery: %w", err)
+		}
+		return delivery, nil
 	case "follow":
 		var follow FollowEvent
 		if err := json.Unmarshal(data, &follow); err != nil {
