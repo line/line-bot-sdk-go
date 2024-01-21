@@ -30,6 +30,7 @@ import (
 	"net/http"
 	"net/url"
 	"path"
+	"strconv"
 	"strings"
 
 	"github.com/line/line-bot-sdk-go/v8/linebot"
@@ -235,7 +236,7 @@ func (client *MessagingApiAPI) BroadcastWithHttpInfo(
 	}
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
-	req.Header.Set("X-Line-Retry-Key", string(xLineRetryKey))
+	req.Header.Set("X-Line-Retry-Key", xLineRetryKey)
 
 	res, err := client.Do(req)
 
@@ -617,7 +618,7 @@ func (client *MessagingApiAPI) GetAdPhoneMessageStatisticsWithHttpInfo(
 	}
 
 	var query url.Values
-	query = url.Values{"date": []string{string(date)}}
+	query = url.Values{"date": []string{date}}
 
 	req.URL.RawQuery = query.Encode()
 
@@ -696,8 +697,8 @@ func (client *MessagingApiAPI) GetAggregationUnitNameListWithHttpInfo(
 	}
 
 	var query url.Values
-	query = url.Values{"limit": []string{string(limit)}}
-	query = url.Values{"start": []string{string(start)}}
+	query = url.Values{"limit": []string{limit}}
+	query = url.Values{"start": []string{start}}
 
 	req.URL.RawQuery = query.Encode()
 
@@ -935,8 +936,8 @@ func (client *MessagingApiAPI) GetFollowersWithHttpInfo(
 	}
 
 	var query url.Values
-	query = url.Values{"start": []string{string(start)}}
-	query = url.Values{"limit": []string{string(limit)}}
+	query = url.Values{"start": []string{start}}
+	query = url.Values{"limit": []string{strconv.FormatInt(int64(limit), 10)}}
 
 	req.URL.RawQuery = query.Encode()
 
@@ -1163,7 +1164,7 @@ func (client *MessagingApiAPI) GetGroupMembersIdsWithHttpInfo(
 	}
 
 	var query url.Values
-	query = url.Values{"start": []string{string(start)}}
+	query = url.Values{"start": []string{start}}
 
 	req.URL.RawQuery = query.Encode()
 
@@ -1408,7 +1409,7 @@ func (client *MessagingApiAPI) GetNarrowcastProgressWithHttpInfo(
 	}
 
 	var query url.Values
-	query = url.Values{"requestId": []string{string(requestId)}}
+	query = url.Values{"requestId": []string{requestId}}
 
 	req.URL.RawQuery = query.Encode()
 
@@ -1479,7 +1480,7 @@ func (client *MessagingApiAPI) GetNumberOfSentBroadcastMessagesWithHttpInfo(
 	}
 
 	var query url.Values
-	query = url.Values{"date": []string{string(date)}}
+	query = url.Values{"date": []string{date}}
 
 	req.URL.RawQuery = query.Encode()
 
@@ -1550,7 +1551,7 @@ func (client *MessagingApiAPI) GetNumberOfSentMulticastMessagesWithHttpInfo(
 	}
 
 	var query url.Values
-	query = url.Values{"date": []string{string(date)}}
+	query = url.Values{"date": []string{date}}
 
 	req.URL.RawQuery = query.Encode()
 
@@ -1621,7 +1622,7 @@ func (client *MessagingApiAPI) GetNumberOfSentPushMessagesWithHttpInfo(
 	}
 
 	var query url.Values
-	query = url.Values{"date": []string{string(date)}}
+	query = url.Values{"date": []string{date}}
 
 	req.URL.RawQuery = query.Encode()
 
@@ -1692,7 +1693,7 @@ func (client *MessagingApiAPI) GetNumberOfSentReplyMessagesWithHttpInfo(
 	}
 
 	var query url.Values
-	query = url.Values{"date": []string{string(date)}}
+	query = url.Values{"date": []string{date}}
 
 	req.URL.RawQuery = query.Encode()
 
@@ -1763,7 +1764,7 @@ func (client *MessagingApiAPI) GetPNPMessageStatisticsWithHttpInfo(
 	}
 
 	var query url.Values
-	query = url.Values{"date": []string{string(date)}}
+	query = url.Values{"date": []string{date}}
 
 	req.URL.RawQuery = query.Encode()
 
@@ -2091,7 +2092,7 @@ func (client *MessagingApiAPI) GetRichMenuBatchProgressWithHttpInfo(
 	}
 
 	var query url.Values
-	query = url.Values{"requestId": []string{string(requestId)}}
+	query = url.Values{"requestId": []string{requestId}}
 
 	req.URL.RawQuery = query.Encode()
 
@@ -2439,7 +2440,7 @@ func (client *MessagingApiAPI) GetRoomMembersIdsWithHttpInfo(
 	}
 
 	var query url.Values
-	query = url.Values{"start": []string{string(start)}}
+	query = url.Values{"start": []string{start}}
 
 	req.URL.RawQuery = query.Encode()
 
@@ -2977,7 +2978,7 @@ func (client *MessagingApiAPI) MulticastWithHttpInfo(
 	}
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
-	req.Header.Set("X-Line-Retry-Key", string(xLineRetryKey))
+	req.Header.Set("X-Line-Retry-Key", xLineRetryKey)
 
 	res, err := client.Do(req)
 
@@ -3059,7 +3060,7 @@ func (client *MessagingApiAPI) NarrowcastWithHttpInfo(
 	}
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
-	req.Header.Set("X-Line-Retry-Key", string(xLineRetryKey))
+	req.Header.Set("X-Line-Retry-Key", xLineRetryKey)
 
 	res, err := client.Do(req)
 
@@ -3141,7 +3142,7 @@ func (client *MessagingApiAPI) PushMessageWithHttpInfo(
 	}
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
-	req.Header.Set("X-Line-Retry-Key", string(xLineRetryKey))
+	req.Header.Set("X-Line-Retry-Key", xLineRetryKey)
 
 	res, err := client.Do(req)
 
@@ -3223,7 +3224,7 @@ func (client *MessagingApiAPI) PushMessagesByPhoneWithHttpInfo(
 	}
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
-	req.Header.Set("X-Line-Delivery-Tag", string(xLineDeliveryTag))
+	req.Header.Set("X-Line-Delivery-Tag", xLineDeliveryTag)
 
 	res, err := client.Do(req)
 
