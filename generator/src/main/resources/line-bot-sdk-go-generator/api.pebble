@@ -122,6 +122,8 @@ func With{{ classname contains "Blob" ? "Blob" : "" }}Endpoint(endpoint string) 
     strconv.FormatInt(int64({{ param.paramName }}), 10)
     {%- elseif param.isBoolean -%}
     strconv.FormatBool({{ param.paramName }})
+    {%- elseif param.isString -%}
+    {{ param.paramName }}
     {%- else -%}
     string({{ param.paramName }})
     {%- endif -%}
