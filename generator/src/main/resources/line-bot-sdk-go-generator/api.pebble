@@ -118,8 +118,12 @@ func With{{ classname contains "Blob" ? "Blob" : "" }}Endpoint(endpoint string) 
 {% macro stringify(param) -%}
     {%- if param.isLong -%}
     strconv.FormatInt({{ param.paramName }}, 10)
+    {%- elseif param.isInteger -%}
+    strconv.FormatInt(int64({{ param.paramName }}), 10)
     {%- elseif param.isBoolean -%}
     strconv.FormatBool({{ param.paramName }})
+    {%- elseif param.isString -%}
+    {{ param.paramName }}
     {%- else -%}
     string({{ param.paramName }})
     {%- endif -%}
@@ -193,7 +197,7 @@ func (client *{{ classname }}) {{ op.operationId }}WithHttpInfo(
 ) (*http.Response, {% if op.isResponseFile %}*http.Response{% elseif op.returnType %}*{{ op.returnType }}{% else %}struct{}{% endif %}, error) {
     path := "{{ op.path }}"
     {% for pp in op.pathParams %}
-    path = strings.Replace(path, "{{ "{" }}{{ pp.paramName }}{{ "}" }}", {% if pp.isInteger or pp.isLong %}strconv.FormatInt({{ pp.paramName }}, 10){% else %}{{ pp.paramName }}{% endif %}, -1)
+    path = strings.Replace(path, "{{ "{" }}{{ pp.paramName }}{{ "}" }}", {{ stringify(pp) }}, -1)
     {% endfor %}
     {% if op.bodyParam != null and op.bodyParam.isFile %}
 	req, err := http.NewRequest(http.Method{{ op.httpMethod }}, client.Url(path), {{ op.bodyParam.paramName }}Reader)

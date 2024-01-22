@@ -172,7 +172,7 @@ func (client *ManageAudienceBlobAPI) AddUserIdsToAudienceWithHttpInfo(
 
 	writer.WriteField("audienceGroupId", strconv.FormatInt(audienceGroupId, 10))
 
-	writer.WriteField("uploadDescription", string(uploadDescription))
+	writer.WriteField("uploadDescription", uploadDescription)
 
 	fileWriter, err := writer.CreateFormFile("file", file.Name())
 	if err != nil {
@@ -274,11 +274,11 @@ func (client *ManageAudienceBlobAPI) CreateAudienceForUploadingUserIdsWithHttpIn
 	body := &bytes.Buffer{}
 	writer := multipart.NewWriter(body)
 
-	writer.WriteField("description", string(description))
+	writer.WriteField("description", description)
 
 	writer.WriteField("isIfaAudience", strconv.FormatBool(isIfaAudience))
 
-	writer.WriteField("uploadDescription", string(uploadDescription))
+	writer.WriteField("uploadDescription", uploadDescription)
 
 	fileWriter, err := writer.CreateFormFile("file", file.Name())
 	if err != nil {

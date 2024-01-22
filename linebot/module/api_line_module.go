@@ -30,6 +30,7 @@ import (
 	"net/http"
 	"net/url"
 	"path"
+	"strconv"
 	"strings"
 
 	"github.com/line/line-bot-sdk-go/v8/linebot"
@@ -307,8 +308,8 @@ func (client *LineModuleAPI) GetModulesWithHttpInfo(
 	}
 
 	var query url.Values
-	query = url.Values{"start": []string{string(start)}}
-	query = url.Values{"limit": []string{string(limit)}}
+	query = url.Values{"start": []string{start}}
+	query = url.Values{"limit": []string{strconv.FormatInt(int64(limit), 10)}}
 
 	req.URL.RawQuery = query.Encode()
 
