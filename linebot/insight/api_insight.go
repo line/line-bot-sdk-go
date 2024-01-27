@@ -206,8 +206,8 @@ func (client *InsightAPI) GetMessageEventWithHttpInfo(
 		return nil, nil, err
 	}
 
-	var query url.Values
-	query = url.Values{"requestId": []string{requestId}}
+	query := url.Values{}
+	query.Add("requestId", requestId)
 
 	req.URL.RawQuery = query.Encode()
 
@@ -277,8 +277,8 @@ func (client *InsightAPI) GetNumberOfFollowersWithHttpInfo(
 		return nil, nil, err
 	}
 
-	var query url.Values
-	query = url.Values{"date": []string{date}}
+	query := url.Values{}
+	query.Add("date", date)
 
 	req.URL.RawQuery = query.Encode()
 
@@ -348,8 +348,8 @@ func (client *InsightAPI) GetNumberOfMessageDeliveriesWithHttpInfo(
 		return nil, nil, err
 	}
 
-	var query url.Values
-	query = url.Values{"date": []string{date}}
+	query := url.Values{}
+	query.Add("date", date)
 
 	req.URL.RawQuery = query.Encode()
 
@@ -435,10 +435,10 @@ func (client *InsightAPI) GetStatisticsPerUnitWithHttpInfo(
 		return nil, nil, err
 	}
 
-	var query url.Values
-	query = url.Values{"customAggregationUnit": []string{customAggregationUnit}}
-	query = url.Values{"from": []string{from}}
-	query = url.Values{"to": []string{to}}
+	query := url.Values{}
+	query.Add("customAggregationUnit", customAggregationUnit)
+	query.Add("from", from)
+	query.Add("to", to)
 
 	req.URL.RawQuery = query.Encode()
 

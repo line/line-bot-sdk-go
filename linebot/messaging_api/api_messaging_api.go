@@ -617,8 +617,8 @@ func (client *MessagingApiAPI) GetAdPhoneMessageStatisticsWithHttpInfo(
 		return nil, nil, err
 	}
 
-	var query url.Values
-	query = url.Values{"date": []string{date}}
+	query := url.Values{}
+	query.Add("date", date)
 
 	req.URL.RawQuery = query.Encode()
 
@@ -696,9 +696,9 @@ func (client *MessagingApiAPI) GetAggregationUnitNameListWithHttpInfo(
 		return nil, nil, err
 	}
 
-	var query url.Values
-	query = url.Values{"limit": []string{limit}}
-	query = url.Values{"start": []string{start}}
+	query := url.Values{}
+	query.Add("limit", limit)
+	query.Add("start", start)
 
 	req.URL.RawQuery = query.Encode()
 
@@ -935,9 +935,9 @@ func (client *MessagingApiAPI) GetFollowersWithHttpInfo(
 		return nil, nil, err
 	}
 
-	var query url.Values
-	query = url.Values{"start": []string{start}}
-	query = url.Values{"limit": []string{strconv.FormatInt(int64(limit), 10)}}
+	query := url.Values{}
+	query.Add("start", start)
+	query.Add("limit", strconv.FormatInt(int64(limit), 10))
 
 	req.URL.RawQuery = query.Encode()
 
@@ -1163,8 +1163,8 @@ func (client *MessagingApiAPI) GetGroupMembersIdsWithHttpInfo(
 		return nil, nil, err
 	}
 
-	var query url.Values
-	query = url.Values{"start": []string{start}}
+	query := url.Values{}
+	query.Add("start", start)
 
 	req.URL.RawQuery = query.Encode()
 
@@ -1408,8 +1408,8 @@ func (client *MessagingApiAPI) GetNarrowcastProgressWithHttpInfo(
 		return nil, nil, err
 	}
 
-	var query url.Values
-	query = url.Values{"requestId": []string{requestId}}
+	query := url.Values{}
+	query.Add("requestId", requestId)
 
 	req.URL.RawQuery = query.Encode()
 
@@ -1479,8 +1479,8 @@ func (client *MessagingApiAPI) GetNumberOfSentBroadcastMessagesWithHttpInfo(
 		return nil, nil, err
 	}
 
-	var query url.Values
-	query = url.Values{"date": []string{date}}
+	query := url.Values{}
+	query.Add("date", date)
 
 	req.URL.RawQuery = query.Encode()
 
@@ -1550,8 +1550,8 @@ func (client *MessagingApiAPI) GetNumberOfSentMulticastMessagesWithHttpInfo(
 		return nil, nil, err
 	}
 
-	var query url.Values
-	query = url.Values{"date": []string{date}}
+	query := url.Values{}
+	query.Add("date", date)
 
 	req.URL.RawQuery = query.Encode()
 
@@ -1621,8 +1621,8 @@ func (client *MessagingApiAPI) GetNumberOfSentPushMessagesWithHttpInfo(
 		return nil, nil, err
 	}
 
-	var query url.Values
-	query = url.Values{"date": []string{date}}
+	query := url.Values{}
+	query.Add("date", date)
 
 	req.URL.RawQuery = query.Encode()
 
@@ -1692,8 +1692,8 @@ func (client *MessagingApiAPI) GetNumberOfSentReplyMessagesWithHttpInfo(
 		return nil, nil, err
 	}
 
-	var query url.Values
-	query = url.Values{"date": []string{date}}
+	query := url.Values{}
+	query.Add("date", date)
 
 	req.URL.RawQuery = query.Encode()
 
@@ -1763,8 +1763,8 @@ func (client *MessagingApiAPI) GetPNPMessageStatisticsWithHttpInfo(
 		return nil, nil, err
 	}
 
-	var query url.Values
-	query = url.Values{"date": []string{date}}
+	query := url.Values{}
+	query.Add("date", date)
 
 	req.URL.RawQuery = query.Encode()
 
@@ -2091,8 +2091,8 @@ func (client *MessagingApiAPI) GetRichMenuBatchProgressWithHttpInfo(
 		return nil, nil, err
 	}
 
-	var query url.Values
-	query = url.Values{"requestId": []string{requestId}}
+	query := url.Values{}
+	query.Add("requestId", requestId)
 
 	req.URL.RawQuery = query.Encode()
 
@@ -2439,8 +2439,8 @@ func (client *MessagingApiAPI) GetRoomMembersIdsWithHttpInfo(
 		return nil, nil, err
 	}
 
-	var query url.Values
-	query = url.Values{"start": []string{start}}
+	query := url.Values{}
+	query.Add("start", start)
 
 	req.URL.RawQuery = query.Encode()
 

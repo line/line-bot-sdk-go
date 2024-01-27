@@ -307,9 +307,9 @@ func (client *LineModuleAPI) GetModulesWithHttpInfo(
 		return nil, nil, err
 	}
 
-	var query url.Values
-	query = url.Values{"start": []string{start}}
-	query = url.Values{"limit": []string{strconv.FormatInt(int64(limit), 10)}}
+	query := url.Values{}
+	query.Add("start", start)
+	query.Add("limit", strconv.FormatInt(int64(limit), 10))
 
 	req.URL.RawQuery = query.Encode()
 
