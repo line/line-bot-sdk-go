@@ -64,6 +64,16 @@ func setDiscriminatorPropertyAction(r ActionInterface) ActionInterface {
 			v.Type = "cameraRoll"
 		}
 		return v
+	case *ClipboardAction:
+		if v.Type == "" {
+			v.Type = "clipboard"
+		}
+		return v
+	case ClipboardAction:
+		if v.Type == "" {
+			v.Type = "clipboard"
+		}
+		return v
 	case *DatetimePickerAction:
 		if v.Type == "" {
 			v.Type = "datetimepicker"
@@ -170,6 +180,12 @@ func UnmarshalAction(data []byte) (ActionInterface, error) {
 			return nil, fmt.Errorf("UnmarshalAction: Cannot read cameraRoll: %w", err)
 		}
 		return cameraRoll, nil
+	case "clipboard":
+		var clipboard ClipboardAction
+		if err := json.Unmarshal(data, &clipboard); err != nil {
+			return nil, fmt.Errorf("UnmarshalAction: Cannot read clipboard: %w", err)
+		}
+		return clipboard, nil
 	case "datetimepicker":
 		var datetimepicker DatetimePickerAction
 		if err := json.Unmarshal(data, &datetimepicker); err != nil {
