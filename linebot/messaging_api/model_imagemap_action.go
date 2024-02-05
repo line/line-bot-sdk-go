@@ -44,6 +44,16 @@ func (e UnknownImagemapAction) GetType() string {
 
 func setDiscriminatorPropertyImagemapAction(r ImagemapActionInterface) ImagemapActionInterface {
 	switch v := r.(type) {
+	case *ClipboardImagemapAction:
+		if v.Type == "" {
+			v.Type = "clipboard"
+		}
+		return v
+	case ClipboardImagemapAction:
+		if v.Type == "" {
+			v.Type = "clipboard"
+		}
+		return v
 	case *MessageImagemapAction:
 		if v.Type == "" {
 			v.Type = "message"
@@ -94,6 +104,12 @@ func UnmarshalImagemapAction(data []byte) (ImagemapActionInterface, error) {
 	}
 
 	switch discriminator {
+	case "clipboard":
+		var clipboard ClipboardImagemapAction
+		if err := json.Unmarshal(data, &clipboard); err != nil {
+			return nil, fmt.Errorf("UnmarshalImagemapAction: Cannot read clipboard: %w", err)
+		}
+		return clipboard, nil
 	case "message":
 		var message MessageImagemapAction
 		if err := json.Unmarshal(data, &message); err != nil {

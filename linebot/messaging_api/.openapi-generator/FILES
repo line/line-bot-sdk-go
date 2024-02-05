@@ -19,6 +19,8 @@ model_camera_roll_action.go
 model_carousel_column.go
 model_carousel_template.go
 model_chat_reference.go
+model_clipboard_action.go
+model_clipboard_imagemap_action.go
 model_confirm_template.go
 model_create_rich_menu_alias_request.go
 model_datetime_picker_action.go
