@@ -18,6 +18,7 @@ model_emoji.go
 model_event.go
 model_event_mode.go
 model_file_message_content.go
+model_follow_detail.go
 model_follow_event.go
 model_group_source.go
 model_image_message_content.go

@@ -59,6 +59,11 @@ type FollowEvent struct {
 	 * Reply token used to send reply message to this event (Required)
 	 */
 	ReplyToken string `json:"replyToken"`
+
+	/**
+	 * Get Follow
+	 */
+	Follow *FollowDetail `json:"follow"`
 }
 
 func (cr *FollowEvent) UnmarshalJSON(data []byte) error {
@@ -130,6 +135,15 @@ func (cr *FollowEvent) UnmarshalJSON(data []byte) error {
 		err = json.Unmarshal(raw["replyToken"], &cr.ReplyToken)
 		if err != nil {
 			return fmt.Errorf("JSON parse error in string(ReplyToken): %w", err)
+		}
+
+	}
+
+	if raw["follow"] != nil {
+
+		err = json.Unmarshal(raw["follow"], &cr.Follow)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in FollowDetail(Follow): %w", err)
 		}
 
 	}
