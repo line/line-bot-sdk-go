@@ -16,7 +16,7 @@
 
 package linebot
 
-const version = "8.3.1"
+const version = "8.4.0"
 
 func GetVersion() string {
 	return version
