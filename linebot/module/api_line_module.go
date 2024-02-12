@@ -270,9 +270,9 @@ func (client *LineModuleAPI) DetachModuleWithHttpInfo(
 // https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api
 func (client *LineModuleAPI) GetModules(
 
-	start *string,
+	start string,
 
-	limit *int32,
+	limit int32,
 
 ) (*GetModulesResponse, error) {
 	_, body, error := client.GetModulesWithHttpInfo(
@@ -295,9 +295,9 @@ func (client *LineModuleAPI) GetModules(
 // https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api
 func (client *LineModuleAPI) GetModulesWithHttpInfo(
 
-	start *string,
+	start string,
 
-	limit *int32,
+	limit int32,
 
 ) (*http.Response, *GetModulesResponse, error) {
 	path := "/v2/bot/list"
@@ -308,12 +308,8 @@ func (client *LineModuleAPI) GetModulesWithHttpInfo(
 	}
 
 	query := url.Values{}
-	if start != nil {
-		query.Add("start", *start)
-	}
-	if limit != nil {
-		query.Add("limit", strconv.FormatInt(int64(*limit), 10))
-	}
+	query.Add("start", start)
+	query.Add("limit", strconv.FormatInt(int64(limit), 10))
 
 	req.URL.RawQuery = query.Encode()
 

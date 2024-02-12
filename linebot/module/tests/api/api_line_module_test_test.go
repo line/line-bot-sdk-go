@@ -12,6 +12,7 @@ import (
 func TestAcquireChatControl(t *testing.T) {
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
 			if r.Header.Get("Content-Type") != "application/json; charset=UTF-8" {
 				t.Fatalf("Invalid content-type: %s", r.Header.Get("Content-Type"))
 				return
@@ -43,6 +44,7 @@ func TestAcquireChatControl(t *testing.T) {
 func TestDetachModule(t *testing.T) {
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
 			if r.Header.Get("Content-Type") != "application/json; charset=UTF-8" {
 				t.Fatalf("Invalid content-type: %s", r.Header.Get("Content-Type"))
 				return
@@ -72,6 +74,7 @@ func TestDetachModule(t *testing.T) {
 func TestGetModules(t *testing.T) {
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
 			w.WriteHeader(http.StatusOK)
 			w.Write([]byte("{}"))
 		}),
@@ -85,9 +88,9 @@ func TestGetModules(t *testing.T) {
 		t.Fatalf("Failed to create client: %v", err)
 	}
 	resp, err := client.GetModules(
-		stringToPointerOfString("hello"),
+		"hello",
 
-		nil,
+		0,
 	)
 	if err != nil {
 		t.Fatalf("Failed to call API: %v", err)
@@ -98,6 +101,7 @@ func TestGetModules(t *testing.T) {
 func TestReleaseChatControl(t *testing.T) {
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
 			w.WriteHeader(http.StatusOK)
 			w.Write([]byte("{}"))
 		}),
@@ -117,8 +121,4 @@ func TestReleaseChatControl(t *testing.T) {
 		t.Fatalf("Failed to call API: %v", err)
 	}
 	log.Printf("Got response: %v", resp)
-}
-
-func stringToPointerOfString(s string) *string {
-	return &s
 }

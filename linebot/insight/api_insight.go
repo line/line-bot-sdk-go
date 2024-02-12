@@ -247,7 +247,7 @@ func (client *InsightAPI) GetMessageEventWithHttpInfo(
 // https://developers.line.biz/en/reference/messaging-api/#get-number-of-followers
 func (client *InsightAPI) GetNumberOfFollowers(
 
-	date *string,
+	date string,
 
 ) (*GetNumberOfFollowersResponse, error) {
 	_, body, error := client.GetNumberOfFollowersWithHttpInfo(
@@ -267,7 +267,7 @@ func (client *InsightAPI) GetNumberOfFollowers(
 // https://developers.line.biz/en/reference/messaging-api/#get-number-of-followers
 func (client *InsightAPI) GetNumberOfFollowersWithHttpInfo(
 
-	date *string,
+	date string,
 
 ) (*http.Response, *GetNumberOfFollowersResponse, error) {
 	path := "/v2/bot/insight/followers"
@@ -278,9 +278,7 @@ func (client *InsightAPI) GetNumberOfFollowersWithHttpInfo(
 	}
 
 	query := url.Values{}
-	if date != nil {
-		query.Add("date", *date)
-	}
+	query.Add("date", date)
 
 	req.URL.RawQuery = query.Encode()
 

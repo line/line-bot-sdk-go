@@ -662,15 +662,15 @@ func (client *ManageAudienceAPI) GetAudienceGroups(
 
 	page int64,
 
-	description *string,
+	description string,
 
-	status *AudienceGroupStatus,
+	status AudienceGroupStatus,
 
-	size *int64,
+	size int64,
 
-	includesExternalPublicGroups *bool,
+	includesExternalPublicGroups bool,
 
-	createRoute *AudienceGroupCreateRoute,
+	createRoute AudienceGroupCreateRoute,
 
 ) (*GetAudienceGroupsResponse, error) {
 	_, body, error := client.GetAudienceGroupsWithHttpInfo(
@@ -707,15 +707,15 @@ func (client *ManageAudienceAPI) GetAudienceGroupsWithHttpInfo(
 
 	page int64,
 
-	description *string,
+	description string,
 
-	status *AudienceGroupStatus,
+	status AudienceGroupStatus,
 
-	size *int64,
+	size int64,
 
-	includesExternalPublicGroups *bool,
+	includesExternalPublicGroups bool,
 
-	createRoute *AudienceGroupCreateRoute,
+	createRoute AudienceGroupCreateRoute,
 
 ) (*http.Response, *GetAudienceGroupsResponse, error) {
 	path := "/v2/bot/audienceGroup/list"
@@ -727,21 +727,11 @@ func (client *ManageAudienceAPI) GetAudienceGroupsWithHttpInfo(
 
 	query := url.Values{}
 	query.Add("page", strconv.FormatInt(page, 10))
-	if description != nil {
-		query.Add("description", *description)
-	}
-	if status != nil {
-		query.Add("status", string(*status))
-	}
-	if size != nil {
-		query.Add("size", strconv.FormatInt(*size, 10))
-	}
-	if includesExternalPublicGroups != nil {
-		query.Add("includesExternalPublicGroups", strconv.FormatBool(*includesExternalPublicGroups))
-	}
-	if createRoute != nil {
-		query.Add("createRoute", string(*createRoute))
-	}
+	query.Add("description", description)
+	query.Add("status", string(status))
+	query.Add("size", strconv.FormatInt(size, 10))
+	query.Add("includesExternalPublicGroups", strconv.FormatBool(includesExternalPublicGroups))
+	query.Add("createRoute", string(createRoute))
 
 	req.URL.RawQuery = query.Encode()
 

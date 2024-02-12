@@ -12,6 +12,7 @@ import (
 func TestGetFriendsDemographics(t *testing.T) {
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
 			w.WriteHeader(http.StatusOK)
 			w.Write([]byte("{}"))
 		}),
@@ -34,6 +35,7 @@ func TestGetFriendsDemographics(t *testing.T) {
 func TestGetMessageEvent(t *testing.T) {
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
 			w.WriteHeader(http.StatusOK)
 			w.Write([]byte("{}"))
 		}),
@@ -58,6 +60,7 @@ func TestGetMessageEvent(t *testing.T) {
 func TestGetNumberOfFollowers(t *testing.T) {
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
 			w.WriteHeader(http.StatusOK)
 			w.Write([]byte("{}"))
 		}),
@@ -71,7 +74,7 @@ func TestGetNumberOfFollowers(t *testing.T) {
 		t.Fatalf("Failed to create client: %v", err)
 	}
 	resp, err := client.GetNumberOfFollowers(
-		stringToPointerOfString("hello"),
+		"hello",
 	)
 	if err != nil {
 		t.Fatalf("Failed to call API: %v", err)
@@ -82,6 +85,7 @@ func TestGetNumberOfFollowers(t *testing.T) {
 func TestGetNumberOfMessageDeliveries(t *testing.T) {
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
 			w.WriteHeader(http.StatusOK)
 			w.Write([]byte("{}"))
 		}),
@@ -106,6 +110,7 @@ func TestGetNumberOfMessageDeliveries(t *testing.T) {
 func TestGetStatisticsPerUnit(t *testing.T) {
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
 			w.WriteHeader(http.StatusOK)
 			w.Write([]byte("{}"))
 		}),
@@ -129,8 +134,4 @@ func TestGetStatisticsPerUnit(t *testing.T) {
 		t.Fatalf("Failed to call API: %v", err)
 	}
 	log.Printf("Got response: %v", resp)
-}
-
-func stringToPointerOfString(s string) *string {
-	return &s
 }

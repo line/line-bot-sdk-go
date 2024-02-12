@@ -132,25 +132,25 @@ func WithEndpoint(endpoint string) LineModuleAttachAPIOption {
 // https://developers.line.biz/en/reference/partner-docs/#link-attach-by-operation-module-channel-provider
 func (client *LineModuleAttachAPI) AttachModule(
 
-	grantType *string,
+	grantType string,
 
-	code *string,
+	code string,
 
-	redirectUri *string,
+	redirectUri string,
 
-	codeVerifier *string,
+	codeVerifier string,
 
-	clientId *string,
+	clientId string,
 
-	clientSecret *string,
+	clientSecret string,
 
-	region *string,
+	region string,
 
-	basicSearchId *string,
+	basicSearchId string,
 
-	scope *string,
+	scope string,
 
-	brandType *string,
+	brandType string,
 
 ) (*AttachModuleResponse, error) {
 	_, body, error := client.AttachModuleWithHttpInfo(
@@ -197,40 +197,40 @@ func (client *LineModuleAttachAPI) AttachModule(
 // https://developers.line.biz/en/reference/partner-docs/#link-attach-by-operation-module-channel-provider
 func (client *LineModuleAttachAPI) AttachModuleWithHttpInfo(
 
-	grantType *string,
+	grantType string,
 
-	code *string,
+	code string,
 
-	redirectUri *string,
+	redirectUri string,
 
-	codeVerifier *string,
+	codeVerifier string,
 
-	clientId *string,
+	clientId string,
 
-	clientSecret *string,
+	clientSecret string,
 
-	region *string,
+	region string,
 
-	basicSearchId *string,
+	basicSearchId string,
 
-	scope *string,
+	scope string,
 
-	brandType *string,
+	brandType string,
 
 ) (*http.Response, *AttachModuleResponse, error) {
 	path := "/module/auth/v1/token"
 
 	vs := url.Values{
-		"grant_type":      []string{*grantType},
-		"code":            []string{*code},
-		"redirect_uri":    []string{*redirectUri},
-		"code_verifier":   []string{*codeVerifier},
-		"client_id":       []string{*clientId},
-		"client_secret":   []string{*clientSecret},
-		"region":          []string{*region},
-		"basic_search_id": []string{*basicSearchId},
-		"scope":           []string{*scope},
-		"brand_type":      []string{*brandType},
+		"grant_type":      []string{string(grantType)},
+		"code":            []string{string(code)},
+		"redirect_uri":    []string{string(redirectUri)},
+		"code_verifier":   []string{string(codeVerifier)},
+		"client_id":       []string{string(clientId)},
+		"client_secret":   []string{string(clientSecret)},
+		"region":          []string{string(region)},
+		"basic_search_id": []string{string(basicSearchId)},
+		"scope":           []string{string(scope)},
+		"brand_type":      []string{string(brandType)},
 	}
 	buf := vs.Encode()
 	body := bytes.NewBufferString(buf)

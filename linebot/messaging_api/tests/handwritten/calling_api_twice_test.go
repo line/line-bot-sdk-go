@@ -31,7 +31,7 @@ func TestCallingAPITwice(t *testing.T) {
 				Text: "Hello, world",
 			},
 		},
-	}, nil)
+	}, "")
 	if err != nil {
 		t.Fatalf("Failed to get response: %v", err)
 	}
@@ -43,7 +43,7 @@ func TestCallingAPITwice(t *testing.T) {
 				Text: "Hello, world",
 			},
 		},
-	}, nil)
+	}, "")
 	if err != nil {
 		t.Fatalf("Failed to get response: %v", err)
 	}

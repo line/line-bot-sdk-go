@@ -130,9 +130,9 @@ func (client *ManageAudienceBlobAPI) AddUserIdsToAudience(
 
 	file *os.File,
 
-	audienceGroupId *int64,
+	audienceGroupId int64,
 
-	uploadDescription *string,
+	uploadDescription string,
 
 ) (struct{}, error) {
 	_, body, error := client.AddUserIdsToAudienceWithHttpInfo(
@@ -160,9 +160,9 @@ func (client *ManageAudienceBlobAPI) AddUserIdsToAudienceWithHttpInfo(
 
 	file *os.File,
 
-	audienceGroupId *int64,
+	audienceGroupId int64,
 
-	uploadDescription *string,
+	uploadDescription string,
 
 ) (*http.Response, struct{}, error) {
 	path := "/v2/bot/audienceGroup/upload/byFile"
@@ -170,9 +170,9 @@ func (client *ManageAudienceBlobAPI) AddUserIdsToAudienceWithHttpInfo(
 	body := &bytes.Buffer{}
 	writer := multipart.NewWriter(body)
 
-	writer.WriteField("audienceGroupId", strconv.FormatInt(*audienceGroupId, 10))
+	writer.WriteField("audienceGroupId", strconv.FormatInt(audienceGroupId, 10))
 
-	writer.WriteField("uploadDescription", *uploadDescription)
+	writer.WriteField("uploadDescription", uploadDescription)
 
 	fileWriter, err := writer.CreateFormFile("file", file.Name())
 	if err != nil {
@@ -227,11 +227,11 @@ func (client *ManageAudienceBlobAPI) CreateAudienceForUploadingUserIds(
 
 	file *os.File,
 
-	description *string,
+	description string,
 
-	isIfaAudience *bool,
+	isIfaAudience bool,
 
-	uploadDescription *string,
+	uploadDescription string,
 
 ) (*CreateAudienceGroupResponse, error) {
 	_, body, error := client.CreateAudienceForUploadingUserIdsWithHttpInfo(
@@ -262,11 +262,11 @@ func (client *ManageAudienceBlobAPI) CreateAudienceForUploadingUserIdsWithHttpIn
 
 	file *os.File,
 
-	description *string,
+	description string,
 
-	isIfaAudience *bool,
+	isIfaAudience bool,
 
-	uploadDescription *string,
+	uploadDescription string,
 
 ) (*http.Response, *CreateAudienceGroupResponse, error) {
 	path := "/v2/bot/audienceGroup/upload/byFile"
@@ -274,11 +274,11 @@ func (client *ManageAudienceBlobAPI) CreateAudienceForUploadingUserIdsWithHttpIn
 	body := &bytes.Buffer{}
 	writer := multipart.NewWriter(body)
 
-	writer.WriteField("description", *description)
+	writer.WriteField("description", description)
 
-	writer.WriteField("isIfaAudience", strconv.FormatBool(*isIfaAudience))
+	writer.WriteField("isIfaAudience", strconv.FormatBool(isIfaAudience))
 
-	writer.WriteField("uploadDescription", *uploadDescription)
+	writer.WriteField("uploadDescription", uploadDescription)
 
 	fileWriter, err := writer.CreateFormFile("file", file.Name())
 	if err != nil {

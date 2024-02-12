@@ -195,11 +195,11 @@ func (client *ChannelAccessTokenAPI) GetsAllValidChannelAccessTokenKeyIdsWithHtt
 // https://developers.line.biz/en/reference/messaging-api/#issue-shortlived-channel-access-token
 func (client *ChannelAccessTokenAPI) IssueChannelToken(
 
-	grantType *string,
+	grantType string,
 
-	clientId *string,
+	clientId string,
 
-	clientSecret *string,
+	clientSecret string,
 
 ) (*IssueShortLivedChannelAccessTokenResponse, error) {
 	_, body, error := client.IssueChannelTokenWithHttpInfo(
@@ -225,19 +225,19 @@ func (client *ChannelAccessTokenAPI) IssueChannelToken(
 // https://developers.line.biz/en/reference/messaging-api/#issue-shortlived-channel-access-token
 func (client *ChannelAccessTokenAPI) IssueChannelTokenWithHttpInfo(
 
-	grantType *string,
+	grantType string,
 
-	clientId *string,
+	clientId string,
 
-	clientSecret *string,
+	clientSecret string,
 
 ) (*http.Response, *IssueShortLivedChannelAccessTokenResponse, error) {
 	path := "/v2/oauth/accessToken"
 
 	vs := url.Values{
-		"grant_type":    []string{*grantType},
-		"client_id":     []string{*clientId},
-		"client_secret": []string{*clientSecret},
+		"grant_type":    []string{string(grantType)},
+		"client_id":     []string{string(clientId)},
+		"client_secret": []string{string(clientSecret)},
 	}
 	buf := vs.Encode()
 	body := bytes.NewBufferString(buf)
@@ -286,11 +286,11 @@ func (client *ChannelAccessTokenAPI) IssueChannelTokenWithHttpInfo(
 // https://developers.line.biz/en/reference/messaging-api/#issue-channel-access-token-v2-1
 func (client *ChannelAccessTokenAPI) IssueChannelTokenByJWT(
 
-	grantType *string,
+	grantType string,
 
-	clientAssertionType *string,
+	clientAssertionType string,
 
-	clientAssertion *string,
+	clientAssertion string,
 
 ) (*IssueChannelAccessTokenResponse, error) {
 	_, body, error := client.IssueChannelTokenByJWTWithHttpInfo(
@@ -316,19 +316,19 @@ func (client *ChannelAccessTokenAPI) IssueChannelTokenByJWT(
 // https://developers.line.biz/en/reference/messaging-api/#issue-channel-access-token-v2-1
 func (client *ChannelAccessTokenAPI) IssueChannelTokenByJWTWithHttpInfo(
 
-	grantType *string,
+	grantType string,
 
-	clientAssertionType *string,
+	clientAssertionType string,
 
-	clientAssertion *string,
+	clientAssertion string,
 
 ) (*http.Response, *IssueChannelAccessTokenResponse, error) {
 	path := "/oauth2/v2.1/token"
 
 	vs := url.Values{
-		"grant_type":            []string{*grantType},
-		"client_assertion_type": []string{*clientAssertionType},
-		"client_assertion":      []string{*clientAssertion},
+		"grant_type":            []string{string(grantType)},
+		"client_assertion_type": []string{string(clientAssertionType)},
+		"client_assertion":      []string{string(clientAssertion)},
 	}
 	buf := vs.Encode()
 	body := bytes.NewBufferString(buf)
@@ -379,15 +379,15 @@ func (client *ChannelAccessTokenAPI) IssueChannelTokenByJWTWithHttpInfo(
 // https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token
 func (client *ChannelAccessTokenAPI) IssueStatelessChannelToken(
 
-	grantType *string,
+	grantType string,
 
-	clientAssertionType *string,
+	clientAssertionType string,
 
-	clientAssertion *string,
+	clientAssertion string,
 
-	clientId *string,
+	clientId string,
 
-	clientSecret *string,
+	clientSecret string,
 
 ) (*IssueStatelessChannelAccessTokenResponse, error) {
 	_, body, error := client.IssueStatelessChannelTokenWithHttpInfo(
@@ -419,25 +419,25 @@ func (client *ChannelAccessTokenAPI) IssueStatelessChannelToken(
 // https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token
 func (client *ChannelAccessTokenAPI) IssueStatelessChannelTokenWithHttpInfo(
 
-	grantType *string,
+	grantType string,
 
-	clientAssertionType *string,
+	clientAssertionType string,
 
-	clientAssertion *string,
+	clientAssertion string,
 
-	clientId *string,
+	clientId string,
 
-	clientSecret *string,
+	clientSecret string,
 
 ) (*http.Response, *IssueStatelessChannelAccessTokenResponse, error) {
 	path := "/oauth2/v3/token"
 
 	vs := url.Values{
-		"grant_type":            []string{*grantType},
-		"client_assertion_type": []string{*clientAssertionType},
-		"client_assertion":      []string{*clientAssertion},
-		"client_id":             []string{*clientId},
-		"client_secret":         []string{*clientSecret},
+		"grant_type":            []string{string(grantType)},
+		"client_assertion_type": []string{string(clientAssertionType)},
+		"client_assertion":      []string{string(clientAssertion)},
+		"client_id":             []string{string(clientId)},
+		"client_secret":         []string{string(clientSecret)},
 	}
 	buf := vs.Encode()
 	body := bytes.NewBufferString(buf)
@@ -484,7 +484,7 @@ func (client *ChannelAccessTokenAPI) IssueStatelessChannelTokenWithHttpInfo(
 // https://developers.line.biz/en/reference/messaging-api/#revoke-longlived-or-shortlived-channel-access-token
 func (client *ChannelAccessTokenAPI) RevokeChannelToken(
 
-	accessToken *string,
+	accessToken string,
 
 ) (struct{}, error) {
 	_, body, error := client.RevokeChannelTokenWithHttpInfo(
@@ -504,13 +504,13 @@ func (client *ChannelAccessTokenAPI) RevokeChannelToken(
 // https://developers.line.biz/en/reference/messaging-api/#revoke-longlived-or-shortlived-channel-access-token
 func (client *ChannelAccessTokenAPI) RevokeChannelTokenWithHttpInfo(
 
-	accessToken *string,
+	accessToken string,
 
 ) (*http.Response, struct{}, error) {
 	path := "/v2/oauth/revoke"
 
 	vs := url.Values{
-		"access_token": []string{*accessToken},
+		"access_token": []string{string(accessToken)},
 	}
 	buf := vs.Encode()
 	body := bytes.NewBufferString(buf)
@@ -554,11 +554,11 @@ func (client *ChannelAccessTokenAPI) RevokeChannelTokenWithHttpInfo(
 // https://developers.line.biz/en/reference/messaging-api/#revoke-channel-access-token-v2-1
 func (client *ChannelAccessTokenAPI) RevokeChannelTokenByJWT(
 
-	clientId *string,
+	clientId string,
 
-	clientSecret *string,
+	clientSecret string,
 
-	accessToken *string,
+	accessToken string,
 
 ) (struct{}, error) {
 	_, body, error := client.RevokeChannelTokenByJWTWithHttpInfo(
@@ -584,19 +584,19 @@ func (client *ChannelAccessTokenAPI) RevokeChannelTokenByJWT(
 // https://developers.line.biz/en/reference/messaging-api/#revoke-channel-access-token-v2-1
 func (client *ChannelAccessTokenAPI) RevokeChannelTokenByJWTWithHttpInfo(
 
-	clientId *string,
+	clientId string,
 
-	clientSecret *string,
+	clientSecret string,
 
-	accessToken *string,
+	accessToken string,
 
 ) (*http.Response, struct{}, error) {
 	path := "/oauth2/v2.1/revoke"
 
 	vs := url.Values{
-		"client_id":     []string{*clientId},
-		"client_secret": []string{*clientSecret},
-		"access_token":  []string{*accessToken},
+		"client_id":     []string{string(clientId)},
+		"client_secret": []string{string(clientSecret)},
+		"access_token":  []string{string(accessToken)},
 	}
 	buf := vs.Encode()
 	body := bytes.NewBufferString(buf)
@@ -638,7 +638,7 @@ func (client *ChannelAccessTokenAPI) RevokeChannelTokenByJWTWithHttpInfo(
 // https://developers.line.biz/en/reference/messaging-api/#verfiy-channel-access-token
 func (client *ChannelAccessTokenAPI) VerifyChannelToken(
 
-	accessToken *string,
+	accessToken string,
 
 ) (*VerifyChannelAccessTokenResponse, error) {
 	_, body, error := client.VerifyChannelTokenWithHttpInfo(
@@ -658,13 +658,13 @@ func (client *ChannelAccessTokenAPI) VerifyChannelToken(
 // https://developers.line.biz/en/reference/messaging-api/#verfiy-channel-access-token
 func (client *ChannelAccessTokenAPI) VerifyChannelTokenWithHttpInfo(
 
-	accessToken *string,
+	accessToken string,
 
 ) (*http.Response, *VerifyChannelAccessTokenResponse, error) {
 	path := "/v2/oauth/verify"
 
 	vs := url.Values{
-		"access_token": []string{*accessToken},
+		"access_token": []string{string(accessToken)},
 	}
 	buf := vs.Encode()
 	body := bytes.NewBufferString(buf)
