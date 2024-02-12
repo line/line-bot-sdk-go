@@ -117,15 +117,15 @@ func With{{ classname contains "Blob" ? "Blob" : "" }}Endpoint(endpoint string) 
 {# @pebvariable name="param" type="org.openapitools.codegen.CodegenParameter" #}
 {% macro stringify(param) -%}
     {%- if param.isLong -%}
-    strconv.FormatInt({{ param.paramName }}, 10)
+    strconv.FormatInt({%- if not param.required -%}*{%- endif -%}{{ param.paramName }}, 10)
     {%- elseif param.isInteger -%}
-    strconv.FormatInt(int64({{ param.paramName }}), 10)
+    strconv.FormatInt(int64({%- if not param.required -%}*{%- endif -%}{{ param.paramName }}), 10)
     {%- elseif param.isBoolean -%}
-    strconv.FormatBool({{ param.paramName }})
+    strconv.FormatBool({%- if not param.required -%}*{%- endif -%}{{ param.paramName }})
     {%- elseif param.isString -%}
-    {{ param.paramName }}
+    {%- if not param.required -%}*{%- endif -%}{{ param.paramName }}
     {%- else -%}
-    string({{ param.paramName }})
+    string({%- if not param.required -%}*{%- endif -%}{{ param.paramName }})
     {%- endif -%}
 {%- endmacro %}
 
@@ -153,7 +153,7 @@ func (client *{{ classname }}) {{ op.operationId }}(
     {{ param.paramName }}ContentType string,
     {{ param.paramName }}Reader io.Reader,
     {% else %}
-    {{ param.paramName }} {% if not (param.isPrimitiveType or param.isEnumRef) %}*{% endif %}{{ param.dataType }},
+    {{ param.paramName }} {% if (not (param.isPrimitiveType or param.isEnumRef)) or (not param.required) %}*{% endif %}{{ param.dataType }},
     {% endif %}
 {% endfor %}
 ) ({% if op.isResponseFile %}*http.Response{% elseif op.returnType %}*{{ op.returnType }}{% else %}struct{}{% endif %}, error) {
@@ -191,7 +191,7 @@ func (client *{{ classname }}) {{ op.operationId }}WithHttpInfo(
     {{ param.paramName }}ContentType string,
     {{ param.paramName }}Reader io.Reader,
     {% else %}
-    {{ param.paramName }} {% if not (param.isPrimitiveType or param.isEnumRef) %}*{% endif %}{{ param.dataType }},
+    {{ param.paramName }} {% if (not (param.isPrimitiveType or param.isEnumRef)) or (not param.required) %}*{% endif %}{{ param.dataType }},
     {% endif %}
 {% endfor %}
 ) (*http.Response, {% if op.isResponseFile %}*http.Response{% elseif op.returnType %}*{{ op.returnType }}{% else %}struct{}{% endif %}, error) {
@@ -243,7 +243,7 @@ func (client *{{ classname }}) {{ op.operationId }}WithHttpInfo(
 	{% elseif op.hasFormParams %}
 	vs := url.Values{
     	{% for fp in op.formParams -%}
-	    "{{ fp.baseName }}": []string{ string({{ fp.paramName }}) },
+	    "{{ fp.baseName }}": []string{ {{ stringify(fp) }} },
     	{% endfor %}
 	}
 	buf := vs.Encode()
@@ -268,7 +268,13 @@ func (client *{{ classname }}) {{ op.operationId }}WithHttpInfo(
     {% if op.hasQueryParams -%}
 	query := url.Values{}
 	    {% for qp in op.queryParams -%}
-    query.Add("{{ qp.paramName }}", {{ stringify(qp) }})
+	        {% if qp.required -%}
+	query.Add("{{ qp.paramName }}", {{ stringify(qp) }})
+	        {% else -%}
+	if {{ qp.paramName }} != nil {
+		query.Add("{{ qp.paramName }}", {{ stringify(qp) }})
+	}
+            {% endif -%}
 	    {% endfor %}
     req.URL.RawQuery = query.Encode()
     {% endif %}

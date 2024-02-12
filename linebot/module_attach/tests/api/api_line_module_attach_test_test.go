@@ -12,7 +12,6 @@ import (
 func TestAttachModule(t *testing.T) {
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-
 			if r.Header.Get("Content-Type") != "application/x-www-form-urlencoded" {
 				t.Fatalf("Invalid content-type: %s", r.Header.Get("Content-Type"))
 				return
@@ -31,28 +30,32 @@ func TestAttachModule(t *testing.T) {
 		t.Fatalf("Failed to create client: %v", err)
 	}
 	resp, err := client.AttachModule(
-		"hello",
+		stringToPointerOfString("hello"),
 
-		"hello",
+		stringToPointerOfString("hello"),
 
-		"hello",
+		stringToPointerOfString("hello"),
 
-		"hello",
+		stringToPointerOfString("hello"),
 
-		"hello",
+		stringToPointerOfString("hello"),
 
-		"hello",
+		stringToPointerOfString("hello"),
 
-		"hello",
+		stringToPointerOfString("hello"),
 
-		"hello",
+		stringToPointerOfString("hello"),
 
-		"hello",
+		stringToPointerOfString("hello"),
 
-		"hello",
+		stringToPointerOfString("hello"),
 	)
 	if err != nil {
 		t.Fatalf("Failed to call API: %v", err)
 	}
 	log.Printf("Got response: %v", resp)
+}
+
+func stringToPointerOfString(s string) *string {
+	return &s
 }

@@ -195,7 +195,7 @@ func (client *MessagingApiAPI) Broadcast(
 
 	broadcastRequest *BroadcastRequest,
 
-	xLineRetryKey string,
+	xLineRetryKey *string,
 
 ) (*map[string]interface{}, error) {
 	_, body, error := client.BroadcastWithHttpInfo(
@@ -220,7 +220,7 @@ func (client *MessagingApiAPI) BroadcastWithHttpInfo(
 
 	broadcastRequest *BroadcastRequest,
 
-	xLineRetryKey string,
+	xLineRetryKey *string,
 
 ) (*http.Response, *map[string]interface{}, error) {
 	path := "/v2/bot/message/broadcast"
@@ -236,7 +236,7 @@ func (client *MessagingApiAPI) BroadcastWithHttpInfo(
 	}
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
-	req.Header.Set("X-Line-Retry-Key", xLineRetryKey)
+	req.Header.Set("X-Line-Retry-Key", *xLineRetryKey)
 
 	res, err := client.Do(req)
 
@@ -659,9 +659,9 @@ func (client *MessagingApiAPI) GetAdPhoneMessageStatisticsWithHttpInfo(
 // https://developers.line.biz/en/reference/messaging-api/#get-name-list-of-units-used-this-month
 func (client *MessagingApiAPI) GetAggregationUnitNameList(
 
-	limit string,
+	limit *string,
 
-	start string,
+	start *string,
 
 ) (*GetAggregationUnitNameListResponse, error) {
 	_, body, error := client.GetAggregationUnitNameListWithHttpInfo(
@@ -684,9 +684,9 @@ func (client *MessagingApiAPI) GetAggregationUnitNameList(
 // https://developers.line.biz/en/reference/messaging-api/#get-name-list-of-units-used-this-month
 func (client *MessagingApiAPI) GetAggregationUnitNameListWithHttpInfo(
 
-	limit string,
+	limit *string,
 
-	start string,
+	start *string,
 
 ) (*http.Response, *GetAggregationUnitNameListResponse, error) {
 	path := "/v2/bot/message/aggregation/list"
@@ -697,8 +697,12 @@ func (client *MessagingApiAPI) GetAggregationUnitNameListWithHttpInfo(
 	}
 
 	query := url.Values{}
-	query.Add("limit", limit)
-	query.Add("start", start)
+	if limit != nil {
+		query.Add("limit", *limit)
+	}
+	if start != nil {
+		query.Add("start", *start)
+	}
 
 	req.URL.RawQuery = query.Encode()
 
@@ -898,9 +902,9 @@ func (client *MessagingApiAPI) GetDefaultRichMenuIdWithHttpInfo() (*http.Respons
 // https://developers.line.biz/en/reference/messaging-api/#get-follower-ids
 func (client *MessagingApiAPI) GetFollowers(
 
-	start string,
+	start *string,
 
-	limit int32,
+	limit *int32,
 
 ) (*GetFollowersResponse, error) {
 	_, body, error := client.GetFollowersWithHttpInfo(
@@ -923,9 +927,9 @@ func (client *MessagingApiAPI) GetFollowers(
 // https://developers.line.biz/en/reference/messaging-api/#get-follower-ids
 func (client *MessagingApiAPI) GetFollowersWithHttpInfo(
 
-	start string,
+	start *string,
 
-	limit int32,
+	limit *int32,
 
 ) (*http.Response, *GetFollowersResponse, error) {
 	path := "/v2/bot/followers/ids"
@@ -936,8 +940,12 @@ func (client *MessagingApiAPI) GetFollowersWithHttpInfo(
 	}
 
 	query := url.Values{}
-	query.Add("start", start)
-	query.Add("limit", strconv.FormatInt(int64(limit), 10))
+	if start != nil {
+		query.Add("start", *start)
+	}
+	if limit != nil {
+		query.Add("limit", strconv.FormatInt(int64(*limit), 10))
+	}
 
 	req.URL.RawQuery = query.Encode()
 
@@ -1126,7 +1134,7 @@ func (client *MessagingApiAPI) GetGroupMembersIds(
 
 	groupId string,
 
-	start string,
+	start *string,
 
 ) (*MembersIdsResponse, error) {
 	_, body, error := client.GetGroupMembersIdsWithHttpInfo(
@@ -1151,7 +1159,7 @@ func (client *MessagingApiAPI) GetGroupMembersIdsWithHttpInfo(
 
 	groupId string,
 
-	start string,
+	start *string,
 
 ) (*http.Response, *MembersIdsResponse, error) {
 	path := "/v2/bot/group/{groupId}/members/ids"
@@ -1164,7 +1172,9 @@ func (client *MessagingApiAPI) GetGroupMembersIdsWithHttpInfo(
 	}
 
 	query := url.Values{}
-	query.Add("start", start)
+	if start != nil {
+		query.Add("start", *start)
+	}
 
 	req.URL.RawQuery = query.Encode()
 
@@ -2402,7 +2412,7 @@ func (client *MessagingApiAPI) GetRoomMembersIds(
 
 	roomId string,
 
-	start string,
+	start *string,
 
 ) (*MembersIdsResponse, error) {
 	_, body, error := client.GetRoomMembersIdsWithHttpInfo(
@@ -2427,7 +2437,7 @@ func (client *MessagingApiAPI) GetRoomMembersIdsWithHttpInfo(
 
 	roomId string,
 
-	start string,
+	start *string,
 
 ) (*http.Response, *MembersIdsResponse, error) {
 	path := "/v2/bot/room/{roomId}/members/ids"
@@ -2440,7 +2450,9 @@ func (client *MessagingApiAPI) GetRoomMembersIdsWithHttpInfo(
 	}
 
 	query := url.Values{}
-	query.Add("start", start)
+	if start != nil {
+		query.Add("start", *start)
+	}
 
 	req.URL.RawQuery = query.Encode()
 
@@ -2937,7 +2949,7 @@ func (client *MessagingApiAPI) Multicast(
 
 	multicastRequest *MulticastRequest,
 
-	xLineRetryKey string,
+	xLineRetryKey *string,
 
 ) (*map[string]interface{}, error) {
 	_, body, error := client.MulticastWithHttpInfo(
@@ -2962,7 +2974,7 @@ func (client *MessagingApiAPI) MulticastWithHttpInfo(
 
 	multicastRequest *MulticastRequest,
 
-	xLineRetryKey string,
+	xLineRetryKey *string,
 
 ) (*http.Response, *map[string]interface{}, error) {
 	path := "/v2/bot/message/multicast"
@@ -2978,7 +2990,7 @@ func (client *MessagingApiAPI) MulticastWithHttpInfo(
 	}
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
-	req.Header.Set("X-Line-Retry-Key", xLineRetryKey)
+	req.Header.Set("X-Line-Retry-Key", *xLineRetryKey)
 
 	res, err := client.Do(req)
 
@@ -3019,7 +3031,7 @@ func (client *MessagingApiAPI) Narrowcast(
 
 	narrowcastRequest *NarrowcastRequest,
 
-	xLineRetryKey string,
+	xLineRetryKey *string,
 
 ) (*map[string]interface{}, error) {
 	_, body, error := client.NarrowcastWithHttpInfo(
@@ -3044,7 +3056,7 @@ func (client *MessagingApiAPI) NarrowcastWithHttpInfo(
 
 	narrowcastRequest *NarrowcastRequest,
 
-	xLineRetryKey string,
+	xLineRetryKey *string,
 
 ) (*http.Response, *map[string]interface{}, error) {
 	path := "/v2/bot/message/narrowcast"
@@ -3060,7 +3072,7 @@ func (client *MessagingApiAPI) NarrowcastWithHttpInfo(
 	}
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
-	req.Header.Set("X-Line-Retry-Key", xLineRetryKey)
+	req.Header.Set("X-Line-Retry-Key", *xLineRetryKey)
 
 	res, err := client.Do(req)
 
@@ -3101,7 +3113,7 @@ func (client *MessagingApiAPI) PushMessage(
 
 	pushMessageRequest *PushMessageRequest,
 
-	xLineRetryKey string,
+	xLineRetryKey *string,
 
 ) (*PushMessageResponse, error) {
 	_, body, error := client.PushMessageWithHttpInfo(
@@ -3126,7 +3138,7 @@ func (client *MessagingApiAPI) PushMessageWithHttpInfo(
 
 	pushMessageRequest *PushMessageRequest,
 
-	xLineRetryKey string,
+	xLineRetryKey *string,
 
 ) (*http.Response, *PushMessageResponse, error) {
 	path := "/v2/bot/message/push"
@@ -3142,7 +3154,7 @@ func (client *MessagingApiAPI) PushMessageWithHttpInfo(
 	}
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
-	req.Header.Set("X-Line-Retry-Key", xLineRetryKey)
+	req.Header.Set("X-Line-Retry-Key", *xLineRetryKey)
 
 	res, err := client.Do(req)
 
@@ -3183,7 +3195,7 @@ func (client *MessagingApiAPI) PushMessagesByPhone(
 
 	pnpMessagesRequest *PnpMessagesRequest,
 
-	xLineDeliveryTag string,
+	xLineDeliveryTag *string,
 
 ) (struct{}, error) {
 	_, body, error := client.PushMessagesByPhoneWithHttpInfo(
@@ -3208,7 +3220,7 @@ func (client *MessagingApiAPI) PushMessagesByPhoneWithHttpInfo(
 
 	pnpMessagesRequest *PnpMessagesRequest,
 
-	xLineDeliveryTag string,
+	xLineDeliveryTag *string,
 
 ) (*http.Response, struct{}, error) {
 	path := "/bot/pnp/push"
@@ -3224,7 +3236,7 @@ func (client *MessagingApiAPI) PushMessagesByPhoneWithHttpInfo(
 	}
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
-	req.Header.Set("X-Line-Delivery-Tag", xLineDeliveryTag)
+	req.Header.Set("X-Line-Delivery-Tag", *xLineDeliveryTag)
 
 	res, err := client.Do(req)
 

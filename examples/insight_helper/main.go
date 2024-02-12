@@ -41,7 +41,7 @@ func main() {
 		}
 		log.Printf("%v", res)
 	case "followers":
-		res, err := client.GetNumberOfFollowers(*date)
+		res, err := client.GetNumberOfFollowers(date)
 		if err != nil {
 			log.Fatal(err)
 		}

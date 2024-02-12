@@ -37,7 +37,34 @@ func TestGetFollowers_ItShouldCorrectlyPassLimitAndStartQueryParameter(t *testin
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
 	}
-	resp, _, _ := client.GetFollowersWithHttpInfo("some-start", 1000)
+	start := "some-start"
+	var limit int32 = 1000
+	resp, _, _ := client.GetFollowersWithHttpInfo(&start, &limit)
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("Not getting 200 response back: %s", resp.Header.Get("TEST-ERROR"))
+	}
+}
+
+func TestGetFollowers_ItShouldNotPassStartWhenItIsEmptyString(t *testing.T) {
+	server := httptest.NewServer(
+		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if r.URL.Query().Has("start") {
+				w.Header().Set("TEST-ERROR", "incorrect start being sent from client. does not expect to have `start` in query-parameter")
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+			json.NewEncoder(w).Encode(messaging_api.GetFollowersResponse{UserIds: []string{}, Next: "abcdef"})
+		}),
+	)
+	client, err := messaging_api.NewMessagingApiAPI(
+		"channelToken",
+		messaging_api.WithEndpoint(server.URL),
+	)
+	if err != nil {
+		t.Fatalf("Failed to create client: %v", err)
+	}
+	var limit int32 = 1000
+	resp, _, _ := client.GetFollowersWithHttpInfo(nil, &limit)
 	if resp.StatusCode != http.StatusOK {
 		t.Errorf("Not getting 200 response back: %s", resp.Header.Get("TEST-ERROR"))
 	}

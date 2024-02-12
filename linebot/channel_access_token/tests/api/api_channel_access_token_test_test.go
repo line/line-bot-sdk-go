@@ -12,7 +12,6 @@ import (
 func TestGetsAllValidChannelAccessTokenKeyIds(t *testing.T) {
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-
 			w.WriteHeader(http.StatusOK)
 			w.Write([]byte("{}"))
 		}),
@@ -39,7 +38,6 @@ func TestGetsAllValidChannelAccessTokenKeyIds(t *testing.T) {
 func TestIssueChannelToken(t *testing.T) {
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-
 			if r.Header.Get("Content-Type") != "application/x-www-form-urlencoded" {
 				t.Fatalf("Invalid content-type: %s", r.Header.Get("Content-Type"))
 				return
@@ -58,11 +56,11 @@ func TestIssueChannelToken(t *testing.T) {
 		t.Fatalf("Failed to create client: %v", err)
 	}
 	resp, err := client.IssueChannelToken(
-		"hello",
+		stringToPointerOfString("hello"),
 
-		"hello",
+		stringToPointerOfString("hello"),
 
-		"hello",
+		stringToPointerOfString("hello"),
 	)
 	if err != nil {
 		t.Fatalf("Failed to call API: %v", err)
@@ -73,7 +71,6 @@ func TestIssueChannelToken(t *testing.T) {
 func TestIssueChannelTokenByJWT(t *testing.T) {
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-
 			if r.Header.Get("Content-Type") != "application/x-www-form-urlencoded" {
 				t.Fatalf("Invalid content-type: %s", r.Header.Get("Content-Type"))
 				return
@@ -92,11 +89,11 @@ func TestIssueChannelTokenByJWT(t *testing.T) {
 		t.Fatalf("Failed to create client: %v", err)
 	}
 	resp, err := client.IssueChannelTokenByJWT(
-		"hello",
+		stringToPointerOfString("hello"),
 
-		"hello",
+		stringToPointerOfString("hello"),
 
-		"hello",
+		stringToPointerOfString("hello"),
 	)
 	if err != nil {
 		t.Fatalf("Failed to call API: %v", err)
@@ -107,7 +104,6 @@ func TestIssueChannelTokenByJWT(t *testing.T) {
 func TestIssueStatelessChannelToken(t *testing.T) {
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-
 			if r.Header.Get("Content-Type") != "application/x-www-form-urlencoded" {
 				t.Fatalf("Invalid content-type: %s", r.Header.Get("Content-Type"))
 				return
@@ -126,15 +122,15 @@ func TestIssueStatelessChannelToken(t *testing.T) {
 		t.Fatalf("Failed to create client: %v", err)
 	}
 	resp, err := client.IssueStatelessChannelToken(
-		"hello",
+		stringToPointerOfString("hello"),
 
-		"hello",
+		stringToPointerOfString("hello"),
 
-		"hello",
+		stringToPointerOfString("hello"),
 
-		"hello",
+		stringToPointerOfString("hello"),
 
-		"hello",
+		stringToPointerOfString("hello"),
 	)
 	if err != nil {
 		t.Fatalf("Failed to call API: %v", err)
@@ -145,7 +141,6 @@ func TestIssueStatelessChannelToken(t *testing.T) {
 func TestRevokeChannelToken(t *testing.T) {
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-
 			if r.Header.Get("Content-Type") != "application/x-www-form-urlencoded" {
 				t.Fatalf("Invalid content-type: %s", r.Header.Get("Content-Type"))
 				return
@@ -164,7 +159,7 @@ func TestRevokeChannelToken(t *testing.T) {
 		t.Fatalf("Failed to create client: %v", err)
 	}
 	resp, err := client.RevokeChannelToken(
-		"hello",
+		stringToPointerOfString("hello"),
 	)
 	if err != nil {
 		t.Fatalf("Failed to call API: %v", err)
@@ -175,7 +170,6 @@ func TestRevokeChannelToken(t *testing.T) {
 func TestRevokeChannelTokenByJWT(t *testing.T) {
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-
 			if r.Header.Get("Content-Type") != "application/x-www-form-urlencoded" {
 				t.Fatalf("Invalid content-type: %s", r.Header.Get("Content-Type"))
 				return
@@ -194,11 +188,11 @@ func TestRevokeChannelTokenByJWT(t *testing.T) {
 		t.Fatalf("Failed to create client: %v", err)
 	}
 	resp, err := client.RevokeChannelTokenByJWT(
-		"hello",
+		stringToPointerOfString("hello"),
 
-		"hello",
+		stringToPointerOfString("hello"),
 
-		"hello",
+		stringToPointerOfString("hello"),
 	)
 	if err != nil {
 		t.Fatalf("Failed to call API: %v", err)
@@ -209,7 +203,6 @@ func TestRevokeChannelTokenByJWT(t *testing.T) {
 func TestVerifyChannelToken(t *testing.T) {
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-
 			if r.Header.Get("Content-Type") != "application/x-www-form-urlencoded" {
 				t.Fatalf("Invalid content-type: %s", r.Header.Get("Content-Type"))
 				return
@@ -228,7 +221,7 @@ func TestVerifyChannelToken(t *testing.T) {
 		t.Fatalf("Failed to create client: %v", err)
 	}
 	resp, err := client.VerifyChannelToken(
-		"hello",
+		stringToPointerOfString("hello"),
 	)
 	if err != nil {
 		t.Fatalf("Failed to call API: %v", err)
@@ -239,7 +232,6 @@ func TestVerifyChannelToken(t *testing.T) {
 func TestVerifyChannelTokenByJWT(t *testing.T) {
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-
 			w.WriteHeader(http.StatusOK)
 			w.Write([]byte("{}"))
 		}),
@@ -259,4 +251,8 @@ func TestVerifyChannelTokenByJWT(t *testing.T) {
 		t.Fatalf("Failed to call API: %v", err)
 	}
 	log.Printf("Got response: %v", resp)
+}
+
+func stringToPointerOfString(s string) *string {
+	return &s
 }

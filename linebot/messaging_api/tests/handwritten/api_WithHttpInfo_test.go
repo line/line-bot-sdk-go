@@ -29,7 +29,7 @@ func TestTextMessageWithHttpInfo(t *testing.T) {
 				Text: "Hello, world",
 			},
 		},
-	}, "")
+	}, nil)
 	if err != nil {
 		t.Fatalf("Failed to create audience: %v", err)
 	}
