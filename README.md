@@ -35,6 +35,7 @@ import (
 	"github.com/line/line-bot-sdk-go/v8/linebot/liff"
 	"github.com/line/line-bot-sdk-go/v8/linebot/manage_audience"
 	"github.com/line/line-bot-sdk-go/v8/linebot/messaging_api"
+	"github.com/line/line-bot-sdk-go/v8/linebot/membership"
 	"github.com/line/line-bot-sdk-go/v8/linebot/module"
 	"github.com/line/line-bot-sdk-go/v8/linebot/module_attach"
 	"github.com/line/line-bot-sdk-go/v8/linebot/shop"
