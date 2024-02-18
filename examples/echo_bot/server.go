@@ -41,7 +41,7 @@ func main() {
 		cb, err := webhook.ParseRequest(channelSecret, req)
 		if err != nil {
 			log.Printf("Cannot parse request: %+v\n", err)
-			if err == linebot.ErrInvalidSignature {
+			if errors.Is(err, webhook.ErrInvalidSignature) {
 				w.WriteHeader(400)
 			} else {
 				w.WriteHeader(500)
