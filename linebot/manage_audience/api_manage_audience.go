@@ -725,13 +725,13 @@ func (client *ManageAudienceAPI) GetAudienceGroupsWithHttpInfo(
 		return nil, nil, err
 	}
 
-	var query url.Values
-	query = url.Values{"page": []string{strconv.FormatInt(page, 10)}}
-	query = url.Values{"description": []string{description}}
-	query = url.Values{"status": []string{string(status)}}
-	query = url.Values{"size": []string{strconv.FormatInt(size, 10)}}
-	query = url.Values{"includesExternalPublicGroups": []string{strconv.FormatBool(includesExternalPublicGroups)}}
-	query = url.Values{"createRoute": []string{string(createRoute)}}
+	query := url.Values{}
+	query.Add("page", strconv.FormatInt(page, 10))
+	query.Add("description", description)
+	query.Add("status", string(status))
+	query.Add("size", strconv.FormatInt(size, 10))
+	query.Add("includesExternalPublicGroups", strconv.FormatBool(includesExternalPublicGroups))
+	query.Add("createRoute", string(createRoute))
 
 	req.URL.RawQuery = query.Encode()
 

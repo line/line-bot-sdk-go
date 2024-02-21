@@ -151,9 +151,9 @@ func (client *ChannelAccessTokenAPI) GetsAllValidChannelAccessTokenKeyIdsWithHtt
 		return nil, nil, err
 	}
 
-	var query url.Values
-	query = url.Values{"clientAssertionType": []string{clientAssertionType}}
-	query = url.Values{"clientAssertion": []string{clientAssertion}}
+	query := url.Values{}
+	query.Add("clientAssertionType", clientAssertionType)
+	query.Add("clientAssertion", clientAssertion)
 
 	req.URL.RawQuery = query.Encode()
 
@@ -741,8 +741,8 @@ func (client *ChannelAccessTokenAPI) VerifyChannelTokenByJWTWithHttpInfo(
 		return nil, nil, err
 	}
 
-	var query url.Values
-	query = url.Values{"accessToken": []string{accessToken}}
+	query := url.Values{}
+	query.Add("accessToken", accessToken)
 
 	req.URL.RawQuery = query.Encode()
 
