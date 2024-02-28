@@ -106,7 +106,7 @@ func NewKitchenSink(channelSecret, channelToken, appBaseURL string) (*KitchenSin
 func (app *KitchenSink) Callback(w http.ResponseWriter, r *http.Request) {
 	cb, err := webhook.ParseRequest(app.channelSecret, r)
 	if err != nil {
-		if err == linebot.ErrInvalidSignature {
+		if err.Error() == linebot.ErrInvalidSignature.Error() {
 			w.WriteHeader(400)
 		} else {
 			w.WriteHeader(500)
