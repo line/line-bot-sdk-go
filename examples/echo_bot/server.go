@@ -15,12 +15,12 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
 
-	"github.com/line/line-bot-sdk-go/v8/linebot"
 	"github.com/line/line-bot-sdk-go/v8/linebot/messaging_api"
 	"github.com/line/line-bot-sdk-go/v8/linebot/webhook"
 )
@@ -41,7 +41,7 @@ func main() {
 		cb, err := webhook.ParseRequest(channelSecret, req)
 		if err != nil {
 			log.Printf("Cannot parse request: %+v\n", err)
-			if err.Error() == linebot.ErrInvalidSignature.Error() {
+			if errors.Is(err, webhook.ErrInvalidSignature) {
 				w.WriteHeader(400)
 			} else {
 				w.WriteHeader(500)
