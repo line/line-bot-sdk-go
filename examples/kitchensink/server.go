@@ -16,6 +16,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -25,7 +26,6 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/line/line-bot-sdk-go/v8/linebot"
 	"github.com/line/line-bot-sdk-go/v8/linebot/messaging_api"
 	"github.com/line/line-bot-sdk-go/v8/linebot/webhook"
 )
@@ -106,7 +106,7 @@ func NewKitchenSink(channelSecret, channelToken, appBaseURL string) (*KitchenSin
 func (app *KitchenSink) Callback(w http.ResponseWriter, r *http.Request) {
 	cb, err := webhook.ParseRequest(app.channelSecret, r)
 	if err != nil {
-		if err == linebot.ErrInvalidSignature {
+		if errors.Is(err, webhook.ErrInvalidSignature) {
 			w.WriteHeader(400)
 		} else {
 			w.WriteHeader(500)
