@@ -53,6 +53,7 @@ def generate_clients():
         "module-attach.yml",
         "module.yml",
         "messaging-api.yml",
+        "membership.yml",
     ]
 
     for sourceYaml in components:
