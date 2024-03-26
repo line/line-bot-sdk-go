@@ -224,11 +224,7 @@ if err != nil && resp.StatusCode >= 400 && resp.StatusCode < 500 {
 
 FAQ: https://developers.line.biz/en/faq/
 
-Community Q&A: https://www.line-community.me/questions
-
 News: https://developers.line.biz/en/news/
-
-X: @LINE_DEV
 
 
 ## Versioning
