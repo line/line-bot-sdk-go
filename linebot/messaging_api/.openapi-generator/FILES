@@ -62,6 +62,7 @@ model_gender_demographic_filter.go
 model_get_aggregation_unit_name_list_response.go
 model_get_aggregation_unit_usage_response.go
 model_get_followers_response.go
+model_get_membership_subscription_response.go
 model_get_message_content_transcoding_response.go
 model_get_webhook_endpoint_response.go
 model_group_member_count_response.go
@@ -82,6 +83,8 @@ model_location_action.go
 model_location_message.go
 model_mark_messages_as_read_request.go
 model_members_ids_response.go
+model_membership.go
+model_membership_list_response.go
 model_message.go
 model_message_action.go
 model_message_imagemap_action.go
@@ -129,6 +132,9 @@ model_sender.go
 model_sent_message.go
 model_set_webhook_endpoint_request.go
 model_sticker_message.go
+model_subscribed_membership_plan.go
+model_subscribed_membership_user.go
+model_subscription.go
 model_subscription_period_demographic.go
 model_subscription_period_demographic_filter.go
 model_template.go
