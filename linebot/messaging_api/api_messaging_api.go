@@ -1263,6 +1263,127 @@ func (client *MessagingApiAPI) GetGroupSummaryWithHttpInfo(
 
 }
 
+// GetMembershipList
+//
+// Get a list of memberships.
+// Parameters:
+
+// https://developers.line.biz/en/reference/messaging-api/#get-membership-plans
+func (client *MessagingApiAPI) GetMembershipList() (*MembershipListResponse, error) {
+	_, body, error := client.GetMembershipListWithHttpInfo()
+	return body, error
+}
+
+// GetMembershipList
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Get a list of memberships.
+// Parameters:
+
+// https://developers.line.biz/en/reference/messaging-api/#get-membership-plans
+func (client *MessagingApiAPI) GetMembershipListWithHttpInfo() (*http.Response, *MembershipListResponse, error) {
+	path := "/v2/bot/membership/list"
+
+	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	res, err := client.Do(req)
+
+	if err != nil {
+		return res, nil, err
+	}
+
+	if res.StatusCode/100 != 2 {
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
+		if err != nil {
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
+		}
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
+	}
+
+	defer res.Body.Close()
+
+	decoder := json.NewDecoder(res.Body)
+	result := MembershipListResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
+	}
+	return res, &result, nil
+
+}
+
+// GetMembershipSubscription
+//
+// Get a user's membership subscription.
+// Parameters:
+//        userId             User ID
+
+// https://developers.line.biz/en/reference/messaging-api/#get-a-users-membership-subscription-status
+func (client *MessagingApiAPI) GetMembershipSubscription(
+
+	userId string,
+
+) (*GetMembershipSubscriptionResponse, error) {
+	_, body, error := client.GetMembershipSubscriptionWithHttpInfo(
+
+		userId,
+	)
+	return body, error
+}
+
+// GetMembershipSubscription
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Get a user's membership subscription.
+// Parameters:
+//        userId             User ID
+
+// https://developers.line.biz/en/reference/messaging-api/#get-a-users-membership-subscription-status
+func (client *MessagingApiAPI) GetMembershipSubscriptionWithHttpInfo(
+
+	userId string,
+
+) (*http.Response, *GetMembershipSubscriptionResponse, error) {
+	path := "/v2/bot/membership/subscription/{userId}"
+
+	path = strings.Replace(path, "{userId}", userId, -1)
+
+	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	res, err := client.Do(req)
+
+	if err != nil {
+		return res, nil, err
+	}
+
+	if res.StatusCode/100 != 2 {
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
+		if err != nil {
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
+		}
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
+	}
+
+	defer res.Body.Close()
+
+	decoder := json.NewDecoder(res.Body)
+	result := GetMembershipSubscriptionResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
+	}
+	return res, &result, nil
+
+}
+
 // GetMessageQuota
 //
 // Gets the target limit for sending messages in the current month. The total number of the free messages and the additional messages is returned.
