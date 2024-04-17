@@ -131,6 +131,7 @@ model_room_user_profile_response.go
 model_sender.go
 model_sent_message.go
 model_set_webhook_endpoint_request.go
+model_show_loading_animation_request.go
 model_sticker_message.go
 model_subscribed_membership_plan.go
 model_subscribed_membership_user.go

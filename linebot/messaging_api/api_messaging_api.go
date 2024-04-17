@@ -3638,6 +3638,78 @@ func (client *MessagingApiAPI) SetWebhookEndpointWithHttpInfo(
 
 }
 
+// ShowLoadingAnimation
+//
+// Display a loading animation in one-on-one chats between users and LINE Official Accounts.
+// Parameters:
+//        showLoadingAnimationRequest
+
+// https://developers.line.biz/en/reference/messaging-api/#display-a-loading-indicator
+func (client *MessagingApiAPI) ShowLoadingAnimation(
+
+	showLoadingAnimationRequest *ShowLoadingAnimationRequest,
+
+) (*map[string]interface{}, error) {
+	_, body, error := client.ShowLoadingAnimationWithHttpInfo(
+
+		showLoadingAnimationRequest,
+	)
+	return body, error
+}
+
+// ShowLoadingAnimation
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Display a loading animation in one-on-one chats between users and LINE Official Accounts.
+// Parameters:
+//        showLoadingAnimationRequest
+
+// https://developers.line.biz/en/reference/messaging-api/#display-a-loading-indicator
+func (client *MessagingApiAPI) ShowLoadingAnimationWithHttpInfo(
+
+	showLoadingAnimationRequest *ShowLoadingAnimationRequest,
+
+) (*http.Response, *map[string]interface{}, error) {
+	path := "/v2/bot/chat/loading/start"
+
+	var buf bytes.Buffer
+	enc := json.NewEncoder(&buf)
+	if err := enc.Encode(showLoadingAnimationRequest); err != nil {
+		return nil, nil, err
+	}
+	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
+	if err != nil {
+		return nil, nil, err
+	}
+	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
+
+	res, err := client.Do(req)
+
+	if err != nil {
+		return res, nil, err
+	}
+
+	if res.StatusCode/100 != 2 {
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
+		if err != nil {
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
+		}
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
+	}
+
+	defer res.Body.Close()
+
+	decoder := json.NewDecoder(res.Body)
+	result := map[string]interface{}{}
+	if err := decoder.Decode(&result); err != nil {
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
+	}
+	return res, &result, nil
+
+}
+
 // TestWebhookEndpoint
 //
 // Test webhook endpoint
