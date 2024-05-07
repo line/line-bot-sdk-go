@@ -635,7 +635,7 @@ func (client *ChannelAccessTokenAPI) RevokeChannelTokenByJWTWithHttpInfo(
 // Parameters:
 //        accessToken             A short-lived or long-lived channel access token.
 
-// https://developers.line.biz/en/reference/messaging-api/#verfiy-channel-access-token
+// https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token
 func (client *ChannelAccessTokenAPI) VerifyChannelToken(
 
 	accessToken string,
@@ -655,7 +655,7 @@ func (client *ChannelAccessTokenAPI) VerifyChannelToken(
 // Parameters:
 //        accessToken             A short-lived or long-lived channel access token.
 
-// https://developers.line.biz/en/reference/messaging-api/#verfiy-channel-access-token
+// https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token
 func (client *ChannelAccessTokenAPI) VerifyChannelTokenWithHttpInfo(
 
 	accessToken string,
@@ -708,7 +708,7 @@ func (client *ChannelAccessTokenAPI) VerifyChannelTokenWithHttpInfo(
 // Parameters:
 //        accessToken             Channel access token with a user-specified expiration (Channel Access Token v2.1).
 
-// https://developers.line.biz/en/reference/messaging-api/#verfiy-channel-access-token-v2-1
+// https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token-v2-1
 func (client *ChannelAccessTokenAPI) VerifyChannelTokenByJWT(
 
 	accessToken string,
@@ -728,7 +728,7 @@ func (client *ChannelAccessTokenAPI) VerifyChannelTokenByJWT(
 // Parameters:
 //        accessToken             Channel access token with a user-specified expiration (Channel Access Token v2.1).
 
-// https://developers.line.biz/en/reference/messaging-api/#verfiy-channel-access-token-v2-1
+// https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token-v2-1
 func (client *ChannelAccessTokenAPI) VerifyChannelTokenByJWTWithHttpInfo(
 
 	accessToken string,

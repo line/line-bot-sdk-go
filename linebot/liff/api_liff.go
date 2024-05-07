@@ -116,7 +116,7 @@ func WithEndpoint(endpoint string) LiffAPIOption {
 }
 
 // AddLIFFApp
-//
+// Create LIFF app
 // Adding the LIFF app to a channel
 // Parameters:
 //        addLiffAppRequest
@@ -136,7 +136,7 @@ func (client *LiffAPI) AddLIFFApp(
 
 // AddLIFFApp
 // If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
-//
+// Create LIFF app
 // Adding the LIFF app to a channel
 // Parameters:
 //        addLiffAppRequest
@@ -304,7 +304,7 @@ func (client *LiffAPI) GetAllLIFFAppsWithHttpInfo() (*http.Response, *GetAllLiff
 }
 
 // UpdateLIFFApp
-//
+// Update LIFF app from a channel
 // Update LIFF app settings
 // Parameters:
 //        liffId             ID of the LIFF app to be updated
@@ -329,7 +329,7 @@ func (client *LiffAPI) UpdateLIFFApp(
 
 // UpdateLIFFApp
 // If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
-//
+// Update LIFF app from a channel
 // Update LIFF app settings
 // Parameters:
 //        liffId             ID of the LIFF app to be updated
