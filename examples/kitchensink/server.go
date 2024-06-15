@@ -541,7 +541,7 @@ func (app *KitchenSink) handleText(message *webhook.TextMessageContent, replyTok
 				},
 			},
 		)
-		if err != nil {
+		if err != nil && resp.StatusCode >= 400 && resp.StatusCode < 500 {
 			decoder := json.NewDecoder(resp.Body)
 			errorResponse := &messaging_api.ErrorResponse{}
 			if err := decoder.Decode(&errorResponse); err != nil {
