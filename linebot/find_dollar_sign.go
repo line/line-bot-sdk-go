@@ -11,7 +11,7 @@ FindDollarSignIndexInUni16Text helps you to find the index of the $ in the text.
 func FindDollarSignIndexInUni16Text(text string) (indexes []int32) {
 	encoded := utf16.Encode([]rune(text))
 	for i, unit := range encoded {
-		if unit == '$' {
+		if unit == '/' {
 			indexes = append(indexes, int32(i))
 		}
 	}
