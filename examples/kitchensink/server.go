@@ -28,6 +28,7 @@ import (
 
 	"github.com/line/line-bot-sdk-go/v8/linebot/messaging_api"
 	"github.com/line/line-bot-sdk-go/v8/linebot/webhook"
+	"github.com/line/line-bot-sdk-go/v8/util"
 )
 
 func main() {
@@ -548,6 +549,33 @@ func (app *KitchenSink) handleText(message *webhook.TextMessageContent, replyTok
 			}
 			log.Printf("status code: (%v), x-line-request-id: (%v), error response: (%v)", resp.StatusCode, resp.Header.Get("x-line-request-id"), errorResponse)
 		}
+	case "emoji":
+		message := "Hello, $ hello こんにちは $, สวัสดีครับ $"
+		emojiIndexes := util.FindDollarSignIndexInUTF16Text(message)
+		emojis := []messaging_api.Emoji{}
+		for _, index := range emojiIndexes {
+			emojis = append(emojis, messaging_api.Emoji{
+				Index:     int32(index),
+				ProductId: "5ac1bfd5040ab15980c9b435",
+				EmojiId:   "001",
+			})
+		}
+		result, _, err := app.bot.ReplyMessageWithHttpInfo(
+			&messaging_api.ReplyMessageRequest{
+				ReplyToken: replyToken,
+				Messages: []messaging_api.MessageInterface{
+					messaging_api.TextMessage{
+						Text:   message,
+						Emojis: emojis,
+					},
+				},
+			},
+		)
+		if err == nil {
+			log.Printf("Sent reply: %v", result)
+		}
+		log.Printf("Sent reply: %v %v", result, err)
+		return err
 	default:
 		log.Printf("Echo message to %s: %s", replyToken, message.Text)
 		if _, err := app.bot.ReplyMessage(
