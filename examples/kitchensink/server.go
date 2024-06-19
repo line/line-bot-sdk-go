@@ -551,7 +551,7 @@ func (app *KitchenSink) handleText(message *webhook.TextMessageContent, replyTok
 		}
 	case "emoji":
 		message := "Hello, $ hello こんにちは $, สวัสดีครับ $"
-		emojiIndexes := util.FindDollarSignIndexInUni16Text(message)
+		emojiIndexes := util.FindDollarSignIndexInUTF16Text(message)
 		emojis := []messaging_api.Emoji{}
 		for _, index := range emojiIndexes {
 			emojis = append(emojis, messaging_api.Emoji{
