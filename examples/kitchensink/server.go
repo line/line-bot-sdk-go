@@ -26,9 +26,9 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/line/line-bot-sdk-go/v8/linebot"
 	"github.com/line/line-bot-sdk-go/v8/linebot/messaging_api"
 	"github.com/line/line-bot-sdk-go/v8/linebot/webhook"
+	"github.com/line/line-bot-sdk-go/v8/util"
 )
 
 func main() {
@@ -551,7 +551,7 @@ func (app *KitchenSink) handleText(message *webhook.TextMessageContent, replyTok
 		}
 	case "emoji":
 		message := "Hello, $ hello こんにちは $, สวัสดีครับ $"
-		emojiIndexes := linebot.FindDollarSignIndexInUni16Text(message)
+		emojiIndexes := util.FindDollarSignIndexInUni16Text(message)
 		emojis := []messaging_api.Emoji{}
 		for _, index := range emojiIndexes {
 			emojis = append(emojis, messaging_api.Emoji{

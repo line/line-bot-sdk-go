@@ -1,4 +1,4 @@
-package linebot
+package util
 
 import "unicode/utf16"
 
@@ -8,11 +8,16 @@ $ in the text, and identify the index of the $ in the text.
 
 FindDollarSignIndexInUni16Text helps you to find the index of the $ in the text.
 */
-func FindDollarSignIndexInUni16Text(text string) (indexes []int32) {
-	bytes := utf16.Encode([]rune(text))
-	for i := range bytes {
 
-		if bytes[i] == 36 {
+type CharInUTF16 uint16
+
+const dollarSign CharInUTF16 = 36
+
+func FindDollarSignIndexInUni16Text(text string) (indexes []int32) {
+	encoded := utf16.Encode([]rune(text))
+	for i, unit := range encoded {
+
+		if unit == uint16(dollarSign) {
 			indexes = append(indexes, int32(i))
 		}
 	}
