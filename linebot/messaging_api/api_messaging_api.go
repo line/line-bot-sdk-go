@@ -1163,10 +1163,12 @@ func (client *MessagingApiAPI) GetGroupMembersIdsWithHttpInfo(
 		return nil, nil, err
 	}
 
-	query := url.Values{}
-	query.Add("start", start)
+	if start != "" {
+		query := url.Values{}
+		query.Add("start", start)
 
-	req.URL.RawQuery = query.Encode()
+		req.URL.RawQuery = query.Encode()
+	}
 
 	res, err := client.Do(req)
 
