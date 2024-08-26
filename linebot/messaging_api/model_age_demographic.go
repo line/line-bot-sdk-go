@@ -39,4 +39,12 @@ const (
 	AgeDemographic__45 AgeDemographic = "age_45"
 
 	AgeDemographic__50 AgeDemographic = "age_50"
+
+	AgeDemographic__55 AgeDemographic = "age_55"
+
+	AgeDemographic__60 AgeDemographic = "age_60"
+
+	AgeDemographic__65 AgeDemographic = "age_65"
+
+	AgeDemographic__70 AgeDemographic = "age_70"
 )
