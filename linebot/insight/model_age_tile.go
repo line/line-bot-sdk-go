@@ -59,5 +59,15 @@ const (
 
 	AgeTileAGE_FROM50 AgeTileAGE = "from50"
 
+	AgeTileAGE_FROM50TO54 AgeTileAGE = "from50to54"
+
+	AgeTileAGE_FROM55TO59 AgeTileAGE = "from55to59"
+
+	AgeTileAGE_FROM60TO64 AgeTileAGE = "from60to64"
+
+	AgeTileAGE_FROM65TO69 AgeTileAGE = "from65to69"
+
+	AgeTileAGE_FROM70 AgeTileAGE = "from70"
+
 	AgeTileAGE_UNKNOWN AgeTileAGE = "unknown"
 )
