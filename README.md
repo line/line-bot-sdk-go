@@ -2,7 +2,7 @@
 
 [![Build Status](https://github.com/line/line-bot-sdk-go/actions/workflows/go.yml/badge.svg?branch=master)](https://github.com/line/line-bot-sdk-go/actions)
 [![codecov](https://codecov.io/gh/line/line-bot-sdk-go/branch/master/graph/badge.svg)](https://codecov.io/gh/line/line-bot-sdk-go)
-[![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](http://godoc.org/github.com/line/line-bot-sdk-go/linebot)
+[![Go Reference](https://pkg.go.dev/badge/github.com/line/line-bot-sdk-go/v8/linebot.svg)](https://pkg.go.dev/github.com/line/line-bot-sdk-go/v8/linebot)
 [![Go Report Card](https://goreportcard.com/badge/github.com/line/line-bot-sdk-go)](https://goreportcard.com/report/github.com/line/line-bot-sdk-go)
 
 
