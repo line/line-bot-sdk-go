@@ -156,11 +156,11 @@ bot.PushMessage(
 		To: "U.......",
 		Messages: []messaging_api.MessageInterface{
 			messaging_api.TextMessage{
-				Text: replyMessage,
+				Text: pushMessage,
 			},
 		},
 	},
-	nil, // x-line-retry-key
+	"", // x-line-retry-key
 )
 ```
 
