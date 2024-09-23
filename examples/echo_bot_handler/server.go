@@ -32,13 +32,12 @@ func main() {
 		log.Fatal(err)
 	}
 	bot, err := messaging_api.NewMessagingApiAPI(os.Getenv("LINE_CHANNEL_TOKEN"))
-
+	if err != nil {
+		log.Print(err)
+		return
+	}
 	// Setup HTTP Server for receiving requests from LINE platform
 	handler.HandleEvents(func(req *webhook.CallbackRequest, r *http.Request) {
-		if err != nil {
-			log.Print(err)
-			return
-		}
 		log.Println("Handling events...")
 		for _, event := range req.Events {
 			log.Printf("/callback called%+v...\n", event)
