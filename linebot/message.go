@@ -52,9 +52,10 @@ type SendingMessage interface {
 // TextMessage type
 // Deprecated: Use OpenAPI based classes instead.
 type TextMessage struct {
-	ID     string
-	Text   string
-	Emojis []*Emoji
+	ID              string
+	Text            string
+	Emojis          []*Emoji
+	QuotedMessageID string
 
 	quickReplyItems *QuickReplyItems
 	sender          *Sender
@@ -66,17 +67,19 @@ type TextMessage struct {
 // MarshalJSON method of TextMessage
 func (m *TextMessage) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type       MessageType      `json:"type"`
-		Text       string           `json:"text"`
-		QuickReply *QuickReplyItems `json:"quickReply,omitempty"`
-		Sender     *Sender          `json:"sender,omitempty"`
-		Emojis     []*Emoji         `json:"emojis,omitempty"`
+		Type            MessageType      `json:"type"`
+		Text            string           `json:"text"`
+		QuickReply      *QuickReplyItems `json:"quickReply,omitempty"`
+		Sender          *Sender          `json:"sender,omitempty"`
+		Emojis          []*Emoji         `json:"emojis,omitempty"`
+		QuotedMessageID string           `json:"quotedMessageId,omitempty"`
 	}{
-		Type:       m.messageType,
-		Text:       m.Text,
-		QuickReply: m.quickReplyItems,
-		Sender:     m.sender,
-		Emojis:     m.Emojis,
+		Type:            m.messageType,
+		Text:            m.Text,
+		QuickReply:      m.quickReplyItems,
+		Sender:          m.sender,
+		Emojis:          m.Emojis,
+		QuotedMessageID: m.QuotedMessageID,
 	})
 }
 
@@ -317,6 +320,7 @@ type StickerMessage struct {
 	StickerResourceType StickerResourceType
 	Keywords            []string
 	Text                string
+	QuotedMessageID     string
 
 	quickReplyItems *QuickReplyItems
 	sender          *Sender
@@ -334,6 +338,7 @@ func (m *StickerMessage) MarshalJSON() ([]byte, error) {
 		QuickReply          *QuickReplyItems    `json:"quickReply,omitempty"`
 		Sender              *Sender             `json:"sender,omitempty"`
 		Text                string              `json:"text,omitempty"`
+		QuotedMessageID     string              `json:"quotedMessageId,omitempty"`
 	}{
 		Type:                m.messageType,
 		PackageID:           m.PackageID,
@@ -343,6 +348,7 @@ func (m *StickerMessage) MarshalJSON() ([]byte, error) {
 		QuickReply:          m.quickReplyItems,
 		Sender:              m.sender,
 		Text:                m.Text,
+		QuotedMessageID:     m.QuotedMessageID,
 	})
 }
 

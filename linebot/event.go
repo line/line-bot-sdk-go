@@ -273,6 +273,7 @@ type rawEventMessage struct {
 	Keywords            []string            `json:"keywords,omitempty"`
 	Emojis              []*Emoji            `json:"emojis,omitempty"`
 	Mention             *Mention            `json:"mention,omitempty"`
+	QuotedMessageID     string              `json:"quotedMessageId,omitempty"`
 }
 
 // Deprecated: Use OpenAPI based classes instead.
@@ -386,11 +387,12 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 	switch m := e.Message.(type) {
 	case *TextMessage:
 		raw.Message = &rawEventMessage{
-			Type:    MessageTypeText,
-			ID:      m.ID,
-			Text:    m.Text,
-			Emojis:  m.Emojis,
-			Mention: m.Mention,
+			Type:            MessageTypeText,
+			ID:              m.ID,
+			Text:            m.Text,
+			Emojis:          m.Emojis,
+			Mention:         m.Mention,
+			QuotedMessageID: m.QuotedMessageID,
 		}
 	case *ImageMessage:
 		raw.Message = &rawEventMessage{
@@ -438,6 +440,7 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 			StickerResourceType: m.StickerResourceType,
 			Keywords:            m.Keywords,
 			Text:                m.Text,
+			QuotedMessageID:     m.QuotedMessageID,
 		}
 	}
 	return json.Marshal(&raw)
@@ -463,10 +466,11 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 		switch rawEvent.Message.Type {
 		case MessageTypeText:
 			e.Message = &TextMessage{
-				ID:      rawEvent.Message.ID,
-				Text:    rawEvent.Message.Text,
-				Emojis:  rawEvent.Message.Emojis,
-				Mention: rawEvent.Message.Mention,
+				ID:              rawEvent.Message.ID,
+				Text:            rawEvent.Message.Text,
+				Emojis:          rawEvent.Message.Emojis,
+				Mention:         rawEvent.Message.Mention,
+				QuotedMessageID: rawEvent.Message.QuotedMessageID,
 			}
 		case MessageTypeImage:
 			e.Message = &ImageMessage{
@@ -508,6 +512,7 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 				StickerResourceType: rawEvent.Message.StickerResourceType,
 				Keywords:            rawEvent.Message.Keywords,
 				Text:                rawEvent.Message.Text,
+				QuotedMessageID:     rawEvent.Message.QuotedMessageID,
 			}
 		}
 	case EventTypePostback:
