@@ -74,11 +74,12 @@ func (m *TextMessage) MarshalJSON() ([]byte, error) {
 		Emojis          []*Emoji         `json:"emojis,omitempty"`
 		QuotedMessageID string           `json:"quotedMessageId,omitempty"`
 	}{
-		Type:       m.messageType,
-		Text:       m.Text,
-		QuickReply: m.quickReplyItems,
-		Sender:     m.sender,
-		Emojis:     m.Emojis,
+		Type:            m.messageType,
+		Text:            m.Text,
+		QuickReply:      m.quickReplyItems,
+		Sender:          m.sender,
+		Emojis:          m.Emojis,
+		QuotedMessageID: m.QuotedMessageID,
 	})
 }
 
@@ -347,6 +348,7 @@ func (m *StickerMessage) MarshalJSON() ([]byte, error) {
 		QuickReply:          m.quickReplyItems,
 		Sender:              m.sender,
 		Text:                m.Text,
+		QuotedMessageID:     m.QuotedMessageID,
 	})
 }
 
