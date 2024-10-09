@@ -44,7 +44,7 @@ func ParseRequest(channelSecret string, r *http.Request) ([]*Event, error) {
 		return nil, ErrInvalidSignature
 	}
 
-	log.Println("reqqqqqqqqqqqqqqq")
+	log.Printf("Received event: %s", string(body))
 
 	request := &struct {
 		Events []*Event `json:"events"`
