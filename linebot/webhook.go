@@ -22,6 +22,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"io"
+	"log"
 	"net/http"
 )
 
@@ -42,6 +43,8 @@ func ParseRequest(channelSecret string, r *http.Request) ([]*Event, error) {
 	if !ValidateSignature(channelSecret, r.Header.Get("x-line-signature"), body) {
 		return nil, ErrInvalidSignature
 	}
+
+	log.Println("reqqqqqqqqqqqqqqq")
 
 	request := &struct {
 		Events []*Event `json:"events"`
