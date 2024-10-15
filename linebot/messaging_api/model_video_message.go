@@ -53,6 +53,8 @@ type VideoMessage struct {
 	 * Get TrackingId
 	 */
 	TrackingId string `json:"trackingId,omitempty"`
+
+	QuoteToken string `json:"quoteToken,omitempty"`
 }
 
 // MarshalJSON customizes the JSON serialization of the VideoMessage struct.

@@ -274,6 +274,7 @@ type rawEventMessage struct {
 	Emojis              []*Emoji            `json:"emojis,omitempty"`
 	Mention             *Mention            `json:"mention,omitempty"`
 	QuotedMessageID     string              `json:"quotedMessageId,omitempty"`
+	QuoteToken          string              `json:"quoteToken,omitempty"`
 }
 
 // Deprecated: Use OpenAPI based classes instead.
@@ -393,6 +394,7 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 			Emojis:          m.Emojis,
 			Mention:         m.Mention,
 			QuotedMessageID: m.QuotedMessageID,
+			QuoteToken:      m.QuoteToken,
 		}
 	case *ImageMessage:
 		raw.Message = &rawEventMessage{
@@ -400,6 +402,7 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 			ID:              m.ID,
 			ContentProvider: m.ContentProvider,
 			ImageSet:        m.ImageSet,
+			QuoteToken:      m.QuoteToken,
 		}
 	case *VideoMessage:
 		raw.Message = &rawEventMessage{
@@ -407,6 +410,7 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 			ID:              m.ID,
 			Duration:        m.Duration,
 			ContentProvider: m.ContentProvider,
+			QuoteToken:      m.QuoteToken,
 		}
 	case *AudioMessage:
 		raw.Message = &rawEventMessage{
@@ -441,6 +445,7 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 			Keywords:            m.Keywords,
 			Text:                m.Text,
 			QuotedMessageID:     m.QuotedMessageID,
+			QuoteToken:          m.QuoteToken,
 		}
 	}
 	return json.Marshal(&raw)
@@ -471,18 +476,21 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 				Emojis:          rawEvent.Message.Emojis,
 				Mention:         rawEvent.Message.Mention,
 				QuotedMessageID: rawEvent.Message.QuotedMessageID,
+				QuoteToken:      rawEvent.Message.QuoteToken,
 			}
 		case MessageTypeImage:
 			e.Message = &ImageMessage{
 				ID:              rawEvent.Message.ID,
 				ContentProvider: rawEvent.Message.ContentProvider,
 				ImageSet:        rawEvent.Message.ImageSet,
+				QuoteToken:      rawEvent.Message.QuoteToken,
 			}
 		case MessageTypeVideo:
 			e.Message = &VideoMessage{
 				ID:              rawEvent.Message.ID,
 				Duration:        rawEvent.Message.Duration,
 				ContentProvider: rawEvent.Message.ContentProvider,
+				QuoteToken:      rawEvent.Message.QuoteToken,
 			}
 		case MessageTypeAudio:
 			e.Message = &AudioMessage{
@@ -513,6 +521,7 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 				Keywords:            rawEvent.Message.Keywords,
 				Text:                rawEvent.Message.Text,
 				QuotedMessageID:     rawEvent.Message.QuotedMessageID,
+				QuoteToken:          rawEvent.Message.QuoteToken,
 			}
 		}
 	case EventTypePostback:

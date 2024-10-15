@@ -48,6 +48,8 @@ type ImageMessage struct {
 	 * Get PreviewImageUrl
 	 */
 	PreviewImageUrl string `json:"previewImageUrl"`
+
+	QuoteToken string `json:"quoteToken,omitempty"`
 }
 
 // MarshalJSON customizes the JSON serialization of the ImageMessage struct.

@@ -56,6 +56,7 @@ type TextMessage struct {
 	Text            string
 	Emojis          []*Emoji
 	QuotedMessageID string
+	QuoteToken      string
 
 	quickReplyItems *QuickReplyItems
 	sender          *Sender
@@ -73,6 +74,7 @@ func (m *TextMessage) MarshalJSON() ([]byte, error) {
 		Sender          *Sender          `json:"sender,omitempty"`
 		Emojis          []*Emoji         `json:"emojis,omitempty"`
 		QuotedMessageID string           `json:"quotedMessageId,omitempty"`
+		QuoteToken      string           `json:"quoteToken,omitempty"`
 	}{
 		Type:            m.messageType,
 		Text:            m.Text,
@@ -80,6 +82,7 @@ func (m *TextMessage) MarshalJSON() ([]byte, error) {
 		Sender:          m.sender,
 		Emojis:          m.Emojis,
 		QuotedMessageID: m.QuotedMessageID,
+		QuoteToken:      m.QuoteToken,
 	})
 }
 
@@ -109,6 +112,7 @@ type ImageMessage struct {
 	PreviewImageURL    string
 	ContentProvider    *ContentProvider
 	ImageSet           *ImageSet
+	QuoteToken         string
 
 	quickReplyItems *QuickReplyItems
 	sender          *Sender
@@ -125,6 +129,7 @@ func (m *ImageMessage) MarshalJSON() ([]byte, error) {
 		ImageSet           *ImageSet        `json:"imageSet,omitempty"`
 		QuickReply         *QuickReplyItems `json:"quickReply,omitempty"`
 		Sender             *Sender          `json:"sender,omitempty"`
+		QuoteToken         string           `json:"quoteToken,omitempty"`
 	}{
 		Type:               m.messageType,
 		OriginalContentURL: m.OriginalContentURL,
@@ -133,6 +138,7 @@ func (m *ImageMessage) MarshalJSON() ([]byte, error) {
 		ImageSet:           m.ImageSet,
 		QuickReply:         m.quickReplyItems,
 		Sender:             m.sender,
+		QuoteToken:         m.QuoteToken,
 	})
 }
 
@@ -161,6 +167,7 @@ type VideoMessage struct {
 	PreviewImageURL    string
 	Duration           int
 	ContentProvider    *ContentProvider
+	QuoteToken         string
 
 	quickReplyItems *QuickReplyItems
 	sender          *Sender
@@ -176,6 +183,7 @@ func (m *VideoMessage) MarshalJSON() ([]byte, error) {
 		Duration           int              `json:"duration,omitempty"`
 		QuickReply         *QuickReplyItems `json:"quickReply,omitempty"`
 		Sender             *Sender          `json:"sender,omitempty"`
+		QuoteToken         string           `json:"quoteToken,omitempty"`
 	}{
 		Type:               m.messageType,
 		OriginalContentURL: m.OriginalContentURL,
@@ -183,6 +191,7 @@ func (m *VideoMessage) MarshalJSON() ([]byte, error) {
 		Duration:           m.Duration,
 		QuickReply:         m.quickReplyItems,
 		Sender:             m.sender,
+		QuoteToken:         m.QuoteToken,
 	})
 }
 
@@ -321,6 +330,7 @@ type StickerMessage struct {
 	Keywords            []string
 	Text                string
 	QuotedMessageID     string
+	QuoteToken          string
 
 	quickReplyItems *QuickReplyItems
 	sender          *Sender
@@ -339,6 +349,7 @@ func (m *StickerMessage) MarshalJSON() ([]byte, error) {
 		Sender              *Sender             `json:"sender,omitempty"`
 		Text                string              `json:"text,omitempty"`
 		QuotedMessageID     string              `json:"quotedMessageId,omitempty"`
+		QuoteToken          string              `json:"quoteToken,omitempty"`
 	}{
 		Type:                m.messageType,
 		PackageID:           m.PackageID,
@@ -349,6 +360,7 @@ func (m *StickerMessage) MarshalJSON() ([]byte, error) {
 		Sender:              m.sender,
 		Text:                m.Text,
 		QuotedMessageID:     m.QuotedMessageID,
+		QuoteToken:          m.QuoteToken,
 	})
 }
 
