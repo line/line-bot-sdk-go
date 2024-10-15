@@ -86,6 +86,11 @@ func (m *TextMessage) MarshalJSON() ([]byte, error) {
 	})
 }
 
+func (m *TextMessage) WithReply(quoteToken string) SendingMessage {
+	m.QuoteToken = quoteToken
+	return m
+}
+
 // WithQuickReplies method of TextMessage
 func (m *TextMessage) WithQuickReplies(items *QuickReplyItems) SendingMessage {
 	m.quickReplyItems = items
