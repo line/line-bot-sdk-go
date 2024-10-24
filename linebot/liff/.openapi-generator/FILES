@@ -8,3 +8,4 @@ model_liff_features.go
 model_liff_scope.go
 model_liff_view.go
 model_update_liff_app_request.go
+model_update_liff_view.go
