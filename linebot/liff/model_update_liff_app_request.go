@@ -27,7 +27,7 @@ type UpdateLiffAppRequest struct {
 	/**
 	 * Get View
 	 */
-	View *LiffView `json:"view,omitempty"`
+	View *UpdateLiffView `json:"view,omitempty"`
 
 	/**
 	 * Name of the LIFF app.  The LIFF app name can&#39;t include \&quot;LINE\&quot; or similar strings, or inappropriate strings.
