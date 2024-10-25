@@ -34,5 +34,5 @@ type ShowLoadingAnimationRequest struct {
 	 * minimum: 5
 	 * maximum: 60
 	 */
-	LoadingSeconds int32 `json:"loadingSeconds"`
+	LoadingSeconds int32 `json:"loadingSeconds,omitempty"`
 }

@@ -28,7 +28,7 @@ type Limit struct {
 	 * The maximum number of narrowcast messages to send. Use this parameter to limit the number of narrowcast messages sent. The recipients will be chosen at random.
 	 * minimum: 1
 	 */
-	Max int32 `json:"max"`
+	Max int32 `json:"max,omitempty"`
 
 	/**
 	 * If true, the message will be sent within the maximum number of deliverable messages. The default value is `false`.  Targets will be selected at random.
