@@ -268,7 +268,13 @@ func (client *{{ classname }}) {{ op.operationId }}WithHttpInfo(
     {% if op.hasQueryParams -%}
 	query := url.Values{}
 	    {% for qp in op.queryParams -%}
+            {% if qp.isString and not qp.required -%}
+    if {{ stringify(qp) }} != "" {
     query.Add("{{ qp.paramName }}", {{ stringify(qp) }})
+    }
+            {% else -%}
+    query.Add("{{ qp.paramName }}", {{ stringify(qp) }})
+            {% endif -%}
 	    {% endfor %}
     req.URL.RawQuery = query.Encode()
     {% endif %}
