@@ -38,7 +38,7 @@ public class IsOmitEmptyFunction implements Function {
             // such as imageBackgroundColor in ButtonsTemplate.
             return true;
         }
-        if (var.isInteger && hasMinimumValueGreaterThanZero(var.minimum)) {
+        if (var.isInteger && isGreaterThanZero(var.minimum)) {
             // For optional integer types with a minimum value greater than 0,
             // it's acceptable to treat 0 as a null value
             return true;
@@ -49,7 +49,7 @@ public class IsOmitEmptyFunction implements Function {
         return true;
     }
 
-    private boolean hasMinimumValueGreaterThanZero(String minValue) {
-        return minValue != null && Integer.parseInt(minValue) > 0;
+    private boolean isGreaterThanZero(String val) {
+        return val != null && Integer.parseInt(val) > 0;
     }
 }
