@@ -242,10 +242,19 @@ func (client *{{ classname }}) {{ op.operationId }}WithHttpInfo(
 	req.Header.Set("Content-Type", writer.FormDataContentType())
 	{% elseif op.hasFormParams %}
 	vs := url.Values{
-    	{% for fp in op.formParams -%}
-	    "{{ fp.baseName }}": []string{ string({{ fp.paramName }}) },
-    	{% endfor %}
-	}
+        {% for fp in op.formParams -%}
+            {% if not fp.isString or fp.required -%}
+        "{{ fp.baseName }}": []string{ string({{ fp.paramName }}) },
+            {% endif -%}
+        {% endfor %}
+    }
+    {% for fp in op.formParams -%}
+        {% if fp.isString and not fp.required -%}
+    if {{ fp.paramName }} != "" {
+    vs["{{ fp.baseName }}"] = []string{ {{ fp.paramName }} }
+    }
+        {% endif -%}
+    {% endfor -%}
 	buf := vs.Encode()
 	body := bytes.NewBufferString(buf)
 

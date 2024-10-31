@@ -221,16 +221,30 @@ func (client *LineModuleAttachAPI) AttachModuleWithHttpInfo(
 	path := "/module/auth/v1/token"
 
 	vs := url.Values{
-		"grant_type":      []string{string(grantType)},
-		"code":            []string{string(code)},
-		"redirect_uri":    []string{string(redirectUri)},
-		"code_verifier":   []string{string(codeVerifier)},
-		"client_id":       []string{string(clientId)},
-		"client_secret":   []string{string(clientSecret)},
-		"region":          []string{string(region)},
-		"basic_search_id": []string{string(basicSearchId)},
-		"scope":           []string{string(scope)},
-		"brand_type":      []string{string(brandType)},
+		"grant_type":   []string{string(grantType)},
+		"code":         []string{string(code)},
+		"redirect_uri": []string{string(redirectUri)},
+	}
+	if codeVerifier != "" {
+		vs["code_verifier"] = []string{codeVerifier}
+	}
+	if clientId != "" {
+		vs["client_id"] = []string{clientId}
+	}
+	if clientSecret != "" {
+		vs["client_secret"] = []string{clientSecret}
+	}
+	if region != "" {
+		vs["region"] = []string{region}
+	}
+	if basicSearchId != "" {
+		vs["basic_search_id"] = []string{basicSearchId}
+	}
+	if scope != "" {
+		vs["scope"] = []string{scope}
+	}
+	if brandType != "" {
+		vs["brand_type"] = []string{brandType}
 	}
 	buf := vs.Encode()
 	body := bytes.NewBufferString(buf)

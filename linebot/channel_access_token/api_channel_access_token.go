@@ -432,12 +432,21 @@ func (client *ChannelAccessTokenAPI) IssueStatelessChannelTokenWithHttpInfo(
 ) (*http.Response, *IssueStatelessChannelAccessTokenResponse, error) {
 	path := "/oauth2/v3/token"
 
-	vs := url.Values{
-		"grant_type":            []string{string(grantType)},
-		"client_assertion_type": []string{string(clientAssertionType)},
-		"client_assertion":      []string{string(clientAssertion)},
-		"client_id":             []string{string(clientId)},
-		"client_secret":         []string{string(clientSecret)},
+	vs := url.Values{}
+	if grantType != "" {
+		vs["grant_type"] = []string{grantType}
+	}
+	if clientAssertionType != "" {
+		vs["client_assertion_type"] = []string{clientAssertionType}
+	}
+	if clientAssertion != "" {
+		vs["client_assertion"] = []string{clientAssertion}
+	}
+	if clientId != "" {
+		vs["client_id"] = []string{clientId}
+	}
+	if clientSecret != "" {
+		vs["client_secret"] = []string{clientSecret}
 	}
 	buf := vs.Encode()
 	body := bytes.NewBufferString(buf)
