@@ -727,7 +727,9 @@ func (client *ManageAudienceAPI) GetAudienceGroupsWithHttpInfo(
 
 	query := url.Values{}
 	query.Add("page", strconv.FormatInt(page, 10))
-	query.Add("description", description)
+	if description != "" {
+		query.Add("description", description)
+	}
 	query.Add("status", string(status))
 	query.Add("size", strconv.FormatInt(size, 10))
 	query.Add("includesExternalPublicGroups", strconv.FormatBool(includesExternalPublicGroups))

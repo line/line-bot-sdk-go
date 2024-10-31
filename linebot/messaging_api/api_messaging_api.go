@@ -697,8 +697,12 @@ func (client *MessagingApiAPI) GetAggregationUnitNameListWithHttpInfo(
 	}
 
 	query := url.Values{}
-	query.Add("limit", limit)
-	query.Add("start", start)
+	if limit != "" {
+		query.Add("limit", limit)
+	}
+	if start != "" {
+		query.Add("start", start)
+	}
 
 	req.URL.RawQuery = query.Encode()
 
@@ -936,7 +940,9 @@ func (client *MessagingApiAPI) GetFollowersWithHttpInfo(
 	}
 
 	query := url.Values{}
-	query.Add("start", start)
+	if start != "" {
+		query.Add("start", start)
+	}
 	query.Add("limit", strconv.FormatInt(int64(limit), 10))
 
 	req.URL.RawQuery = query.Encode()
@@ -1164,7 +1170,9 @@ func (client *MessagingApiAPI) GetGroupMembersIdsWithHttpInfo(
 	}
 
 	query := url.Values{}
-	query.Add("start", start)
+	if start != "" {
+		query.Add("start", start)
+	}
 
 	req.URL.RawQuery = query.Encode()
 
@@ -2561,7 +2569,9 @@ func (client *MessagingApiAPI) GetRoomMembersIdsWithHttpInfo(
 	}
 
 	query := url.Values{}
-	query.Add("start", start)
+	if start != "" {
+		query.Add("start", start)
+	}
 
 	req.URL.RawQuery = query.Encode()
 
