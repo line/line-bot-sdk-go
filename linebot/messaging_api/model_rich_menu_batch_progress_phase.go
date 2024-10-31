@@ -20,7 +20,7 @@
 package messaging_api
 
 /*
- * The current status. One of:  `ongoing`: Rich menu batch control is in progress. `succeeded`: Rich menu batch control is complete. `failed`: Rich menu batch control failed.           This means that the rich menu for one or more users couldn&#39;t be controlled.            There may also be users whose operations have been successfully completed.
+ * The current status. One of:  `ongoing`: Rich menu batch control is in progress. `succeeded`: Rich menu batch control is complete. `failed`: Rich menu batch control failed.           This means that the rich menu for one or more users couldn&#39;t be controlled.           There may also be users whose operations have been successfully completed.
  */
 
 // RichMenuBatchProgressPhase type
