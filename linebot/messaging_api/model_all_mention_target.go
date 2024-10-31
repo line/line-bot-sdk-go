@@ -19,26 +19,28 @@
 //go:generate python3 ../../generate-code.py
 package messaging_api
 
-/*
- * You can specify the minimum space before a child component with the `margin` property of the child component, in pixels or with a keyword. FlexMargin just provides only keywords.
- */
-
-// FlexMargin type
-type FlexMargin string
-
-// FlexMargin constants
-const (
-	FlexMargin_NONE FlexMargin = "none"
-
-	FlexMargin_XS FlexMargin = "xs"
-
-	FlexMargin_SM FlexMargin = "sm"
-
-	FlexMargin_MD FlexMargin = "md"
-
-	FlexMargin_LG FlexMargin = "lg"
-
-	FlexMargin_XL FlexMargin = "xl"
-
-	FlexMargin_XXL FlexMargin = "xxl"
+import (
+	"encoding/json"
 )
+
+// AllMentionTarget
+// AllMentionTarget
+// https://developers.line.biz/en/reference/messaging-api/#text-message-v2-mentionee-all
+type AllMentionTarget struct {
+	MentionTarget
+}
+
+// MarshalJSON customizes the JSON serialization of the AllMentionTarget struct.
+func (r *AllMentionTarget) MarshalJSON() ([]byte, error) {
+
+	type Alias AllMentionTarget
+	return json.Marshal(&struct {
+		*Alias
+
+		Type string `json:"type"`
+	}{
+		Alias: (*Alias)(r),
+
+		Type: "all",
+	})
+}
