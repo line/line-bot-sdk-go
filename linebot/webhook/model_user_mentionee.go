@@ -43,6 +43,11 @@ type UserMentionee struct {
 	 * User ID of the mentioned user. Only included if mention.mentions[].type is user and the user consents to the LINE Official Account obtaining their user profile information.
 	 */
 	UserId string `json:"userId,omitempty"`
+
+	/**
+	 * Whether the mentioned user is the bot that receives the webhook.
+	 */
+	IsSelf bool `json:"isSelf"`
 }
 
 // MarshalJSON customizes the JSON serialization of the UserMentionee struct.
