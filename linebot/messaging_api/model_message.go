@@ -124,6 +124,16 @@ func setDiscriminatorPropertyMessage(r MessageInterface) MessageInterface {
 			v.Type = "text"
 		}
 		return v
+	case *TextMessageV2:
+		if v.Type == "" {
+			v.Type = "textV2"
+		}
+		return v
+	case TextMessageV2:
+		if v.Type == "" {
+			v.Type = "textV2"
+		}
+		return v
 	case *VideoMessage:
 		if v.Type == "" {
 			v.Type = "video"
@@ -216,6 +226,12 @@ func UnmarshalMessage(data []byte) (MessageInterface, error) {
 			return nil, fmt.Errorf("UnmarshalMessage: Cannot read text: %w", err)
 		}
 		return text, nil
+	case "textV2":
+		var textV2 TextMessageV2
+		if err := json.Unmarshal(data, &textV2); err != nil {
+			return nil, fmt.Errorf("UnmarshalMessage: Cannot read textV2: %w", err)
+		}
+		return textV2, nil
 	case "video":
 		var video VideoMessage
 		if err := json.Unmarshal(data, &video); err != nil {

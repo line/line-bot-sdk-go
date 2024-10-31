@@ -3,6 +3,7 @@ api_messaging_api_blob.go
 model_action.go
 model_age_demographic.go
 model_age_demographic_filter.go
+model_all_mention_target.go
 model_alt_uri.go
 model_app_type_demographic.go
 model_app_type_demographic_filter.go
@@ -26,6 +27,7 @@ model_create_rich_menu_alias_request.go
 model_datetime_picker_action.go
 model_demographic_filter.go
 model_emoji.go
+model_emoji_substitution_object.go
 model_error_detail.go
 model_error_response.go
 model_filter.go
@@ -85,6 +87,8 @@ model_mark_messages_as_read_request.go
 model_members_ids_response.go
 model_membership.go
 model_membership_list_response.go
+model_mention_substitution_object.go
+model_mention_target.go
 model_message.go
 model_message_action.go
 model_message_imagemap_action.go
@@ -138,6 +142,7 @@ model_subscribed_membership_user.go
 model_subscription.go
 model_subscription_period_demographic.go
 model_subscription_period_demographic_filter.go
+model_substitution_object.go
 model_template.go
 model_template_image_aspect_ratio.go
 model_template_image_size.go
@@ -145,9 +150,11 @@ model_template_message.go
 model_test_webhook_endpoint_request.go
 model_test_webhook_endpoint_response.go
 model_text_message.go
+model_text_message_v2.go
 model_update_rich_menu_alias_request.go
 model_uri_action.go
 model_uri_imagemap_action.go
+model_user_mention_target.go
 model_user_profile_response.go
 model_validate_message_request.go
 model_video_message.go
