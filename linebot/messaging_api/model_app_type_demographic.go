@@ -24,7 +24,7 @@ type AppTypeDemographic string
 
 // AppTypeDemographic constants
 const (
-	AppTypeDemographic_IOS AppTypeDemographic = "ios"
+	AppTypeDemographic_IOS AppTypeDemographic = "iosaa"
 
 	AppTypeDemographic_ANDROID AppTypeDemographic = "android"
 )
