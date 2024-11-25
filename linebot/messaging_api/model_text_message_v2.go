@@ -45,7 +45,7 @@ type TextMessageV2 struct {
 	Text string `json:"text"`
 
 	/**
-	 * A mapping that specifies substitutions for parts enclosed in {} within the &#39;text&#39; field.
+	 * A mapping that specifies substitutions for parts enclosed in {} within the `text` field.
 	 */
 	Substitution map[string]SubstitutionObject `json:"substitution,omitempty"`
 
