@@ -209,7 +209,7 @@ func (client *Client) url(base *url.URL, endpoint string) string {
 
 func (client *Client) do(ctx context.Context, req *http.Request) (*http.Response, error) {
 	req.Header.Set("Authorization", "Bearer "+client.channelToken)
-	req.Header.Set("User-Agent", "LINE-BotSDK-Go/"+version)
+	req.Header.Set("User-Agent", "LINE-BotSDK-Go/"+GetVersion())
 	if len(client.retryKeyID) > 0 {
 		req.Header.Set("X-Line-Retry-Key", client.retryKeyID)
 	}
