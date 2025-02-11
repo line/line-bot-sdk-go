@@ -104,7 +104,7 @@ func WithHTTPClient(c *http.Client) ManageAudienceAPIOption {
 	}
 }
 
-// WithEndpointClient function
+// WithEndpoint function
 func WithEndpoint(endpoint string) ManageAudienceAPIOption {
 	return func(client *ManageAudienceAPI) error {
 		u, err := url.ParseRequestURI(endpoint)

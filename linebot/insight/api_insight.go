@@ -102,7 +102,7 @@ func WithHTTPClient(c *http.Client) InsightAPIOption {
 	}
 }
 
-// WithEndpointClient function
+// WithEndpoint function
 func WithEndpoint(endpoint string) InsightAPIOption {
 	return func(client *InsightAPI) error {
 		u, err := url.ParseRequestURI(endpoint)
