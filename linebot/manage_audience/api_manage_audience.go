@@ -764,6 +764,183 @@ func (client *ManageAudienceAPI) GetAudienceGroupsWithHttpInfo(
 
 }
 
+// GetSharedAudienceData
+//
+// Gets audience data.
+// Parameters:
+//        audienceGroupId             The audience ID.
+
+// https://developers.line.biz/en/reference/messaging-api/#get-shared-audience
+func (client *ManageAudienceAPI) GetSharedAudienceData(
+
+	audienceGroupId int64,
+
+) (*GetSharedAudienceDataResponse, error) {
+	_, body, error := client.GetSharedAudienceDataWithHttpInfo(
+
+		audienceGroupId,
+	)
+	return body, error
+}
+
+// GetSharedAudienceData
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Gets audience data.
+// Parameters:
+//        audienceGroupId             The audience ID.
+
+// https://developers.line.biz/en/reference/messaging-api/#get-shared-audience
+func (client *ManageAudienceAPI) GetSharedAudienceDataWithHttpInfo(
+
+	audienceGroupId int64,
+
+) (*http.Response, *GetSharedAudienceDataResponse, error) {
+	path := "/v2/bot/audienceGroup/shared/{audienceGroupId}"
+
+	path = strings.Replace(path, "{audienceGroupId}", strconv.FormatInt(audienceGroupId, 10), -1)
+
+	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	res, err := client.Do(req)
+
+	if err != nil {
+		return res, nil, err
+	}
+
+	if res.StatusCode/100 != 2 {
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
+		if err != nil {
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
+		}
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
+	}
+
+	defer res.Body.Close()
+
+	decoder := json.NewDecoder(res.Body)
+	result := GetSharedAudienceDataResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
+	}
+	return res, &result, nil
+
+}
+
+// GetSharedAudienceGroups
+//
+// Gets data for more than one audience, including those shared by the Business Manager.
+// Parameters:
+//        page             The page to return when getting (paginated) results. Must be 1 or higher.
+//        description             The name of the audience(s) to return. You can search for partial matches. This is case-insensitive, meaning AUDIENCE and audience are considered identical. If omitted, the name of the audience(s) will not be used as a search criterion.
+//        status             The status of the audience(s) to return. If omitted, the status of the audience(s) will not be used as a search criterion.
+//        size             The number of audiences per page. Default: 20 Max: 40
+//        createRoute             How the audience was created. If omitted, all audiences are included.  `OA_MANAGER`: Return only audiences created with LINE Official Account Manager (opens new window). `MESSAGING_API`: Return only audiences created with Messaging API.
+
+// https://developers.line.biz/en/reference/messaging-api/#get-shared-audience-list
+func (client *ManageAudienceAPI) GetSharedAudienceGroups(
+
+	page int64,
+
+	description string,
+
+	status AudienceGroupStatus,
+
+	size int64,
+
+	createRoute AudienceGroupCreateRoute,
+
+) (*GetSharedAudienceGroupsResponse, error) {
+	_, body, error := client.GetSharedAudienceGroupsWithHttpInfo(
+
+		page,
+
+		description,
+
+		status,
+
+		size,
+
+		createRoute,
+	)
+	return body, error
+}
+
+// GetSharedAudienceGroups
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Gets data for more than one audience, including those shared by the Business Manager.
+// Parameters:
+//        page             The page to return when getting (paginated) results. Must be 1 or higher.
+//        description             The name of the audience(s) to return. You can search for partial matches. This is case-insensitive, meaning AUDIENCE and audience are considered identical. If omitted, the name of the audience(s) will not be used as a search criterion.
+//        status             The status of the audience(s) to return. If omitted, the status of the audience(s) will not be used as a search criterion.
+//        size             The number of audiences per page. Default: 20 Max: 40
+//        createRoute             How the audience was created. If omitted, all audiences are included.  `OA_MANAGER`: Return only audiences created with LINE Official Account Manager (opens new window). `MESSAGING_API`: Return only audiences created with Messaging API.
+
+// https://developers.line.biz/en/reference/messaging-api/#get-shared-audience-list
+func (client *ManageAudienceAPI) GetSharedAudienceGroupsWithHttpInfo(
+
+	page int64,
+
+	description string,
+
+	status AudienceGroupStatus,
+
+	size int64,
+
+	createRoute AudienceGroupCreateRoute,
+
+) (*http.Response, *GetSharedAudienceGroupsResponse, error) {
+	path := "/v2/bot/audienceGroup/shared/list"
+
+	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	query := url.Values{}
+	query.Add("page", strconv.FormatInt(page, 10))
+	if description != "" {
+		query.Add("description", description)
+	}
+	query.Add("status", string(status))
+	query.Add("size", strconv.FormatInt(size, 10))
+	query.Add("createRoute", string(createRoute))
+
+	req.URL.RawQuery = query.Encode()
+
+	res, err := client.Do(req)
+
+	if err != nil {
+		return res, nil, err
+	}
+
+	if res.StatusCode/100 != 2 {
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
+		if err != nil {
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
+		}
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
+	}
+
+	defer res.Body.Close()
+
+	decoder := json.NewDecoder(res.Body)
+	result := GetSharedAudienceGroupsResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
+	}
+	return res, &result, nil
+
+}
+
 // UpdateAudienceGroupAuthorityLevel
 //
 // Change the authority level of the audience

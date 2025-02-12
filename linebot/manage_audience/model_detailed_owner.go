@@ -19,23 +19,23 @@
 //go:generate python3 ../../generate-code.py
 package manage_audience
 
-// GetAudienceDataResponse
-// Get audience data
-// https://developers.line.biz/en/reference/messaging-api/#get-audience-group
-type GetAudienceDataResponse struct {
+// DetailedOwner
+// Owner of this audience group.
+
+type DetailedOwner struct {
 
 	/**
-	 * Get AudienceGroup
+	 * Service name where the audience group has been created.
 	 */
-	AudienceGroup *AudienceGroup `json:"audienceGroup,omitempty"`
+	ServiceType string `json:"serviceType,omitempty"`
 
 	/**
-	 * An array of jobs. This array is used to keep track of each attempt to add new user IDs or IFAs to an audience for uploading user IDs. Empty array is returned for any other type of audience. Max: 50
+	 * Owner ID in the service.
 	 */
-	Jobs []AudienceGroupJob `json:"jobs,omitempty"`
+	Id string `json:"id,omitempty"`
 
 	/**
-	 * Get Adaccount
+	 * Owner account name.
 	 */
-	Adaccount *Adaccount `json:"adaccount,omitempty"`
+	Name string `json:"name,omitempty"`
 }
