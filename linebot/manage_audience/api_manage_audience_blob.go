@@ -97,7 +97,7 @@ func (client *ManageAudienceBlobAPI) Url(endpointPath string) string {
 	return u.String()
 }
 
-// WithHTTPClient function
+// WithBlobHTTPClient function
 func WithBlobHTTPClient(c *http.Client) ManageAudienceBlobAPIOption {
 	return func(client *ManageAudienceBlobAPI) error {
 		client.httpClient = c
@@ -105,7 +105,7 @@ func WithBlobHTTPClient(c *http.Client) ManageAudienceBlobAPIOption {
 	}
 }
 
-// WithEndpointClient function
+// WithBlobEndpoint function
 func WithBlobEndpoint(endpoint string) ManageAudienceBlobAPIOption {
 	return func(client *ManageAudienceBlobAPI) error {
 		u, err := url.ParseRequestURI(endpoint)

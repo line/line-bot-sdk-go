@@ -104,7 +104,7 @@ func WithHTTPClient(c *http.Client) LineModuleAPIOption {
 	}
 }
 
-// WithEndpointClient function
+// WithEndpoint function
 func WithEndpoint(endpoint string) LineModuleAPIOption {
 	return func(client *LineModuleAPI) error {
 		u, err := url.ParseRequestURI(endpoint)

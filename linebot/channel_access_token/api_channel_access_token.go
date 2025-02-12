@@ -92,7 +92,7 @@ func WithHTTPClient(c *http.Client) ChannelAccessTokenAPIOption {
 	}
 }
 
-// WithEndpointClient function
+// WithEndpoint function
 func WithEndpoint(endpoint string) ChannelAccessTokenAPIOption {
 	return func(client *ChannelAccessTokenAPI) error {
 		u, err := url.ParseRequestURI(endpoint)

@@ -104,7 +104,7 @@ func WithHTTPClient(c *http.Client) MessagingApiAPIOption {
 	}
 }
 
-// WithEndpointClient function
+// WithEndpoint function
 func WithEndpoint(endpoint string) MessagingApiAPIOption {
 	return func(client *MessagingApiAPI) error {
 		u, err := url.ParseRequestURI(endpoint)

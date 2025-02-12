@@ -102,7 +102,7 @@ func WithHTTPClient(c *http.Client) ShopAPIOption {
 	}
 }
 
-// WithEndpointClient function
+// WithEndpoint function
 func WithEndpoint(endpoint string) ShopAPIOption {
 	return func(client *ShopAPI) error {
 		u, err := url.ParseRequestURI(endpoint)

@@ -103,7 +103,7 @@ func WithHTTPClient(c *http.Client) LiffAPIOption {
 	}
 }
 
-// WithEndpointClient function
+// WithEndpoint function
 func WithEndpoint(endpoint string) LiffAPIOption {
 	return func(client *LiffAPI) error {
 		u, err := url.ParseRequestURI(endpoint)
