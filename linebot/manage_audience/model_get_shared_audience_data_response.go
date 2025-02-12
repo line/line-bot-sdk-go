@@ -19,10 +19,10 @@
 //go:generate python3 ../../generate-code.py
 package manage_audience
 
-// GetAudienceDataResponse
+// GetSharedAudienceDataResponse
 // Get audience data
 // https://developers.line.biz/en/reference/messaging-api/#get-audience-group
-type GetAudienceDataResponse struct {
+type GetSharedAudienceDataResponse struct {
 
 	/**
 	 * Get AudienceGroup
@@ -35,7 +35,7 @@ type GetAudienceDataResponse struct {
 	Jobs []AudienceGroupJob `json:"jobs,omitempty"`
 
 	/**
-	 * Get Adaccount
+	 * Get Owner
 	 */
-	Adaccount *Adaccount `json:"adaccount,omitempty"`
+	Owner *DetailedOwner `json:"owner,omitempty"`
 }
