@@ -1133,6 +1133,98 @@ func (client *MessagingApiAPI) GetGroupSummaryWithHttpInfo(
 
 }
 
+// GetJoinedMembershipUsers
+//
+// Get a list of user IDs who joined the membership.
+// Parameters:
+//        membershipId             Membership plan ID.
+//        start             A continuation token to get next remaining membership user IDs. Returned only when there are remaining user IDs that weren't returned in the userIds property in the previous request. The continuation token expires in 24 hours (86,400 seconds).
+//        limit             The max number of items to return for this API call. The value is set to 300 by default, but the max acceptable value is 1000.
+
+// https://developers.line.biz/en/reference/messaging-api/#get-membership-user-ids
+func (client *MessagingApiAPI) GetJoinedMembershipUsers(
+
+	membershipId int32,
+
+	start string,
+
+	limit int32,
+
+) (*GetJoinedMembershipUsersResponse, error) {
+	_, body, error := client.GetJoinedMembershipUsersWithHttpInfo(
+
+		membershipId,
+
+		start,
+
+		limit,
+	)
+	return body, error
+}
+
+// GetJoinedMembershipUsers
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Get a list of user IDs who joined the membership.
+// Parameters:
+//        membershipId             Membership plan ID.
+//        start             A continuation token to get next remaining membership user IDs. Returned only when there are remaining user IDs that weren't returned in the userIds property in the previous request. The continuation token expires in 24 hours (86,400 seconds).
+//        limit             The max number of items to return for this API call. The value is set to 300 by default, but the max acceptable value is 1000.
+
+// https://developers.line.biz/en/reference/messaging-api/#get-membership-user-ids
+func (client *MessagingApiAPI) GetJoinedMembershipUsersWithHttpInfo(
+
+	membershipId int32,
+
+	start string,
+
+	limit int32,
+
+) (*http.Response, *GetJoinedMembershipUsersResponse, error) {
+	path := "/v2/bot/membership/{membershipId}/users/ids"
+
+	path = strings.Replace(path, "{membershipId}", strconv.FormatInt(int64(membershipId), 10), -1)
+
+	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	query := url.Values{}
+	if start != "" {
+		query.Add("start", start)
+	}
+	query.Add("limit", strconv.FormatInt(int64(limit), 10))
+
+	req.URL.RawQuery = query.Encode()
+
+	res, err := client.Do(req)
+
+	if err != nil {
+		return res, nil, err
+	}
+
+	if res.StatusCode/100 != 2 {
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
+		if err != nil {
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
+		}
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
+	}
+
+	defer res.Body.Close()
+
+	decoder := json.NewDecoder(res.Body)
+	result := GetJoinedMembershipUsersResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
+	}
+	return res, &result, nil
+
+}
+
 // GetMembershipList
 //
 // Get a list of memberships.
