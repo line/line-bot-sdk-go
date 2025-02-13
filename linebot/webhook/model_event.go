@@ -164,6 +164,16 @@ func setDiscriminatorPropertyEvent(r EventInterface) EventInterface {
 			v.Type = "memberLeft"
 		}
 		return v
+	case *MembershipEvent:
+		if v.Type == "" {
+			v.Type = "membership"
+		}
+		return v
+	case MembershipEvent:
+		if v.Type == "" {
+			v.Type = "membership"
+		}
+		return v
 	case *MessageEvent:
 		if v.Type == "" {
 			v.Type = "message"
@@ -347,6 +357,12 @@ func UnmarshalEvent(data []byte) (EventInterface, error) {
 			return nil, fmt.Errorf("UnmarshalEvent: Cannot read memberLeft: %w", err)
 		}
 		return memberLeft, nil
+	case "membership":
+		var membership MembershipEvent
+		if err := json.Unmarshal(data, &membership); err != nil {
+			return nil, fmt.Errorf("UnmarshalEvent: Cannot read membership: %w", err)
+		}
+		return membership, nil
 	case "message":
 		var message MessageEvent
 		if err := json.Unmarshal(data, &message); err != nil {
