@@ -88,7 +88,7 @@ func setDiscriminatorPropertySource(r SourceInterface) SourceInterface {
 type Source struct {
 	// source type
 
-	Type string `json:"type,omitempty"`
+	Type string `json:"type"`
 }
 
 func UnmarshalSource(data []byte) (SourceInterface, error) {
