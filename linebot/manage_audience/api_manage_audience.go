@@ -116,69 +116,6 @@ func WithEndpoint(endpoint string) ManageAudienceAPIOption {
 	}
 }
 
-// ActivateAudienceGroup
-//
-// Activate audience
-// Parameters:
-//        audienceGroupId             The audience ID.
-
-// https://developers.line.biz/en/reference/messaging-api/#activate-audience-group
-func (client *ManageAudienceAPI) ActivateAudienceGroup(
-
-	audienceGroupId int64,
-
-) (struct{}, error) {
-	_, body, error := client.ActivateAudienceGroupWithHttpInfo(
-
-		audienceGroupId,
-	)
-	return body, error
-}
-
-// ActivateAudienceGroup
-// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
-//
-// Activate audience
-// Parameters:
-//        audienceGroupId             The audience ID.
-
-// https://developers.line.biz/en/reference/messaging-api/#activate-audience-group
-func (client *ManageAudienceAPI) ActivateAudienceGroupWithHttpInfo(
-
-	audienceGroupId int64,
-
-) (*http.Response, struct{}, error) {
-	path := "/v2/bot/audienceGroup/{audienceGroupId}/activate"
-
-	path = strings.Replace(path, "{audienceGroupId}", strconv.FormatInt(audienceGroupId, 10), -1)
-
-	req, err := http.NewRequest(http.MethodPut, client.Url(path), nil)
-	if err != nil {
-		return nil, struct{}{}, err
-	}
-
-	res, err := client.Do(req)
-
-	if err != nil {
-		return res, struct{}{}, err
-	}
-
-	if res.StatusCode/100 != 2 {
-		bodyBytes, err := io.ReadAll(res.Body)
-		bodyReader := bytes.NewReader(bodyBytes)
-		if err != nil {
-			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
-		}
-		res.Body = io.NopCloser(bodyReader)
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
-	}
-
-	defer res.Body.Close()
-
-	return res, struct{}{}, nil
-
-}
-
 // AddAudienceToAudienceGroup
 //
 // Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by JSON)
@@ -593,59 +530,6 @@ func (client *ManageAudienceAPI) GetAudienceDataWithHttpInfo(
 
 }
 
-// GetAudienceGroupAuthorityLevel
-//
-// Get the authority level of the audience
-// Parameters:
-
-// https://developers.line.biz/en/reference/messaging-api/#get-authority-level
-func (client *ManageAudienceAPI) GetAudienceGroupAuthorityLevel() (*GetAudienceGroupAuthorityLevelResponse, error) {
-	_, body, error := client.GetAudienceGroupAuthorityLevelWithHttpInfo()
-	return body, error
-}
-
-// GetAudienceGroupAuthorityLevel
-// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
-//
-// Get the authority level of the audience
-// Parameters:
-
-// https://developers.line.biz/en/reference/messaging-api/#get-authority-level
-func (client *ManageAudienceAPI) GetAudienceGroupAuthorityLevelWithHttpInfo() (*http.Response, *GetAudienceGroupAuthorityLevelResponse, error) {
-	path := "/v2/bot/audienceGroup/authorityLevel"
-
-	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	res, err := client.Do(req)
-
-	if err != nil {
-		return res, nil, err
-	}
-
-	if res.StatusCode/100 != 2 {
-		bodyBytes, err := io.ReadAll(res.Body)
-		bodyReader := bytes.NewReader(bodyBytes)
-		if err != nil {
-			return res, nil, fmt.Errorf("failed to read response body: %w", err)
-		}
-		res.Body = io.NopCloser(bodyReader)
-		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
-	}
-
-	defer res.Body.Close()
-
-	decoder := json.NewDecoder(res.Body)
-	result := GetAudienceGroupAuthorityLevelResponse{}
-	if err := decoder.Decode(&result); err != nil {
-		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
-	}
-	return res, &result, nil
-
-}
-
 // GetAudienceGroups
 //
 // Gets data for more than one audience.
@@ -841,6 +725,7 @@ func (client *ManageAudienceAPI) GetSharedAudienceDataWithHttpInfo(
 //        status             The status of the audience(s) to return. If omitted, the status of the audience(s) will not be used as a search criterion.
 //        size             The number of audiences per page. Default: 20 Max: 40
 //        createRoute             How the audience was created. If omitted, all audiences are included.  `OA_MANAGER`: Return only audiences created with LINE Official Account Manager (opens new window). `MESSAGING_API`: Return only audiences created with Messaging API.
+//        includesOwnedAudienceGroups             true: Include audienceGroups owned by LINE Official Account Manager false: Respond only audienceGroups shared by Business Manager
 
 // https://developers.line.biz/en/reference/messaging-api/#get-shared-audience-list
 func (client *ManageAudienceAPI) GetSharedAudienceGroups(
@@ -855,6 +740,8 @@ func (client *ManageAudienceAPI) GetSharedAudienceGroups(
 
 	createRoute AudienceGroupCreateRoute,
 
+	includesOwnedAudienceGroups bool,
+
 ) (*GetSharedAudienceGroupsResponse, error) {
 	_, body, error := client.GetSharedAudienceGroupsWithHttpInfo(
 
@@ -867,6 +754,8 @@ func (client *ManageAudienceAPI) GetSharedAudienceGroups(
 		size,
 
 		createRoute,
+
+		includesOwnedAudienceGroups,
 	)
 	return body, error
 }
@@ -881,6 +770,7 @@ func (client *ManageAudienceAPI) GetSharedAudienceGroups(
 //        status             The status of the audience(s) to return. If omitted, the status of the audience(s) will not be used as a search criterion.
 //        size             The number of audiences per page. Default: 20 Max: 40
 //        createRoute             How the audience was created. If omitted, all audiences are included.  `OA_MANAGER`: Return only audiences created with LINE Official Account Manager (opens new window). `MESSAGING_API`: Return only audiences created with Messaging API.
+//        includesOwnedAudienceGroups             true: Include audienceGroups owned by LINE Official Account Manager false: Respond only audienceGroups shared by Business Manager
 
 // https://developers.line.biz/en/reference/messaging-api/#get-shared-audience-list
 func (client *ManageAudienceAPI) GetSharedAudienceGroupsWithHttpInfo(
@@ -894,6 +784,8 @@ func (client *ManageAudienceAPI) GetSharedAudienceGroupsWithHttpInfo(
 	size int64,
 
 	createRoute AudienceGroupCreateRoute,
+
+	includesOwnedAudienceGroups bool,
 
 ) (*http.Response, *GetSharedAudienceGroupsResponse, error) {
 	path := "/v2/bot/audienceGroup/shared/list"
@@ -911,6 +803,7 @@ func (client *ManageAudienceAPI) GetSharedAudienceGroupsWithHttpInfo(
 	query.Add("status", string(status))
 	query.Add("size", strconv.FormatInt(size, 10))
 	query.Add("createRoute", string(createRoute))
+	query.Add("includesOwnedAudienceGroups", strconv.FormatBool(includesOwnedAudienceGroups))
 
 	req.URL.RawQuery = query.Encode()
 
@@ -938,73 +831,6 @@ func (client *ManageAudienceAPI) GetSharedAudienceGroupsWithHttpInfo(
 		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
 	return res, &result, nil
-
-}
-
-// UpdateAudienceGroupAuthorityLevel
-//
-// Change the authority level of the audience
-// Parameters:
-//        updateAudienceGroupAuthorityLevelRequest
-
-// https://developers.line.biz/en/reference/messaging-api/#change-authority-level
-func (client *ManageAudienceAPI) UpdateAudienceGroupAuthorityLevel(
-
-	updateAudienceGroupAuthorityLevelRequest *UpdateAudienceGroupAuthorityLevelRequest,
-
-) (struct{}, error) {
-	_, body, error := client.UpdateAudienceGroupAuthorityLevelWithHttpInfo(
-
-		updateAudienceGroupAuthorityLevelRequest,
-	)
-	return body, error
-}
-
-// UpdateAudienceGroupAuthorityLevel
-// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
-//
-// Change the authority level of the audience
-// Parameters:
-//        updateAudienceGroupAuthorityLevelRequest
-
-// https://developers.line.biz/en/reference/messaging-api/#change-authority-level
-func (client *ManageAudienceAPI) UpdateAudienceGroupAuthorityLevelWithHttpInfo(
-
-	updateAudienceGroupAuthorityLevelRequest *UpdateAudienceGroupAuthorityLevelRequest,
-
-) (*http.Response, struct{}, error) {
-	path := "/v2/bot/audienceGroup/authorityLevel"
-
-	var buf bytes.Buffer
-	enc := json.NewEncoder(&buf)
-	if err := enc.Encode(updateAudienceGroupAuthorityLevelRequest); err != nil {
-		return nil, struct{}{}, err
-	}
-	req, err := http.NewRequest(http.MethodPut, client.Url(path), &buf)
-	if err != nil {
-		return nil, struct{}{}, err
-	}
-	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
-
-	res, err := client.Do(req)
-
-	if err != nil {
-		return res, struct{}{}, err
-	}
-
-	if res.StatusCode/100 != 2 {
-		bodyBytes, err := io.ReadAll(res.Body)
-		bodyReader := bytes.NewReader(bodyBytes)
-		if err != nil {
-			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
-		}
-		res.Body = io.NopCloser(bodyReader)
-		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
-	}
-
-	defer res.Body.Close()
-
-	return res, struct{}{}, nil
 
 }
 
