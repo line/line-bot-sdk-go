@@ -57,7 +57,7 @@ type CreateAudienceGroupResponse struct {
 	/**
 	 * Time of audience expiration. Only returned for specific audiences.
 	 */
-	ExpireTimestamp float32 `json:"expireTimestamp"`
+	ExpireTimestamp int64 `json:"expireTimestamp"`
 
 	/**
 	 * The value indicating the type of account to be sent, as specified when creating the audience for uploading user IDs. One of:  `true`: Accounts are specified with IFAs. `false` (default): Accounts are specified with user IDs.
