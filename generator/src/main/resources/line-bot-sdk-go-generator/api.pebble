@@ -277,7 +277,11 @@ func (client *{{ classname }}) {{ op.operationId }}WithHttpInfo(
     {% if op.hasQueryParams -%}
 	query := url.Values{}
 	    {% for qp in op.queryParams -%}
-            {% if qp.isString and not qp.required -%}
+            {% if qp.isArray -%}
+    for _, v := range *{{ qp.paramName }} {
+    query.Add("{{ qp.paramName }}", v)
+    }
+            {% elseif qp.isString and not qp.required -%}
     if {{ stringify(qp) }} != "" {
     query.Add("{{ qp.paramName }}", {{ stringify(qp) }})
     }
