@@ -15,14 +15,19 @@ var (
 	ErrInvalidSignature = errors.New("invalid signature")
 )
 
+type ParseOption struct {
+	SkipSignatureValidation func() bool
+}
+
 // ParseRequest func
-func ParseRequest(channelSecret string, r *http.Request) (*CallbackRequest, error) {
+func ParseRequestWithOption(channelSecret string, r *http.Request, opt *ParseOption) (*CallbackRequest, error) {
 	defer func() { _ = r.Body.Close() }()
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		return nil, err
 	}
-	if !ValidateSignature(channelSecret, r.Header.Get("x-line-signature"), body) {
+	skip := opt != nil && opt.SkipSignatureValidation != nil && opt.SkipSignatureValidation()
+	if !skip && !ValidateSignature(channelSecret, r.Header.Get("x-line-signature"), body) {
 		return nil, ErrInvalidSignature
 	}
 
@@ -31,6 +36,10 @@ func ParseRequest(channelSecret string, r *http.Request) (*CallbackRequest, erro
 		return nil, fmt.Errorf("failed to unmarshal request body: %w, %s", err, body)
 	}
 	return &cb, nil
+}
+
+func ParseRequest(channelSecret string, r *http.Request) (*CallbackRequest, error) {
+	return ParseRequestWithOption(channelSecret, r, nil)
 }
 
 func ValidateSignature(channelSecret, signature string, body []byte) bool {
