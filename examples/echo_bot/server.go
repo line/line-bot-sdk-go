@@ -26,7 +26,7 @@ import (
 )
 
 func main() {
-	channelSecret := "DummyChannelSecret" // Dummy value is fine to skip webhook signature verification
+	channelSecret := os.Getenv("LINE_CHANNEL_SECRET")
 	bot, err := messaging_api.NewMessagingApiAPI(
 		os.Getenv("LINE_CHANNEL_TOKEN"),
 	)
@@ -38,9 +38,7 @@ func main() {
 	http.HandleFunc("/callback", func(w http.ResponseWriter, req *http.Request) {
 		log.Println("/callback called...")
 
-		cb, err := webhook.ParseRequestWithOption(channelSecret, req, &webhook.ParseOption{
-			SkipSignatureValidation: func() bool { return true },
-		})
+		cb, err := webhook.ParseRequest(channelSecret, req)
 		if err != nil {
 			log.Printf("Cannot parse request: %+v\n", err)
 			if errors.Is(err, webhook.ErrInvalidSignature) {
