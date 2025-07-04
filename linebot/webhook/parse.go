@@ -16,10 +16,21 @@ var (
 )
 
 type ParseOption struct {
+	// SkipSignatureValidation is a function that determines whether to skip
+	// webhook signature verification.
+	//
+	// If the function returns true, the signature verification step is skipped.
+	// This can be useful in scenarios such as when you're in the process of updating
+	// the channel secret and need to temporarily bypass verification to avoid disruptions.
 	SkipSignatureValidation func() bool
 }
 
-// ParseRequest func
+// ParseRequestWithOption parses a LINE webhook request with optional behavior.
+//
+// Use this when you need to customize parsing, such as skipping signature validation
+// via ParseOption. This is useful during channel secret rotation or local development.
+//
+// For standard use, prefer ParseRequest.
 func ParseRequestWithOption(channelSecret string, r *http.Request, opt *ParseOption) (*CallbackRequest, error) {
 	defer func() { _ = r.Body.Close() }()
 	body, err := io.ReadAll(r.Body)
@@ -38,6 +49,10 @@ func ParseRequestWithOption(channelSecret string, r *http.Request, opt *ParseOpt
 	return &cb, nil
 }
 
+// ParseRequest parses a LINE webhook request with signature verification.
+//
+// If you need to customize behavior (e.g. skip signature verification),
+// use ParseRequestWithOption instead.
 func ParseRequest(channelSecret string, r *http.Request) (*CallbackRequest, error) {
 	return ParseRequestWithOption(channelSecret, r, nil)
 }
