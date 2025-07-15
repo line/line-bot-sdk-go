@@ -17,7 +17,7 @@ title: "Question"
 -->
 
 ## Have You Checked the Following?
-- [ ] [line-bot-sdk-go module](https://pkg.go.dev/github.com/line/line-bot-sdk-go)
+- [ ] [line-bot-sdk-go module](https://pkg.go.dev/github.com/line/line-bot-sdk-go/v8)
 - [ ] [Examples](https://github.com/line/line-bot-sdk-go/tree/master/examples/)
 - [ ] [Developer Documentation - LINE Developers](https://developers.line.biz/en/docs/)
 - [ ] [FAQ - LINE Developers](https://developers.line.biz/en/faq/tags/messaging-api/)
