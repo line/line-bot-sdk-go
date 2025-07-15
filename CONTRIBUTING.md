@@ -44,6 +44,12 @@ Especially for bug fixes, please follow this flow for testing and development:
 
 You can use the [example projects](examples) to test your changes locally before submitting a pull request.
 
+### Documentation
+
+Please ensure that your code is well-documented. 
+Use Go's standard documentation comments to explain the purpose of functions, methods, and types.
+Good documentation ensures that contributors and users can easily read and understand how the methods and classes work.
+
 ## Contributor license agreement
 
 When you are sending a pull request and it's a non-trivial change beyond fixing typos, please make sure to sign
