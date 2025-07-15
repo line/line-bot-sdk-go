@@ -10,23 +10,19 @@ source projects you are aware of. It will be amazing if you could help us by doi
 
 ## Development
 
-### Install dependencies
-
-Run `go mod tidy` to install all dependencies for development.
-
 ### Understand the project structure
 
 The project structure is as follows:
 
-- `/linebot`: The main library code, organized into sub-packages by API functionality.
-- `/examples`: Example projects that demonstrate how to use the library.
-- `/generator`: OpenAPI-based code generation tools and templates.
-- `/script`: Utility scripts for development.
+- `linebot`: The main library code, organized into sub-packages by API functionality.
+- `examples`: Example projects that demonstrate how to use the library.
+- `generator`: OpenAPI-based code generation tools and templates.
+- `script`: Utility scripts for development.
 
 ### Edit OpenAPI templates
 
 Almost all code is generated with OpenAPI Generator based on [line-openapi](https://github.com/line/line-openapi)'s YAML files.
-Thus, you cannot edit most code under the `/linebot` directory directly.
+Thus, you cannot edit most code under the `linebot` directory directly.
 
 You need to edit the custom generator templates under the `generator/src/main/resources` directory instead.
 
@@ -46,7 +42,7 @@ Especially for bug fixes, please follow this flow for testing and development:
 
 ### Run your code in your local
 
-You can use the [example projects](examples/) to test your changes locally before submitting a pull request.
+You can use the [example projects](examples) to test your changes locally before submitting a pull request.
 
 ## Contributor license agreement
 
