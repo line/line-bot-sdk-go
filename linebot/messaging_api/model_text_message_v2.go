@@ -47,7 +47,7 @@ type TextMessageV2 struct {
 	/**
 	 * A mapping that specifies substitutions for parts enclosed in {} within the `text` field.
 	 */
-	Substitution map[string]SubstitutionObject `json:"substitution,omitempty"`
+	Substitution map[string]SubstitutionObjectInterface `json:"substitution,omitempty"`
 
 	/**
 	 * Quote token of the message you want to quote.
