@@ -49,6 +49,47 @@ func makeRequest(t *testing.T, url string, body []byte, signature string) *http.
 	return req
 }
 
+func TestWebhookParseRequest(t *testing.T) {
+	const channelSecret = "testsecret"
+	body := []byte(`{"destination":"U0123456789abcdef","events":[]}`)
+
+	handler := http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
+		cb, err := webhook.ParseRequest(channelSecret, req)
+		if err != nil {
+			if err == webhook.ErrInvalidSignature {
+				w.WriteHeader(http.StatusBadRequest)
+				return
+			}
+			t.Errorf("unexpected error: %v", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		if cb.Destination != "U0123456789abcdef" {
+			t.Errorf("destination = %s; want %s", cb.Destination, "U0123456789abcdef")
+		}
+		w.WriteHeader(http.StatusOK)
+	})
+
+	server := httptest.NewTLSServer(handler)
+	defer server.Close()
+
+	signature := generateSignature(channelSecret, body)
+	req := makeRequest(t, server.URL, body, signature)
+
+	client := &http.Client{
+		Transport: &http.Transport{
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+		},
+	}
+	res, err := client.Do(req)
+	if err != nil {
+		t.Fatalf("request failed: %v", err)
+	}
+	if res.StatusCode != http.StatusOK {
+		t.Errorf("StatusCode = %d; want %d", res.StatusCode, http.StatusOK)
+	}
+}
+
 func TestWebhookParseRequestWithOption(t *testing.T) {
 	const channelSecret = "testsecret"
 	body := []byte(`{"destination":"U0123456789abcdef","events":[]}`)
