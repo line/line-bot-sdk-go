@@ -54,6 +54,16 @@ func setDiscriminatorPropertyMessage(r MessageInterface) MessageInterface {
 			v.Type = "audio"
 		}
 		return v
+	case *CouponMessage:
+		if v.Type == "" {
+			v.Type = "coupon"
+		}
+		return v
+	case CouponMessage:
+		if v.Type == "" {
+			v.Type = "coupon"
+		}
+		return v
 	case *FlexMessage:
 		if v.Type == "" {
 			v.Type = "flex"
@@ -184,6 +194,12 @@ func UnmarshalMessage(data []byte) (MessageInterface, error) {
 			return nil, fmt.Errorf("UnmarshalMessage: Cannot read audio: %w", err)
 		}
 		return audio, nil
+	case "coupon":
+		var coupon CouponMessage
+		if err := json.Unmarshal(data, &coupon); err != nil {
+			return nil, fmt.Errorf("UnmarshalMessage: Cannot read coupon: %w", err)
+		}
+		return coupon, nil
 	case "flex":
 		var flex FlexMessage
 		if err := json.Unmarshal(data, &flex); err != nil {
