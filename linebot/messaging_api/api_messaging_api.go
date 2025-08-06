@@ -246,6 +246,141 @@ func (client *MessagingApiAPI) CancelDefaultRichMenuWithHttpInfo() (*http.Respon
 
 }
 
+// CloseCoupon
+//
+// Close coupon
+// Parameters:
+//        couponId
+
+// https://developers.line.biz/en/reference/messaging-api/#discontinue-coupon
+func (client *MessagingApiAPI) CloseCoupon(
+
+	couponId string,
+
+) (struct{}, error) {
+	_, body, error := client.CloseCouponWithHttpInfo(
+
+		couponId,
+	)
+	return body, error
+}
+
+// CloseCoupon
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Close coupon
+// Parameters:
+//        couponId
+
+// https://developers.line.biz/en/reference/messaging-api/#discontinue-coupon
+func (client *MessagingApiAPI) CloseCouponWithHttpInfo(
+
+	couponId string,
+
+) (*http.Response, struct{}, error) {
+	path := "/v2/bot/coupon/{couponId}/close"
+
+	path = strings.Replace(path, "{couponId}", couponId, -1)
+
+	req, err := http.NewRequest(http.MethodPut, client.Url(path), nil)
+	if err != nil {
+		return nil, struct{}{}, err
+	}
+
+	res, err := client.Do(req)
+
+	if err != nil {
+		return res, struct{}{}, err
+	}
+
+	if res.StatusCode/100 != 2 {
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
+		if err != nil {
+			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
+		}
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
+	}
+
+	defer res.Body.Close()
+
+	return res, struct{}{}, nil
+
+}
+
+// CreateCoupon
+//
+// Create a new coupon. Define coupon details such as type, title, and validity period.
+// Parameters:
+//        couponCreateRequest
+
+// https://developers.line.biz/en/reference/messaging-api/#create-coupon
+func (client *MessagingApiAPI) CreateCoupon(
+
+	couponCreateRequest *CouponCreateRequest,
+
+) (*CouponCreateResponse, error) {
+	_, body, error := client.CreateCouponWithHttpInfo(
+
+		couponCreateRequest,
+	)
+	return body, error
+}
+
+// CreateCoupon
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Create a new coupon. Define coupon details such as type, title, and validity period.
+// Parameters:
+//        couponCreateRequest
+
+// https://developers.line.biz/en/reference/messaging-api/#create-coupon
+func (client *MessagingApiAPI) CreateCouponWithHttpInfo(
+
+	couponCreateRequest *CouponCreateRequest,
+
+) (*http.Response, *CouponCreateResponse, error) {
+	path := "/v2/bot/coupon"
+
+	var buf bytes.Buffer
+	enc := json.NewEncoder(&buf)
+	if err := enc.Encode(couponCreateRequest); err != nil {
+		return nil, nil, err
+	}
+	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
+	if err != nil {
+		return nil, nil, err
+	}
+	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
+
+	res, err := client.Do(req)
+
+	if err != nil {
+		return res, nil, err
+	}
+
+	if res.StatusCode/100 != 2 {
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
+		if err != nil {
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
+		}
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
+	}
+
+	defer res.Body.Close()
+
+	decoder := json.NewDecoder(res.Body)
+	result := CouponCreateResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
+	}
+	return res, &result, nil
+
+}
+
 // CreateRichMenu
 //
 // Create rich menu
@@ -694,6 +829,74 @@ func (client *MessagingApiAPI) GetBotInfoWithHttpInfo() (*http.Response, *BotInf
 
 	decoder := json.NewDecoder(res.Body)
 	result := BotInfoResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
+	}
+	return res, &result, nil
+
+}
+
+// GetCouponDetail
+//
+// Get coupon detail
+// Parameters:
+//        couponId
+
+// https://developers.line.biz/en/reference/messaging-api/#get-coupon
+func (client *MessagingApiAPI) GetCouponDetail(
+
+	couponId string,
+
+) (*CouponResponse, error) {
+	_, body, error := client.GetCouponDetailWithHttpInfo(
+
+		couponId,
+	)
+	return body, error
+}
+
+// GetCouponDetail
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Get coupon detail
+// Parameters:
+//        couponId
+
+// https://developers.line.biz/en/reference/messaging-api/#get-coupon
+func (client *MessagingApiAPI) GetCouponDetailWithHttpInfo(
+
+	couponId string,
+
+) (*http.Response, *CouponResponse, error) {
+	path := "/v2/bot/coupon/{couponId}"
+
+	path = strings.Replace(path, "{couponId}", couponId, -1)
+
+	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	res, err := client.Do(req)
+
+	if err != nil {
+		return res, nil, err
+	}
+
+	if res.StatusCode/100 != 2 {
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
+		if err != nil {
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
+		}
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
+	}
+
+	defer res.Body.Close()
+
+	decoder := json.NewDecoder(res.Body)
+	result := CouponResponse{}
 	if err := decoder.Decode(&result); err != nil {
 		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
@@ -2940,6 +3143,99 @@ func (client *MessagingApiAPI) LinkRichMenuIdToUsersWithHttpInfo(
 	defer res.Body.Close()
 
 	return res, struct{}{}, nil
+
+}
+
+// ListCoupon
+//
+// Get a paginated list of coupons.
+// Parameters:
+//        status             Filter coupons by their status.
+//        start             Pagination token to retrieve the next page of results.
+//        limit             Maximum number of coupons to return per request.
+
+// https://developers.line.biz/en/reference/messaging-api/#get-coupons-list
+func (client *MessagingApiAPI) ListCoupon(
+
+	status *[]string,
+
+	start string,
+
+	limit int32,
+
+) (*MessagingApiPagerCouponListResponse, error) {
+	_, body, error := client.ListCouponWithHttpInfo(
+
+		status,
+
+		start,
+
+		limit,
+	)
+	return body, error
+}
+
+// ListCoupon
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Get a paginated list of coupons.
+// Parameters:
+//        status             Filter coupons by their status.
+//        start             Pagination token to retrieve the next page of results.
+//        limit             Maximum number of coupons to return per request.
+
+// https://developers.line.biz/en/reference/messaging-api/#get-coupons-list
+func (client *MessagingApiAPI) ListCouponWithHttpInfo(
+
+	status *[]string,
+
+	start string,
+
+	limit int32,
+
+) (*http.Response, *MessagingApiPagerCouponListResponse, error) {
+	path := "/v2/bot/coupon"
+
+	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	query := url.Values{}
+	for _, v := range *status {
+		query.Add("status", v)
+	}
+	if start != "" {
+		query.Add("start", start)
+	}
+	query.Add("limit", strconv.FormatInt(int64(limit), 10))
+
+	req.URL.RawQuery = query.Encode()
+
+	res, err := client.Do(req)
+
+	if err != nil {
+		return res, nil, err
+	}
+
+	if res.StatusCode/100 != 2 {
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
+		if err != nil {
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
+		}
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
+	}
+
+	defer res.Body.Close()
+
+	decoder := json.NewDecoder(res.Body)
+	result := MessagingApiPagerCouponListResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
+	}
+	return res, &result, nil
 
 }
 
