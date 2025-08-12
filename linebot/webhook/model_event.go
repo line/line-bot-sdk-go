@@ -204,16 +204,6 @@ func setDiscriminatorPropertyEvent(r EventInterface) EventInterface {
 			v.Type = "postback"
 		}
 		return v
-	case *ThingsEvent:
-		if v.Type == "" {
-			v.Type = "things"
-		}
-		return v
-	case ThingsEvent:
-		if v.Type == "" {
-			v.Type = "things"
-		}
-		return v
 	case *UnfollowEvent:
 		if v.Type == "" {
 			v.Type = "unfollow"
@@ -381,12 +371,6 @@ func UnmarshalEvent(data []byte) (EventInterface, error) {
 			return nil, fmt.Errorf("UnmarshalEvent: Cannot read postback: %w", err)
 		}
 		return postback, nil
-	case "things":
-		var things ThingsEvent
-		if err := json.Unmarshal(data, &things); err != nil {
-			return nil, fmt.Errorf("UnmarshalEvent: Cannot read things: %w", err)
-		}
-		return things, nil
 	case "unfollow":
 		var unfollow UnfollowEvent
 		if err := json.Unmarshal(data, &unfollow); err != nil {
