@@ -35,7 +35,6 @@ const (
 	EventTypePostback          EventType = "postback"
 	EventTypeBeacon            EventType = "beacon"
 	EventTypeAccountLink       EventType = "accountLink"
-	EventTypeThings            EventType = "things"
 	EventTypeUnsend            EventType = "unsend"
 	EventTypeVideoPlayComplete EventType = "videoPlayComplete"
 )
@@ -126,52 +125,6 @@ type AccountLink struct {
 	Nonce  string
 }
 
-// ThingsResult type
-// Deprecated: Use OpenAPI based classes instead.
-type ThingsResult struct {
-	ScenarioID             string
-	Revision               int
-	StartTime              int64
-	EndTime                int64
-	ResultCode             ThingsResultCode
-	ActionResults          []*ThingsActionResult
-	BLENotificationPayload []byte
-	ErrorReason            string
-}
-
-// ThingsResultCode type
-type ThingsResultCode string
-
-// ThingsResultCode constants
-const (
-	ThingsResultCodeSuccess      ThingsResultCode = "success"
-	ThingsResultCodeGattError    ThingsResultCode = "gatt_error"
-	ThingsResultCodeRuntimeError ThingsResultCode = "runtime_error"
-)
-
-// ThingsActionResult type
-// Deprecated: Use OpenAPI based classes instead.
-type ThingsActionResult struct {
-	Type ThingsActionResultType
-	Data []byte
-}
-
-// ThingsActionResultType type
-type ThingsActionResultType string
-
-// ThingsActionResultType constants
-const (
-	ThingsActionResultTypeBinary ThingsActionResultType = "binary"
-	ThingsActionResultTypeVoid   ThingsActionResultType = "void"
-)
-
-// Things type
-// Deprecated: Use OpenAPI based classes instead.
-type Things struct {
-	DeviceID string
-	Type     string
-	Result   *ThingsResult
-}
 
 // Unsend type
 // Deprecated: Use OpenAPI based classes instead.
@@ -220,7 +173,6 @@ type Event struct {
 	Postback          *Postback
 	Beacon            *Beacon
 	AccountLink       *AccountLink
-	Things            *Things
 	Members           []*EventSource
 	Unsend            *Unsend
 	VideoPlayComplete *VideoPlayComplete
@@ -241,7 +193,6 @@ type rawEvent struct {
 	AccountLink       *rawAccountLinkEvent `json:"link,omitempty"`
 	Joined            *rawMemberEvent      `json:"joined,omitempty"`
 	Left              *rawMemberEvent      `json:"left,omitempty"`
-	Things            *rawThingsEvent      `json:"things,omitempty"`
 	Unsend            *Unsend              `json:"unsend,omitempty"`
 	VideoPlayComplete *VideoPlayComplete   `json:"videoPlayComplete,omitempty"`
 	WebhookEventID    string               `json:"webhookEventId"`
@@ -288,30 +239,6 @@ type rawAccountLinkEvent struct {
 	Nonce  string            `json:"nonce"`
 }
 
-// Deprecated: Use OpenAPI based classes instead.
-type rawThingsResult struct {
-	ScenarioID             string                   `json:"scenarioId"`
-	Revision               int                      `json:"revision"`
-	StartTime              int64                    `json:"startTime"`
-	EndTime                int64                    `json:"endTime"`
-	ResultCode             ThingsResultCode         `json:"resultCode"`
-	ActionResults          []*rawThingsActionResult `json:"actionResults"`
-	BLENotificationPayload string                   `json:"bleNotificationPayload,omitempty"`
-	ErrorReason            string                   `json:"errorReason,omitempty"`
-}
-
-// Deprecated: Use OpenAPI based classes instead.
-type rawThingsActionResult struct {
-	Type ThingsActionResultType `json:"type,omitempty"`
-	Data string                 `json:"data,omitempty"`
-}
-
-// Deprecated: Use OpenAPI based classes instead.
-type rawThingsEvent struct {
-	DeviceID string           `json:"deviceId"`
-	Type     string           `json:"type"`
-	Result   *rawThingsResult `json:"result,omitempty"`
-}
 
 const (
 	milliSecPerSec     = int64(time.Second / time.Millisecond)
@@ -355,33 +282,7 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 		raw.Left = &rawMemberEvent{
 			Members: e.Members,
 		}
-	case EventTypeThings:
-		raw.Things = &rawThingsEvent{
-			DeviceID: e.Things.DeviceID,
-			Type:     e.Things.Type,
-		}
-		if e.Things.Result != nil {
-			raw.Things.Result = &rawThingsResult{
-				ScenarioID: e.Things.Result.ScenarioID,
-				Revision:   e.Things.Result.Revision,
-				StartTime:  e.Things.Result.StartTime,
-				EndTime:    e.Things.Result.EndTime,
-				ResultCode: e.Things.Result.ResultCode,
-
-				BLENotificationPayload: string(e.Things.Result.BLENotificationPayload),
-				ErrorReason:            e.Things.Result.ErrorReason,
-			}
-			if e.Things.Result.ActionResults != nil {
-				raw.Things.Result.ActionResults = make([]*rawThingsActionResult, len(e.Things.Result.ActionResults))
-			}
-			for i := range e.Things.Result.ActionResults {
-				raw.Things.Result.ActionResults[i] = &rawThingsActionResult{
-					Type: e.Things.Result.ActionResults[i].Type,
-					Data: string(e.Things.Result.ActionResults[i].Data),
-				}
-			}
-		}
-	}
+    }
 
 	switch m := e.Message.(type) {
 	case *TextMessage:
@@ -532,30 +433,6 @@ func (e *Event) UnmarshalJSON(body []byte) (err error) {
 		e.Members = rawEvent.Joined.Members
 	case EventTypeMemberLeft:
 		e.Members = rawEvent.Left.Members
-	case EventTypeThings:
-		e.Things = &Things{
-			Type:     rawEvent.Things.Type,
-			DeviceID: rawEvent.Things.DeviceID,
-		}
-		if rawEvent.Things.Result != nil {
-			rawResult := rawEvent.Things.Result
-			e.Things.Result = &ThingsResult{
-				ScenarioID:             rawResult.ScenarioID,
-				Revision:               rawResult.Revision,
-				StartTime:              rawResult.StartTime,
-				EndTime:                rawResult.EndTime,
-				ResultCode:             rawResult.ResultCode,
-				ActionResults:          make([]*ThingsActionResult, len(rawResult.ActionResults)),
-				BLENotificationPayload: []byte(rawResult.BLENotificationPayload),
-				ErrorReason:            rawResult.ErrorReason,
-			}
-			for i := range rawResult.ActionResults {
-				e.Things.Result.ActionResults[i] = &ThingsActionResult{
-					Type: rawResult.ActionResults[i].Type,
-					Data: []byte(rawResult.ActionResults[i].Data),
-				}
-			}
-		}
 	case EventTypeUnsend:
 		e.Unsend = rawEvent.Unsend
 	case EventTypeVideoPlayComplete:
