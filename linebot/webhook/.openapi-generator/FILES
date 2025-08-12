@@ -1,5 +1,4 @@
 model_account_link_event.go
-model_action_result.go
 model_activated_event.go
 model_all_mentionee.go
 model_attached_module_content.go
@@ -30,7 +29,6 @@ model_leave_event.go
 model_left_members.go
 model_left_membership_content.go
 model_link_content.go
-model_link_things_content.go
 model_location_message_content.go
 model_member_joined_event.go
 model_member_left_event.go
@@ -48,15 +46,10 @@ model_postback_content.go
 model_postback_event.go
 model_renewed_membership_content.go
 model_room_source.go
-model_scenario_result.go
-model_scenario_result_things_content.go
 model_source.go
 model_sticker_message_content.go
 model_text_message_content.go
-model_things_content.go
-model_things_event.go
 model_unfollow_event.go
-model_unlink_things_content.go
 model_unsend_detail.go
 model_unsend_event.go
 model_user_mentionee.go
