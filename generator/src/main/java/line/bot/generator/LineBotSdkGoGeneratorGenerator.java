@@ -82,6 +82,11 @@ public class LineBotSdkGoGeneratorGenerator extends AbstractGoCodegen {
                         var.getVendorExtensions().put("x-is-discriminator-array", true);
                         model.getVendorExtensions().put("x-has-discriminator", true);
                         System.out.println("UnmarshalJSON[]: " + model.name + " " + var.name + " " + var.baseType + " " + var.complexType);
+                    } else if (var.baseType.equals("map") && discriminators.contains(var.complexType)) {
+                        // TextMessageV2 contains `map[string]SubstitutionObject`.
+                        // in this case, baseType=map, complexType=SubstitutionObject
+                        // UnmarshalJSON is not needed for this case.
+                        var.getVendorExtensions().put("x-is-discriminator-map", true);
                     } else if (discriminators.contains(var.dataType)) {
                         var.getVendorExtensions().put("x-is-discriminator", true);
                         model.getVendorExtensions().put("x-has-discriminator", true);
@@ -96,7 +101,10 @@ public class LineBotSdkGoGeneratorGenerator extends AbstractGoCodegen {
     }
 
     private String type(CodegenModel model, CodegenProperty var) {
-        boolean isDiscriminator = var.vendorExtensions.get("x-is-discriminator-array") != null || var.vendorExtensions.get("x-is-discriminator") != null;
+        boolean isDiscriminator =
+                var.vendorExtensions.get("x-is-discriminator-array") != null ||
+                var.vendorExtensions.get("x-is-discriminator") != null ||
+                var.vendorExtensions.get("x-is-discriminator-map") != null;
 
         if (var.isEnum) {
             return model.classname + var.datatypeWithEnum;
