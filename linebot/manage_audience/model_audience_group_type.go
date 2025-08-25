@@ -51,4 +51,6 @@ const (
 	AudienceGroupType_RICHMENU_IMP AudienceGroupType = "RICHMENU_IMP"
 
 	AudienceGroupType_RICHMENU_CLICK AudienceGroupType = "RICHMENU_CLICK"
+
+	AudienceGroupType_POP_AD_IMP AudienceGroupType = "POP_AD_IMP"
 )
