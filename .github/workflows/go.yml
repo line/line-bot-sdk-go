@@ -39,8 +39,8 @@ jobs:
     - name: Generate code
       run: python generate-code.py
 
-    - name: run codecov.sh
-      run: bash script/codecov.sh
+    - name: run test.sh
+      run: bash script/test.sh
 
     - name: go vet
       run: go vet $(go list ./... | grep -v /examples/)
@@ -53,9 +53,6 @@ jobs:
           go build -o /dev/null
           popd
         done
-
-    - name: Publish to codecov.io
-      run: bash <(curl -s https://codecov.io/bash)
 
   pinact:
     runs-on: ubuntu-latest

@@ -33,7 +33,7 @@ When you update code, be sure to check consistencies between generated code and 
 
 ### Add unit tests
 
-We use Go's built-in testing framework. To run all tests with race detection and coverage reporting: `bash script/codecov.sh`
+We use Go's built-in testing framework. To run all tests with race detection `bash script/test.sh`
 
 Especially for bug fixes, please follow this flow for testing and development:
 1. Write a test before making changes to the library and confirm that the test fails.
