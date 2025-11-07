@@ -3306,6 +3306,73 @@ func (client *MessagingApiAPI) MarkMessagesAsReadWithHttpInfo(
 
 }
 
+// MarkMessagesAsReadByToken
+//
+// Mark messages from users as read by token
+// Parameters:
+//        markMessagesAsReadByTokenRequest
+
+// https://developers.line.biz/en/reference/messaging-api/#mark-as-read
+func (client *MessagingApiAPI) MarkMessagesAsReadByToken(
+
+	markMessagesAsReadByTokenRequest *MarkMessagesAsReadByTokenRequest,
+
+) (struct{}, error) {
+	_, body, error := client.MarkMessagesAsReadByTokenWithHttpInfo(
+
+		markMessagesAsReadByTokenRequest,
+	)
+	return body, error
+}
+
+// MarkMessagesAsReadByToken
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Mark messages from users as read by token
+// Parameters:
+//        markMessagesAsReadByTokenRequest
+
+// https://developers.line.biz/en/reference/messaging-api/#mark-as-read
+func (client *MessagingApiAPI) MarkMessagesAsReadByTokenWithHttpInfo(
+
+	markMessagesAsReadByTokenRequest *MarkMessagesAsReadByTokenRequest,
+
+) (*http.Response, struct{}, error) {
+	path := "/v2/bot/chat/markAsRead"
+
+	var buf bytes.Buffer
+	enc := json.NewEncoder(&buf)
+	if err := enc.Encode(markMessagesAsReadByTokenRequest); err != nil {
+		return nil, struct{}{}, err
+	}
+	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
+	if err != nil {
+		return nil, struct{}{}, err
+	}
+	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
+
+	res, err := client.Do(req)
+
+	if err != nil {
+		return res, struct{}{}, err
+	}
+
+	if res.StatusCode/100 != 2 {
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
+		if err != nil {
+			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
+		}
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
+	}
+
+	defer res.Body.Close()
+
+	return res, struct{}{}, nil
+
+}
+
 // Multicast
 //
 // An API that efficiently sends the same message to multiple user IDs. You can't send messages to group chats or multi-person chats.

@@ -118,6 +118,7 @@ model_location_action.go
 model_location_message.go
 model_lottery_acquisition_condition_request.go
 model_lottery_acquisition_condition_response.go
+model_mark_messages_as_read_by_token_request.go
 model_mark_messages_as_read_request.go
 model_members_ids_response.go
 model_membership.go
