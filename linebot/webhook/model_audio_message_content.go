@@ -43,6 +43,11 @@ type AudioMessageContent struct {
 	 * Length of audio file (milliseconds)
 	 */
 	Duration int64 `json:"duration"`
+
+	/**
+	 * Token used to mark the message as read.
+	 */
+	MarkAsReadToken string `json:"markAsReadToken,omitempty"`
 }
 
 // MarshalJSON customizes the JSON serialization of the AudioMessageContent struct.

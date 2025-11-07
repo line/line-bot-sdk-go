@@ -48,6 +48,11 @@ type VideoMessageContent struct {
 	 * Quote token to quote this message.  (Required)
 	 */
 	QuoteToken string `json:"quoteToken"`
+
+	/**
+	 * Token used to mark the message as read.
+	 */
+	MarkAsReadToken string `json:"markAsReadToken,omitempty"`
 }
 
 // MarshalJSON customizes the JSON serialization of the VideoMessageContent struct.

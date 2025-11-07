@@ -68,6 +68,11 @@ type StickerMessageContent struct {
 	 * Message ID of a quoted message. Only included when the received message quotes a past message.
 	 */
 	QuotedMessageId string `json:"quotedMessageId,omitempty"`
+
+	/**
+	 * Token used to mark the message as read.
+	 */
+	MarkAsReadToken string `json:"markAsReadToken,omitempty"`
 }
 
 // MarshalJSON customizes the JSON serialization of the StickerMessageContent struct.
