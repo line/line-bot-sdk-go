@@ -69,3 +69,20 @@ func TestFlexBubble(t *testing.T) {
 		t.Errorf("Encoded message doens't contains expected default value: %s", encodedMsgStr)
 	}
 }
+
+func TestFlexBoxUnmarshalJSONWithEmptyContents(t *testing.T) {
+	jsonStr := `{"type":"box","layout":"horizontal","contents":[]}`
+	var flexBox messaging_api.FlexBox
+	err := json.Unmarshal([]byte(jsonStr), &flexBox)
+	if err != nil {
+		t.Fatalf("Failed to unmarshal JSON: %v", err)
+	}
+
+	if flexBox.Contents == nil {
+		t.Error("FlexBox.Contents should not be nil when unmarshaling JSON with \"contents\":[]")
+	}
+
+	if len(flexBox.Contents) != 0 {
+		t.Errorf("FlexBox.Contents should be empty, but got %d elements", len(flexBox.Contents))
+	}
+}
