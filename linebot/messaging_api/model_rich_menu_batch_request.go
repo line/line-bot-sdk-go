@@ -55,6 +55,8 @@ func (cr *RichMenuBatchRequest) UnmarshalJSON(data []byte) error {
 			return fmt.Errorf("JSON parse error in operations(array): %w", err)
 		}
 
+		cr.Operations = make([]RichMenuBatchOperationInterface, 0, len(rawoperations))
+
 		for _, data := range rawoperations {
 			e, err := UnmarshalRichMenuBatchOperation(data)
 			if err != nil {
