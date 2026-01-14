@@ -74,6 +74,8 @@ func (cr *PushMessageRequest) UnmarshalJSON(data []byte) error {
 			return fmt.Errorf("JSON parse error in messages(array): %w", err)
 		}
 
+		cr.Messages = make([]MessageInterface, 0, len(rawmessages))
+
 		for _, data := range rawmessages {
 			e, err := UnmarshalMessage(data)
 			if err != nil {

@@ -64,6 +64,8 @@ func (cr *CallbackRequest) UnmarshalJSON(data []byte) error {
 			return fmt.Errorf("JSON parse error in events(array): %w", err)
 		}
 
+		cr.Events = make([]EventInterface, 0, len(rawevents))
+
 		for _, data := range rawevents {
 			e, err := UnmarshalEvent(data)
 			if err != nil {
