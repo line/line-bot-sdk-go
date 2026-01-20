@@ -68,6 +68,8 @@ func (cr *{{model.classname}}) UnmarshalJSON(data []byte) error {
             return fmt.Errorf("JSON parse error in {{var.baseName}}({{var.baseType}}): %w", err)
         }
 
+        {% if var.required %}cr.{{ var.name | capitalize }} = make({{ var.vendorExtensions.get("x-type") }}, 0, len(raw{{ var.baseName }})){% endif %}
+
         for _, data := range raw{{ var.baseName }} {
             e, err := Unmarshal{{ var.complexType }}(data)
             if err != nil {

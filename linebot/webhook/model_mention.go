@@ -50,6 +50,8 @@ func (cr *Mention) UnmarshalJSON(data []byte) error {
 			return fmt.Errorf("JSON parse error in mentionees(array): %w", err)
 		}
 
+		cr.Mentionees = make([]MentioneeInterface, 0, len(rawmentionees))
+
 		for _, data := range rawmentionees {
 			e, err := UnmarshalMentionee(data)
 			if err != nil {

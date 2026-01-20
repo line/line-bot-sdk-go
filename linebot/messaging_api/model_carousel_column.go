@@ -123,6 +123,8 @@ func (cr *CarouselColumn) UnmarshalJSON(data []byte) error {
 			return fmt.Errorf("JSON parse error in actions(array): %w", err)
 		}
 
+		cr.Actions = make([]ActionInterface, 0, len(rawactions))
+
 		for _, data := range rawactions {
 			e, err := UnmarshalAction(data)
 			if err != nil {

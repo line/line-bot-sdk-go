@@ -208,6 +208,8 @@ func (cr *FlexBox) UnmarshalJSON(data []byte) error {
 			return fmt.Errorf("JSON parse error in contents(array): %w", err)
 		}
 
+		cr.Contents = make([]FlexComponentInterface, 0, len(rawcontents))
+
 		for _, data := range rawcontents {
 			e, err := UnmarshalFlexComponent(data)
 			if err != nil {
