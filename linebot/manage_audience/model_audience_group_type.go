@@ -53,4 +53,6 @@ const (
 	AudienceGroupType_RICHMENU_CLICK AudienceGroupType = "RICHMENU_CLICK"
 
 	AudienceGroupType_POP_AD_IMP AudienceGroupType = "POP_AD_IMP"
+
+	AudienceGroupType_TRACKINGTAG_WEBTRAFFIC AudienceGroupType = "TRACKINGTAG_WEBTRAFFIC"
 )
