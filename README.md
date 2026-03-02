@@ -19,13 +19,13 @@ See the official API documentation for more information.
 
 This library requires Go 1.24 or later.
 
-## Installation ##
+## Installation
 
 ```sh
 $ go get -u github.com/line/line-bot-sdk-go/v8/linebot
 ```
 
-## Import all packages in your code ##
+## Import all packages in your code
 ```go
 import (
 	"github.com/line/line-bot-sdk-go/v8/linebot"
@@ -42,7 +42,7 @@ import (
 
 ```
 
-## Configuration ##
+## Configuration
 
 ```go
 import (
@@ -58,7 +58,7 @@ func main() {
 
 ```
 
-### Configuration with http.Client ###
+### Configuration with http.Client
 
 Every client application allows configuration with WithHTTPClient and WithEndpoint.
 (For Blob client, configurations WithBlobHTTPClient and WithBlobEndpoint are also available.)
@@ -72,7 +72,7 @@ bot, err := messaging_api.NewMessagingApiAPI(
 ...
 ```
 
-## Getting Started ##
+## Getting Started
 
 The LINE Messaging API primarily utilizes the JSON data format. To parse the incoming HTTP requests, the `webhook.ParseRequest()` method is provided. This method reads the `*http.Request` content and returns a slice of pointers to Event Objects.
 
@@ -112,7 +112,7 @@ We provide code [examples](./examples).
 - [InsightHelper](./examples/insight_helper/main.go)
 - [RichmenuHelper](./examples/richmenu_helper/main.go)
 
-### Receiver ###
+### Receiver
 
 To send a message to a user, group, or room, you need either an ID
 
@@ -128,7 +128,7 @@ or a reply token.
 replyToken := event.ReplyToken
 ```
 
-### Create message ###
+### Create message
 
 The LINE Messaging API provides various types of message.
 
@@ -145,7 +145,7 @@ bot.ReplyMessage(
 )
 ```
 
-### Send message ###
+### Send message
 
 With an ID, you can send message using ```PushMessage()```
 
@@ -178,7 +178,7 @@ bot.ReplyMessage(
 )
 ```
 
-### How to get response header and error message ###
+### How to get response header and error message
 You may need to store the ```x-line-request-id``` header obtained as a response from several APIs. In this case, please use ```~WithHttpInfo```. You can get headers and status codes. The ```x-line-accepted-request-id``` or ```content-type``` header can also be obtained in the same way.
 
 ```go
