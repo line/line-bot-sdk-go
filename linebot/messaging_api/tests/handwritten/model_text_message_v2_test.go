@@ -22,7 +22,7 @@ func TestTextMessageV2(t *testing.T) {
 					},
 					"smile": &messaging_api.EmojiSubstitutionObject{
 						ProductId: "5ac1bfd5040ab15980c9b435",
-						EmojiId: "002",
+						EmojiId:   "002",
 					},
 				},
 			},

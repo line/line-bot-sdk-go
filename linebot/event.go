@@ -125,7 +125,6 @@ type AccountLink struct {
 	Nonce  string
 }
 
-
 // Unsend type
 // Deprecated: Use OpenAPI based classes instead.
 type Unsend struct {
@@ -239,7 +238,6 @@ type rawAccountLinkEvent struct {
 	Nonce  string            `json:"nonce"`
 }
 
-
 const (
 	milliSecPerSec     = int64(time.Second / time.Millisecond)
 	nanoSecPerMilliSec = int64(time.Millisecond / time.Nanosecond)
@@ -282,7 +280,7 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 		raw.Left = &rawMemberEvent{
 			Members: e.Members,
 		}
-    }
+	}
 
 	switch m := e.Message.(type) {
 	case *TextMessage:
