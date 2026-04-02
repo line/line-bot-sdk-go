@@ -328,3 +328,7 @@ func (client *{{ classname }}) {{ op.operationId }}WithHttpInfo(
 
 {% endfor %}
 
+{% if ["ChannelAccessTokenAPI"] contains classname %}
+{% include "./apiBody/" + classname + ".pebble" %}
+{% endif %}
+

@@ -74,3 +74,7 @@ func Test{{ op.operationId }}(t *testing.T) {
 	}
 }
 {% endfor %}
+
+{% if ["ChannelAccessTokenAPI"] contains classname %}
+{% include "./apiBody/" + classname + "_test.pebble" %}
+{% endif %}
