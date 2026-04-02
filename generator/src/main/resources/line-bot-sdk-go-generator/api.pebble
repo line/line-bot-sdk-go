@@ -279,14 +279,14 @@ func (client *{{ classname }}) {{ op.operationId }}WithHttpInfo(
 	    {% for qp in op.queryParams -%}
             {% if qp.isArray -%}
     for _, v := range *{{ qp.paramName }} {
-    query.Add("{{ qp.paramName }}", v)
+    query.Add("{{ qp.baseName }}", v)
     }
             {% elseif qp.isString and not qp.required -%}
     if {{ stringify(qp) }} != "" {
-    query.Add("{{ qp.paramName }}", {{ stringify(qp) }})
+    query.Add("{{ qp.baseName }}", {{ stringify(qp) }})
     }
             {% else -%}
-    query.Add("{{ qp.paramName }}", {{ stringify(qp) }})
+    query.Add("{{ qp.baseName }}", {{ stringify(qp) }})
             {% endif -%}
 	    {% endfor %}
     req.URL.RawQuery = query.Encode()
