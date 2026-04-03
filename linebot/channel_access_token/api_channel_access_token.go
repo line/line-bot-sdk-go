@@ -368,6 +368,8 @@ func (client *ChannelAccessTokenAPI) IssueChannelTokenByJWTWithHttpInfo(
 
 // IssueStatelessChannelToken
 //
+// Deprecated: Use IssueStatelessChannelTokenByJWTAssertion or IssueStatelessChannelTokenByClientSecret instead.
+//
 // Issues a new stateless channel access token, which doesn't have max active token limit unlike the other token types. The newly issued token is only valid for 15 minutes but can not be revoked until it naturally expires.
 // Parameters:
 //        grantType             `client_credentials`
@@ -407,6 +409,8 @@ func (client *ChannelAccessTokenAPI) IssueStatelessChannelToken(
 
 // IssueStatelessChannelToken
 // If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Deprecated: Use IssueStatelessChannelTokenByJWTAssertionWithHttpInfo or IssueStatelessChannelTokenByClientSecretWithHttpInfo instead.
 //
 // Issues a new stateless channel access token, which doesn't have max active token limit unlike the other token types. The newly issued token is only valid for 15 minutes but can not be revoked until it naturally expires.
 // Parameters:
