@@ -368,6 +368,8 @@ func (client *ChannelAccessTokenAPI) IssueChannelTokenByJWTWithHttpInfo(
 
 // IssueStatelessChannelToken
 //
+// Deprecated: Use IssueStatelessChannelTokenByJWTAssertion or IssueStatelessChannelTokenByClientSecret instead.
+//
 // Issues a new stateless channel access token, which doesn't have max active token limit unlike the other token types. The newly issued token is only valid for 15 minutes but can not be revoked until it naturally expires.
 // Parameters:
 //        grantType             `client_credentials`
@@ -407,6 +409,8 @@ func (client *ChannelAccessTokenAPI) IssueStatelessChannelToken(
 
 // IssueStatelessChannelToken
 // If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Deprecated: Use IssueStatelessChannelTokenByJWTAssertionWithHttpInfo or IssueStatelessChannelTokenByClientSecretWithHttpInfo instead.
 //
 // Issues a new stateless channel access token, which doesn't have max active token limit unlike the other token types. The newly issued token is only valid for 15 minutes but can not be revoked until it naturally expires.
 // Parameters:
@@ -780,4 +784,82 @@ func (client *ChannelAccessTokenAPI) VerifyChannelTokenByJWTWithHttpInfo(
 	}
 	return res, &result, nil
 
+}
+
+// IssueStatelessChannelTokenByJWTAssertion
+//
+// Issue a stateless channel access token by JWT assertion.
+// Parameters:
+//
+//	clientAssertion             A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
+func (client *ChannelAccessTokenAPI) IssueStatelessChannelTokenByJWTAssertion(
+	clientAssertion string,
+) (*IssueStatelessChannelAccessTokenResponse, error) {
+	return client.IssueStatelessChannelToken(
+		"client_credentials",
+		"urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+		clientAssertion,
+		"",
+		"",
+	)
+}
+
+// IssueStatelessChannelTokenByJWTAssertionWithHttpInfo
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Issue a stateless channel access token by JWT assertion.
+// Parameters:
+//
+//	clientAssertion             A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
+func (client *ChannelAccessTokenAPI) IssueStatelessChannelTokenByJWTAssertionWithHttpInfo(
+	clientAssertion string,
+) (*http.Response, *IssueStatelessChannelAccessTokenResponse, error) {
+	return client.IssueStatelessChannelTokenWithHttpInfo(
+		"client_credentials",
+		"urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+		clientAssertion,
+		"",
+		"",
+	)
+}
+
+// IssueStatelessChannelTokenByClientSecret
+//
+// Issue a stateless channel access token by client secret.
+// Parameters:
+//
+//	clientId             Channel ID.
+//	clientSecret             Channel secret.
+func (client *ChannelAccessTokenAPI) IssueStatelessChannelTokenByClientSecret(
+	clientId string,
+	clientSecret string,
+) (*IssueStatelessChannelAccessTokenResponse, error) {
+	return client.IssueStatelessChannelToken(
+		"client_credentials",
+		"",
+		"",
+		clientId,
+		clientSecret,
+	)
+}
+
+// IssueStatelessChannelTokenByClientSecretWithHttpInfo
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Issue a stateless channel access token by client secret.
+// Parameters:
+//
+//	clientId             Channel ID.
+//	clientSecret             Channel secret.
+func (client *ChannelAccessTokenAPI) IssueStatelessChannelTokenByClientSecretWithHttpInfo(
+	clientId string,
+	clientSecret string,
+) (*http.Response, *IssueStatelessChannelAccessTokenResponse, error) {
+	return client.IssueStatelessChannelTokenWithHttpInfo(
+		"client_credentials",
+		"",
+		"",
+		clientId,
+		clientSecret,
+	)
 }

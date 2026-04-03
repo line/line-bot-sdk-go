@@ -134,6 +134,10 @@ func With{{ classname contains "Blob" ? "Blob" : "" }}Endpoint(endpoint string) 
     {% set nilval = op.returnType ? "nil" : "struct{}{}" %}
 
 // {{ op.operationId | capitalize }}
+{% if op.operationId == "IssueStatelessChannelToken" -%}
+//
+// Deprecated: Use IssueStatelessChannelTokenByJWTAssertion or IssueStatelessChannelTokenByClientSecret instead.
+{% endif -%}
 // {{ op.summary }}
 // {{ op.notes }}
 // Parameters:
@@ -172,6 +176,10 @@ func (client *{{ classname }}) {{ op.operationId }}(
 
 // {{ op.operationId | capitalize }}
 // If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+{% if op.operationId == "IssueStatelessChannelToken" -%}
+//
+// Deprecated: Use IssueStatelessChannelTokenByJWTAssertionWithHttpInfo or IssueStatelessChannelTokenByClientSecretWithHttpInfo instead.
+{% endif -%}
 // {{ op.summary }}
 // {{ op.notes }}
 // Parameters:
@@ -327,4 +335,8 @@ func (client *{{ classname }}) {{ op.operationId }}WithHttpInfo(
 }
 
 {% endfor %}
+
+{% if ["ChannelAccessTokenAPI"] contains classname %}
+{% include "./apiBody/" + classname + ".pebble" %}
+{% endif %}
 
