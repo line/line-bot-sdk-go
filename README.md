@@ -17,7 +17,7 @@ See the official API documentation for more information.
 
 ## Requirements
 
-This library requires Go 1.24 or later.
+This library requires Go 1.25 or later.
 
 ## Installation ##
 
