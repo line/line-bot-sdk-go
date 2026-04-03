@@ -69,7 +69,7 @@ func main() {
 									Substitution: map[string]messaging_api.SubstitutionObjectInterface{
 										"smile": &messaging_api.EmojiSubstitutionObject{
 											ProductId: "5ac1bfd5040ab15980c9b435",
-											EmojiId: "002",
+											EmojiId:   "002",
 										},
 									},
 								},

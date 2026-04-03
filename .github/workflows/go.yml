@@ -42,6 +42,9 @@ jobs:
     - name: run test.sh
       run: bash script/test.sh
 
+    - name: gofmt check
+      run: bash script/fmt.sh && git diff --exit-code
+
     - name: go vet
       run: go vet $(go list ./... | grep -v /examples/)
 
