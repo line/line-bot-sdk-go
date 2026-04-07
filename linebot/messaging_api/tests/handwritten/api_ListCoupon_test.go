@@ -40,7 +40,7 @@ func TestListCoupon_ItShouldCorrectlyPassQueryParameter(t *testing.T) {
 				Items: []messaging_api.CouponListResponse{
 					{
 						CouponId: "COUPON_ID_1",
-						Title: "100Yen OFF",
+						Title:    "100Yen OFF",
 					},
 				},
 				Next: "abcdef",
@@ -66,7 +66,7 @@ func TestListCoupon_ItShouldCorrectlyPassQueryParameter(t *testing.T) {
 	if !reflect.DeepEqual(result.Items, []messaging_api.CouponListResponse{
 		{
 			CouponId: "COUPON_ID_1",
-			Title: "100Yen OFF",
+			Title:    "100Yen OFF",
 		},
 	}) {
 		t.Errorf("Expected Items: [{CouponId: COUPON_ID_1, Title: 100Yen OFF}], got: %v", result.Items)

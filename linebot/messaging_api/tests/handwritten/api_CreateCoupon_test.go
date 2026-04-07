@@ -39,7 +39,6 @@ func TestCreateCoupon_ItShouldCorrectlySendRequestBody(t *testing.T) {
 		"timezone": "ASIA_TOKYO"
 	}`
 
-
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			// Read the request body
@@ -89,7 +88,7 @@ func TestCreateCoupon_ItShouldCorrectlySendRequestBody(t *testing.T) {
 	req := &messaging_api.CouponCreateRequest{
 		AcquisitionCondition: &messaging_api.LotteryAcquisitionConditionRequest{
 			LotteryProbability: 50,
-			MaxAcquireCount:      1000,
+			MaxAcquireCount:    1000,
 		},
 		BarcodeImageUrl:      "https://example.com/barcode.png",
 		CouponCode:           "UNIQUECODE123",
@@ -100,13 +99,13 @@ func TestCreateCoupon_ItShouldCorrectlySendRequestBody(t *testing.T) {
 		StartTimestamp:       1600000000,
 		Title:                "100 Yen OFF",
 		UsageCondition:       "Minimum purchase of 500 Yen",
-		Reward:               &messaging_api.CouponDiscountRewardRequest{
+		Reward: &messaging_api.CouponDiscountRewardRequest{
 			PriceInfo: &messaging_api.DiscountFixedPriceInfoRequest{
 				FixedAmount: 100,
 			},
 		},
-		Visibility:           messaging_api.CouponCreateRequestVISIBILITY_PUBLIC,
-		Timezone:             messaging_api.CouponCreateRequestTIMEZONE_ASIA_TOKYO,
+		Visibility: messaging_api.CouponCreateRequestVISIBILITY_PUBLIC,
+		Timezone:   messaging_api.CouponCreateRequestTIMEZONE_ASIA_TOKYO,
 	}
 
 	resp, result, err := client.CreateCouponWithHttpInfo(req)
