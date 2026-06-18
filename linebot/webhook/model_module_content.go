@@ -72,6 +72,8 @@ func setDiscriminatorPropertyModuleContent(r ModuleContentInterface) ModuleConte
 
 // ModuleContent
 
+// https://developers.line.biz/en/reference/partner-docs/#module-channel-specific-webhook-events
+
 type ModuleContent struct {
 	// Type
 

@@ -25,7 +25,7 @@ import (
 
 // FileMessageContent
 // FileMessageContent
-
+// https://developers.line.biz/en/reference/messaging-api/#wh-file
 type FileMessageContent struct {
 	MessageContent
 

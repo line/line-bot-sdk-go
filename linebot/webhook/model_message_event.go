@@ -26,7 +26,7 @@ import (
 
 // MessageEvent
 // Webhook event object which contains the sent message.
-
+// https://developers.line.biz/en/reference/messaging-api/#message-event
 type MessageEvent struct {
 	Event
 

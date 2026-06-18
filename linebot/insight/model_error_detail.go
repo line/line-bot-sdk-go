@@ -21,7 +21,7 @@ package insight
 
 // ErrorDetail
 // ErrorDetail
-
+// https://developers.line.biz/en/reference/messaging-api/#error-responses
 type ErrorDetail struct {
 
 	/**

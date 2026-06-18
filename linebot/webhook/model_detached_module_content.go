@@ -25,7 +25,7 @@ import (
 
 // DetachedModuleContent
 // DetachedModuleContent
-
+// https://developers.line.biz/en/reference/partner-docs/#detached-event
 type DetachedModuleContent struct {
 	ModuleContent
 

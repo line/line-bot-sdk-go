@@ -26,7 +26,7 @@ import (
 
 // UnfollowEvent
 // Event object for when your LINE Official Account is blocked.
-
+// https://developers.line.biz/en/reference/messaging-api/#unfollow-event
 type UnfollowEvent struct {
 	Event
 

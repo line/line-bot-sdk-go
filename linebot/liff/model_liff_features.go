@@ -21,7 +21,7 @@ package liff
 
 // LiffFeatures
 // LiffFeatures
-
+// https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps
 type LiffFeatures struct {
 
 	/**

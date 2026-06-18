@@ -21,7 +21,7 @@ package liff
 
 // LiffApp
 // LiffApp
-
+// https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps
 type LiffApp struct {
 
 	/**

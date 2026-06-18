@@ -26,7 +26,7 @@ import (
 
 // FollowEvent
 // Event object for when your LINE Official Account is added as a friend (or unblocked). You can reply to follow events.
-
+// https://developers.line.biz/en/reference/messaging-api/#follow-event
 type FollowEvent struct {
 	Event
 

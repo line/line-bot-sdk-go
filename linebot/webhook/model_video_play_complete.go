@@ -21,7 +21,7 @@ package webhook
 
 // VideoPlayComplete
 // VideoPlayComplete
-
+// https://developers.line.biz/en/reference/messaging-api/#video-viewing-complete
 type VideoPlayComplete struct {
 
 	/**

@@ -21,7 +21,7 @@ package messaging_api
 
 // RichMenuResponse
 // RichMenuResponse
-
+// https://developers.line.biz/en/reference/messaging-api/#rich-menu-response-object
 type RichMenuResponse struct {
 
 	/**

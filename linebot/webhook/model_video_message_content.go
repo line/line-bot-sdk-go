@@ -25,7 +25,7 @@ import (
 
 // VideoMessageContent
 // VideoMessageContent
-
+// https://developers.line.biz/en/reference/messaging-api/#wh-video
 type VideoMessageContent struct {
 	MessageContent
 

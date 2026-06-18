@@ -26,7 +26,7 @@ import (
 
 // MemberLeftEvent
 // Event object for when a user leaves a group chat or multi-person chat that the LINE Official Account is in.
-
+// https://developers.line.biz/en/reference/messaging-api/#member-left-event
 type MemberLeftEvent struct {
 	Event
 

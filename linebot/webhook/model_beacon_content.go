@@ -21,7 +21,7 @@ package webhook
 
 // BeaconContent
 // BeaconContent
-
+// https://developers.line.biz/en/reference/messaging-api/#beacon-event
 type BeaconContent struct {
 
 	/**

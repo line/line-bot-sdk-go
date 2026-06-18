@@ -25,7 +25,7 @@ import (
 
 // ImageMessageContent
 // ImageMessageContent
-
+// https://developers.line.biz/en/reference/messaging-api/#wh-image
 type ImageMessageContent struct {
 	MessageContent
 

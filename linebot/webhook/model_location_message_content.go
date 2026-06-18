@@ -25,7 +25,7 @@ import (
 
 // LocationMessageContent
 // LocationMessageContent
-
+// https://developers.line.biz/en/reference/messaging-api/#wh-location
 type LocationMessageContent struct {
 	MessageContent
 

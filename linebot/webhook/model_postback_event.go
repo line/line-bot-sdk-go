@@ -26,7 +26,7 @@ import (
 
 // PostbackEvent
 // Event object for when a user performs a postback action which initiates a postback. You can reply to postback events.
-
+// https://developers.line.biz/en/reference/messaging-api/#postback-event
 type PostbackEvent struct {
 	Event
 
