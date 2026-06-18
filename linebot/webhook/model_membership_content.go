@@ -83,6 +83,8 @@ func setDiscriminatorPropertyMembershipContent(r MembershipContentInterface) Mem
 // MembershipContent
 // Content of the membership event.
 
+// https://developers.line.biz/en/reference/messaging-api/#membership-event
+
 type MembershipContent struct {
 	// Type of membership event.
 

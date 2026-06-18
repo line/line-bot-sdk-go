@@ -21,7 +21,7 @@ package webhook
 
 // FollowDetail
 // FollowDetail
-
+// https://developers.line.biz/en/reference/messaging-api/#follow-event
 type FollowDetail struct {
 
 	/**

@@ -21,7 +21,7 @@ package insight
 
 // GenderTile
 // GenderTile
-
+// https://developers.line.biz/en/reference/messaging-api/#get-demographic
 type GenderTile struct {
 
 	/**

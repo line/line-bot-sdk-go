@@ -26,7 +26,7 @@ import (
 
 // BeaconEvent
 // Event object for when a user enters the range of a LINE Beacon. You can reply to beacon events.
-
+// https://developers.line.biz/en/reference/messaging-api/#beacon-event
 type BeaconEvent struct {
 	Event
 

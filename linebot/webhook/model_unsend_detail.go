@@ -21,7 +21,7 @@ package webhook
 
 // UnsendDetail
 // UnsendDetail
-
+// https://developers.line.biz/en/reference/messaging-api/#unsend-event
 type UnsendDetail struct {
 
 	/**

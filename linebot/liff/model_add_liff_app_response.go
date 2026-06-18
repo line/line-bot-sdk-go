@@ -21,7 +21,7 @@ package liff
 
 // AddLiffAppResponse
 // AddLiffAppResponse
-
+// https://developers.line.biz/en/reference/liff-server/#add-liff-app
 type AddLiffAppResponse struct {
 
 	/**

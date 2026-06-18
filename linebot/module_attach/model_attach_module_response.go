@@ -21,7 +21,7 @@ package module_attach
 
 // AttachModuleResponse
 // Attach by operation of the module channel provider
-
+// https://developers.line.biz/en/reference/partner-docs/#link-attach-by-operation-module-channel-provider
 type AttachModuleResponse struct {
 
 	/**

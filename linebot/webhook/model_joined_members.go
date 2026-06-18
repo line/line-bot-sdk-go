@@ -21,7 +21,7 @@ package webhook
 
 // JoinedMembers
 // JoinedMembers
-
+// https://developers.line.biz/en/reference/messaging-api/#member-joined-event
 type JoinedMembers struct {
 
 	/**

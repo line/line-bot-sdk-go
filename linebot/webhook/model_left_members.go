@@ -21,7 +21,7 @@ package webhook
 
 // LeftMembers
 // LeftMembers
-
+// https://developers.line.biz/en/reference/messaging-api/#member-left-event
 type LeftMembers struct {
 
 	/**

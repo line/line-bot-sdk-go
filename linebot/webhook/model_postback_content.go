@@ -21,7 +21,7 @@ package webhook
 
 // PostbackContent
 // PostbackContent
-
+// https://developers.line.biz/en/reference/messaging-api/#postback-event
 type PostbackContent struct {
 
 	/**

@@ -21,7 +21,7 @@ package insight
 
 // GetMessageEventResponseOverview
 // Summary of message statistics.
-
+// https://developers.line.biz/en/reference/messaging-api/#get-insight-message-event-response
 type GetMessageEventResponseOverview struct {
 
 	/**

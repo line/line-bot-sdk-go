@@ -25,7 +25,7 @@ import (
 
 // TextMessageContent
 // TextMessageContent
-
+// https://developers.line.biz/en/reference/messaging-api/#wh-text
 type TextMessageContent struct {
 	MessageContent
 

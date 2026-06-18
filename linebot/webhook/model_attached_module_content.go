@@ -25,7 +25,7 @@ import (
 
 // AttachedModuleContent
 // AttachedModuleContent
-
+// https://developers.line.biz/en/reference/partner-docs/#attached-event
 type AttachedModuleContent struct {
 	ModuleContent
 

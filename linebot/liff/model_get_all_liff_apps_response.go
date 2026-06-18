@@ -21,7 +21,7 @@ package liff
 
 // GetAllLiffAppsResponse
 // GetAllLiffAppsResponse
-
+// https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps
 type GetAllLiffAppsResponse struct {
 
 	/**

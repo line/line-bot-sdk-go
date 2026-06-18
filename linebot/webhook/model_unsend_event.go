@@ -26,7 +26,7 @@ import (
 
 // UnsendEvent
 // Event object for when the user unsends a message.
-
+// https://developers.line.biz/en/reference/messaging-api/#unsend-event
 type UnsendEvent struct {
 	Event
 

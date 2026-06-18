@@ -21,7 +21,7 @@ package insight
 
 // SubscriptionPeriodTile
 // SubscriptionPeriodTile
-
+// https://developers.line.biz/en/reference/messaging-api/#get-demographic
 type SubscriptionPeriodTile struct {
 
 	/**

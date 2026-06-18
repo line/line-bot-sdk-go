@@ -26,7 +26,7 @@ import (
 
 // MembershipEvent
 // This event indicates that a user has subscribed (joined), unsubscribed (left), or renewed the bot&#39;s membership.
-
+// https://developers.line.biz/en/reference/messaging-api/#membership-event
 type MembershipEvent struct {
 	Event
 

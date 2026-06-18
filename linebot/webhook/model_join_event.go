@@ -26,7 +26,7 @@ import (
 
 // JoinEvent
 // Event object for when your LINE Official Account joins a group chat or multi-person chat. You can reply to join events.
-
+// https://developers.line.biz/en/reference/messaging-api/#join-event
 type JoinEvent struct {
 	Event
 

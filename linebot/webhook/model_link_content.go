@@ -21,7 +21,7 @@ package webhook
 
 // LinkContent
 // Content of the account link event.
-
+// https://developers.line.biz/en/reference/messaging-api/#account-link-event
 type LinkContent struct {
 
 	/**

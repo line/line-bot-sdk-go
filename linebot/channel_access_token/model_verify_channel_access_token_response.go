@@ -21,7 +21,7 @@ package channel_access_token
 
 // VerifyChannelAccessTokenResponse
 // Verification result
-
+// https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token-v2-1
 type VerifyChannelAccessTokenResponse struct {
 
 	/**

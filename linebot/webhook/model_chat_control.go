@@ -21,7 +21,7 @@ package webhook
 
 // ChatControl
 // ChatControl
-
+// https://developers.line.biz/en/reference/partner-docs/#activated-event
 type ChatControl struct {
 
 	/**

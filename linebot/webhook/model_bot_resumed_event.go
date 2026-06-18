@@ -26,7 +26,7 @@ import (
 
 // BotResumedEvent
 // This event indicates that the LINE Official Account has returned from the suspended state. Sent to the webhook URL server of the module channel.
-
+// https://developers.line.biz/en/reference/partner-docs/#botresumed-event
 type BotResumedEvent struct {
 	Event
 

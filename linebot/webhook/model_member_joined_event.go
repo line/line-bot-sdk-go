@@ -26,7 +26,7 @@ import (
 
 // MemberJoinedEvent
 // Event object for when a user joins a group chat or multi-person chat that the LINE Official Account is in.
-
+// https://developers.line.biz/en/reference/messaging-api/#member-joined-event
 type MemberJoinedEvent struct {
 	Event
 

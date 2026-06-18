@@ -21,7 +21,7 @@ package insight
 
 // AreaTile
 // AreaTile
-
+// https://developers.line.biz/en/reference/messaging-api/#get-demographic
 type AreaTile struct {
 
 	/**

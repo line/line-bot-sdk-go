@@ -26,7 +26,7 @@ import (
 
 // PnpDeliveryCompletionEvent
 // When a request is made to the LINE notification messages API and delivery of the LINE notification message to the user is completed, a dedicated webhook event (delivery completion event) is sent from the LINE Platform to the webhook URL of the bot server.
-
+// https://developers.line.biz/en/docs/partner-docs/line-notification-messages/message-sending-complete-webhook-event/#overview-delivery-webhook-event
 type PnpDeliveryCompletionEvent struct {
 	Event
 

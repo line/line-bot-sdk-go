@@ -21,7 +21,7 @@ package insight
 
 // GetMessageEventResponseMessage
 // GetMessageEventResponseMessage
-
+// https://developers.line.biz/en/reference/messaging-api/#get-insight-message-event-response
 type GetMessageEventResponseMessage struct {
 
 	/**

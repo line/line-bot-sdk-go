@@ -21,7 +21,7 @@ package channel_access_token
 
 // ErrorResponse
 // Error response of the Channel access token
-
+// https://developers.line.biz/en/reference/messaging-api/#error-responses
 type ErrorResponse struct {
 
 	/**

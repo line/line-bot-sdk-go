@@ -26,7 +26,7 @@ import (
 
 // ActivatedEvent
 // This event indicates that the module channel has been switched to Active Channel by calling the Acquire Control API. Sent to the webhook URL server of the module channel.
-
+// https://developers.line.biz/en/reference/partner-docs/#activated-event
 type ActivatedEvent struct {
 	Event
 

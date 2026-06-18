@@ -21,7 +21,7 @@ package insight
 
 // AppTypeTile
 // AppTypeTile
-
+// https://developers.line.biz/en/reference/messaging-api/#get-demographic
 type AppTypeTile struct {
 
 	/**

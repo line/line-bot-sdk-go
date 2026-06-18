@@ -26,7 +26,7 @@ import (
 
 // ModuleEvent
 // This event indicates that the module channel has been attached to the LINE Official Account. Sent to the webhook URL server of the module channel.
-
+// https://developers.line.biz/en/reference/partner-docs/#module-channel-specific-webhook-events
 type ModuleEvent struct {
 	Event
 

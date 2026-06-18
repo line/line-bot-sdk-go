@@ -25,7 +25,7 @@ import (
 
 // AudioMessageContent
 // AudioMessageContent
-
+// https://developers.line.biz/en/reference/messaging-api/#wh-audio
 type AudioMessageContent struct {
 	MessageContent
 
