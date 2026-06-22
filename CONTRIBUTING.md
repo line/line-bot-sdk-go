@@ -31,9 +31,15 @@ If not, CI status will fail.
 
 When you update code, be sure to check consistencies between generated code and your changes.
 
-### Add unit tests
+### Run checks locally
 
-We use Go's built-in testing framework. To run all tests with race detection `bash script/test.sh`
+Run all CI checks with one command:
+
+`bash script/checkAll.sh`
+
+If you only want to run tests with race detection, use:
+
+`bash script/test.sh`
 
 Especially for bug fixes, please follow this flow for testing and development:
 1. Write a test before making changes to the library and confirm that the test fails.

@@ -35,27 +35,11 @@ jobs:
     - name: Install goimports
       run: go install golang.org/x/tools/cmd/goimports@latest
 
-
     - name: Generate code
       run: python generate-code.py
 
-    - name: run test.sh
-      run: bash script/test.sh
-
-    - name: gofmt check
-      run: bash script/fmt.sh && git diff --exit-code
-
-    - name: go vet
-      run: go vet $(go list ./... | grep -v /examples/)
-
-    - name: Compile example scripts
-      run: |
-        for file in $(find ./examples/ -name '*.go'); do
-          dir=$(dirname $file)
-          pushd $dir
-          go build -o /dev/null
-          popd
-        done
+    - name: Run all checks
+      run: bash script/checkAll.sh
 
   pinact:
     runs-on: ubuntu-latest
