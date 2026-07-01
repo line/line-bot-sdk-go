@@ -1,6 +1,6 @@
 /**
- * LINE Messaging API
- * This document describes LINE Messaging API.
+ * LINE Messaging API(Insight)
+ * This document describes LINE Messaging API(Insight).
  *
  * The version of the OpenAPI document: 0.0.1
  *
@@ -17,18 +17,20 @@
  */
 
 //go:generate python3 ../../generate-code.py
-package manage_audience
+package insight
 
-/*
- * Failed type
- */
+// GetRichMenuInsightSummaryResponseClick
+// Click metrics for a single tappable area of the rich menu.
 
-// AudienceGroupFailedType type
-type AudienceGroupFailedType string
+type GetRichMenuInsightSummaryResponseClick struct {
 
-// AudienceGroupFailedType constants
-const (
-	AudienceGroupFailedType_AUDIENCE_GROUP_AUDIENCE_INSUFFICIENT AudienceGroupFailedType = "AUDIENCE_GROUP_AUDIENCE_INSUFFICIENT"
+	/**
+	 * Get Bounds
+	 */
+	Bounds *GetRichMenuInsightSummaryResponseBounds `json:"bounds"`
 
-	AudienceGroupFailedType_INTERNAL_ERROR AudienceGroupFailedType = "INTERNAL_ERROR"
-)
+	/**
+	 * Get Metrics
+	 */
+	Metrics *GetRichMenuInsightSummaryResponseMetrics `json:"metrics"`
+}

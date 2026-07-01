@@ -30,6 +30,7 @@ import (
 	"net/http"
 	"net/url"
 	"path"
+	"strings"
 
 	"github.com/line/line-bot-sdk-go/v8/linebot"
 )
@@ -375,6 +376,186 @@ func (client *InsightAPI) GetNumberOfMessageDeliveriesWithHttpInfo(
 
 	decoder := json.NewDecoder(res.Body)
 	result := GetNumberOfMessageDeliveriesResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
+	}
+	return res, &result, nil
+
+}
+
+// GetRichMenuInsightDaily
+// Get rich menu insight daily
+// Gets rich menu statistics broken down by day for the specified period, for a rich menu created via the Messaging API. Returns the daily impression count for the whole rich menu and the daily click count for each tappable area. When the total number of unique clicks during the period is below the privacy threshold, only `richMenuId` is returned and the other fields are omitted.
+// Parameters:
+//        richMenuId             ID of the rich menu created via the Messaging API.
+//        from             Start date of the aggregation period (inclusive). Must be within the most recent 3 years.  Format: yyyyMMdd (e.g. 20260213) Time zone: UTC+9
+//        to             End date of the aggregation period (inclusive). The end date can be specified for up to 99 days after the start date.  Format: yyyyMMdd (e.g. 20260215) Time zone: UTC+9
+
+// https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-insight-daily
+func (client *InsightAPI) GetRichMenuInsightDaily(
+
+	richMenuId string,
+
+	from string,
+
+	to string,
+
+) (*GetRichMenuInsightDailyResponse, error) {
+	_, body, error := client.GetRichMenuInsightDailyWithHttpInfo(
+
+		richMenuId,
+
+		from,
+
+		to,
+	)
+	return body, error
+}
+
+// GetRichMenuInsightDaily
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+// Get rich menu insight daily
+// Gets rich menu statistics broken down by day for the specified period, for a rich menu created via the Messaging API. Returns the daily impression count for the whole rich menu and the daily click count for each tappable area. When the total number of unique clicks during the period is below the privacy threshold, only `richMenuId` is returned and the other fields are omitted.
+// Parameters:
+//        richMenuId             ID of the rich menu created via the Messaging API.
+//        from             Start date of the aggregation period (inclusive). Must be within the most recent 3 years.  Format: yyyyMMdd (e.g. 20260213) Time zone: UTC+9
+//        to             End date of the aggregation period (inclusive). The end date can be specified for up to 99 days after the start date.  Format: yyyyMMdd (e.g. 20260215) Time zone: UTC+9
+
+// https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-insight-daily
+func (client *InsightAPI) GetRichMenuInsightDailyWithHttpInfo(
+
+	richMenuId string,
+
+	from string,
+
+	to string,
+
+) (*http.Response, *GetRichMenuInsightDailyResponse, error) {
+	path := "/v2/bot/insight/richmenu/{richMenuId}/daily"
+
+	path = strings.Replace(path, "{richMenuId}", richMenuId, -1)
+
+	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	query := url.Values{}
+	query.Add("from", from)
+	query.Add("to", to)
+
+	req.URL.RawQuery = query.Encode()
+
+	res, err := client.Do(req)
+
+	if err != nil {
+		return res, nil, err
+	}
+
+	if res.StatusCode/100 != 2 {
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
+		if err != nil {
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
+		}
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
+	}
+
+	defer res.Body.Close()
+
+	decoder := json.NewDecoder(res.Body)
+	result := GetRichMenuInsightDailyResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
+	}
+	return res, &result, nil
+
+}
+
+// GetRichMenuInsightSummary
+// Get rich menu insight summary
+// Gets a summary of rich menu statistics for the specified period, for a rich menu created via the Messaging API. Returns the total impression count for the whole rich menu and the click count for each tappable area, aggregated over the entire period as a single result. When the total number of unique clicks during the period is below the privacy threshold, only `richMenuId` is returned and the other fields are omitted.
+// Parameters:
+//        richMenuId             ID of the rich menu created via the Messaging API.
+//        from             Start date of the aggregation period (inclusive). Must be within the most recent 3 years.  Format: yyyyMMdd (e.g. 20260213) Time zone: UTC+9
+//        to             End date of the aggregation period (inclusive). The end date can be specified for up to 396 days after the start date.  Format: yyyyMMdd (e.g. 20260215) Time zone: UTC+9
+
+// https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-insight-summary
+func (client *InsightAPI) GetRichMenuInsightSummary(
+
+	richMenuId string,
+
+	from string,
+
+	to string,
+
+) (*GetRichMenuInsightSummaryResponse, error) {
+	_, body, error := client.GetRichMenuInsightSummaryWithHttpInfo(
+
+		richMenuId,
+
+		from,
+
+		to,
+	)
+	return body, error
+}
+
+// GetRichMenuInsightSummary
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+// Get rich menu insight summary
+// Gets a summary of rich menu statistics for the specified period, for a rich menu created via the Messaging API. Returns the total impression count for the whole rich menu and the click count for each tappable area, aggregated over the entire period as a single result. When the total number of unique clicks during the period is below the privacy threshold, only `richMenuId` is returned and the other fields are omitted.
+// Parameters:
+//        richMenuId             ID of the rich menu created via the Messaging API.
+//        from             Start date of the aggregation period (inclusive). Must be within the most recent 3 years.  Format: yyyyMMdd (e.g. 20260213) Time zone: UTC+9
+//        to             End date of the aggregation period (inclusive). The end date can be specified for up to 396 days after the start date.  Format: yyyyMMdd (e.g. 20260215) Time zone: UTC+9
+
+// https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-insight-summary
+func (client *InsightAPI) GetRichMenuInsightSummaryWithHttpInfo(
+
+	richMenuId string,
+
+	from string,
+
+	to string,
+
+) (*http.Response, *GetRichMenuInsightSummaryResponse, error) {
+	path := "/v2/bot/insight/richmenu/{richMenuId}/summary"
+
+	path = strings.Replace(path, "{richMenuId}", richMenuId, -1)
+
+	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	query := url.Values{}
+	query.Add("from", from)
+	query.Add("to", to)
+
+	req.URL.RawQuery = query.Encode()
+
+	res, err := client.Do(req)
+
+	if err != nil {
+		return res, nil, err
+	}
+
+	if res.StatusCode/100 != 2 {
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
+		if err != nil {
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
+		}
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
+	}
+
+	defer res.Body.Close()
+
+	decoder := json.NewDecoder(res.Body)
+	result := GetRichMenuInsightSummaryResponse{}
 	if err := decoder.Decode(&result); err != nil {
 		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
