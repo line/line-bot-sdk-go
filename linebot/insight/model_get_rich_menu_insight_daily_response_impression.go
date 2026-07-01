@@ -1,6 +1,6 @@
 /**
- * LINE Messaging API
- * This document describes LINE Messaging API.
+ * LINE Messaging API(Insight)
+ * This document describes LINE Messaging API(Insight).
  *
  * The version of the OpenAPI document: 0.0.1
  *
@@ -17,18 +17,15 @@
  */
 
 //go:generate python3 ../../generate-code.py
-package manage_audience
+package insight
 
-/*
- * Failed type
- */
+// GetRichMenuInsightDailyResponseImpression
+// Daily impression metrics for the whole rich menu.
 
-// AudienceGroupFailedType type
-type AudienceGroupFailedType string
+type GetRichMenuInsightDailyResponseImpression struct {
 
-// AudienceGroupFailedType constants
-const (
-	AudienceGroupFailedType_AUDIENCE_GROUP_AUDIENCE_INSUFFICIENT AudienceGroupFailedType = "AUDIENCE_GROUP_AUDIENCE_INSUFFICIENT"
-
-	AudienceGroupFailedType_INTERNAL_ERROR AudienceGroupFailedType = "INTERNAL_ERROR"
-)
+	/**
+	 * Per-day impression metrics. (Required)
+	 */
+	Metrics []GetRichMenuInsightDailyResponseDailyMetrics `json:"metrics"`
+}
