@@ -7,15 +7,12 @@ import java.util.Map;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenProperty;
 import org.openapitools.codegen.CodegenType;
-import org.openapitools.codegen.SupportingFile;
 import org.openapitools.codegen.languages.AbstractGoCodegen;
 import org.openapitools.codegen.model.ModelMap;
 import org.openapitools.codegen.model.ModelsMap;
 
 // https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator/src/main/java/org/openapitools/codegen/languages/AbstractGoCodegen.java
 public class LineBotSdkGoGeneratorGenerator extends AbstractGoCodegen {
-    protected String outputTestFolder = "";
-    protected String testFolder = "tests";
 
     /**
      * Configures the type of generator.
@@ -44,7 +41,6 @@ public class LineBotSdkGoGeneratorGenerator extends AbstractGoCodegen {
     public LineBotSdkGoGeneratorGenerator() {
         super();
         embeddedTemplateDir = templateDir = "line-bot-sdk-go-generator";
-        apiTestTemplateFiles.put("line-bot-sdk-go-generator/api_test.pebble", "_test.go");
         modelTemplateFiles.remove("model.mustache");
         modelTemplateFiles.put("line-bot-sdk-go-generator/model.pebble", ".go");
         apiTemplateFiles.remove("api-single.mustache");
@@ -115,23 +111,6 @@ public class LineBotSdkGoGeneratorGenerator extends AbstractGoCodegen {
         } else {
             return var.datatypeWithEnum;
         }
-    }
-
-    @Override
-    public String apiTestFileFolder() {
-        return (outputTestFolder + File.separator + testFolder + File.separator + apiPackage().replace('.', File.separatorChar)).replace('/', File.separatorChar);
-    }
-
-    @Override
-    public void setOutputDir(String dir) {
-        super.setOutputDir(dir);
-        if (this.outputTestFolder.isEmpty()) {
-            setOutputTestFolder(dir);
-        }
-    }
-
-    public void setOutputTestFolder(String outputTestFolder) {
-        this.outputTestFolder = outputTestFolder;
     }
 
     @Override
