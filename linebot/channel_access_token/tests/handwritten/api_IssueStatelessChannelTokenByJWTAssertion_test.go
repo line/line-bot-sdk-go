@@ -1,3 +1,15 @@
+package tests
+
+import (
+	"io"
+	"net/http"
+	"net/http/httptest"
+	"net/url"
+	"testing"
+
+	"github.com/line/line-bot-sdk-go/v8/linebot/channel_access_token"
+)
+
 func TestIssueStatelessChannelTokenByJWTAssertion(t *testing.T) {
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -33,8 +45,8 @@ func TestIssueStatelessChannelTokenByJWTAssertion(t *testing.T) {
 		}),
 	)
 
-	client, err := {{ packageName }}.New{{ classname }}(
-		{{ packageName }}.WithEndpoint(server.URL),
+	client, err := channel_access_token.NewChannelAccessTokenAPI(
+		channel_access_token.WithEndpoint(server.URL),
 	)
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
@@ -45,7 +57,9 @@ func TestIssueStatelessChannelTokenByJWTAssertion(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to call API: %v", err)
 	}
-	log.Printf("Got response: %v", resp)
+	if resp.AccessToken != "token" {
+		t.Errorf("Expected AccessToken=token, got %s", resp.AccessToken)
+	}
 }
 
 func TestIssueStatelessChannelTokenByClientSecret(t *testing.T) {
@@ -83,8 +97,8 @@ func TestIssueStatelessChannelTokenByClientSecret(t *testing.T) {
 		}),
 	)
 
-	client, err := {{ packageName }}.New{{ classname }}(
-		{{ packageName }}.WithEndpoint(server.URL),
+	client, err := channel_access_token.NewChannelAccessTokenAPI(
+		channel_access_token.WithEndpoint(server.URL),
 	)
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
@@ -96,5 +110,7 @@ func TestIssueStatelessChannelTokenByClientSecret(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to call API: %v", err)
 	}
-	log.Printf("Got response: %v", resp)
+	if resp.AccessToken != "token" {
+		t.Errorf("Expected AccessToken=token, got %s", resp.AccessToken)
+	}
 }
