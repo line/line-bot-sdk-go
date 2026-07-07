@@ -184,6 +184,16 @@ func setDiscriminatorPropertyEvent(r EventInterface) EventInterface {
 			v.Type = "message"
 		}
 		return v
+	case *MessageEditedEvent:
+		if v.Type == "" {
+			v.Type = "messageEdited"
+		}
+		return v
+	case MessageEditedEvent:
+		if v.Type == "" {
+			v.Type = "messageEdited"
+		}
+		return v
 	case *ModuleEvent:
 		if v.Type == "" {
 			v.Type = "module"
@@ -359,6 +369,12 @@ func UnmarshalEvent(data []byte) (EventInterface, error) {
 			return nil, fmt.Errorf("UnmarshalEvent: Cannot read message: %w", err)
 		}
 		return message, nil
+	case "messageEdited":
+		var messageEdited MessageEditedEvent
+		if err := json.Unmarshal(data, &messageEdited); err != nil {
+			return nil, fmt.Errorf("UnmarshalEvent: Cannot read messageEdited: %w", err)
+		}
+		return messageEdited, nil
 	case "module":
 		var module ModuleEvent
 		if err := json.Unmarshal(data, &module); err != nil {

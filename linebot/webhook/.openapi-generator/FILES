@@ -37,6 +37,7 @@ model_membership_event.go
 model_mention.go
 model_mentionee.go
 model_message_content.go
+model_message_edited_event.go
 model_message_event.go
 model_module_content.go
 model_module_event.go
