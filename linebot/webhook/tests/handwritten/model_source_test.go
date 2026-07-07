@@ -34,6 +34,40 @@ func TestStickerMessage(t *testing.T) {
 	}
 }
 
+func TestMessageEditedEvent(t *testing.T) {
+	var cb webhook.CallbackRequest
+	if err := json.Unmarshal([]byte(`{
+		"destination": "Uaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+		"events": [
+			{
+				"type": "messageEdited",
+				"timestamp": 1462629479859,
+				"mode": "active",
+				"webhookEventId": "01H810E2VKWTRCJER1MMDP2BA5",
+				"deliveryContext": {"isRedelivery": false},
+				"replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+				"source": {
+					"type": "user",
+					"userId": "U206d25c2ea6bd87c17655609a1c37cb8"
+				},
+				"message": {
+					"id": "325708",
+					"type": "text",
+					"text": "Hello, edited world",
+					"quoteToken": "q3Plxr4AgKd"
+				}
+			}
+		]
+	}`), &cb); err != nil {
+		t.Fatalf("Failed to unmarshal callback request: %v", err)
+	}
+
+	_, ok := cb.Events[0].(webhook.MessageEditedEvent)
+	if !ok {
+		t.Fatalf("Failed to cast to MessageEditedEvent: %v", cb.Events[0])
+	}
+}
+
 func generateSignature(secret string, body []byte) string {
 	mac := hmac.New(sha256.New, []byte(secret))
 	mac.Write(body)
