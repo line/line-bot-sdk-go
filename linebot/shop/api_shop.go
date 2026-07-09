@@ -146,6 +146,7 @@ func (client *ShopAPI) MissionStickerV3WithHttpInfo(
 	missionStickerRequest *MissionStickerRequest,
 
 ) (*http.Response, struct{}, error) {
+
 	path := "/shop/v3/mission"
 
 	var buf bytes.Buffer

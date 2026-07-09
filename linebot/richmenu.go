@@ -545,7 +545,11 @@ func (call *UploadRichMenuImageCall) Do() (*BasicResponse, error) {
 	}
 	body.Seek(0, 0)
 	endpoint := fmt.Sprintf(APIEndpointUploadRichMenuImage, call.richMenuID)
-	req, err := http.NewRequest("POST", call.c.url(call.c.endpointBaseData, endpoint), body)
+	u, err := call.c.url(call.c.endpointBaseData, endpoint)
+	if err != nil {
+		return nil, err
+	}
+	req, err := http.NewRequest("POST", u, body)
 	if err != nil {
 		return nil, err
 	}

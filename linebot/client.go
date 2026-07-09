@@ -201,10 +201,13 @@ func WithEndpointBaseData(endpointBaseData string) ClientOption {
 	}
 }
 
-func (client *Client) url(base *url.URL, endpoint string) string {
+func (client *Client) url(base *url.URL, endpoint string) (string, error) {
+	if err := validateEndpoint(endpoint); err != nil {
+		return "", err
+	}
 	u := *base
 	u.Path = path.Join(u.Path, endpoint)
-	return u.String()
+	return u.String(), nil
 }
 
 func (client *Client) do(ctx context.Context, req *http.Request) (*http.Response, error) {
@@ -220,7 +223,11 @@ func (client *Client) do(ctx context.Context, req *http.Request) (*http.Response
 }
 
 func (client *Client) get(ctx context.Context, base *url.URL, endpoint string, query url.Values) (*http.Response, error) {
-	req, err := http.NewRequest(http.MethodGet, client.url(base, endpoint), nil)
+	u, err := client.url(base, endpoint)
+	if err != nil {
+		return nil, err
+	}
+	req, err := http.NewRequest(http.MethodGet, u, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -231,7 +238,11 @@ func (client *Client) get(ctx context.Context, base *url.URL, endpoint string, q
 }
 
 func (client *Client) post(ctx context.Context, endpoint string, body io.Reader) (*http.Response, error) {
-	req, err := http.NewRequest(http.MethodPost, client.url(client.endpointBase, endpoint), body)
+	u, err := client.url(client.endpointBase, endpoint)
+	if err != nil {
+		return nil, err
+	}
+	req, err := http.NewRequest(http.MethodPost, u, body)
 	if err != nil {
 		return nil, err
 	}
@@ -240,7 +251,11 @@ func (client *Client) post(ctx context.Context, endpoint string, body io.Reader)
 }
 
 func (client *Client) postForm(ctx context.Context, endpoint string, body io.Reader) (*http.Response, error) {
-	req, err := http.NewRequest("POST", client.url(client.endpointBase, endpoint), body)
+	u, err := client.url(client.endpointBase, endpoint)
+	if err != nil {
+		return nil, err
+	}
+	req, err := http.NewRequest("POST", u, body)
 	if err != nil {
 		return nil, err
 	}
@@ -253,7 +268,11 @@ func (client *Client) postFormFile(ctx context.Context, endpoint string, values 
 	if err != nil {
 		return nil, err
 	}
-	req, err := http.NewRequest(http.MethodPost, client.url(client.endpointBaseData, endpoint), &b)
+	u, err := client.url(client.endpointBaseData, endpoint)
+	if err != nil {
+		return nil, err
+	}
+	req, err := http.NewRequest(http.MethodPost, u, &b)
 	if err != nil {
 		return nil, err
 	}
@@ -262,7 +281,11 @@ func (client *Client) postFormFile(ctx context.Context, endpoint string, values 
 }
 
 func (client *Client) put(ctx context.Context, endpoint string, body io.Reader) (*http.Response, error) {
-	req, err := http.NewRequest(http.MethodPut, client.url(client.endpointBase, endpoint), body)
+	u, err := client.url(client.endpointBase, endpoint)
+	if err != nil {
+		return nil, err
+	}
+	req, err := http.NewRequest(http.MethodPut, u, body)
 	if err != nil {
 		return nil, err
 	}
@@ -275,7 +298,11 @@ func (client *Client) putFormFile(ctx context.Context, endpoint string, values m
 	if err != nil {
 		return nil, err
 	}
-	req, err := http.NewRequest(http.MethodPut, client.url(client.endpointBaseData, endpoint), &b)
+	u, err := client.url(client.endpointBaseData, endpoint)
+	if err != nil {
+		return nil, err
+	}
+	req, err := http.NewRequest(http.MethodPut, u, &b)
 	if err != nil {
 		return nil, err
 	}
@@ -284,7 +311,11 @@ func (client *Client) putFormFile(ctx context.Context, endpoint string, values m
 }
 
 func (client *Client) delete(ctx context.Context, endpoint string) (*http.Response, error) {
-	req, err := http.NewRequest(http.MethodDelete, client.url(client.endpointBase, endpoint), nil)
+	u, err := client.url(client.endpointBase, endpoint)
+	if err != nil {
+		return nil, err
+	}
+	req, err := http.NewRequest(http.MethodDelete, u, nil)
 	if err != nil {
 		return nil, err
 	}

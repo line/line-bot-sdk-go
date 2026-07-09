@@ -165,6 +165,7 @@ func (client *ManageAudienceBlobAPI) AddUserIdsToAudienceWithHttpInfo(
 	uploadDescription string,
 
 ) (*http.Response, struct{}, error) {
+
 	path := "/v2/bot/audienceGroup/upload/byFile"
 
 	body := &bytes.Buffer{}
@@ -269,6 +270,7 @@ func (client *ManageAudienceBlobAPI) CreateAudienceForUploadingUserIdsWithHttpIn
 	uploadDescription string,
 
 ) (*http.Response, *CreateAudienceGroupResponse, error) {
+
 	path := "/v2/bot/audienceGroup/upload/byFile"
 
 	body := &bytes.Buffer{}

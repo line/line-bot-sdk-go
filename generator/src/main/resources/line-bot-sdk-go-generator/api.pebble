@@ -15,7 +15,6 @@ import (
 	"errors"
 	"log"
     "encoding/json"
-    "strings"
 	"mime/multipart"
     "net/url"
     "net/http"
@@ -203,10 +202,18 @@ func (client *{{ classname }}) {{ op.operationId }}WithHttpInfo(
     {% endif %}
 {% endfor %}
 ) (*http.Response, {% if op.isResponseFile %}*http.Response{% elseif op.returnType %}*{{ op.returnType }}{% else %}struct{}{% endif %}, error) {
-    path := "{{ op.path }}"
+    {% if op.pathParams is not empty %}
+    path, err := linebot.BuildPath("{{ op.path }}", map[string]string{
     {% for pp in op.pathParams %}
-    path = strings.Replace(path, "{{ "{" }}{{ pp.paramName }}{{ "}" }}", {{ stringify(pp) }}, -1)
+        "{{ pp.paramName }}": {{ stringify(pp) }},
     {% endfor %}
+    })
+    if err != nil {
+        return nil, {{ nilval }}, err
+    }
+    {% else %}
+    path := "{{ op.path }}"
+    {% endif %}
     {% if op.bodyParam != null and op.bodyParam.isFile %}
 	req, err := http.NewRequest(http.Method{{ op.httpMethod }}, client.Url(path), {{ op.bodyParam.paramName }}Reader)
 	if err != nil {

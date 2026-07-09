@@ -144,6 +144,7 @@ func (client *ChannelAccessTokenAPI) GetsAllValidChannelAccessTokenKeyIdsWithHtt
 	clientAssertion string,
 
 ) (*http.Response, *ChannelAccessTokenKeyIdsResponse, error) {
+
 	path := "/oauth2/v2.1/tokens/kid"
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
@@ -232,6 +233,7 @@ func (client *ChannelAccessTokenAPI) IssueChannelTokenWithHttpInfo(
 	clientSecret string,
 
 ) (*http.Response, *IssueShortLivedChannelAccessTokenResponse, error) {
+
 	path := "/v2/oauth/accessToken"
 
 	vs := url.Values{
@@ -323,6 +325,7 @@ func (client *ChannelAccessTokenAPI) IssueChannelTokenByJWTWithHttpInfo(
 	clientAssertion string,
 
 ) (*http.Response, *IssueChannelAccessTokenResponse, error) {
+
 	path := "/oauth2/v2.1/token"
 
 	vs := url.Values{
@@ -434,6 +437,7 @@ func (client *ChannelAccessTokenAPI) IssueStatelessChannelTokenWithHttpInfo(
 	clientSecret string,
 
 ) (*http.Response, *IssueStatelessChannelAccessTokenResponse, error) {
+
 	path := "/oauth2/v3/token"
 
 	vs := url.Values{}
@@ -520,6 +524,7 @@ func (client *ChannelAccessTokenAPI) RevokeChannelTokenWithHttpInfo(
 	accessToken string,
 
 ) (*http.Response, struct{}, error) {
+
 	path := "/v2/oauth/revoke"
 
 	vs := url.Values{
@@ -604,6 +609,7 @@ func (client *ChannelAccessTokenAPI) RevokeChannelTokenByJWTWithHttpInfo(
 	accessToken string,
 
 ) (*http.Response, struct{}, error) {
+
 	path := "/oauth2/v2.1/revoke"
 
 	vs := url.Values{
@@ -674,6 +680,7 @@ func (client *ChannelAccessTokenAPI) VerifyChannelTokenWithHttpInfo(
 	accessToken string,
 
 ) (*http.Response, *VerifyChannelAccessTokenResponse, error) {
+
 	path := "/v2/oauth/verify"
 
 	vs := url.Values{
@@ -747,6 +754,7 @@ func (client *ChannelAccessTokenAPI) VerifyChannelTokenByJWTWithHttpInfo(
 	accessToken string,
 
 ) (*http.Response, *VerifyChannelAccessTokenResponse, error) {
+
 	path := "/oauth2/v2.1/verify"
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)

@@ -218,6 +218,7 @@ func (client *LineModuleAttachAPI) AttachModuleWithHttpInfo(
 	brandType string,
 
 ) (*http.Response, *AttachModuleResponse, error) {
+
 	path := "/module/auth/v1/token"
 
 	vs := url.Values{

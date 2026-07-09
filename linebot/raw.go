@@ -22,7 +22,11 @@ import (
 
 // NewRawCall method
 func (client *Client) NewRawCall(method string, endpoint string) (*RawCall, error) {
-	req, err := http.NewRequest(method, client.url(client.endpointBase, endpoint), nil)
+	u, err := client.url(client.endpointBase, endpoint)
+	if err != nil {
+		return nil, err
+	}
+	req, err := http.NewRequest(method, u, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -34,7 +38,11 @@ func (client *Client) NewRawCall(method string, endpoint string) (*RawCall, erro
 
 // NewRawCallWithBody method
 func (client *Client) NewRawCallWithBody(method string, endpoint string, body io.Reader) (*RawCall, error) {
-	req, err := http.NewRequest(method, client.url(client.endpointBase, endpoint), body)
+	u, err := client.url(client.endpointBase, endpoint)
+	if err != nil {
+		return nil, err
+	}
+	req, err := http.NewRequest(method, u, body)
 	if err != nil {
 		return nil, err
 	}

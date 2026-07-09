@@ -31,7 +31,6 @@ import (
 	"net/url"
 	"path"
 	"strconv"
-	"strings"
 
 	"github.com/line/line-bot-sdk-go/v8/linebot"
 )
@@ -156,9 +155,14 @@ func (client *LineModuleAPI) AcquireChatControlWithHttpInfo(
 	acquireChatControlRequest *AcquireChatControlRequest,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/chat/{chatId}/control/acquire"
 
-	path = strings.Replace(path, "{chatId}", chatId, -1)
+	path, err := linebot.BuildPath("/v2/bot/chat/{chatId}/control/acquire", map[string]string{
+
+		"chatId": chatId,
+	})
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -225,6 +229,7 @@ func (client *LineModuleAPI) DetachModuleWithHttpInfo(
 	detachModuleRequest *DetachModuleRequest,
 
 ) (*http.Response, struct{}, error) {
+
 	path := "/v2/bot/channel/detach"
 
 	var buf bytes.Buffer
@@ -300,6 +305,7 @@ func (client *LineModuleAPI) GetModulesWithHttpInfo(
 	limit int32,
 
 ) (*http.Response, *GetModulesResponse, error) {
+
 	path := "/v2/bot/list"
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
@@ -374,9 +380,14 @@ func (client *LineModuleAPI) ReleaseChatControlWithHttpInfo(
 	chatId string,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/chat/{chatId}/control/release"
 
-	path = strings.Replace(path, "{chatId}", chatId, -1)
+	path, err := linebot.BuildPath("/v2/bot/chat/{chatId}/control/release", map[string]string{
+
+		"chatId": chatId,
+	})
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), nil)
 	if err != nil {

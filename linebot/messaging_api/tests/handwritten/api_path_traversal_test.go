@@ -73,6 +73,32 @@ func TestPathTraversal_GetProfile_NormalInput(t *testing.T) {
 	}
 }
 
+func TestPathTraversal_GetProfile_PlaceholderBleed(t *testing.T) {
+	server := httptest.NewServer(
+		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if r.URL.Path != "/v2/bot/user/%7BrichMenuId%7D/richmenu/real-menu-id" {
+				t.Errorf("unexpected path: %s", r.URL.Path)
+			}
+			w.WriteHeader(http.StatusOK)
+			w.Write([]byte(`{}`))
+		}),
+	)
+	defer server.Close()
+
+	client, err := messaging_api.NewMessagingApiAPI(
+		"channelToken",
+		messaging_api.WithEndpoint(server.URL),
+	)
+	if err != nil {
+		t.Fatalf("Failed to create client: %v", err)
+	}
+
+	_, err = client.LinkRichMenuIdToUser("{richMenuId}", "real-menu-id")
+	if err != nil {
+		t.Errorf("placeholder in value should be escaped, not expanded: %v", err)
+	}
+}
+
 func TestPathTraversal_GetProfile_DotsInMiddle(t *testing.T) {
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

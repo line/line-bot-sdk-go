@@ -30,7 +30,6 @@ import (
 	"net/http"
 	"net/url"
 	"path"
-	"strings"
 
 	"github.com/line/line-bot-sdk-go/v8/linebot"
 )
@@ -147,6 +146,7 @@ func (client *LiffAPI) AddLIFFAppWithHttpInfo(
 	addLiffAppRequest *AddLiffAppRequest,
 
 ) (*http.Response, *AddLiffAppResponse, error) {
+
 	path := "/liff/v1/apps"
 
 	var buf bytes.Buffer
@@ -219,9 +219,14 @@ func (client *LiffAPI) DeleteLIFFAppWithHttpInfo(
 	liffId string,
 
 ) (*http.Response, struct{}, error) {
-	path := "/liff/v1/apps/{liffId}"
 
-	path = strings.Replace(path, "{liffId}", liffId, -1)
+	path, err := linebot.BuildPath("/liff/v1/apps/{liffId}", map[string]string{
+
+		"liffId": liffId,
+	})
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	req, err := http.NewRequest(http.MethodDelete, client.Url(path), nil)
 	if err != nil {
@@ -269,6 +274,7 @@ func (client *LiffAPI) GetAllLIFFApps() (*GetAllLiffAppsResponse, error) {
 
 // https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps
 func (client *LiffAPI) GetAllLIFFAppsWithHttpInfo() (*http.Response, *GetAllLiffAppsResponse, error) {
+
 	path := "/liff/v1/apps"
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
@@ -343,9 +349,14 @@ func (client *LiffAPI) UpdateLIFFAppWithHttpInfo(
 	updateLiffAppRequest *UpdateLiffAppRequest,
 
 ) (*http.Response, struct{}, error) {
-	path := "/liff/v1/apps/{liffId}"
 
-	path = strings.Replace(path, "{liffId}", liffId, -1)
+	path, err := linebot.BuildPath("/liff/v1/apps/{liffId}", map[string]string{
+
+		"liffId": liffId,
+	})
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)

@@ -30,7 +30,6 @@ import (
 	"net/http"
 	"net/url"
 	"path"
-	"strings"
 
 	"github.com/line/line-bot-sdk-go/v8/linebot"
 )
@@ -134,6 +133,7 @@ func (client *InsightAPI) GetFriendsDemographics() (*GetFriendsDemographicsRespo
 
 // https://developers.line.biz/en/reference/messaging-api/#get-demographic
 func (client *InsightAPI) GetFriendsDemographicsWithHttpInfo() (*http.Response, *GetFriendsDemographicsResponse, error) {
+
 	path := "/v2/bot/insight/demographic"
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
@@ -200,6 +200,7 @@ func (client *InsightAPI) GetMessageEventWithHttpInfo(
 	requestId string,
 
 ) (*http.Response, *GetMessageEventResponse, error) {
+
 	path := "/v2/bot/insight/message/event"
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
@@ -271,6 +272,7 @@ func (client *InsightAPI) GetNumberOfFollowersWithHttpInfo(
 	date string,
 
 ) (*http.Response, *GetNumberOfFollowersResponse, error) {
+
 	path := "/v2/bot/insight/followers"
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
@@ -344,6 +346,7 @@ func (client *InsightAPI) GetNumberOfMessageDeliveriesWithHttpInfo(
 	date string,
 
 ) (*http.Response, *GetNumberOfMessageDeliveriesResponse, error) {
+
 	path := "/v2/bot/insight/message/delivery"
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
@@ -431,9 +434,14 @@ func (client *InsightAPI) GetRichMenuInsightDailyWithHttpInfo(
 	to string,
 
 ) (*http.Response, *GetRichMenuInsightDailyResponse, error) {
-	path := "/v2/bot/insight/richmenu/{richMenuId}/daily"
 
-	path = strings.Replace(path, "{richMenuId}", richMenuId, -1)
+	path, err := linebot.BuildPath("/v2/bot/insight/richmenu/{richMenuId}/daily", map[string]string{
+
+		"richMenuId": richMenuId,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -521,9 +529,14 @@ func (client *InsightAPI) GetRichMenuInsightSummaryWithHttpInfo(
 	to string,
 
 ) (*http.Response, *GetRichMenuInsightSummaryResponse, error) {
-	path := "/v2/bot/insight/richmenu/{richMenuId}/summary"
 
-	path = strings.Replace(path, "{richMenuId}", richMenuId, -1)
+	path, err := linebot.BuildPath("/v2/bot/insight/richmenu/{richMenuId}/summary", map[string]string{
+
+		"richMenuId": richMenuId,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -611,6 +624,7 @@ func (client *InsightAPI) GetStatisticsPerUnitWithHttpInfo(
 	to string,
 
 ) (*http.Response, *GetStatisticsPerUnitResponse, error) {
+
 	path := "/v2/bot/insight/message/event/aggregation"
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)

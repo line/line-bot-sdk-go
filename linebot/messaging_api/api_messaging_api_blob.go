@@ -30,7 +30,6 @@ import (
 	"net/http"
 	"net/url"
 	"path"
-	"strings"
 
 	"github.com/line/line-bot-sdk-go/v8/linebot"
 )
@@ -149,9 +148,14 @@ func (client *MessagingApiBlobAPI) GetMessageContentWithHttpInfo(
 	messageId string,
 
 ) (*http.Response, *http.Response, error) {
-	path := "/v2/bot/message/{messageId}/content"
 
-	path = strings.Replace(path, "{messageId}", messageId, -1)
+	path, err := linebot.BuildPath("/v2/bot/message/{messageId}/content", map[string]string{
+
+		"messageId": messageId,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -212,9 +216,14 @@ func (client *MessagingApiBlobAPI) GetMessageContentPreviewWithHttpInfo(
 	messageId string,
 
 ) (*http.Response, *http.Response, error) {
-	path := "/v2/bot/message/{messageId}/content/preview"
 
-	path = strings.Replace(path, "{messageId}", messageId, -1)
+	path, err := linebot.BuildPath("/v2/bot/message/{messageId}/content/preview", map[string]string{
+
+		"messageId": messageId,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -273,9 +282,14 @@ func (client *MessagingApiBlobAPI) GetMessageContentTranscodingByMessageIdWithHt
 	messageId string,
 
 ) (*http.Response, *GetMessageContentTranscodingResponse, error) {
-	path := "/v2/bot/message/{messageId}/content/transcoding"
 
-	path = strings.Replace(path, "{messageId}", messageId, -1)
+	path, err := linebot.BuildPath("/v2/bot/message/{messageId}/content/transcoding", map[string]string{
+
+		"messageId": messageId,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -343,9 +357,14 @@ func (client *MessagingApiBlobAPI) GetRichMenuImageWithHttpInfo(
 	richMenuId string,
 
 ) (*http.Response, *http.Response, error) {
-	path := "/v2/bot/richmenu/{richMenuId}/content"
 
-	path = strings.Replace(path, "{richMenuId}", richMenuId, -1)
+	path, err := linebot.BuildPath("/v2/bot/richmenu/{richMenuId}/content", map[string]string{
+
+		"richMenuId": richMenuId,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -417,9 +436,14 @@ func (client *MessagingApiBlobAPI) SetRichMenuImageWithHttpInfo(
 	bodyReader io.Reader,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/richmenu/{richMenuId}/content"
 
-	path = strings.Replace(path, "{richMenuId}", richMenuId, -1)
+	path, err := linebot.BuildPath("/v2/bot/richmenu/{richMenuId}/content", map[string]string{
+
+		"richMenuId": richMenuId,
+	})
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), bodyReader)
 	if err != nil {
