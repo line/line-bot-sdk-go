@@ -3,12 +3,13 @@ package tests
 import (
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/line/line-bot-sdk-go/v8/linebot/messaging_api"
 )
 
-func TestPathTraversal_GetProfile(t *testing.T) {
+func TestPathTraversal_GetProfile_DotSegmentsRejected(t *testing.T) {
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			t.Errorf("request should not be sent, but got path: %s", r.URL.Path)
@@ -26,18 +27,64 @@ func TestPathTraversal_GetProfile(t *testing.T) {
 		t.Fatalf("Failed to create client: %v", err)
 	}
 
-	traversalInputs := []string{
-		"../message/quota",
-		"..%2Fmessage%2Fquota",
+	dotSegments := []string{
 		"..",
 		".",
+		"%2e%2e",
+		"%2e",
+		"%2E%2E",
+		".%2e",
+		"%2e.",
 	}
 
-	for _, input := range traversalInputs {
+	for _, input := range dotSegments {
 		t.Run(input, func(t *testing.T) {
 			_, err := client.GetProfile(input)
 			if err == nil {
-				t.Errorf("expected error for path traversal input %q, but got nil", input)
+				t.Errorf("expected error for dot segment %q, but got nil", input)
+			}
+		})
+	}
+}
+
+func TestPathTraversal_GetProfile_ReservedCharsEncoded(t *testing.T) {
+	cases := []struct {
+		input       string
+		wantEscaped string
+	}{
+		{"../message/quota", "/v2/bot/profile/..%2Fmessage%2Fquota"},
+		{"a/b", "/v2/bot/profile/a%2Fb"},
+		{"a?b", "/v2/bot/profile/a%3Fb"},
+		{"a#b", "/v2/bot/profile/a%23b"},
+	}
+
+	for _, tc := range cases {
+		t.Run(tc.input, func(t *testing.T) {
+			server := httptest.NewServer(
+				http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+					if got := r.URL.EscapedPath(); got != tc.wantEscaped {
+						t.Errorf("EscapedPath = %s; want %s", got, tc.wantEscaped)
+					}
+					if strings.Contains(r.RequestURI, "%25") {
+						t.Errorf("double-encoded path detected: %s", r.RequestURI)
+					}
+					w.WriteHeader(http.StatusOK)
+					w.Write([]byte(`{"userId":"test","displayName":"Test"}`))
+				}),
+			)
+			defer server.Close()
+
+			client, err := messaging_api.NewMessagingApiAPI(
+				"channelToken",
+				messaging_api.WithEndpoint(server.URL),
+			)
+			if err != nil {
+				t.Fatalf("Failed to create client: %v", err)
+			}
+
+			_, err = client.GetProfile(tc.input)
+			if err != nil {
+				t.Errorf("reserved chars should be encoded, not rejected: %v", err)
 			}
 		})
 	}
@@ -46,9 +93,9 @@ func TestPathTraversal_GetProfile(t *testing.T) {
 func TestPathTraversal_GetProfile_NormalInput(t *testing.T) {
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			expected := "/v2/bot/profile/U0047556f2e40dba2456887320ba7c76d"
-			if r.URL.Path != expected {
-				t.Errorf("URLPath %s; want %s", r.URL.Path, expected)
+			wantEscaped := "/v2/bot/profile/U0047556f2e40dba2456887320ba7c76d"
+			if got := r.URL.EscapedPath(); got != wantEscaped {
+				t.Errorf("EscapedPath = %s; want %s", got, wantEscaped)
 			}
 			w.WriteHeader(http.StatusOK)
 			w.Write([]byte(`{"userId":"U0047556f2e40dba2456887320ba7c76d","displayName":"Test"}`))
@@ -73,11 +120,15 @@ func TestPathTraversal_GetProfile_NormalInput(t *testing.T) {
 	}
 }
 
-func TestPathTraversal_GetProfile_PlaceholderBleed(t *testing.T) {
+func TestPathTraversal_PlaceholderBleed(t *testing.T) {
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			if r.URL.Path != "/v2/bot/user/%7BrichMenuId%7D/richmenu/real-menu-id" {
-				t.Errorf("unexpected path: %s", r.URL.Path)
+			wantEscaped := "/v2/bot/user/%7BrichMenuId%7D/richmenu/real-menu-id"
+			if got := r.URL.EscapedPath(); got != wantEscaped {
+				t.Errorf("EscapedPath = %s; want %s", got, wantEscaped)
+			}
+			if strings.Contains(r.RequestURI, "%257B") {
+				t.Errorf("double-encoded placeholder: %s", r.RequestURI)
 			}
 			w.WriteHeader(http.StatusOK)
 			w.Write([]byte(`{}`))
@@ -102,9 +153,9 @@ func TestPathTraversal_GetProfile_PlaceholderBleed(t *testing.T) {
 func TestPathTraversal_GetProfile_DotsInMiddle(t *testing.T) {
 	server := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			expected := "/v2/bot/profile/abc..def"
-			if r.URL.Path != expected {
-				t.Errorf("URLPath %s; want %s", r.URL.Path, expected)
+			wantEscaped := "/v2/bot/profile/abc..def"
+			if got := r.URL.EscapedPath(); got != wantEscaped {
+				t.Errorf("EscapedPath = %s; want %s", got, wantEscaped)
 			}
 			w.WriteHeader(http.StatusOK)
 			w.Write([]byte(`{"userId":"abc..def","displayName":"Test"}`))

@@ -29,7 +29,6 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"path"
 
 	"github.com/line/line-bot-sdk-go/v8/linebot"
 )
@@ -88,10 +87,8 @@ func (client *LiffAPI) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (client *LiffAPI) Url(endpointPath string) string {
-	newPath := path.Join(client.endpoint.Path, endpointPath)
-	u := *client.endpoint
-	u.Path = newPath
-	return u.String()
+	u, _ := url.JoinPath(client.endpoint.String(), endpointPath)
+	return u
 }
 
 // WithHTTPClient function

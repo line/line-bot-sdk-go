@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestPathTraversal_GetProfile(t *testing.T) {
+func TestPathTraversal_GetProfile_DotSegmentsRejected(t *testing.T) {
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		t.Errorf("request should not be sent, but got path: %s", r.URL.Path)
 		w.WriteHeader(http.StatusOK)
@@ -25,20 +25,51 @@ func TestPathTraversal_GetProfile(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	traversalInputs := []string{
-		"../message/quota",
-		"..%2Fmessage%2Fquota",
+	dotSegments := []string{
 		"..",
 		".",
+		"%2e%2e",
+		"%2e",
+		"%2E%2E",
+		".%2e",
+		"%2e.",
 	}
 
-	for _, input := range traversalInputs {
+	for _, input := range dotSegments {
 		t.Run(input, func(t *testing.T) {
 			_, err := client.GetProfile(input).Do()
 			if err == nil {
-				t.Errorf("expected error for path traversal input %q, but got nil", input)
+				t.Errorf("expected error for dot segment %q, but got nil", input)
 			}
 		})
+	}
+}
+
+func TestPathTraversal_GetProfile_SlashInValue(t *testing.T) {
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		t.Errorf("request should not be sent, but got path: %s", r.URL.Path)
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`{}`))
+	}))
+	defer server.Close()
+
+	dataServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		t.Error("Unexpected Data API call")
+		w.WriteHeader(404)
+	}))
+	defer dataServer.Close()
+
+	client, err := mockClient(server, dataServer)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Legacy API uses fmt.Sprintf (no encoding), so "../message/quota"
+	// creates endpoint "/v2/bot/profile/../message/quota" which contains
+	// ".." as a path segment and is correctly rejected.
+	_, err = client.GetProfile("../message/quota").Do()
+	if err == nil {
+		t.Error("expected error for ../message/quota in legacy API")
 	}
 }
 

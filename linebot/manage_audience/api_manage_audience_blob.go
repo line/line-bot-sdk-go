@@ -31,7 +31,6 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"path"
 	"strconv"
 
 	"github.com/line/line-bot-sdk-go/v8/linebot"
@@ -91,10 +90,8 @@ func (client *ManageAudienceBlobAPI) Do(req *http.Request) (*http.Response, erro
 }
 
 func (client *ManageAudienceBlobAPI) Url(endpointPath string) string {
-	newPath := path.Join(client.endpoint.Path, endpointPath)
-	u := *client.endpoint
-	u.Path = newPath
-	return u.String()
+	u, _ := url.JoinPath(client.endpoint.String(), endpointPath)
+	return u
 }
 
 // WithBlobHTTPClient function

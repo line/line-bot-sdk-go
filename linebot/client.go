@@ -24,7 +24,6 @@ import (
 	"net/http"
 	"net/textproto"
 	"net/url"
-	"path"
 	"time"
 )
 
@@ -205,9 +204,7 @@ func (client *Client) url(base *url.URL, endpoint string) (string, error) {
 	if err := validateEndpoint(endpoint); err != nil {
 		return "", err
 	}
-	u := *base
-	u.Path = path.Join(u.Path, endpoint)
-	return u.String(), nil
+	return url.JoinPath(base.String(), endpoint)
 }
 
 func (client *Client) do(ctx context.Context, req *http.Request) (*http.Response, error) {
