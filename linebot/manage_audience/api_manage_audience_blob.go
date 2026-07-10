@@ -90,8 +90,7 @@ func (client *ManageAudienceBlobAPI) Do(req *http.Request) (*http.Response, erro
 }
 
 func (client *ManageAudienceBlobAPI) Url(endpointPath string) string {
-	u, _ := url.JoinPath(client.endpoint.String(), endpointPath)
-	return u
+	return client.endpoint.JoinPath(endpointPath).String()
 }
 
 // WithBlobHTTPClient function

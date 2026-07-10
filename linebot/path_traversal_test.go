@@ -71,6 +71,14 @@ func TestPathTraversal_GetProfile_SlashInValue(t *testing.T) {
 	if err == nil {
 		t.Error("expected error for ../message/quota in legacy API")
 	}
+
+	// Pre-encoded slash: "..%2Fmessage%2Fquota" is also rejected because
+	// validateEndpoint PathUnescapes first, producing "../message/quota"
+	// which contains ".." as a segment.
+	_, err = client.GetProfile("..%2Fmessage%2Fquota").Do()
+	if err == nil {
+		t.Error("expected error for ..%2Fmessage%2Fquota in legacy API")
+	}
 }
 
 func TestPathTraversal_GetProfile_NormalInput(t *testing.T) {

@@ -56,6 +56,7 @@ func TestPathTraversal_GetProfile_ReservedCharsEncoded(t *testing.T) {
 		{"a/b", "/v2/bot/profile/a%2Fb"},
 		{"a?b", "/v2/bot/profile/a%3Fb"},
 		{"a#b", "/v2/bot/profile/a%23b"},
+		{"..%2Fmessage%2Fquota", "/v2/bot/profile/..%252Fmessage%252Fquota"},
 	}
 
 	for _, tc := range cases {
@@ -65,7 +66,7 @@ func TestPathTraversal_GetProfile_ReservedCharsEncoded(t *testing.T) {
 					if got := r.URL.EscapedPath(); got != tc.wantEscaped {
 						t.Errorf("EscapedPath = %s; want %s", got, tc.wantEscaped)
 					}
-					if strings.Contains(r.RequestURI, "%25") {
+					if strings.Contains(r.RequestURI, "%257B") || strings.Contains(r.RequestURI, "%257D") {
 						t.Errorf("double-encoded path detected: %s", r.RequestURI)
 					}
 					w.WriteHeader(http.StatusOK)

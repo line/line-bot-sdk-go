@@ -87,8 +87,7 @@ func (client *ShopAPI) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (client *ShopAPI) Url(endpointPath string) string {
-	u, _ := url.JoinPath(client.endpoint.String(), endpointPath)
-	return u
+	return client.endpoint.JoinPath(endpointPath).String()
 }
 
 // WithHTTPClient function

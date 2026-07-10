@@ -36,7 +36,11 @@ func BuildPath(pathTemplate string, params map[string]string) (string, error) {
 }
 
 func validateEndpoint(endpoint string) error {
-	for _, segment := range strings.Split(endpoint, "/") {
+	decoded, err := url.PathUnescape(endpoint)
+	if err != nil {
+		return err
+	}
+	for _, segment := range strings.Split(decoded, "/") {
 		if isDotSegment(segment) {
 			return ErrPathTraversal
 		}
