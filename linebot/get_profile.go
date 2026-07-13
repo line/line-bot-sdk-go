@@ -17,6 +17,7 @@ package linebot
 import (
 	"context"
 	"fmt"
+	"net/url"
 )
 
 // GetProfile method
@@ -44,7 +45,7 @@ func (call *GetProfileCall) WithContext(ctx context.Context) *GetProfileCall {
 
 // Do method
 func (call *GetProfileCall) Do() (*UserProfileResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointGetProfile, call.userID)
+	endpoint := fmt.Sprintf(APIEndpointGetProfile, url.PathEscape(call.userID))
 	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, nil)
 	if err != nil {
 		return nil, err
@@ -80,7 +81,7 @@ func (call *GetGroupMemberProfileCall) WithContext(ctx context.Context) *GetGrou
 
 // Do method
 func (call *GetGroupMemberProfileCall) Do() (*UserProfileResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointGetGroupMemberProfile, call.groupID, call.userID)
+	endpoint := fmt.Sprintf(APIEndpointGetGroupMemberProfile, url.PathEscape(call.groupID), url.PathEscape(call.userID))
 	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, nil)
 	if err != nil {
 		return nil, err
@@ -116,7 +117,7 @@ func (call *GetRoomMemberProfileCall) WithContext(ctx context.Context) *GetRoomM
 
 // Do method
 func (call *GetRoomMemberProfileCall) Do() (*UserProfileResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointGetRoomMemberProfile, call.roomID, call.userID)
+	endpoint := fmt.Sprintf(APIEndpointGetRoomMemberProfile, url.PathEscape(call.roomID), url.PathEscape(call.userID))
 	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, nil)
 	if err != nil {
 		return nil, err

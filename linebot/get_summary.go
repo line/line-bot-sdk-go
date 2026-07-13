@@ -17,6 +17,7 @@ package linebot
 import (
 	"context"
 	"fmt"
+	"net/url"
 )
 
 // GetGroupSummary method
@@ -44,7 +45,7 @@ func (call *GetGroupSummaryCall) WithContext(ctx context.Context) *GetGroupSumma
 
 // Do method
 func (call *GetGroupSummaryCall) Do() (*GroupSummaryResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointGetGroupSummary, call.groupID)
+	endpoint := fmt.Sprintf(APIEndpointGetGroupSummary, url.PathEscape(call.groupID))
 	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, nil)
 	if err != nil {
 		return nil, err

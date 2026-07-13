@@ -201,7 +201,7 @@ func WithEndpointBaseData(endpointBaseData string) ClientOption {
 }
 
 func (client *Client) url(base *url.URL, endpoint string) (string, error) {
-	if err := validateEndpoint(endpoint); err != nil {
+	if err := validateEscapedPath(endpoint); err != nil {
 		return "", err
 	}
 	return url.JoinPath(base.String(), endpoint)

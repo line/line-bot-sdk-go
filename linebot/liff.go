@@ -20,6 +20,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"net/url"
 )
 
 // LIFFViewType type
@@ -207,7 +208,7 @@ func (call *UpdateLIFFCall) Do() (*BasicResponse, error) {
 		return nil, err
 	}
 
-	endpoint := fmt.Sprintf(APIEndpointUpdateLIFFApp, call.liffID)
+	endpoint := fmt.Sprintf(APIEndpointUpdateLIFFApp, url.PathEscape(call.liffID))
 	res, err := call.c.put(call.ctx, endpoint, &buf)
 	if err != nil {
 		return nil, err
@@ -241,7 +242,7 @@ func (call *DeleteLIFFCall) WithContext(ctx context.Context) *DeleteLIFFCall {
 
 // Do method
 func (call *DeleteLIFFCall) Do() (*BasicResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointDeleteLIFFApp, call.liffID)
+	endpoint := fmt.Sprintf(APIEndpointDeleteLIFFApp, url.PathEscape(call.liffID))
 	res, err := call.c.delete(call.ctx, endpoint)
 	if err != nil {
 		return nil, err

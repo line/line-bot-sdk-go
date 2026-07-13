@@ -21,6 +21,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 	"os"
 )
 
@@ -143,7 +144,7 @@ func (call *GetRichMenuCall) WithContext(ctx context.Context) *GetRichMenuCall {
 
 // Do method
 func (call *GetRichMenuCall) Do() (*RichMenuResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointGetRichMenu, call.richMenuID)
+	endpoint := fmt.Sprintf(APIEndpointGetRichMenu, url.PathEscape(call.richMenuID))
 	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, nil)
 	if err != nil {
 		return nil, err
@@ -177,7 +178,7 @@ func (call *GetUserRichMenuCall) WithContext(ctx context.Context) *GetUserRichMe
 
 // Do method
 func (call *GetUserRichMenuCall) Do() (*RichMenuResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointGetUserRichMenu, call.userID)
+	endpoint := fmt.Sprintf(APIEndpointGetUserRichMenu, url.PathEscape(call.userID))
 	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, nil)
 	if err != nil {
 		return nil, err
@@ -265,7 +266,7 @@ func (call *DeleteRichMenuCall) WithContext(ctx context.Context) *DeleteRichMenu
 
 // Do method
 func (call *DeleteRichMenuCall) Do() (*BasicResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointDeleteRichMenu, call.richMenuID)
+	endpoint := fmt.Sprintf(APIEndpointDeleteRichMenu, url.PathEscape(call.richMenuID))
 	res, err := call.c.delete(call.ctx, endpoint)
 	if err != nil {
 		return nil, err
@@ -301,7 +302,7 @@ func (call *LinkUserRichMenuCall) WithContext(ctx context.Context) *LinkUserRich
 
 // Do method
 func (call *LinkUserRichMenuCall) Do() (*BasicResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointLinkUserRichMenu, call.userID, call.richMenuID)
+	endpoint := fmt.Sprintf(APIEndpointLinkUserRichMenu, url.PathEscape(call.userID), url.PathEscape(call.richMenuID))
 	res, err := call.c.post(call.ctx, endpoint, nil)
 	if err != nil {
 		return nil, err
@@ -335,7 +336,7 @@ func (call *UnlinkUserRichMenuCall) WithContext(ctx context.Context) *UnlinkUser
 
 // Do method
 func (call *UnlinkUserRichMenuCall) Do() (*BasicResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointUnlinkUserRichMenu, call.userID)
+	endpoint := fmt.Sprintf(APIEndpointUnlinkUserRichMenu, url.PathEscape(call.userID))
 	res, err := call.c.delete(call.ctx, endpoint)
 	if err != nil {
 		return nil, err
@@ -369,7 +370,7 @@ func (call *SetDefaultRichMenuCall) WithContext(ctx context.Context) *SetDefault
 
 // Do method
 func (call *SetDefaultRichMenuCall) Do() (*BasicResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointSetDefaultRichMenu, call.richMenuID)
+	endpoint := fmt.Sprintf(APIEndpointSetDefaultRichMenu, url.PathEscape(call.richMenuID))
 	res, err := call.c.post(call.ctx, endpoint, nil)
 	if err != nil {
 		return nil, err
@@ -493,7 +494,7 @@ func (call *DownloadRichMenuImageCall) WithContext(ctx context.Context) *Downloa
 
 // Do method
 func (call *DownloadRichMenuImageCall) Do() (*MessageContentResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointDownloadRichMenuImage, call.richMenuID)
+	endpoint := fmt.Sprintf(APIEndpointDownloadRichMenuImage, url.PathEscape(call.richMenuID))
 	res, err := call.c.get(call.ctx, call.c.endpointBaseData, endpoint, nil)
 	if err != nil {
 		return nil, err
@@ -544,7 +545,7 @@ func (call *UploadRichMenuImageCall) Do() (*BasicResponse, error) {
 		return nil, err
 	}
 	body.Seek(0, 0)
-	endpoint := fmt.Sprintf(APIEndpointUploadRichMenuImage, call.richMenuID)
+	endpoint := fmt.Sprintf(APIEndpointUploadRichMenuImage, url.PathEscape(call.richMenuID))
 	u, err := call.c.url(call.c.endpointBaseData, endpoint)
 	if err != nil {
 		return nil, err
@@ -749,7 +750,7 @@ func (call *UpdateRichMenuAliasCall) Do() (*BasicResponse, error) {
 	if err := call.encodeJSON(&buf); err != nil {
 		return nil, err
 	}
-	endpoint := fmt.Sprintf(APIEndpointUpdateRichMenuAlias, call.richMenuAliasID)
+	endpoint := fmt.Sprintf(APIEndpointUpdateRichMenuAlias, url.PathEscape(call.richMenuAliasID))
 	res, err := call.c.post(call.ctx, endpoint, &buf)
 	if err != nil {
 		return nil, err
@@ -783,7 +784,7 @@ func (call *DeleteRichMenuAliasCall) WithContext(ctx context.Context) *DeleteRic
 
 // Do method
 func (call *DeleteRichMenuAliasCall) Do() (*BasicResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointDeleteRichMenuAlias, call.richMenuAliasID)
+	endpoint := fmt.Sprintf(APIEndpointDeleteRichMenuAlias, url.PathEscape(call.richMenuAliasID))
 	res, err := call.c.delete(call.ctx, endpoint)
 	if err != nil {
 		return nil, err
@@ -817,7 +818,7 @@ func (call *GetRichMenuAliasCall) WithContext(ctx context.Context) *GetRichMenuA
 
 // Do method
 func (call *GetRichMenuAliasCall) Do() (*RichMenuAliasResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointGetRichMenuAlias, call.richMenuAliasID)
+	endpoint := fmt.Sprintf(APIEndpointGetRichMenuAlias, url.PathEscape(call.richMenuAliasID))
 	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, nil)
 	if err != nil {
 		return nil, err

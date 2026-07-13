@@ -30,11 +30,6 @@ func TestPathTraversal_GetProfile_DotSegmentsRejected(t *testing.T) {
 	dotSegments := []string{
 		"..",
 		".",
-		"%2e%2e",
-		"%2e",
-		"%2E%2E",
-		".%2e",
-		"%2e.",
 	}
 
 	for _, input := range dotSegments {
@@ -42,6 +37,47 @@ func TestPathTraversal_GetProfile_DotSegmentsRejected(t *testing.T) {
 			_, err := client.GetProfile(input)
 			if err == nil {
 				t.Errorf("expected error for dot segment %q, but got nil", input)
+			}
+		})
+	}
+}
+
+func TestPathTraversal_GetProfile_EncodedDotsAllowed(t *testing.T) {
+	cases := []struct {
+		input       string
+		wantEscaped string
+	}{
+		{"%2e%2e", "/v2/bot/profile/%252e%252e"},
+		{"%2e", "/v2/bot/profile/%252e"},
+		{"%2E%2E", "/v2/bot/profile/%252E%252E"},
+		{".%2e", "/v2/bot/profile/.%252e"},
+		{"%2e.", "/v2/bot/profile/%252e."},
+	}
+
+	for _, tc := range cases {
+		t.Run(tc.input, func(t *testing.T) {
+			server := httptest.NewServer(
+				http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+					if got := r.URL.EscapedPath(); got != tc.wantEscaped {
+						t.Errorf("EscapedPath = %s; want %s", got, tc.wantEscaped)
+					}
+					w.WriteHeader(http.StatusOK)
+					w.Write([]byte(`{"userId":"test","displayName":"Test"}`))
+				}),
+			)
+			defer server.Close()
+
+			client, err := messaging_api.NewMessagingApiAPI(
+				"channelToken",
+				messaging_api.WithEndpoint(server.URL),
+			)
+			if err != nil {
+				t.Fatalf("Failed to create client: %v", err)
+			}
+
+			_, err = client.GetProfile(tc.input)
+			if err != nil {
+				t.Errorf("percent-encoded dots should be double-encoded and allowed, but got error: %v", err)
 			}
 		})
 	}

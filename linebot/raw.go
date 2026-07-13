@@ -18,11 +18,15 @@ import (
 	"context"
 	"io"
 	"net/http"
+	"net/url"
 )
 
 // NewRawCall method
 func (client *Client) NewRawCall(method string, endpoint string) (*RawCall, error) {
-	u, err := client.url(client.endpointBase, endpoint)
+	if err := validateEndpoint(endpoint); err != nil {
+		return nil, err
+	}
+	u, err := url.JoinPath(client.endpointBase.String(), endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -38,7 +42,10 @@ func (client *Client) NewRawCall(method string, endpoint string) (*RawCall, erro
 
 // NewRawCallWithBody method
 func (client *Client) NewRawCallWithBody(method string, endpoint string, body io.Reader) (*RawCall, error) {
-	u, err := client.url(client.endpointBase, endpoint)
+	if err := validateEndpoint(endpoint); err != nil {
+		return nil, err
+	}
+	u, err := url.JoinPath(client.endpointBase.String(), endpoint)
 	if err != nil {
 		return nil, err
 	}

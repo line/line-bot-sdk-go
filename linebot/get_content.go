@@ -17,6 +17,7 @@ package linebot
 import (
 	"context"
 	"fmt"
+	"net/url"
 )
 
 // GetMessageContent method
@@ -44,7 +45,7 @@ func (call *GetMessageContentCall) WithContext(ctx context.Context) *GetMessageC
 
 // Do method
 func (call *GetMessageContentCall) Do() (*MessageContentResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointGetMessageContent, call.messageID)
+	endpoint := fmt.Sprintf(APIEndpointGetMessageContent, url.PathEscape(call.messageID))
 	res, err := call.c.get(call.ctx, call.c.endpointBaseData, endpoint, nil)
 	if err != nil {
 		return nil, err

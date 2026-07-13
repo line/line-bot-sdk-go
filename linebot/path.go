@@ -10,23 +10,11 @@ import (
 // contains a dot segment that could change the resolved endpoint.
 var ErrPathTraversal = errors.New("path parameter must not perform path traversal")
 
-// ValidatePathParam validates that a single path parameter value
-// is not a dot segment (., .., or percent-encoded equivalents).
-func ValidatePathParam(value string) error {
-	if isDotSegment(value) {
-		return ErrPathTraversal
-	}
-	return nil
-}
-
 // BuildPath substitutes path parameters into a URL path template,
-// validates each parameter against dot-segment traversal, percent-encodes
-// each value, and validates the final path.
+// percent-encodes each value, and validates the final path against
+// dot-segment traversal.
 func BuildPath(pathTemplate string, params map[string]string) (string, error) {
 	for name, value := range params {
-		if err := ValidatePathParam(value); err != nil {
-			return "", err
-		}
 		pathTemplate = strings.ReplaceAll(pathTemplate, "{"+name+"}", url.PathEscape(value))
 	}
 	if err := validateEscapedPath(pathTemplate); err != nil {

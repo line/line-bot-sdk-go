@@ -17,6 +17,7 @@ package linebot
 import (
 	"context"
 	"fmt"
+	"net/url"
 )
 
 // GetGroupMemberCount method
@@ -44,7 +45,7 @@ func (call *GetGroupMemberCountCall) WithContext(ctx context.Context) *GetGroupM
 
 // Do method
 func (call *GetGroupMemberCountCall) Do() (*MemberCountResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointGetGroupMemberCount, call.groupID)
+	endpoint := fmt.Sprintf(APIEndpointGetGroupMemberCount, url.PathEscape(call.groupID))
 	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, nil)
 	if err != nil {
 		return nil, err
@@ -78,7 +79,7 @@ func (call *GetRoomMemberCountCall) WithContext(ctx context.Context) *GetRoomMem
 
 // Do method
 func (call *GetRoomMemberCountCall) Do() (*MemberCountResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointGetRoomMemberCount, call.roomID)
+	endpoint := fmt.Sprintf(APIEndpointGetRoomMemberCount, url.PathEscape(call.roomID))
 	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, nil)
 	if err != nil {
 		return nil, err

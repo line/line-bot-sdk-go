@@ -17,6 +17,7 @@ package linebot
 import (
 	"context"
 	"fmt"
+	"net/url"
 )
 
 // IssueLinkToken method
@@ -45,7 +46,7 @@ func (call *IssueLinkTokenCall) WithContext(ctx context.Context) *IssueLinkToken
 
 // Do method
 func (call *IssueLinkTokenCall) Do() (*LinkTokenResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointLinkToken, call.userID)
+	endpoint := fmt.Sprintf(APIEndpointLinkToken, url.PathEscape(call.userID))
 	res, err := call.c.post(call.ctx, endpoint, nil)
 	if err != nil {
 		return nil, err
