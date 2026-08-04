@@ -492,7 +492,7 @@ func (client *ChannelAccessTokenAPI) IssueStatelessChannelTokenWithHttpInfo(
 //
 // Revoke short-lived or long-lived channel access token
 // Parameters:
-//        accessToken             Channel access token
+//        accessToken             A short-lived or long-lived channel access token.
 
 // https://developers.line.biz/en/reference/messaging-api/#revoke-longlived-or-shortlived-channel-access-token
 func (client *ChannelAccessTokenAPI) RevokeChannelToken(
@@ -512,7 +512,7 @@ func (client *ChannelAccessTokenAPI) RevokeChannelToken(
 //
 // Revoke short-lived or long-lived channel access token
 // Parameters:
-//        accessToken             Channel access token
+//        accessToken             A short-lived or long-lived channel access token.
 
 // https://developers.line.biz/en/reference/messaging-api/#revoke-longlived-or-shortlived-channel-access-token
 func (client *ChannelAccessTokenAPI) RevokeChannelTokenWithHttpInfo(
