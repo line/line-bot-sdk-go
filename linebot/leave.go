@@ -16,7 +16,6 @@ package linebot
 
 import (
 	"context"
-	"fmt"
 )
 
 // LeaveGroup method
@@ -44,7 +43,7 @@ func (call *LeaveGroupCall) WithContext(ctx context.Context) *LeaveGroupCall {
 
 // Do method
 func (call *LeaveGroupCall) Do() (*BasicResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointLeaveGroup, call.groupID)
+	endpoint := buildEndpoint(APIEndpointLeaveGroup, call.groupID)
 	res, err := call.c.post(call.ctx, endpoint, nil)
 	if err != nil {
 		return nil, err
@@ -78,7 +77,7 @@ func (call *LeaveRoomCall) WithContext(ctx context.Context) *LeaveRoomCall {
 
 // Do method
 func (call *LeaveRoomCall) Do() (*BasicResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointLeaveRoom, call.roomID)
+	endpoint := buildEndpoint(APIEndpointLeaveRoom, call.roomID)
 	res, err := call.c.post(call.ctx, endpoint, nil)
 	if err != nil {
 		return nil, err

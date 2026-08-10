@@ -16,7 +16,6 @@ package linebot
 
 import (
 	"context"
-	"fmt"
 )
 
 // GetProfile method
@@ -44,7 +43,7 @@ func (call *GetProfileCall) WithContext(ctx context.Context) *GetProfileCall {
 
 // Do method
 func (call *GetProfileCall) Do() (*UserProfileResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointGetProfile, call.userID)
+	endpoint := buildEndpoint(APIEndpointGetProfile, call.userID)
 	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, nil)
 	if err != nil {
 		return nil, err
@@ -80,7 +79,7 @@ func (call *GetGroupMemberProfileCall) WithContext(ctx context.Context) *GetGrou
 
 // Do method
 func (call *GetGroupMemberProfileCall) Do() (*UserProfileResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointGetGroupMemberProfile, call.groupID, call.userID)
+	endpoint := buildEndpoint(APIEndpointGetGroupMemberProfile, call.groupID, call.userID)
 	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, nil)
 	if err != nil {
 		return nil, err
@@ -116,7 +115,7 @@ func (call *GetRoomMemberProfileCall) WithContext(ctx context.Context) *GetRoomM
 
 // Do method
 func (call *GetRoomMemberProfileCall) Do() (*UserProfileResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointGetRoomMemberProfile, call.roomID, call.userID)
+	endpoint := buildEndpoint(APIEndpointGetRoomMemberProfile, call.roomID, call.userID)
 	res, err := call.c.get(call.ctx, call.c.endpointBase, endpoint, nil)
 	if err != nil {
 		return nil, err

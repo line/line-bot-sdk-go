@@ -31,7 +31,6 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"path"
 	"strconv"
 
 	"github.com/line/line-bot-sdk-go/v8/linebot"
@@ -91,10 +90,7 @@ func (client *ManageAudienceBlobAPI) Do(req *http.Request) (*http.Response, erro
 }
 
 func (client *ManageAudienceBlobAPI) Url(endpointPath string) string {
-	newPath := path.Join(client.endpoint.Path, endpointPath)
-	u := *client.endpoint
-	u.Path = newPath
-	return u.String()
+	return client.endpoint.JoinPath(endpointPath).String()
 }
 
 // WithBlobHTTPClient function
@@ -165,7 +161,12 @@ func (client *ManageAudienceBlobAPI) AddUserIdsToAudienceWithHttpInfo(
 	uploadDescription string,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/audienceGroup/upload/byFile"
+
+	path, err := linebot.BuildPath("/v2/bot/audienceGroup/upload/byFile", nil)
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	body := &bytes.Buffer{}
 	writer := multipart.NewWriter(body)
@@ -269,7 +270,12 @@ func (client *ManageAudienceBlobAPI) CreateAudienceForUploadingUserIdsWithHttpIn
 	uploadDescription string,
 
 ) (*http.Response, *CreateAudienceGroupResponse, error) {
-	path := "/v2/bot/audienceGroup/upload/byFile"
+
+	path, err := linebot.BuildPath("/v2/bot/audienceGroup/upload/byFile", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	body := &bytes.Buffer{}
 	writer := multipart.NewWriter(body)

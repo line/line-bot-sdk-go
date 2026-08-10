@@ -29,7 +29,6 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"path"
 
 	"github.com/line/line-bot-sdk-go/v8/linebot"
 )
@@ -88,10 +87,7 @@ func (client *LineModuleAttachAPI) Do(req *http.Request) (*http.Response, error)
 }
 
 func (client *LineModuleAttachAPI) Url(endpointPath string) string {
-	newPath := path.Join(client.endpoint.Path, endpointPath)
-	u := *client.endpoint
-	u.Path = newPath
-	return u.String()
+	return client.endpoint.JoinPath(endpointPath).String()
 }
 
 // WithHTTPClient function
@@ -218,7 +214,12 @@ func (client *LineModuleAttachAPI) AttachModuleWithHttpInfo(
 	brandType string,
 
 ) (*http.Response, *AttachModuleResponse, error) {
-	path := "/module/auth/v1/token"
+
+	path, err := linebot.BuildPath("/module/auth/v1/token", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	vs := url.Values{
 		"grant_type":   []string{string(grantType)},

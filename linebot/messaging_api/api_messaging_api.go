@@ -29,9 +29,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"path"
 	"strconv"
-	"strings"
 
 	"github.com/line/line-bot-sdk-go/v8/linebot"
 )
@@ -90,10 +88,7 @@ func (client *MessagingApiAPI) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (client *MessagingApiAPI) Url(endpointPath string) string {
-	newPath := path.Join(client.endpoint.Path, endpointPath)
-	u := *client.endpoint
-	u.Path = newPath
-	return u.String()
+	return client.endpoint.JoinPath(endpointPath).String()
 }
 
 // WithHTTPClient function
@@ -156,7 +151,12 @@ func (client *MessagingApiAPI) BroadcastWithHttpInfo(
 	xLineRetryKey string,
 
 ) (*http.Response, *map[string]interface{}, error) {
-	path := "/v2/bot/message/broadcast"
+
+	path, err := linebot.BuildPath("/v2/bot/message/broadcast", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -217,7 +217,12 @@ func (client *MessagingApiAPI) CancelDefaultRichMenu() (struct{}, error) {
 
 // https://developers.line.biz/en/reference/messaging-api/#cancel-default-rich-menu
 func (client *MessagingApiAPI) CancelDefaultRichMenuWithHttpInfo() (*http.Response, struct{}, error) {
-	path := "/v2/bot/user/all/richmenu"
+
+	path, err := linebot.BuildPath("/v2/bot/user/all/richmenu", nil)
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	req, err := http.NewRequest(http.MethodDelete, client.Url(path), nil)
 	if err != nil {
@@ -278,9 +283,15 @@ func (client *MessagingApiAPI) CloseCouponWithHttpInfo(
 	couponId string,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/coupon/{couponId}/close"
 
-	path = strings.Replace(path, "{couponId}", couponId, -1)
+	path, err := linebot.BuildPath("/v2/bot/coupon/{couponId}/close", map[string]string{
+
+		"couponId": couponId,
+	})
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	req, err := http.NewRequest(http.MethodPut, client.Url(path), nil)
 	if err != nil {
@@ -341,7 +352,12 @@ func (client *MessagingApiAPI) CreateCouponWithHttpInfo(
 	couponCreateRequest *CouponCreateRequest,
 
 ) (*http.Response, *CouponCreateResponse, error) {
-	path := "/v2/bot/coupon"
+
+	path, err := linebot.BuildPath("/v2/bot/coupon", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -413,7 +429,12 @@ func (client *MessagingApiAPI) CreateRichMenuWithHttpInfo(
 	richMenuRequest *RichMenuRequest,
 
 ) (*http.Response, *RichMenuIdResponse, error) {
-	path := "/v2/bot/richmenu"
+
+	path, err := linebot.BuildPath("/v2/bot/richmenu", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -485,7 +506,12 @@ func (client *MessagingApiAPI) CreateRichMenuAliasWithHttpInfo(
 	createRichMenuAliasRequest *CreateRichMenuAliasRequest,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/richmenu/alias"
+
+	path, err := linebot.BuildPath("/v2/bot/richmenu/alias", nil)
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -552,9 +578,15 @@ func (client *MessagingApiAPI) DeleteRichMenuWithHttpInfo(
 	richMenuId string,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/richmenu/{richMenuId}"
 
-	path = strings.Replace(path, "{richMenuId}", richMenuId, -1)
+	path, err := linebot.BuildPath("/v2/bot/richmenu/{richMenuId}", map[string]string{
+
+		"richMenuId": richMenuId,
+	})
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	req, err := http.NewRequest(http.MethodDelete, client.Url(path), nil)
 	if err != nil {
@@ -615,9 +647,15 @@ func (client *MessagingApiAPI) DeleteRichMenuAliasWithHttpInfo(
 	richMenuAliasId string,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/richmenu/alias/{richMenuAliasId}"
 
-	path = strings.Replace(path, "{richMenuAliasId}", richMenuAliasId, -1)
+	path, err := linebot.BuildPath("/v2/bot/richmenu/alias/{richMenuAliasId}", map[string]string{
+
+		"richMenuAliasId": richMenuAliasId,
+	})
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	req, err := http.NewRequest(http.MethodDelete, client.Url(path), nil)
 	if err != nil {
@@ -686,7 +724,12 @@ func (client *MessagingApiAPI) GetAggregationUnitNameListWithHttpInfo(
 	start string,
 
 ) (*http.Response, *GetAggregationUnitNameListResponse, error) {
-	path := "/v2/bot/message/aggregation/list"
+
+	path, err := linebot.BuildPath("/v2/bot/message/aggregation/list", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -749,7 +792,12 @@ func (client *MessagingApiAPI) GetAggregationUnitUsage() (*GetAggregationUnitUsa
 
 // https://developers.line.biz/en/reference/messaging-api/#get-number-of-units-used-this-month
 func (client *MessagingApiAPI) GetAggregationUnitUsageWithHttpInfo() (*http.Response, *GetAggregationUnitUsageResponse, error) {
-	path := "/v2/bot/message/aggregation/info"
+
+	path, err := linebot.BuildPath("/v2/bot/message/aggregation/info", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -802,7 +850,12 @@ func (client *MessagingApiAPI) GetBotInfo() (*BotInfoResponse, error) {
 
 // https://developers.line.biz/en/reference/messaging-api/#get-bot-info
 func (client *MessagingApiAPI) GetBotInfoWithHttpInfo() (*http.Response, *BotInfoResponse, error) {
-	path := "/v2/bot/info"
+
+	path, err := linebot.BuildPath("/v2/bot/info", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -868,9 +921,15 @@ func (client *MessagingApiAPI) GetCouponDetailWithHttpInfo(
 	couponId string,
 
 ) (*http.Response, *CouponResponse, error) {
-	path := "/v2/bot/coupon/{couponId}"
 
-	path = strings.Replace(path, "{couponId}", couponId, -1)
+	path, err := linebot.BuildPath("/v2/bot/coupon/{couponId}", map[string]string{
+
+		"couponId": couponId,
+	})
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -923,7 +982,12 @@ func (client *MessagingApiAPI) GetDefaultRichMenuId() (*RichMenuIdResponse, erro
 
 // https://developers.line.biz/en/reference/messaging-api/#get-default-rich-menu-id
 func (client *MessagingApiAPI) GetDefaultRichMenuIdWithHttpInfo() (*http.Response, *RichMenuIdResponse, error) {
-	path := "/v2/bot/user/all/richmenu"
+
+	path, err := linebot.BuildPath("/v2/bot/user/all/richmenu", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -997,7 +1061,12 @@ func (client *MessagingApiAPI) GetFollowersWithHttpInfo(
 	limit int32,
 
 ) (*http.Response, *GetFollowersResponse, error) {
-	path := "/v2/bot/followers/ids"
+
+	path, err := linebot.BuildPath("/v2/bot/followers/ids", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -1071,9 +1140,15 @@ func (client *MessagingApiAPI) GetGroupMemberCountWithHttpInfo(
 	groupId string,
 
 ) (*http.Response, *GroupMemberCountResponse, error) {
-	path := "/v2/bot/group/{groupId}/members/count"
 
-	path = strings.Replace(path, "{groupId}", groupId, -1)
+	path, err := linebot.BuildPath("/v2/bot/group/{groupId}/members/count", map[string]string{
+
+		"groupId": groupId,
+	})
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -1147,11 +1222,17 @@ func (client *MessagingApiAPI) GetGroupMemberProfileWithHttpInfo(
 	userId string,
 
 ) (*http.Response, *GroupUserProfileResponse, error) {
-	path := "/v2/bot/group/{groupId}/member/{userId}"
 
-	path = strings.Replace(path, "{groupId}", groupId, -1)
+	path, err := linebot.BuildPath("/v2/bot/group/{groupId}/member/{userId}", map[string]string{
 
-	path = strings.Replace(path, "{userId}", userId, -1)
+		"groupId": groupId,
+
+		"userId": userId,
+	})
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -1225,9 +1306,15 @@ func (client *MessagingApiAPI) GetGroupMembersIdsWithHttpInfo(
 	start string,
 
 ) (*http.Response, *MembersIdsResponse, error) {
-	path := "/v2/bot/group/{groupId}/members/ids"
 
-	path = strings.Replace(path, "{groupId}", groupId, -1)
+	path, err := linebot.BuildPath("/v2/bot/group/{groupId}/members/ids", map[string]string{
+
+		"groupId": groupId,
+	})
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -1300,9 +1387,15 @@ func (client *MessagingApiAPI) GetGroupSummaryWithHttpInfo(
 	groupId string,
 
 ) (*http.Response, *GroupSummaryResponse, error) {
-	path := "/v2/bot/group/{groupId}/summary"
 
-	path = strings.Replace(path, "{groupId}", groupId, -1)
+	path, err := linebot.BuildPath("/v2/bot/group/{groupId}/summary", map[string]string{
+
+		"groupId": groupId,
+	})
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -1384,9 +1477,15 @@ func (client *MessagingApiAPI) GetJoinedMembershipUsersWithHttpInfo(
 	limit int32,
 
 ) (*http.Response, *GetJoinedMembershipUsersResponse, error) {
-	path := "/v2/bot/membership/{membershipId}/users/ids"
 
-	path = strings.Replace(path, "{membershipId}", strconv.FormatInt(int64(membershipId), 10), -1)
+	path, err := linebot.BuildPath("/v2/bot/membership/{membershipId}/users/ids", map[string]string{
+
+		"membershipId": strconv.FormatInt(int64(membershipId), 10),
+	})
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -1447,7 +1546,12 @@ func (client *MessagingApiAPI) GetMembershipList() (*MembershipListResponse, err
 
 // https://developers.line.biz/en/reference/messaging-api/#get-membership-plans
 func (client *MessagingApiAPI) GetMembershipListWithHttpInfo() (*http.Response, *MembershipListResponse, error) {
-	path := "/v2/bot/membership/list"
+
+	path, err := linebot.BuildPath("/v2/bot/membership/list", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -1513,9 +1617,15 @@ func (client *MessagingApiAPI) GetMembershipSubscriptionWithHttpInfo(
 	userId string,
 
 ) (*http.Response, *GetMembershipSubscriptionResponse, error) {
-	path := "/v2/bot/membership/subscription/{userId}"
 
-	path = strings.Replace(path, "{userId}", userId, -1)
+	path, err := linebot.BuildPath("/v2/bot/membership/subscription/{userId}", map[string]string{
+
+		"userId": userId,
+	})
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -1568,7 +1678,12 @@ func (client *MessagingApiAPI) GetMessageQuota() (*MessageQuotaResponse, error) 
 
 // https://developers.line.biz/en/reference/messaging-api/#get-quota
 func (client *MessagingApiAPI) GetMessageQuotaWithHttpInfo() (*http.Response, *MessageQuotaResponse, error) {
-	path := "/v2/bot/message/quota"
+
+	path, err := linebot.BuildPath("/v2/bot/message/quota", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -1621,7 +1736,12 @@ func (client *MessagingApiAPI) GetMessageQuotaConsumption() (*QuotaConsumptionRe
 
 // https://developers.line.biz/en/reference/messaging-api/#get-consumption
 func (client *MessagingApiAPI) GetMessageQuotaConsumptionWithHttpInfo() (*http.Response, *QuotaConsumptionResponse, error) {
-	path := "/v2/bot/message/quota/consumption"
+
+	path, err := linebot.BuildPath("/v2/bot/message/quota/consumption", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -1687,7 +1807,12 @@ func (client *MessagingApiAPI) GetNarrowcastProgressWithHttpInfo(
 	requestId string,
 
 ) (*http.Response, *NarrowcastProgressResponse, error) {
-	path := "/v2/bot/message/progress/narrowcast"
+
+	path, err := linebot.BuildPath("/v2/bot/message/progress/narrowcast", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -1758,7 +1883,12 @@ func (client *MessagingApiAPI) GetNumberOfSentBroadcastMessagesWithHttpInfo(
 	date string,
 
 ) (*http.Response, *NumberOfMessagesResponse, error) {
-	path := "/v2/bot/message/delivery/broadcast"
+
+	path, err := linebot.BuildPath("/v2/bot/message/delivery/broadcast", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -1829,7 +1959,12 @@ func (client *MessagingApiAPI) GetNumberOfSentMulticastMessagesWithHttpInfo(
 	date string,
 
 ) (*http.Response, *NumberOfMessagesResponse, error) {
-	path := "/v2/bot/message/delivery/multicast"
+
+	path, err := linebot.BuildPath("/v2/bot/message/delivery/multicast", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -1900,7 +2035,12 @@ func (client *MessagingApiAPI) GetNumberOfSentPushMessagesWithHttpInfo(
 	date string,
 
 ) (*http.Response, *NumberOfMessagesResponse, error) {
-	path := "/v2/bot/message/delivery/push"
+
+	path, err := linebot.BuildPath("/v2/bot/message/delivery/push", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -1971,7 +2111,12 @@ func (client *MessagingApiAPI) GetNumberOfSentReplyMessagesWithHttpInfo(
 	date string,
 
 ) (*http.Response, *NumberOfMessagesResponse, error) {
-	path := "/v2/bot/message/delivery/reply"
+
+	path, err := linebot.BuildPath("/v2/bot/message/delivery/reply", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -2042,7 +2187,12 @@ func (client *MessagingApiAPI) GetPNPMessageStatisticsWithHttpInfo(
 	date string,
 
 ) (*http.Response, *NumberOfMessagesResponse, error) {
-	path := "/v2/bot/message/delivery/pnp"
+
+	path, err := linebot.BuildPath("/v2/bot/message/delivery/pnp", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -2113,9 +2263,15 @@ func (client *MessagingApiAPI) GetProfileWithHttpInfo(
 	userId string,
 
 ) (*http.Response, *UserProfileResponse, error) {
-	path := "/v2/bot/profile/{userId}"
 
-	path = strings.Replace(path, "{userId}", userId, -1)
+	path, err := linebot.BuildPath("/v2/bot/profile/{userId}", map[string]string{
+
+		"userId": userId,
+	})
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -2181,9 +2337,15 @@ func (client *MessagingApiAPI) GetRichMenuWithHttpInfo(
 	richMenuId string,
 
 ) (*http.Response, *RichMenuResponse, error) {
-	path := "/v2/bot/richmenu/{richMenuId}"
 
-	path = strings.Replace(path, "{richMenuId}", richMenuId, -1)
+	path, err := linebot.BuildPath("/v2/bot/richmenu/{richMenuId}", map[string]string{
+
+		"richMenuId": richMenuId,
+	})
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -2249,9 +2411,15 @@ func (client *MessagingApiAPI) GetRichMenuAliasWithHttpInfo(
 	richMenuAliasId string,
 
 ) (*http.Response, *RichMenuAliasResponse, error) {
-	path := "/v2/bot/richmenu/alias/{richMenuAliasId}"
 
-	path = strings.Replace(path, "{richMenuAliasId}", richMenuAliasId, -1)
+	path, err := linebot.BuildPath("/v2/bot/richmenu/alias/{richMenuAliasId}", map[string]string{
+
+		"richMenuAliasId": richMenuAliasId,
+	})
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -2304,7 +2472,12 @@ func (client *MessagingApiAPI) GetRichMenuAliasList() (*RichMenuAliasListRespons
 
 // https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-list
 func (client *MessagingApiAPI) GetRichMenuAliasListWithHttpInfo() (*http.Response, *RichMenuAliasListResponse, error) {
-	path := "/v2/bot/richmenu/alias/list"
+
+	path, err := linebot.BuildPath("/v2/bot/richmenu/alias/list", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -2370,7 +2543,12 @@ func (client *MessagingApiAPI) GetRichMenuBatchProgressWithHttpInfo(
 	requestId string,
 
 ) (*http.Response, *RichMenuBatchProgressResponse, error) {
-	path := "/v2/bot/richmenu/progress/batch"
+
+	path, err := linebot.BuildPath("/v2/bot/richmenu/progress/batch", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -2441,9 +2619,15 @@ func (client *MessagingApiAPI) GetRichMenuIdOfUserWithHttpInfo(
 	userId string,
 
 ) (*http.Response, *RichMenuIdResponse, error) {
-	path := "/v2/bot/user/{userId}/richmenu"
 
-	path = strings.Replace(path, "{userId}", userId, -1)
+	path, err := linebot.BuildPath("/v2/bot/user/{userId}/richmenu", map[string]string{
+
+		"userId": userId,
+	})
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -2496,7 +2680,12 @@ func (client *MessagingApiAPI) GetRichMenuList() (*RichMenuListResponse, error) 
 
 // https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-list
 func (client *MessagingApiAPI) GetRichMenuListWithHttpInfo() (*http.Response, *RichMenuListResponse, error) {
-	path := "/v2/bot/richmenu/list"
+
+	path, err := linebot.BuildPath("/v2/bot/richmenu/list", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -2562,9 +2751,15 @@ func (client *MessagingApiAPI) GetRoomMemberCountWithHttpInfo(
 	roomId string,
 
 ) (*http.Response, *RoomMemberCountResponse, error) {
-	path := "/v2/bot/room/{roomId}/members/count"
 
-	path = strings.Replace(path, "{roomId}", roomId, -1)
+	path, err := linebot.BuildPath("/v2/bot/room/{roomId}/members/count", map[string]string{
+
+		"roomId": roomId,
+	})
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -2638,11 +2833,17 @@ func (client *MessagingApiAPI) GetRoomMemberProfileWithHttpInfo(
 	userId string,
 
 ) (*http.Response, *RoomUserProfileResponse, error) {
-	path := "/v2/bot/room/{roomId}/member/{userId}"
 
-	path = strings.Replace(path, "{roomId}", roomId, -1)
+	path, err := linebot.BuildPath("/v2/bot/room/{roomId}/member/{userId}", map[string]string{
 
-	path = strings.Replace(path, "{userId}", userId, -1)
+		"roomId": roomId,
+
+		"userId": userId,
+	})
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -2716,9 +2917,15 @@ func (client *MessagingApiAPI) GetRoomMembersIdsWithHttpInfo(
 	start string,
 
 ) (*http.Response, *MembersIdsResponse, error) {
-	path := "/v2/bot/room/{roomId}/members/ids"
 
-	path = strings.Replace(path, "{roomId}", roomId, -1)
+	path, err := linebot.BuildPath("/v2/bot/room/{roomId}/members/ids", map[string]string{
+
+		"roomId": roomId,
+	})
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -2778,7 +2985,12 @@ func (client *MessagingApiAPI) GetWebhookEndpoint() (*GetWebhookEndpointResponse
 
 // https://developers.line.biz/en/reference/messaging-api/#get-webhook-endpoint-information
 func (client *MessagingApiAPI) GetWebhookEndpointWithHttpInfo() (*http.Response, *GetWebhookEndpointResponse, error) {
-	path := "/v2/bot/channel/webhook/endpoint"
+
+	path, err := linebot.BuildPath("/v2/bot/channel/webhook/endpoint", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -2844,9 +3056,15 @@ func (client *MessagingApiAPI) IssueLinkTokenWithHttpInfo(
 	userId string,
 
 ) (*http.Response, *IssueLinkTokenResponse, error) {
-	path := "/v2/bot/user/{userId}/linkToken"
 
-	path = strings.Replace(path, "{userId}", userId, -1)
+	path, err := linebot.BuildPath("/v2/bot/user/{userId}/linkToken", map[string]string{
+
+		"userId": userId,
+	})
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), nil)
 	if err != nil {
@@ -2912,9 +3130,15 @@ func (client *MessagingApiAPI) LeaveGroupWithHttpInfo(
 	groupId string,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/group/{groupId}/leave"
 
-	path = strings.Replace(path, "{groupId}", groupId, -1)
+	path, err := linebot.BuildPath("/v2/bot/group/{groupId}/leave", map[string]string{
+
+		"groupId": groupId,
+	})
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), nil)
 	if err != nil {
@@ -2975,9 +3199,15 @@ func (client *MessagingApiAPI) LeaveRoomWithHttpInfo(
 	roomId string,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/room/{roomId}/leave"
 
-	path = strings.Replace(path, "{roomId}", roomId, -1)
+	path, err := linebot.BuildPath("/v2/bot/room/{roomId}/leave", map[string]string{
+
+		"roomId": roomId,
+	})
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), nil)
 	if err != nil {
@@ -3046,11 +3276,17 @@ func (client *MessagingApiAPI) LinkRichMenuIdToUserWithHttpInfo(
 	richMenuId string,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/user/{userId}/richmenu/{richMenuId}"
 
-	path = strings.Replace(path, "{userId}", userId, -1)
+	path, err := linebot.BuildPath("/v2/bot/user/{userId}/richmenu/{richMenuId}", map[string]string{
 
-	path = strings.Replace(path, "{richMenuId}", richMenuId, -1)
+		"userId": userId,
+
+		"richMenuId": richMenuId,
+	})
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), nil)
 	if err != nil {
@@ -3111,7 +3347,12 @@ func (client *MessagingApiAPI) LinkRichMenuIdToUsersWithHttpInfo(
 	richMenuBulkLinkRequest *RichMenuBulkLinkRequest,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/richmenu/bulk/link"
+
+	path, err := linebot.BuildPath("/v2/bot/richmenu/bulk/link", nil)
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -3194,7 +3435,12 @@ func (client *MessagingApiAPI) ListCouponWithHttpInfo(
 	limit int32,
 
 ) (*http.Response, *MessagingApiPagerCouponListResponse, error) {
-	path := "/v2/bot/coupon"
+
+	path, err := linebot.BuildPath("/v2/bot/coupon", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -3271,7 +3517,12 @@ func (client *MessagingApiAPI) MarkMessagesAsReadWithHttpInfo(
 	markMessagesAsReadRequest *MarkMessagesAsReadRequest,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/message/markAsRead"
+
+	path, err := linebot.BuildPath("/v2/bot/message/markAsRead", nil)
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -3338,7 +3589,12 @@ func (client *MessagingApiAPI) MarkMessagesAsReadByTokenWithHttpInfo(
 	markMessagesAsReadByTokenRequest *MarkMessagesAsReadByTokenRequest,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/chat/markAsRead"
+
+	path, err := linebot.BuildPath("/v2/bot/chat/markAsRead", nil)
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -3413,7 +3669,12 @@ func (client *MessagingApiAPI) MulticastWithHttpInfo(
 	xLineRetryKey string,
 
 ) (*http.Response, *map[string]interface{}, error) {
-	path := "/v2/bot/message/multicast"
+
+	path, err := linebot.BuildPath("/v2/bot/message/multicast", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -3495,7 +3756,12 @@ func (client *MessagingApiAPI) NarrowcastWithHttpInfo(
 	xLineRetryKey string,
 
 ) (*http.Response, *map[string]interface{}, error) {
-	path := "/v2/bot/message/narrowcast"
+
+	path, err := linebot.BuildPath("/v2/bot/message/narrowcast", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -3577,7 +3843,12 @@ func (client *MessagingApiAPI) PushMessageWithHttpInfo(
 	xLineRetryKey string,
 
 ) (*http.Response, *PushMessageResponse, error) {
-	path := "/v2/bot/message/push"
+
+	path, err := linebot.BuildPath("/v2/bot/message/push", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -3659,7 +3930,12 @@ func (client *MessagingApiAPI) PushMessagesByPhoneWithHttpInfo(
 	xLineDeliveryTag string,
 
 ) (*http.Response, struct{}, error) {
-	path := "/bot/pnp/push"
+
+	path, err := linebot.BuildPath("/bot/pnp/push", nil)
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -3728,7 +4004,12 @@ func (client *MessagingApiAPI) ReplyMessageWithHttpInfo(
 	replyMessageRequest *ReplyMessageRequest,
 
 ) (*http.Response, *ReplyMessageResponse, error) {
-	path := "/v2/bot/message/reply"
+
+	path, err := linebot.BuildPath("/v2/bot/message/reply", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -3800,7 +4081,12 @@ func (client *MessagingApiAPI) RichMenuBatchWithHttpInfo(
 	richMenuBatchRequest *RichMenuBatchRequest,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/richmenu/batch"
+
+	path, err := linebot.BuildPath("/v2/bot/richmenu/batch", nil)
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -3867,9 +4153,15 @@ func (client *MessagingApiAPI) SetDefaultRichMenuWithHttpInfo(
 	richMenuId string,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/user/all/richmenu/{richMenuId}"
 
-	path = strings.Replace(path, "{richMenuId}", richMenuId, -1)
+	path, err := linebot.BuildPath("/v2/bot/user/all/richmenu/{richMenuId}", map[string]string{
+
+		"richMenuId": richMenuId,
+	})
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), nil)
 	if err != nil {
@@ -3930,7 +4222,12 @@ func (client *MessagingApiAPI) SetWebhookEndpointWithHttpInfo(
 	setWebhookEndpointRequest *SetWebhookEndpointRequest,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/channel/webhook/endpoint"
+
+	path, err := linebot.BuildPath("/v2/bot/channel/webhook/endpoint", nil)
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -3997,7 +4294,12 @@ func (client *MessagingApiAPI) ShowLoadingAnimationWithHttpInfo(
 	showLoadingAnimationRequest *ShowLoadingAnimationRequest,
 
 ) (*http.Response, *map[string]interface{}, error) {
-	path := "/v2/bot/chat/loading/start"
+
+	path, err := linebot.BuildPath("/v2/bot/chat/loading/start", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -4069,7 +4371,12 @@ func (client *MessagingApiAPI) TestWebhookEndpointWithHttpInfo(
 	testWebhookEndpointRequest *TestWebhookEndpointRequest,
 
 ) (*http.Response, *TestWebhookEndpointResponse, error) {
-	path := "/v2/bot/channel/webhook/test"
+
+	path, err := linebot.BuildPath("/v2/bot/channel/webhook/test", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -4141,9 +4448,15 @@ func (client *MessagingApiAPI) UnlinkRichMenuIdFromUserWithHttpInfo(
 	userId string,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/user/{userId}/richmenu"
 
-	path = strings.Replace(path, "{userId}", userId, -1)
+	path, err := linebot.BuildPath("/v2/bot/user/{userId}/richmenu", map[string]string{
+
+		"userId": userId,
+	})
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	req, err := http.NewRequest(http.MethodDelete, client.Url(path), nil)
 	if err != nil {
@@ -4204,7 +4517,12 @@ func (client *MessagingApiAPI) UnlinkRichMenuIdFromUsersWithHttpInfo(
 	richMenuBulkUnlinkRequest *RichMenuBulkUnlinkRequest,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/richmenu/bulk/unlink"
+
+	path, err := linebot.BuildPath("/v2/bot/richmenu/bulk/unlink", nil)
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -4279,9 +4597,15 @@ func (client *MessagingApiAPI) UpdateRichMenuAliasWithHttpInfo(
 	updateRichMenuAliasRequest *UpdateRichMenuAliasRequest,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/richmenu/alias/{richMenuAliasId}"
 
-	path = strings.Replace(path, "{richMenuAliasId}", richMenuAliasId, -1)
+	path, err := linebot.BuildPath("/v2/bot/richmenu/alias/{richMenuAliasId}", map[string]string{
+
+		"richMenuAliasId": richMenuAliasId,
+	})
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -4348,7 +4672,12 @@ func (client *MessagingApiAPI) ValidateBroadcastWithHttpInfo(
 	validateMessageRequest *ValidateMessageRequest,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/message/validate/broadcast"
+
+	path, err := linebot.BuildPath("/v2/bot/message/validate/broadcast", nil)
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -4415,7 +4744,12 @@ func (client *MessagingApiAPI) ValidateMulticastWithHttpInfo(
 	validateMessageRequest *ValidateMessageRequest,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/message/validate/multicast"
+
+	path, err := linebot.BuildPath("/v2/bot/message/validate/multicast", nil)
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -4482,7 +4816,12 @@ func (client *MessagingApiAPI) ValidateNarrowcastWithHttpInfo(
 	validateMessageRequest *ValidateMessageRequest,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/message/validate/narrowcast"
+
+	path, err := linebot.BuildPath("/v2/bot/message/validate/narrowcast", nil)
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -4549,7 +4888,12 @@ func (client *MessagingApiAPI) ValidatePushWithHttpInfo(
 	validateMessageRequest *ValidateMessageRequest,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/message/validate/push"
+
+	path, err := linebot.BuildPath("/v2/bot/message/validate/push", nil)
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -4616,7 +4960,12 @@ func (client *MessagingApiAPI) ValidateReplyWithHttpInfo(
 	validateMessageRequest *ValidateMessageRequest,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/message/validate/reply"
+
+	path, err := linebot.BuildPath("/v2/bot/message/validate/reply", nil)
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -4683,7 +5032,12 @@ func (client *MessagingApiAPI) ValidateRichMenuBatchRequestWithHttpInfo(
 	richMenuBatchRequest *RichMenuBatchRequest,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/richmenu/validate/batch"
+
+	path, err := linebot.BuildPath("/v2/bot/richmenu/validate/batch", nil)
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -4750,7 +5104,12 @@ func (client *MessagingApiAPI) ValidateRichMenuObjectWithHttpInfo(
 	richMenuRequest *RichMenuRequest,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/richmenu/validate"
+
+	path, err := linebot.BuildPath("/v2/bot/richmenu/validate", nil)
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
