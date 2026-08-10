@@ -106,7 +106,7 @@ func TestStickerMessage(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
 	}
-	resp, err := client.CreateAudienceForUploadingUserIds(tempFile, "hello", true, "foobar")
+	resp, err := client.CreateAudienceForUploadingUserIds("hello", tempFile, true, "foobar")
 	if err != nil {
 		t.Fatalf("Failed to create audience: %v", err)
 	}
