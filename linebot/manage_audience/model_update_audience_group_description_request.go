@@ -25,7 +25,7 @@ package manage_audience
 type UpdateAudienceGroupDescriptionRequest struct {
 
 	/**
-	 * The audience&#39;s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
+	 * The audience&#39;s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120  (Required)
 	 */
-	Description string `json:"description,omitempty"`
+	Description string `json:"description"`
 }

@@ -83,7 +83,7 @@ type CouponCreateRequest struct {
 	/**
 	 * Get Reward
 	 */
-	Reward CouponRewardRequestInterface `json:"reward,omitempty"`
+	Reward CouponRewardRequestInterface `json:"reward"`
 
 	/**
 	 * Visibility of the coupon. Determines who can see or acquire the coupon. (Required)

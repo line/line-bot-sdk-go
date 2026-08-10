@@ -121,25 +121,25 @@ func WithBlobEndpoint(endpoint string) ManageAudienceBlobAPIOption {
 //
 // Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by file).
 // Parameters:
-//        file             A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
 //        audienceGroupId             The audience ID.
+//        file             A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
 //        uploadDescription             The description to register with the job
 
 // https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group-by-file
 func (client *ManageAudienceBlobAPI) AddUserIdsToAudience(
 
-	file *os.File,
-
 	audienceGroupId int64,
+
+	file *os.File,
 
 	uploadDescription string,
 
 ) (struct{}, error) {
 	_, body, error := client.AddUserIdsToAudienceWithHttpInfo(
 
-		file,
-
 		audienceGroupId,
+
+		file,
 
 		uploadDescription,
 	)
@@ -151,16 +151,16 @@ func (client *ManageAudienceBlobAPI) AddUserIdsToAudience(
 //
 // Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by file).
 // Parameters:
-//        file             A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
 //        audienceGroupId             The audience ID.
+//        file             A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
 //        uploadDescription             The description to register with the job
 
 // https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group-by-file
 func (client *ManageAudienceBlobAPI) AddUserIdsToAudienceWithHttpInfo(
 
-	file *os.File,
-
 	audienceGroupId int64,
+
+	file *os.File,
 
 	uploadDescription string,
 
@@ -217,17 +217,17 @@ func (client *ManageAudienceBlobAPI) AddUserIdsToAudienceWithHttpInfo(
 //
 // Create audience for uploading user IDs (by file).
 // Parameters:
-//        file             A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
 //        description             The audience's name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
+//        file             A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
 //        isIfaAudience             To specify recipients by IFAs: set `true`. To specify recipients by user IDs: set `false` or omit isIfaAudience property.
 //        uploadDescription             The description to register for the job (in `jobs[].description`).
 
 // https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group-by-file
 func (client *ManageAudienceBlobAPI) CreateAudienceForUploadingUserIds(
 
-	file *os.File,
-
 	description string,
+
+	file *os.File,
 
 	isIfaAudience bool,
 
@@ -236,9 +236,9 @@ func (client *ManageAudienceBlobAPI) CreateAudienceForUploadingUserIds(
 ) (*CreateAudienceGroupResponse, error) {
 	_, body, error := client.CreateAudienceForUploadingUserIdsWithHttpInfo(
 
-		file,
-
 		description,
+
+		file,
 
 		isIfaAudience,
 
@@ -252,17 +252,17 @@ func (client *ManageAudienceBlobAPI) CreateAudienceForUploadingUserIds(
 //
 // Create audience for uploading user IDs (by file).
 // Parameters:
-//        file             A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
 //        description             The audience's name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
+//        file             A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
 //        isIfaAudience             To specify recipients by IFAs: set `true`. To specify recipients by user IDs: set `false` or omit isIfaAudience property.
 //        uploadDescription             The description to register for the job (in `jobs[].description`).
 
 // https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group-by-file
 func (client *ManageAudienceBlobAPI) CreateAudienceForUploadingUserIdsWithHttpInfo(
 
-	file *os.File,
-
 	description string,
+
+	file *os.File,
 
 	isIfaAudience bool,
 

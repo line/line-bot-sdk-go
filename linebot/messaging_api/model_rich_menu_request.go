@@ -27,25 +27,25 @@ type RichMenuRequest struct {
 	/**
 	 * Get Size
 	 */
-	Size *RichMenuSize `json:"size,omitempty"`
+	Size *RichMenuSize `json:"size"`
 
 	/**
-	 * `true` to display the rich menu by default. Otherwise, `false`.
+	 * `true` to display the rich menu by default. Otherwise, `false`. (Required)
 	 */
 	Selected bool `json:"selected"`
 
 	/**
-	 * Name of the rich menu. This value can be used to help manage your rich menus and is not displayed to users.
+	 * Name of the rich menu. This value can be used to help manage your rich menus and is not displayed to users. (Required)
 	 */
-	Name string `json:"name,omitempty"`
+	Name string `json:"name"`
 
 	/**
-	 * Text displayed in the chat bar
+	 * Text displayed in the chat bar (Required)
 	 */
-	ChatBarText string `json:"chatBarText,omitempty"`
+	ChatBarText string `json:"chatBarText"`
 
 	/**
-	 * Array of area objects which define the coordinates and size of tappable areas
+	 * Array of area objects which define the coordinates and size of tappable areas (Required)
 	 */
-	Areas []RichMenuArea `json:"areas,omitempty"`
+	Areas []RichMenuArea `json:"areas"`
 }

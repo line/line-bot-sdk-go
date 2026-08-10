@@ -279,9 +279,7 @@ func (client *InsightAPI) GetNumberOfFollowersWithHttpInfo(
 	}
 
 	query := url.Values{}
-	if date != "" {
-		query.Add("date", date)
-	}
+	query.Add("date", date)
 
 	req.URL.RawQuery = query.Encode()
 

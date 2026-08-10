@@ -25,7 +25,7 @@ package manage_audience
 type AddAudienceToAudienceGroupRequest struct {
 
 	/**
-	 * The audience ID.
+	 * The audience ID. (Required)
 	 */
 	AudienceGroupId int64 `json:"audienceGroupId"`
 
@@ -35,7 +35,7 @@ type AddAudienceToAudienceGroupRequest struct {
 	UploadDescription string `json:"uploadDescription,omitempty"`
 
 	/**
-	 * An array of up to 10,000 user IDs or IFAs.
+	 * An array of up to 10,000 user IDs or IFAs. (Required)
 	 */
-	Audiences []Audience `json:"audiences,omitempty"`
+	Audiences []Audience `json:"audiences"`
 }
