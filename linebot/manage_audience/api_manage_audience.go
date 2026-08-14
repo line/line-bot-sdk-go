@@ -29,9 +29,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"path"
 	"strconv"
-	"strings"
 
 	"github.com/line/line-bot-sdk-go/v8/linebot"
 )
@@ -90,10 +88,7 @@ func (client *ManageAudienceAPI) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (client *ManageAudienceAPI) Url(endpointPath string) string {
-	newPath := path.Join(client.endpoint.Path, endpointPath)
-	u := *client.endpoint
-	u.Path = newPath
-	return u.String()
+	return client.endpoint.JoinPath(endpointPath).String()
 }
 
 // WithHTTPClient function
@@ -148,7 +143,12 @@ func (client *ManageAudienceAPI) AddAudienceToAudienceGroupWithHttpInfo(
 	addAudienceToAudienceGroupRequest *AddAudienceToAudienceGroupRequest,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/audienceGroup/upload"
+
+	path, err := linebot.BuildPath("/v2/bot/audienceGroup/upload", nil)
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -215,7 +215,12 @@ func (client *ManageAudienceAPI) CreateAudienceGroupWithHttpInfo(
 	createAudienceGroupRequest *CreateAudienceGroupRequest,
 
 ) (*http.Response, *CreateAudienceGroupResponse, error) {
-	path := "/v2/bot/audienceGroup/upload"
+
+	path, err := linebot.BuildPath("/v2/bot/audienceGroup/upload", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -287,7 +292,12 @@ func (client *ManageAudienceAPI) CreateClickBasedAudienceGroupWithHttpInfo(
 	createClickBasedAudienceGroupRequest *CreateClickBasedAudienceGroupRequest,
 
 ) (*http.Response, *CreateClickBasedAudienceGroupResponse, error) {
-	path := "/v2/bot/audienceGroup/click"
+
+	path, err := linebot.BuildPath("/v2/bot/audienceGroup/click", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -359,7 +369,12 @@ func (client *ManageAudienceAPI) CreateImpBasedAudienceGroupWithHttpInfo(
 	createImpBasedAudienceGroupRequest *CreateImpBasedAudienceGroupRequest,
 
 ) (*http.Response, *CreateImpBasedAudienceGroupResponse, error) {
-	path := "/v2/bot/audienceGroup/imp"
+
+	path, err := linebot.BuildPath("/v2/bot/audienceGroup/imp", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -431,9 +446,15 @@ func (client *ManageAudienceAPI) DeleteAudienceGroupWithHttpInfo(
 	audienceGroupId int64,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/audienceGroup/{audienceGroupId}"
 
-	path = strings.Replace(path, "{audienceGroupId}", strconv.FormatInt(audienceGroupId, 10), -1)
+	path, err := linebot.BuildPath("/v2/bot/audienceGroup/{audienceGroupId}", map[string]string{
+
+		"audienceGroupId": strconv.FormatInt(audienceGroupId, 10),
+	})
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	req, err := http.NewRequest(http.MethodDelete, client.Url(path), nil)
 	if err != nil {
@@ -494,9 +515,15 @@ func (client *ManageAudienceAPI) GetAudienceDataWithHttpInfo(
 	audienceGroupId int64,
 
 ) (*http.Response, *GetAudienceDataResponse, error) {
-	path := "/v2/bot/audienceGroup/{audienceGroupId}"
 
-	path = strings.Replace(path, "{audienceGroupId}", strconv.FormatInt(audienceGroupId, 10), -1)
+	path, err := linebot.BuildPath("/v2/bot/audienceGroup/{audienceGroupId}", map[string]string{
+
+		"audienceGroupId": strconv.FormatInt(audienceGroupId, 10),
+	})
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -602,7 +629,12 @@ func (client *ManageAudienceAPI) GetAudienceGroupsWithHttpInfo(
 	createRoute AudienceGroupCreateRoute,
 
 ) (*http.Response, *GetAudienceGroupsResponse, error) {
-	path := "/v2/bot/audienceGroup/list"
+
+	path, err := linebot.BuildPath("/v2/bot/audienceGroup/list", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -680,9 +712,15 @@ func (client *ManageAudienceAPI) GetSharedAudienceDataWithHttpInfo(
 	audienceGroupId int64,
 
 ) (*http.Response, *GetSharedAudienceDataResponse, error) {
-	path := "/v2/bot/audienceGroup/shared/{audienceGroupId}"
 
-	path = strings.Replace(path, "{audienceGroupId}", strconv.FormatInt(audienceGroupId, 10), -1)
+	path, err := linebot.BuildPath("/v2/bot/audienceGroup/shared/{audienceGroupId}", map[string]string{
+
+		"audienceGroupId": strconv.FormatInt(audienceGroupId, 10),
+	})
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -788,7 +826,12 @@ func (client *ManageAudienceAPI) GetSharedAudienceGroupsWithHttpInfo(
 	includesOwnedAudienceGroups bool,
 
 ) (*http.Response, *GetSharedAudienceGroupsResponse, error) {
-	path := "/v2/bot/audienceGroup/shared/list"
+
+	path, err := linebot.BuildPath("/v2/bot/audienceGroup/shared/list", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -874,9 +917,15 @@ func (client *ManageAudienceAPI) UpdateAudienceGroupDescriptionWithHttpInfo(
 	updateAudienceGroupDescriptionRequest *UpdateAudienceGroupDescriptionRequest,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/bot/audienceGroup/{audienceGroupId}/updateDescription"
 
-	path = strings.Replace(path, "{audienceGroupId}", strconv.FormatInt(audienceGroupId, 10), -1)
+	path, err := linebot.BuildPath("/v2/bot/audienceGroup/{audienceGroupId}/updateDescription", map[string]string{
+
+		"audienceGroupId": strconv.FormatInt(audienceGroupId, 10),
+	})
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)

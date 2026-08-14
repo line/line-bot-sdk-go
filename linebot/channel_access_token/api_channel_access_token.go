@@ -28,7 +28,6 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"path"
 
 	"github.com/line/line-bot-sdk-go/v8/linebot"
 )
@@ -78,10 +77,7 @@ func (client *ChannelAccessTokenAPI) Do(req *http.Request) (*http.Response, erro
 }
 
 func (client *ChannelAccessTokenAPI) Url(endpointPath string) string {
-	newPath := path.Join(client.endpoint.Path, endpointPath)
-	u := *client.endpoint
-	u.Path = newPath
-	return u.String()
+	return client.endpoint.JoinPath(endpointPath).String()
 }
 
 // WithHTTPClient function
@@ -144,7 +140,12 @@ func (client *ChannelAccessTokenAPI) GetsAllValidChannelAccessTokenKeyIdsWithHtt
 	clientAssertion string,
 
 ) (*http.Response, *ChannelAccessTokenKeyIdsResponse, error) {
-	path := "/oauth2/v2.1/tokens/kid"
+
+	path, err := linebot.BuildPath("/oauth2/v2.1/tokens/kid", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {
@@ -232,7 +233,12 @@ func (client *ChannelAccessTokenAPI) IssueChannelTokenWithHttpInfo(
 	clientSecret string,
 
 ) (*http.Response, *IssueShortLivedChannelAccessTokenResponse, error) {
-	path := "/v2/oauth/accessToken"
+
+	path, err := linebot.BuildPath("/v2/oauth/accessToken", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	vs := url.Values{
 		"grant_type":    []string{string(grantType)},
@@ -323,7 +329,12 @@ func (client *ChannelAccessTokenAPI) IssueChannelTokenByJWTWithHttpInfo(
 	clientAssertion string,
 
 ) (*http.Response, *IssueChannelAccessTokenResponse, error) {
-	path := "/oauth2/v2.1/token"
+
+	path, err := linebot.BuildPath("/oauth2/v2.1/token", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	vs := url.Values{
 		"grant_type":            []string{string(grantType)},
@@ -434,7 +445,12 @@ func (client *ChannelAccessTokenAPI) IssueStatelessChannelTokenWithHttpInfo(
 	clientSecret string,
 
 ) (*http.Response, *IssueStatelessChannelAccessTokenResponse, error) {
-	path := "/oauth2/v3/token"
+
+	path, err := linebot.BuildPath("/oauth2/v3/token", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	vs := url.Values{}
 	if grantType != "" {
@@ -520,7 +536,12 @@ func (client *ChannelAccessTokenAPI) RevokeChannelTokenWithHttpInfo(
 	accessToken string,
 
 ) (*http.Response, struct{}, error) {
-	path := "/v2/oauth/revoke"
+
+	path, err := linebot.BuildPath("/v2/oauth/revoke", nil)
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	vs := url.Values{
 		"access_token": []string{string(accessToken)},
@@ -604,7 +625,12 @@ func (client *ChannelAccessTokenAPI) RevokeChannelTokenByJWTWithHttpInfo(
 	accessToken string,
 
 ) (*http.Response, struct{}, error) {
-	path := "/oauth2/v2.1/revoke"
+
+	path, err := linebot.BuildPath("/oauth2/v2.1/revoke", nil)
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	vs := url.Values{
 		"client_id":     []string{string(clientId)},
@@ -674,7 +700,12 @@ func (client *ChannelAccessTokenAPI) VerifyChannelTokenWithHttpInfo(
 	accessToken string,
 
 ) (*http.Response, *VerifyChannelAccessTokenResponse, error) {
-	path := "/v2/oauth/verify"
+
+	path, err := linebot.BuildPath("/v2/oauth/verify", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	vs := url.Values{
 		"access_token": []string{string(accessToken)},
@@ -747,7 +778,12 @@ func (client *ChannelAccessTokenAPI) VerifyChannelTokenByJWTWithHttpInfo(
 	accessToken string,
 
 ) (*http.Response, *VerifyChannelAccessTokenResponse, error) {
-	path := "/oauth2/v2.1/verify"
+
+	path, err := linebot.BuildPath("/oauth2/v2.1/verify", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
 
 	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
 	if err != nil {

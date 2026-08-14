@@ -29,7 +29,6 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"path"
 
 	"github.com/line/line-bot-sdk-go/v8/linebot"
 )
@@ -88,10 +87,7 @@ func (client *ShopAPI) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (client *ShopAPI) Url(endpointPath string) string {
-	newPath := path.Join(client.endpoint.Path, endpointPath)
-	u := *client.endpoint
-	u.Path = newPath
-	return u.String()
+	return client.endpoint.JoinPath(endpointPath).String()
 }
 
 // WithHTTPClient function
@@ -146,7 +142,12 @@ func (client *ShopAPI) MissionStickerV3WithHttpInfo(
 	missionStickerRequest *MissionStickerRequest,
 
 ) (*http.Response, struct{}, error) {
-	path := "/shop/v3/mission"
+
+	path, err := linebot.BuildPath("/shop/v3/mission", nil)
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
 
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)

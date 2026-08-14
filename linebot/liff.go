@@ -18,7 +18,6 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"fmt"
 	"io"
 )
 
@@ -207,7 +206,7 @@ func (call *UpdateLIFFCall) Do() (*BasicResponse, error) {
 		return nil, err
 	}
 
-	endpoint := fmt.Sprintf(APIEndpointUpdateLIFFApp, call.liffID)
+	endpoint := buildEndpoint(APIEndpointUpdateLIFFApp, call.liffID)
 	res, err := call.c.put(call.ctx, endpoint, &buf)
 	if err != nil {
 		return nil, err
@@ -241,7 +240,7 @@ func (call *DeleteLIFFCall) WithContext(ctx context.Context) *DeleteLIFFCall {
 
 // Do method
 func (call *DeleteLIFFCall) Do() (*BasicResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointDeleteLIFFApp, call.liffID)
+	endpoint := buildEndpoint(APIEndpointDeleteLIFFApp, call.liffID)
 	res, err := call.c.delete(call.ctx, endpoint)
 	if err != nil {
 		return nil, err

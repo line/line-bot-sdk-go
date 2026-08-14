@@ -16,7 +16,6 @@ package linebot
 
 import (
 	"context"
-	"fmt"
 	"net/url"
 )
 
@@ -47,7 +46,7 @@ func (call *GetGroupMemberIDsCall) WithContext(ctx context.Context) *GetGroupMem
 
 // Do method
 func (call *GetGroupMemberIDsCall) Do() (*MemberIDsResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointGetGroupMemberIDs, call.groupID)
+	endpoint := buildEndpoint(APIEndpointGetGroupMemberIDs, call.groupID)
 	var q url.Values
 	if call.continuationToken != "" {
 		q = url.Values{"start": []string{call.continuationToken}}
@@ -87,7 +86,7 @@ func (call *GetRoomMemberIDsCall) WithContext(ctx context.Context) *GetRoomMembe
 
 // Do method
 func (call *GetRoomMemberIDsCall) Do() (*MemberIDsResponse, error) {
-	endpoint := fmt.Sprintf(APIEndpointGetRoomMemberIDs, call.roomID)
+	endpoint := buildEndpoint(APIEndpointGetRoomMemberIDs, call.roomID)
 	var q url.Values
 	if call.continuationToken != "" {
 		q = url.Values{"start": []string{call.continuationToken}}
