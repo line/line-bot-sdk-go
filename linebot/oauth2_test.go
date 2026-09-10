@@ -100,7 +100,7 @@ func TestIssueAccessTokenV2(t *testing.T) {
 		}
 		if tc.Want.Response != nil {
 			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+				t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
 			}
 		}
 	}
@@ -225,7 +225,7 @@ func TestGetAccessTokensV2(t *testing.T) {
 		}
 		if tc.Want.Response != nil {
 			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+				t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
 			}
 		}
 	}
@@ -353,7 +353,7 @@ func TestRevokeAccessTokenV2(t *testing.T) {
 		}
 		if tc.Want.Response != nil {
 			if !reflect.DeepEqual(res, tc.Want.Response) {
-				t.Errorf("Response %d %q; want %q", i, res, tc.Want.Response)
+				t.Errorf("Response %d %v; want %v", i, res, tc.Want.Response)
 			}
 		}
 	}
