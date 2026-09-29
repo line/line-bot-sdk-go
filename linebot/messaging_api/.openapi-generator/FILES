@@ -139,6 +139,11 @@ model_number_of_messages_response.go
 model_operator_demographic_filter.go
 model_operator_recipient.go
 model_pnp_messages_request.go
+model_pnp_templated_button.go
+model_pnp_templated_emphasized_item.go
+model_pnp_templated_item.go
+model_pnp_templated_message_body.go
+model_pnp_templated_message_request.go
 model_postback_action.go
 model_push_message_request.go
 model_push_message_response.go
