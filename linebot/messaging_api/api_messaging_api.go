@@ -2231,6 +2231,82 @@ func (client *MessagingApiAPI) GetPNPMessageStatisticsWithHttpInfo(
 
 }
 
+// GetPNPTemplatedMessageStatistics
+//
+// Get number of sent LINE notification messages (template)
+// Parameters:
+//        date             Date the message was sent  Format: `yyyyMMdd` (Example:`20211231`) Time zone: UTC+9
+
+// https://developers.line.biz/en/reference/line-notification-messages/#get-number-of-sent-line-notification-messages-template
+func (client *MessagingApiAPI) GetPNPTemplatedMessageStatistics(
+
+	date string,
+
+) (*NumberOfMessagesResponse, error) {
+	_, body, error := client.GetPNPTemplatedMessageStatisticsWithHttpInfo(
+
+		date,
+	)
+	return body, error
+}
+
+// GetPNPTemplatedMessageStatistics
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Get number of sent LINE notification messages (template)
+// Parameters:
+//        date             Date the message was sent  Format: `yyyyMMdd` (Example:`20211231`) Time zone: UTC+9
+
+// https://developers.line.biz/en/reference/line-notification-messages/#get-number-of-sent-line-notification-messages-template
+func (client *MessagingApiAPI) GetPNPTemplatedMessageStatisticsWithHttpInfo(
+
+	date string,
+
+) (*http.Response, *NumberOfMessagesResponse, error) {
+
+	path, err := linebot.BuildPath("/v2/bot/message/delivery/pnp/templated", nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, client.Url(path), nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	query := url.Values{}
+	query.Add("date", date)
+
+	req.URL.RawQuery = query.Encode()
+
+	res, err := client.Do(req)
+
+	if err != nil {
+		return res, nil, err
+	}
+
+	if res.StatusCode/100 != 2 {
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
+		if err != nil {
+			return res, nil, fmt.Errorf("failed to read response body: %w", err)
+		}
+		res.Body = io.NopCloser(bodyReader)
+		return res, nil, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
+	}
+
+	defer res.Body.Close()
+
+	decoder := json.NewDecoder(res.Body)
+	result := NumberOfMessagesResponse{}
+	if err := decoder.Decode(&result); err != nil {
+		return res, nil, fmt.Errorf("failed to decode JSON: %w", err)
+	}
+	return res, &result, nil
+
+}
+
 // GetProfile
 //
 // Get profile
@@ -3940,6 +4016,88 @@ func (client *MessagingApiAPI) PushMessagesByPhoneWithHttpInfo(
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
 	if err := enc.Encode(pnpMessagesRequest); err != nil {
+		return nil, struct{}{}, err
+	}
+	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)
+	if err != nil {
+		return nil, struct{}{}, err
+	}
+	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
+
+	req.Header.Set("X-Line-Delivery-Tag", xLineDeliveryTag)
+
+	res, err := client.Do(req)
+
+	if err != nil {
+		return res, struct{}{}, err
+	}
+
+	if res.StatusCode/100 != 2 {
+		bodyBytes, err := io.ReadAll(res.Body)
+		bodyReader := bytes.NewReader(bodyBytes)
+		if err != nil {
+			return res, struct{}{}, fmt.Errorf("failed to read response body: %w", err)
+		}
+		res.Body = io.NopCloser(bodyReader)
+		return res, struct{}{}, fmt.Errorf("unexpected status code: %d, %s", res.StatusCode, string(bodyBytes))
+	}
+
+	defer res.Body.Close()
+
+	return res, struct{}{}, nil
+
+}
+
+// PushTemplatedMessagesByPhone
+//
+// Send LINE notification message (template)
+// Parameters:
+//        pnpTemplatedMessageRequest
+//        xLineDeliveryTag             String returned in the delivery.data property of the delivery completion event via Webhook.
+
+// https://developers.line.biz/en/reference/line-notification-messages/#send-line-notification-message-template
+func (client *MessagingApiAPI) PushTemplatedMessagesByPhone(
+
+	pnpTemplatedMessageRequest *PnpTemplatedMessageRequest,
+
+	xLineDeliveryTag string,
+
+) (struct{}, error) {
+	_, body, error := client.PushTemplatedMessagesByPhoneWithHttpInfo(
+
+		pnpTemplatedMessageRequest,
+
+		xLineDeliveryTag,
+	)
+	return body, error
+}
+
+// PushTemplatedMessagesByPhone
+// If you want to take advantage of the HTTPResponse object for status codes and headers, use this signature.
+//
+// Send LINE notification message (template)
+// Parameters:
+//        pnpTemplatedMessageRequest
+//        xLineDeliveryTag             String returned in the delivery.data property of the delivery completion event via Webhook.
+
+// https://developers.line.biz/en/reference/line-notification-messages/#send-line-notification-message-template
+func (client *MessagingApiAPI) PushTemplatedMessagesByPhoneWithHttpInfo(
+
+	pnpTemplatedMessageRequest *PnpTemplatedMessageRequest,
+
+	xLineDeliveryTag string,
+
+) (*http.Response, struct{}, error) {
+
+	path, err := linebot.BuildPath("/v2/bot/message/pnp/templated/push", nil)
+
+	if err != nil {
+		return nil, struct{}{}, err
+	}
+
+	var buf bytes.Buffer
+	enc := json.NewEncoder(&buf)
+	if err := enc.Encode(pnpTemplatedMessageRequest); err != nil {
 		return nil, struct{}{}, err
 	}
 	req, err := http.NewRequest(http.MethodPost, client.Url(path), &buf)

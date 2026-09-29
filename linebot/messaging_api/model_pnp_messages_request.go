@@ -43,6 +43,11 @@ type PnpMessagesRequest struct {
 	 * `true`: The user doesn’t receive a push notification when a message is sent. `false`: The user receives a push notification when the message is sent (unless they have disabled push notifications in LINE and/or their device). The default value is false.
 	 */
 	NotificationDisabled bool `json:"notificationDisabled"`
+
+	/**
+	 * Name of aggregation unit. Case-sensitive.
+	 */
+	CustomAggregationUnits []string `json:"customAggregationUnits"`
 }
 
 func (cr *PnpMessagesRequest) UnmarshalJSON(data []byte) error {
@@ -86,6 +91,15 @@ func (cr *PnpMessagesRequest) UnmarshalJSON(data []byte) error {
 		err = json.Unmarshal(raw["notificationDisabled"], &cr.NotificationDisabled)
 		if err != nil {
 			return fmt.Errorf("JSON parse error in bool(NotificationDisabled): %w", err)
+		}
+
+	}
+
+	if raw["customAggregationUnits"] != nil {
+
+		err = json.Unmarshal(raw["customAggregationUnits"], &cr.CustomAggregationUnits)
+		if err != nil {
+			return fmt.Errorf("JSON parse error in array(CustomAggregationUnits): %w", err)
 		}
 
 	}
